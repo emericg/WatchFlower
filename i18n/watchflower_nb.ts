@@ -298,7 +298,7 @@
 <context>
     <name>Device</name>
     <message numerus="yes">
-        <location filename="../src/device.cpp" line="772"/>
+        <location filename="../src/device.cpp" line="771"/>
         <source>%n minute(s)</source>
         <translation>
             <numerusform>%n minutt</numerusform>
@@ -306,7 +306,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../src/device.cpp" line="774"/>
+        <location filename="../src/device.cpp" line="773"/>
         <source>%n hour(s)</source>
         <translation>
             <numerusform>%n time/timer</numerusform>
@@ -463,33 +463,37 @@
 <context>
     <name>DeviceList</name>
     <message>
-        <location filename="../qml/DeviceList.qml" line="176"/>
+        <location filename="../qml/DeviceList.qml" line="180"/>
         <source>About</source>
         <translation type="unfinished">Om</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="191"/>
+        <location filename="../qml/DeviceList.qml" line="195"/>
         <source>Enable</source>
         <translation>Slå på</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="192"/>
-        <location filename="../qml/DeviceList.qml" line="194"/>
+        <location filename="../qml/DeviceList.qml" line="196"/>
+        <location filename="../qml/DeviceList.qml" line="198"/>
         <source>Retry</source>
         <translation>Prøv om igjen</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="214"/>
         <source>Bluetooth disabled...</source>
-        <translation>Bluetooth er slått av...</translation>
+        <translation type="vanished">Bluetooth er slått av...</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="223"/>
-        <source>Bluetooth permissions missing...</source>
+        <location filename="../qml/DeviceList.qml" line="216"/>
+        <source>Bluetooth is disabled...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceList.qml" line="221"/>
+        <source>Bluetooth permission is missing...</source>
         <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
-        <location filename="../qml/DeviceList.qml" line="275"/>
+        <location filename="../qml/DeviceList.qml" line="267"/>
         <source>%n device(s) selected</source>
         <translation>
             <numerusform>%n enhet(er) valgt</numerusform>
@@ -497,27 +501,27 @@
         </translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="313"/>
+        <location filename="../qml/DeviceList.qml" line="305"/>
         <source>Synchronize history</source>
         <translation type="unfinished">Synkroniser historikk</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="328"/>
+        <location filename="../qml/DeviceList.qml" line="320"/>
         <source>Refresh</source>
         <translation>Oppdater</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="393"/>
+        <location filename="../qml/DeviceList.qml" line="385"/>
         <source>devices</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="399"/>
+        <location filename="../qml/DeviceList.qml" line="391"/>
         <source>plants</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceList.qml" line="298"/>
+        <location filename="../qml/DeviceList.qml" line="290"/>
         <source>Delete</source>
         <translation>Slett</translation>
     </message>
@@ -938,7 +942,7 @@
         <translation>Termometer</translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="772"/>
+        <location filename="../qml/DeviceWidget.qml" line="771"/>
         <source>µSv/h</source>
         <translation type="unfinished"></translation>
     </message>
@@ -948,22 +952,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="870"/>
+        <location filename="../qml/DeviceWidget.qml" line="869"/>
         <source>VOC</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="877"/>
+        <location filename="../qml/DeviceWidget.qml" line="876"/>
         <source>HCHO</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="884"/>
+        <location filename="../qml/DeviceWidget.qml" line="883"/>
         <source>eCO2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/DeviceWidget.qml" line="884"/>
+        <location filename="../qml/DeviceWidget.qml" line="883"/>
         <source>CO2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1133,37 +1137,37 @@
         <translation type="obsolete">For å søke etter Bluetooth Low Energy-enheter på Android 6+ trengs plasseringstillatelse. Programmet verken bruker eller lagrer plasseringa di. Beklager dette.</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="54"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="55"/>
         <source>On Android 6+, scanning for Bluetooth Low Energy devices requires &lt;b&gt;location permission&lt;/b&gt;.</source>
         <translation type="unfinished">For å søke etter Bluetooth Low Energy-enheter på Android 6+ trengs plasseringstillatelse.</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="66"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="67"/>
         <source>Some Android devices also require the actual &lt;b&gt;GPS to be turned on&lt;/b&gt;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="78"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="79"/>
         <source>The application is neither using nor storing your location. Sorry for the inconvenience.</source>
         <translation type="unfinished">Programmet verken bruker eller lagrer plasseringa di. Beklager dette.</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="91"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="92"/>
         <source>Authorization to use Bluetooth is required to connect to the sensors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="109"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="119"/>
         <source>Official information</source>
         <translation>Offisiell informasjon</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="124"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="142"/>
         <source>Launch detection</source>
         <translation>Start søk</translation>
     </message>
     <message>
-        <location filename="../qml/components/ItemNoDevice.qml" line="146"/>
+        <location filename="../qml/components/ItemNoDevice.qml" line="166"/>
         <source>Please keep your device close to the sensors you want to scan.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1190,6 +1194,24 @@
     </message>
 </context>
 <context>
+    <name>ItemNoPermission</name>
+    <message>
+        <location filename="../qml/components/ItemNoPermission.qml" line="36"/>
+        <source>Bluetooth permission is missing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoPermission.qml" line="47"/>
+        <source>Enable</source>
+        <translation type="unfinished">Slå på</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoPermission.qml" line="47"/>
+        <source>Retry</source>
+        <translation type="unfinished">Prøv om igjen</translation>
+    </message>
+</context>
+<context>
     <name>ItemNoPlant</name>
     <message>
         <location filename="../qml/components/ItemNoPlant.qml" line="33"/>
@@ -1213,37 +1235,37 @@
 <context>
     <name>MobileApplication</name>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="424"/>
+        <location filename="../qml/MobileApplication.qml" line="419"/>
         <source>Welcome</source>
         <translation>Velkommen</translation>
     </message>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="466"/>
+        <location filename="../qml/MobileApplication.qml" line="461"/>
         <source>Thermometer</source>
         <translation>Termometer</translation>
     </message>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="494"/>
+        <location filename="../qml/MobileApplication.qml" line="489"/>
         <source>Settings</source>
         <translation>Innstillinger</translation>
     </message>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="508"/>
+        <location filename="../qml/MobileApplication.qml" line="503"/>
         <source>Permissions</source>
         <translation>Tillatelser</translation>
     </message>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="522"/>
+        <location filename="../qml/MobileApplication.qml" line="517"/>
         <source>About</source>
         <translation>Om</translation>
     </message>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="536"/>
+        <location filename="../qml/MobileApplication.qml" line="531"/>
         <source>Plant browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="550"/>
+        <location filename="../qml/MobileApplication.qml" line="545"/>
         <source>Device browser</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1256,7 +1278,7 @@
         <translation type="vanished">Historikk</translation>
     </message>
     <message>
-        <location filename="../qml/MobileApplication.qml" line="593"/>
+        <location filename="../qml/MobileApplication.qml" line="588"/>
         <source>Press one more time to exit...</source>
         <translation>Trykk en gang til for å avslutte...</translation>
     </message>
@@ -1342,33 +1364,33 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/MobileMenu.qml" line="118"/>
+        <location filename="../qml/MobileMenu.qml" line="119"/>
         <source>Device browser</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/MobileMenu.qml" line="131"/>
-        <location filename="../qml/MobileMenu.qml" line="211"/>
+        <location filename="../qml/MobileMenu.qml" line="133"/>
+        <location filename="../qml/MobileMenu.qml" line="213"/>
         <source>Settings</source>
         <translation type="unfinished">Innstillinger</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMenu.qml" line="144"/>
+        <location filename="../qml/MobileMenu.qml" line="146"/>
         <source>About</source>
         <translation type="unfinished">Om</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMenu.qml" line="169"/>
+        <location filename="../qml/MobileMenu.qml" line="171"/>
         <source>Data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/MobileMenu.qml" line="183"/>
+        <location filename="../qml/MobileMenu.qml" line="185"/>
         <source>History</source>
         <translation type="unfinished">Historikk</translation>
     </message>
     <message>
-        <location filename="../qml/MobileMenu.qml" line="197"/>
+        <location filename="../qml/MobileMenu.qml" line="199"/>
         <source>Plant</source>
         <translation type="unfinished">Plante</translation>
     </message>
@@ -1543,113 +1565,113 @@
 <context>
     <name>PlantCareLimits</name>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="91"/>
+        <location filename="../qml/PlantCareLimits.qml" line="536"/>
         <source>inside</source>
         <translation type="unfinished">inne</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="135"/>
+        <location filename="../qml/PlantCareLimits.qml" line="580"/>
         <source>outside</source>
         <translation type="unfinished">ute</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="156"/>
+        <location filename="../qml/PlantCareLimits.qml" line="601"/>
         <source>Reset limits from the associated plant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="189"/>
+        <location filename="../qml/PlantCareLimits.qml" line="65"/>
         <source>Soil moisture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="231"/>
+        <location filename="../qml/PlantCareLimits.qml" line="107"/>
         <source>Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.</source>
         <translation type="unfinished">Ideelt vætenivå for stueplantejord er vanligvis 15 til 50 %. Kaktuser og sukkulenter klarer seg med så lite som 7 %. Tropiske planter liker mer vann.</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="232"/>
-        <location filename="../qml/PlantCareLimits.qml" line="233"/>
-        <location filename="../qml/PlantCareLimits.qml" line="310"/>
-        <location filename="../qml/PlantCareLimits.qml" line="403"/>
-        <location filename="../qml/PlantCareLimits.qml" line="404"/>
+        <location filename="../qml/PlantCareLimits.qml" line="108"/>
+        <location filename="../qml/PlantCareLimits.qml" line="109"/>
+        <location filename="../qml/PlantCareLimits.qml" line="186"/>
+        <location filename="../qml/PlantCareLimits.qml" line="279"/>
+        <location filename="../qml/PlantCareLimits.qml" line="280"/>
         <source>&lt;br&gt;&lt;b&gt;Tip: &lt;/b&gt;</source>
         <translation type="unfinished">&lt;br&gt;&lt;b&gt;Tips: &lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="232"/>
+        <location filename="../qml/PlantCareLimits.qml" line="108"/>
         <source>Be careful, too much water over long periods of time can be just as lethal as not enough!</source>
         <translation type="unfinished">Vær forsiktig: for mye vann over lang tid, kan vere like dødelig som for lite vann!</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="233"/>
+        <location filename="../qml/PlantCareLimits.qml" line="109"/>
         <source>Water your plants more frequently during their growth period.</source>
         <translation type="unfinished">Vann plantene dine oftere i vekstperioder.</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="268"/>
+        <location filename="../qml/PlantCareLimits.qml" line="144"/>
         <source>Soil conductivity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="309"/>
+        <location filename="../qml/PlantCareLimits.qml" line="185"/>
         <source>Soil &apos;Electrical Conductivity&apos; value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="310"/>
+        <location filename="../qml/PlantCareLimits.qml" line="186"/>
         <source>Be sure to use the right soil composition for your plants.</source>
         <translation type="unfinished">Pass på å bruke rett jordtype til plantene dine.</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="344"/>
+        <location filename="../qml/PlantCareLimits.qml" line="220"/>
         <source>Temperature</source>
         <translation type="unfinished">Temperatur</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="402"/>
+        <location filename="../qml/PlantCareLimits.qml" line="278"/>
         <source>Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.</source>
         <translation type="unfinished">De fleste stueplanter trives mellom 15 og 25°C. Det er ikke mange som tåler -2°C eller lavere.</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="403"/>
+        <location filename="../qml/PlantCareLimits.qml" line="279"/>
         <source>Having constant temperature is important for indoor plants.</source>
         <translation type="unfinished">Stabil temperatur er viktig for stueplanter.</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="404"/>
+        <location filename="../qml/PlantCareLimits.qml" line="280"/>
         <source>If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).</source>
         <translation type="unfinished">Med et hygrometer kan du måle luftfuktigheten. Den bør være mellom 40 og 60 %, og gjerne mer for tropiske planter.</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="438"/>
+        <location filename="../qml/PlantCareLimits.qml" line="314"/>
         <source>Luminosity</source>
         <translation type="unfinished">Lysstyrke</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="504"/>
+        <location filename="../qml/PlantCareLimits.qml" line="380"/>
         <source>low</source>
         <translation type="unfinished">lav</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="521"/>
-        <location filename="../qml/PlantCareLimits.qml" line="573"/>
+        <location filename="../qml/PlantCareLimits.qml" line="397"/>
+        <location filename="../qml/PlantCareLimits.qml" line="449"/>
         <source>indirect</source>
         <translation type="unfinished">indirekte</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="538"/>
+        <location filename="../qml/PlantCareLimits.qml" line="414"/>
         <source>direct light (indoor)</source>
         <translation type="unfinished">direkte lys (inne)</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="555"/>
-        <location filename="../qml/PlantCareLimits.qml" line="590"/>
+        <location filename="../qml/PlantCareLimits.qml" line="431"/>
+        <location filename="../qml/PlantCareLimits.qml" line="466"/>
         <source>sunlight</source>
         <translation type="unfinished">sollys</translation>
     </message>
     <message>
-        <location filename="../qml/PlantCareLimits.qml" line="611"/>
+        <location filename="../qml/PlantCareLimits.qml" line="487"/>
         <source>Some plants like direct sun exposition, all day long or just for part of the day. But many indoor plants don&apos;t like direct sunlight: place them away from south oriented windows!</source>
         <translation type="unfinished">Noen planter liker direkte sollys, hele dagen, eller bare deler av dagen. Men mange stueplanter liker ikke direkte sollys og bør derfor ikke plasseres i sørvendte vinduer.</translation>
     </message>
@@ -1712,136 +1734,126 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="822"/>
-        <source>Change the associated plant</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/PlantScreen.qml" line="836"/>
-        <source>Reset</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../qml/PlantScreen.qml" line="514"/>
+        <location filename="../qml/PlantScreen.qml" line="550"/>
         <source>leaf color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="546"/>
+        <location filename="../qml/PlantScreen.qml" line="582"/>
         <source>bract color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="578"/>
+        <location filename="../qml/PlantScreen.qml" line="614"/>
         <source>flower color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="610"/>
+        <location filename="../qml/PlantScreen.qml" line="646"/>
         <source>fruit color</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="648"/>
-        <source>height</source>
+        <location filename="../qml/PlantScreen.qml" line="460"/>
+        <source>Swap plant</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="668"/>
-        <source>diameter</source>
+        <location filename="../qml/PlantScreen.qml" line="473"/>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="769"/>
+        <location filename="../qml/PlantScreen.qml" line="810"/>
         <source>Learn more</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="859"/>
+        <location filename="../qml/PlantScreen.qml" line="864"/>
         <source>Plant care</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="944"/>
-        <location filename="../qml/PlantScreen.qml" line="1667"/>
-        <location filename="../qml/PlantScreen.qml" line="1700"/>
+        <location filename="../qml/PlantScreen.qml" line="948"/>
+        <location filename="../qml/PlantScreen.qml" line="1670"/>
+        <location filename="../qml/PlantScreen.qml" line="1703"/>
         <source>sunlight</source>
         <translation type="unfinished">sollys</translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1054"/>
+        <location filename="../qml/PlantScreen.qml" line="1057"/>
         <source>watering</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1095"/>
+        <location filename="../qml/PlantScreen.qml" line="1098"/>
         <source>fertilization</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1132"/>
+        <location filename="../qml/PlantScreen.qml" line="1135"/>
         <source>pruning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1169"/>
+        <location filename="../qml/PlantScreen.qml" line="1172"/>
         <source>soil</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1221"/>
+        <location filename="../qml/PlantScreen.qml" line="1224"/>
         <source>Please note that WatchFlower should not be your definitive source of information about plant care.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1265"/>
+        <location filename="../qml/PlantScreen.qml" line="1268"/>
         <source>sensor metrics</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1299"/>
+        <location filename="../qml/PlantScreen.qml" line="1302"/>
         <source>Soil moisture</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1354"/>
+        <location filename="../qml/PlantScreen.qml" line="1357"/>
         <source>Soil conductivity</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1408"/>
+        <location filename="../qml/PlantScreen.qml" line="1411"/>
         <source>Soil PH</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1463"/>
+        <location filename="../qml/PlantScreen.qml" line="1466"/>
         <source>Temperature</source>
         <translation type="unfinished">Temperatur</translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1517"/>
+        <location filename="../qml/PlantScreen.qml" line="1520"/>
         <source>Humidity</source>
         <translation type="unfinished">Fukt</translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1572"/>
-        <location filename="../qml/PlantScreen.qml" line="1738"/>
+        <location filename="../qml/PlantScreen.qml" line="1575"/>
+        <location filename="../qml/PlantScreen.qml" line="1741"/>
         <source>Luminosity</source>
         <translation type="unfinished">Lysstyrke</translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1619"/>
+        <location filename="../qml/PlantScreen.qml" line="1622"/>
         <source>low</source>
         <translation type="unfinished">lav</translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1635"/>
-        <location filename="../qml/PlantScreen.qml" line="1684"/>
+        <location filename="../qml/PlantScreen.qml" line="1638"/>
+        <location filename="../qml/PlantScreen.qml" line="1687"/>
         <source>indirect</source>
         <translation type="unfinished">indirekte</translation>
     </message>
     <message>
-        <location filename="../qml/PlantScreen.qml" line="1651"/>
+        <location filename="../qml/PlantScreen.qml" line="1654"/>
         <source>direct light (indoor)</source>
         <translation type="unfinished">direkte lys (inne)</translation>
     </message>
