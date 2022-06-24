@@ -43,7 +43,14 @@ class Plant: public QObject
 
     Q_PROPERTY(QString origin READ getOrigin CONSTANT)
     Q_PROPERTY(QString category READ getCategory CONSTANT)
+    Q_PROPERTY(QString taxonomy READ getTaxonomy CONSTANT)
+
+    Q_PROPERTY(QString hardiness READ getHardiness CONSTANT)
+    Q_PROPERTY(QString careLevel READ getCareLevel CONSTANT)
+    Q_PROPERTY(QString growthRate READ getGrowthRate CONSTANT)
+    Q_PROPERTY(QString foliage READ getFoliage CONSTANT)
     Q_PROPERTY(QStringList tags READ getTags CONSTANT)
+
     Q_PROPERTY(QString diameter READ getSizeDiameter CONSTANT)
     Q_PROPERTY(QString height READ getSizeHeight CONSTANT)
     Q_PROPERTY(QStringList colorsLeaf READ getColorsLeaf CONSTANT)
@@ -79,6 +86,8 @@ class Plant: public QObject
     Q_PROPERTY(int lightMmol_min READ getLightMmol_min CONSTANT)
     Q_PROPERTY(int lightMmol_max READ getLightMmol_max CONSTANT)
 
+    int cache_version = 0;
+
     // names
     QString name;
     QString name_botanical;
@@ -86,9 +95,18 @@ class Plant: public QObject
     QString name_variety;
     QString name_common;
 
-    // basic infos
+    // infos
     QString origin;
     QString category;
+    QString taxonomy;
+
+    QString careLevel;
+    QString growthRate;
+    QString hardiness;
+    QString foliage;
+
+    QStringList tags;
+
     QString size_diameter;
     QString size_height;
     QStringList colors_leaf;
@@ -99,9 +117,6 @@ class Plant: public QObject
     QString period_growth;
     QString period_blooming;
     QString period_fruiting;
-
-    // tags
-    QStringList tags;
 
     // maintenance infos
     QString soil;
@@ -129,14 +144,19 @@ class Plant: public QObject
     int lightMmol_max = -99;
 
     void computeNames();
-
     const QString &getNameBotanical() { return name_botanical; }
     const QString &getNameBotanical_url() { return name_botanical_url; }
     const QString &getNameVariety() { return name_variety; }
     const QString &getNameCommon() { return name_common; }
+
     const QString &getOrigin() { return origin; }
     const QString &getCategory() { return category; }
+    const QString &getTaxonomy() { return taxonomy; }
 
+    const QString &getCareLevel() { return careLevel; }
+    const QString &getGrowthRate() { return growthRate; }
+    const QString &getHardiness() { return hardiness; }
+    const QString &getFoliage() { return foliage; }
     QStringList getTags() { return tags; }
 
     QStringList getColorsLeaf() { return colors_leaf; }
@@ -185,7 +205,7 @@ public:
     QString getNameFilter() { return name + " - " + name_common; }
 
     void read_csv_watchflower(const QStringList &plantSections);
-    void read_json_watchflower(QJsonObject &json);
+    bool read_json_watchflower(QJsonObject &json);
     void write_json_watchflower(QJsonObject &json) const;
 
     void print() const;

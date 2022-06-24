@@ -59,6 +59,7 @@ class DevicePlantSensor: public DeviceSensor
     int m_plantId = -1;
     QString m_plantName;
     QString m_plantCache;
+    int m_plantCacheVersion = -1;
     QDateTime m_plantStart;
     Plant *m_plant = nullptr;
 

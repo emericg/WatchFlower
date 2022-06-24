@@ -73,59 +73,62 @@ void Plant::read_csv_watchflower(const QStringList &plantSections)
         computeNames();
 
         // basic infos
-        int startAt = 2;
-        origin = plantSections.at(startAt + 0);
-        category = plantSections.at(startAt + 1);
+        int i = 2;
+        origin = plantSections.at(i++);
+        category = plantSections.at(i++);
+        //taxonomy = plantSections.at(i++);
 
-        size_diameter = plantSections.at(startAt + 2);
-        size_height = plantSections.at(startAt + 3);
+        //size_diameter = plantSections.at(i++);
+        //size_height = plantSections.at(i++);
 
-        colors_leaf = plantSections.at(startAt + 4).split(", ", Qt::SkipEmptyParts);
-        colors_bract = plantSections.at(startAt + 5).split(", ", Qt::SkipEmptyParts);
-        colors_flower = plantSections.at(startAt + 6).split(", ", Qt::SkipEmptyParts);
-        colors_fruit = plantSections.at(startAt + 7).split(", ", Qt::SkipEmptyParts);
+        colors_leaf = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
+        colors_bract = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
+        colors_flower = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
+        colors_fruit = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
 
-        period_planting = plantSections.at(startAt + 8);
-        period_growth = plantSections.at(startAt + 9);
-        period_blooming = plantSections.at(startAt + 10);
-        period_fruiting = plantSections.at(startAt + 11);
+        //period_planting = plantSections.at(i++);
+        //period_growth = plantSections.at(i++);
+        //period_blooming = plantSections.at(i++);
+        //period_fruiting = plantSections.at(i++);
 
         // tags
-        tags = plantSections.at(startAt + 12).split(", ", Qt::SkipEmptyParts);
+        tags = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
 
         // maintenance infos
-        startAt = 15;
-        sunlight = plantSections.at(startAt + 0);
-        watering = plantSections.at(startAt + 1);
-        fertilizing = plantSections.at(startAt + 2);
-        pruning = plantSections.at(startAt + 3);
-        soil = plantSections.at(startAt + 4);
+        sunlight = plantSections.at(i++);
+        watering = plantSections.at(i++);
+        //fertilizing = plantSections.at(i++);
+        //pruning = plantSections.at(i++);
+        //soil = plantSections.at(i++);
 
         // sensor parameters
-        startAt = 20;
-        soilRH_min = plantSections.at(startAt + 0).toInt();
-        soilRH_max = plantSections.at(startAt + 1).toInt();
-        soilEC_min = plantSections.at(startAt + 2).toInt();
-        soilEC_max = plantSections.at(startAt + 3).toInt();
-        soilPH_min = plantSections.at(startAt + 4).toFloat();
-        soilPH_max = plantSections.at(startAt + 5).toFloat();
-        envTemp_min = plantSections.at(startAt + 6).toInt();
-        envTemp_max = plantSections.at(startAt + 7).toInt();
-        //envTempIdeal_min = plantSections.at(startAt + 8).toInt();
-        //envTempIdeal_max = plantSections.at(startAt + 9).toInt();
-        envHumi_min = plantSections.at(startAt + 8).toInt();
-        envHumi_max = plantSections.at(startAt + 9).toInt();
-        lightLux_min = plantSections.at(startAt + 10).toInt();
-        lightLux_max = plantSections.at(startAt + 11).toInt();
-        lightMmol_min = plantSections.at(startAt + 12).toInt();
-        lightMmol_max = plantSections.at(startAt + 13).toInt();
+        soilRH_min = plantSections.at(i++).toInt();
+        soilRH_max = plantSections.at(i++).toInt();
+        soilEC_min = plantSections.at(i++).toInt();
+        soilEC_max = plantSections.at(i++).toInt();
+        soilPH_min = plantSections.at(i++).toFloat();
+        soilPH_max = plantSections.at(i++).toFloat();
+        envTemp_min = plantSections.at(i++).toInt();
+        envTemp_max = plantSections.at(i++).toInt();
+        //envTempIdeal_min = plantSections.at(i++).toInt();
+        //envTempIdeal_max = plantSections.at(i++).toInt();
+        envHumi_min = plantSections.at(i++).toInt();
+        envHumi_max = plantSections.at(i++).toInt();
+        lightLux_min = plantSections.at(i++).toInt();
+        lightLux_max = plantSections.at(i++).toInt();
+        lightMmol_min = plantSections.at(i++).toInt();
+        lightMmol_max = plantSections.at(i++).toInt();
     }
 }
 
 /* ************************************************************************** */
 
-void Plant::read_json_watchflower(QJsonObject &json)
+bool Plant::read_json_watchflower(QJsonObject &json)
 {
+    ///
+    if (json.contains("cache") && json["cache"].isString())
+        cache_version = json["cache"].toInt();
+
     ///
     if (json.contains("name") && json["name"].isString())
         name = json["name"].toString();
@@ -230,6 +233,8 @@ void Plant::read_json_watchflower(QJsonObject &json)
         if (metrics.contains("light_mmol_min")) lightMmol_min = metrics["light_mmol_min"].toInt();
         if (metrics.contains("light_mmol_max")) lightMmol_max = metrics["light_mmol_max"].toInt();
     }
+
+    return true;
 }
 
 /* ************************************************************************** */
