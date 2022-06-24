@@ -1,6 +1,6 @@
 # SingleApplication
 
-SingleApplication is a replacement of the QtSingleApplication for `Qt5` and `Qt6`.
+SingleApplication is a replacement of the QtSingleApplication. Works with Qt5 and Qt6.
 
 Keeps the Primary Instance of your Application and kills each subsequent
 instances. It can (if enabled) spawn secondary (non-related to the primary)
@@ -12,7 +12,7 @@ This README is just a quick start guide, you can find everything on the project 
 
 > https://itay-grudev.github.io/SingleApplication/classSingleApplication.html  
 
-## Quick Documentation
+## Quick start
 
 ### Build
 

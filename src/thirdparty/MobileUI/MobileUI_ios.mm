@@ -123,7 +123,7 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::screenKeepOn(bool on)
+void MobileUIPrivate::keepScreenOn(bool on)
 {
     if (on)
     {

@@ -134,7 +134,7 @@ void SingleApplicationPrivate::genBlockServerName()
 #if QT_VERSION < QT_VERSION_CHECK(6, 3, 0)
     appData.addData( "SingleApplication", 17 );
 #else
-    appData.addData( QByteArrayView{"SingleApplication"} );    
+    appData.addData( QByteArrayView{"SingleApplication"} );
 #endif
     appData.addData( SingleApplication::app_t::applicationName().toUtf8() );
     appData.addData( SingleApplication::app_t::organizationName().toUtf8() );

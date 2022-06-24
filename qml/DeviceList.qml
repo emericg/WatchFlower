@@ -37,7 +37,7 @@ Item {
             } else if (!deviceManager.bluetoothPermissions) {
                 rectangleStatus.setPermissionWarning()
             } else {
-                itemStatus.source = ""
+                rectangleStatus.hide()
             }
         } else {
             // The device list is not populated
@@ -213,12 +213,12 @@ Item {
                 rectangleStatus.height = 0
             }
             function setBluetoothWarning() {
-                textStatus.text = qsTr("Bluetooth disabled...")
+                textStatus.text = qsTr("Bluetooth is disabled...")
                 rectangleStatus.height = 48
                 buttonBluetoothRetry.visible = true
             }
             function setPermissionWarning() {
-                textStatus.text = qsTr("Bluetooth permissions missing...")
+                textStatus.text = qsTr("Bluetooth permission is missing...")
                 rectangleStatus.height = 48
                 buttonBluetoothRetry.visible = false
             }

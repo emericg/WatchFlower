@@ -455,7 +455,7 @@ void DeviceManager::checkBluetoothIos()
 
     m_btA = true;
 
-    if (m_discoveryAgent && !m_discoveryAgent->isActive())
+    if (m_discoveryAgent)
     {
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                    this, &DeviceManager::addBleDevice);
@@ -592,6 +592,7 @@ void DeviceManager::bluetoothHostModeStateChangedIos()
 
     if (!m_btE)
     {
+        m_btA = true;
         m_btE = true;
         Q_EMIT bluetoothChanged();
     }

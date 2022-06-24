@@ -108,6 +108,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
+            visible: (screenOrientation === Qt.LandscapeOrientation)
             selected: (appContent.state === "PlantBrowser")
             onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
         }
@@ -121,6 +122,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
+            visible: (screenOrientation === Qt.LandscapeOrientation)
             selected: (appContent.state === "DeviceBrowser")
             onClicked: screenDeviceBrowser.loadScreen()
         }

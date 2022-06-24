@@ -29,10 +29,10 @@ find_package(Qt${QT_DEFAULT_MAJOR_VERSION} COMPONENTS ${CORE_COMPONENTS} REQUIRE
 
 if(WIN32)
     if(MSVC)
-        target_link_libraries(SingleApplication PRIVATE Advapi32.lib)
+        set(PLATFORM_LIBRARIES Advapi32.lib)
     endif()
     if(GCC)
-        target_link_libraries(SingleApplication PRIVATE advapi32)
+        set(PLATFORM_LIBRARIES advapi32)
     endif()
 endif()
 
@@ -41,7 +41,7 @@ endif()
 add_library(SingleApplication STATIC singleapplication.cpp singleapplication_p.cpp )
 add_library(SingleApplication::SingleApplication ALIAS SingleApplication)
 
-target_link_libraries(SingleApplication PUBLIC ${CORE_LIBRARIES})
+target_link_libraries(SingleApplication PUBLIC ${CORE_LIBRARIES} ${PLATFORM_LIBRARIES})
 target_include_directories(SingleApplication PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_compile_definitions(SingleApplication PUBLIC QAPPLICATION_CLASS=${QAPPLICATION_CLASS})

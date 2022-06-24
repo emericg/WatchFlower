@@ -219,7 +219,7 @@ Item {
             colorOrange = "#ffa635"
             colorRed = "#ff7657"
 
-            themeStatusbar = Material.Dark
+            themeStatusbar = Material.Light
             colorStatusbar = "white"
 
             colorHeader = "white"
