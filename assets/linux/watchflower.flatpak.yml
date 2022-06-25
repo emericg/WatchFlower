@@ -40,6 +40,24 @@ build-options:
   append-ld-library-path: /app/lib
 
 modules:
+- name: libical # required by bluez
+  buildsystem: cmake-ninja
+  config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+    - -DBUILD_SHARED_LIBS:BOOL=ON
+    - -DICAL_GLIB=true
+    - -DGOBJECT_INTROSPECTION=true
+    - -DICAL_GLIB_VAPI=true
+    - -DICAL_BUILD_DOCS=false
+    - -DICAL_GLIB_VAPI=false
+  sources:
+    - type: archive
+      url: https://github.com/libical/libical/archive/v3.0.14.tar.gz
+      sha256: 4284b780356f1dc6a01f16083e7b836e63d3815e27ed0eaaad684712357ccc8f
+      x-checker-data:
+        type: anitya
+        project-id: 1637
+        url-template: https://github.com/libical/libical/archive/v$version.tar.gz
 - name: bluez # required by qtconnectivity
   buildsystem: autotools
   config-opts:
@@ -68,6 +86,7 @@ modules:
   buildsystem: cmake-ninja
   builddir: true
   config-opts:
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
     - -DQT_BUILD_EXAMPLES=OFF
     - -DQT_BUILD_TESTS=OFF
   sources:
@@ -87,6 +106,7 @@ modules:
   builddir: true
   config-opts:
     - -DCMAKE_PREFIX_PATH=/app
+    - -DCMAKE_BUILD_TYPE=RelWithDebInfo
     - -DQT_BUILD_EXAMPLES=OFF
     - -DQT_BUILD_TESTS=OFF
   sources:
