@@ -236,3 +236,4 @@ modules:
   sources:
     - type: archive
       url: https://github.com/emericg/WatchFlower/archive/refs/tags/v4.0.tar.gz
+      sha256: 9a204d047f0e1f87286e466bf5f5ec4e5ad2a03b6c51d70873d524cc0a43144b
