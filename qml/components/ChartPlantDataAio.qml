@@ -264,13 +264,11 @@ Item {
             if (direction === "middle") {
                 // date indicator is too big, center on screen
                 indicators.columns = 2
-                indicators.rows = 1
                 indicators.state = "reanchoredmid"
                 indicators.layoutDirection = "LeftToRight"
             } else {
                 // date indicator is positioned next to the vertical indicator
                 indicators.columns = 1
-                indicators.rows = 2
                 if (direction === "left") {
                     indicators.state = "reanchoredleft"
                     indicators.layoutDirection = "LeftToRight"
@@ -295,7 +293,7 @@ Item {
         spacing: 32
         layoutDirection: "LeftToRight"
         columns: 2
-        rows: 1
+        rows: 2
 
         transitions: Transition { AnchorAnimation { duration: 133; } }
         //move: Transition { NumberAnimation { properties: "x"; duration: 133; } }
@@ -390,8 +388,13 @@ Item {
     }
 
     function resetIndicator() {
-        if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
-        if (appContent.state === "DevicePlantSensor" && indicatorsLoader.status === Loader.Ready) dataIndicators.resetDataBars()
+        if (appContent.state === "DevicePlantSensor" && indicatorsLoader.status === Loader.Ready) {
+            if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
+            dataIndicators.resetDataBars()
+        }
+        if (appContent.state === "DeviceThermometer") {
+            //
+        }
 
         dateIndicator.visible = false
         dataIndicator.visible = false
