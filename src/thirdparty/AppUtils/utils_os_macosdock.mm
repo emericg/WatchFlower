@@ -22,8 +22,9 @@
 
 #if defined(Q_OS_MACOS)
 
-#include <AppKit/AppKit.h>
 #include <objc/runtime.h>
+#include <AppKit/AppKit.h>
+#import <Foundation/Foundation.h>
 
 static MacOSDockHandler *instance = nullptr;
 
@@ -43,13 +44,6 @@ bool dockClickHandler(id self, SEL _cmd, ...)
     return false;
 }
 
-void setupDockClickHandler()
-{
-    Class delClass = (Class)[[[NSApplication sharedApplication] delegate] class];
-    SEL shouldHandle = sel_registerName("applicationShouldHandleReopen:hasVisibleWindows:");
-    class_replaceMethod(delClass, shouldHandle, reinterpret_cast<IMP>(dockClickHandler), "B@:");
-}
-
 /* ************************************************************************** */
 
 MacOSDockHandler *MacOSDockHandler::getInstance()
@@ -64,12 +58,31 @@ MacOSDockHandler *MacOSDockHandler::getInstance()
 
 MacOSDockHandler::MacOSDockHandler() : QObject()
 {
-    setupDockClickHandler();
+    // Setup dock click handler
+    Class delClass = (Class)[[[NSApplication sharedApplication] delegate] class];
+    SEL shouldHandle = sel_registerName("applicationShouldHandleReopen:hasVisibleWindows:");
+    class_replaceMethod(delClass, shouldHandle, reinterpret_cast<IMP>(dockClickHandler), "B@:");
 }
 
 MacOSDockHandler::~MacOSDockHandler()
 {
     delete instance;
+}
+
+/* ************************************************************************** */
+
+void MacOSDockHandler::toggleDockIconVisibility(bool show)
+{
+    ProcessSerialNumber psn = {0, kCurrentProcess};
+
+    if (show)
+    {
+        TransformProcessType(&psn, kProcessTransformToForegroundApplication);
+    }
+    else
+    {
+        TransformProcessType(&psn, kProcessTransformToUIElementApplication);
+    }
 }
 
 /* ************************************************************************** */

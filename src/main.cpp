@@ -229,6 +229,7 @@ int main(int argc, char *argv[])
     MacOSDockHandler *dockIconHandler = MacOSDockHandler::getInstance();
     QObject::connect(dockIconHandler, &MacOSDockHandler::dockIconClicked, window, &QQuickWindow::show);
     QObject::connect(dockIconHandler, &MacOSDockHandler::dockIconClicked, window, &QQuickWindow::raise);
+    engine_context->setContextProperty("utilsDock", dockIconHandler);
 #endif
 
 #endif // desktop section

@@ -45,6 +45,8 @@ signals:
 
 public:
     static MacOSDockHandler *getInstance();
+
+    Q_INVOKABLE static void toggleDockIconVisibility(bool show);
 };
 
 /* ************************************************************************** */

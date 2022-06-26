@@ -22,10 +22,9 @@
 #include "SystrayManager.h"
 
 #include <QApplication>
+#include <QQuickWindow>
 #include <QSystemTrayIcon>
 #include <QMenu>
-
-#include <QQuickWindow>
 
 /* ************************************************************************** */
 
@@ -98,6 +97,8 @@ void SystrayManager::initSystray()
         m_sysTrayMenu = new QMenu();
         if (m_sysTrayMenu)
         {
+            m_actionDeviceList = new QAction(tr("Device list"));
+            m_actionSettings = new QAction(tr("Settings") + "        ");
             m_actionShow = new QAction(tr("Hide"));
             if (!m_saved_view ||
                 m_saved_view->isVisible() == false ||
@@ -106,14 +107,12 @@ void SystrayManager::initSystray()
             {
                 m_actionShow->setText(tr("Show"));
             }
-            m_actionDeviceList = new QAction(tr("Device list"));
-            m_actionSettings = new QAction(tr("Settings"));
-            m_actionExit = new QAction(tr("Exit") + "        ");
+            m_actionExit = new QAction(tr("Quit"));
 
-            m_sysTrayMenu->addAction(m_actionShow);
-            m_sysTrayMenu->addSeparator();
             m_sysTrayMenu->addAction(m_actionDeviceList);
             m_sysTrayMenu->addAction(m_actionSettings);
+            m_sysTrayMenu->addSeparator();
+            m_sysTrayMenu->addAction(m_actionShow);
             m_sysTrayMenu->addAction(m_actionExit);
 
             connect(m_actionShow, &QAction::triggered, this, &SystrayManager::showHideButton);
