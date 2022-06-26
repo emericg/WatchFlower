@@ -166,14 +166,14 @@ Item {
         id: contentGrid_lvl1
         anchors.fill: parent
         columns: (uiMode === 3) ? 2 : 1
-        rows: (uiMode === 3) ? 1 : 2
+        rows: 2
         spacing: 0
 
         Grid {
             id: contentGrid_lvl2
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
             columns: (uiMode === 2) ? 3 : 1
-            rows: (uiMode === 2) ? 1 : 3
+            rows: 3
             spacing: 0
 
             ////////

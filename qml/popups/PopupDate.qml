@@ -40,9 +40,13 @@ Popup {
         currentDate = date
 
         today = new Date()
+        printDate()
+
+        // visual hacks
+        //dow.width = dow.width - 8
+        grid.width = dow.width - 8
 
         popupDate.open()
-        printDate()
     }
 
     function openDate_limits(datetime, min, max) {
@@ -196,6 +200,7 @@ Popup {
             ////////
 
             DayOfWeekRow {
+                id: dow
                 anchors.left: parent.left
                 anchors.leftMargin: 4
                 anchors.right: parent.right
@@ -239,7 +244,7 @@ Popup {
                     Rectangle {
                         z: -1
                         anchors.fill: parent
-                        radius: parent.width
+                        radius: width
                         color: selected ? Theme.colorSecondary : "transparent"
                         border.color: Theme.colorSecondary
                         border.width: (model.today) ? Theme.componentBorderWidth : 0

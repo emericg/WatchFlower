@@ -300,9 +300,9 @@ Item {
                                 anchors.centerIn: parent
 
                                 //property bool doubletrouble: (parent.width < (6*52 + 5*24))
-                                rows: singleColumn ? 2 : 1
-                                columns: singleColumn ? 3 : 6
                                 spacing: singleColumn ? 16 : 20
+                                columns: singleColumn ? 3 : 6
+                                rows: 2
 
                                 Repeater {
                                     model: [JournalUtils.JOURNAL_WATER, JournalUtils.JOURNAL_FERTILIZE, JournalUtils.JOURNAL_PRUNE,

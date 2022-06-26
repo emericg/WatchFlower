@@ -51,8 +51,6 @@ ApplicationWindow {
                 } else {
                     visibility = Window.Minimized
                 }
-            } else {
-                visibility = settingsManager.initialVisibility
             }
         }
     }

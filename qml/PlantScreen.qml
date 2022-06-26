@@ -9,7 +9,7 @@ import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
 Grid {
     id: plantScreen
 
-    rows: singleColumn ? 3 : 1
+    rows: 3
     columns: singleColumn ? 1 : 3
     spacing: isPhone ? 12 : 16
     padding: isPhone ? 12 : 16
