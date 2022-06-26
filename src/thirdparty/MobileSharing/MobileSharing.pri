@@ -3,7 +3,8 @@ QT += core gui qml
 SOURCES += $${PWD}/SharingUtils.cpp \
            $${PWD}/SharingApplication.cpp
 
-HEADERS += $${PWD}/SharingUtils.h \
+HEADERS += $${PWD}/MobileSharing \
+           $${PWD}/SharingUtils.h \
            $${PWD}/SharingApplication.h
 
 INCLUDEPATH += $${PWD}

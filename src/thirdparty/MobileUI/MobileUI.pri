@@ -1,7 +1,9 @@
 QT += core gui qml
 
 SOURCES += $${PWD}/MobileUI.cpp
-HEADERS += $${PWD}/MobileUI.h
+
+HEADERS += $${PWD}/MobileUI \
+           $${PWD}/MobileUI.h \
            $${PWD}/MobileUI_private.h
 
 INCLUDEPATH += $${PWD}
