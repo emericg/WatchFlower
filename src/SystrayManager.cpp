@@ -106,11 +106,12 @@ void SystrayManager::initSystray()
             {
                 m_actionShow->setText(tr("Show"));
             }
-
             m_actionDeviceList = new QAction(tr("Device list"));
             m_actionSettings = new QAction(tr("Settings"));
-            m_actionExit = new QAction(tr("Exit"));
+            m_actionExit = new QAction(tr("Exit") + "        ");
+
             m_sysTrayMenu->addAction(m_actionShow);
+            m_sysTrayMenu->addSeparator();
             m_sysTrayMenu->addAction(m_actionDeviceList);
             m_sysTrayMenu->addAction(m_actionSettings);
             m_sysTrayMenu->addAction(m_actionExit);
