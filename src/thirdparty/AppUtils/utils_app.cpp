@@ -261,7 +261,7 @@ bool UtilsApp::checkMobileBleLocationPermission()
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::checkPermission_location_ble();
 #elif defined(Q_OS_IOS)
-    return true; // TODO // we know have bluetooth permission on iOS too
+    return true; // TODO // we know have Bluetooth permission on iOS too
 #else
     return true;
 #endif

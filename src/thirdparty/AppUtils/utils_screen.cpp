@@ -49,19 +49,19 @@
 
 UtilsScreen *UtilsScreen::instance = nullptr;
 
-UtilsScreen *UtilsScreen::getInstance(QGuiApplication *app)
+UtilsScreen *UtilsScreen::getInstance()
 {
     if (instance == nullptr)
     {
-        instance = new UtilsScreen(app);
+        instance = new UtilsScreen();
     }
 
     return instance;
 }
 
-UtilsScreen::UtilsScreen(QGuiApplication *app)
+UtilsScreen::UtilsScreen()
 {
-    setAppWindow(app);
+    setAppWindow(qApp);
 }
 
 UtilsScreen::~UtilsScreen()
@@ -90,18 +90,18 @@ void UtilsScreen::getScreenInfos(QScreen *scr)
     if (scr)
     {
         m_scr = scr;
-        if (m_scr)
-        {
-            m_screenWidth = m_scr->size().width();
-            m_screenHeight = m_scr->size().height();
-            m_screenDepth = m_scr->depth();
-            m_screenRefreshRate = m_scr->refreshRate();
 
-            m_screenDpi = m_scr->physicalDotsPerInch();
-            m_screenPar = m_scr->devicePixelRatio();
-            m_screenSizeInch = std::sqrt(std::pow(m_scr->physicalSize().width(), 2.0) +
-                                         std::pow(m_scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
-        }
+        m_screenWidth = scr->size().width();
+        m_screenHeight = scr->size().height();
+        m_screenDepth = scr->depth();
+        m_screenRefreshRate = scr->refreshRate();
+
+        m_screenDpi = scr->physicalDotsPerInch();
+        m_screenPar = scr->devicePixelRatio();
+        m_screenSizeInch = std::sqrt(std::pow(scr->physicalSize().width(), 2.0) +
+                                     std::pow(scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
+
+        // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
 
         Q_EMIT screenChanged();
     }
@@ -117,22 +117,13 @@ void UtilsScreen::printScreenInfos()
 
     if (m_scr)
     {
-        qDebug() << "- physicalSize (mm) " << m_scr->physicalSize();
-        qDebug() << "- dpi " << m_scr->physicalDotsPerInch();
-        qDebug() << "- pixel ratio " << m_scr->devicePixelRatio();
+        qDebug() << "- screen geometry    " << m_scr->size();
+        qDebug() << "- screen geometry (dpi corrected)  " << m_scr->size() * m_scr->devicePixelRatio();
+        qDebug() << "- screen dpi         " << m_scr->physicalDotsPerInch();
+        qDebug() << "- screen pixel ratio " << m_scr->devicePixelRatio();
 
-        if (m_scr->devicePixelRatio() == 1.0)
-        {
-            qDebug() << "- pixel size" << m_scr->size();
-        }
-        else
-        {
-            qDebug() << "- pixel size (hdpi corrected)" << m_scr->size() * m_scr->devicePixelRatio();
-            qDebug() << "- screen size (physical) " << std::sqrt(std::pow(m_scr->physicalSize().width(), 2.0) + std::pow(m_scr->physicalSize().height(), 2.0)) / (2.54 * 10.0);
-        }
-
-        // TODO // On Android, physicalSize().height seems to ignore the buttons and/or status bar
-        qDebug() << "- inches count: " << getScreenSize_inch();
+        qDebug() << "- screen size (physical, mm)       " << m_scr->physicalSize();
+        qDebug() << "- screen size (diagonal in inches) " << m_screenSizeInch;
     }
     else
     {

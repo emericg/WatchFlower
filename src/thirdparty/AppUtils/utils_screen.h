@@ -70,9 +70,11 @@ class UtilsScreen: public QObject
     QGuiApplication *m_app = nullptr;
     QScreen *m_scr = nullptr;
 
+    void setAppWindow(QGuiApplication *app);
+
     // Singleton
     static UtilsScreen *instance;
-    UtilsScreen(QGuiApplication *app = nullptr);
+    UtilsScreen();
     ~UtilsScreen();
 
 Q_SIGNALS:
@@ -83,9 +85,7 @@ public slots:
     void getScreenInfos(QScreen *scr);
 
 public:
-    static UtilsScreen *getInstance(QGuiApplication *app = nullptr);
-
-    void setAppWindow(QGuiApplication *app);
+    static UtilsScreen *getInstance();
 
     //Q_INVOKABLE void getScreenInfos(QScreen *scr);
     Q_INVOKABLE void printScreenInfos();

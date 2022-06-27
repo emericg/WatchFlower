@@ -110,8 +110,11 @@ void UtilsSysinfo::getCpuInfos()
 #else
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-    // Desktop OS? Assume HyperThreaded CPU...
-    m_cpu_core_physical /= 2;
+    if (m_cpu_arch == "x86_64")
+    {
+        // Desktop OS? x86_64 CPU? Assume HyperThreaded CPU...
+        m_cpu_core_physical /= 2;
+    }
 #endif
 
 #endif
@@ -146,10 +149,6 @@ void UtilsSysinfo::getRamInfos()
 
 #endif
 }
-
-/* ************************************************************************** */
-
-
 
 /* ************************************************************************** */
 

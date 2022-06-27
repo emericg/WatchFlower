@@ -341,14 +341,49 @@ QString UtilsAndroid::getAppExternalStorage()
     return storage;
 }
 
-QStringList UtilsAndroid::get_storages_by_api()
+QStringList UtilsAndroid::get_storages_by_api() // DEPRECATED
 {
-    return QStringList(); // DEPRECATED
+    QStringList storages;
+
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    if (activity.isValid())
+    {
+        QJniObject dirs = activity.callObjectMethod("getExternalFilesDirs",
+                                                    "(Ljava/lang/String;)[Ljava/io/File;",
+                                                    NULL);
+        if (dirs.isValid())
+        {
+            QJniEnvironment env;
+            jsize l = env->GetArrayLength(dirs.object<jarray>());
+            for (int i = 0; i < l; i++)
+            {
+                QJniObject dir = env->GetObjectArrayElement(dirs.object<jobjectArray>(), i);
+                QString storage = dir.toString();
+
+                storage.truncate(storage.indexOf("/Android/data"));
+                if (!storage.isEmpty())
+                    storages += storage;
+            }
+            //qDebug() << "> android_get_storages_by_api()" << storages;
+        }
+    }
+
+    return storages;
 }
 
-QString UtilsAndroid::get_external_storage()
+QString UtilsAndroid::get_external_storage() // DEPRECATED
 {
-    return QString(); // DEPRECATED
+    QJniObject mediaDir = QJniObject::callStaticObjectMethod("android/os/Environment",
+                                                             "getExternalStorageDirectory",
+                                                             "()Ljava/io/File;");
+
+    QJniObject mediaPath = mediaDir.callObjectMethod("getAbsolutePath",
+                                                     "()Ljava/lang/String;");
+
+    QString external_storage = mediaPath.toString();
+    //qDebug() << "> get_external_storage()" << external_storage;
+
+    return external_storage;
 }
 
 /* ************************************************************************** */

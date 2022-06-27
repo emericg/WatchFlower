@@ -115,7 +115,7 @@ For macOS and iOS builds, you'll need Xcode 12+ installed.
 ```bash
 $ git clone https://github.com/emericg/WatchFlower.git
 $ cd WatchFlower/
-$ qmake
+$ qmake6
 $ make
 ```
 
@@ -158,9 +158,9 @@ You could also give WatchFlower binary the _net_raw_ and _net_admin_ capabilitie
 
 #### Third party projects used by WatchFlower
 
-* [Qt](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
-* [StatusBar](https://github.com/jpnurmi/statusbar) ([MIT](https://opensource.org/licenses/MIT))
-* [ekkesSHAREexample](https://github.com/ekke/ekkesSHAREexample) ([license](https://github.com/ekke/ekkesSHAREexample/blob/master/LICENSE))
+* [Qt6](https://www.qt.io) ([LGPL 3](https://www.gnu.org/licenses/lgpl-3.0.txt))
+* [MobileUI](src/thirdparty/MobileUI/README.md) ([MIT](https://opensource.org/licenses/MIT))
+* [MobileSharing](src/thirdparty/MobileSharing/README.md) ([MIT](https://opensource.org/licenses/MIT))
 * [SingleApplication](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
 * RC4 code from Christophe Devine ([GPL 2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt))
 * Graphical resources: [assets/COPYING](assets/COPYING)

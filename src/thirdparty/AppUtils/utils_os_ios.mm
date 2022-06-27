@@ -42,11 +42,11 @@ void UtilsIOS::screenKeepOn(bool on)
 /* ************************************************************************** */
 /*
     enum ScreenOrientation_iOS {
-        UIInterfaceOrientationUnknown = 0,      // The orientation of the device is unknown.
-        UIInterfaceOrientationPortrait,         // The device is in portrait mode, with the device upright and the Home button on the bottom.
-        UIInterfaceOrientationPortraitUpsideDown, // The device is in portrait mode but is upside down, with the device upright and the Home button at the top.
-        UIInterfaceOrientationLandscapeLeft,    // The device is in landscape mode, with the device upright and the Home button on the left.
-        UIInterfaceOrientationLandscapeRight,   // The device is in landscape mode, with the device upright and the Home button on the right.
+        UIInterfaceOrientationUnknown = 0,          // The orientation of the device is unknown.
+        UIInterfaceOrientationPortrait,             // The device is in portrait mode, with the device upright and the Home button on the bottom.
+        UIInterfaceOrientationPortraitUpsideDown,   // The device is in portrait mode but is upside down, with the device upright and the Home button at the top.
+        UIInterfaceOrientationLandscapeLeft,        // The device is in landscape mode, with the device upright and the Home button on the left.
+        UIInterfaceOrientationLandscapeRight,       // The device is in landscape mode, with the device upright and the Home button on the right.
     };
 */
 

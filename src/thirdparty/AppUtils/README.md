@@ -1,8 +1,8 @@
 # AppUtils
 
-A collection of C++ helpers for (my) QML applications.
+A collection of C++ helpers for (my) QML applications. Works with Qt5 and Qt6.
 
-## Quick Documentation
+## Quick start
 
 ### Build
 

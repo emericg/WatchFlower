@@ -18,8 +18,10 @@ find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS ${CORE_COMPONENTS
 set(CORE_LIBRARIES
     Qt::Core
     Qt::Gui
+    Qt::GuiPrivate
     Qt::Qml
     Qt::Quick
+    m
 )
 
 # Generic sources

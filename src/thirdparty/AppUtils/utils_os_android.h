@@ -131,7 +131,7 @@ public:
     static QString getAppExternalStorage();
 
     /*!
-     * \note DEPRECATED
+     * \note DEPRECATED won't work with Android 12+
      * \return The path to the external storage.
      *
      * Search for storage devices using native API, using:
@@ -140,7 +140,7 @@ public:
     static QStringList get_storages_by_api();
 
     /*!
-     * \note DEPRECATED
+     * \note DEPRECATED won't work with Android 12+
      * \return The path to the external storage.
      *
      * Search for storage devices using native API, using:

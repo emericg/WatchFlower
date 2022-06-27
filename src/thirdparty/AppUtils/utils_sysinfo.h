@@ -70,7 +70,6 @@ public:
     Q_INVOKABLE uint64_t getRamTotal() const  { return m_ram_total; };
 
     Q_INVOKABLE QString getOs() const { return m_os_name; };
-
 };
 
 /* ************************************************************************** */

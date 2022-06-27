@@ -66,7 +66,7 @@ target_include_directories(WatchFlower PRIVATE src)
 
 ################################################################################
 
-## ANDROID
+## Android
 if(ANDROID)
     #set(QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64")
     #set(QT_ANDROID_BUILD_ALL_ABIS "ON")
@@ -88,7 +88,10 @@ endif()
 
 ## iOS
 if(IOS)
-    #
+    target_link_libraries(QmlAppTemplate PRIVATE
+        Qt::GuiPrivate
+        "-framework UIKit"
+    )
 endif()
 
 ## Windows

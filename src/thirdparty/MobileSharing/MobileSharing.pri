@@ -10,7 +10,6 @@ HEADERS += $${PWD}/MobileSharing \
 INCLUDEPATH += $${PWD}
 
 android {
-
     versionAtLeast(QT_VERSION, 6.0) {
         QT += core-private
         SOURCES += $${PWD}/SharingUtils_android_qt6.cpp

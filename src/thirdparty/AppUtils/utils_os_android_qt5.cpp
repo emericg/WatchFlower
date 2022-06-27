@@ -29,6 +29,13 @@
 
 /* ************************************************************************** */
 
+int UtilsAndroid::getSdkVersion()
+{
+    return QtAndroid::sdkVersion();
+}
+
+/* ************************************************************************** */
+
 bool UtilsAndroid::checkPermissions_storage()
 {
     QtAndroid::PermissionResult r = QtAndroid::checkPermission("android.permission.READ_EXTERNAL_STORAGE");
@@ -178,6 +185,16 @@ bool UtilsAndroid::getPermission_location_ble()
     return status;
 }
 
+bool UtilsAndroid::checkPermission_location_background()
+{
+    return false;
+}
+
+bool UtilsAndroid::getPermission_location_background()
+{
+    return false;
+}
+
 /* ************************************************************************** */
 
 bool UtilsAndroid::checkPermission_phonestate()
@@ -199,6 +216,32 @@ bool UtilsAndroid::getPermission_phonestate()
         {
             qWarning() << "READ_PHONE_STATE PERMISSION DENIED";
             status = false;
+        }
+    }
+
+    return status;
+}
+
+/* ************************************************************************** */
+
+bool UtilsAndroid::isGpsEnabled()
+{
+    bool status = false;
+
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    if (activity.isValid())
+    {
+        QAndroidJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+        if (appCtx.isValid())
+        {
+            QAndroidJniObject locationString = QAndroidJniObject::fromString("location");
+            QAndroidJniObject locationService = appCtx.callObjectMethod("getSystemService",
+                                                                        "(Ljava/lang/String;)Ljava/lang/Object;",
+                                                                        locationString.object<jstring>());
+            if (locationService.callMethod<jboolean>("isLocationEnabled", "()Z"))
+            {
+                status = true;
+            }
         }
     }
 
@@ -270,6 +313,7 @@ QString UtilsAndroid::get_external_storage()
 
     QString external_storage = mediaPath.toString();
     //qDebug() << "> get_external_storage()" << external_storage;
+
     return external_storage;
 }
 
@@ -316,62 +360,6 @@ QString UtilsAndroid::getDeviceSerial()
 
     //qDebug() << "> getDeviceSerial()" << device_serial;
     return device_serial;
-}
-
-/* ************************************************************************** */
-
-void UtilsAndroid::vibrate(int milliseconds)
-{
-    if (milliseconds > 100) milliseconds = 100;
-
-    QtAndroid::runOnAndroidThread([=]() {
-        QAndroidJniObject activity = QtAndroid::androidActivity();
-        if (activity.isValid())
-        {
-            QAndroidJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
-            if (appCtx.isValid())
-            {
-                QAndroidJniObject vibratorString = QAndroidJniObject::fromString("vibrator");
-                QAndroidJniObject vibratorService = appCtx.callObjectMethod("getSystemService",
-                                                                            "(Ljava/lang/String;)Ljava/lang/Object;",
-                                                                            vibratorString.object<jstring>());
-                if (vibratorService.callMethod<jboolean>("hasVibrator", "()Z"))
-                {
-                    jlong ms = milliseconds;
-                    vibratorService.callMethod<void>("vibrate", "(J)V", ms);
-                }
-            }
-        }
-        QAndroidJniEnvironment env;
-        if (env->ExceptionCheck())
-        {
-            env->ExceptionClear();
-        }
-    });
-}
-
-bool UtilsAndroid::isGpsEnabled()
-{
-    bool status = false;
-
-    QAndroidJniObject activity = QtAndroid::androidActivity();
-    if (activity.isValid())
-    {
-        QAndroidJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
-        if (appCtx.isValid())
-        {
-            QAndroidJniObject locationString = QAndroidJniObject::fromString("location");
-            QAndroidJniObject locationService = appCtx.callObjectMethod("getSystemService",
-                                                                        "(Ljava/lang/String;)Ljava/lang/Object;",
-                                                                        locationString.object<jstring>());
-            if (locationService.callMethod<jboolean>("isLocationEnabled", "()Z"))
-            {
-                status = true;
-            }
-        }
-    }
-
-    return status;
 }
 
 /* ************************************************************************** */
@@ -455,6 +443,45 @@ void UtilsAndroid::screenLockOrientation(int orientation, bool autoRotate)
     {
         activity.callMethod<void>("setRequestedOrientation", "(I)V", value);
     }
+}
+
+/* ************************************************************************** */
+
+void UtilsAndroid::vibrate(int milliseconds)
+{
+    if (milliseconds > 100) milliseconds = 100;
+
+    QtAndroid::runOnAndroidThread([=]() {
+        QAndroidJniObject activity = QtAndroid::androidActivity();
+        if (activity.isValid())
+        {
+            QAndroidJniObject appCtx = activity.callObjectMethod("getApplicationContext", "()Landroid/content/Context;");
+            if (appCtx.isValid())
+            {
+                QAndroidJniObject vibratorString = QAndroidJniObject::fromString("vibrator");
+                QAndroidJniObject vibratorService = appCtx.callObjectMethod("getSystemService",
+                                                                            "(Ljava/lang/String;)Ljava/lang/Object;",
+                                                                            vibratorString.object<jstring>());
+                if (vibratorService.callMethod<jboolean>("hasVibrator", "()Z"))
+                {
+                    jlong ms = milliseconds;
+                    vibratorService.callMethod<void>("vibrate", "(J)V", ms);
+                }
+            }
+        }
+        QAndroidJniEnvironment env;
+        if (env->ExceptionCheck())
+        {
+            env->ExceptionClear();
+        }
+    });
+}
+
+/* ************************************************************************** */
+
+void UtilsAndroid::openApplicationInfo(const QString &packageName)
+{
+    //qDebug() << "> openApplicationInfo(" << packageName << ")";
 }
 
 /* ************************************************************************** */
