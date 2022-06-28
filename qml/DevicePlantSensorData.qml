@@ -8,9 +8,9 @@ import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 Item {
     id: devicePlantSensorData
 
-    // 1: single column
-    // 2: wide mode (two main rows)
-    // 3: wide mode for phones (two main columns)
+    // 1: single column (single column view or portrait tablet)
+    // 2: wide mode, two main rows (wide view)
+    // 3: wide mode, two main columns (wide view, phones)
     property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : (isPhone ? 3 : 2)
 
     property var dataIndicators: indicatorsLoader.item

@@ -9,6 +9,11 @@ import "qrc:/js/UtilsPlantJournal.js" as UtilsPlantJournal
 Item {
     id: plantCareJournal
 
+    // 1: single column (single column view)
+    // 2: single column, with calendar unfolded (portrait tablet)
+    // 3: wide mode (wide view)
+    property int uiMode: (singleColumn) ? 1 : ((isTablet && screenOrientation === Qt.PortraitOrientation) ? 2 : 3)
+
     function load() {
         journalEntries.active = true
     }
@@ -239,7 +244,7 @@ Item {
 
                 ////////////
 
-                Row {
+                Grid {
                     id: rowrowrow
                     anchors.fill: parent
                     anchors.topMargin: isPhone ? 14 : 16
@@ -248,10 +253,13 @@ Item {
                     anchors.bottomMargin: 80
                     spacing: 20
 
+                    columns: (uiMode === 3) ? 2 : 1
+                    rows: 2
+
                     Item {
-                        width: (rowrowrow.width * 0.4) - (rowrowrow.spacing / 2)
-                        height: rowrowrow.height
-                        visible: !singleColumn
+                        width: (uiMode === 2) ? rowrowrow.width : ((rowrowrow.width * 0.4) - (rowrowrow.spacing / 2))
+                        height: (uiMode === 2) ? 400 : rowrowrow.height
+                        visible: (uiMode !== 1)
 
                         DatePicker {
                             id: datePicker
@@ -267,20 +275,20 @@ Item {
                     ////
 
                     Column {
-                        width: singleColumn ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
+                        width: (uiMode === 1) ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
                         spacing: isPhone ? 12 : 20
 
                         ButtonWireframe {
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            height: singleColumn ? 40 : 44
+                            height: (uiMode === 1) ? 40 : 44
 
                             //visible: singleColumn
                             fullColor: true
                             text: entryEditor.currentDateTime.toLocaleDateString(Qt.locale())
                             primaryColor: Theme.colorSecondary
                             onClicked: {
-                                if (singleColumn)
+                                if (uiMode === 1)
                                     popupDate.openDate(entryEditor.currentDateTime)
                             }
                         }
@@ -292,17 +300,16 @@ Item {
 
                             radius: Theme.componentRadius
                             color: Theme.colorForeground
-                            border.width: singleColumn ? 0 : 2
+                            border.width: (uiMode === 1) ? 0 : 2
                             border.color: Theme.colorSeparator
 
                             Grid {
                                 id: colEntryType
                                 anchors.centerIn: parent
 
-                                //property bool doubletrouble: (parent.width < (6*52 + 5*24))
-                                spacing: singleColumn ? 16 : 20
-                                columns: singleColumn ? 3 : 6
-                                rows: 2
+                                spacing: (uiMode === 1) ? 16 : 20
+                                columns: (uiMode === 1) ? 3 : 6
+                                rows: (uiMode === 1) ? 2 : 1
 
                                 Repeater {
                                     model: [JournalUtils.JOURNAL_WATER, JournalUtils.JOURNAL_FERTILIZE, JournalUtils.JOURNAL_PRUNE,

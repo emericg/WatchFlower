@@ -9,17 +9,21 @@ import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
 Grid {
     id: plantScreen
 
+    // 1: single column (single column view or portrait tablet)
+    // 2: wide mode (wide view)
+    property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+
     rows: 3
-    columns: singleColumn ? 1 : 3
+    columns: (uiMode === 1) ? 1 : 3
     spacing: isPhone ? 12 : 16
     padding: isPhone ? 12 : 16
 
     property int parentWidth: appContent.width // default
     property int parentHeight: parent.height // default
 
-    property int www1: singleColumn ? (parentWidth - plantScreen.padding*2) : 480
-    property int www2: singleColumn ? (parentWidth - plantScreen.padding*2) : 600
-    property int insidemargins: singleColumn ? 8 : 16
+    property int www1: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : 480
+    property int www2: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : 600
+    property int insidemargins: (uiMode === 1) ? 8 : 16
 
     ////////
 
@@ -176,24 +180,24 @@ Grid {
 
     Flickable { ////////////////////////////////////////////////////////
         width: plantScreen.www1
-        height: singleColumn ? columnPlant.height + 24 : plantScreen.parentHeight
+        height: (uiMode === 1) ? columnPlant.height + 24 : plantScreen.parentHeight
         contentWidth: columnPlant.width
         contentHeight: columnPlant.height + 32
-        interactive: !singleColumn
+        interactive: !(uiMode === 1)
 
         Column {
             id: columnPlant
             width: plantScreen.www1
             spacing: 24
 
-            topPadding: singleColumn ? -plantScreen.padding : 0
+            topPadding: (uiMode === 1) ? -plantScreen.padding : 0
 /*
             Image {
                 id: plantPicture
                 anchors.left: parent.left
-                anchors.leftMargin: singleColumn ? -plantScreen.padding : 0
+                anchors.leftMargin: (uiMode === 1) ? -plantScreen.padding : 0
                 anchors.right: parent.right
-                anchors.rightMargin: singleColumn ? -plantScreen.padding : 0
+                anchors.rightMargin: (uiMode === 1) ? -plantScreen.padding : 0
                 height: width * 0.75
 
                 source: "file:/home/emeric/Dev/perso/WatchFlower/stash/plants_db/aloe.jpg"
@@ -310,22 +314,22 @@ Grid {
 
             Rectangle {
                 anchors.left: parent.left
-                anchors.leftMargin: singleColumn ? -plantScreen.padding : 0
+                anchors.leftMargin: (uiMode === 1) ? -plantScreen.padding : 0
                 anchors.right: parent.right
-                anchors.rightMargin: singleColumn ? -plantScreen.padding : 0
+                anchors.rightMargin: (uiMode === 1) ? -plantScreen.padding : 0
                 height: columnHeader.height
 
-                color: singleColumn ? Theme.colorForeground : Theme.colorBackground
+                color: (uiMode === 1) ? Theme.colorForeground : Theme.colorBackground
 
                 Column {
                     id: columnHeader
                     anchors.left: parent.left
-                    anchors.leftMargin: singleColumn ? plantScreen.padding : 0
+                    anchors.leftMargin: (uiMode === 1) ? plantScreen.padding : 0
                     anchors.right: parent.right
-                    anchors.rightMargin: singleColumn ? plantScreen.padding : 0
+                    anchors.rightMargin: (uiMode === 1) ? plantScreen.padding : 0
 
-                    topPadding: singleColumn ? 16 : 0
-                    bottomPadding: singleColumn ? 16 : 0
+                    topPadding: (uiMode === 1) ? 16 : 0
+                    bottomPadding: (uiMode === 1) ? 16 : 0
                     spacing: 16
 
                     Column {
@@ -850,10 +854,10 @@ Grid {
 
     Flickable { ////////////////////////////////////////////////////////
         width: plantScreen.www2
-        height: singleColumn ? columnCare.height + 24 : plantScreen.parentHeight
+        height: (uiMode === 1) ? columnCare.height + 24 : plantScreen.parentHeight
         contentWidth: columnCare.width
         contentHeight: columnCare.height + 32
-        interactive: !singleColumn
+        interactive: (uiMode !== 1)
 
         Column  {
             id: columnCare
@@ -1254,10 +1258,10 @@ Grid {
 
     Flickable { ////////////////////////////////////////////////////////
         width: plantScreen.www2
-        height: singleColumn ? columnLimits.height + 24 : plantScreen.parentHeight
+        height: (uiMode === 1) ? columnLimits.height + 24 : plantScreen.parentHeight
         contentWidth: columnLimits.width
         contentHeight: columnLimits.height + 32
-        interactive: !singleColumn
+        interactive: (uiMode !== 1)
 
         Column {
             id: columnLimits
@@ -1435,7 +1439,6 @@ Grid {
                     stepSize: 0.1
                 }
             }
-
 
             Item {
                 id: itemTemp
