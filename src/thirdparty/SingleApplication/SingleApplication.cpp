@@ -24,8 +24,8 @@
 #include <QtCore/QByteArray>
 #include <QtCore/QSharedMemory>
 
-#include "singleapplication.h"
-#include "singleapplication_p.h"
+#include "SingleApplication.h"
+#include "SingleApplication_private.h"
 
 /**
  * @brief Constructor. Checks and fires up LocalServer or closes the program

@@ -29,13 +29,15 @@
 // version without notice, or may even be removed.
 //
 
-#ifndef SINGLEAPPLICATION_P_H
-#define SINGLEAPPLICATION_P_H
+#ifndef SINGLEAPPLICATION_PRIVATE_H
+#define SINGLEAPPLICATION_PRIVATE_H
+/* ************************************************************************** */
+
+#include "SingleApplication.h"
 
 #include <QtCore/QSharedMemory>
 #include <QtNetwork/QLocalServer>
 #include <QtNetwork/QLocalSocket>
-#include "singleapplication.h"
 
 struct InstancesInfo {
     bool primary;
@@ -50,6 +52,8 @@ struct ConnectionInfo {
     quint32 instanceId = 0;
     quint8 stage = 0;
 };
+
+/* ************************************************************************** */
 
 class SingleApplicationPrivate : public QObject {
 Q_OBJECT
@@ -106,4 +110,5 @@ public Q_SLOTS:
     void slotClientConnectionClosed( QLocalSocket*, quint32 );
 };
 
+/* ************************************************************************** */
 #endif // SINGLEAPPLICATION_P_H

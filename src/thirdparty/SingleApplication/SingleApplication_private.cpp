@@ -47,8 +47,8 @@
 #include <QtCore/QDateTime>
 #endif
 
-#include "singleapplication.h"
-#include "singleapplication_p.h"
+#include "SingleApplication.h"
+#include "SingleApplication_private.h"
 
 #ifdef Q_OS_UNIX
     #include <unistd.h>

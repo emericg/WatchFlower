@@ -1,11 +1,11 @@
 QT += core network
 CONFIG += c++11
 
-SOURCES += $${PWD}/singleapplication.cpp \
-           $${PWD}/singleapplication_p.cpp
+SOURCES += $${PWD}/SingleApplication.cpp \
+           $${PWD}/SingleApplication_private.cpp
 
-HEADERS += $${PWD}/singleapplication.h \
-           $${PWD}/singleapplication_p.h
+HEADERS += $${PWD}/SingleApplication.h \
+           $${PWD}/SingleApplication_private.h
 
 #INCLUDEPATH += $${PWD}
 

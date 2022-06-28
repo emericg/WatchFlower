@@ -38,7 +38,7 @@ endif()
 
 ################################################################################
 
-add_library(SingleApplication STATIC singleapplication.cpp singleapplication_p.cpp )
+add_library(SingleApplication STATIC SingleApplication.cpp SingleApplication_private.cpp )
 add_library(SingleApplication::SingleApplication ALIAS SingleApplication)
 
 target_link_libraries(SingleApplication PUBLIC ${CORE_LIBRARIES} ${PLATFORM_LIBRARIES})
