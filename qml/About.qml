@@ -591,7 +591,29 @@ Item {
                         anchors.right: parent.right
                         anchors.rightMargin: 12
 
-                        text: "- Qt (LGPL 3)"
+                        text: "- Qt6 (LGPL v3)"
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
+                    }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+
+                        text: "- MobileUI (MIT)"
+                        textFormat: Text.PlainText
+                        color: Theme.colorText
+                        font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
+                    }
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.rightMargin: 12
+
+                        text: "- MobileSharing (MIT)"
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
@@ -614,17 +636,6 @@ Item {
                         anchors.rightMargin: 12
 
                         text: "- Google Material Icons (MIT)"
-                        textFormat: Text.PlainText
-                        color: Theme.colorText
-                        font.pixelSize: Theme.fontSizeContent
-                        wrapMode: Text.WordWrap
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.rightMargin: 12
-
-                        text: "- MobileUI & MobileSharing (MIT)"
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent

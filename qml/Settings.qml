@@ -1543,10 +1543,10 @@ Item {
                     primaryColor: Theme.colorPrimary
                     secondaryColor: Theme.colorBackground
 
-                    text: qsTr("Send file")
+                    text: qsTr("Export file")
                     onClicked: {
                         var file = deviceManager.exportDataOpen()
-                        utilsShare.sendFile(file, "Send file", "text/csv", 0)
+                        utilsShare.sendFile(file, "Export file", "text/csv", 0)
                     }
                 }
             }

@@ -99,6 +99,7 @@ T.SpinBox {
 
                 visible: control.legend
                 color: Theme.colorComponentText
+                opacity: 0.8
 
                 text: control.legend
                 textFormat: Text.PlainText
