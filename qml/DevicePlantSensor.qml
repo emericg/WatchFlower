@@ -156,13 +156,14 @@ Loader {
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             } else if (event.key === Qt.Key_Backspace) {
                 event.accepted = true
-                appWindow.backAction()
+                backAction()
             }
         }
 
         function backAction() {
             if (plantSensorPages.currentIndex === 0) { // data
                 plantSensorData.backAction()
+                return
             }
             if (plantSensorPages.currentIndex === 1) { // history
                 if (plantSensorHistory.isHistoryMode()) {
@@ -174,9 +175,11 @@ Loader {
             }
             if (plantSensorPages.currentIndex === 2) { // plant care
                 plantSensorCare.backAction()
+                return
             }
             if (plantSensorPages.currentIndex === 3) { // sensor settings
                 appContent.state = "DeviceList"
+                return
             }
         }
 

@@ -258,7 +258,7 @@ Item {
 
                     Item {
                         width: (uiMode === 2) ? rowrowrow.width : ((rowrowrow.width * 0.4) - (rowrowrow.spacing / 2))
-                        height: (uiMode === 2) ? 400 : rowrowrow.height
+                        height: (uiMode === 2) ? 320 : rowrowrow.height
                         visible: (uiMode !== 1)
 
                         DatePicker {
@@ -275,7 +275,7 @@ Item {
                     ////
 
                     Column {
-                        width: (uiMode === 1) ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
+                        width: (uiMode !== 3) ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
                         spacing: isPhone ? 12 : 20
 
                         ButtonWireframe {

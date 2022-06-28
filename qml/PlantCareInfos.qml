@@ -6,10 +6,6 @@ import ThemeEngine 1.0
 Item {
     id: plantCareInfos
 
-    // 1: single column (single column view or portrait tablet)
-    // 2: wide mode (wide view or landscape tablet)
-    property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
-
     function load() {
         if (currentDevice.hasPlant) {
             if (plantScreenLoader.status !== Loader.Ready)
@@ -55,6 +51,10 @@ Item {
         sourceComponent: Flickable {
             contentWidth: (uiMode === 1) ? -1 : plantScreen.width
             contentHeight: (uiMode === 1) ? plantScreen.height : -1
+
+            // 1: single column (single column view or portrait tablet)
+            // 2: wide mode (wide view or landscape tablet)
+            property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
             function setPlant() {
                 plantScreen.currentPlant = currentDevice.plant

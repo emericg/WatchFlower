@@ -244,8 +244,12 @@ Loader {
 
             visible: false
 
-            contentWidth: singleColumn ? -1 : plantScreen.width
-            contentHeight: singleColumn ? plantScreen.height : -1
+            // 1: single column (single column view or portrait tablet)
+            // 2: wide mode (wide view)
+            property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+
+            contentWidth: (uiMode === 1) ? -1 : plantScreen.width
+            contentHeight: (uiMode === 1) ? plantScreen.height : -1
 
             boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }

@@ -25,8 +25,9 @@
 #define DOCVIEWCONTROLLER_IOS_H
 /* ************************************************************************** */
 
+#import "SharingUtils_ios.h"
+
 #import <UIKit/UIKit.h>
-#import <SharingUtils_ios.h>
 
 /* ************************************************************************** */
 

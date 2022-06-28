@@ -17,6 +17,10 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    // 1: single column (single column view or portrait tablet)
+    // 2: wide mode (wide view)
+    property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+
     property int flow_width: (flow.width - flow.spacing)
     property int flow_divider: Math.round(flow_width / 512)
     property int www: ((flow_width - (flow.spacing * flow_divider)) / flow_divider)
@@ -31,14 +35,14 @@ Item {
             id: flow
             anchors.left: parent.left
             anchors.right: parent.right
-            height: singleColumn ? maxheight : devicePlantSensorSettings.height
+            height: (uiMode === 1) ? maxheight : devicePlantSensorSettings.height
 
             property int maxheight: 2*topPadding + 3*spacing + itemDevice.height + itemDeviceInfos.height + itemDeviceSensors.height + itemDeviceSettings.height
 
-            topPadding: 14
-            padding: 12
-            bottomPadding: 14
-            spacing: 12
+            topPadding: isPhone ? 14 : 16
+            padding: isPhone ? 12 : 16
+            bottomPadding: isPhone ? 14 : 16
+            spacing: isPhone ? 12 : 16
             flow: Flow.TopToBottom
 
             ////////////////////////////////

@@ -410,7 +410,7 @@ void DeviceManager::bluetoothHostModeStateChanged(QBluetoothLocalDevice::HostMod
 
 void DeviceManager::bluetoothStatusChanged()
 {
-    qDebug() << "DeviceManager::bluetoothStatusChanged() bt adapter:" << m_btA << " /  bt enabled:" << m_btE;
+    //qDebug() << "DeviceManager::bluetoothStatusChanged() bt adapter:" << m_btA << " /  bt enabled:" << m_btE;
 
     if (m_btA && m_btE)
     {
@@ -451,7 +451,7 @@ void DeviceManager::checkBluetoothIos()
     // iOS behave differently than all other platforms; there is no way to check
     // adapter status, only to start a device discovery and check for errors
 
-    qDebug() << "DeviceManager::checkBluetoothIos()";
+    //qDebug() << "DeviceManager::checkBluetoothIos()";
 
     m_btA = true;
 
