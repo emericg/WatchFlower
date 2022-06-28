@@ -108,7 +108,7 @@ HEADERS  += src/SettingsManager.h \
             src/devices/device_ess_generic.h \
             src/thirdparty/RC4/rc4.h
 
-INCLUDEPATH += src/
+INCLUDEPATH += src/ src/thirdparty/
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \

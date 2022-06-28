@@ -34,9 +34,9 @@
 #include "utils_os_macosdock.h"
 #endif
 
-#include <MobileUI>
-#include <MobileSharing>
-#include <SingleApplication>
+#include <MobileUI/MobileUI.h>
+#include <MobileSharing/MobileSharing.h>
+#include <SingleApplication/SingleApplication.h>
 
 #include <QtGlobal>
 #include <QLibraryInfo>

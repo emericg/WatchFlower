@@ -62,7 +62,8 @@ qt_add_executable(WatchFlower
     assets/plants.qrc
 )
 
-target_include_directories(WatchFlower PRIVATE src)
+target_include_directories(WatchFlower PRIVATE src/)
+target_include_directories(WatchFlower PRIVATE src/thirdparty/)
 
 ################################################################################
 

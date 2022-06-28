@@ -4,11 +4,10 @@ CONFIG += c++11
 SOURCES += $${PWD}/singleapplication.cpp \
            $${PWD}/singleapplication_p.cpp
 
-HEADERS += $${PWD}/SingleApplication \
-           $${PWD}/singleapplication.h \
+HEADERS += $${PWD}/singleapplication.h \
            $${PWD}/singleapplication_p.h
 
-INCLUDEPATH += $${PWD}
+#INCLUDEPATH += $${PWD}
 
 win32 {
     msvc: LIBS += Advapi32.lib
