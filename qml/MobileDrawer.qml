@@ -611,6 +611,8 @@ Drawer {
                 anchors.left: parent.left
                 color: (appContent.state === "DeviceBrowser") ? Theme.colorForeground : Theme.colorBackground
 
+                enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
@@ -627,7 +629,7 @@ Drawer {
                     anchors.verticalCenter: parent.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
-                    color: Theme.colorText
+                    color: rectangleDeviceBrowser.enabled ? Theme.colorText : Theme.colorSubText
                 }
                 Text {
                     anchors.left: parent.left
@@ -637,7 +639,7 @@ Drawer {
                     text: qsTr("Device browser")
                     font.pixelSize: 13
                     font.bold: true
-                    color: Theme.colorText
+                    color: rectangleDeviceBrowser.enabled ? Theme.colorText : Theme.colorSubText
                 }
             }
         }

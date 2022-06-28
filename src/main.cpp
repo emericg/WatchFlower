@@ -30,7 +30,9 @@
 #include "utils_app.h"
 #include "utils_screen.h"
 #include "utils_language.h"
+#if defined(Q_OS_MACOS)
 #include "utils_os_macosdock.h"
+#endif
 
 #include <MobileUI>
 #include <MobileSharing>
@@ -161,7 +163,7 @@ int main(int argc, char *argv[])
 
     // Init generic utils
     UtilsApp *utilsApp = UtilsApp::getInstance();
-    UtilsScreen *utilsScreen = UtilsScreen::getInstance(&app);
+    UtilsScreen *utilsScreen = UtilsScreen::getInstance();
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
     if (!utilsScreen || !utilsApp || !utilsLanguage)
     {

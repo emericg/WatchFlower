@@ -146,8 +146,8 @@ function weightKiloToPound(weight_kg) {
 /*!
  * Pound to Kilogramme conversion
  */
-function weightPoundToKilog(weight_lbs) {
-    return (weight_lbs / 2.20462262185);
+function weightPoundToKilog(weight_lb) {
+    return (weight_lb / 2.20462262185);
 }
 
 /* ************************************************************************** */

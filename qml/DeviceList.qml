@@ -386,6 +386,7 @@ Item {
             fullColor: true
             primaryColor: Theme.colorSecondary
             onClicked: screenDeviceBrowser.loadScreen()
+            enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
         }
         ButtonWireframe {
             text: qsTr("plants")
