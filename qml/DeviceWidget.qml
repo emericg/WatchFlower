@@ -108,19 +108,14 @@ Item {
         if (!boxDevice.isDataToday()) {
             if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
-                refreshAnimation.running = false
             } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
-                refreshAnimation.running = true
             } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
-                refreshAnimation.running = true
             } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
                 imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
-                refreshAnimation.running = true
             } else {
                 imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                refreshAnimation.running = false
             }
         }
     }
@@ -436,7 +431,8 @@ Item {
                             id: opa
                             loops: Animation.Infinite
                             alwaysRunToEnd: true
-                            running: (boxDevice.status !== DeviceUtils.DEVICE_OFFLINE &&
+                            running: (visible &&
+                                      boxDevice.status !== DeviceUtils.DEVICE_OFFLINE &&
                                       boxDevice.status !== DeviceUtils.DEVICE_QUEUED &&
                                       boxDevice.status !== DeviceUtils.DEVICE_CONNECTED)
 
@@ -500,7 +496,7 @@ Item {
                     color: parent.color
 
                     SequentialAnimation on opacity {
-                        running: alarmVentilate.visible
+                        running: visible
                         loops: Animation.Infinite
 
                         PropertyAnimation { to: 0; duration: 1000; }
@@ -529,7 +525,7 @@ Item {
                     color: Qt.lighter(parent.color, 1.66)
 
                     SequentialAnimation on opacity {
-                        running: alarmRadiation.visible
+                        running: visible
                         alwaysRunToEnd: true
                         loops: Animation.Infinite
 
@@ -609,7 +605,10 @@ Item {
             SequentialAnimation on opacity {
                 id: refreshAnimation
                 loops: Animation.Infinite
-                running: false
+                running: (visible &&
+                          boxDevice.status === DeviceUtils.DEVICE_CONNECTING ||
+                          boxDevice.status === DeviceUtils.DEVICE_CONNECTED ||
+                          boxDevice.status === DeviceUtils.DEVICE_WORKING)
                 alwaysRunToEnd: true
                 OpacityAnimator { from: 0.8; to: 0; duration: 750 }
                 OpacityAnimator { from: 0; to: 0.8; duration: 750 }
