@@ -14,18 +14,14 @@ Item {
     property bool bluetoothPermissionsAvailable: deviceManager.bluetoothPermissions
 
     Component.onCompleted: checkStatus()
-
     onBluetoothAvailableChanged: checkStatus()
     onBluetoothPermissionsAvailableChanged: checkStatus()
-    onDeviceAvailableChanged: {
-        checkStatus()
-        exitSelectionMode()
-    }
+    onDeviceAvailableChanged: { checkStatus(); exitSelectionMode(); }
 
     function checkStatus() {
 
         if (!utilsApp.checkMobileBleLocationPermission()) {
-            utilsApp.getMobileBleLocationPermission()
+            //utilsApp.getMobileBleLocationPermission()
         }
 
         if (deviceManager.hasDevices) {
@@ -33,20 +29,18 @@ Item {
             itemStatus.source = ""
 
             if (!deviceManager.bluetooth) {
-                rectangleStatus.setBluetoothWarning()
+                rectangleBluetoothStatus.setBluetoothWarning()
             } else if (!deviceManager.bluetoothPermissions) {
-                rectangleStatus.setPermissionWarning()
+                rectangleBluetoothStatus.setPermissionWarning()
             } else {
-                rectangleStatus.hide()
+                rectangleBluetoothStatus.hide()
             }
         } else {
             // The device list is not populated
-            rectangleStatus.hide()
+            rectangleBluetoothStatus.hide()
 
             if (!deviceManager.bluetooth) {
                 itemStatus.source = "ItemNoBluetooth.qml"
-            } else if (!deviceManager.bluetoothPermissions) {
-                itemStatus.source = "ItemNoPermission.qml"
             } else {
                 itemStatus.source = "ItemNoDevice.qml"
             }
@@ -135,7 +129,7 @@ Item {
         ////////////////
 
         Rectangle {
-            id: rectangleStatus
+            id: rectangleBluetoothStatus
             anchors.left: parent.left
             anchors.right: parent.right
 
@@ -150,7 +144,7 @@ Item {
             MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
             Text {
-                id: textStatus
+                id: textBluetoothStatus
                 anchors.fill: parent
                 anchors.leftMargin: 16
                 anchors.rightMargin: 16
@@ -162,65 +156,54 @@ Item {
                 font.pixelSize: Theme.fontSizeComponent
             }
 
-            Row {
+            ButtonWireframe {
+                id: buttonBluetoothStatus
+                height: 32
                 anchors.right: parent.right
                 anchors.rightMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 16
 
-                ButtonWireframe {
-                    id: buttonBluetoothAbout
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
+                fullColor: true
+                primaryColor: Theme.colorActionbarHighlight
 
-                    visible: !deviceManager.bluetoothPermissions
-                    fullColor: true
-                    primaryColor: Theme.colorActionbarHighlight
-
-                    text: qsTr("About")
-                    onClicked: screenPermissions.loadScreenFrom("DeviceList")
-                }
-
-                ButtonWireframe {
-                    id: buttonBluetoothRetry
-                    height: 32
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: false
-                    fullColor: true
-                    primaryColor: Theme.colorActionbarHighlight
-
-                    text: {
-                        if (Qt.platform.os === "android") {
-                            if (!deviceManager.bluetooth) qsTr("Enable")
-                            else qsTr("Retry")
-                        } else {
-                            qsTr("Retry")
-                        }
+                text: {
+                    if (Qt.platform.os === "android") {
+                        if (!deviceManager.bluetoothEnabled) qsTr("Enable")
+                        else if (!deviceManager.bluetoothPermissions) qsTr("About")
+                        else qsTr("Retry")
+                    } else {
+                        qsTr("Retry")
                     }
-                    onClicked: {
-                        if (Qt.platform.os === "android") {
-                            if (!deviceManager.bluetooth) deviceManager.enableBluetooth()
-                            if (!deviceManager.bluetoothPermissions) deviceManager.checkBluetoothPermissions()
+                }
+                onClicked: {
+                    if (Qt.platform.os === "android") {
+                        if (!deviceManager.bluetooth) {
+                            deviceManager.enableBluetooth()
+                        } else if (!deviceManager.bluetoothPermissions) {
+                            //utilsApp.getMobileBleLocationPermission()
+                            //deviceManager.checkBluetoothPermissions()
+
+                            // someone clicked 'never ask again'?
+                            screenPermissions.loadScreenFrom("DeviceList")
                         } else {
                             deviceManager.checkBluetooth()
                         }
+                    } else {
+                        deviceManager.checkBluetooth()
                     }
                 }
             }
 
             function hide() {
-                rectangleStatus.height = 0
+                rectangleBluetoothStatus.height = 0
             }
             function setBluetoothWarning() {
-                textStatus.text = qsTr("Bluetooth is disabled...")
-                rectangleStatus.height = 48
-                buttonBluetoothRetry.visible = true
+                textBluetoothStatus.text = qsTr("Bluetooth is disabled...")
+                rectangleBluetoothStatus.height = 48
             }
             function setPermissionWarning() {
-                textStatus.text = qsTr("Bluetooth permission is missing...")
-                rectangleStatus.height = 48
-                buttonBluetoothRetry.visible = false
+                textBluetoothStatus.text = qsTr("Bluetooth permission is missing...")
+                rectangleBluetoothStatus.height = 48
             }
         }
 

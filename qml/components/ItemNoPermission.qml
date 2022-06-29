@@ -4,6 +4,7 @@ import ThemeEngine 1.0
 
 Item {
     id: itemNoPermission
+    anchors.fill: parent
 
     Rectangle {
         anchors.centerIn: parent
@@ -44,8 +45,8 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 fullColor: true
-                text: (Qt.platform.os === "android") ? qsTr("Enable") : qsTr("Retry")
-                onClicked: (Qt.platform.os === "android") ? deviceManager.enableBluetooth() : deviceManager.checkBluetooth()
+                text: (Qt.platform.os === "android") ? qsTr("Get permission") : qsTr("Check permission")
+                onClicked: (Qt.platform.os === "android") ? utilsApp.getMobileBleLocationPermission() : deviceManager.checkBluetooth()
             }
         }
     }

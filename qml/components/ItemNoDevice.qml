@@ -3,7 +3,30 @@ import QtQuick 2.15
 import ThemeEngine 1.0
 
 Item {
+    id: itemNoDevice
     anchors.fill: parent
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Timer {
+        id: retryScan
+        interval: 333
+        running: false
+        repeat: false
+        onTriggered: scan()
+    }
+
+    function scan() {
+        if (!deviceManager.updating) {
+            if (deviceManager.scanning) {
+                deviceManager.scanDevices_stop()
+            } else {
+                deviceManager.scanDevices_start()
+            }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Column {
         id: column
@@ -144,12 +167,11 @@ Item {
                         primaryColor: Theme.colorPrimary
 
                         onClicked: {
-                            if (!deviceManager.updating) {
-                                if (deviceManager.scanning) {
-                                    deviceManager.scanDevices_stop()
-                                } else {
-                                    deviceManager.scanDevices_start()
-                                }
+                            if (utilsApp.checkMobileBleLocationPermission()) {
+                                scan()
+                            } else {
+                                utilsApp.getMobileBleLocationPermission()
+                                retryScan.start()
                             }
                         }
                     }
@@ -171,6 +193,8 @@ Item {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignBottom
             }
+
+            ////////
         }
     }
 }
