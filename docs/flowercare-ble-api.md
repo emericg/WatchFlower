@@ -3,14 +3,14 @@
 
 ## About Flower Care
 
-* Xiaomi [Flower Care (MiFlora)](http://www.huahuacaocao.com/product) sensors are meant to keep your plants alive by monitoring their environment
+* Xiaomi [Flower Care](http://www.huahuacaocao.com/product) sensors are meant to keep your plants alive by monitoring their environment
 * Has sensors to relay temperature, light intensity, soil moisture and soil fertility (via electrical conductivity)
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2032 coin cell battery is used as power source for Flower Care
 * An internal Li-Po battery is used as power source for Flower Care Max
 
-Xiaomi MiJia **Flower Care** / VegTrug **Grow Care Home** (HHCCJCY01)  
-Xiaomi MiJia **Flower Care Max** (HHCCJCY09)  
+Xiaomi **Flower Care** / VegTrug **Grow Care Home** (HHCCJCY01)  
+Xiaomi **Flower Care Max** (HHCCJCY09)  
 Tuya **Flower Care** (HHCCJCY10)  
 VegTrug **Grow Care Garden** (GCLS002)  
 

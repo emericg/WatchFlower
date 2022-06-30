@@ -124,15 +124,28 @@ $ make
 ##### Android
 
 The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors. Android 10+ will ask for _ACCESS_FINE_LOCATION_, while Android 6+ will only ask for _ACCESS_COARSE_LOCATION_.  
-You can learn more on Android developer [website](https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower).
-Using the 'background updates' feature also requires the _ACCESS_BACKGROUND_LOCATION_ for the exact same reasons.  
-The application is neither using nor storing your location. Sorry for the inconvenience.  
+This is a mandatory requirement. The application is neither using nor storing your location. Sorry for the inconvenience.  
+
+You can learn more on Android developer [website](https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower).  
 
 Some devices also require the GPS to be turned on while scanning for new sensors. This requirement is not documented and there is not much that can be done about it.  
+
+##### Android background updates and notifications
+
+Using the 'background updates' feature requires the _ACCESS_BACKGROUND_LOCATION_ additional permission, for the same reasons just mentioned above. Note that you can actually deny that permission, but then the background updates will be **much** less efficient.  
+
+It's also very important to note that Android phones will try very hard to both prevent the app from starting in the background, then kill every application running in the background, making it hard for this feature to work properly.  
+Depending on your phone model and manufacturer, you **will** have to manually **enable** `auto launch` and manually **disable** various `battery saving` features.  
+
+> Fortunately, there is a very good website with per device steps to help you do that: https://dontkillmyapp.com/
 
 ##### iOS
 
 The application will ask you for permission to use Bluetooth. You can learn more on Apple [website](https://support.apple.com/HT210578).
+
+##### macOS
+
+Starting with macOS 11, the application will ask you for permission to use Bluetooth. You can learn more on Apple [developer website](https://developer.apple.com/documentation/bundleresources/information_property_list/nsbluetoothalwaysusagedescription).
 
 ##### Linux ('live mode' and 'historical data')
 
