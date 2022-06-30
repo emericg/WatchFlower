@@ -38,7 +38,7 @@ jobs:
         with:
           aqtversion: '==2.1.0'
           version: '6.3.1'
-          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          modules: qtconnectivity qtcharts qt5compat
           cached: 'false'
 
       # Install dependencies (from package manager)
@@ -87,7 +87,7 @@ jobs:
         with:
           aqtversion: '==2.1.0'
           version: '6.3.1'
-          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          modules: qtconnectivity qtcharts qt5compat
           cached: 'false'
 
       # Build application
@@ -132,7 +132,7 @@ jobs:
         with:
           aqtversion: '==2.1.0'
           version: '6.3.1'
-          modules: qtconnectivity qtcharts qtimageformats qt5compat
+          modules: qtconnectivity qtcharts qt5compat
           cached: 'false'
 
       # Install NSIS (already installed in 'windows-2022')
