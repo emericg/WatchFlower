@@ -3,7 +3,7 @@
   {
     "model": "Flower Care",
     "manufacturer": "HHCC Plant Technology",
-    "ID": ["HHCCJCY01", "HHCCJCY10"],
+    "ID": ["HHCCJCY01"],
     "year": 2016,
     "battery": "1 x CR2032",
     "ipx": "IPX5",
