@@ -131,6 +131,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         {
             if (device->getName() == "Flower care" ||
                 device->getName() == "Flower mate" ||
+                device->getName() == "TY" ||
                 device->getName() == "Grow care garden") { // plant sensors
                 return "a";
             } else if (device->getName() == "Flower power") {

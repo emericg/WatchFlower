@@ -52,6 +52,7 @@ SOURCES  += src/main.cpp \
             src/device_thermometer.cpp \
             src/device_environmental.cpp \
             src/devices/device_flowercare.cpp \
+            src/devices/device_flowercare_tuya.cpp \
             src/devices/device_flowerpower.cpp \
             src/devices/device_ropot.cpp \
             src/devices/device_parrotpot.cpp \
@@ -89,6 +90,7 @@ HEADERS  += src/SettingsManager.h \
             src/device_thermometer.h \
             src/device_environmental.h \
             src/devices/device_flowercare.h \
+            src/devices/device_flowercare_tuya.h \
             src/devices/device_flowerpower.h \
             src/devices/device_ropot.h \
             src/devices/device_parrotpot.h \

@@ -40,6 +40,7 @@ qt_add_executable(WatchFlower
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
     src/devices/device_flowercare.cpp src/devices/device_flowercare.h
+    src/devices/device_flowercare_tuya.cpp src/devices/device_flowercare_tuya.h
     src/devices/device_flowerpower.cpp src/devices/device_flowerpower.h
     src/devices/device_hygrotemp_cgd1.cpp src/devices/device_hygrotemp_cgd1.h
     src/devices/device_hygrotemp_cgdk2.cpp src/devices/device_hygrotemp_cgdk2.h

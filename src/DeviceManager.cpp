@@ -24,6 +24,7 @@
 
 #include "device.h"
 #include "devices/device_flowercare.h"
+#include "devices/device_flowercare_tuya.h"
 #include "devices/device_flowerpower.h"
 #include "devices/device_parrotpot.h"
 #include "devices/device_ropot.h"
@@ -121,7 +122,7 @@ DeviceManager::DeviceManager(bool daemon)
             if (deviceName == "Flower care" || deviceName == "Flower mate" || deviceName == "Grow care garden")
                 d = new DeviceFlowerCare(deviceAddr, deviceName, this);
             else if (deviceName == "TY")
-                d = new DeviceFlowerCare(deviceAddr, deviceName, this);
+                d = new DeviceFlowerCare_tuya(deviceAddr, deviceName, this);
             else if (deviceName == "ropot")
                 d = new DeviceRopot(deviceAddr, deviceName, this);
             else if (deviceName.startsWith("Flower power"))
@@ -1387,7 +1388,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden")
             d = new DeviceFlowerCare(info, this);
         else if (info.name() == "TY")
-            d = new DeviceFlowerCare(info, this);
+            d = new DeviceFlowerCare_tuya(info, this);
         else if (info.name() == "ropot")
             d = new DeviceRopot(info, this);
         else if (info.name().startsWith("Flower power"))

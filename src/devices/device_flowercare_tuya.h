@@ -15,12 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2018
+ * \date      2022
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_FLOWERCARE_H
-#define DEVICE_FLOWERCARE_H
+#ifndef DEVICE_FLOWERCARE_TUYA_H
+#define DEVICE_FLOWERCARE_TUYA_H
 /* ************************************************************************** */
 
 #include "device_plantsensor.h"
@@ -36,20 +36,19 @@
 /* ************************************************************************** */
 
 /*!
- * Xiaomi "Flower Care" or VegTrug "Grow Care Home" (HHCCJCY01)
- * Xiaomi "Flower Care Max" (HHCCJCY09) or VegTrug "Grow Care Garden" (GCLS002)
+ * Tuya "Flower Care" (HHCCJCY10)
  *
  * Protocol infos:
- * - WatchFlower/docs/flowercare-ble-api.md
+ * - WatchFlower/docs/flowercare_tuya-ble-api.md
  */
-class DeviceFlowerCare: public DevicePlantSensor
+class DeviceFlowerCare_tuya: public DevicePlantSensor
 {
     Q_OBJECT
 
 public:
-    DeviceFlowerCare(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
-    DeviceFlowerCare(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceFlowerCare();
+    DeviceFlowerCare_tuya(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
+    DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceFlowerCare_tuya();
 
     void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
@@ -83,4 +82,4 @@ private slots:
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_FLOWERCARE_H
+#endif // DEVICE_FLOWERCARE_TUYA_H
