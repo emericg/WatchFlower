@@ -27,6 +27,7 @@ T.SpinBox {
 
         radius: Theme.componentRadius
         color: Theme.colorComponentBackground
+        opacity: enabled ? 1 : 0.33
 
         Rectangle {
             width: control.height
@@ -75,6 +76,7 @@ T.SpinBox {
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorComponentText
+                opacity: enabled ? 1.0 : 0.33
                 selectionColor: Theme.colorText
                 selectedTextColor: "white"
 
@@ -120,6 +122,7 @@ T.SpinBox {
         height: control.height
         anchors.verticalCenter: control.verticalCenter
         x: control.mirrored ? 0 : control.width - width
+        opacity: enabled ? 1.0 : 0.33
 
         Rectangle {
             anchors.centerIn: parent
@@ -131,7 +134,7 @@ T.SpinBox {
             anchors.centerIn: parent
             width: 2
             height: UtilsNumber.round2(parent.height * 0.4)
-            color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            color: Theme.colorComponentContent
         }
     }
 
@@ -145,12 +148,13 @@ T.SpinBox {
         height: control.height
         anchors.verticalCenter: control.verticalCenter
         x: control.mirrored ? control.width - width : 0
+        opacity: enabled ? 1.0 : 0.33
 
         Rectangle {
             anchors.centerIn: parent
             width: UtilsNumber.round2(parent.height * 0.4)
             height: 2
-            color: enabled ? Theme.colorComponentContent : Theme.colorSubText
+            color: Theme.colorComponentContent
         }
     }
 

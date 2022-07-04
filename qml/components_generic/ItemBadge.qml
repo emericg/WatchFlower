@@ -4,8 +4,8 @@ import ThemeEngine 1.0
 
 Item {
     id: control
-    implicitWidth: 80
-    implicitHeight: 22
+    width: leftText.contentWidth + rightText.contentWidth + 24
+    height: 22
 
     property string legend: "legend"
     property string text: "text"

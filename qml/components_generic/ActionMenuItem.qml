@@ -30,7 +30,7 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        hoverEnabled: isDesktop && visible
+        hoverEnabled: (isDesktop && enabled)
 
         onClicked: actionMenuItem.clicked()
         onPressAndHold: actionMenuItem.pressAndHold()

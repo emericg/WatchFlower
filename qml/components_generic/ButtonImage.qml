@@ -34,7 +34,7 @@ Item {
     MouseArea {
         anchors.fill: parent
         propagateComposedEvents: false
-        hoverEnabled: isDesktop
+        hoverEnabled: (isDesktop && control.enabled)
 
         onClicked: control.clicked()
         onPressAndHold: control.pressAndHold()

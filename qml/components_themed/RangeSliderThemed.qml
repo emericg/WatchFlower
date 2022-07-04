@@ -38,6 +38,24 @@ T.RangeSlider {
         radius: (width / 2)
         color: first.pressed ? Theme.colorSecondary : Theme.colorPrimary
         border.color: first.pressed ? Theme.colorSecondary : Theme.colorPrimary
+
+        MouseArea {
+            anchors.fill: parent
+            anchors.margins: -10
+            z: -1
+
+            acceptedButtons: Qt.NoButton
+            hoverEnabled: (isDesktop && control.enabled)
+            propagateComposedEvents: false
+
+            Rectangle {
+                anchors.fill: parent
+                radius: width
+                color: Theme.colorPrimary
+                opacity: parent.containsMouse ? 0.2 : 0
+                Behavior on opacity { NumberAnimation { duration: 233 } }
+            }
+        }
     }
 
     second.handle: Rectangle {
@@ -48,5 +66,23 @@ T.RangeSlider {
         radius: (width / 2)
         color: second.pressed ? Theme.colorSecondary : Theme.colorPrimary
         border.color: second.pressed ? Theme.colorSecondary : Theme.colorPrimary
+
+        MouseArea {
+            anchors.fill: parent
+            anchors.margins: -10
+            z: -1
+
+            acceptedButtons: Qt.NoButton
+            hoverEnabled: (isDesktop && control.enabled)
+            propagateComposedEvents: false
+
+            Rectangle {
+                anchors.fill: parent
+                radius: width
+                color: Theme.colorPrimary
+                opacity: parent.containsMouse ? 0.2 : 0
+                Behavior on opacity { NumberAnimation { duration: 233 } }
+            }
+        }
     }
 }

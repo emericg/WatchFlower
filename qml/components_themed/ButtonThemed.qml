@@ -14,7 +14,8 @@ T.Button {
 
     width: contentItem.contentWidth + leftPadding + rightPadding
 
-    padding: 12
+    leftPadding: 12
+    rightPadding: 12
 
     font.pixelSize: Theme.fontSizeComponent
 

@@ -45,7 +45,7 @@ Item {
     MouseArea {
         anchors.fill: control
 
-        hoverEnabled: isDesktop
+        hoverEnabled: (isDesktop && control.enabled)
         propagateComposedEvents: false
 
         onClicked: control.clicked()

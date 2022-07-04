@@ -57,6 +57,7 @@ qt_add_executable(WatchFlower
     src/thirdparty/RC4/rc4.cpp src/thirdparty/RC4/rc4.h
     src/main.cpp
     qml/qml.qrc
+    qml/components.qrc
     i18n/i18n.qrc
     assets/assets.qrc
     assets/devices.qrc

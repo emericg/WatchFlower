@@ -36,5 +36,23 @@ T.Slider {
         radius: (width / 2)
         color: control.pressed ? Theme.colorSecondary : Theme.colorPrimary
         border.color: control.pressed ? Theme.colorPrimary : Theme.colorPrimary
+
+        MouseArea {
+            anchors.fill: parent
+            anchors.margins: -10
+            z: -1
+
+            acceptedButtons: Qt.NoButton
+            hoverEnabled: (isDesktop && control.enabled)
+            propagateComposedEvents: false
+
+            Rectangle {
+                anchors.fill: parent
+                radius: width
+                color: Theme.colorPrimary
+                opacity: (control.pressed || parent.containsMouse) ? 0.2 : 0
+                Behavior on opacity { NumberAnimation { duration: 233 } }
+            }
+        }
     }
 }

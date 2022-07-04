@@ -48,7 +48,7 @@ Item {
         id: mousearea
         anchors.fill: parent
 
-        hoverEnabled: isDesktop
+        hoverEnabled: (isDesktop && control.enabled)
 
         onClicked: control.clicked()
         onPressAndHold: control.pressAndHold()

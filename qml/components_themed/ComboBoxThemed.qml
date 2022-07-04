@@ -26,6 +26,7 @@ T.ComboBox {
 
         radius: Theme.componentRadius
         color: control.down ? Theme.colorComponentDown : Theme.colorComponent
+        opacity: enabled ? 1.0 : 0.33
         border.width: 1
         border.color: Theme.colorComponentBorder
     }
@@ -41,6 +42,7 @@ T.ComboBox {
         verticalAlignment: Text.AlignVCenter
 
         color: Theme.colorComponentContent
+        opacity: enabled ? 1.0 : 0.33
     }
 
     ////////////////////////////////////////////////////////////////////////////

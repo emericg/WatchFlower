@@ -23,7 +23,6 @@ Switch {
         radius: (width / 2)
 
         color: Theme.colorComponentBackground
-        Behavior on color { ColorAnimation { duration: 133; easing.type: Easing.InOutCirc; } }
 
         border.color: Theme.colorComponentBorder
         border.width: Theme.componentBorderWidth
