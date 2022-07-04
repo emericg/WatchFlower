@@ -32,6 +32,7 @@
 #include "utils_language.h"
 #if defined(Q_OS_MACOS)
 #include "utils_os_macosdock.h"
+#include "MenubarManager.h"
 #endif
 
 #include <MobileUI/MobileUI.h>
@@ -150,6 +151,7 @@ int main(int argc, char *argv[])
     // Init components
     SettingsManager *sm = SettingsManager::getInstance();
     SystrayManager *st = SystrayManager::getInstance();
+    MenubarManager *mb = MenubarManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
     if (!sm || !st || !nm || !dm)
@@ -188,6 +190,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
+    engine_context->setContextProperty("menubarManager", mb);
     engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
@@ -217,8 +220,12 @@ int main(int argc, char *argv[])
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS) // desktop section
 
+    // React to secondary instances
+    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
+    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
+
     // Set systray?
-    st->initSettings(&app, window);
+    st->setupSystray(&app, window);
     if (sm->getSysTray()) st->installSystray();
 
 #if defined(Q_OS_LINUX)
@@ -228,9 +235,12 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_MACOS)
+    // menu bar
+    mb->setupMenubar(window, dm);
+
+    // dock
     MacOSDockHandler *dockIconHandler = MacOSDockHandler::getInstance();
-    QObject::connect(dockIconHandler, &MacOSDockHandler::dockIconClicked, window, &QQuickWindow::show);
-    QObject::connect(dockIconHandler, &MacOSDockHandler::dockIconClicked, window, &QQuickWindow::raise);
+    dockIconHandler->setupDock(window);
     engine_context->setContextProperty("utilsDock", dockIconHandler);
 #endif
 

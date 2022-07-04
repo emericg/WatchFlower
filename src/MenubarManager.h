@@ -15,79 +15,72 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * \date      2018
+ * \date      2022
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef SYSTRAY_MANAGER_H
-#define SYSTRAY_MANAGER_H
+#ifndef MENUBAR_MANAGER_H
+#define MENUBAR_MANAGER_H
 /* ************************************************************************** */
 
 #include <QObject>
-#include <QSystemTrayIcon>
-#include <QTimer>
+
+class DeviceManager;
 
 QT_FORWARD_DECLARE_CLASS(QMenu)
 QT_FORWARD_DECLARE_CLASS(QAction)
-QT_FORWARD_DECLARE_CLASS(QApplication)
 QT_FORWARD_DECLARE_CLASS(QQuickWindow)
 
 /* ************************************************************************** */
 
 /*!
- * \brief The SystrayManager class
+ * \brief The MenubarManager class
  */
-class SystrayManager: public QObject
+class MenubarManager: public QObject
 {
     Q_OBJECT
 
     QQuickWindow *m_saved_view = nullptr;
-    QApplication *m_saved_app = nullptr;
+    DeviceManager *m_saved_devicemanager = nullptr;
 
-    QSystemTrayIcon *m_sysTray = nullptr;
-    QIcon *m_sysTrayIcon = nullptr;
-    QMenu *m_sysTrayMenu = nullptr;
-    QAction *m_actionShow = nullptr;
-    QAction *m_actionDeviceList = nullptr;
-    QAction *m_actionSettings = nullptr;
-    QAction *m_actionExit = nullptr;
+    QMenu *m_menuSensors = nullptr;
+    QAction *m_actionSensorList = nullptr;
+    QAction *m_actionSensorScan = nullptr;
+    QAction *m_actionSensorRefresh = nullptr;
 
-    QTimer m_retryTimer;
-    int retryCount = 6;
+    QMenu *m_menuHelp = nullptr;
+    QAction *m_actionAbout = nullptr;
+    QAction *m_actionWebsite = nullptr;
+    QAction *m_actionIssueTracker = nullptr;
+    QAction *m_actionReleaseNotes = nullptr;
+    QAction *m_actionTutorial = nullptr;
 
-    static SystrayManager *instance;
+    static MenubarManager *instance;
 
-    SystrayManager();
-    ~SystrayManager();
-
-    void initSystray();
+    MenubarManager();
+    ~MenubarManager();
 
 signals:
-    void showClicked();
-    void hideClicked();
     void sensorsClicked();
     void settingsClicked();
-    void quitClicked();
+    void aboutClicked();
+    void tutorialClicked();
 
 public:
-    static SystrayManager *getInstance();
-    void setupSystray(QApplication *app, QQuickWindow *view);
-
-public slots:
-    bool installSystray();
-    void REinstallSystray();
-    void removeSystray();
-    void sendNotification(QString &text);
+    static MenubarManager *getInstance();
+    void setupMenubar(QQuickWindow *view, DeviceManager *dm);
 
 private slots:
-    void trayClicked(QSystemTrayIcon::ActivationReason r);
-    void showHideButton();
-    void sensorsButton();
-    void settingsButton();
-
-    void visibilityChanged();
-    void aboutToBeDestroyed();
+    void sensorList();
+    void sensorScan();
+    void sensorRefresh();
+    void settings();
+    void about();
+    void website();
+    void issuetracker();
+    void releasenotes();
+    void tutorial();
 };
 
 /* ************************************************************************** */
-#endif // SYSTRAY_MANAGER_H
+#endif // MENUBAR_MANAGER_H

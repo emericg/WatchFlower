@@ -28,6 +28,8 @@
 
 #include <QObject>
 
+QT_FORWARD_DECLARE_CLASS(QQuickWindow)
+
 /*!
  * \brief macOS dock click handler
  *
@@ -37,6 +39,8 @@ class MacOSDockHandler : public QObject
 {
     Q_OBJECT
 
+    QQuickWindow *m_saved_view = nullptr;
+
     MacOSDockHandler();
     ~MacOSDockHandler();
 
@@ -45,6 +49,8 @@ signals:
 
 public:
     static MacOSDockHandler *getInstance();
+
+    void setupDock(QQuickWindow *view);
 
     Q_INVOKABLE static void toggleDockIconVisibility(bool show);
 };

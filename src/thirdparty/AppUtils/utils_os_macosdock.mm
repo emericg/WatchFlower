@@ -22,6 +22,7 @@
 
 #if defined(Q_OS_MACOS)
 
+#include <QQuickWindow>
 #include <objc/runtime.h>
 #include <AppKit/AppKit.h>
 #import <Foundation/Foundation.h>
@@ -70,6 +71,20 @@ MacOSDockHandler::~MacOSDockHandler()
 }
 
 /* ************************************************************************** */
+
+void MacOSDockHandler::setupDock(QQuickWindow *view)
+{
+    if (!view)
+    {
+        qWarning() << "MacOSDockHandler::setupDock() no QQuickWindow passed";
+        return;
+    }
+
+    m_saved_view = view;
+
+    QObject::connect(this, &MacOSDockHandler::dockIconClicked, m_saved_view, &QQuickWindow::show);
+    QObject::connect(this, &MacOSDockHandler::dockIconClicked, m_saved_view, &QQuickWindow::raise);
+}
 
 void MacOSDockHandler::toggleDockIconVisibility(bool show)
 {

@@ -35,6 +35,7 @@ SOURCES  += src/main.cpp \
             src/SettingsManager.cpp \
             src/DatabaseManager.cpp \
             src/SystrayManager.cpp \
+            src/MenubarManager.cpp \
             src/NotificationManager.cpp \
             src/AndroidService.cpp \
             src/PlantDatabase.cpp \
@@ -74,6 +75,7 @@ SOURCES  += src/main.cpp \
 
 HEADERS  += src/SettingsManager.h \
             src/DatabaseManager.h \
+            src/MenubarManager.h \
             src/SystrayManager.h \
             src/NotificationManager.h \
             src/AndroidService.h \
