@@ -19,6 +19,7 @@ qt_add_executable(WatchFlower
     src/DatabaseManager.cpp src/DatabaseManager.h
     src/SettingsManager.cpp src/SettingsManager.h
     src/SystrayManager.cpp src/SystrayManager.h
+    src/MenubarManager.cpp src/MenubarManager.h
     src/NotificationManager.cpp src/NotificationManager.h
     src/PlantDatabase.cpp src/PlantDatabase.h
     src/Plant.cpp src/Plant.h

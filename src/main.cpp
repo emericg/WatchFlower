@@ -22,6 +22,7 @@
 #include "DatabaseManager.h"
 #include "SettingsManager.h"
 #include "SystrayManager.h"
+#include "MenubarManager.h"
 #include "NotificationManager.h"
 #include "DeviceManager.h"
 #include "PlantDatabase.h"
@@ -32,7 +33,6 @@
 #include "utils_language.h"
 #if defined(Q_OS_MACOS)
 #include "utils_os_macosdock.h"
-#include "MenubarManager.h"
 #endif
 
 #include <MobileUI/MobileUI.h>
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
     MenubarManager *mb = MenubarManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
-    if (!sm || !st || !nm || !dm)
+    if (!sm || !st ||!mb || !nm || !dm)
     {
         qWarning() << "Cannot init WatchFlower components!";
         return EXIT_FAILURE;
@@ -224,9 +224,12 @@ int main(int argc, char *argv[])
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
     QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
 
-    // Set systray?
+    // Systray?
     st->setupSystray(&app, window);
     if (sm->getSysTray()) st->installSystray();
+
+    // Menu bar
+    mb->setupMenubar(window, dm);
 
 #if defined(Q_OS_LINUX)
     // GNOME hack for the mysterious disappearences of the tray icon with TopIcon Plus
@@ -235,16 +238,13 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_MACOS)
-    // menu bar
-    mb->setupMenubar(window, dm);
-
     // dock
     MacOSDockHandler *dockIconHandler = MacOSDockHandler::getInstance();
     dockIconHandler->setupDock(window);
     engine_context->setContextProperty("utilsDock", dockIconHandler);
 #endif
 
-#endif // desktop section
+#endif // Desktop section
 
 #if defined(Q_OS_ANDROID)
     QNativeInterface::QAndroidApplication::hideSplashScreen(333);

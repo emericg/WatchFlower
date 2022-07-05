@@ -134,7 +134,7 @@ Item {
 
                         radius: 2
                         color: "white"
-                        border.color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ccc"
+                        border.color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ddd"
                         border.width: 2
 
                         Text {
