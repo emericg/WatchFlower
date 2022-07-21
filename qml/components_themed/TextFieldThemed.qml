@@ -35,8 +35,8 @@ T.TextField {
     property string colorPlaceholderText: Theme.colorSubText
     property string colorBorder: Theme.colorComponentBorder
     property string colorBackground: Theme.colorComponentBackground
-    property string colorSelectedText: Theme.colorHighContrast
     property string colorSelection: Theme.colorPrimary
+    property string colorSelectedText: Theme.colorHighContrast
 
     PlaceholderText {
         id: placeholder

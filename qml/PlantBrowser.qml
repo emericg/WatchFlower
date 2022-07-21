@@ -21,6 +21,7 @@ Loader {
         if (status === Loader.Ready) {
             // Reset state
             item.resetPlantClicked()
+            item.focusSearchBox()
         } else {
             // Load the plant browser
             active = true
@@ -81,6 +82,7 @@ Loader {
                 }
             } else {
                 appContent.state = "PlantBrowser"
+                focusSearchBox()
             }
         }
 
@@ -98,6 +100,17 @@ Loader {
             itemPlantViewer.visible = false
             itemPlantViewer.enabled = false
             itemPlantViewer.contentY = 0
+        }
+
+        function focusSearchBox() {
+            // Search focus is set on desktop
+            if (isDesktop) {
+                plantSearchBox.focus = true
+            }
+        }
+
+        Component.onCompleted: {
+            focusSearchBox()
         }
 
         ////////////////
@@ -125,6 +138,8 @@ Loader {
                 z: 5
                 height: 40
                 placeholderText: qsTr("Search for plants")
+                selectByMouse: true
+                colorSelectedText: "white"
 
                 onDisplayTextChanged: plantDatabase.filter(displayText)
 

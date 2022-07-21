@@ -362,17 +362,15 @@ Flickable {
                     id: lumiScale
                     anchors.top: rangeSlider_lumi.bottom
                     anchors.topMargin: 2
-                    anchors.right: parent.right
-                    anchors.rightMargin: 8
-                    anchors.left: parent.left
-                    anchors.leftMargin: 8
+                    anchors.horizontalCenter: rangeSlider_lumi.horizontalCenter
 
-                    spacing: 2
+                    width: rangeSlider_lumi.width - 2*rangeSlider_lumi.padding - 4
+                    spacing: 3
 
                     Rectangle {
                         id: lux_1
-                        height: 18
-                        width: (lumiScale.width - 4) * 0.1 // 0 to 1k
+                        height: 20
+                        width: (lumiScale.width - 3*parent.spacing) * 0.1 // 0 to 1k
                         visible: currentDevice.deviceIsInside
                         color: Theme.colorGrey
                         Text {
@@ -388,8 +386,8 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_2
-                        height: 18
-                        width: (lumiScale.width - 8) * 0.2 // 1k to 3k
+                        height: 20
+                        width: (lumiScale.width - 3*parent.spacing) * 0.2 // 1k to 3k
                         visible: currentDevice.deviceIsInside
                         color: "grey"
                         Text {
@@ -405,8 +403,8 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_3
-                        height: 18
-                        width: (lumiScale.width - 16) * 0.5 // 3k to 8k
+                        height: 20
+                        width: (lumiScale.width - 3*parent.spacing) * 0.5 // 3k to 8k
                         visible: currentDevice.deviceIsInside
                         color: Theme.colorYellow
                         Text {
@@ -422,8 +420,8 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_4
-                        height: 18
-                        width: (lumiScale.width - 0) * 0.2 // 8k+
+                        height: 20
+                        width: (lumiScale.width - 3*parent.spacing) * 0.2 // 8k+
                         visible: currentDevice.deviceIsInside
                         color: "orange"
                         Text {
@@ -440,8 +438,8 @@ Flickable {
 
                     Rectangle {
                         id: lux_5
-                        height: 18
-                        width: (lumiScale.width - 6) * 0.16 // 0-15k
+                        height: 20
+                        width: (lumiScale.width - 2*parent.spacing) * 0.16 // 0-15k
                         visible: currentDevice.deviceIsOutside
                         color: "grey"
                         Text {
@@ -457,8 +455,8 @@ Flickable {
                     }
                     Rectangle {
                         id: lux_6
-                        height: 18
-                        width: (lumiScale.width - 6) * 0.84 // 15k+
+                        height: 20
+                        width: (lumiScale.width - 2*parent.spacing) * 0.84 // 15k+
                         visible: currentDevice.deviceIsOutside
                         color: Theme.colorYellow
                         Text {

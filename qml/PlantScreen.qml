@@ -28,7 +28,6 @@ Grid {
     ////////
 
     property var currentPlant: null
-    property string currentPlantNameClean
 
     onCurrentPlantChanged: {
         if (typeof currentPlant === "undefined" || !currentPlant) return
@@ -60,8 +59,6 @@ Grid {
         console.log("soil Moisture m/m: " + currentPlant.soilMoist_min + " / " + currentPlant.soilMoist_max)
         console.log("mmol m/m: " + currentPlant.lightMmol_min + " / " + currentPlant.lightMmol_max)
 */
-        currentPlantNameClean = currentPlant.nameBotanical_url
-
         plantNameBotanical.text = currentPlant.nameBotanical
         plantNameVariety.text = currentPlant.nameVariety
         plantNameCommon.text = currentPlant.nameCommon
@@ -178,7 +175,7 @@ Grid {
         rangeSlider_lumi_mmol.setValues(currentPlant.lightMmol_min, Math.max(currentPlant.lightMmol_min, currentPlant.lightMmol_max))
     }
 
-    Flickable { ////////////////////////////////////////////////////////
+    Flickable { ////////////////////////////////////////////////////////////////
         width: plantScreen.www1
         height: (uiMode === 1) ? columnPlant.height + 24 : plantScreen.parentHeight
         contentWidth: columnPlant.width
@@ -831,7 +828,7 @@ Grid {
                         source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                         sourceSize: 16
 
-                        onClicked: Qt.openUrlExternally("https://wikipedia.org/wiki/" + plantScreen.currentPlantNameClean)
+                        onClicked: Qt.openUrlExternally("https://wikipedia.org/wiki/" + currentPlant.nameBotanical_url)
                     }
 
                     ButtonWireframeIcon {
@@ -843,7 +840,19 @@ Grid {
                         source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                         sourceSize: 16
 
-                        onClicked: Qt.openUrlExternally("https://hortipedia.com/" + plantScreen.currentPlantNameClean)
+                        onClicked: Qt.openUrlExternally("https://hortipedia.com/" + currentPlant.nameBotanical_url)
+                    }
+
+                    ButtonWireframeIcon {
+                        layoutDirection: Qt.RightToLeft
+                        primaryColor: Theme.colorPrimary
+                        secondaryColor: Theme.colorBackground
+
+                        text: "RHS"
+                        source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                        sourceSize: 16
+
+                        onClicked: Qt.openUrlExternally("https://www.rhs.org.uk/plants/search-results?query=" + currentPlant.nameBotanical)
                     }
                 }
             }
@@ -852,7 +861,7 @@ Grid {
         }
     }
 
-    Flickable { ////////////////////////////////////////////////////////
+    Flickable { ////////////////////////////////////////////////////////////////
         width: plantScreen.www2
         height: (uiMode === 1) ? columnCare.height + 24 : plantScreen.parentHeight
         contentWidth: columnCare.width
@@ -1202,7 +1211,7 @@ Grid {
 
                 color: Theme.colorComponentBackground
                 border.color: Theme.colorSeparator
-                border.width: 1
+                border.width: 2
 
                 IconSvg {
                     width: 28
@@ -1213,7 +1222,7 @@ Grid {
                     anchors.leftMargin: 8
 
                     source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorIcon
+                    color: Theme.colorSubText
                 }
 
                 Text {
@@ -1256,7 +1265,7 @@ Grid {
         }
     }
 
-    Flickable { ////////////////////////////////////////////////////////
+    Flickable { ////////////////////////////////////////////////////////////////
         width: plantScreen.www2
         height: (uiMode === 1) ? columnLimits.height + 24 : plantScreen.parentHeight
         contentWidth: columnLimits.width
@@ -1388,7 +1397,7 @@ Grid {
 
             Item {
                 id: itemSoilPH
-                height: 40
+                height: 64
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: parent.right
@@ -1434,9 +1443,105 @@ Grid {
                     enabled: false
                     colorBg: Theme.colorYellow
                     colorFg: Theme.colorGreen
-                    from: 0
-                    to: 12
+                    from: 4
+                    to: 10
                     stepSize: 0.1
+                    tofixed: 1
+
+                    Row {
+                        id: phScale // 4 to 10
+                        anchors.top: rangeSlider_soilPH.bottom
+                        anchors.topMargin: 8
+                        anchors.horizontalCenter: rangeSlider_soilPH.horizontalCenter
+
+                        spacing: 3
+                        property int phsz: (rangeSlider_soilPH.width - 2*rangeSlider_soilPH.padding - 4 - 5*spacing) / 6
+
+                        Rectangle { // 4
+                            width: parent.phsz
+                            height: 20
+                            radius: Theme.componentRadius
+                            color: "#ff914d"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "4"
+                                color: "white"
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                            }
+                        }
+                        Rectangle { // 5
+                            width: parent.phsz
+                            height: 20
+                            radius: Theme.componentRadius
+                            color: "#ffbd59"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "5"
+                                color: "white"
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                            }
+                        }
+                        Rectangle { // 6
+                            width: parent.phsz
+                            height: 20
+                            radius: Theme.componentRadius
+                            color: "#ffde59"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "6"
+                                color: "white"
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                            }
+                        }
+                        Rectangle { // 7
+                            width: parent.phsz
+                            height: 20
+                            radius: Theme.componentRadius
+                            color: "#c9e265"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "7"
+                                color: "white"
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                            }
+                        }
+                        Rectangle { // 8
+                            width: parent.phsz
+                            height: 20
+                            radius: Theme.componentRadius
+                            color: "#03989e"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "8"
+                                color: "white"
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                            }
+                        }
+                        Rectangle { // 9
+                            width: parent.phsz
+                            height: 20
+                            radius: Theme.componentRadius
+                            color: "#2163bb"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: "9"
+                                color: "white"
+                                font.bold: true
+                                font.pixelSize: Theme.fontSizeContentVerySmall
+                            }
+                        }
+                    }
                 }
             }
 
@@ -1607,19 +1712,19 @@ Grid {
                         id: lumiScale
                         anchors.top: rangeSlider_lumi_lux.bottom
                         anchors.topMargin: 8
-                        anchors.left: parent.left
-                        anchors.leftMargin: 8
-                        anchors.right: parent.right
-                        anchors.rightMargin: 8
+                        anchors.horizontalCenter: rangeSlider_lumi_lux.horizontalCenter
 
-                        spacing: 2
+                        width: rangeSlider_lumi_lux.width - 2*rangeSlider_lumi_lux.padding - 4
+                        spacing: 3
 
                         Rectangle {
                             id: lux_1
-                            height: 18
-                            width: (lumiScale.width - 4) * 0.1 // 0 to 1k
+                            height: 20
+                            width: (lumiScale.width - 3*parent.spacing) * 0.1 // 0 to 1k
+                            radius: 2
                             visible: true
                             color: Theme.colorGrey
+
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("low")
@@ -1632,10 +1737,12 @@ Grid {
                         }
                         Rectangle {
                             id: lux_2
-                            height: 18
-                            width: (lumiScale.width - 8) * 0.2 // 1k to 3k
+                            height: 20
+                            width: (lumiScale.width - 3*parent.spacing) * 0.2 // 1k to 3k
+                            radius: 2
                             visible: true
                             color: "grey"
+
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("indirect")
@@ -1648,10 +1755,12 @@ Grid {
                         }
                         Rectangle {
                             id: lux_3
-                            height: 18
-                            width: (lumiScale.width - 16) * 0.5 // 3k to 8k
+                            height: 20
+                            width: (lumiScale.width - 3*parent.spacing) * 0.5 // 3k to 8k
+                            radius: 2
                             visible: true
                             color: Theme.colorYellow
+
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("direct light (indoor)")
@@ -1664,10 +1773,12 @@ Grid {
                         }
                         Rectangle {
                             id: lux_4
-                            height: 18
-                            width: (lumiScale.width - 0) * 0.2 // 8k+
+                            height: 20
+                            width: (lumiScale.width - 3*parent.spacing) * 0.2 // 8k+
+                            radius: 2
                             visible: true
                             color: "orange"
+
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("sunlight")
@@ -1681,10 +1792,12 @@ Grid {
 
                         Rectangle {
                             id: lux_5
-                            height: 18
-                            width: (lumiScale.width - 6) * 0.16 // 0-15k
+                            height: 20
+                            width: (lumiScale.width - 3*parent.spacing) * 0.16 // 0-15k
+                            radius: 2
                             visible: false
                             color: "grey"
+
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("indirect")
@@ -1697,10 +1810,12 @@ Grid {
                         }
                         Rectangle {
                             id: lux_6
-                            height: 18
-                            width: (lumiScale.width - 6) * 0.84 // 15k+
+                            height: 20
+                            width: (lumiScale.width - 3*parent.spacing) * 0.84 // 15k+
+                            radius: 2
                             visible: false
                             color: Theme.colorYellow
+
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("sunlight")

@@ -73,8 +73,8 @@ class Plant: public QObject
     Q_PROPERTY(int soilMoist_max READ getSoilMoist_max CONSTANT)
     Q_PROPERTY(int soilCondu_min READ getSoilCondu_min CONSTANT)
     Q_PROPERTY(int soilCondu_max READ getSoilCondu_max CONSTANT)
-    Q_PROPERTY(int soilPH_min READ getSoilPH_min CONSTANT)
-    Q_PROPERTY(int soilPH_max READ getSoilPH_max CONSTANT)
+    Q_PROPERTY(float soilPH_min READ getSoilPH_min CONSTANT)
+    Q_PROPERTY(float soilPH_max READ getSoilPH_max CONSTANT)
     Q_PROPERTY(float envTemp_min READ getEnvTemp_min CONSTANT)
     Q_PROPERTY(float envTemp_max READ getEnvTemp_max CONSTANT)
     Q_PROPERTY(float envTempIdeal_min READ getEnvTempIdeal_min CONSTANT)
@@ -109,10 +109,12 @@ class Plant: public QObject
 
     QString size_diameter;
     QString size_height;
+
     QStringList colors_leaf;
     QStringList colors_bract;
     QStringList colors_flower;
     QStringList colors_fruit;
+
     QString period_planting;
     QString period_growth;
     QString period_blooming;
@@ -183,8 +185,8 @@ public:
     int getSoilMoist_max() { return soilRH_max; }
     int getSoilCondu_min() { return soilEC_min; }
     int getSoilCondu_max() { return soilEC_max; }
-    int getSoilPH_min() { return soilPH_min; }
-    int getSoilPH_max() { return soilPH_max; }
+    float getSoilPH_min() { return soilPH_min; }
+    float getSoilPH_max() { return soilPH_max; }
     float getEnvTemp_min() { return envTemp_min; }
     float getEnvTemp_max() { return envTemp_max; }
     float getEnvTempIdeal_min() { return envTempIdeal_min; }

@@ -18,6 +18,7 @@ T.RangeSlider {
     // settings
     property int hhh: 18
     property string unit
+    property int tofixed: 0
     property bool kshort: false
 
     // colors
@@ -68,7 +69,7 @@ T.RangeSlider {
             text: {
                 var vvalue = first.value
                 if (control.unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
-                vvalue = vvalue.toFixed(0)
+                vvalue = vvalue.toFixed(control.tofixed)
                 return ((control.kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
@@ -103,7 +104,7 @@ T.RangeSlider {
             text: {
                 var vvalue = second.value
                 if (control.unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
-                vvalue = vvalue.toFixed(0)
+                vvalue = vvalue.toFixed(control.tofixed)
                 return ((control.kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
