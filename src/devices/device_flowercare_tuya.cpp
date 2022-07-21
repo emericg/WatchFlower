@@ -64,8 +64,6 @@ DeviceFlowerCare_tuya::DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObj
 DeviceFlowerCare_tuya::~DeviceFlowerCare_tuya()
 {
     delete serviceData;
-    delete serviceHandshake;
-    delete serviceHistory;
 }
 
 /* ************************************************************************** */
@@ -106,24 +104,14 @@ void DeviceFlowerCare_tuya::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
+        QBluetoothUuid a(QString("00000001-0000-1001-8001-00805f9b07d0")); // W // W no resp
+        QBluetoothUuid b(QString("00000002-0000-1001-8001-00805f9b07d0")); // NOTIFY
+
         {
             serviceData = m_bleController->createServiceObject(uuid);
             if (!serviceData)
                 qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
         }
-    }
-}
-
-/* ************************************************************************** */
-
-void DeviceFlowerCare_tuya::askForReading()
-{
-    if (serviceData)
-    {
-        QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
-        QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-        serviceData->readCharacteristic(chb);
     }
 }
 
@@ -135,94 +123,19 @@ void DeviceFlowerCare_tuya::serviceDetailsDiscovered_data(QLowEnergyService::Ser
     {
         //qDebug() << "DeviceFlowerCare_tuya::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData && m_ble_action == DeviceUtils::ACTION_UPDATE)
-        {
-            int batt = -1;
-            QString fw;
-
-            QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handle 0x38
-            QLowEnergyCharacteristic chc = serviceData->characteristic(c);
-            if (chc.value().size() > 0)
-            {
-                batt = chc.value().at(0);
-                fw = chc.value().remove(0, 2);
-                setBatteryFirmware(batt, fw);
-            }
-
-            bool need_modechange = true;
-            if (m_deviceFirmware.size() == 5)
-            {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
-                {
-                    m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
-                }
-                if (VersionChecker(m_deviceFirmware) <= VersionChecker("2.6.6"))
-                {
-                    need_modechange = false;
-                }
-            }
-
-            if (need_modechange) // if firmware > 2.6.6
-            {
-                // Change device mode
-                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
-                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-                serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
-            }
-
-            // Ask for a data reading
-            askForReading();
-        }
-
         if (serviceData)
         {
-            QBluetoothUuid l(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
-            QLowEnergyCharacteristic chl = serviceData->characteristic(l);
-
-            if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
-            {
-                // Make the LED blink
-                serviceData->writeCharacteristic(chl, QByteArray::fromHex("FDFF"), QLowEnergyService::WriteWithoutResponse);
-
-                m_bleController->disconnectFromDevice();
-            }
-            else
-            {
-                // Make sure the LED is OFF
-                //if (chl.value().size() == 2 && (chl.value().at(0) != 0 || chl.value().at(1) != 0))
-                //{
-                //    serviceData->writeCharacteristic(chl, QByteArray::fromHex("0000"), QLowEnergyService::WriteWithoutResponse);
-                //    qWarning() << "FlowerCare LED was ON!";
-                //}
-            }
+            //
         }
-    }
-}
-
-void DeviceFlowerCare_tuya::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceState newState)
-{
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
-    {
-        //qDebug() << "DeviceFlowerCare_tuya::serviceDetailsDiscovered_handshake(" << m_deviceAddress << ") > ServiceDiscovered";
-    }
-}
-
-void DeviceFlowerCare_tuya::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
-{
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
-    {
-        //qDebug() << "DeviceFlowerCare_tuya::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
     }
 }
 
 /* ************************************************************************** */
 
-void DeviceFlowerCare_tuya::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+void DeviceFlowerCare_tuya::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
     //qDebug() << "DeviceFlowerCare_tuya::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
-    Q_UNUSED(value)
 }
 
 void DeviceFlowerCare_tuya::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
@@ -240,38 +153,8 @@ void DeviceFlowerCare_tuya::bleReadDone(const QLowEnergyCharacteristic &c, const
 
     if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
     {
-        // MiFlora data // handle 0x35
-
         if (value.size() > 0)
         {
-            // first read might send bad data (0x aa bb cc dd ee ff 99 88 77 66...)
-            // until the first write is done
-            if (data[0] == 0xAA && data[1] == 0xBB)
-                return;
-
-            m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
-            m_luminosityLux = data[3] + (data[4] << 8);
-            m_soilMoisture = data[7];
-            m_soilConductivity = data[8] + (data[9] << 8);
-
-            m_lastUpdate = QDateTime::currentDateTime();
-
-            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
-            {
-                refreshRealtime();
-
-                // Ask for a new data reading, but not too often...
-                QTimer::singleShot(1000, this, SLOT(askForReading()));
-            }
-            else
-            {
-                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                                m_soilMoisture, m_soilConductivity, -99.f, -99.f,
-                                                m_temperature, -99.f, m_luminosityLux);
-
-                refreshDataFinished(status);
-                m_bleController->disconnectFromDevice();
-            }
 /*
             qDebug() << "* DeviceFlowerCare_tuya update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;

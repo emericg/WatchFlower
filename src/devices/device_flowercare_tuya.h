@@ -59,12 +59,8 @@ private:
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
     void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceState newState);
-    void serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceData = nullptr;
-    QLowEnergyService *serviceHandshake = nullptr;
-    QLowEnergyService *serviceHistory = nullptr;
     QLowEnergyDescriptor m_notificationHandshake;
     QLowEnergyDescriptor m_notificationHistory;
 
@@ -76,9 +72,6 @@ private:
     QString m_deviceMacAddress;
     QByteArray m_key_challenge;
     QByteArray m_key_finish;
-
-private slots:
-    void askForReading();
 };
 
 /* ************************************************************************** */
