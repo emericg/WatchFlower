@@ -96,6 +96,11 @@ Item {
                 border.color: Theme.colorSeparator
                 border.width: 1
 
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: parent.visible = false
+                }
+
                 IconSvg {
                     width: 28
                     height: 28
@@ -192,6 +197,11 @@ Item {
                 color: Theme.colorComponentBackground
                 border.color: Theme.colorSeparator
                 border.width: 1
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: parent.visible = false
+                }
 
                 IconSvg {
                     width: 28
@@ -327,7 +337,7 @@ Item {
                         property real alpha: Math.random() * (3.14/2) + (3.14/4)
                         property real a: c * Math.cos(alpha)
                         property real b: c * Math.sin(alpha)
-                        property real c: radar.height * Math.abs(((boxDevice.deviceRssi)+10) / 100)
+                        property real c: radar.height * Math.abs(((boxDevice.deviceRssi)+12) / 100)
 
                         x: (radar.width / 2) - a
                         y: radar.height - b
@@ -341,15 +351,9 @@ Item {
                         border.color: boxDevice.selected ? Theme.colorSecondary : Qt.darker(color, 1.2)
 
                         color: {
-                            if (boxDevice.deviceRssi < 0) {
-                                if (boxDevice.deviceRssi > -65) return Theme.colorGreen
-                                if (boxDevice.deviceRssi > -85) return Theme.colorOrange
-                                if (boxDevice.deviceRssi > -100) return Theme.colorRed
-                            } else {
-                                if (boxDevice.deviceRssi < 65) return Theme.colorGreen
-                                if (boxDevice.deviceRssi < 85) return Theme.colorOrange
-                                if (boxDevice.deviceRssi < 100) return Theme.colorRed
-                            }
+                            if (Math.abs(boxDevice.deviceRssi) < 65) return Theme.colorGreen
+                            if (Math.abs(boxDevice.deviceRssi) < 85) return Theme.colorOrange
+                            if (Math.abs(boxDevice.deviceRssi) < 100) return Theme.colorRed
                             return Theme.colorRed
                         }
 
