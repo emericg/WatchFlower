@@ -43,7 +43,7 @@ Item {
 
             ////////////////
 
-            Rectangle {
+            Rectangle { // title
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -51,7 +51,6 @@ Item {
                 color: Theme.colorForeground
 
                 IconSvg {
-                    id: image_appsettings
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -63,9 +62,8 @@ Item {
                 }
 
                 Text {
-                    id: text_appsettings
-                    anchors.left: image_appsettings.right
-                    anchors.leftMargin: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Application")
@@ -288,12 +286,14 @@ Item {
                 anchors.leftMargin: screenPaddingLeft + 64
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                topPadding: -12
-                bottomPadding: 12
 
+                topPadding: -12
+                bottomPadding: isDesktop ? 12 : 0
                 visible: element_appThemeAuto.visible
 
-                text: qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
+                text: settingsManager.appThemeAuto ?
+                          qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.") :
+                          qsTr("Dark mode schedule is disabled.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -302,14 +302,13 @@ Item {
 
             ////////
 
-            Rectangle {
+            Rectangle { // spacer
                 height: 1
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorSeparator
+                visible: isDesktop
             }
-
-            ////////
 
             Item {
                 id: element_language
@@ -396,254 +395,7 @@ Item {
                 }
             }
 
-            ////////
-
-            Rectangle {
-                height: 1
-                anchors.left: parent.left
-                anchors.right: parent.right
-                color: Theme.colorSeparator
-            }
-
-            ////////
-
-            Item {
-                id: element_bluetoothControl
-                height: 48
-                anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
-                anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
-
-                // Android only
-                visible: (Qt.platform.os === "android")
-
-                IconSvg {
-                    id: image_bluetoothControl
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-                }
-
-                Text {
-                    id: text_bluetoothControl
-                    height: 40
-                    anchors.left: image_bluetoothControl.right
-                    anchors.leftMargin: 24
-                    anchors.right: switch_bluetoothControl.left
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Bluetooth control")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                SwitchThemedDesktop {
-                    id: switch_bluetoothControl
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
-
-                    checked: settingsManager.bluetoothControl
-                    onClicked: settingsManager.bluetoothControl = checked
-                }
-            }
-            Text {
-                id: legend_bluetoothControl
-                anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 64
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-
-                topPadding: -12
-                bottomPadding: 0
-                visible: element_bluetoothControl.visible
-
-                text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
-                textFormat: Text.PlainText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            Item {
-                id: element_bluetoothRange
-                height: 48
-                anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
-                anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
-
-                IconSvg {
-                    id: image_bluetoothRange
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
-                }
-
-                Text {
-                    id: text_bluetoothRange
-                    height: 40
-                    anchors.left: image_bluetoothRange.right
-                    anchors.leftMargin: 24
-                    anchors.right: switch_bluetoothRange.left
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Limit Bluetooth scanning range")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                SwitchThemedDesktop {
-                    id: switch_bluetoothRange
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
-
-                    checked: settingsManager.bluetoothLimitScanningRange
-                    onClicked: settingsManager.bluetoothLimitScanningRange = checked
-                }
-            }
-            Text {
-                id: legend_bluetoothRange
-                anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 64
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-
-                topPadding: -12
-                bottomPadding: 0
-                visible: element_bluetoothRange.visible
-
-                text: qsTr("Will only scan for sensors ~2m around you.")
-                textFormat: Text.PlainText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            Item {
-                id: element_bluetoothSimUpdate
-                height: 48
-                anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft
-                anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight
-
-                IconSvg {
-                    id: image_bluetoothSimUpdate
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
-                }
-
-                Text {
-                    id: text_bluetoothSimUpdate
-                    height: 40
-                    anchors.left: image_bluetoothSimUpdate.right
-                    anchors.leftMargin: 24
-                    anchors.right: isDesktop ? undefined : spinBox_bluetoothSimUpdate.left
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Simultaneous updates")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorText
-                    font.pixelSize: Theme.fontSizeContent
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                SliderValueSolid {
-                    id: slider_bluetoothSimUpdate
-                    anchors.left: text_bluetoothSimUpdate.right
-                    anchors.leftMargin: 16
-                    anchors.right: parent.right
-                    anchors.rightMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: isDesktop
-                    z: 1
-
-                    from: 1
-                    to: 6
-                    stepSize: 1
-                    wheelEnabled: false
-
-                    value: settingsManager.bluetoothSimUpdates
-                    onMoved: settingsManager.bluetoothSimUpdates = value
-                }
-                SpinBoxThemed {
-                    id: spinBox_bluetoothSimUpdate
-                    width: 128
-                    height: 36
-                    anchors.right: parent.right
-                    anchors.rightMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: isMobile
-                    z: 1
-
-                    from: 1
-                    to: 6
-                    stepSize: 1
-                    editable: false
-
-                    value: settingsManager.bluetoothSimUpdates
-                    onValueModified: settingsManager.bluetoothSimUpdates = value
-                }
-            }
-            Text {
-                id: legend_bluetoothSimUpdate
-                anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 64
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                topPadding: -12
-                bottomPadding: 12
-
-                visible: element_bluetoothSimUpdate.visible
-
-                text: qsTr("How many sensors should be updated at once.") + "<br>" +
-                      qsTr("A lower number improves Bluetooth synchronization reliability, at the expense of speed.")
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            Rectangle {
+            Rectangle { // spacer
                 height: 1
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -849,7 +601,9 @@ Item {
 
                 visible: (element_worker.visible && isDesktop)
 
-                text: qsTr("WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.")
+                text: settingsManager.systray ?
+                          qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensor data at regular interval.") :
+                          qsTr("WatchFlower is only active while the window is open.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -867,7 +621,9 @@ Item {
                 anchors.rightMargin: screenPaddingRight
 
                 // every platforms except iOS // also, need the systray
-                visible: (Qt.platform.os !== "ios") && settingsManager.systray
+                visible: (Qt.platform.os !== "ios")
+                enabled: settingsManager.systray
+                opacity: settingsManager.systray ? 1 : 0.4
 
                 IconSvg {
                     id: image_notifications
@@ -919,8 +675,11 @@ Item {
                 bottomPadding: 12
 
                 visible: (element_notifications.visible)
+                opacity: settingsManager.systray ? 1 : 0.4
 
-                text: qsTr("If a plant needs water, WatchFlower will bring it to your attention!")
+                text: settingsManager.notifications ?
+                          qsTr("If a plant needs water, WatchFlower will bring it to your attention!") :
+                          qsTr("If a plant needs water, WatchFlower can bring it to your attention.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -929,14 +688,288 @@ Item {
 
             ////////////////
 
-            Rectangle {
+            Rectangle { // title
+                height: 48
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                color: Theme.colorForeground
+
+                IconSvg {
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Bluetooth")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    font.bold: false
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+
+            ////////
+
+            Item {
+                id: element_bluetoothControl
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
+
+                // Android only
+                visible: (Qt.platform.os === "android")
+
+                IconSvg {
+                    id: image_bluetoothControl
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                }
+
+                Text {
+                    id: text_bluetoothControl
+                    height: 40
+                    anchors.left: image_bluetoothControl.right
+                    anchors.leftMargin: 24
+                    anchors.right: switch_bluetoothControl.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Bluetooth control")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedDesktop {
+                    id: switch_bluetoothControl
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    checked: settingsManager.bluetoothControl
+                    onClicked: settingsManager.bluetoothControl = checked
+                }
+            }
+            Text {
+                id: legend_bluetoothControl
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft + 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                topPadding: -12
+                bottomPadding: 0
+                visible: element_bluetoothControl.visible
+
+                text: settingsManager.bluetoothControl ?
+                          qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.") :
+                          qsTr("WatchFlower will enable your device's Bluetooth in order to operate.")
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////
+
+            Item {
+                id: element_bluetoothRange
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
+
+                IconSvg {
+                    id: image_bluetoothRange
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
+                }
+
+                Text {
+                    id: text_bluetoothRange
+                    height: 40
+                    anchors.left: image_bluetoothRange.right
+                    anchors.leftMargin: 24
+                    anchors.right: switch_bluetoothRange.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Limit Bluetooth scanning range")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedDesktop {
+                    id: switch_bluetoothRange
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    checked: settingsManager.bluetoothLimitScanningRange
+                    onClicked: settingsManager.bluetoothLimitScanningRange = checked
+                }
+            }
+            Text {
+                id: legend_bluetoothRange
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft + 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+
+                topPadding: -12
+                bottomPadding: 0
+                visible: element_bluetoothRange.visible
+
+                text: settingsManager.bluetoothLimitScanningRange ?
+                          qsTr("Will only scan for sensors approximately 2 meters around you.") :
+                          qsTr("Sensor scanning range is not limited.")
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////
+
+            Item {
+                id: element_bluetoothSimUpdate
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
+
+                IconSvg {
+                    id: image_bluetoothSimUpdate
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
+                }
+
+                Text {
+                    id: text_bluetoothSimUpdate
+                    height: 40
+                    anchors.left: image_bluetoothSimUpdate.right
+                    anchors.leftMargin: 24
+                    anchors.right: isDesktop ? undefined : spinBox_bluetoothSimUpdate.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Simultaneous updates")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorText
+                    font.pixelSize: Theme.fontSizeContent
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SliderValueSolid {
+                    id: slider_bluetoothSimUpdate
+                    anchors.left: text_bluetoothSimUpdate.right
+                    anchors.leftMargin: 16
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: isDesktop
+                    z: 1
+
+                    from: 1
+                    to: 6
+                    stepSize: 1
+                    wheelEnabled: false
+
+                    value: settingsManager.bluetoothSimUpdates
+                    onMoved: settingsManager.bluetoothSimUpdates = value
+                }
+                SpinBoxThemed {
+                    id: spinBox_bluetoothSimUpdate
+                    width: 128
+                    height: 36
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    visible: isMobile
+                    z: 1
+
+                    from: 1
+                    to: 6
+                    stepSize: 1
+                    editable: false
+
+                    value: settingsManager.bluetoothSimUpdates
+                    onValueModified: settingsManager.bluetoothSimUpdates = value
+                }
+            }
+            Text {
+                id: legend_bluetoothSimUpdate
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft + 64
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                topPadding: -12
+                bottomPadding: 12
+
+                visible: element_bluetoothSimUpdate.visible
+
+                text: qsTr("How many sensors should be updated at once.") + "<br>" +
+                      qsTr("A lower number improves Bluetooth synchronization reliability, at the expense of speed.")
+                textFormat: Text.StyledText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////////////
+
+            Rectangle { // title
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorForeground
 
                 IconSvg {
-                    id: image_plantsensor
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -948,9 +981,8 @@ Item {
                 }
 
                 Text {
-                    id: text_plantsensor
-                    anchors.left: image_plantsensor.right
-                    anchors.leftMargin: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Plant sensors")
@@ -1112,11 +1144,11 @@ Item {
                     height: 40
                     anchors.left: image_dynascale.right
                     anchors.leftMargin: 24
-                    anchors.right: switch_dynascale.left
+                    anchors.right: row_dynascale.left
                     anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Dynamic scale for indicators")
+                    text: qsTr("Data indicators scale")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -1124,28 +1156,124 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
 
-                SwitchThemedDesktop {
-                    id: switch_dynascale
+                Row {
+                    id: row_dynascale
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
+                    anchors.rightMargin: 12
+                    anchors.verticalCenter: text_dynascale.verticalCenter
+                    spacing: 12
 
-                    checked: settingsManager.dynaScale
-                    onClicked: settingsManager.dynaScale = checked
+                    RadioButtonThemed {
+                        text: qsTr("static")
+
+                        checked: !settingsManager.dynaScale
+                        onClicked: settingsManager.dynaScale = false
+                    }
+
+                    RadioButtonThemed {
+                        text: qsTr("dynamic")
+
+                        checked: settingsManager.dynaScale
+                        onClicked: settingsManager.dynaScale = true
+                    }
+                }
+            }
+
+            ////////
+
+            Row { // indicators preview
+                height: 56
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft + (isDesktop ? 72 : 24)
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight + 12
+
+                spacing: isDesktop ? 32 : 16
+
+                DataBarCompact {
+                    width: ((parent.width - parent.spacing) / 2)
+                    height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+
+                    legend: isDesktop ? qsTr("thin") : ""
+                    legendWidth: 48
+                    suffix: "°" + settingsManager.tempUnit
+                    colorForeground: Theme.colorYellow
+
+                    value: 24
+                    valueMin: settingsManager.dynaScale ? 16 : 0
+                    valueMax: settingsManager.dynaScale ? 32 : 40
+                    limitMin: 20
+                    limitMax: 28
+
+                    Rectangle {
+                        anchors.fill: parent
+                        anchors.margins: -8
+                        z: -1
+
+                        radius: 6
+                        color: Theme.colorComponentBackground
+                        border.width: (!settingsManager.bigIndicator) ? 2 : 0
+                        border.color: Theme.colorSeparator
+
+                        opacity: (!settingsManager.bigIndicator) ? 0.66 : 0.2
+                        Behavior on opacity { OpacityAnimator { duration: 133 } }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: settingsManager.bigIndicator = false
+                        }
+                    }
+                }
+
+                DataBarSolid {
+                    width: ((parent.width - parent.spacing) / 2)
+                    height: 32
+                    anchors.top: parent.top
+                    anchors.topMargin: 8
+
+                    legend: isDesktop ? qsTr("solid") : ""
+                    legendWidth: 64
+                    suffix: "°" + settingsManager.tempUnit
+                    colorForeground: Theme.colorYellow
+
+                    value: 24
+                    valueMin: settingsManager.dynaScale ? 16 : 0
+                    valueMax: settingsManager.dynaScale ? 32 : 40
+                    limitMin: 20
+                    limitMax: 28
+
+                    Rectangle {
+                        anchors.fill: parent
+                        anchors.margins: -8
+                        z: -1
+
+                        radius: 6
+                        color: Theme.colorComponentBackground
+                        border.width: (settingsManager.bigIndicator) ? 2 : 0
+                        border.color: Theme.colorSeparator
+
+                        opacity: (settingsManager.bigIndicator) ? 0.66 : 0.2
+                        Behavior on opacity { OpacityAnimator { duration: 133 } }
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: settingsManager.bigIndicator = true
+                        }
+                    }
                 }
             }
 
             ////////////////
 
-            Rectangle {
+            Rectangle { // title
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorForeground
 
                 IconSvg {
-                    id: image_thermometer
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -1157,9 +1285,8 @@ Item {
                 }
 
                 Text {
-                    id: text_thermometer
-                    anchors.left: image_thermometer.right
-                    anchors.leftMargin: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Thermometers")
@@ -1278,41 +1405,17 @@ Item {
                     spacing: 12
 
                     RadioButtonThemed {
-                        id: radioDelegateCelsius
                         text: qsTr("°C")
 
-                        checked: {
-                            if (settingsManager.tempUnit === 'C') {
-                                radioDelegateCelsius.checked = true
-                                radioDelegateFahrenheit.checked = false
-                            } else {
-                                radioDelegateCelsius.checked = false
-                                radioDelegateFahrenheit.checked = true
-                            }
-                        }
-                        onCheckedChanged: {
-                            if (checked === true)
-                                settingsManager.tempUnit = 'C'
-                        }
+                        checked: (settingsManager.tempUnit === 'C')
+                        onClicked: settingsManager.tempUnit = 'C'
                     }
 
                     RadioButtonThemed {
-                        id: radioDelegateFahrenheit
                         text: qsTr("°F")
 
-                        checked: {
-                            if (settingsManager.tempUnit === 'F') {
-                                radioDelegateCelsius.checked = false
-                                radioDelegateFahrenheit.checked = true
-                            } else {
-                                radioDelegateFahrenheit.checked = false
-                                radioDelegateCelsius.checked = true
-                            }
-                        }
-                        onCheckedChanged: {
-                            if (checked === true)
-                                settingsManager.tempUnit = 'F'
-                        }
+                        checked: (settingsManager.tempUnit === 'F')
+                        onClicked: settingsManager.tempUnit = 'F'
                     }
                 }
             }
@@ -1405,7 +1508,7 @@ Item {
 */
             ////////////////
 
-            Rectangle {
+            Rectangle { // title
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -1414,7 +1517,6 @@ Item {
                 color: Theme.colorForeground
 
                 IconSvg {
-                    id: image_export
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -1426,9 +1528,8 @@ Item {
                 }
 
                 Text {
-                    id: text_export
-                    anchors.left: image_export.right
-                    anchors.leftMargin: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Data archiving")
@@ -1454,7 +1555,6 @@ Item {
                 visible: deviceManager.hasDevices
 
                 Text {
-                    id: legend_export1
                     anchors.left: parent.left
                     anchors.right: parent.right
 
@@ -1466,7 +1566,6 @@ Item {
                     verticalAlignment: Text.AlignBottom
                 }
                 Text {
-                    id: legend_export2
                     anchors.left: parent.left
                     anchors.right: parent.right
 
