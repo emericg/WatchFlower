@@ -92,7 +92,7 @@ DeviceInfos::~DeviceInfos()
     m_capabilities.clear();
 }
 
-void DeviceInfos::load(const QString &model)
+bool DeviceInfos::load(const QString &model)
 {
     //qDebug() << "DeviceInfos::load(" << model << ")";
 
@@ -149,10 +149,12 @@ void DeviceInfos::load(const QString &model)
                     }
                 }
 
-                return;
+                return true;
             }
         }
     }
+
+    return false;
 }
 
 /* ************************************************************************** */

@@ -163,8 +163,10 @@ protected:
     // Device data
     QString m_deviceAddress;
     QString m_deviceAddressMAC;     //!< Used only on macOS and iOS, mostly to interact with other platforms
+    QString m_deviceModelID;
     QString m_deviceModel;
     QString m_deviceName;
+
     QString m_deviceFirmware = "UNKN";
     int m_deviceBattery = -1;
 

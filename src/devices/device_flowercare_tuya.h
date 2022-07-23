@@ -52,8 +52,6 @@ public:
 
     void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
 
-    Q_INVOKABLE virtual bool hasHistory() const;
-
 private:
     // QLowEnergyController related
     void serviceScanDone();

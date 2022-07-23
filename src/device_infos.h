@@ -112,7 +112,7 @@ public:
     DeviceInfos(QObject *parent);
     ~DeviceInfos();
 
-    void load(const QString &model);
+    bool load(const QString &model);
 };
 
 /* ************************************************************************** */

@@ -20,6 +20,25 @@
     ]
   },
   {
+    "model": "Flower Care (Tuya variant)",
+    "manufacturer": "HHCC Plant Technology",
+    "ID": ["HHCCJCY10"],
+    "year": 2022,
+    "battery": "1 x CR2032",
+    "ipx": "IPX5",
+    "sensors": [
+      ["Soil moisture", "0 → 100%"],
+      ["Soil conductivity", ""],
+      ["Temperature", "-15 → 50 °C (± 0.5 °C)"],
+      ["Luminosity", "0 → 100k lux (± 100 lux)"]
+    ],
+    "capabilities": [
+      ["led_status", ""],
+      ["realtime", ""],
+      ["history", "?"]
+    ]
+  },
+  {
     "model": "Flower Care Max",
     "manufacturer": "HHCC Plant Technology",
     "ID": ["HHCCJCY09", "GCLS002"],

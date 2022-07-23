@@ -47,6 +47,11 @@ DeviceFlowerCare_tuya::DeviceFlowerCare_tuya(const QString &deviceAddr, const QS
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
+
+    // Device infos (backup)
+    m_deviceModel = "Flower Care (Tuya variant)";
+    m_deviceModelID = "HHCCJCY10";
+    m_deviceInfos->load(m_deviceModel);
 }
 
 DeviceFlowerCare_tuya::DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -59,6 +64,11 @@ DeviceFlowerCare_tuya::DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObj
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
+
+    // Device infos (backup)
+    m_deviceModel = "Flower Care (Tuya variant)";
+    m_deviceModelID = "HHCCJCY10";
+    m_deviceInfos->load(m_deviceModel);
 }
 
 DeviceFlowerCare_tuya::~DeviceFlowerCare_tuya()
@@ -67,13 +77,6 @@ DeviceFlowerCare_tuya::~DeviceFlowerCare_tuya()
 }
 
 /* ************************************************************************** */
-/* ************************************************************************** */
-
-bool DeviceFlowerCare_tuya::hasHistory() const
-{
-    return false;
-}
-
 /* ************************************************************************** */
 
 void DeviceFlowerCare_tuya::serviceScanDone()
@@ -193,14 +196,19 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const QByteArray &value, cons
         batt = static_cast<int8_t>(data[6]);
         setBattery(batt);
 
-        humi = static_cast<int16_t>(data[0] + (data[1] << 8));
-        temp = static_cast<int16_t>(data[2] + (data[3] << 8)) / 10.f;
-        lumi = static_cast<int16_t>(data[4] + (data[5] << 8));
-        fert = static_cast<int16_t>(data[7] + (data[8] << 8));
+        humi = static_cast<int16_t>(data[0]);
+        temp = static_cast<int16_t>(data[2] + (data[1] << 8)) / 10.f;
+        lumi = static_cast<int16_t>(data[3] + (data[4] << 8) + (data[5] << 16));
+        fert = static_cast<int16_t>(data[8] + (data[7] << 8));
 
         if (areValuesValid(humi, fert, -99.f, -99.f, temp, -99.f, lumi))
         {
             m_lastUpdate = QDateTime::currentDateTime();
+
+            m_soilMoisture = humi;
+            m_soilConductivity = fert;
+            m_temperature = temp;
+            m_luminosityLux = lumi;
 
             if (needsUpdateDb_mini())
             {
