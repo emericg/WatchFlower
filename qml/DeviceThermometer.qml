@@ -117,8 +117,9 @@ Loader {
             //console.log("DeviceThermometer // loadDevice() >> " + currentDevice)
 
             sensorTemp.visible = false
-            heatIndex.visible = false
             sensorHygro.visible = false
+            heatIndex.visible = false
+            dewPoint.visible = false
 
             graphLoader.source = "" // force graph reload
 
@@ -145,31 +146,42 @@ Loader {
                 sensorDisconnected.visible = true
 
                 sensorTemp.visible = false
-                heatIndex.visible = false
                 sensorHygro.visible = false
+                heatIndex.visible = false
+                dewPoint.visible = false
                 imageBattery.visible = false
 
             } else {
                 sensorDisconnected.visible = false
 
-                if (currentDevice.temperatureC >= -40) {
+                if (currentDevice.hasTemperatureSensor && currentDevice.temperatureC >= -40) {
                     sensorTemp.text = currentDevice.getTempString()
                     sensorTemp.visible = true
                 }
-                if (currentDevice.hasHumiditySensor && currentDevice.humidity >= 0) {
-                    sensorHygro.text = currentDevice.humidity.toFixed(0) + "% " + qsTr("humidity")
-                    sensorHygro.visible = true
-                }
-                if (currentDevice.hasHumiditySensor && currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
-                    if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
-                        heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
-                        heatIndex.visible = true
-                    } else {
-                        heatIndex.visible = false
+
+                if (currentDevice.hasHumiditySensor) {
+                    if (currentDevice.humidity >= 0 && currentDevice.humidity <= 100) {
+                        sensorHygro.text = currentDevice.humidity.toFixed(0) + "% " + qsTr("humidity")
+                        sensorHygro.visible = true
+
+                        if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
+                            if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
+                                heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
+                                heatIndex.visible = true
+                            } else {
+                                heatIndex.visible = false
+                            }
+                        } else {
+                            heatIndex.visible = false
+                        }
+
+                        if (currentDevice.deviceIsOutside) {
+                            dewPoint.text = qsTr("dew point %1").arg(currentDevice.getDewPointString())
+                            dewPoint.visible = true
+                        }
                     }
-                } else {
-                    heatIndex.visible = false
                 }
+
                 if (currentDevice.hasBattery && currentDevice.deviceBattery >= 0) {
                     imageBattery.visible = true
                 }
@@ -285,6 +297,17 @@ Loader {
                         font.pixelSize: isPhone ? 44 : 48
                         color: cccc
                     }
+                    Text {
+                        id: sensorHygro
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        font.bold: false
+                        font.pixelSize: isPhone ? 22 : 24
+                        color: cccc
+                        opacity: 0.8
+                    }
+
+                    Item { width: 1; height: 1; } // spacer
 
                     Text {
                         id: heatIndex
@@ -294,15 +317,13 @@ Loader {
                         font.pixelSize: isPhone ? 19 : 20
                         color: cccc
                     }
-
                     Text {
-                        id: sensorHygro
+                        id: dewPoint
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         font.bold: false
-                        font.pixelSize: isPhone ? 22 : 24
+                        font.pixelSize: isPhone ? 18 : 19
                         color: cccc
-                        opacity: 0.8
                     }
 
                     IconSvg {
