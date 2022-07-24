@@ -75,7 +75,9 @@ Item {
     }
 
     Timer {
-        interval: 60000; running: true; repeat: true;
+        interval: 60000
+        running: visible
+        repeat: true
         onTriggered: updateStatusText()
     }
 

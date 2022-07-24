@@ -43,6 +43,10 @@ Loader {
 
         focus: parent.focus
 
+        // 1: single column (single column view or portrait tablet)
+        // 2: wide mode (wide view)
+        property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+
         property alias thermoChart: graphLoader.item
 
         property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
@@ -86,9 +90,11 @@ Loader {
             // desktop only
             function onDeviceDataButtonClicked() {
                 appHeader.setActiveDeviceData()
+                swipeBox.currentIndex = 0
             }
             function onDeviceSettingsButtonClicked() {
                 appHeader.setActiveDeviceSettings()
+                swipeBox.currentIndex = 1
             }
             // mobile only
             function onRightMenuClicked() {
@@ -97,17 +103,27 @@ Loader {
         }
 
         Timer {
-            interval: 60000; running: true; repeat: true;
+            interval: 60000
+            running: visible
+            repeat: true
             onTriggered: updateStatusText()
         }
 
         Keys.onPressed: (event) => {
-            if (event.key === Qt.Key_F5) {
+            if (event.key === Qt.Key_Left) {
+                event.accepted = true
+                if (swipeBox.currentIndex > 0)
+                    swipeBox.currentIndex--
+            } else if (event.key === Qt.Key_Right) {
+                event.accepted = true
+                if (swipeBox.currentIndex+1 < swipeBox.count)
+                    swipeBox.currentIndex++
+            } else if (event.key === Qt.Key_F5) {
                 event.accepted = true
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             } else if (event.key === Qt.Key_Backspace) {
                 event.accepted = true
-                appWindow.backAction()
+                backAction()
             }
         }
 
@@ -121,11 +137,19 @@ Loader {
             heatIndex.visible = false
             dewPoint.visible = false
 
+            swipeBox.disableAnimation()
+            swipeBox.currentIndex = 0
+            swipeBox.interactive = false
+            swipeBox.enableAnimation()
+
             graphLoader.source = "" // force graph reload
 
             loadGraph()
             updateHeader()
             updateData()
+
+            if (isMobile) mobileMenu.setActiveDeviceData()
+            if (isDesktop) appHeader.setActiveDeviceData()
         }
 
         function updateHeader() {
@@ -229,13 +253,22 @@ Loader {
         ////////
 
         function backAction() {
-            if (textInputLocation.focus) {
-                textInputLocation.focus = false
-                return
+            if (swipeBox.currentIndex === 0) { // data
+                if (textInputLocation.focus) {
+                    textInputLocation.focus = false
+                    return
+                }
+                if (isHistoryMode()) {
+                    resetHistoryMode()
+                    return
+                }
             }
-            if (isHistoryMode()) {
-                resetHistoryMode()
-                return
+
+            if (swipeBox.currentIndex === 1) { // settings
+                if (isMobile) {
+                    swipeBox.currentIndex = 0
+                    return
+                }
             }
 
             appContent.state = "DeviceList"
@@ -255,19 +288,13 @@ Loader {
             anchors.fill: parent
 
             Rectangle {
-                id: tempBox
+                id: headerBox
 
                 property int dimboxw: Math.min(deviceThermometer.width * 0.4, isPhone ? 320 : 600)
                 property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 180 : 256)
 
-                width: {
-                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return parent.width
-                    return singleColumn ? parent.width : dimboxw
-                }
-                height: {
-                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return dimboxh
-                    return singleColumn ? dimboxh : parent.height
-                }
+                width: (uiMode === 1) ? parent.width : dimboxw
+                height: (uiMode === 1) ? dimboxh : parent.height
 
                 color: Theme.colorHeader
                 z: 5
@@ -468,41 +495,68 @@ Loader {
 
             ////////////////
 
-            Item {
+            SwipeView {
+                id: swipeBox
+
                 width: {
                     if (isTablet && screenOrientation == Qt.PortraitOrientation) return parent.width
-                    return singleColumn ? parent.width : (parent.width - tempBox.width)
+                    return singleColumn ? parent.width : (parent.width - headerBox.width)
                 }
                 height: {
-                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return (parent.height - tempBox.height)
-                    return singleColumn ? (parent.height - tempBox.height) : parent.height
+                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return (parent.height - headerBox.height)
+                    return singleColumn ? (parent.height - headerBox.height) : parent.height
                 }
 
-                ItemBannerSync {
-                    id: bannersync
-                    z: 5
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                }
+                interactive: false
 
-                ItemNoData {
-                    id: noDataIndicator
-                    visible: (currentDevice.countDataNamed("temperature", 14) <= 1)
-                }
-
-                Loader {
-                    id: graphLoader
-                    anchors.top: bannersync.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-
-                    asynchronous: true
-                    onLoaded: {
-                        thermoChart.loadGraph()
-                        thermoChart.updateGraph()
+                currentIndex: 0
+                onCurrentIndexChanged: {
+                    if (isDesktop) {
+                        if (swipeBox.currentIndex === 0)
+                            appHeader.setActiveDeviceData()
+                        else if (swipeBox.currentIndex === 1)
+                            appHeader.setActiveDeviceSettings()
                     }
+                }
+
+                function enableAnimation() {
+                    contentItem.highlightMoveDuration = 333
+                }
+                function disableAnimation() {
+                    contentItem.highlightMoveDuration = 0
+                }
+
+                Item {
+                    ItemBannerSync {
+                        id: bannersync
+                        z: 5
+                        anchors.top: parent.top
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                    }
+
+                    ItemNoData {
+                        id: noDataIndicator
+                        visible: (currentDevice.countDataNamed("temperature", 14) <= 1)
+                    }
+
+                    Loader {
+                        id: graphLoader
+                        anchors.top: bannersync.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+
+                        asynchronous: true
+                        onLoaded: {
+                            thermoChart.loadGraph()
+                            thermoChart.updateGraph()
+                        }
+                    }
+                }
+
+                DevicePlantSensorSettings {
+                    id: plantSensorSettings
                 }
             }
         }

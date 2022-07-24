@@ -45,9 +45,6 @@ class DeviceFlowerCare_tuya: public DevicePlantSensor
 {
     Q_OBJECT
 
-    QString m_deviceModel = "Flower Care";
-    QString m_deviceModelID = "HHCCJCY10";
-
 public:
     DeviceFlowerCare_tuya(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);

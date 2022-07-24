@@ -55,7 +55,7 @@ Loader {
 
         property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
-        property var historyChart: chartEnvLoader.item
+        property var historyChart: graphLoader.item
 
         property int itemCount_AirMonitor: 3
         property int itemCount_GeigerCounter: 2
@@ -100,9 +100,11 @@ Loader {
             // desktop only
             function onDeviceDataButtonClicked() {
                 appHeader.setActiveDeviceData()
+                swipeBox.currentIndex = 0
             }
             function onDeviceSettingsButtonClicked() {
                 appHeader.setActiveDeviceSettings()
+                swipeBox.currentIndex = 1
             }
             // mobile only
             function onRightMenuClicked() {
@@ -111,38 +113,57 @@ Loader {
         }
 
         Timer {
-            interval: 60000; running: true; repeat: true;
+            interval: 60000
+            running: visible
+            repeat: true
             onTriggered: updateStatusText()
         }
 
         ////////
 
         Keys.onPressed: (event) => {
-            if (event.key === Qt.Key_F5) {
+            if (event.key === Qt.Key_Left) {
+                event.accepted = true
+                if (swipeBox.currentIndex > 0)
+                    swipeBox.currentIndex--
+            } else if (event.key === Qt.Key_Right) {
+                event.accepted = true
+                if (swipeBox.currentIndex+1 < swipeBox.count)
+                    swipeBox.currentIndex++
+            } else if (event.key === Qt.Key_F5) {
                 event.accepted = true
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             } else if (event.key === Qt.Key_Backspace) {
                 event.accepted = true
-                appWindow.backAction()
+                backAction()
             }
         }
 
         onPrimaryChanged: {
             currentDevice.setSetting("primary", primary)
             loadIndicator()
-            if (chartEnvLoader.status === Loader.Ready) historyChart.updateGraph()
+            if (graphLoader.status === Loader.Ready) historyChart.updateGraph()
         }
 
         ////////
 
         function backAction() {
-            if (textInputLocation.focus) {
-                textInputLocation.focus = false
-                return
+            if (swipeBox.currentIndex === 0) { // data
+                if (textInputLocation.focus) {
+                    textInputLocation.focus = false
+                    return
+                }
+                if (isHistoryMode()) {
+                    resetHistoryMode()
+                    return
+                }
             }
-            if (isHistoryMode()) {
-                resetHistoryMode()
-                return
+
+            if (swipeBox.currentIndex === 1) { // settings
+                if (isMobile) {
+                    swipeBox.currentIndex = 0
+                    return
+                }
             }
 
             appContent.state = "DeviceList"
@@ -215,15 +236,20 @@ Loader {
             if (currentDevice.hasUvSensor) itemCount_WeatherStation++
             weatherFlow.updateSize()
 
-            // Force graph reload
-            chartEnvLoader.source = ""
+            swipeBox.disableAnimation()
+            swipeBox.currentIndex = 0
+            swipeBox.interactive = false
+            swipeBox.enableAnimation()
 
-            //
+            graphLoader.source = "" // force graph reload
+
             loadIndicator()
             loadGraph()
-            //
             updateHeader()
             updateData()
+
+            if (isMobile) mobileMenu.setActiveDeviceData()
+            if (isDesktop) appHeader.setActiveDeviceData()
         }
 
         function loadIndicator() {
@@ -354,18 +380,18 @@ Loader {
         }
 
         function loadGraph() {
-            chartEnvLoader.visible = false
+            graphLoader.visible = false
 
             if (isAirMonitor) {
                 if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
-                    if (chartEnvLoader.status !== Loader.Ready) {
-                        chartEnvLoader.source = "ChartEnvironmentalVoc.qml"
+                    if (graphLoader.status !== Loader.Ready) {
+                        graphLoader.source = "ChartEnvironmentalVoc.qml"
                     } else {
                         historyChart.loadGraph()
                         historyChart.updateGraph()
                     }
                     currentDevice.updateChartData_environmentalVoc(31)
-                    chartEnvLoader.visible = true
+                    graphLoader.visible = true
                 }
             }
         }
@@ -633,8 +659,9 @@ Loader {
 
             ////////////////////////////////////////////////////////////////
 
-            Item {
-                id: sensorBox
+            SwipeView {
+                id: swipeBox
+
                 width: {
                     if (isTablet && screenOrientation == Qt.PortraitOrientation) return parent.width
                     return singleColumn ? parent.width : (parent.width - headerBox.width)
@@ -644,474 +671,499 @@ Loader {
                     return singleColumn ? (parent.height - headerBox.height) : parent.height
                 }
 
-                ItemBannerSync {
-                    id: bannersync
-                    z: 5
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                interactive: false
+
+                currentIndex: 0
+                onCurrentIndexChanged: {
+                    if (isDesktop) {
+                        if (swipeBox.currentIndex === 0)
+                            appHeader.setActiveDeviceData()
+                        else if (swipeBox.currentIndex === 1)
+                            appHeader.setActiveDeviceSettings()
+                    }
+                }
+
+                function enableAnimation() {
+                    contentItem.highlightMoveDuration = 333
+                }
+                function disableAnimation() {
+                    contentItem.highlightMoveDuration = 0
                 }
 
                 ////////////////
 
-                Flickable {
-                    id: sensorFlick
-                    anchors.top: bannersync.bottom
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    anchors.bottom: parent.bottom
-
-                    contentWidth: parent.width
-                    contentHeight: sensorFlow.height
-
-                    flickableDirection: Flickable.VerticalFlick
-                    boundsBehavior: Flickable.StopAtBounds
-
-                    Flow {
-                        id: sensorFlow
+                Item {
+                    ItemBannerSync {
+                        id: bannersync
+                        z: 5
                         anchors.left: parent.left
                         anchors.right: parent.right
+                    }
 
-                        Rectangle {
-                            id: airBoxes
-                            width: parent.width
-                            height: airFlow.height + (airFlow.anchors.topMargin*2)
+                    Flickable {
+                        id: sensorFlick
+                        anchors.top: bannersync.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
 
-                            visible: isAirMonitor
-                            color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
-                            z: 3
+                        contentWidth: parent.width
+                        contentHeight: sensorFlow.height
 
-                            Flow {
-                                id: airFlow
-                                anchors.top: parent.top
-                                anchors.topMargin: isDesktop ? 20 : 14
-                                anchors.left: parent.left
-                                anchors.leftMargin: isDesktop ? 20 : 14
-                                anchors.right: parent.right
-                                anchors.rightMargin: 0
-                                spacing: 8
+                        flickableDirection: Flickable.VerticalFlick
+                        boundsBehavior: Flickable.StopAtBounds
 
-                                onWidthChanged: updateSize()
-                                function updateSize() {
-                                    var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin)
-                                    var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                    if (cellColumnsTarget >= itemCount_AirMonitor) {
-                                        www = (availableWidth - (spacing * itemCount_AirMonitor)) / itemCount_AirMonitor
-                                        if (www > wwwMax) www = wwwMax
-                                    } else {
-                                        www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
+                        Flow {
+                            id: sensorFlow
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
+                            Rectangle {
+                                id: airBoxes
+                                width: parent.width
+                                height: airFlow.height + (airFlow.anchors.topMargin*2)
+
+                                visible: isAirMonitor
+                                color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+                                z: 3
+
+                                Flow {
+                                    id: airFlow
+                                    anchors.top: parent.top
+                                    anchors.topMargin: isDesktop ? 20 : 14
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: isDesktop ? 20 : 14
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: 0
+                                    spacing: 8
+
+                                    onWidthChanged: updateSize()
+                                    function updateSize() {
+                                        var availableWidth = swipeBox.width - (anchors.leftMargin + anchors.rightMargin)
+                                        var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
+                                        if (cellColumnsTarget >= itemCount_AirMonitor) {
+                                            www = (availableWidth - (spacing * itemCount_AirMonitor)) / itemCount_AirMonitor
+                                            if (www > wwwMax) www = wwwMax
+                                        } else {
+                                            www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
+                                        }
+                                        //console.log("--- wwww: " + www)
                                     }
-                                    //console.log("--- wwww: " + www)
-                                }
 
-                                property int wwwTarget: isPhone ? 96 : 140
-                                property int wwwMax: 200
-                                property int www: wwwTarget
+                                    property int wwwTarget: isPhone ? 96 : 140
+                                    property int wwwMax: 200
+                                    property int www: wwwTarget
 
-                                ItemEnvBox {
-                                    id: pm1
-                                    width: airFlow.www
-                                    visible: currentDevice.hasPM1Sensor
+                                    ItemEnvBox {
+                                        id: pm1
+                                        width: airFlow.www
+                                        visible: currentDevice.hasPM1Sensor
 
-                                    title: qsTr("PM1")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.pm1
-                                    precision: 1
-                                    onSensorSelection: primary = "pm1"
-                                }
+                                        title: qsTr("PM1")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.pm1
+                                        precision: 1
+                                        onSensorSelection: primary = "pm1"
+                                    }
 
-                                ItemEnvBox {
-                                    id: pm25
-                                    width: airFlow.www
-                                    visible: currentDevice.hasPM25Sensor
+                                    ItemEnvBox {
+                                        id: pm25
+                                        width: airFlow.www
+                                        visible: currentDevice.hasPM25Sensor
 
-                                    title: qsTr("PM2.5")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.pm25
-                                    precision: 1
-                                    onSensorSelection: primary = "pm25"
-                                }
+                                        title: qsTr("PM2.5")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.pm25
+                                        precision: 1
+                                        onSensorSelection: primary = "pm25"
+                                    }
 
-                                ItemEnvBox {
-                                    id: pm100
-                                    width: airFlow.www
-                                    visible: currentDevice.hasPM10Sensor
+                                    ItemEnvBox {
+                                        id: pm100
+                                        width: airFlow.www
+                                        visible: currentDevice.hasPM10Sensor
 
-                                    title: qsTr("PM10")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.pm10
-                                    precision: 1
-                                    onSensorSelection: primary = "pm10"
-                                }
+                                        title: qsTr("PM10")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.pm10
+                                        precision: 1
+                                        onSensorSelection: primary = "pm10"
+                                    }
 
-                                ItemEnvBox {
-                                    id: voc
-                                    width: airFlow.www
-                                    visible: currentDevice.hasVocSensor
+                                    ItemEnvBox {
+                                        id: voc
+                                        width: airFlow.www
+                                        visible: currentDevice.hasVocSensor
 
-                                    title: qsTr("VOC")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.voc
-                                    limit_mid: 500
-                                    limit_high: 1000
-                                    precision: 0
-                                    onSensorSelection: primary = "voc"
-                                }
+                                        title: qsTr("VOC")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.voc
+                                        limit_mid: 500
+                                        limit_high: 1000
+                                        precision: 0
+                                        onSensorSelection: primary = "voc"
+                                    }
 
-                                ItemEnvBox {
-                                    id: hcho
-                                    width: airFlow.www
-                                    visible: currentDevice.hasHchoSensor
+                                    ItemEnvBox {
+                                        id: hcho
+                                        width: airFlow.www
+                                        visible: currentDevice.hasHchoSensor
 
-                                    title: qsTr("HCHO")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.hcho
-                                    limit_mid: 500
-                                    limit_high: 1000
-                                    precision: 0
-                                    onSensorSelection: primary = "hcho"
-                                }
+                                        title: qsTr("HCHO")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.hcho
+                                        limit_mid: 500
+                                        limit_high: 1000
+                                        precision: 0
+                                        onSensorSelection: primary = "hcho"
+                                    }
 /*
-                                ItemEnvBox {
-                                    id: o2
-                                    width: airFlow.www
-                                    visible: currentDevice.hasO2Sensor
+                                    ItemEnvBox {
+                                        id: o2
+                                        width: airFlow.www
+                                        visible: currentDevice.hasO2Sensor
 
-                                    title: qsTr("O2")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.o2
-                                    precision: 0
-                                    onSensorSelection: primary = "o2"
-                                }
-
-                                ItemEnvBox {
-                                    id: o3
-                                    width: airFlow.www
-                                    visible: currentDevice.hasO3Sensor
-
-                                    title: qsTr("O3")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.o3
-                                    precision: 0
-                                    onSensorSelection: primary = "o3"
-                                }
-
-                                ItemEnvBox {
-                                    id: so2
-                                    width: airFlow.www
-                                    visible: currentDevice.hasSo2Sensor
-
-                                    title: qsTr("SO2")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.so2
-                                    precision: 0
-                                    onSensorSelection: primary = "so2"
-                                }
-
-                                ItemEnvBox {
-                                    id: no2
-                                    width: airFlow.www
-                                    visible: currentDevice.hasNo2Sensor
-
-                                    title: qsTr("NO2")
-                                    legend: qsTr("µg/m³")
-                                    value: currentDevice.no2
-                                    precision: 0
-                                    onSensorSelection: primary = "no2"
-                                }
-
-                                ItemEnvBox {
-                                    id: co
-                                    width: airFlow.www
-                                    visible: currentDevice.hasCoSensor
-
-                                    title: qsTr("CO")
-                                    legend: qsTr("PPM")
-                                    value: currentDevice.co
-                                    precision: 0
-                                    onSensorSelection: primary = "co"
-                                }
-*/
-                                ItemEnvBox {
-                                    id: co2
-                                    width: airFlow.www
-                                    visible: currentDevice.hasCo2Sensor
-
-                                    title: (currentDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
-                                    legend: qsTr("PPM")
-                                    value: currentDevice.co2
-                                    precision: 0
-                                    limit_mid: 850
-                                    limit_high: 1500
-                                    onSensorSelection: primary = "co2"
-                                }
-                            }
-
-                            Rectangle {
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.bottom: parent.bottom
-
-                                visible: !headerUnicolor
-                                height: 2
-                                color: Theme.colorSeparator
-                            }
-                        }
-
-                        ////////////////////////////////////////////////////
-
-                        Rectangle {
-                            id: radBoxes
-                            width: parent.width
-                            height: radFlow.height + (radFlow.anchors.topMargin*2)
-
-                            visible: isGeigerCounter
-                            color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
-                            z: 3
-
-                            Flow {
-                                id: radFlow
-                                anchors.top: parent.top
-                                anchors.topMargin: isDesktop ? 20 : 12
-                                anchors.left: parent.left
-                                anchors.leftMargin: isDesktop ? 20 : 12
-                                anchors.right: parent.right
-                                anchors.rightMargin: 0
-                                spacing: 12
-
-                                onWidthChanged: updateSize()
-                                function updateSize() {
-                                    var availableWidth = sensorBox.width - (anchors.leftMargin + anchors.rightMargin)
-                                    var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                    if (cellColumnsTarget >= itemCount_GeigerCounter) {
-                                        www = (availableWidth - (spacing * itemCount_GeigerCounter)) / itemCount_GeigerCounter
-                                        if (www > wwwMax) www = wwwMax
-                                    } else {
-                                        www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
+                                        title: qsTr("O2")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.o2
+                                        precision: 0
+                                        onSensorSelection: primary = "o2"
                                     }
-                                    //console.log("--- wwww: " + www)
+
+                                    ItemEnvBox {
+                                        id: o3
+                                        width: airFlow.www
+                                        visible: currentDevice.hasO3Sensor
+
+                                        title: qsTr("O3")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.o3
+                                        precision: 0
+                                        onSensorSelection: primary = "o3"
+                                    }
+
+                                    ItemEnvBox {
+                                        id: so2
+                                        width: airFlow.www
+                                        visible: currentDevice.hasSo2Sensor
+
+                                        title: qsTr("SO2")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.so2
+                                        precision: 0
+                                        onSensorSelection: primary = "so2"
+                                    }
+
+                                    ItemEnvBox {
+                                        id: no2
+                                        width: airFlow.www
+                                        visible: currentDevice.hasNo2Sensor
+
+                                        title: qsTr("NO2")
+                                        legend: qsTr("µg/m³")
+                                        value: currentDevice.no2
+                                        precision: 0
+                                        onSensorSelection: primary = "no2"
+                                    }
+
+                                    ItemEnvBox {
+                                        id: co
+                                        width: airFlow.www
+                                        visible: currentDevice.hasCoSensor
+
+                                        title: qsTr("CO")
+                                        legend: qsTr("PPM")
+                                        value: currentDevice.co
+                                        precision: 0
+                                        onSensorSelection: primary = "co"
+                                    }
+*/
+                                    ItemEnvBox {
+                                        id: co2
+                                        width: airFlow.www
+                                        visible: currentDevice.hasCo2Sensor
+
+                                        title: (currentDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
+                                        legend: qsTr("PPM")
+                                        value: currentDevice.co2
+                                        precision: 0
+                                        limit_mid: 850
+                                        limit_high: 1500
+                                        onSensorSelection: primary = "co2"
+                                    }
                                 }
 
-                                property int wwwTarget: 128
-                                property int wwwMax: 256
-                                property int www: wwwTarget
+                                Rectangle {
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.bottom: parent.bottom
 
-                                ItemEnvBox {
-                                    id: rad_h
-                                    width: radFlow.www
-
-                                    title: qsTr("RADIATION")
-                                    legend: qsTr("µSv/h")
-                                    value: currentDevice.radioactivityH
-                                    precision: 2
-                                    limit_mid: 1
-                                    limit_high: 10
-                                    onSensorSelection: primary = "radiation"
-                                }
-
-                                ItemEnvBox {
-                                    id: rad_m
-                                    width: radFlow.www
-
-                                    title: qsTr("RADIATION")
-                                    legend: qsTr("µSv/m")
-                                    value: currentDevice.radioactivityM
-                                    precision: 2
-                                    limit_mid: 1
-                                    limit_high: 10
-                                    onSensorSelection: primary = "radiation"
+                                    visible: !headerUnicolor
+                                    height: 2
+                                    color: Theme.colorSeparator
                                 }
                             }
 
-                            Rectangle {
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                anchors.bottom: parent.bottom
+                            ////////////////////////////////////////////////////
 
-                                visible: !headerUnicolor
+                            Rectangle {
+                                id: radBoxes
+                                width: parent.width
+                                height: radFlow.height + (radFlow.anchors.topMargin*2)
+
+                                visible: isGeigerCounter
+                                color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+                                z: 3
+
+                                Flow {
+                                    id: radFlow
+                                    anchors.top: parent.top
+                                    anchors.topMargin: isDesktop ? 20 : 12
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: isDesktop ? 20 : 12
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: 0
+                                    spacing: 12
+
+                                    onWidthChanged: updateSize()
+                                    function updateSize() {
+                                        var availableWidth = swipeBox.width - (anchors.leftMargin + anchors.rightMargin)
+                                        var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
+                                        if (cellColumnsTarget >= itemCount_GeigerCounter) {
+                                            www = (availableWidth - (spacing * itemCount_GeigerCounter)) / itemCount_GeigerCounter
+                                            if (www > wwwMax) www = wwwMax
+                                        } else {
+                                            www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
+                                        }
+                                        //console.log("--- wwww: " + www)
+                                    }
+
+                                    property int wwwTarget: 128
+                                    property int wwwMax: 256
+                                    property int www: wwwTarget
+
+                                    ItemEnvBox {
+                                        id: rad_h
+                                        width: radFlow.www
+
+                                        title: qsTr("RADIATION")
+                                        legend: qsTr("µSv/h")
+                                        value: currentDevice.radioactivityH
+                                        precision: 2
+                                        limit_mid: 1
+                                        limit_high: 10
+                                        onSensorSelection: primary = "radiation"
+                                    }
+
+                                    ItemEnvBox {
+                                        id: rad_m
+                                        width: radFlow.www
+
+                                        title: qsTr("RADIATION")
+                                        legend: qsTr("µSv/m")
+                                        value: currentDevice.radioactivityM
+                                        precision: 2
+                                        limit_mid: 1
+                                        limit_high: 10
+                                        onSensorSelection: primary = "radiation"
+                                    }
+                                }
+
+                                Rectangle {
+                                    anchors.left: parent.left
+                                    anchors.right: parent.right
+                                    anchors.bottom: parent.bottom
+
+                                    visible: !headerUnicolor
+                                    height: 2
+                                    opacity: 0.5
+                                    color: Theme.colorSeparator
+                                }
+                            }
+
+                            ////////////////////////////////////////////////////
+
+                            Rectangle {
+                                id: weatherBoxes
+
+                                visible: isWeatherStation
+
+                                width: parent.width
+                                height: weatherFlow.height + (weatherFlow.anchors.topMargin*2)
+                                color: Theme.colorBackground
+                                z: 3
+
+                                Flow {
+                                    id: weatherFlow
+                                    anchors.top: parent.top
+                                    anchors.topMargin: isPhone ? 8 : 14
+                                    anchors.left: parent.left
+                                    anchors.leftMargin: isPhone ? 8 : 14
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: 0
+                                    spacing: isPhone ? 8 : 14
+
+                                    onWidthChanged: updateSize()
+                                    function updateSize() {
+                                        var availableWidth = swipeBox.width - (anchors.leftMargin)
+                                        var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
+                                        if (cellColumnsTarget >= itemCount_WeatherStation) {
+                                            www = (availableWidth - (spacing * itemCount_WeatherStation)) / itemCount_WeatherStation
+                                            if (www > wwwMax) www = wwwMax
+                                        } else {
+                                            www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
+                                            if (www > wwwMax) www = wwwMax
+                                        }
+                                        //console.log("--- wwww: " + www)
+                                    }
+
+                                    property int wwwTarget: isPhone ? 92 : 128
+                                    property int wwwMax: 160
+                                    property int www: wwwTarget
+
+                                    ItemWeatherBox {
+                                        id: temp
+                                        visible: currentDevice.hasTemperatureSensor
+                                        sz: weatherFlow.www
+                                        duo: false
+
+                                        title: qsTr("Temperature")
+                                        legend: "°" + settingsManager.tempUnit
+                                        icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
+                                        value: currentDevice.temperature
+                                        precision: 1
+                                        //onSensorSelection: primary = "temperature"
+                                    }
+                                    ItemWeatherBox {
+                                        id: humi
+                                        visible: currentDevice.hasHumiditySensor
+                                        sz: weatherFlow.www
+                                        duo: false
+
+                                        title: qsTr("Humidity")
+                                        legend: qsTr("°RH")
+                                        icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
+                                        value: currentDevice.humidity
+                                        precision: 0
+                                        //onSensorSelection: primary = "humidity"
+                                    }
+                                    ItemWeatherBox {
+                                        id: pres
+                                        visible: currentDevice.hasPressureSensor
+                                        sz: weatherFlow.www
+                                        duo: false
+
+                                        title: qsTr("Pressure")
+                                        legend: qsTr("hPa")
+                                        icon: "qrc:/assets/icons_material/duotone-speed-24px.svg"
+                                        value: currentDevice.pressure
+                                        precision: 0
+                                    }
+
+                                    ItemWeatherBox {
+                                        id: light
+                                        visible: currentDevice.hasLuminositySensor
+                                        sz: weatherFlow.www
+
+                                        title: qsTr("Luminosity")
+                                        legend: qsTr("lux")
+                                        icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                                        value: currentDevice.luminosityLux
+                                        precision: 0
+                                    }
+                                    ItemWeatherBox {
+                                        id: uv
+                                        visible: currentDevice.hasUvSensor
+                                        sz: weatherFlow.www
+
+                                        title: qsTr("UV index")
+                                        legend: ""
+                                        icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                                        value: currentDevice.uv
+                                        precision: 0
+                                    }
+/*
+                                    ItemWeatherBox {
+                                        id: sound
+                                        visible: currentDevice.hasSoundSensor
+                                        sz: weatherFlow.www
+
+                                        title: qsTr("Sound level")
+                                        legend: qsTr("db")
+                                        icon: "qrc:/assets/icons_material/duotone-mic-24px.svg"
+                                        value: 47
+                                        precision: 0
+                                    }
+
+                                    ItemWeatherBox {
+                                        id: windd
+                                        visible: currentDevice.hasWindDirectionSensor
+                                        sz: weatherFlow.www
+
+                                        title: qsTr("Wind direction")
+                                        legend: "north"
+                                        icon: "qrc:/assets/icons_material/baseline-near_me-24px.svg"
+                                        value: 0
+                                        precision: 0
+                                    }
+                                    ItemWeatherBox {
+                                        id: winds
+                                        visible: currentDevice.hasWindSpeedSensor
+                                        sz: weatherFlow.www
+
+                                        title: qsTr("Wind speed")
+                                        legend: qsTr("km/h")
+                                        icon: "qrc:/assets/icons_material/baseline-air-24px.svg"
+                                        value: 16
+                                        precision: 0
+                                    }
+
+                                    ItemWeatherBox {
+                                        id: rain
+                                        visible: currentDevice.hasWaterLevelSensor
+                                        sz: weatherFlow.www
+
+                                        title: qsTr("Rain")
+                                        legend: qsTr("mm")
+                                        icon: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+                                        value: 7
+                                        precision: 0
+                                    }
+*/
+                                }
+                            }
+/*
+                            Rectangle {
+                                width: parent.width
+
+                                visible: (isDesktop && singleColumn && !headerUnicolor)
                                 height: 2
                                 opacity: 0.5
                                 color: Theme.colorSeparator
                             }
-                        }
-
-                        ////////////////////////////////////////////////////
-
-                        Rectangle {
-                            id: weatherBoxes
-
-                            visible: isWeatherStation
-
-                            width: parent.width
-                            height: weatherFlow.height + (weatherFlow.anchors.topMargin*2)
-                            color: Theme.colorBackground
-                            z: 3
-
-                            Flow {
-                                id: weatherFlow
-                                anchors.top: parent.top
-                                anchors.topMargin: isPhone ? 8 : 14
-                                anchors.left: parent.left
-                                anchors.leftMargin: isPhone ? 8 : 14
-                                anchors.right: parent.right
-                                anchors.rightMargin: 0
-                                spacing: isPhone ? 8 : 14
-
-                                onWidthChanged: updateSize()
-                                function updateSize() {
-                                    var availableWidth = sensorBox.width - (anchors.leftMargin)
-                                    var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                    if (cellColumnsTarget >= itemCount_WeatherStation) {
-                                        www = (availableWidth - (spacing * itemCount_WeatherStation)) / itemCount_WeatherStation
-                                        if (www > wwwMax) www = wwwMax
-                                    } else {
-                                        www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
-                                        if (www > wwwMax) www = wwwMax
-                                    }
-                                    //console.log("--- wwww: " + www)
-                                }
-
-                                property int wwwTarget: isPhone ? 92 : 128
-                                property int wwwMax: 160
-                                property int www: wwwTarget
-
-                                ItemWeatherBox {
-                                    id: temp
-                                    visible: currentDevice.hasTemperatureSensor
-                                    sz: weatherFlow.www
-                                    duo: false
-
-                                    title: qsTr("Temperature")
-                                    legend: "°" + settingsManager.tempUnit
-                                    icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
-                                    value: currentDevice.temperature
-                                    precision: 1
-                                    //onSensorSelection: primary = "temperature"
-                                }
-                                ItemWeatherBox {
-                                    id: humi
-                                    visible: currentDevice.hasHumiditySensor
-                                    sz: weatherFlow.www
-                                    duo: false
-
-                                    title: qsTr("Humidity")
-                                    legend: qsTr("°RH")
-                                    icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
-                                    value: currentDevice.humidity
-                                    precision: 0
-                                    //onSensorSelection: primary = "humidity"
-                                }
-                                ItemWeatherBox {
-                                    id: pres
-                                    visible: currentDevice.hasPressureSensor
-                                    sz: weatherFlow.www
-                                    duo: false
-
-                                    title: qsTr("Pressure")
-                                    legend: qsTr("hPa")
-                                    icon: "qrc:/assets/icons_material/duotone-speed-24px.svg"
-                                    value: currentDevice.pressure
-                                    precision: 0
-                                }
-
-                                ItemWeatherBox {
-                                    id: light
-                                    visible: currentDevice.hasLuminositySensor
-                                    sz: weatherFlow.www
-
-                                    title: qsTr("Luminosity")
-                                    legend: qsTr("lux")
-                                    icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                                    value: currentDevice.luminosityLux
-                                    precision: 0
-                                }
-                                ItemWeatherBox {
-                                    id: uv
-                                    visible: currentDevice.hasUvSensor
-                                    sz: weatherFlow.www
-
-                                    title: qsTr("UV index")
-                                    legend: ""
-                                    icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                                    value: currentDevice.uv
-                                    precision: 0
-                                }
-/*
-                                ItemWeatherBox {
-                                    id: sound
-                                    visible: currentDevice.hasSoundSensor
-                                    sz: weatherFlow.www
-
-                                    title: qsTr("Sound level")
-                                    legend: qsTr("db")
-                                    icon: "qrc:/assets/icons_material/duotone-mic-24px.svg"
-                                    value: 47
-                                    precision: 0
-                                }
-
-                                ItemWeatherBox {
-                                    id: windd
-                                    visible: currentDevice.hasWindDirectionSensor
-                                    sz: weatherFlow.www
-
-                                    title: qsTr("Wind direction")
-                                    legend: "north"
-                                    icon: "qrc:/assets/icons_material/baseline-near_me-24px.svg"
-                                    value: 0
-                                    precision: 0
-                                }
-                                ItemWeatherBox {
-                                    id: winds
-                                    visible: currentDevice.hasWindSpeedSensor
-                                    sz: weatherFlow.www
-
-                                    title: qsTr("Wind speed")
-                                    legend: qsTr("km/h")
-                                    icon: "qrc:/assets/icons_material/baseline-air-24px.svg"
-                                    value: 16
-                                    precision: 0
-                                }
-
-                                ItemWeatherBox {
-                                    id: rain
-                                    visible: currentDevice.hasWaterLevelSensor
-                                    sz: weatherFlow.www
-
-                                    title: qsTr("Rain")
-                                    legend: qsTr("mm")
-                                    icon: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
-                                    value: 7
-                                    precision: 0
-                                }
 */
+                            ////////////////////////////////////////////////////
+
+                            Loader {
+                                id: graphLoader
+                                width: parent.width
+                                height: (sensorFlick.height - airBoxes.height - weatherBoxes.height)
+                                //height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
+
+                                asynchronous: true
+                                onLoaded: {
+                                    historyChart.loadGraph()
+                                    historyChart.updateGraph()
+                                }
                             }
+
+                            ////////////////////////////////////////////////////
                         }
-/*
-                        Rectangle {
-                            width: parent.width
-
-                            visible: (isDesktop && singleColumn && !headerUnicolor)
-                            height: 2
-                            opacity: 0.5
-                            color: Theme.colorSeparator
-                        }
-*/
-                        ////////////////////////////////////////////////////
-
-                        Loader {
-                            id: chartEnvLoader
-                            width: parent.width
-                            height: (sensorFlick.height - airBoxes.height - weatherBoxes.height)
-                            //height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
-
-                            asynchronous: true
-                            onLoaded: {
-                                historyChart.loadGraph()
-                                historyChart.updateGraph()
-                            }
-                        }
-
-                        ////////////////////////////////////////////////////
                     }
+                }
+
+                DevicePlantSensorSettings {
+                    id: plantSensorSettings
                 }
             }
         }

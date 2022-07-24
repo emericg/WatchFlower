@@ -127,7 +127,7 @@ Popup {
         ActionMenuItem {
             id: actionLed
 
-            index: 5
+            index: 8
             text: qsTr("Blink LED")
             source: "qrc:/assets/icons_material/duotone-emoji_objects-24px.svg"
             layoutDirection: actionMenu.layoutDirection
@@ -143,7 +143,7 @@ Popup {
         ActionMenuItem {
             id: actionWatering
 
-            index: 6
+            index: 9
             text: qsTr("Watering")
             source: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
             layoutDirection: actionMenu.layoutDirection
@@ -157,9 +157,25 @@ Popup {
         }
 
         ActionMenuItem {
+            id: actionCalibrate
+
+            index: 10
+            text: qsTr("Calibrate sensor")
+            source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
+            layoutDirection: actionMenu.layoutDirection
+            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasCalibration))
+
+            onClicked: {
+                deviceCalibrateButtonClicked()
+                menuSelected(index)
+                close()
+            }
+        }
+
+        ActionMenuItem {
             id: actionGraphMode
 
-            index: 7
+            index: 16
             text: qsTr("Switch graph")
             source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg"
             layoutDirection: actionMenu.layoutDirection
@@ -174,16 +190,16 @@ Popup {
         }
 
         ActionMenuItem {
-            id: actionCalibrate
+            id: actionShowSettings
 
-            index: 8
-            text: qsTr("Calibrate sensor")
-            source: "qrc:/assets/icons_material/duotone-model_training-24px.svg"
+            index: 17
+            text: qsTr("Sensor infos")
+            source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
             layoutDirection: actionMenu.layoutDirection
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasCalibration))
+            visible: (appContent.state === "DeviceThermometer" || appContent.state === "DeviceEnvironmental")
 
             onClicked: {
-                deviceCalibrateButtonClicked()
+                deviceSettingsButtonClicked()
                 menuSelected(index)
                 close()
             }
@@ -192,7 +208,7 @@ Popup {
         ActionMenuItem {
             id: actionReboot
 
-            index: 9
+            index: 32
             text: qsTr("Reboot sensor")
             source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
             layoutDirection: actionMenu.layoutDirection

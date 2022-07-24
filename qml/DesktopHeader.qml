@@ -367,7 +367,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (!singleColumn && appContent.state === "DevicePlantSensor")
+            visible: (!singleColumn && menuDevice.visible)
         }
         Item { // spacer
             width: 1; height: 1;
@@ -381,7 +381,9 @@ Rectangle {
             id: menuDevice
             spacing: 0
 
-            visible: (appContent.state === "DevicePlantSensor")
+            visible: (appContent.state === "DevicePlantSensor" ||
+                      appContent.state === "DeviceThermometer" ||
+                      appContent.state === "DeviceEnvironmental")
 
             DesktopHeaderItem {
                 id: menuDeviceData
@@ -399,6 +401,8 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
+                visible: (appContent.state === "DevicePlantSensor")
+
                 source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -409,6 +413,8 @@ Rectangle {
                 id: menuDevicePlant
                 width: headerHeight
                 height: headerHeight
+
+                visible: (appContent.state === "DevicePlantSensor")
 
                 source: "qrc:/assets/icons_custom/duotone-plant_care-24px.svg"
                 colorContent: Theme.colorHeaderContent
