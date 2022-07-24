@@ -47,11 +47,6 @@ DeviceFlowerCare_tuya::DeviceFlowerCare_tuya(const QString &deviceAddr, const QS
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
-
-    // Device infos (backup)
-    m_deviceModel = "Flower Care (Tuya variant)";
-    m_deviceModelID = "HHCCJCY10";
-    m_deviceInfos->load(m_deviceModel);
 }
 
 DeviceFlowerCare_tuya::DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -64,11 +59,6 @@ DeviceFlowerCare_tuya::DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObj
     m_deviceSensors += DeviceUtils::SENSOR_SOIL_CONDUCTIVITY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_LUMINOSITY;
-
-    // Device infos (backup)
-    m_deviceModel = "Flower Care (Tuya variant)";
-    m_deviceModelID = "HHCCJCY10";
-    m_deviceInfos->load(m_deviceModel);
 }
 
 DeviceFlowerCare_tuya::~DeviceFlowerCare_tuya()

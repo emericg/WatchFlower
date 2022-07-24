@@ -665,8 +665,13 @@ QDateTime Device::getDeviceUptime() const
 
 float Device::getDeviceUptime_days() const
 {
-    float days = (m_device_time / 3600.f / 24.f);
-    if (days < 0.f) days = 0.f;
+    float days = 0;
+
+    if (m_device_time > 0)
+    {
+        days = (m_device_time / 3600.f / 24.f);
+        if (days < 0.f) days = 0.f;
+    }
 
     return days;
 }

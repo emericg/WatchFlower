@@ -44,6 +44,10 @@ DeviceThermometer::DeviceThermometer(const QString &deviceAddr, const QString &d
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlThermoData(12*60);
     }
+
+    // Device infos
+    DeviceInfosLoader *devloader = DeviceInfosLoader::getInstance();
+    m_deviceInfos = devloader->getDeviceInfos(m_deviceName, m_deviceModel, m_deviceModelID);
 }
 
 DeviceThermometer::DeviceThermometer(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -60,6 +64,10 @@ DeviceThermometer::DeviceThermometer(const QBluetoothDeviceInfo &d, QObject *par
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlThermoData(12*60);
     }
+
+    // Device infos
+    DeviceInfosLoader *devloader = DeviceInfosLoader::getInstance();
+    m_deviceInfos = devloader->getDeviceInfos(m_deviceName, m_deviceModel, m_deviceModelID);
 }
 
 DeviceThermometer::~DeviceThermometer()

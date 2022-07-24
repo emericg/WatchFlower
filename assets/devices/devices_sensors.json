@@ -1,6 +1,7 @@
 {
   "devices": [
   {
+    "name_ble": "Flower care",
     "model": "Flower Care",
     "manufacturer": "HHCC Plant Technology",
     "ID": ["HHCCJCY01"],
@@ -20,6 +21,7 @@
     ]
   },
   {
+    "name_ble": "TY",
     "model": "Flower Care (Tuya variant)",
     "manufacturer": "HHCC Plant Technology",
     "ID": ["HHCCJCY10"],
@@ -33,17 +35,18 @@
       ["Luminosity", "0 → 100k lux (± 100 lux)"]
     ],
     "capabilities": [
-      ["led_status", ""],
+      ["led_status", "unsupported"],
       ["realtime", ""],
-      ["history", "?"]
+      ["history", "unsupported"]
     ]
   },
   {
+    "name_ble": "Grow care garden",
     "model": "Flower Care Max",
     "manufacturer": "HHCC Plant Technology",
     "ID": ["HHCCJCY09", "GCLS002"],
     "year": 2018,
-    "battery": "Lithium Polymer (embedded)",
+    "battery": "Lithium Polymer (internal)",
     "ipx": "IPX6",
     "sensors": [
       ["Soil moisture", "0 → 100%"],
@@ -58,11 +61,12 @@
     ]
   },
   {
+    "name_ble": "ropot",
     "model": "RoPot",
     "manufacturer": "HHCC Plant Technology",
     "ID": ["HHCCPOT002"],
     "year": 2016,
-    "battery": "Lithium Polymer (embedded)",
+    "battery": "Lithium Polymer (internal)",
     "ipx": "IPX6",
     "sensors": [
       ["Soil moisture", "0 → 100%"],
@@ -76,6 +80,7 @@
     ]
   },
   {
+    "name_ble": "Flower power XXXX",
     "model": "Flower Power",
     "manufacturer": "Parrot",
     "ID": ["RKXHAWAII"],
@@ -97,6 +102,7 @@
     ]
   },
   {
+    "name_ble": "Parrot pot XXXX",
     "model": "Parrot Pot",
     "manufacturer": "Parrot",
     "ID": ["2AG61POT"],
@@ -117,6 +123,224 @@
       ["history", "unsupported"],
       ["last_move", "unsupported"],
       ["water_tank", "manual trigger supported"]
+    ]
+  },
+
+  {
+    "name_ble": "MJ_HT_V1",
+    "model": "Bluetooth Hygrometer (?)",
+    "manufacturer": "Miaomiaoce",
+    "ID": ["LYWSDCGQ/01ZM"],
+    "year": "2017",
+    "battery": "1 x AAA",
+    "screen": "LCD",
+    "sensors": [
+      ["Temperature", "-9.9 → 60 °C"],
+      ["Humidity", "0 → 99% RH"]
+    ],
+    "capabilities": [
+      ["realtime", ""],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "LYWSD02",
+    "model": "Digital Hygrometer Clock (?)",
+    "manufacturer": "Miaomiaoce",
+    "ID": ["LYWSD02"],
+    "year": "2018",
+    "battery": "2 x CR2032",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "0 → 60 °C"],
+      ["Humidity", "0 → 99% RH"]
+    ],
+    "capabilities": [
+      ["realtime", ""],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "MHO-C303",
+    "model": "Digital Hygrometer Alarm (?)",
+    "manufacturer": "Miaomiaoce",
+    "ID": ["MHO-C303"],
+    "year": "2019",
+    "battery": "2 x AAA",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "0 → 60 °C"],
+      ["Humidity", "0 → 99% RH"]
+    ],
+    "capabilities": [
+      ["realtime", ""],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "MHO-C401",
+    "model": "Digital Hygrometer (?)",
+    "manufacturer": "Miaomiaoce",
+    "ID": ["MHO-C401"],
+    "year": "2019",
+    "battery": "1 x CR2032",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "0 → 60 °C (± 0.3 °C)"],
+      ["Humidity", "0 → 99% RH (± 3% RH)"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "LYWSD03MMC",
+    "model": "Thermo-Hygrometer (?)",
+    "manufacturer": "Miaomiaoce",
+    "ID": ["LYWSD03MMC"],
+    "year": "2019",
+    "battery": "1 x CR2032",
+    "screen": "LCD",
+    "sensors": [
+      ["Temperature", "-9.9 → 60 °C (± 0.1 °C)"],
+      ["Humidity", "0 → 99% RH (± 1% RH)"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "XMWSDJO4MMC",
+    "model": "Thermo-Hygrometer (?)",
+    "manufacturer": "Miaomiaoce",
+    "ID": ["XMWSDJO4MMC"],
+    "year": "2021",
+    "battery": "1 x CR2450",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "0 → 60 °C"],
+      ["Humidity", "0 → 99% RH"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "Qingping Alarm Clock",
+    "model": "Bluetooth Alarm Clock",
+    "manufacturer": "Qinping",
+    "ID": ["CGD1"],
+    "year": "2018",
+    "battery": "2 x AAA",
+    "screen": "LCD",
+    "sensors": [
+      ["Temperature", "-9.9 → 49.9 °C"],
+      ["Humidity", "0 → 100% RH"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "Qingping Temp RH Barometer",
+    "model": "Temp & RH Barometer Pro S",
+    "manufacturer": "Qinping",
+    "ID": ["CGP1W"],
+    "year": "2019",
+    "battery": "1 x 18650 (internal)",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "-30 → 55 °C (± 0.2 °C)"],
+      ["Humidity", "0 → 100% RH (± 2% RH)"],
+      ["Air pressure", "300 → 1250 hPa (±0.5 hPa)"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "CGG1",
+    "model": "Temp & RH Monitor",
+    "manufacturer": "Qinping",
+    "ID": ["CGG1"],
+    "year": "?",
+    "battery": "1 x CR2430",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "-9.9 → 50 °C"],
+      ["Humidity", "0 → 99.9% RH"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "CGDK2",
+    "model": "Temp & RH Monitor Lite",
+    "manufacturer": "Qinping",
+    "ID": ["CGDK2"],
+    "year": "?",
+    "battery": "1 x CR2450",
+    "screen": "LCD",
+    "sensors": [
+      ["Temperature", "0 → 60 °C"],
+      ["Humidity", "0 → 99% RH"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "ThermoBeacon",
+    "model": "ThermoBeacon",
+    "manufacturer": "SensorBlue",
+    "ID": ["2ACD3-WS02","2ACD3-WS07"],
+    "year": "?",
+    "battery": "1 x CR2477",
+    "screen": "",
+    "sensors": [
+      ["Temperature", "-20 → 65 °C (± 0.5 °C)"],
+      ["Humidity", "0 → 99% RH (± 5% RH)"]
+    ],
+    "capabilities": [
+      ["led_status", "some models"],
+      ["realtime", ""],
+      ["history", "30 days"]
+    ]
+  },
+
+  {
+    "name_ble": "6003#XXXXXXXXXXXX",
+    "model": "Air Box WP6003",
+    "manufacturer": "VSON technology",
+    "ID": ["WP6003"],
+    "year": "2020",
+    "sensors": [
+      ["Temperature", "-10 → 50 °C"],
+      ["TVOC", "0 → 9.999 mg/m3 RH"],
+      ["HCHO", "0 → 1.999 mg/m3"],
+      ["CO2 (estimated)", "400 → 2000 ppm"]
+    ]
+  },
+  {
+    "name_ble": "JQJCY01YM",
+    "model": "Formaldehyde HCHO Monitor",
+    "manufacturer": "Honeywell",
+    "ID": ["JQJCY01YM"],
+    "year": "2018",
+    "battery": "2 x AA",
+    "screen": "OLED",
+    "sensors": [
+      ["Temperature", "0 → 50 °C"],
+      ["Humidity", "0 → 99% RH"],
+      ["HCHO", "0 → 1.500 mg/m3"]
     ]
   }
   ]

@@ -1,11 +1,27 @@
 <RCC>
     <qresource prefix="/devices">
         <file alias="devices_sensors.json">devices/devices_sensors.json</file>
+
         <file alias="flowercare.svg">../docs/flowercare.svg</file>
         <file alias="flowercaremax.svg">../docs/flowercaremax.svg</file>
         <file alias="flowerpower.svg">../docs/flowerpower.svg</file>
         <file alias="higrow.svg">../docs/higrow.svg</file>
         <file alias="ropot.svg">../docs/ropot.svg</file>
         <file alias="parrotpot.svg">../docs/parrotpot.svg</file>
+
+        <file alias="hygrotemp_alarm.svg">../docs/hygrotemp_alarm.svg</file>
+        <file alias="hygrotemp_cgd1.svg">../docs/hygrotemp_cgd1.svg</file>
+        <file alias="hygrotemp_cgdk2.svg">../docs/hygrotemp_cgdk2.svg</file>
+        <file alias="hygrotemp_cgg1.svg">../docs/hygrotemp_cgg1.svg</file>
+        <file alias="hygrotemp_cgp1w.svg">../docs/hygrotemp_cgp1w.svg</file>
+        <file alias="hygrotemp_clock.svg">../docs/hygrotemp_clock.svg</file>
+        <file alias="hygrotemp_lywsd03mmc.svg">../docs/hygrotemp_lywsd03mmc.svg</file>
+        <file alias="hygrotemp_lywsdcgq.svg">../docs/hygrotemp_lywsdcgq.svg</file>
+        <file alias="hygrotemp_mhoc401.svg">../docs/hygrotemp_mhoc401.svg</file>
+        <file alias="hygrotemp_xmwsdjo4mmc.svg">../docs/hygrotemp_xmwsdjo4mmc.svg</file>
+        <file alias="thermobeacon_round.svg">../docs/thermobeacon_round.svg</file>
+
+        <file alias="wp6003.svg">../docs/wp6003.svg</file>
+        <file alias="jqjcy01ym.svg">../docs/jqjcy01ym.svg</file>
     </qresource>
 </RCC>

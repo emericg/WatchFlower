@@ -92,9 +92,51 @@ DeviceInfos::~DeviceInfos()
     m_capabilities.clear();
 }
 
-bool DeviceInfos::load(const QString &model)
+void DeviceInfos::load(const QJsonObject &obj)
 {
-    //qDebug() << "DeviceInfos::load(" << model << ")";
+    //qDebug() << "DeviceInfos::load(" << obj << ")";
+
+    m_model = obj["model"].toString();
+    m_manufacturer = obj["manufacturer"].toString();
+    for (const auto &vv: obj["ID"].toArray())
+    {
+        if (!m_id.isEmpty()) m_id += ", ";
+        m_id += vv.toString();
+    }
+
+    m_year = obj["year"].toInt();
+    m_battery = obj["battery"].toString();
+    m_screen = obj["screen"].toString();
+    m_ipx = obj["ipx"].toString();
+
+    for (const auto &vv: obj["sensors"].toArray())
+    {
+        QJsonArray vvv = vv.toArray();
+        if (vvv.size() == 2)
+        {
+            DeviceInfosSensor *dis = new DeviceInfosSensor(vvv.at(0).toString(),
+                                                           vvv.at(1).toString(),
+                                                           this);
+            m_sensors.push_back(dis);
+        }
+    }
+
+    for (const auto &vv: obj["capabilities"].toArray())
+    {
+        QJsonArray vvv = vv.toArray();
+        if (vvv.size() == 2)
+        {
+            DeviceInfosCapability *dic = new DeviceInfosCapability(vvv.at(0).toString(),
+                                                                   vvv.at(1).toString(),
+                                                                   this);
+            m_capabilities.push_back(dic);
+        }
+    }
+}
+
+bool DeviceInfos::loadSlow(const QString &name, const QString &model, const QString &modelId)
+{
+    //qDebug() << "DeviceInfos::loadSlow(" << name << model << modelId << ")";
 
     QFile file(":/devices/devices_sensors.json");
 
@@ -108,7 +150,10 @@ bool DeviceInfos::load(const QString &model)
         for (const auto &value: deviceArray)
         {
             QJsonObject obj = value.toObject();
-            if (model.toLower() == obj["model"].toString().toLower())
+            if (name == obj["name_ble"].toString() ||
+                name.toLower() == obj["model"].toString().toLower() ||
+                model.toLower() == obj["name_ble"].toString().toLower() ||
+                model.toLower() == obj["model"].toString().toLower())
             {
                 //qDebug() << "DeviceInfos::load(" << model << ") FOUND";
 
@@ -155,6 +200,66 @@ bool DeviceInfos::load(const QString &model)
     }
 
     return false;
+}
+
+/* ************************************************************************** */
+
+DeviceInfosLoader *DeviceInfosLoader::instance = nullptr;
+
+DeviceInfosLoader *DeviceInfosLoader::getInstance()
+{
+    if (instance == nullptr)
+    {
+        instance = new DeviceInfosLoader();
+    }
+
+    return instance;
+}
+
+DeviceInfosLoader::DeviceInfosLoader()
+{
+    //
+}
+
+DeviceInfosLoader::~DeviceInfosLoader()
+{
+    //
+}
+
+DeviceInfos *DeviceInfosLoader::getDeviceInfos(const QString &name, const QString &model, const QString &modelId)
+{
+    //qDebug() << "DeviceInfosLoader::getDeviceInfos(" << name << model << modelId << ")";
+
+    DeviceInfos *dev = nullptr;
+
+    if (deviceJsonArray.isEmpty())
+    {
+        QFile jsonFile(":/devices/devices_sensors.json");
+        if (jsonFile.open(QIODevice::ReadOnly))
+        {
+            QJsonDocument jsonDoc = QJsonDocument().fromJson(jsonFile.readAll());
+            QJsonObject jsonObj = jsonDoc.object();
+
+            deviceJsonArray = jsonObj["devices"].toArray();
+
+            jsonFile.close();
+        }
+    }
+
+    for (const auto &value: qAsConst(deviceJsonArray))
+    {
+        QJsonObject obj = value.toObject();
+        if (name == obj["name_ble"].toString() ||
+            name.toLower() == obj["model"].toString().toLower() ||
+            model.toLower() == obj["name_ble"].toString().toLower() ||
+            model.toLower() == obj["model"].toString().toLower())
+        {
+            dev = new DeviceInfos(this);
+            dev->load(obj);
+        }
+    }
+
+    return dev;
 }
 
 /* ************************************************************************** */

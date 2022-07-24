@@ -89,7 +89,7 @@ Item {
 
                     Column {
                         Text {
-                            text: qsTr("Device")
+                            text: qsTr("Bluetooth name")
                             textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.bold: true
@@ -107,7 +107,7 @@ Item {
 
                     Column {
                         Text {
-                            text: qsTr("Address")
+                            text: qsTr("Bluetooth address")
                             textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.bold: true
@@ -304,6 +304,8 @@ Item {
                 border.width: 2
                 border.color: Theme.colorSeparator
 
+                visible: currentDevice.deviceInfos
+
                 Column {
                     id: itemDeviceInfosContent
                     anchors.top: parent.top
@@ -313,6 +315,23 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     spacing: 8
+
+                    Column {
+                        Text {
+                            text: qsTr("Model")
+                            textFormat: Text.PlainText
+                            color: Theme.colorSubText
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentVerySmall
+                            font.capitalization: Font.AllUppercase
+                        }
+                        Text {
+                            text: currentDevice.deviceInfos.deviceModel
+                            textFormat: Text.PlainText
+                            font.pixelSize: Theme.fontSizeContentBig
+                            color: Theme.colorHighContrast
+                        }
+                    }
 
                     Column {
                         Text {
@@ -352,6 +371,8 @@ Item {
                         spacing: 32
 
                         Column {
+                            visible: currentDevice.deviceInfos.deviceYear
+
                             Text {
                                 text: qsTr("Year")
                                 textFormat: Text.PlainText
@@ -369,6 +390,8 @@ Item {
                         }
 
                         Column {
+                            visible: currentDevice.deviceInfos.deviceIPrating
+
                             Text {
                                 text: qsTr("IP Rating")
                                 textFormat: Text.PlainText
@@ -390,7 +413,7 @@ Item {
                         spacing: 32
 
                         Column {
-                            visible: dbatt.text
+                            visible: currentDevice.deviceInfos.deviceBattery
 
                             Text {
                                 text: qsTr("Battery")
@@ -401,7 +424,6 @@ Item {
                                 font.capitalization: Font.AllUppercase
                             }
                             Text {
-                                id: dbatt
                                 textFormat: Text.PlainText
                                 text: currentDevice.deviceInfos.deviceBattery
                                 font.pixelSize: Theme.fontSizeContentBig
@@ -410,7 +432,7 @@ Item {
                         }
 
                         Column {
-                            visible: dscreen.text
+                            visible: currentDevice.deviceInfos.deviceScreen
 
                             Text {
                                 text: qsTr("Screen")
@@ -421,7 +443,6 @@ Item {
                                 font.capitalization: Font.AllUppercase
                             }
                             Text {
-                                id: dscreen
                                 text: currentDevice.deviceInfos.deviceScreen
                                 textFormat: Text.PlainText
                                 font.pixelSize: Theme.fontSizeContentBig
@@ -443,6 +464,8 @@ Item {
                 color: Theme.colorForeground
                 border.width: 2
                 border.color: Theme.colorSeparator
+
+                visible: currentDevice.deviceInfos
 
                 Column {
                     id: itemDeviceSensorsContent

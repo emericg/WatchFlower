@@ -55,8 +55,8 @@ DevicePlantSensor::DevicePlantSensor(const QString &deviceAddr, const QString &d
     }
 
     // Device infos
-    m_deviceInfos = new DeviceInfos(this);
-    m_deviceInfos->load(m_deviceName);
+    DeviceInfosLoader *devloader = DeviceInfosLoader::getInstance();
+    m_deviceInfos = devloader->getDeviceInfos(m_deviceName, m_deviceModel, m_deviceModelID);
 }
 
 DevicePlantSensor::DevicePlantSensor(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -78,8 +78,8 @@ DevicePlantSensor::DevicePlantSensor(const QBluetoothDeviceInfo &d, QObject *par
     }
 
     // Device infos
-    m_deviceInfos = new DeviceInfos(this);
-    m_deviceInfos->load(m_deviceName);
+    DeviceInfosLoader *devloader = DeviceInfosLoader::getInstance();
+    m_deviceInfos = devloader->getDeviceInfos(m_deviceName, m_deviceModel, m_deviceModelID);
 }
 
 DevicePlantSensor::~DevicePlantSensor()

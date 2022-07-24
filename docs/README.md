@@ -22,7 +22,7 @@ Supported devices
 | Product ID                           | HHCCJCY09 / GCLS002                   |
 | FCC ID                               | 2AJEPHHCCJCY09 / 2AQPCGCLS002         |
 | <img src="flowercaremax.svg" width="256">                                   ||
-| Battery                              | Lithium Polymer (embedded)            |
+| Battery                              | Lithium Polymer (internal)            |
 | Soil moisture                        | 0 → 100%                              |
 | Soil conductivity                    |                                       |
 | Temperature                          | -15 → 50 °C (± 0.5 °C)                |
@@ -35,7 +35,7 @@ Supported devices
 | Product ID                           | HHCCPOT002                            |
 | FCC ID                               | 2AJEPHHCCPOT002                       |
 | <img src="ropot.svg" width="256">                                           ||
-| Battery                              | Lithium Polymer (embedded)            |
+| Battery                              | Lithium Polymer (internal)            |
 | Soil moisture                        | 0 → 100%                              |
 | Soil conductivity                    |                                       |
 | Temperature                          | -15 → 50 °C (± 0.5 °C)                |
@@ -85,14 +85,14 @@ Supported devices
 
 # Thermometers
 
-| Bluetooth Hygrometer                 | Xiaomi MiJia?                         |
+| Bluetooth Hygrometer (?)             | Miaomiaoce (?)                        |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | LYWSDCGQ/01ZM                         |
 | <img src="hygrotemp_lywsdcgq.svg" width="256">                              ||
 | Screen                               | LCD                                   |
 | Battery                              | 1 x AAA                               |
-| Temperature                          | -9.9 ~ 60 °C                          |
-| Humidity                             | 0 ~ 99.9% RH                          |
+| Temperature                          | -9.9 → 60 °C                          |
+| Humidity                             | 0 → 99.9% RH                          |
 | BLE API                              | [link](lywsdcgq-ble-api.md)           |
 
 | Bluetooth Alarm Clock                | Qinping (formerly ClearGrass)         |
@@ -102,19 +102,19 @@ Supported devices
 | <img src="hygrotemp_cgd1.svg" width="256">                                  ||
 | Screen                               | LCD                                   |
 | Battery                              | 2 x AAA                               |
-| Temperature                          | -9.9 ~ 49.9 °C                        |
-| Humidity                             | 0 ~ 100% RH                           |
+| Temperature                          | -9.9 → 49.9 °C                        |
+| Humidity                             | 0 → 100% RH                           |
 | BLE API                              | [link](cgd1-ble-api.md)               |
 
 | Temp & RH Barometer Pro S            | Qinping                               |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | CGP1W                                 |
-| <img src="hygrotemp_cgp1w.svg" width="256">                                  ||
+| <img src="hygrotemp_cgp1w.svg" width="256">                                 ||
 | Screen                               | LCD                                   |
-| Battery                              | 1 x 18650                             |
-| Temperature                          | -30 ~ 55 °C (± 0.2 °C)                |
-| Humidity                             | 0 ~ 100% RH (± 2% RH)                 |
-| Air pressure                         | 300~1250 hPa (±0.5 hPa)               |
+| Battery                              | 1 x 18650 (internal)                  |
+| Temperature                          | -30 → 55 °C (± 0.2 °C)                |
+| Humidity                             | 0 → 100% RH (± 2% RH)                 |
+| Air pressure                         | 300 → 1250 hPa (±0.5 hPa)             |
 | BLE API                              | [link](cgp1w-ble-api.md)              |
 
 | Temp & RH Monitor                    | Qinping (formerly ClearGrass)         |
@@ -124,8 +124,8 @@ Supported devices
 | <img src="hygrotemp_cgg1.svg" width="256">                                  ||
 | Screen                               | EInk                                  |
 | Battery                              | 1 x CR2430                            |
-| Temperature                          | 0 ~ 50 °C                             |
-| Humidity                             | 0 ~ 99.9% RH                          |
+| Temperature                          | 0 → 50 °C                             |
+| Humidity                             | 0 → 99.9% RH                          |
 | BLE API                              | [link](cgg1-ble-api.md)               |
 
 | Temp & RH Monitor Lite               | Qinping                               |
@@ -134,58 +134,58 @@ Supported devices
 | <img src="hygrotemp_cgdk2.svg" width="256">                                 ||
 | Screen                               | LCD                                   |
 | Battery                              | 1 x CR2430                            |
-| Temperature                          | -9.9 ~ 50 °C                          |
-| Humidity                             | 0 ~ 99.9% RH                          |
+| Temperature                          | -9.9 → 50 °C                          |
+| Humidity                             | 0 → 99.9% RH                          |
 | BLE API                              | [link](cgdk2-ble-api.md)              |
 
-| Digital Hygrometer Clock             | Miaomiaoce (MMC)                      |
+| Digital Hygrometer Clock (?)         | Miaomiaoce (MMC)                      |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | LYWSD02                               |
 | <img src="hygrotemp_clock.svg" width="256">                                 ||
 | Screen                               | EInk                                  |
 | Battery                              | 2 x CR2032                            |
-| Temperature                          | 0 ~ 60 °C                             |
-| Humidity                             | 0 ~ 99% RH                            |
+| Temperature                          | 0 → 60 °C                             |
+| Humidity                             | 0 → 99% RH                            |
 | BLE API                              | [link](lywsd02-ble-api.md)            |
 
-| Digital Hygrometer Alarm             | Miaomiaoce (MMC)                      |
+| Digital Hygrometer Alarm (?)         | Miaomiaoce (MMC)                      |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | MHO-C303                              |
 | <img src="hygrotemp_alarm.svg" width="256">                                 ||
 | Screen                               | EInk                                  |
 | Battery                              | 2 x AAA                               |
-| Temperature                          | 0 ~ 60 °C                             |
-| Humidity                             | 0 ~ 99% RH                            |
+| Temperature                          | 0 → 60 °C                             |
+| Humidity                             | 0 → 99% RH                            |
 | BLE API                              | [link](mhoc303-ble-api.md)            |
 
-| Thermo-Hygrometer 2                  | Miaomiaoce (MMC)                      |
+| Thermo-Hygrometer (?)                | Miaomiaoce (MMC)                      |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | LYWSD03MMC                            |
 | <img src="hygrotemp_lywsd03mmc.svg" width="256">                            ||
 | Screen                               | LCD                                   |
 | Battery                              | 1 x CR2032                            |
-| Temperature                          | -9.9 ~ 60 °C (± 0.1 °C)               |
-| Humidity                             | 0 ~ 99% RH (± 1% RH)                  |
+| Temperature                          | -9.9 → 60 °C (± 0.1 °C)               |
+| Humidity                             | 0 → 99% RH (± 1% RH)                  |
 | BLE API                              | [link](lywsd03mmc-ble-api.md)         |
 
-| Thermo-Hygrometer                    | Miaomiaoce (MMC)                      |
+| Thermo-Hygrometer (?)                | Miaomiaoce (MMC)                      |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | XMWSDJO4MMC                           |
 | <img src="hygrotemp_xmwsdjo4mmc.svg" width="256">                           ||
 | Screen                               | EInk                                  |
 | Battery                              | 1 x CR2450                            |
-| Temperature                          | 0 ~ 60 °C                             |
-| Humidity                             | 0 ~ 99.9% RH                          |
+| Temperature                          | 0 → 60 °C                             |
+| Humidity                             | 0 → 99.9% RH                          |
 | BLE API                              | [link](xmwsdjo4mmc-ble-api.md)        |
 
-| Digital Hygrometer                   | Miaomiaoce (MMC)                      |
+| Digital Hygrometer (?)               | Miaomiaoce (MMC)                      |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | MHO-C401                              |
 | <img src="hygrotemp_mhoc401.svg" width="256">                               ||
 | Screen                               | EInk                                  |
 | Battery                              | 1 x CR2032                            |
-| Temperature                          | 0 ~ 60 °C (± 0.3 °C)                  |
-| Humidity                             | 0 ~ 99% RH (± 3% RH)                  |
+| Temperature                          | 0 → 60 °C (± 0.3 °C)                  |
+| Humidity                             | 0 → 99% RH (± 3% RH)                  |
 | BLE API                              | [link](mhoc401-ble-api.md)            |
 
 | ThermoBeacon (LCD)                   | SensorBlue / Brifit / ORIA / ?        |
@@ -194,8 +194,8 @@ Supported devices
 | <img src="thermobeacon_square.svg" width="256">                             ||
 | Screen                               | LCD                                   |
 | Battery                              | 1 x CR2477                            |
-| Temperature                          | -20 ~ 65 °C (± 0.5 °C)                |
-| Humidity                             | 0 ~ 99% RH (± 5% RH)                  |
+| Temperature                          | -20 → 65 °C (± 0.5 °C)                |
+| Humidity                             | 0 → 99% RH (± 5% RH)                  |
 | BLE API                              | [link](thermobeacon-ble-api.md)       |
 
 | ThermoBeacon (round keychain)        | SensorBlue / Brifit / ORIA / ?        |
@@ -204,8 +204,8 @@ Supported devices
 | <img src="thermobeacon_round.svg" width="256">                              ||
 | Screen                               | N/A                                   |
 | Battery                              | 1 x CR2477                            |
-| Temperature                          | -20 ~ 65 °C (± 0.5 °C)                |
-| Humidity                             | 0 ~ 99% RH (± 5% RH)                  |
+| Temperature                          | -20 → 65 °C (± 0.5 °C)                |
+| Humidity                             | 0 → 99% RH (± 5% RH)                  |
 | BLE API                              | [link](thermobeacon-ble-api.md)       |
 
 | ThermoBeacon (diamond keychain)      | SensorBlue / Brifit / ORIA / ?        |
@@ -214,8 +214,8 @@ Supported devices
 | <img src="thermobeacon_diamond.svg" width="256">                            ||
 | Screen                               | N/A                                   |
 | Battery                              | 1 x CR2477                            |
-| Temperature                          | -20 ~ 65 °C (± 0.5 °C)                |
-| Humidity                             | 0 ~ 99% RH (± 5% RH)                  |
+| Temperature                          | -20 → 65 °C (± 0.5 °C)                |
+| Humidity                             | 0 → 99% RH (± 5% RH)                  |
 | BLE API                              | [link](thermobeacon-ble-api.md)       |
 
 
@@ -227,10 +227,10 @@ Supported devices
 | <img src="wp6003.svg" width="256">                                          ||
 | Screen                               | N/A                                   |
 | Battery                              | N/A                                   |
-| Temperature                          | -10 ~ 50 °C                           |
-| TVOC                                 | 0 ~ 9.999 mg/m3                       |
-| HCHO                                 | 0 ~ 1.999 mg/m3                       |
-| CO2 (estimated)                      | 400 ~ 2000 ppm                        |
+| Temperature                          | -10 → 50 °C                           |
+| TVOC                                 | 0 → 9.999 mg/m3                       |
+| HCHO                                 | 0 → 1.999 mg/m3                       |
+| CO2 (estimated)                      | 400 → 2000 ppm                        |
 | BLE API                              | [link](wp6003-ble-api.md)             |
 
 | Formaldehyde HCHO Monitor            | Honeywell                             |
@@ -239,9 +239,9 @@ Supported devices
 | <img src="jqjcy01ym.svg" width="256">                                       ||
 | Screen                               | OLED                                  |
 | Battery                              | 2 x AA                                |
-| Temperature                          | 0 ~ 50 °C                             |
-| Humidity                             | 0 ~ 99% RH                            |
-| HCHO                                 | 0 ~ 1.500 mg/m3                       |
+| Temperature                          | 0 → 50 °C                             |
+| Humidity                             | 0 → 99% RH                            |
+| HCHO                                 | 0 → 1.500 mg/m3                       |
 | BLE API                              | [link](jqjcy01ym-ble-api.md)          |
 
 * Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"

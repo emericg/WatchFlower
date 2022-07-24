@@ -44,6 +44,10 @@ DeviceEnvironmental::DeviceEnvironmental(const QString &deviceAddr, const QStrin
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlSensorData(12*60);
     }
+
+    // Device infos
+    DeviceInfosLoader *devloader = DeviceInfosLoader::getInstance();
+    m_deviceInfos = devloader->getDeviceInfos(m_deviceName, m_deviceModel, m_deviceModelID);
 }
 
 DeviceEnvironmental::DeviceEnvironmental(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -60,6 +64,10 @@ DeviceEnvironmental::DeviceEnvironmental(const QBluetoothDeviceInfo &d, QObject 
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlSensorData(12*60);
     }
+
+    // Device infos
+    DeviceInfosLoader *devloader = DeviceInfosLoader::getInstance();
+    m_deviceInfos = devloader->getDeviceInfos(m_deviceName, m_deviceModel, m_deviceModelID);
 }
 
 DeviceEnvironmental::~DeviceEnvironmental()

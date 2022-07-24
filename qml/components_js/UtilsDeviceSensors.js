@@ -8,7 +8,8 @@
 
 function isDeviceSupported(deviceName) {
     if (deviceName === "Flower care" || deviceName === "Flower power" ||
-        deviceName === "Flower mate" || deviceName === "Grow care garden" ||
+        deviceName === "Flower mate" || deviceName === "TY" ||
+        deviceName === "Grow care garden" ||
         deviceName === "ropot" || deviceName === "Parrot pot" ||
         deviceName === "HiGrow" ||
         deviceName === "ThermoBeacon" ||
@@ -28,11 +29,28 @@ function isDeviceSupported(deviceName) {
 
 function getDeviceImage(deviceName) {
     if (deviceName === "Flower care") return "qrc:/devices/flowercare.svg"
+    if (deviceName === "TY") return "qrc:/devices/flowercare.svg"
     if (deviceName === "Grow care garden") return "qrc:/devices/flowercaremax.svg"
     if (deviceName === "Flower power") return "qrc:/devices/flowerpower.svg"
     if (deviceName === "Parrot pot") return "qrc:/devices/parrotpot.svg"
     if (deviceName === "ropot") return "qrc:/devices/ropot.svg"
     if (deviceName === "HiGrow") return "qrc:/devices/higrow.svg"
+
+    if (deviceName === "MHO-C303") return "qrc:/devices/hygrotemp_alarm.svg"
+    if (deviceName === "Qingping Alarm Clock") return "qrc:/devices/hygrotemp_cgd1.svg"
+    if (deviceName === "Qingping Temp RH Lite") return "qrc:/devices/hygrotemp_cgdk2.svg"
+    if (deviceName === "ClearGrass Temp & RH") return "qrc:/devices/hygrotemp_cgg1.svg"
+    if (deviceName === "Qingping Temp & RH") return "qrc:/devices/hygrotemp_cgg1.svg"
+    if (deviceName === "Qingping Temp RH Barometer") return "qrc:/devices/hygrotemp_cgp1w.svg"
+    if (deviceName === "LYWSD02") return "qrc:/devices/hygrotemp_clock.svg"
+    if (deviceName === "LYWSD03MMC") return "qrc:/devices/hygrotemp_lywsd03mmc.svg"
+    if (deviceName === "MJ_HT_V1") return "qrc:/devices/hygrotemp_lywsdcgq.svg"
+    if (deviceName === "MHO-C401") return "qrc:/devices/hygrotemp_mhoc401.svg"
+    if (deviceName === "XMWSDJO4MMC") return "qrc:/devices/hygrotemp_xmwsdjo4mmc.svg"
+    if (deviceName === "ThermoBeacon") return "qrc:/devices/thermobeacon_round.svg"
+
+    if (deviceName === "WP6003") return "qrc:/devices/wp6003.svg"
+    if (deviceName === "JQJCY01YM") return "qrc:/devices/jqjcy01ym.svg"
     return ""
 }
 
