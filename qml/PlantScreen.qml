@@ -65,6 +65,9 @@ Grid {
         plantCategory.text = currentPlant.category
         plantOrigin.text = currentPlant.origin
 
+        itemType.text = UtilsPlantDatabase.getPlantTypeText(currentPlant.type)
+        itemType.backgroundColor = UtilsPlantDatabase.getPlantTypeColor(currentPlant.type)
+
         // tags
         plantTags.model = currentPlant.tags
 
@@ -180,7 +183,7 @@ Grid {
         height: (uiMode === 1) ? columnPlant.height + 24 : plantScreen.parentHeight
         contentWidth: columnPlant.width
         contentHeight: columnPlant.height + 32
-        interactive: !(uiMode === 1)
+        interactive: (uiMode !== 1)
 
         Column {
             id: columnPlant
@@ -478,6 +481,14 @@ Grid {
             }
 
             ////////
+
+            ItemTag {
+                id: itemType
+                visible: text
+                textColor: "white"
+                textSize: Theme.fontSizeContentSmall
+                backgroundColor: Theme.colorGreen
+            }
 
             Flow {
                 id: itemTags

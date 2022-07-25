@@ -146,6 +146,8 @@ bool Plant::read_json_watchflower(QJsonObject &json)
             origin = infos["origin"].toString();
         if (infos.contains("category") && infos["category"].isString())
             category = infos["category"].toString();
+        if (infos.contains("type") && infos["type"].isString())
+            type = infos["type"].toString();
 
         if (infos.contains("size_height") && infos["size_height"].isString())
             size_height = infos["size_height"].toString();
@@ -247,6 +249,7 @@ void Plant::write_json_watchflower(QJsonObject &jsonObject) const
     QJsonObject infosObject; ///////////////////////////////////////////////////
     infosObject.insert("origin", QJsonValue::fromVariant(origin));
     infosObject.insert("category", QJsonValue::fromVariant(category));
+    infosObject.insert("type", QJsonValue::fromVariant(type));
     infosObject.insert("size_height", QJsonValue::fromVariant(size_height));
     infosObject.insert("size_diameter", QJsonValue::fromVariant(size_diameter));
     infosObject.insert("period_planting", QJsonValue::fromVariant(period_planting));
@@ -327,6 +330,7 @@ void Plant::print() const
     qDebug() << "* basic infos";
     qDebug() << "- origin:  " << origin;
     qDebug() << "- category:" << category;
+    qDebug() << "- type:" << type;
     qDebug() << "- diameter:" << size_diameter;
     qDebug() << "- height:  " << size_height;
     qDebug() << "- colors leaf:     " << colors_leaf;
@@ -334,14 +338,14 @@ void Plant::print() const
     qDebug() << "- colors flower:   " << colors_flower;
     qDebug() << "- colors fruit:    " << colors_fruit;
 
+    qDebug() << "* tags";
+    qDebug() << "-" << tags;
+
     qDebug() << "* calendar";
     qDebug() << "- planting:    " << period_planting;
     qDebug() << "- growth:      " << period_growth;
     qDebug() << "- blooming:    " << period_blooming;
     qDebug() << "- fruiting:    " << period_fruiting;
-
-    qDebug() << "* tags";
-    qDebug() << "-" << tags;
 
     qDebug() << "* maintenance infos";
     qDebug() << "-" << sunlight;

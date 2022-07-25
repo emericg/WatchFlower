@@ -44,6 +44,7 @@ class Plant: public QObject
     Q_PROPERTY(QString origin READ getOrigin CONSTANT)
     Q_PROPERTY(QString category READ getCategory CONSTANT)
     Q_PROPERTY(QString taxonomy READ getTaxonomy CONSTANT)
+    Q_PROPERTY(QString type READ getType CONSTANT)
 
     Q_PROPERTY(QString hardiness READ getHardiness CONSTANT)
     Q_PROPERTY(QString careLevel READ getCareLevel CONSTANT)
@@ -105,6 +106,8 @@ class Plant: public QObject
     QString hardiness;
     QString foliage;
 
+    QString type;
+
     QStringList tags;
 
     QString size_diameter;
@@ -154,12 +157,13 @@ class Plant: public QObject
     const QString &getOrigin() { return origin; }
     const QString &getCategory() { return category; }
     const QString &getTaxonomy() { return taxonomy; }
+    const QString &getType() { return type; }
+    QStringList getTags() { return tags; }
 
     const QString &getCareLevel() { return careLevel; }
     const QString &getGrowthRate() { return growthRate; }
     const QString &getHardiness() { return hardiness; }
     const QString &getFoliage() { return foliage; }
-    QStringList getTags() { return tags; }
 
     QStringList getColorsLeaf() { return colors_leaf; }
     QStringList getColorsBract() { return colors_bract; } // unused?
