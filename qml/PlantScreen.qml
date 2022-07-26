@@ -59,6 +59,10 @@ Grid {
         console.log("soil Moisture m/m: " + currentPlant.soilMoist_min + " / " + currentPlant.soilMoist_max)
         console.log("mmol m/m: " + currentPlant.lightMmol_min + " / " + currentPlant.lightMmol_max)
 */
+        col1.contentY = 0
+        col2.contentY = 0
+        col3.contentY = 0
+
         plantNameBotanical.text = currentPlant.nameBotanical
         plantNameVariety.text = currentPlant.nameVariety
         plantNameCommon.text = currentPlant.nameCommon
@@ -179,6 +183,7 @@ Grid {
     }
 
     Flickable { ////////////////////////////////////////////////////////////////
+        id: col1
         width: plantScreen.www1
         height: (uiMode === 1) ? columnPlant.height + 24 : plantScreen.parentHeight
         contentWidth: columnPlant.width
@@ -873,6 +878,7 @@ Grid {
     }
 
     Flickable { ////////////////////////////////////////////////////////////////
+        id: col2
         width: plantScreen.www2
         height: (uiMode === 1) ? columnCare.height + 24 : plantScreen.parentHeight
         contentWidth: columnCare.width
@@ -1277,6 +1283,7 @@ Grid {
     }
 
     Flickable { ////////////////////////////////////////////////////////////////
+        id: col3
         width: plantScreen.www2
         height: (uiMode === 1) ? columnLimits.height + 24 : plantScreen.parentHeight
         contentWidth: columnLimits.width

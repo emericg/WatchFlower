@@ -369,11 +369,6 @@ Rectangle {
             color: Theme.colorHeaderHighlight
             visible: (!singleColumn && menuDevice.visible)
         }
-        Item { // spacer
-            width: 1; height: 1;
-            anchors.verticalCenter: parent.verticalCenter
-            visible: (appContent.state === "DeviceThermometer" || appContent.state === "DeviceEnvironmental")
-        }
 
         // DEVICE MENU //////////
 

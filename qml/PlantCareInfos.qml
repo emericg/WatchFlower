@@ -58,6 +58,9 @@ Item {
 
             function setPlant() {
                 plantScreen.currentPlant = currentDevice.plant
+
+                itemPlantViewer.contentX = 0
+                itemPlantViewer.contentY = 0
             }
 
             PlantScreen {

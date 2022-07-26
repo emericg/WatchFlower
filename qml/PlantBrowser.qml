@@ -238,6 +238,7 @@ Loader {
                             itemPlantBrowser.enabled = false
                             itemPlantViewer.visible = true
                             itemPlantViewer.enabled = true
+                            itemPlantViewer.contentX = 0
                             itemPlantViewer.contentY = 0
                         }
                     }
