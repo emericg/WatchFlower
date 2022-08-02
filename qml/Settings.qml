@@ -1464,8 +1464,8 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     z: 1
 
-                    checked: settingsManager.externalDb
-                    onClicked: settingsManager.externalDb = checked
+                    checked: settingsManager.mysql
+                    onClicked: settingsManager.mysql = checked
                 }
             }
 
@@ -1473,7 +1473,7 @@ Item {
 
             Item {
                 anchors.left: parent.left
-                anchors.leftMargin: 40 + 24
+                anchors.leftMargin: screenPaddingLeft + 16 + 48
                 anchors.right: parent.right
                 anchors.rightMargin: 12
                 height: UtilsNumber.alignTo(legend_database.contentHeight, 16)
@@ -1499,9 +1499,11 @@ Item {
 
             Loader {
                 anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft + 16 + 48
                 anchors.right: parent.right
+                anchors.rightMargin: 16
 
-                active: false
+                active: settingsManager.mysql
                 asynchronous: true
                 sourceComponent: dbSettingsScalable
             }
@@ -1660,9 +1662,7 @@ Item {
         Grid {
             id: grid
             anchors.left: parent.left
-            anchors.leftMargin: 16
             anchors.right: parent.right
-            anchors.rightMargin: 16
 
             rows: 4
             columns: singleColumn ? 1 : 2
@@ -1672,13 +1672,12 @@ Item {
 
             TextFieldThemed {
                 id: tf_database_host
-                anchors.verticalCenter: parent.verticalCenter
                 width: grid.sz
                 height: 36
 
                 placeholderText: qsTr("Host")
-                text: settingsManager.externalDbHost
-                onEditingFinished: settingsManager.externalDbHost = text
+                text: settingsManager.mysqlHost
+                onEditingFinished: settingsManager.mysqlHost = text
                 selectByMouse: true
 
                 IconSvg {
@@ -1694,13 +1693,12 @@ Item {
 
             TextFieldThemed {
                 id: tf_database_port
-                anchors.verticalCenter: parent.verticalCenter
                 width: grid.sz
                 height: 36
 
                 placeholderText: qsTr("Port")
-                text: settingsManager.externalDbPort
-                onEditingFinished: settingsManager.externalDbPort = parseInt(text, 10)
+                text: settingsManager.mysqlPort
+                onEditingFinished: settingsManager.mysqlPort = parseInt(text, 10)
                 validator: IntValidator { bottom: 1; top: 65535; }
                 selectByMouse: true
 
@@ -1717,13 +1715,12 @@ Item {
 
             TextFieldThemed {
                 id: tf_database_user
-                anchors.verticalCenter: parent.verticalCenter
                 width: grid.sz
                 height: 36
 
                 placeholderText: qsTr("User")
-                text: settingsManager.externalDbUser
-                onEditingFinished: settingsManager.externalDbUser = text
+                text: settingsManager.mysqlUser
+                onEditingFinished: settingsManager.mysqlUser = text
                 selectByMouse: true
 
                 IconSvg {
@@ -1739,13 +1736,12 @@ Item {
 
             TextFieldThemed {
                 id: tf_database_pwd
-                anchors.verticalCenter: parent.verticalCenter
                 width: grid.sz
                 height: 36
 
                 placeholderText: qsTr("Password")
-                text: settingsManager.externalDbPassword
-                onEditingFinished: settingsManager.externalDbPassword = text
+                text: settingsManager.mysqlPassword
+                onEditingFinished: settingsManager.mysqlPassword = text
                 selectByMouse: true
                 echoMode: TextInput.PasswordEchoOnEdit
 
