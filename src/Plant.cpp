@@ -67,13 +67,13 @@ void Plant::read_csv_watchflower(const QStringList &plantSections)
 
     //if (plantSections.size() == 24)
     {
+        int i = 0;
         // name
-        name = plantSections.at(0),
-        name_common = plantSections.at(1);
+        name = plantSections.at(i++),
+        name_common = plantSections.at(i++);
         computeNames();
 
         // basic infos
-        int i = 2;
         origin = plantSections.at(i++);
         category = plantSections.at(i++);
         //taxonomy = plantSections.at(i++);

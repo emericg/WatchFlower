@@ -137,7 +137,7 @@ Item {
                     ButtonWireframeIcon {
                         id: btn1
                         anchors.horizontalCenter: parent.horizontalCenter
-                        //visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+                        visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                         text: qsTr("Official information")
                         primaryColor: Theme.colorSubText
