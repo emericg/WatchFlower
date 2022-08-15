@@ -414,18 +414,22 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
 
 /* ************************************************************************** */
 
-void DeviceThermoBeacon::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
+void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
+                                                const uint16_t adv_id,
+                                                const QByteArray &ba)
 {
-    //qDebug() << "DeviceThermoBeacon::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
-    //qDebug() << "DATA: 0x" << value.toHex();
-
+/*
+    qDebug() << "DeviceThermoBeacon::parseAdvertisementData(" << m_deviceAddress
+             << " - " << adv_mode << " - 0x" << adv_id << ")";
+    qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
+*/
     // 20 bytes message
-    if (value.size() == 20) return;
+    if (ba.size() == 20) return;
 
     // 18 bytes message
-    if (value.size() == 18)
+    if (ba.size() == 18)
     {
-        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+        const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
 
         int battv = static_cast<uint16_t>(data[8] + (data[9] << 8));
         float temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.f;

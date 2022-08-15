@@ -20,6 +20,7 @@
  */
 
 #include "DeviceManager.h"
+#include "SettingsManager.h"
 #include "DatabaseManager.h"
 
 #include "device.h"

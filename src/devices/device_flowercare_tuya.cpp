@@ -165,16 +165,20 @@ void DeviceFlowerCare_tuya::bleReadDone(const QLowEnergyCharacteristic &c, const
 
 /* ************************************************************************** */
 
-void DeviceFlowerCare_tuya::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
+void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
+                                                   const uint16_t adv_id,
+                                                   const QByteArray &ba)
 {
-    //qDebug() << "DeviceFlowerCare_tuya::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
-    //qDebug() << "DATA: 0x" << value.toHex();
-
+/*
+    qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress
+             << " - " << adv_mode << " - 0x" << adv_id << ")";
+    qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
+*/
     // service data / 16b UUID 0xfd50 / 9 bytes messages
 
-    if (value.size() == 9)
+    if (ba.size() == 9)
     {
-        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+        const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
 
         int batt = -99;
         float temp = -99.f;

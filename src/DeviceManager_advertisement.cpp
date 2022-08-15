@@ -42,8 +42,12 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
     // We don't use QBluetoothDeviceInfo::Fields, it's unreliable
     Q_UNUSED(updatedFields)
 
+    if (info.isCached()) return; // skip cached devices
+    if (!info.isValid()) return; // skip invalid devices
     if (info.name().isEmpty()) return; // skip beacons
     if (info.name().replace('-', ':') == info.address().toString()) return; // skip beacons
+
+    // Supported devices ///////////////////////////////////////////////////////
 
     for (auto d: qAsConst(m_devices_model->m_devices))
     {
@@ -57,7 +61,10 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
         {
             if (!dd->isEnabled()) return;
 
-            // Handle advertisement ////////////////////////////////////////////
+            //dd->setName(info.name());
+            //dd->setRssi(info.rssi());
+
+            // Handle advertisement //
 
             const QList<quint16> &manufacturerIds = info.manufacturerIds();
             for (const auto id: manufacturerIds)
@@ -67,7 +74,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
                 //         << "manufacturer data" << Qt::dec << info.manufacturerData(id).count() << Qt::hex
                 //         << "bytes:" << info.manufacturerData(id).toHex();
 
-                dd->parseAdvertisementData(info.manufacturerData(id), id);
+                dd->parseAdvertisementData(DeviceUtils::BLE_ADV_MANUFACTURERDATA, id, info.manufacturerData(id));
             }
 
             const QList<QBluetoothUuid> &serviceIds = info.serviceIds();
@@ -78,10 +85,10 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
                 //         << "service data" << Qt::dec << info.serviceData(id).count() << Qt::hex
                 //         << "bytes:" << info.serviceData(id).toHex();
 
-                dd->parseAdvertisementData(info.serviceData(id), id.toUInt16());
+                dd->parseAdvertisementData(DeviceUtils::BLE_ADV_SERVICEDATA, id.toUInt16(), info.serviceData(id));
             }
 
-            // Dynamic updates /////////////////////////////////////////////////
+            // Dynamic updates //
             if (m_listening && dd->hasBluetoothConnection())
             {
                 // old or no data: go for refresh

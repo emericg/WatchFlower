@@ -45,6 +45,33 @@ class DeviceSensor: public Device
     Q_PROPERTY(bool hasDataFresh READ hasDataFresh NOTIFY dataAvailableUpdated)
     Q_PROPERTY(bool hasDataToday READ hasDataToday NOTIFY dataAvailableUpdated)
 
+    Q_PROPERTY(bool hasSoilMoistureSensor READ hasSoilMoistureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoilConductivitySensor READ hasSoilConductivitySensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoilTemperatureSensor READ hasSoilTemperatureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoilPhSensor READ hasSoilPhSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasTemperatureSensor READ hasTemperatureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasHumiditySensor READ hasHumiditySensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPressureSensor READ hasPressureSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasLuminositySensor READ hasLuminositySensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasUvSensor READ hasUvSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSoundSensor READ hasSoundSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasWaterLevelSensor READ hasWaterLevelSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasWindDirectionSensor READ hasWindDirectionSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasWindSpeedSensor READ hasWindSpeedSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPM1Sensor READ hasPM1Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPM25Sensor READ hasPM25Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasPM10Sensor READ hasPM10Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasO2Sensor READ hasO2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasO3Sensor READ hasO3Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasCoSensor READ hasCoSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasCo2Sensor READ hasCo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool haseCo2Sensor READ haseCo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasNo2Sensor READ hasNo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasSo2Sensor READ hasSo2Sensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasVocSensor READ hasVocSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasHchoSensor READ hasHchoSensor NOTIFY sensorsUpdated)
+    Q_PROPERTY(bool hasGeigerCounter READ hasGeigerCounter NOTIFY sensorsUpdated)
+
     // plant data
     Q_PROPERTY(int soilMoisture READ getSoilMoisture NOTIFY dataUpdated)
     Q_PROPERTY(int soilConductivity READ getSoilConductivity NOTIFY dataUpdated)
@@ -291,6 +318,35 @@ public:
 
     Q_INVOKABLE bool hasDataNamed(const QString &dataName) const;
     Q_INVOKABLE int countDataNamed(const QString &dataName, int days = 31) const;
+
+    bool hasSoilMoistureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_MOISTURE); }
+    bool hasSoilConductivitySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_CONDUCTIVITY); }
+    bool hasSoilTemperatureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_TEMPERATURE); }
+    bool hasSoilPhSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_PH); }
+
+    bool hasTemperatureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_TEMPERATURE); }
+    bool hasHumiditySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_HUMIDITY); }
+
+    bool hasPressureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PRESSURE); }
+    bool hasLuminositySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_LUMINOSITY); }
+    bool hasUvSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_UV); }
+    bool hasSoundSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOUND); }
+    bool hasWaterLevelSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WATER_LEVEL); }
+    bool hasWindDirectionSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WIND_DIRECTION); }
+    bool hasWindSpeedSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WIND_SPEED); }
+    bool hasPM1Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM1); }
+    bool hasPM25Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM25); }
+    bool hasPM10Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM10); }
+    bool hasO2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O2); }
+    bool hasO3Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O3); }
+    bool hasCoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_CO); }
+    bool hasCo2Sensor() const { return ((m_deviceSensors & DeviceUtils::SENSOR_CO2) || (m_deviceSensors & DeviceUtils::SENSOR_eCO2)); }
+    bool haseCo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_eCO2); }
+    bool hasNo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_NO2); }
+    bool hasSo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SO2); }
+    bool hasVocSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_VOC); }
+    bool hasHchoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_HCHO); }
+    bool hasGeigerCounter() const { return (m_deviceSensors & DeviceUtils::SENSOR_GEIGER); }
 
     Q_INVOKABLE bool isDataAvailable() const;       //!< Has data, fresh or from history
     Q_INVOKABLE bool isDataToday() const;           //!< Has at most 12h old data

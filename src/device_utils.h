@@ -66,6 +66,7 @@ public:
         qRegisterMetaType<DeviceUtils::DeviceStatus>("DeviceUtils::DeviceStatus");
         qRegisterMetaType<DeviceUtils::DeviceActions>("DeviceUtils::DeviceActions");
         qRegisterMetaType<DeviceUtils::BluetoothMode>("DeviceUtils::BluetoothMode");
+        qRegisterMetaType<DeviceUtils::BluetoothAdvertisementMode>("DeviceUtils::BluetoothAdvertisementMode");
 
         qmlRegisterType<DeviceUtils>("DeviceUtils", 1, 0, "DeviceUtils");
     }
@@ -78,6 +79,12 @@ public:
     };
     Q_ENUM(BluetoothMode)
 
+    enum BluetoothAdvertisementMode {
+        BLE_ADV_SERVICEDATA         = 0,
+        BLE_ADV_MANUFACTURERDATA    = 1
+    };
+    Q_ENUM(BluetoothAdvertisementMode)
+
     enum DeviceType {
         DEVICE_UNKNOWN              = 0,
 
@@ -85,10 +92,10 @@ public:
         DEVICE_THERMOMETER,
         DEVICE_ENVIRONMENTAL,
 
-        DEVICE_REMOTE               = 8,
+        DEVICE_LIGHT                 = 8,
         DEVICE_BEACON,
+        DEVICE_REMOTE,
         DEVICE_PGP,
-        DEVICE_LAMP,
     };
     Q_ENUM(DeviceType)
 
@@ -157,7 +164,8 @@ public:
     Q_ENUM(DeviceStatus)
 
     enum DeviceActions {
-        ACTION_IDLE                 = 0,  //!< No action
+        ACTION_IDLE                 = 0,  //!< No action, stay connected
+
         ACTION_UPDATE,                    //!< Read sensor latest data
         ACTION_UPDATE_REALTIME,           //!< Stay connected and read sensor data
         ACTION_UPDATE_HISTORY,            //!< Sync sensor history

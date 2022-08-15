@@ -20,9 +20,8 @@
  */
 
 #include "DeviceManager.h"
-#include "DatabaseManager.h"
-
-#include "utils_app.h"
+#include "SettingsManager.h"
+#include "device_sensor.h"
 
 #include <QList>
 #include <QDateTime>
@@ -163,7 +162,7 @@ bool DeviceManager::exportData(const QString &exportFilePath)
 
         for (auto d: qAsConst(m_devices_model->m_devices))
         {
-            Device *dd = qobject_cast<Device*>(d);
+            DeviceSensor *dd = qobject_cast<DeviceSensor *>(d);
             if (dd)
             {
                 QString l = "> " + dd->getName() + " (" + dd->getAddress() + ")";

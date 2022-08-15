@@ -55,14 +55,21 @@ class Device: public QObject
 
     Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceModelID READ getModelID NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAddressMAC READ getAddressMAC WRITE setAddressMAC NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
     Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
+    Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY batteryUpdated)
 
     Q_PROPERTY(bool isPlantSensor READ isPlantSensor NOTIFY sensorUpdated)
     Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY sensorUpdated)
     Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY sensorUpdated)
+
+    Q_PROPERTY(bool isLight READ isLight NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isBeacon READ isBeacon NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isRemote READ isRemote NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isPGP READ isPGP NOTIFY sensorUpdated)
 
     Q_PROPERTY(bool hasBluetoothConnection READ hasBluetoothConnection CONSTANT)
     Q_PROPERTY(bool hasBluetoothAdvertisement READ hasBluetoothAdvertisement CONSTANT)
@@ -78,36 +85,6 @@ class Device: public QObject
     Q_PROPERTY(bool hasCalibration READ hasCalibration NOTIFY capabilitiesUpdated)
     Q_PROPERTY(bool hasReboot READ hasReboot NOTIFY capabilitiesUpdated)
 
-    Q_PROPERTY(bool hasSoilMoistureSensor READ hasSoilMoistureSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasSoilConductivitySensor READ hasSoilConductivitySensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasSoilTemperatureSensor READ hasSoilTemperatureSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasSoilPhSensor READ hasSoilPhSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasTemperatureSensor READ hasTemperatureSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasHumiditySensor READ hasHumiditySensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasPressureSensor READ hasPressureSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasLuminositySensor READ hasLuminositySensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasUvSensor READ hasUvSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasSoundSensor READ hasSoundSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasWaterLevelSensor READ hasWaterLevelSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasWindDirectionSensor READ hasWindDirectionSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasWindSpeedSensor READ hasWindSpeedSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasPM1Sensor READ hasPM1Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasPM25Sensor READ hasPM25Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasPM10Sensor READ hasPM10Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasO2Sensor READ hasO2Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasO3Sensor READ hasO3Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasCoSensor READ hasCoSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasCo2Sensor READ hasCo2Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool haseCo2Sensor READ haseCo2Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasNo2Sensor READ hasNo2Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasSo2Sensor READ hasSo2Sensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasVocSensor READ hasVocSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasHchoSensor READ hasHchoSensor NOTIFY sensorsUpdated)
-    Q_PROPERTY(bool hasGeigerCounter READ hasGeigerCounter NOTIFY sensorsUpdated)
-
-    Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY batteryUpdated)
-    Q_PROPERTY(int deviceRssi READ getRssi NOTIFY rssiUpdated)
-
     Q_PROPERTY(QString deviceLocationName READ getLocationName WRITE setLocationName NOTIFY settingsUpdated)
     Q_PROPERTY(QString deviceAssociatedName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated)
     Q_PROPERTY(QString devicePlantName READ getAssociatedName WRITE setAssociatedName NOTIFY settingsUpdated) // legacy
@@ -115,8 +92,12 @@ class Device: public QObject
     Q_PROPERTY(bool deviceIsInside READ isInside WRITE setInside NOTIFY settingsUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside WRITE setOutside NOTIFY settingsUpdated)
 
-    Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
+    Q_PROPERTY(int rssi READ getRssi NOTIFY rssiUpdated)
+    Q_PROPERTY(bool available READ isAvailable NOTIFY rssiUpdated)
+
+    Q_PROPERTY(bool enabled READ isEnabled NOTIFY statusUpdated)
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
+    Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
     Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
     Q_PROPERTY(bool working READ isWorking NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
@@ -206,8 +187,10 @@ protected:
     // BLE
     QBluetoothDeviceInfo m_bleDevice;
     QLowEnergyController *m_bleController = nullptr;
-    QTimer m_rssiTimer;
+
     int m_rssi = 1;
+    QTimer m_rssiTimer;
+    int m_rssiTimeoutInterval = 12;
 
     virtual void deviceConnected();
     virtual void deviceDisconnected();
@@ -233,6 +216,8 @@ protected:
     virtual bool getSqlDeviceInfos();
 
     // helpers
+    void setModel(const QString &model);
+    void setModelID(const QString &modelID);
     void setBattery(const int battery);
     void setBatteryFirmware(const int battery, const QString &firmware);
     void setFirmware(const QString &firmware);
@@ -247,6 +232,7 @@ public:
 
     // Device infos
     QString getModel() const { return m_deviceModel; }
+    QString getModelID() const { return m_deviceModelID; }
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
     QString getFirmware() const { return m_deviceFirmware; }
@@ -264,6 +250,10 @@ public:
     bool isPlantSensor() const { return (m_deviceType == DeviceUtils::DEVICE_PLANTSENSOR); }
     bool isThermometer() const { return (m_deviceType == DeviceUtils::DEVICE_THERMOMETER); }
     bool isEnvironmentalSensor() const { return (m_deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL); }
+    bool isLight() const { return (m_deviceType == DeviceUtils::DEVICE_LIGHT); }
+    bool isBeacon() const { return (m_deviceType == DeviceUtils::DEVICE_BEACON); }
+    bool isRemote() const { return (m_deviceType == DeviceUtils::DEVICE_REMOTE); }
+    bool isPGP() const { return (m_deviceType == DeviceUtils::DEVICE_PGP); }
 
     virtual bool hasRealTime() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_REALTIME); }
     virtual bool hasHistory() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_HISTORY); }
@@ -276,39 +266,11 @@ public:
     bool hasCalibration() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_CALIBRATION); }
     bool hasReboot() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_REBOOT); }
 
-    bool hasSoilMoistureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_MOISTURE); }
-    bool hasSoilConductivitySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_CONDUCTIVITY); }
-    bool hasSoilTemperatureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_TEMPERATURE); }
-    bool hasSoilPhSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_PH); }
-
-    bool hasTemperatureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_TEMPERATURE); }
-    bool hasHumiditySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_HUMIDITY); }
-
-    bool hasPressureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PRESSURE); }
-    bool hasLuminositySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_LUMINOSITY); }
-    bool hasUvSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_UV); }
-    bool hasSoundSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOUND); }
-    bool hasWaterLevelSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WATER_LEVEL); }
-    bool hasWindDirectionSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WIND_DIRECTION); }
-    bool hasWindSpeedSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_WIND_SPEED); }
-    bool hasPM1Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM1); }
-    bool hasPM25Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM25); }
-    bool hasPM10Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_PM10); }
-    bool hasO2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O2); }
-    bool hasO3Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_O3); }
-    bool hasCoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_CO); }
-    bool hasCo2Sensor() const { return ((m_deviceSensors & DeviceUtils::SENSOR_CO2) || (m_deviceSensors & DeviceUtils::SENSOR_eCO2)); }
-    bool haseCo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_eCO2); }
-    bool hasNo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_NO2); }
-    bool hasSo2Sensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SO2); }
-    bool hasVocSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_VOC); }
-    bool hasHchoSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_HCHO); }
-    bool hasGeigerCounter() const { return (m_deviceSensors & DeviceUtils::SENSOR_GEIGER); }
-
     // Device RSSI
     int getRssi() const { return m_rssi; }
     void setRssi(const int rssi);
     void cleanRssi();
+    bool isAvailable() const { return (m_rssi < 0); }
 
     // Device status
     int getAction() const { return m_ble_action; }
@@ -358,6 +320,7 @@ public:
     Q_INVOKABLE bool setSetting(const QString &key, QVariant value);
 
     // Start actions
+    Q_INVOKABLE void actionConnect();
     Q_INVOKABLE void actionClearData();
     Q_INVOKABLE void actionClearDeviceData();
     Q_INVOKABLE void actionLedBlink();
@@ -367,7 +330,9 @@ public:
     Q_INVOKABLE void actionShutdown();
 
     // BLE advertisement
-    virtual void parseAdvertisementData(const QByteArray &value, const uint16_t identifier);
+    virtual void parseAdvertisementData(const uint16_t adv_mode,
+                                        const uint16_t adv_id,
+                                        const QByteArray &data);
 
 public slots:
     void deviceConnect();               //!< Initiate a BLE connection with a device

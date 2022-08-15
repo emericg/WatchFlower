@@ -243,31 +243,35 @@ void DeviceHygrotempCGDK2::confirmedDescriptorWrite(const QLowEnergyDescriptor &
 
 /* ************************************************************************** */
 
-void DeviceHygrotempCGDK2::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
+void DeviceHygrotempCGDK2::parseAdvertisementData(const uint16_t adv_mode,
+                                                  const uint16_t adv_id,
+                                                  const QByteArray &ba)
 {
-    //qDebug() << "DeviceHygrotempCGDK2::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
-    //qDebug() << "DATA: 0x" << value.toHex();
-
-    if (value.size() == 17) // Qingping data protocol // 17 bytes messages
+/*
+    qDebug() << "DeviceHygrotempCGDK2::parseAdvertisementData(" << m_deviceAddress
+             << " - " << adv_mode << " - 0x" << adv_id << ")";
+    qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
+*/
+    if (ba.size() == 17) // Qingping data protocol // 17 bytes messages
     {
-        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+        const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
 
         // Save mac address (for macOS and iOS)
         if (!hasAddressMAC())
         {
             QString mac;
 
-            mac += value.mid(10,1).toHex().toUpper();
+            mac += ba.mid(10,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(9,1).toHex().toUpper();
+            mac += ba.mid(9,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(8,1).toHex().toUpper();
+            mac += ba.mid(8,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(7,1).toHex().toUpper();
+            mac += ba.mid(7,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(6,1).toHex().toUpper();
+            mac += ba.mid(6,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(5,1).toHex().toUpper();
+            mac += ba.mid(5,1).toHex().toUpper();
 
             setAddressMAC(mac);
         }

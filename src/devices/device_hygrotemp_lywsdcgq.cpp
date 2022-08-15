@@ -288,46 +288,52 @@ void DeviceHygrotempLYWSDCGQ::confirmedDescriptorWrite(const QLowEnergyDescripto
 
 /* ************************************************************************** */
 
-void DeviceHygrotempLYWSDCGQ::parseAdvertisementData(const QByteArray &value, const uint16_t identifier)
+void DeviceHygrotempLYWSDCGQ::parseAdvertisementData(const uint16_t adv_mode,
+                                                     const uint16_t adv_id,
+                                                     const QByteArray &ba)
 {
-    //qDebug() << "DeviceHygrotempLYWSDCGQ::parseAdvertisementData(" << m_deviceAddress << ")" << value.size();
-    //qDebug() << "DATA: 0x" << value.toHex();
+/*
+    qDebug() << "DeviceHygrotempLYWSDCGQ::parseAdvertisementData(" << m_deviceAddress
+             << " - " << adv_mode << " - 0x" << adv_id << ")";
+    qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
+*/
 
     // MiBeacon protocol / 12-20 bytes messages
     // LYWSDCGQ uses 15 and 18 bytes messages
 
-    if (value.size() >= 12)
+    if (ba.size() >= 12)
     {
-        const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+        const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
+        const int data_size = ba.size();
 
         // Save mac address (for macOS and iOS)
         if (!hasAddressMAC())
         {
             QString mac;
 
-            mac += value.mid(10,1).toHex().toUpper();
+            mac += ba.mid(10,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(9,1).toHex().toUpper();
+            mac += ba.mid(9,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(8,1).toHex().toUpper();
+            mac += ba.mid(8,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(7,1).toHex().toUpper();
+            mac += ba.mid(7,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(6,1).toHex().toUpper();
+            mac += ba.mid(6,1).toHex().toUpper();
             mac += ':';
-            mac += value.mid(5,1).toHex().toUpper();
+            mac += ba.mid(5,1).toHex().toUpper();
 
             setAddressMAC(mac);
         }
 
-        if (value.size() >= 15)
+        if (data_size >= 15)
         {
             int batt = -99;
             float temp = -99.f;
             float humi = -99.f;
 
             // get data
-            if (data[11] == 4 && value.size() >= 16)
+            if (data[11] == 4 && data_size >= 16)
             {
                 temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
                 if (temp != m_temperature)
@@ -339,7 +345,7 @@ void DeviceHygrotempLYWSDCGQ::parseAdvertisementData(const QByteArray &value, co
                     }
                 }
             }
-            else if (data[11] == 6 && value.size() >= 16)
+            else if (data[11] == 6 && data_size >= 16)
             {
                 humi = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
                 if (humi != m_humidity)
@@ -351,7 +357,7 @@ void DeviceHygrotempLYWSDCGQ::parseAdvertisementData(const QByteArray &value, co
                     }
                 }
             }
-            else if (data[11] == 13 && value.size() >= 18)
+            else if (data[11] == 13 && data_size >= 18)
             {
                 temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
                 if (temp != m_temperature)
@@ -366,7 +372,7 @@ void DeviceHygrotempLYWSDCGQ::parseAdvertisementData(const QByteArray &value, co
                     Q_EMIT dataUpdated();
                 }
             }
-            else if (data[11] == 10 && value.size() >= 15)
+            else if (data[11] == 10 && data_size >= 15)
             {
                 batt = static_cast<int8_t>(data[14]);
                 setBattery(batt);

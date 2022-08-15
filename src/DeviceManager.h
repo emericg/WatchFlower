@@ -23,9 +23,7 @@
 #define DEVICE_MANAGER_H
 /* ************************************************************************** */
 
-#include "SettingsManager.h"
 #include "DeviceFilter.h"
-#include "device_utils.h"
 
 #include <QObject>
 #include <QVariant>
