@@ -105,7 +105,7 @@ Item {
                     radius: 3
                     color: dataBarCompact.colorForeground
 
-                    Behavior on width { NumberAnimation { duration: 333 } }
+                    Behavior on width { NumberAnimation { duration: animated ? 333 : 0 } }
                 }
 
                 Rectangle {
@@ -119,7 +119,7 @@ Item {
                     color: (limitMin < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                     opacity: (limitMin < value) ? 0.66 : 0.33
 
-                    Behavior on x { NumberAnimation { duration: 333 } }
+                    Behavior on x { NumberAnimation { duration: animated ? 333 : 0 } }
                     Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
                     Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
                 }
@@ -134,7 +134,7 @@ Item {
                     color: (limitMax < value) ? Theme.colorLowContrast : Theme.colorHighContrast
                     opacity: (limitMax < value) ? 0.66 : 0.33
 
-                    Behavior on x { NumberAnimation { duration: 333 } }
+                    Behavior on x { NumberAnimation { duration: animated ? 333 : 0 } }
                     Behavior on color { ColorAnimation { duration: animated ? 333 : 0 } }
                     Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
                 }

@@ -302,12 +302,12 @@ Item {
 
             ////////
 
-            Rectangle { // spacer
-                height: 1
+            Rectangle { // separator
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: Theme.colorSeparator
+                height: 1
                 visible: isDesktop
+                color: Theme.colorSeparator
             }
 
             Item {
@@ -395,12 +395,12 @@ Item {
                 }
             }
 
-            Rectangle { // spacer
-                height: 1
+            Rectangle { // separator
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: Theme.colorSeparator
+                height: 1
                 visible: isDesktop
+                color: Theme.colorSeparator
             }
 
             ////////
@@ -458,7 +458,7 @@ Item {
 
             ////////////////
 
-            Rectangle {
+            Rectangle { // title
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -1196,6 +1196,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
 
+                    animated: false
                     legend: isDesktop ? qsTr("thin") : ""
                     legendWidth: 48
                     suffix: "°" + settingsManager.tempUnit
@@ -1233,6 +1234,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
 
+                    animated: false
                     legend: isDesktop ? qsTr("solid") : ""
                     legendWidth: 64
                     suffix: "°" + settingsManager.tempUnit

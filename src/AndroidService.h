@@ -22,6 +22,7 @@
 #ifndef ANDROID_SERVICE_H
 #define ANDROID_SERVICE_H
 /* ************************************************************************** */
+#if defined(Q_OS_ANDROID)
 
 #include <QtGlobal>
 #include <QObject>
@@ -31,7 +32,6 @@ class DeviceManager;
 class SettingsManager;
 class NotificationManager;
 
-#if defined(Q_OS_ANDROID)
 /* ************************************************************************** */
 
 /*!

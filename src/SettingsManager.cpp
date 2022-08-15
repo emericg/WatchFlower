@@ -356,7 +356,7 @@ void SettingsManager::resetSettings()
 
     m_mqtt = false;
     m_mqttHost = "";
-    m_mqttPort = 3306;
+    m_mqttPort = 1883;
     m_mqttName = "watchflower";
     m_mqttUser = "watchflower";
     m_mqttPassword = "watchflower";

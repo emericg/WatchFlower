@@ -244,7 +244,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsDock", dockIconHandler);
 #endif
 
-#endif // Desktop section
+#endif // desktop section
 
 #if defined(Q_OS_ANDROID)
     QNativeInterface::QAndroidApplication::hideSplashScreen(333);
