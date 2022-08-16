@@ -22,11 +22,12 @@
 #ifndef ANDROID_SERVICE_H
 #define ANDROID_SERVICE_H
 /* ************************************************************************** */
-#if defined(Q_OS_ANDROID)
 
 #include <QtGlobal>
 #include <QObject>
 #include <QTimer>
+
+#if defined(Q_OS_ANDROID)
 
 class DeviceManager;
 class SettingsManager;

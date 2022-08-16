@@ -181,10 +181,10 @@ install(SCRIPT ${deploy_script})
 
 ################################################################################
 
-#message(STATUS "[DEFINE] SOURCE_DIR                    = ${CMAKE_CURRENT_SOURCE_DIR}")
-#message(STATUS "[DEFINE] BUILD_TYPE                    = ${CMAKE_BUILD_TYPE}")
-#message(STATUS "[SYSTEM] HOST SYSTEM                   = ${CMAKE_HOST_SYSTEM_NAME}")
-#message(STATUS "[SYSTEM] TARGET PLATFORM               = ${CMAKE_SYSTEM_NAME}")
-#message(STATUS "[PROJECT] CMAKE_VERSION                = ${CMAKE_VERSION}")
-#message(STATUS "[PROJECT] CMAKE_PREFIX_PATH            = ${CMAKE_PREFIX_PATH}")
-#message(STATUS "[PROJECT] CMAKE_TOOLCHAIN_FILE         = ${CMAKE_TOOLCHAIN_FILE}")
+message(STATUS "[PROJECT] CMAKE_VERSION                = ${CMAKE_VERSION}")
+message(STATUS "[PROJECT] CMAKE_PREFIX_PATH            = ${CMAKE_PREFIX_PATH}")
+message(STATUS "[PROJECT] CMAKE_TOOLCHAIN_FILE         = ${CMAKE_TOOLCHAIN_FILE}")
+message(STATUS "[DEFINE] SOURCE_DIR                    = ${CMAKE_CURRENT_SOURCE_DIR}")
+message(STATUS "[DEFINE] BUILD_TYPE                    = ${CMAKE_BUILD_TYPE}")
+message(STATUS "[SYSTEM] HOST SYSTEM NAME              = ${CMAKE_HOST_SYSTEM_NAME}")
+message(STATUS "[SYSTEM] (TARGET) SYSTEM NAME          = ${CMAKE_SYSTEM_NAME}")
