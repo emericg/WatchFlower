@@ -36,9 +36,6 @@
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
 
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QDateTimeAxis>
-
 /* ************************************************************************** */
 
 /*!

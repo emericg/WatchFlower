@@ -60,6 +60,11 @@ class DeviceManager: public QObject
 
     Q_PROPERTY(DeviceFilter *devicesNearby READ getDevicesNearby NOTIFY devicesNearbyUpdated)
 
+    static const int ble_scanning_duration = 30;
+    static const int ble_listening_duration = 0;
+    static const int ble_listening_duration_nearby = 0;
+    static const int ble_listening_duration_background = 45;
+
     bool m_dbInternal = false;
     bool m_dbExternal = false;
     bool m_btA = false;
@@ -97,11 +102,6 @@ class DeviceManager: public QObject
 
     bool m_syncing = false;
     bool isSyncing() const;
-
-    static const int ble_scanning_duration = 30;
-    static const int ble_listening_duration = 60;
-    static const int ble_listening_duration_nearby = 0;
-    static const int ble_listening_duration_background = 45;
 
     bool hasBluetooth() const;
     bool hasBluetoothAdapter() const;
@@ -142,6 +142,9 @@ public:
     Q_INVOKABLE void scanDevices_stop();
 
     Q_INVOKABLE void listenDevices_start();
+    Q_INVOKABLE void listenDevices_stop();
+
+    Q_INVOKABLE void disconnectDevices();
 
     Q_INVOKABLE void refreshDevices_background(); //!< Refresh devices on the background
     Q_INVOKABLE void refreshDevices_listen();   //!< Refresh devices with data >xh old (as they appear nearby)

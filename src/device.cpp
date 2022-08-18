@@ -1061,6 +1061,29 @@ void Device::setModel(const QString &model)
     }
 }
 
+void Device::setModelID(const QString &modelID)
+{
+    if (!modelID.isEmpty() && m_deviceModel != modelID)
+    {
+        m_deviceModelID = modelID;
+        Q_EMIT sensorUpdated();
+
+        if (m_dbInternal || m_dbExternal)
+        {
+            QSqlQuery setModelID;
+            setModelID.prepare("UPDATE devices SET deviceModel = :model WHERE deviceAddr = :deviceAddr");
+            setModelID.bindValue(":model", m_deviceModelID);
+            setModelID.bindValue(":deviceAddr", getAddress());
+
+            if (setModelID.exec() == false)
+            {
+                qWarning() << "> setModelID.exec() ERROR"
+                           << setModelID.lastError().type() << ":" << setModelID.lastError().text();
+            }
+        }
+    }
+}
+
 void Device::setFirmware(const QString &firmware)
 {
     if (!firmware.isEmpty() && m_deviceFirmware != firmware)

@@ -20,8 +20,8 @@
  */
 
 #include "DeviceManager.h"
-#include "SettingsManager.h"
 #include "DatabaseManager.h"
+#include "SettingsManager.h"
 
 #include "device.h"
 #include "devices/device_flowercare.h"
@@ -112,11 +112,12 @@ DeviceManager::DeviceManager(bool daemon)
 
         // Load saved devices
         QSqlQuery queryDevices;
-        queryDevices.exec("SELECT deviceName, deviceAddr FROM devices");
+        queryDevices.exec("SELECT deviceName, deviceModel, deviceAddr FROM devices");
         while (queryDevices.next())
         {
             QString deviceName = queryDevices.value(0).toString();
-            QString deviceAddr = queryDevices.value(1).toString();
+            QString deviceModel = queryDevices.value(1).toString();
+            QString deviceAddr = queryDevices.value(2).toString();
 
             Device *d = nullptr;
 
@@ -815,6 +816,11 @@ void DeviceManager::listenDevices_start()
     }
 }
 
+void DeviceManager::listenDevices_stop()
+{
+    //qDebug() << "DeviceManager::listenDevices_stop()";
+}
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 
@@ -1481,6 +1487,17 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     else
     {
         //qDebug() << "Unsupported device: " << info.name() << "/" << info.address();
+    }
+}
+
+void DeviceManager::disconnectDevices()
+{
+    //qDebug() << "DeviceManager::disconnectDevices()";
+
+    for (auto d: qAsConst(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        dd->deviceDisconnect();
     }
 }
 
