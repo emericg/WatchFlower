@@ -50,24 +50,20 @@ jobs:
 
       # Install Qt (desktop)
       - name: Install Qt (desktop)
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: '==2.1.0'
-          version: '6.3.1'
+          version: '6.3.2'
           modules: qtconnectivity qtcharts qt5compat
-          cached: 'false'
 
       # Install Qt (Android)
       - name: Install Qt (Android)
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: '==2.1.0'
-          version: '6.3.1'
+          version: '6.3.2'
           host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'
           modules: qtconnectivity qtcharts qt5compat
-          cached: 'false'
 
       # Build application
       - name: Build application
@@ -90,29 +86,25 @@ jobs:
 
       # Install Qt (desktop)
       - name: Install Qt (desktop)
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: '==2.1.0'
-          version: '6.3.0'
+          version: '6.3.2'
           modules: qtconnectivity qtcharts qt5compat
-          cached: 'false'
 
       # Install Qt (iOS)
       - name: Install Qt (iOS)
-        uses: jurplel/install-qt-action@v2
+        uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: '==2.1.0'
-          version: '6.3.0'
+          version: '6.3.2'
           host: 'mac'
           target: 'ios'
           modules: qtconnectivity qtcharts qt5compat
-          cached: 'false'
 
       # Build application
       - name: Build application
         run: |
              export PATH=$Qt6_DIR/bin:$PATH
-             ln -s /Users/runner/work/${{env.APPLICATION}}/Qt/6.3.0/macos /Users/runner/work/${{env.APPLICATION}}/Qt/6.3.0/clang_64
+             ln -s /Users/runner/work/${{env.APPLICATION}}/Qt/6.3.2/macos /Users/runner/work/${{env.APPLICATION}}/Qt/6.3.2/clang_64
              qmake --version
              qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
              make -j$(nproc)
