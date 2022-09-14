@@ -9,7 +9,9 @@ Item {
     id: selectorMenu
     implicitWidth: 128
     implicitHeight: 32
+
     width: contentRow.width
+    opacity: enabled ? 1 : 0.4
 
     signal menuSelected(var index)
     property int currentSelection: 1
@@ -23,7 +25,7 @@ Item {
         radius: Theme.componentRadius
         color: Theme.colorComponentBackground
 
-        border.width: 1
+        border.width: Theme.componentBorderWidth
         border.color: Theme.colorComponentBorder
 
         layer.enabled: true

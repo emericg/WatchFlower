@@ -1,5 +1,5 @@
 // UtilsNumber.js
-// Version 8
+// Version 9
 .pragma library
 
 /* ************************************************************************** */
@@ -47,6 +47,10 @@ function mapNumber(n, a1, a2, b1, b2) {
     if (n < a1) n = a1
     if (n > a2) n = a2
 
+    return (b1 + ((n-a1) * (b2-b1)) / (a2-a1))
+}
+
+function mapNumber_nocheck(n, a1, a2, b1, b2) {
     return (b1 + ((n-a1) * (b2-b1)) / (a2-a1))
 }
 

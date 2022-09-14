@@ -95,6 +95,14 @@ function getDeviceIcon(device, devicePlanted) {
         } else {
             src = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
         }
+    } else if (device.isLight) {
+        src = "qrc:/assets/icons_material/lightbulb_FILL0_wght400_GRAD0_opsz48.svg"
+    } else if (device.isBeacon) {
+        src = "qrc:/assets/icons_material/baseline-sensors-24px.svg"
+    } else if (device.isRemote) {
+        src = "qrc:/assets/icons_material/baseline-remote_tv-24px.svg"
+    } else if (device.isPGP) {
+        src = "qrc:/assets/icons_material/baseline-pgp-24px.svg"
     } else {
         src = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
     }

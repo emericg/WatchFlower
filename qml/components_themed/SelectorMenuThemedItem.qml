@@ -48,7 +48,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: control
-        anchors.margins: 1
+        anchors.margins: 0
 
         color: control.colorBackgroundHighlight
         opacity: {
