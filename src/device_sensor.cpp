@@ -84,7 +84,8 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
             // Reorder the device list by water level, if needed
             if (sm->getOrderBy() == "waterlevel")
             {
-                if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
+                // FIXME
+                //if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
             }
         }
 
