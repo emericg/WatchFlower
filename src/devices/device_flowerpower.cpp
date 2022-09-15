@@ -20,6 +20,7 @@
  */
 
 #include "device_flowerpower.h"
+#include "device_firmwares.h"
 #include "utils_versionchecker.h"
 
 #include <cstdint>

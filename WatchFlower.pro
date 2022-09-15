@@ -86,6 +86,7 @@ HEADERS  += src/SettingsManager.h \
             src/DeviceFilter.h \
             src/device.h \
             src/device_utils.h \
+            src/device_firmwares.h \
             src/device_infos.h \
             src/device_sensor.h \
             src/device_plantsensor.h \

@@ -24,7 +24,6 @@
 #include "utils_app.h"
 
 #include <QBluetoothDeviceInfo>
-#include <QList>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -37,10 +36,9 @@ void DeviceManager::updateBleDevice_simple(const QBluetoothDeviceInfo &info)
 void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
                                     QBluetoothDeviceInfo::Fields updatedFields)
 {
-    //qDebug() << "updateBleDevice() " << info.name() << info.address(); // << info.deviceUuid() // << " updatedFields: " << updatedFields
+    //qDebug() << "updateBleDevice() " << info.name() << info.address(); // << info.deviceUuid(); // << " updatedFields: " << updatedFields;
 
-    // We don't use QBluetoothDeviceInfo::Fields, it's unreliable
-    Q_UNUSED(updatedFields)
+    Q_UNUSED(updatedFields) // We don't use QBluetoothDeviceInfo::Fields, it's unreliable
 
     if (info.isCached()) return; // skip cached devices
     if (!info.isValid()) return; // skip invalid devices

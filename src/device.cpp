@@ -20,8 +20,9 @@
  */
 
 #include "device.h"
-#include "SettingsManager.h"
 #include "DeviceManager.h"
+#include "SettingsManager.h"
+#include "DatabaseManager.h"
 #include "utils_screen.h"
 
 #include <cstdlib>
@@ -32,9 +33,9 @@
 #include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
 
+#include <QJsonDocument>
 #include <QSqlQuery>
 #include <QSqlError>
-#include <QJsonDocument>
 
 #include <QDateTime>
 #include <QTimer>
@@ -73,6 +74,14 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
         else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
     }
 
+    // Database
+    DatabaseManager *db = DatabaseManager::getInstance();
+    if (db)
+    {
+        m_dbInternal = db->hasDatabaseInternal();
+        m_dbExternal = db->hasDatabaseExternal();
+    }
+
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedout);
@@ -108,6 +117,14 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
         else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
+    }
+
+    // Database
+    DatabaseManager *db = DatabaseManager::getInstance();
+    if (db)
+    {
+        m_dbInternal = db->hasDatabaseInternal();
+        m_dbExternal = db->hasDatabaseExternal();
     }
 
     // Configure timeout timer
@@ -205,6 +222,34 @@ void Device::actionConnect()
         deviceConnect();
     }
 }
+
+/* ************************************************************************** */
+
+void Device::actionScan()
+{
+    //qDebug() << "Device::actionScan()" << getAddress() << getName();
+
+    if (!isBusy())
+    {
+        m_ble_action = DeviceUtils::ACTION_SCAN;
+        actionStarted();
+        deviceConnect();
+    }
+}
+
+void Device::actionScanWithValues()
+{
+    //qDebug() << "Device::actionScanWithValues()" << getAddress() << getName();
+
+    if (!isBusy())
+    {
+        m_ble_action = DeviceUtils::ACTION_SCAN_WITH_VALUES;
+        actionStarted();
+        deviceConnect();
+    }
+}
+
+/* ************************************************************************** */
 
 void Device::actionClearData()
 {
@@ -1012,7 +1057,6 @@ bool Device::setSetting(const QString &key, QVariant value)
             updateSettings.bindValue(":deviceAddr", getAddress());
 
             status = updateSettings.exec();
-
             if (!status)
             {
                 qWarning() << "> updateSettings.exec() ERROR"
@@ -1174,14 +1218,55 @@ void Device::setBatteryFirmware(const int battery, const QString &firmware)
 
 /* ************************************************************************** */
 
+void Device::setCoreConfiguration(const int bleconf)
+{
+    //qDebug() << "Device::setCoreConfiguration(" << bleconf << ")";
+
+    if (bleconf > 0)
+    {
+        if (m_bluetoothCoreConfiguration != bleconf && m_bluetoothCoreConfiguration != 3)
+        {
+            if (m_bluetoothCoreConfiguration == 1 && bleconf == 2) m_bluetoothCoreConfiguration = 3;
+            else if (m_bluetoothCoreConfiguration == 2 && bleconf == 1) m_bluetoothCoreConfiguration = 3;
+            else m_bluetoothCoreConfiguration = bleconf;
+
+            Q_EMIT advertisementUpdated();
+        }
+    }
+}
+
+void Device::setDeviceClass(const int major, const int minor, const int service)
+{
+    //qDebug() << "Device::setDeviceClass() " << info.name() << info.address() << info.minorDeviceClass() << info.majorDeviceClass() << info.serviceClasses();
+
+    if (m_major != major || m_minor != minor || m_service != service)
+    {
+        m_major = major;
+        m_minor = minor;
+        m_service = service;
+
+        Q_EMIT advertisementUpdated();
+    }
+}
+
+/* ************************************************************************** */
+
 void Device::setRssi(const int rssi)
 {
+    if (m_rssiMin > rssi)
+    {
+        m_rssiMin = rssi;
+    }
+    if (m_rssiMax < rssi)
+    {
+        m_rssiMax = rssi;
+    }
+
     if (m_rssi != rssi)
     {
         m_rssi = rssi;
         Q_EMIT rssiUpdated();
     }
-
     m_rssiTimer.start();
 }
 
@@ -1235,6 +1320,11 @@ void Device::deviceConnected()
     else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
     {
         m_ble_status = DeviceUtils::DEVICE_UPDATING_HISTORY;
+    }
+    else if (m_ble_action == DeviceUtils::ACTION_SCAN ||
+             m_ble_action == DeviceUtils::ACTION_SCAN_WITH_VALUES)
+    {
+        m_ble_status = DeviceUtils::DEVICE_WORKING;
     }
     else if (m_ble_action == DeviceUtils::ACTION_LED_BLINK ||
              m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY||
@@ -1292,6 +1382,8 @@ void Device::deviceErrored(QLowEnergyController::Error error)
 
     m_lastError = QDateTime::currentDateTime();
     refreshDataFinished(false);
+
+    Q_EMIT statusUpdated();
 }
 
 void Device::deviceStateChanged(QLowEnergyController::ControllerState)

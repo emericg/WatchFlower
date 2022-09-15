@@ -24,18 +24,15 @@
 #include "device_sensor.h"
 
 #include <QList>
+#include <QString>
 #include <QDateTime>
-#include <QDebug>
 
-#include <QStandardPaths>
+#include <QSqlQuery>
+
 #include <QDir>
 #include <QFile>
 #include <QTextStream>
-
-#include <QSqlDatabase>
-#include <QSqlDriver>
-#include <QSqlError>
-#include <QSqlQuery>
+#include <QStandardPaths>
 
 /* ************************************************************************** */
 
@@ -117,10 +114,10 @@ QString DeviceManager::exportDataOpen()
 
 QString DeviceManager::exportDataFolder()
 {
-    // Get temp directory path
+    // Get home directory path
     QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
 
-    // check if directory exist
+    // Check if directory exist
     QDir exportDirectory(exportDirectoryPath);
     if (exportDirectory.exists())
     {
@@ -150,7 +147,7 @@ bool DeviceManager::exportData(const QString &exportFilePath)
     // Open file
     QFile efile;
     efile.setFileName(exportFilePath);
-    if (efile.open(QIODevice::WriteOnly))
+    if (efile.open(QIODevice::WriteOnly | QIODevice::Text))
     {
         status = true;
         QTextStream eout(&efile);

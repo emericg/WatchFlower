@@ -35,7 +35,7 @@ qt_add_executable(WatchFlower
     src/DeviceManager_nearby.cpp
     src/DeviceManager_export.cpp
     src/DeviceFilter.cpp src/DeviceFilter.h
-    src/device_utils.h
+    src/device_utils.h src/device_firmwares.h
     src/devices/device_esp32_airqualitymonitor.cpp src/devices/device_esp32_airqualitymonitor.h
     src/devices/device_esp32_geigercounter.cpp src/devices/device_esp32_geigercounter.h
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h

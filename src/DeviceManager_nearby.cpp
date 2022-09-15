@@ -21,8 +21,6 @@
 
 #include "DeviceManager.h"
 
-#include "utils_app.h"
-
 #include <QBluetoothDeviceInfo>
 #include <QBluetoothDeviceDiscoveryAgent>
 

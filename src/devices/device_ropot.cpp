@@ -20,6 +20,7 @@
  */
 
 #include "device_ropot.h"
+#include "device_firmwares.h"
 #include "utils_versionchecker.h"
 #include "thirdparty/RC4/rc4.h"
 

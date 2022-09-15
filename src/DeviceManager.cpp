@@ -71,6 +71,7 @@ DeviceManager::DeviceManager(bool daemon)
     m_devices_model = new DeviceModel(this);
     m_devices_filter = new DeviceFilter(this);
     m_devices_filter->setSourceModel(m_devices_model);
+    m_devices_filter->setDynamicSortFilter(true);
     SettingsManager *sm = SettingsManager::getInstance();
     if (sm)
     {
@@ -228,6 +229,11 @@ bool DeviceManager::isSyncing() const
     return !m_devices_syncing.empty();
 }
 
+bool DeviceManager::isAdvertising() const
+{
+    return m_advertising;
+}
+
 /* ************************************************************************** */
 
 bool DeviceManager::checkBluetooth()
@@ -287,21 +293,7 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     bool btA_was = m_btA;
     bool btE_was = m_btE;
     bool btP_was = m_btP;
-/*
-    // List Bluetooth adapters
-    QList<QBluetoothHostInfo> adaptersList = QBluetoothLocalDevice::allDevices();
-    if (adaptersList.size() > 0)
-    {
-        for (QBluetoothHostInfo a: adaptersList)
-        {
-            qDebug() << "- Bluetooth adapter:" << a.name();
-        }
-    }
-    else
-    {
-        qDebug() << "> No Bluetooth adapter found...";
-    }
-*/
+
     // Invalid adapter? (ex: plugged off)
     if (m_bluetoothAdapter && !m_bluetoothAdapter->isValid())
     {
@@ -309,10 +301,10 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
         m_bluetoothAdapter = nullptr;
     }
 
-    // We only try the "first" available Bluetooth adapter
-    // TODO // Handle multiple adapters?
+    // Select an adapter (if none currently selected)
     if (!m_bluetoothAdapter)
     {
+        // Correspond to the "first available" or "default" Bluetooth adapter
         m_bluetoothAdapter = new QBluetoothLocalDevice();
         if (m_bluetoothAdapter)
         {
@@ -441,6 +433,8 @@ void DeviceManager::startBleAgent()
         m_discoveryAgent = new QBluetoothDeviceDiscoveryAgent();
         if (m_discoveryAgent)
         {
+            //qDebug() << "Scanning method supported:" << m_discoveryAgent->supportedDiscoveryMethods();
+
             connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::errorOccurred),
                     this, &DeviceManager::deviceDiscoveryError, Qt::UniqueConnection);
         }
@@ -1453,7 +1447,12 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
                 addDevice.bindValue(":deviceAddr", d->getAddress());
                 addDevice.bindValue(":deviceModel", d->getModel());
                 addDevice.bindValue(":deviceName", d->getName());
-                addDevice.exec();
+
+                if (addDevice.exec() == false)
+                {
+                    qWarning() << "> addDevice.exec() ERROR"
+                               << addDevice.lastError().type() << ":" << addDevice.lastError().text();
+                }
             }
         }
 
@@ -1523,6 +1522,7 @@ void DeviceManager::removeDevice(const QString &address)
                 QSqlQuery removeDevice;
                 removeDevice.prepare("DELETE FROM devices WHERE deviceAddr = :deviceAddr");
                 removeDevice.bindValue(":deviceAddr", dd->getAddress());
+
                 if (removeDevice.exec() == false)
                 {
                     qWarning() << "> removeDevice.exec() ERROR"

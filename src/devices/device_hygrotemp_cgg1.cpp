@@ -20,6 +20,7 @@
  */
 
 #include "device_hygrotemp_cgg1.h"
+#include "device_firmwares.h"
 #include "utils_versionchecker.h"
 
 #include <cstdint>

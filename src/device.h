@@ -53,6 +53,7 @@ class Device: public QObject
     Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceModelID READ getModelID NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceManufacturer READ getManufacturer NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceAddressMAC READ getAddressMAC WRITE setAddressMAC NOTIFY sensorUpdated)
     Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
@@ -92,6 +93,11 @@ class Device: public QObject
     Q_PROPERTY(int rssi READ getRssi NOTIFY rssiUpdated)
     Q_PROPERTY(bool available READ isAvailable NOTIFY rssiUpdated)
 
+    Q_PROPERTY(int minorClass READ getMinorClass NOTIFY advertisementUpdated)
+    Q_PROPERTY(int majorClass READ getMajorClass NOTIFY advertisementUpdated)
+    Q_PROPERTY(int serviceClass READ getServiceClass NOTIFY advertisementUpdated)
+    Q_PROPERTY(int bluetoothConfiguration READ getBluetoothConfiguration NOTIFY advertisementUpdated)
+
     Q_PROPERTY(bool enabled READ isEnabled NOTIFY statusUpdated)
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
     Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
@@ -125,6 +131,7 @@ Q_SIGNALS:
 
     void batteryUpdated();
     void rssiUpdated();
+    void advertisementUpdated();
     void statusUpdated();
     void dataAvailableUpdated();
     void dataUpdated();
@@ -133,14 +140,15 @@ Q_SIGNALS:
     void realtimeUpdated(); // sent when a realtime update is received
 
 protected:
-    int m_deviceType = 0;           //!< See DeviceType enum
-    int m_deviceCapabilities = 0;   //!< See DeviceCapabilities enum
-    int m_deviceSensors = 0;        //!< See DeviceSensors enum
-    int m_deviceBluetoothMode = 0;  //!< See BluetoothMode enum
+    int m_deviceType = 0;           //!< See DeviceUtils::DeviceType enum
+    int m_deviceCapabilities = 0;   //!< See DeviceUtils::DeviceCapabilities enum
+    int m_deviceSensors = 0;        //!< See DeviceUtils::DeviceSensors enum
+    int m_deviceBluetoothMode = 0;  //!< See DeviceUtils::BluetoothMode enum
 
     // Device data
     QString m_deviceAddress;
     QString m_deviceAddressMAC;     //!< Used only on macOS and iOS, mostly to interact with other platforms
+    QString m_deviceManufacturer;
     QString m_deviceModelID;
     QString m_deviceModel;
     QString m_deviceName;
@@ -185,9 +193,18 @@ protected:
     QBluetoothDeviceInfo m_bleDevice;
     QLowEnergyController *m_bleController = nullptr;
 
-    int m_rssi = 1;
+    int m_bluetoothCoreConfiguration = 0; //!< See QBluetoothDeviceInfo::CoreConfiguration enum
+
+    int m_rssi = 0;
+    int m_rssiMin = 0;
+    int m_rssiMax = -100;
+
     QTimer m_rssiTimer;
-    int m_rssiTimeoutInterval = 12;
+    int m_rssiTimeoutInterval = 16;
+
+    int m_major = 0;
+    int m_minor = 0;
+    int m_service = 0;
 
     virtual void deviceConnected();
     virtual void deviceDisconnected();
@@ -226,12 +243,15 @@ public:
     virtual ~Device();
 
     void setName(const QString &name);
+    void setDeviceClass(const int major, const int minor, const int service);
+    virtual void setCoreConfiguration(const int bleconf);
 
     // Device infos
     QString getModel() const { return m_deviceModel; }
     QString getModelID() const { return m_deviceModelID; }
     QString getName() const { return m_deviceName; }
     QString getAddress() const { return m_deviceAddress; }
+    QString getManufacturer() const { return m_deviceManufacturer; }
     QString getFirmware() const { return m_deviceFirmware; }
     int getBatteryLevel() const { return m_deviceBattery; }
 
@@ -240,6 +260,7 @@ public:
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
     int getDeviceSensors() const { return m_deviceSensors; }
 
+    int getBluetoothConfiguration() const { return m_bluetoothCoreConfiguration; }
     int getBluetoothMode() const { return m_deviceBluetoothMode; }
     bool hasBluetoothConnection() const { return (m_deviceBluetoothMode & DeviceUtils::DEVICE_BLE_CONNECTION); }
     bool hasBluetoothAdvertisement() const { return (m_deviceBluetoothMode & DeviceUtils::DEVICE_BLE_ADVERTISEMENT); }
@@ -264,10 +285,17 @@ public:
     bool hasReboot() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_REBOOT); }
 
     // Device RSSI
-    int getRssi() const { return m_rssi; }
     void setRssi(const int rssi);
     void cleanRssi();
+
     bool isAvailable() const { return (m_rssi < 0); }
+    int getRssi() const { return m_rssi; }
+    int getRssiMin() const { return m_rssiMin; }
+    int getRssiMax() const { return m_rssiMax; }
+
+    int getMinorClass() const { return m_minor; }
+    int getMajorClass() const { return m_major; }
+    int getServiceClass() const { return m_service; }
 
     // Device status
     int getAction() const { return m_ble_action; }
@@ -318,6 +346,8 @@ public:
 
     // Start actions
     Q_INVOKABLE void actionConnect();
+    Q_INVOKABLE void actionScan();
+    Q_INVOKABLE void actionScanWithValues();
     Q_INVOKABLE void actionClearData();
     Q_INVOKABLE void actionClearDeviceData();
     Q_INVOKABLE void actionLedBlink();

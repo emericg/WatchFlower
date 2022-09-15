@@ -20,11 +20,12 @@
  */
 
 #include "device_sensor.h"
+#include "device_firmwares.h"
+#include "utils_versionchecker.h"
+
 #include "SettingsManager.h"
-#include "DatabaseManager.h"
 #include "DeviceManager.h"
 #include "NotificationManager.h"
-#include "utils_versionchecker.h"
 
 #include <QSqlQuery>
 #include <QSqlError>
@@ -38,14 +39,6 @@
 DeviceSensor::DeviceSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent) :
     Device(deviceAddr, deviceName, parent)
 {
-    // Database
-    DatabaseManager *db = DatabaseManager::getInstance();
-    if (db)
-    {
-        m_dbInternal = db->hasDatabaseInternal();
-        m_dbExternal = db->hasDatabaseExternal();
-    }
-
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedout);
@@ -57,14 +50,6 @@ DeviceSensor::DeviceSensor(const QString &deviceAddr, const QString &deviceName,
 DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     Device(d, parent)
 {
-    // Database
-    DatabaseManager *db = DatabaseManager::getInstance();
-    if (db)
-    {
-        m_dbInternal = db->hasDatabaseInternal();
-        m_dbExternal = db->hasDatabaseExternal();
-    }
-
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedout);
@@ -152,6 +137,13 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
             }
         }
     }
+}
+
+void DeviceSensor::refreshDataRtFinished(bool status)
+{
+    //qDebug() << "DeviceSensor::refreshDataRtFinished()" << getAddress() << getName();
+
+    checkDataAvailability();
 }
 
 /* ************************************************************************** */

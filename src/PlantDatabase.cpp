@@ -25,11 +25,6 @@
 #include <QDir>
 #include <QFile>
 #include <QStringList>
-#include <QStandardPaths>
-
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
 
 #include <QDebug>
 

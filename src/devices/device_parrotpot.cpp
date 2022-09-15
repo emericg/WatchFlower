@@ -20,6 +20,7 @@
  */
 
 #include "device_parrotpot.h"
+#include "device_firmwares.h"
 #include "utils_maths.h"
 #include "utils_versionchecker.h"
 
