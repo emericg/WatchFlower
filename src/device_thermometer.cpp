@@ -335,11 +335,6 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
 
         QSqlQuery graphData;
         graphData.prepare("SELECT " + strftime_d + ", min(temperature), avg(temperature), max(temperature), min(humidity), max(humidity) " \
-                          "FROM plantData " \
-                          "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_months + " " \
-                          "GROUP BY " + strftime_d + " " \
-                          " UNION ALL " \
-                          "SELECT " + strftime_d + ", min(temperature), avg(temperature), max(temperature), min(humidity), max(humidity) " \
                           "FROM thermoData " \
                           "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_months + " " \
                           "GROUP BY " + strftime_d + " " \
