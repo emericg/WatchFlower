@@ -142,7 +142,10 @@ Item {
                     background: true
                     backgroundColor: Theme.colorPrimary
 
-                    onClicked: entryEditor.open()
+                    onClicked: {
+                        journalEditorLoader.active = true
+                        journalEditorLoader.item.openEditor()
+                    }
 
                     ButtonWireframe {
                         height: 36
@@ -180,6 +183,9 @@ Item {
             }
             function openEditor() {
                 entryEditor.open()
+            }
+            function editEditor(eee) {
+                entryEditor.edit(eee)
             }
             function closeEditor() {
                 entryEditor.close()

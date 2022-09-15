@@ -49,6 +49,7 @@ Item {
         active: false
         asynchronous: true
         sourceComponent: Flickable {
+            id: itemPlantViewer
             contentWidth: (uiMode === 1) ? -1 : plantScreen.width
             contentHeight: (uiMode === 1) ? plantScreen.height : -1
 
@@ -59,8 +60,10 @@ Item {
             function setPlant() {
                 plantScreen.currentPlant = currentDevice.plant
 
-                itemPlantViewer.contentX = 0
-                itemPlantViewer.contentY = 0
+                if (typeof itemPlantViewer !== "undefined" || itemPlantViewer) {
+                    itemPlantViewer.contentX = 0
+                    itemPlantViewer.contentY = 0
+                }
             }
 
             PlantScreen {

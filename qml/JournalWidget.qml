@@ -120,7 +120,8 @@ Item {
             source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
 
             onClicked: {
-                entryEditor.edit(modelData)
+                journalEditorLoader.active = true
+                journalEditorLoader.item.editEditor(modelData)
             }
         }
         RoundButtonIcon {

@@ -270,6 +270,15 @@ Loader {
             boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
+            function setPlant() {
+                plantScreen.currentPlant = currentDevice.plant
+
+                if (typeof itemPlantViewer !== "undefined" || itemPlantViewer) {
+                    itemPlantViewer.contentX = 0
+                    itemPlantViewer.contentY = 0
+                }
+            }
+
             PlantScreen {
                 id: plantScreen
             }
