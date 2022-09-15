@@ -139,13 +139,6 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
     }
 }
 
-void DeviceSensor::refreshDataRtFinished(bool status)
-{
-    //qDebug() << "DeviceSensor::refreshDataRtFinished()" << getAddress() << getName();
-
-    checkDataAvailability();
-}
-
 /* ************************************************************************** */
 
 void DeviceSensor::refreshHistoryFinished(bool status)
