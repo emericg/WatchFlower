@@ -58,7 +58,7 @@ modules:
           type: anitya
           project-id: 1637
           url-template: https://github.com/libical/libical/archive/v$version.tar.gz
-          
+
   - name: bluez # required by qtconnectivity
     buildsystem: autotools
     config-opts:
