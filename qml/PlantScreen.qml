@@ -70,7 +70,7 @@ Grid {
         plantOrigin.text = currentPlant.origin
 
         itemType.text = UtilsPlantDatabase.getPlantTypeText(currentPlant.type)
-        itemType.backgroundColor = UtilsPlantDatabase.getPlantTypeColor(currentPlant.type)
+        itemType.color = UtilsPlantDatabase.getPlantTypeColor(currentPlant.type)
 
         // tags
         plantTags.model = currentPlant.tags
@@ -490,9 +490,9 @@ Grid {
             ItemTag {
                 id: itemType
                 visible: text
+                color: Theme.colorGreen
                 textColor: "white"
                 textSize: Theme.fontSizeContentSmall
-                backgroundColor: Theme.colorGreen
             }
 
             Flow {
@@ -508,7 +508,7 @@ Grid {
                         text: UtilsPlantDatabase.getPlantTagText(modelData)
                         textColor: "white"
                         textSize: Theme.fontSizeContentSmall
-                        backgroundColor: UtilsPlantDatabase.getPlantTagColor(modelData)
+                        color: UtilsPlantDatabase.getPlantTagColor(modelData)
                     }
                 }
             }

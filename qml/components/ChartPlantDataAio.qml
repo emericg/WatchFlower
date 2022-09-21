@@ -37,9 +37,9 @@ Item {
 
         //// DATA
         if (currentDevice.isPlantSensor) {
-            currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData);
+            currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData)
         } else if (currentDevice.isThermometer) {
-            currentDevice.getChartData_thermometerAIO(days, axisTime, tempData, hygroData);
+            currentDevice.getChartData_thermometerAIO(days, axisTime, tempData, hygroData)
         }
 
         // graph visibility
@@ -157,8 +157,7 @@ Item {
                 if (mouse.button === Qt.LeftButton) {
                     aioGraph.moveIndicator(mouse, false)
                     mouse.accepted = true
-                }
-                else if (mouse.button === Qt.RightButton) {
+                } else if (mouse.button === Qt.RightButton) {
                     resetIndicator()
                 }
             }
