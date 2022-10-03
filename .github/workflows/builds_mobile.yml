@@ -15,6 +15,7 @@ env:
   VERSION: "4.2"
   APPLICATION: "WatchFlower"
   QMAKE_PROJECT: "WatchFlower.pro"
+  QT_VERSION: "6.4.0"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -52,14 +53,14 @@ jobs:
       - name: Install Qt (desktop)
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.3.2'
+          version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qt5compat
 
       # Install Qt (Android)
       - name: Install Qt (Android)
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.3.2'
+          version: ${{env.QT_VERSION}}
           host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'
@@ -88,14 +89,14 @@ jobs:
       - name: Install Qt (desktop)
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.3.2'
+          version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qt5compat
 
       # Install Qt (iOS)
       - name: Install Qt (iOS)
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.3.2'
+          version: ${{env.QT_VERSION}}
           host: 'mac'
           target: 'ios'
           modules: qtconnectivity qtcharts qt5compat
@@ -104,7 +105,7 @@ jobs:
       - name: Build application
         run: |
              export PATH=$Qt6_DIR/bin:$PATH
-             ln -s /Users/runner/work/${{env.APPLICATION}}/Qt/6.3.2/macos /Users/runner/work/${{env.APPLICATION}}/Qt/6.3.2/clang_64
+             ln -s /Users/runner/work/${{env.APPLICATION}}/Qt/${{env.QT_VERSION}}/macos /Users/runner/work/${{env.APPLICATION}}/Qt/${{env.QT_VERSION}}/clang_64
              qmake --version
              qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
              make -j$(nproc)
