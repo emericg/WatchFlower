@@ -24,6 +24,7 @@
 #include "utils_app.h"
 
 #include <QBluetoothDeviceInfo>
+#include <QList>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -108,7 +109,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
 
     if (m_scanning) // Dynamic scanning ////////////////////////////////////////
     {
-        //qDebug() << "addBleDevice() FROM DYNAMIC SCANNING";
+        //qDebug() << "addBleDevice(" << info.name() << ") FROM DYNAMIC SCANNING";
         addBleDevice(info);
     }
 }

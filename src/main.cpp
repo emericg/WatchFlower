@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
     MenubarManager *mb = MenubarManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
-    if (!sm || !st ||!mb || !nm || !dm)
+    if (!sm || !st || !mb || !nm || !dm)
     {
         qWarning() << "Cannot init WatchFlower components!";
         return EXIT_FAILURE;

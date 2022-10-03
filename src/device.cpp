@@ -1382,8 +1382,6 @@ void Device::deviceErrored(QLowEnergyController::Error error)
 
     m_lastError = QDateTime::currentDateTime();
     refreshDataFinished(false);
-
-    Q_EMIT statusUpdated();
 }
 
 void Device::deviceStateChanged(QLowEnergyController::ControllerState)
