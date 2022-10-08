@@ -8,7 +8,7 @@ Rectangle {
     implicitWidth: 480
     implicitHeight: 48
 
-    opacity: (device.deviceRssi < 0) ? 1 : 0.66
+    opacity: (device.rssi < 0) ? 1 : 0.66
     color: (device.selected) ? Theme.colorForeground : Theme.colorBackground
 
     property var device: pointer
@@ -123,17 +123,17 @@ Rectangle {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.bottom: parent.bottom
-                width: parent.width * Math.abs(device.deviceRssi / 100)
+                width: parent.width * Math.abs(device.rssi / 100)
                 radius: 3
                 color: {
-                    if (device.deviceRssi < 0) {
-                        if (device.deviceRssi > -65) return Theme.colorGreen
-                        if (device.deviceRssi > -85) return Theme.colorOrange
-                        if (device.deviceRssi > -100) return Theme.colorRed
+                    if (device.rssi < 0) {
+                        if (device.rssi > -65) return Theme.colorGreen
+                        if (device.rssi > -85) return Theme.colorOrange
+                        if (device.rssi > -100) return Theme.colorRed
                     } else {
-                        if (device.deviceRssi < 65) return Theme.colorGreen
-                        if (device.deviceRssi < 85) return Theme.colorOrange
-                        if (device.deviceRssi < 100) return Theme.colorRed
+                        if (device.rssi < 65) return Theme.colorGreen
+                        if (device.rssi < 85) return Theme.colorOrange
+                        if (device.rssi < 100) return Theme.colorRed
                     }
                     return Theme.colorRed
                 }
@@ -143,7 +143,7 @@ Rectangle {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("-%1 dB").arg(Math.abs(device.deviceRssi))
+                    text: qsTr("-%1 dB").arg(Math.abs(device.rssi))
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContentVerySmall
                     color: "white"
