@@ -50,6 +50,7 @@ class MenubarManager: public QObject
 
     QMenu *m_menuHelp = nullptr;
     QAction *m_actionAbout = nullptr;
+    QAction *m_actionPreferences = nullptr;
     QAction *m_actionWebsite = nullptr;
     QAction *m_actionIssueTracker = nullptr;
     QAction *m_actionReleaseNotes = nullptr;

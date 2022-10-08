@@ -54,6 +54,7 @@ MenubarManager::~MenubarManager()
     delete m_menuSensors;
 
     delete m_actionAbout;
+    delete m_actionPreferences;
     delete m_actionWebsite;
     delete m_actionIssueTracker;
     delete m_actionReleaseNotes;
@@ -91,12 +92,14 @@ void MenubarManager::setupMenubar(QQuickWindow *view, DeviceManager *dm)
     menuBar->addMenu(m_menuSensors);
 
     m_actionAbout = new QAction(tr("About WatchFlower"));
+    m_actionPreferences = new QAction(tr("Preferences"));
     m_actionWebsite = new QAction(tr("Visit website"));
     m_actionIssueTracker = new QAction(tr("Visit issue tracker"));
     m_actionReleaseNotes = new QAction(tr("Consult release notes"));
     m_actionTutorial = new QAction(tr("Show the tutorial"));
 
     connect(m_actionAbout, &QAction::triggered, this, &MenubarManager::about);
+    connect(m_actionPreferences, &QAction::triggered, this, &MenubarManager::settings);
     connect(m_actionWebsite, &QAction::triggered, this, &MenubarManager::website);
     connect(m_actionIssueTracker, &QAction::triggered, this, &MenubarManager::issuetracker);
     connect(m_actionReleaseNotes, &QAction::triggered, this, &MenubarManager::releasenotes);
@@ -104,6 +107,7 @@ void MenubarManager::setupMenubar(QQuickWindow *view, DeviceManager *dm)
 
     m_menuHelp = new QMenu(tr("Help"));
     m_menuHelp->addAction(m_actionAbout);
+    m_menuHelp->addAction(m_actionPreferences);
     m_menuHelp->addAction(m_actionTutorial);
     m_menuHelp->addSeparator();
     m_menuHelp->addAction(m_actionWebsite);
