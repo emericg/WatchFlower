@@ -90,7 +90,7 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}
-          modules: qtconnectivity qtcharts qt5compat
+          modules: qtconnectivity qtcharts qtshadertools qt5compat
 
       # Install Qt (iOS)
       - name: Install Qt (iOS)
@@ -99,7 +99,7 @@ jobs:
           version: ${{env.QT_VERSION}}
           host: 'mac'
           target: 'ios'
-          modules: qtconnectivity qtcharts qt5compat
+          modules: qtconnectivity qtcharts qtshadertools qt5compat
 
       # Build application
       - name: Build application
