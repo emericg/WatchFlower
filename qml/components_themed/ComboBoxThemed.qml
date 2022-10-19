@@ -17,6 +17,7 @@ T.ComboBox {
     rightPadding: 16
 
     font.pixelSize: Theme.fontSizeComponent
+    opacity: enabled ? 1.0 : 0.4
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -26,7 +27,6 @@ T.ComboBox {
 
         radius: Theme.componentRadius
         color: control.down ? Theme.colorComponentDown : Theme.colorComponent
-        opacity: enabled ? 1.0 : 0.33
         border.width: 1
         border.color: Theme.colorComponentBorder
     }
@@ -42,7 +42,6 @@ T.ComboBox {
         verticalAlignment: Text.AlignVCenter
 
         color: Theme.colorComponentContent
-        opacity: enabled ? 1.0 : 0.33
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -83,7 +82,6 @@ T.ComboBox {
             implicitHeight: Theme.componentHeight
 
             radius: Theme.componentRadius
-            opacity: enabled ? 1 : 0.3
             color: highlighted ? "#F6F6F6" : "white"
         }
 

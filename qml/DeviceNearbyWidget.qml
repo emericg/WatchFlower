@@ -61,6 +61,8 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 12
 
+        ////////
+
         IconSvg {
             anchors.verticalCenter: parent.verticalCenter
 
@@ -126,15 +128,9 @@ Rectangle {
                 width: parent.width * Math.abs(device.rssi / 100)
                 radius: 3
                 color: {
-                    if (device.rssi < 0) {
-                        if (device.rssi > -65) return Theme.colorGreen
-                        if (device.rssi > -85) return Theme.colorOrange
-                        if (device.rssi > -100) return Theme.colorRed
-                    } else {
-                        if (device.rssi < 65) return Theme.colorGreen
-                        if (device.rssi < 85) return Theme.colorOrange
-                        if (device.rssi < 100) return Theme.colorRed
-                    }
+                    if (Math.abs(device.rssi) < 65) return Theme.colorGreen
+                    if (Math.abs(device.rssi) < 85) return Theme.colorOrange
+                    if (Math.abs(device.rssi) < 100) return Theme.colorRed
                     return Theme.colorRed
                 }
 

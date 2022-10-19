@@ -347,8 +347,18 @@ Item {
                         radius: 32
                         opacity: (boxDevice.rssi < 0) ? 1 : 0.66
 
-                        border.width: boxDevice.selected ? 6 : 2
-                        border.color: boxDevice.selected ? Theme.colorSecondary : Qt.darker(color, 1.2)
+                        border.width: 2
+                        border.color: Qt.darker(color, 1.2)
+
+                        Rectangle {
+                            anchors.fill: parent
+                            anchors.margins: -8
+                            radius: width
+                            z: -1
+                            opacity: boxDevice.selected ? 0.5 : 0
+                            Behavior on opacity { OpacityAnimator { duration: 133 } }
+                            color: (Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader
+                        }
 
                         color: {
                             if (Math.abs(boxDevice.rssi) < 65) return Theme.colorGreen
