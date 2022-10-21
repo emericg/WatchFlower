@@ -104,6 +104,8 @@ void DeviceFlowerCare::serviceScanDone()
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
+            //auto ret = QtConcurrent::run([this](){ serviceData->discoverDetails(); });
+            //QMetaObject::invokeMethod(QCoreApplication::instance(), [] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -117,6 +119,7 @@ void DeviceFlowerCare::serviceScanDone()
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceHandshake->discoverDetails(); });
+            //auto ret = QtConcurrent::run([this](){ serviceHandshake->discoverDetails(); });
         }
     }
 
@@ -130,6 +133,7 @@ void DeviceFlowerCare::serviceScanDone()
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceHistory->discoverDetails(); });
+            //auto ret = QtConcurrent::run([this](){ serviceHistory->discoverDetails(); });
         }
     }
 }

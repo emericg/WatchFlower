@@ -21,8 +21,6 @@
 
 #include "DeviceManager.h"
 
-#include "utils_app.h"
-
 #include <QBluetoothDeviceInfo>
 #include <QList>
 #include <QDebug>
@@ -41,8 +39,9 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
 
     Q_UNUSED(updatedFields) // We don't use QBluetoothDeviceInfo::Fields, it's unreliable
 
-    if (info.isCached()) return; // skip cached devices
-    if (!info.isValid()) return; // skip invalid devices
+    //if (!info.isValid()) return; // skip invalid devices
+    //if (info.isCached()) return; // we probably just hit the device cache
+    if (info.rssi() >= 0) return; // we probably just hit the device cache
     if (info.name().isEmpty()) return; // skip beacons
     if (info.name().replace('-', ':') == info.address().toString()) return; // skip beacons
 

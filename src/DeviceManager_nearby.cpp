@@ -128,7 +128,7 @@ void DeviceManager::addNearbyBleDevice(const QBluetoothDeviceInfo &info)
 {
     //qDebug() << "DeviceManager::addNearbyBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
 
-    if (info.isCached()) return; // we probably just hit the device cache
+    //if (info.isCached()) return; // we probably just hit the device cache
     if (info.rssi() >= 0) return; // we probably just hit the device cache
 
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
