@@ -242,7 +242,10 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             }
 
             // Ask for a data reading
-            askForReading();
+            if (m_deviceName == "Grow care garden")
+                QTimer::singleShot(666, this, SLOT(askForReading()));
+            else
+                askForReading();
         }
 
         if (serviceData)
