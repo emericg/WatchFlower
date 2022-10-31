@@ -1,18 +1,13 @@
 
-<img src="jqjcy01ym.svg" width="400px" alt="Formaldehyde HCHO Monitor" align="right" />
+<img src="cgdn1.svg" width="400px" alt="Air Detector Lite" align="right" />
 
-## About JQJCY01YM
+## About CGDN1
 
-* Honeywell 'Formaldehyde HCHO Monitor' [JQJCY01YM]() are HCHO Monitor
-* Has sensors to relay temperature, humidity and formaldehyde
+* Qingping 'Air Monitor Lite' [CGDN1](https://www.qingping.co/air-monitor-lite/overview)
+* Has sensors to relay temperature, humidity, CO2 and PM 2.5/10
 * Uses Bluetooth Low Energy (BLE) and has a limited range
-* 2 * AA batteries are used as power source
+* A 18650 battery is used as internal power source
 
-## Features
-
-* Read real-time sensor values
-* Read historical sensor values
-* Temperature humidity and formaldehyde sensors
 
 ## Protocol
 
@@ -46,7 +41,7 @@ TODO
 
 ## Advertisement data
 
-JQJCY01YM broadcast `service data` with 16 bits service UUID `0xFE95` .  
+CGDN1 broadcast sensor values over `service data` with the `0xFDCD` 16 bits service UUID.  
 
 Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more information on advertisement data for this device.  
 

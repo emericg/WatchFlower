@@ -53,7 +53,7 @@ Please note that most Chinese devices have many names, usually no official manuf
 | Xiaomi / VegTrug / ...<br>(International and Chinese versions) | Xiaomi and VegTrug variants | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
 | [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
-| Xiaomi MiJia Bluetooth Hygrometer (LCD) | ClearGrass Temp & RH Monitor (EInk) | QingPing Temp & RH Monitor Lite (LCD) |
+| Xiaomi MiJia Bluetooth Hygrometer (LCD) | ClearGrass Temp & RH Monitor (EInk) | Qingping Temp & RH Monitor Lite (LCD) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
 | ![LYWSDCGQ](docs/hygrotemp_lywsdcgq.svg) | ![CGG1](docs/hygrotemp_cgg1.svg) | ![CGDK2](docs/hygrotemp_cgdk2.svg) |
 | LYWSDCGQ | CGG1 | CGDK2 |

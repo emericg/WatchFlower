@@ -65,6 +65,7 @@ SOURCES  += src/main.cpp \
             src/devices/device_hygrotemp_square.cpp \
             src/devices/device_hygrotemp_lywsdcgq.cpp \
             src/devices/device_thermobeacon.cpp \
+            src/devices/device_cgdn1.cpp \
             src/devices/device_jqjcy01ym.cpp \
             src/devices/device_wp6003.cpp \
             src/devices/device_esp32_airqualitymonitor.cpp \
@@ -105,6 +106,7 @@ HEADERS  += src/SettingsManager.h \
             src/devices/device_hygrotemp_square.h \
             src/devices/device_hygrotemp_lywsdcgq.h \
             src/devices/device_thermobeacon.h \
+            src/devices/device_cgdn1.h \
             src/devices/device_jqjcy01ym.h \
             src/devices/device_wp6003.h \
             src/devices/device_esp32_airqualitymonitor.h \

@@ -95,7 +95,7 @@ Supported devices
 | Humidity                             | 0 → 99.9% RH                          |
 | BLE API                              | [link](lywsdcgq-ble-api.md)           |
 
-| Bluetooth Alarm Clock                | Qinping (formerly ClearGrass)         |
+| Bluetooth Alarm Clock                | Qingping (formerly ClearGrass)        |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | CGD1                                  |
 | FCC ID                               | 2AQ3F-CGD1                            |
@@ -106,7 +106,7 @@ Supported devices
 | Humidity                             | 0 → 100% RH                           |
 | BLE API                              | [link](cgd1-ble-api.md)               |
 
-| Temp & RH Barometer Pro S            | Qinping                               |
+| Temp & RH Barometer Pro S            | Qingping                              |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | CGP1W                                 |
 | <img src="hygrotemp_cgp1w.svg" width="256">                                 ||
@@ -117,7 +117,7 @@ Supported devices
 | Air pressure                         | 300 → 1250 hPa (±0.5 hPa)             |
 | BLE API                              | [link](cgp1w-ble-api.md)              |
 
-| Temp & RH Monitor                    | Qinping (formerly ClearGrass)         |
+| Temp & RH Monitor                    | Qingping (formerly ClearGrass)        |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | CGG1                                  |
 | FCC ID                               | 2AQ3F-CGG1                            |
@@ -128,7 +128,7 @@ Supported devices
 | Humidity                             | 0 → 99.9% RH                          |
 | BLE API                              | [link](cgg1-ble-api.md)               |
 
-| Temp & RH Monitor Lite               | Qinping                               |
+| Temp & RH Monitor Lite               | Qingping                              |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | CGDK2                                 |
 | <img src="hygrotemp_cgdk2.svg" width="256">                                 ||
@@ -228,8 +228,8 @@ Supported devices
 | Screen                               | N/A                                   |
 | Battery                              | N/A                                   |
 | Temperature                          | -10 → 50 °C                           |
-| TVOC                                 | 0 → 9.999 mg/m3                       |
-| HCHO                                 | 0 → 1.999 mg/m3                       |
+| TVOC                                 | 0 → 9.999 mg/m³                       |
+| HCHO                                 | 0 → 1.999 mg/m³                       |
 | CO2 (estimated)                      | 400 → 2000 ppm                        |
 | BLE API                              | [link](wp6003-ble-api.md)             |
 
@@ -241,8 +241,21 @@ Supported devices
 | Battery                              | 2 x AA                                |
 | Temperature                          | 0 → 50 °C                             |
 | Humidity                             | 0 → 99% RH                            |
-| HCHO                                 | 0 → 1.500 mg/m3                       |
+| HCHO                                 | 0 → 1.500 mg/m³                       |
 | BLE API                              | [link](jqjcy01ym-ble-api.md)          |
+
+| Air Monitor Lite                     | Qingping (formerly ClearGrass)        |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | CGDN1                                 |
+| <img src="cgdn1.svg" width="256">                                           ||
+| Screen                               | OLED                                  |
+| Battery                              | 1 x 18650 (internal)                  |
+| Temperature                          | 0 → 50 °C                             |
+| Humidity                             | 0 → 99% RH                            |
+| CO2                                  | 400 → 9999 ppm                        |
+| PM2.5                                | 0 → 500 µg/m³                         |
+| PM10                                 | 0 → 500 µg/m³                         |
+| BLE API                              | [link](cgdn1-ble-api.md)              |
 
 * Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"
 

@@ -71,6 +71,7 @@ Example with a CGP1W advertisement message:
 | CGG1         | 0x0807 / 0x8816          |
 | CGDK2        | 0x0810 / 0x8810          |
 | CGD1         | 0x080C                   |
+| CGDN1        | 0x080E                   |
 | CGP1W        | 0x0809                   |
 | CGPR1        | 0x0812                   |
 | CGH1         | 0x0804 / 0x4804          |

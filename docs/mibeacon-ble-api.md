@@ -44,6 +44,11 @@ Only one measurement is sent per advertisement message.
 | CGG1-M       |          | 30 | 58 | 48 | 0b | 01 | XX | XX | 12 | 34 | 2d | 58 | 28 | 01 | 00 |
 | CGDK2        |          | 30 | 58 | 6f | 06 | 02 | XX | XX | 12 | 34 | 2d | 58 | 08 | -  | -  |
 
+#### Frame control (first 2 bytes)
+
+| bits  | Type      | Value             | Description                          |
+| ----- | --------- | ----------------- | ------------------------------------ |
+
 #### Protocol (version 0x70?)
 
 | Bytes | Type      | Value             | Description                          |
@@ -84,6 +89,7 @@ Only one measurement is sent per advertisement message.
 | HHCCJCY01    | 0x9800       |
 | HHCCJCY09    | 0xBC03       |
 | HHCCPOT002   | 0x5D01       |
+
 | LYWSDCGQ     | 0xAA01       |
 | CGG1         | 0x4703       |
 | CGG1-M       | 0x480B       |
@@ -91,6 +97,10 @@ Only one measurement is sent per advertisement message.
 | CGDK2        | 0x6F06       |
 | MHO-C303     | 0xD306       |
 | JQJCY01YM    | 0xDF02       |
+
+| YLKG01YL     | 0x0315       |
+| YLKG07YL     | 0xB603       |
+| YLAI003      | 0xBF07       |
 
 #### Type of measurement
 

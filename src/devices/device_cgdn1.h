@@ -19,8 +19,8 @@
  * \author    Emeric Grange <emeric.grange@gmail.com>
  */
 
-#ifndef DEVICE_JQJCY01YM_H
-#define DEVICE_JQJCY01YM_H
+#ifndef DEVICE_CGDN1_H
+#define DEVICE_CGDN1_H
 /* ************************************************************************** */
 
 #include "device_environmental.h"
@@ -34,20 +34,20 @@
 /* ************************************************************************** */
 
 /*!
- * Honeywell "HCHO Formaldehyde detector"
- * JQJCY01YM device / squared body / OLED
+ * Qingping "Air Monitor Lite"
+ * CGDN1 device / squared body / OLED
  *
  * Protocol infos:
- * - WatchFlower/docs/jqjcy01m-ble-api.md
+ * - WatchFlower/docs/cgdn1-ble-api.md
  */
-class DeviceJQJCY01YM: public DeviceEnvironmental
+class DeviceCGDN1: public DeviceEnvironmental
 {
     Q_OBJECT
 
 public:
-    DeviceJQJCY01YM(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
-    DeviceJQJCY01YM(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceJQJCY01YM();
+    DeviceCGDN1(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
+    DeviceCGDN1(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceCGDN1();
 
     Q_INVOKABLE bool hasData() const;
 
@@ -60,4 +60,4 @@ private:
 };
 
 /* ************************************************************************** */
-#endif // DEVICE_JQJCY01YM_H
+#endif // DEVICE_CGDN1_H
