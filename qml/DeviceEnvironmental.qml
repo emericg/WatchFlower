@@ -135,7 +135,7 @@ Loader {
                 deviceManager.updateDevice(currentDevice.deviceAddress)
             } else if (event.key === Qt.Key_Backspace) {
                 event.accepted = true
-                backAction()
+                appWindow.backAction()
             }
         }
 
@@ -437,31 +437,36 @@ Loader {
 
                 //MouseArea { anchors.fill: parent } // prevent clicks below this area
 
-                Flow {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: headerUnicolor ? -(appHeader.height/2) : -(appHeader.height/4)
-                    spacing: 48
+                Item {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    anchors.bottomMargin: 24
+
+                    ////////////////
 
                     IconSvg {
                         id: indicatorDisconnected
                         width: isMobile ? 96 : 128
                         height: isMobile ? 96 : 128
+                        anchors.centerIn: parent
 
                         visible: (currentDevice && !currentDevice.hasDataToday)
-                        color: cccc
                         source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                        color: cccc
                     }
 
                     ////////////////
 
                     AirQualityIndicator {
                         id: indicatorAirQuality
-                        width: (uiMode === 1) ? headerBox.height * 0.72 : headerBox.width * 0.5
+                        width: (uiMode === 1) ? headerBox.height-24 : headerBox.width * 0.60
                         height: width
+                        anchors.centerIn: parent
 
-                        color: cccc
                         visible: (currentDevice && isAirMonitor && currentDevice.hasDataToday)
+                        color: cccc
                     }
 
                     ////////////////
@@ -470,6 +475,7 @@ Loader {
                         id: indicatorHygrometer
                         width: isMobile ? 96 : 128
                         height: isMobile ? 96 : 128
+                        anchors.centerIn: parent
                         spacing: 2
 
                         visible: (currentDevice && primary === "hygrometer")
@@ -508,6 +514,7 @@ Loader {
                         id: indicatorRadioactivity
                         width: isMobile ? 128 : 160
                         height: isMobile ? 128 : 160
+                        anchors.centerIn: parent
 
                         visible: (currentDevice && isGeigerCounter && currentDevice.hasDataToday)
                         color: cccc
@@ -1041,7 +1048,7 @@ Loader {
                                         duo: false
 
                                         title: qsTr("Humidity")
-                                        legend: qsTr("°RH")
+                                        legend: qsTr("%RH")
                                         icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
                                         value: currentDevice.humidity
                                         precision: 0

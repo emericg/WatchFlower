@@ -879,7 +879,7 @@ Item {
                     limitMax = 750
                     gaugeValue.value = boxDevice.hcho
                 } else if (primaryValue === "co2") {
-                    gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
+                    gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO₂") : qsTr("CO₂"))
                     gaugeValue.from = 0
                     gaugeValue.to = 2000
                     limitMin = 850

@@ -20,12 +20,9 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Item {
-        id: legendSimple
-        width: parent.width + (isMobile ? 28 : 40)
-        height: parent.height + (isMobile ? 28 : 40)
-        anchors.centerIn: parent
-
-        visible: true
+        id: legend
+        anchors.fill: parent
+        anchors.margins: 0
 
         ProgressCircle { // arcSafe
             anchors.fill: parent
@@ -77,7 +74,9 @@ Item {
     ////////////////
 
     ProgressCircle { // actual indicator
+        id: indicator
         anchors.fill: parent
+        anchors.margins: (isMobile ? 12 : 20)
 
         arcOffset: 225
         arcBegin: 0
@@ -98,13 +97,14 @@ Item {
 
     IconSvg {
         id: lungsIcon
-        width: parent.width * 0.58
-        height: parent.height * 0.58
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -14
+        width: indicator.width * 0.58
+        height: indicator.height * 0.58
+        anchors.horizontalCenter: indicator.horizontalCenter
+        anchors.verticalCenter: indicator.verticalCenter
+        anchors.verticalCenterOffset: -12
 
         color: indicatorAirQuality.color
+        smooth: true
         opacity: 0.6
         source: "qrc:/assets/icons_fontawesome/lungs-solid.svg"
 
@@ -136,7 +136,8 @@ Item {
     Column {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: -8
+        anchors.bottomMargin: 8
+        spacing: -4
 
         Text {
             anchors.horizontalCenter: parent.horizontalCenter
