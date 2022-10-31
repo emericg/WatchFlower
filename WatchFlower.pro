@@ -1,6 +1,6 @@
 TARGET  = WatchFlower
 
-VERSION = 4.2
+VERSION = 5.0
 DEFINES+= APP_NAME=\\\"$$TARGET\\\"
 DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 

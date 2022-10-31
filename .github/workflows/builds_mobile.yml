@@ -12,7 +12,7 @@ on:
 #-------------------------------------------------------------------------------
 
 env:
-  VERSION: "4.2"
+  VERSION: "5.0"
   APPLICATION: "WatchFlower"
   QMAKE_PROJECT: "WatchFlower.pro"
   QT_VERSION: "6.4.0"
