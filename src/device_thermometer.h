@@ -54,10 +54,10 @@ public:
     DeviceThermometer(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceThermometer();
 
-    // Chart "min/max"
+    // Chart thermometer "min/max"
     Q_INVOKABLE void updateChartData_thermometerMinMax(int maxDays);
 
-    // Chart "AIO"
+    // Chart thermometer "AIO"
     Q_INVOKABLE void getChartData_thermometerAIO(int maxDays, QDateTimeAxis *axis,
                                                  QLineSeries *temp, QLineSeries *hygro);
 };

@@ -312,7 +312,6 @@ void DeviceThermometer::getChartData_thermometerAIO(int maxDays, QDateTimeAxis *
 }
 
 /* ************************************************************************** */
-/* ************************************************************************** */
 
 void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
 {
@@ -445,4 +444,5 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
     }
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */

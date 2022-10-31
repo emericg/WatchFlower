@@ -655,6 +655,8 @@ void DevicePlantSensor::updateChartData_history_day()
     }
 }
 
+/* ************************************************************************** */
+
 void DevicePlantSensor::updateChartData_history_day(const QDateTime &d)
 {
     qDeleteAll(m_chartData_history_day);
@@ -888,6 +890,8 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays)
     }
 }
 
+/* ************************************************************************** */
+
 void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const QDateTime &l)
 {
     if (!f.isValid() || !l.isValid()) return;
@@ -978,4 +982,5 @@ void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const 
     }
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */

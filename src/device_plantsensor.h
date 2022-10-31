@@ -109,13 +109,13 @@ public:
     Q_INVOKABLE bool addJournalEntry(const int type, const QDateTime &date, const QString &comment);
     Q_INVOKABLE bool removeJournalEntry(const int id);
 
-    // Chart history
+    // Chart plant "history"
     Q_INVOKABLE void updateChartData_history_month(int maxDays);
     Q_INVOKABLE void updateChartData_history_month(const QDateTime &f, const QDateTime &l);
     Q_INVOKABLE void updateChartData_history_day();
     Q_INVOKABLE void updateChartData_history_day(const QDateTime &d);
 
-    // Chart plant AIO
+    // Chart plant "AIO"
     Q_INVOKABLE void getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
                                            QLineSeries *hygro, QLineSeries *condu,
                                            QLineSeries *temp, QLineSeries *lumi);
