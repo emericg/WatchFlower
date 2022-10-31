@@ -8,22 +8,10 @@ Item {
 
         // WatchFlower
         THEME_PLANT = 0,
-        THEME_SNOW = 1,
-        THEME_DAY = 2,
-        THEME_NIGHT = 3,
-
-        // dSphere
-        THEME_LIGHT_DESKTOP = 4,
-        THEME_DARK_DESKTOP = 5,
-        THEME_LIGHT_MOBILE = 6,
-        THEME_DARK_MOBILE = 7,
-
-        // Offloadbuddy
-        THEME_LIGHT_AND_WARM = 8,
-        THEME_DARK_AND_SPOOKY = 9,
-        THEME_PLAIN_AND_BORING = 10,
-        THEME_BLOOD_AND_TEARS = 11,
-        THEME_MIGHTY_KITTENS = 12,
+        THEME_RAIN = 1,
+        THEME_SNOW = 2,
+        THEME_DAY = 3,
+        THEME_NIGHT = 4,
 
         THEME_LAST
     }
@@ -135,39 +123,20 @@ Item {
 
     function getThemeIndex(name) {
         if (name === "THEME_PLANT") return ThemeEngine.THEME_PLANT
+        if (name === "THEME_RAIN") return ThemeEngine.THEME_RAIN
         if (name === "THEME_SNOW") return ThemeEngine.THEME_SNOW
         if (name === "THEME_DAY") return ThemeEngine.THEME_DAY
         if (name === "THEME_NIGHT") return ThemeEngine.THEME_NIGHT
-
-        if (name === "THEME_LIGHT_AND_WARM") return ThemeEngine.THEME_LIGHT_AND_WARM
-        if (name === "THEME_DARK_AND_SPOOKY") return ThemeEngine.THEME_DARK_AND_SPOOKY
-        if (name === "THEME_PLAIN_AND_BORING") return ThemeEngine.THEME_PLAIN_AND_BORING
-        if (name === "THEME_BLOOD_AND_TEARS") return ThemeEngine.THEME_BLOOD_AND_TEARS
-        if (name === "THEME_MIGHTY_KITTENS") return ThemeEngine.THEME_MIGHTY_KITTENS
-
-        if (name === "THEME_LIGHT_DESKTOP") return ThemeEngine.THEME_LIGHT_DESKTOP
-        if (name === "THEME_DARK_DESKTOP") return ThemeEngine.THEME_DARK_DESKTOP
-        if (name === "THEME_LIGHT_MOBILE") return ThemeEngine.THEME_LIGHT_MOBILE
-        if (name === "THEME_DARK_MOBILE") return ThemeEngine.THEME_DARK_MOBILE
 
         return -1
     }
     function getThemeName(index) {
         if (index === ThemeEngine.THEME_PLANT) return "THEME_PLANT"
+        if (index === ThemeEngine.THEME_RAIN) return "THEME_RAIN"
         if (index === ThemeEngine.THEME_SNOW) return "THEME_SNOW"
         if (index === ThemeEngine.THEME_DAY) return "THEME_DAY"
         if (index === ThemeEngine.THEME_NIGHT) return "THEME_NIGHT"
 
-        if (index === ThemeEngine.THEME_LIGHT_AND_WARM) return "THEME_LIGHT_AND_WARM"
-        if (index === ThemeEngine.THEME_DARK_AND_SPOOKY) return "THEME_DARK_AND_SPOOKY"
-        if (index === ThemeEngine.THEME_PLAIN_AND_BORING) return "THEME_PLAIN_AND_BORING"
-        if (index === ThemeEngine.THEME_BLOOD_AND_TEARS) return "THEME_BLOOD_AND_TEARS"
-        if (index === ThemeEngine.THEME_MIGHTY_KITTENS) return "THEME_MIGHTY_KITTENS"
-
-        if (index === ThemeEngine.THEME_LIGHT_DESKTOP) return "THEME_LIGHT_DESKTOP"
-        if (index === ThemeEngine.THEME_DARK_DESKTOP) return "THEME_DARK_DESKTOP"
-        if (index === ThemeEngine.THEME_LIGHT_MOBILE) return "THEME_LIGHT_MOBILE"
-        if (index === ThemeEngine.THEME_DARK_MOBILE) return "THEME_DARK_MOBILE"
 
         return ""
     }
@@ -322,6 +291,62 @@ Item {
             colorComponentBorder = "#E3E3E3"
             colorComponentDown = "#D0D0D0"
             colorComponentBackground = "#F1F1F1"
+
+        } else if (themeIndex === ThemeEngine.THEME_RAIN) {
+
+            colorGreen = "#8cd200"
+            colorBlue = "#4cafe9"
+            colorYellow = "#ffcf00"
+            colorOrange = "#ffa635"
+            colorRed = "#ff7657"
+
+            themeStatusbar = Material.Dark
+            colorStatusbar = "#1e3c77"
+
+            colorHeader = "#325da9"
+            colorHeaderHighlight = "#0f295c"
+            colorHeaderContent = "white"
+
+            colorSidebar = "#ffcf00"
+            colorSidebarContent = "white"
+            colorSidebarHighlight = colorNeutralNight
+
+            colorActionbar = colorBlue
+            colorActionbarContent = "white"
+            colorActionbarHighlight = "#4c8ee9"
+
+            colorTabletmenu = "#f3f3f3"
+            colorTabletmenuContent = "#9d9d9d"
+            colorTabletmenuHighlight = "#0079fe"
+
+            colorBackground = "white"
+            colorForeground = colorMaterialLightGrey
+
+            colorPrimary = "#325da9"
+            colorSecondary = "#446eb7"
+            colorSuccess = colorGreen
+            colorWarning = colorOrange
+            colorError = colorRed
+
+            colorText = "#474747"
+            colorSubText = "#666666"
+            colorIcon = "#474747"
+            colorSeparator = colorMaterialDarkGrey
+            colorLowContrast = "white"
+            colorHighContrast = "#303030"
+
+            colorDeviceWidget = "#fdfdfd"
+
+            componentHeight = 40
+            componentRadius = 6
+            componentBorderWidth = 2
+
+            colorComponent = "#EFEFEF"
+            colorComponentText = "black"
+            colorComponentContent = "black"
+            colorComponentBorder = "#E8E8E8"
+            colorComponentDown = "#DDDDDD"
+            colorComponentBackground = "#FAFAFA"
 
         } else if (themeIndex === ThemeEngine.THEME_DAY) {
 

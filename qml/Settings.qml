@@ -150,6 +150,31 @@ Item {
                         }
                     }
                     Rectangle {
+                        id: rectangleRain
+                        width: wideWideMode ? 80 : 32
+                        height: 32
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        radius: 2
+                        color: "#476cae"
+                        border.color: "#06307a"
+                        border.width: (settingsManager.appTheme === "THEME_RAIN") ? 2 : 0
+
+                        Text {
+                            anchors.centerIn: parent
+                            visible: wideWideMode
+                            text: qsTr("rain")
+                            textFormat: Text.PlainText
+                            color: "white"
+                            font.bold: true
+                            font.pixelSize: Theme.fontSizeContentSmall
+                        }
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: settingsManager.appTheme = "THEME_RAIN"
+                        }
+                    }
+                    Rectangle {
                         id: rectangleGreen
                         width: wideWideMode ? 80 : 32
                         height: 32
