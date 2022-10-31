@@ -52,8 +52,8 @@ modules:
       - -DICAL_GLIB_VAPI=false
     sources:
       - type: archive
-        url: https://github.com/libical/libical/archive/v3.0.14.tar.gz
-        sha256: 4284b780356f1dc6a01f16083e7b836e63d3815e27ed0eaaad684712357ccc8f
+        url: https://github.com/libical/libical/archive/v3.0.16.tar.gz
+        sha256: b44705dd71ca4538c86fb16248483ab4b48978524fb1da5097bd76aa2e0f0c33
         x-checker-data:
           type: anitya
           project-id: 1637
