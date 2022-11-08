@@ -26,7 +26,7 @@ Item {
         widgetWidth = Math.floor(width / daysVisible)
         currentDevice.updateChartData_thermometerMinMax(daysMax)
 
-        mmGraph.visible = (currentDevice.countDataNamed("temperature", daysMax) > 1)
+        mmGraph.visible = (currentDevice.countDataNamed("temperature", daysMax) >= 1)
         //mmGraphFlick.contentX = mmGraphFlick.width // WIP
     }
 

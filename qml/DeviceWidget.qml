@@ -55,6 +55,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function initBoxData() {
+        //console.log("DeviceWidget // initBoxData() >> " + boxDevice)
+
         // Set icon
         imageDevice.source = UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
 
@@ -219,7 +221,9 @@ Item {
                     alarmVentilate.color = Theme.colorRed
                 } else if ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
                            (boxDevice.hasHchoSensor && boxDevice.hcho > 500) ||
-                           (boxDevice.hasCo2Sensor && boxDevice.co2 > 850)) {
+                           (boxDevice.hasCo2Sensor && boxDevice.co2 > 850) ||
+                           (boxDevice.hasPM25Sensor && boxDevice.pm25 > 120) ||
+                           (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350)) {
                     alarmVentilate.visible = true
                     alarmVentilate.color = Theme.colorYellow
                 }
@@ -499,7 +503,7 @@ Item {
                         running: visible
                         loops: Animation.Infinite
 
-                        PropertyAnimation { to: 0; duration: 1000; }
+                        PropertyAnimation { to: 0.1; duration: 1000; }
                         PropertyAnimation { to: 0.33; duration: 1000; }
                     }
                 }
@@ -647,9 +651,11 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
+                    radius: rectangleSensors.sensorRadius
                     color: Theme.colorBlue
                     opacity: 0.33
-                    radius: rectangleSensors.sensorRadius
+                    border.width: 1
+                    border.color: Qt.darker(color, 1.1)
                 }
                 Rectangle {
                     id: hygro_data
@@ -675,9 +681,11 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
+                    radius: rectangleSensors.sensorRadius
                     color: Theme.colorRed
                     opacity: 0.33
-                    radius: rectangleSensors.sensorRadius
+                    border.width: 1
+                    border.color: Qt.darker(color, 1.1)
                 }
                 Rectangle {
                     id: cond_data
@@ -701,9 +709,11 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
+                    radius: rectangleSensors.sensorRadius
                     color: Theme.colorGreen
                     opacity: 0.33
-                    radius: rectangleSensors.sensorRadius
+                    border.width: 1
+                    border.color: Qt.darker(color, 1.1)
                 }
                 Rectangle {
                     id: temp_data
@@ -729,9 +739,11 @@ Item {
 
                 Rectangle {
                     anchors.fill: parent
+                    radius: rectangleSensors.sensorRadius
                     color: Theme.colorYellow
                     opacity: 0.33
-                    radius: rectangleSensors.sensorRadius
+                    border.width: 1
+                    border.color: Qt.darker(color, 1.1)
                 }
                 Rectangle {
                     id: lumi_data
@@ -879,12 +891,26 @@ Item {
                     limitMax = 750
                     gaugeValue.value = boxDevice.hcho
                 } else if (primaryValue === "co2") {
-                    gaugeLegend.text = (boxDevice.haseCo2Sensor ? qsTr("eCO₂") : qsTr("CO₂"))
+                    gaugeLegend.text = boxDevice.haseCo2Sensor ? qsTr("eCO₂") : qsTr("CO₂")
                     gaugeValue.from = 0
                     gaugeValue.to = 2000
                     limitMin = 850
                     limitMax = 1500
                     gaugeValue.value = boxDevice.co2
+                } else if (primary === "pm25") {
+                    gaugeLegend.text = qsTr("PM2.5")
+                    gaugeValue.from = 0
+                    gaugeValue.to = 240
+                    limitMin = 60
+                    limitMax = 120
+                    gaugeValue.value = boxDevice.pm25
+                } else if (primary === "pm10") {
+                    gaugeLegend.text = qsTr("PM10")
+                    gaugeValue.from = 0
+                    gaugeValue.to = 500
+                    limitMin = 100
+                    limitMax = 350
+                    gaugeValue.value = boxDevice.pm10
                 }
             }
 
@@ -902,6 +928,9 @@ Item {
                 else if (primaryValue === "o3") gaugeValue.value = boxDevice.o3
                 else if (primaryValue === "no2") gaugeValue.value = boxDevice.no2
                 else if (primaryValue === "so2") gaugeValue.value = boxDevice.so2
+                else if (primaryValue === "pm1") gaugeValue.value = boxDevice.pm1
+                else if (primaryValue === "pm25") gaugeValue.value = boxDevice.pm25
+                else if (primaryValue === "pm10") gaugeValue.value = boxDevice.pm10
 
                 // limits
                 if (limitMin > 0 && limitMax > 0) {

@@ -126,7 +126,7 @@ Item {
                     subHeader.height = 52
                 }
             }
-        } else {
+        } else { // isDesktop
             if (graphGrid.width < 1080) {
                 graphGrid.columns = 1
             } else {

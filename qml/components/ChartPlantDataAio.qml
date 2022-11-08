@@ -114,7 +114,7 @@ Item {
         ValueAxis { id: axisTemp; visible: false; gridVisible: false; }
         ValueAxis { id: axisLumi; visible: false; gridVisible: false; }
         DateTimeAxis { id: axisTime; visible: true;
-                       labelsFont.pixelSize: Theme.fontSizeContentSmall-1; labelsColor: legendColor;
+                       labelsFont.pixelSize: Theme.fontSizeContentVerySmall; labelsColor: legendColor;
                        color: legendColor;
                        gridLineColor: Theme.colorSeparator; }
 
@@ -147,6 +147,8 @@ Item {
             axisY: axisLumi; axisX: axisTime;
         }
 
+        ////////////////
+
         MouseArea {
             id: clickableGraphArea
             anchors.fill: aioGraph
@@ -154,11 +156,48 @@ Item {
             acceptedButtons: Qt.LeftButton | Qt.RightButton
 
             onClicked: (mouse) => {
-                if (mouse.button === Qt.LeftButton) {
-                    aioGraph.moveIndicator(mouse, false)
+                if (isMobile) {
+                    if (mouse.button === Qt.LeftButton) {
+                        aioGraph.moveIndicator(mouse, false)
+                        mouse.accepted = true
+                    } else if (mouse.button === Qt.RightButton) {
+                        resetIndicator()
+                    }
+                }
+            }
+
+            onPressed: (mouse) => {
+                if (isDesktop) {
+                    if (mouse.button === Qt.LeftButton) {
+                        aioGraph.moveIndicator(mouse, false)
+                        mouse.accepted = true
+                    } else if (mouse.button === Qt.RightButton) {
+                        resetIndicator()
+                    }
+                }
+            }
+            onReleased: {
+                if (typeof (plantSensorPages) !== "undefined") {
+                    // Re-enable page swipe after we dragged the indicator
+                    plantSensorPages.interactive = isPhone
+                }
+
+                vanim.duration = 233
+            }
+
+            onPositionChanged: (mouse) => {
+                if (isDesktop || verticalIndicator.visible) {
+
+                    if (typeof (plantSensorPages) !== "undefined") {
+                        // Disable page swipe while we drag the indicator
+                        plantSensorPages.interactive = false
+                    }
+
+                    vanim.duration = 0
+
+                    var mouseMapped = mapToItem(clickableGraphArea, mouse.x, mouse.y)
+                    aioGraph.moveIndicator(mouseMapped, true)
                     mouse.accepted = true
-                } else if (mouse.button === Qt.RightButton) {
-                    resetIndicator()
                 }
             }
         }
@@ -205,50 +244,40 @@ Item {
             // update the indicator data
             updateIndicator()
         }
+
+        ////////////////
+
+        Item {
+            id: legend_area
+
+            width: aioGraph.plotArea.width
+            height: aioGraph.plotArea.height
+            x: aioGraph.plotArea.x
+            y: aioGraph.plotArea.y
+
+            //Rectangle { anchors.fill: parent; color: "red"; opacity: 0.1; }
+        }
+
+        ////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     Rectangle {
         id: verticalIndicator
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 26
 
+        x: aioGraph.x + aioGraph.plotArea.x
+        y: aioGraph.y + aioGraph.plotArea.y
         width: 2
+        height: aioGraph.plotArea.height
+
         visible: false
         opacity: 0.66
         color: Theme.colorSubText
 
         property var clickedCoordinates: null
 
-        Behavior on x { NumberAnimation { id: vanim; duration: 333; easing.type: Easing.InOutCubic; } }
-
-        MouseArea {
-            id: verticalIndicatorArea
-            anchors.fill: parent
-            anchors.margins: isMobile ? -24 : -8
-
-            propagateComposedEvents: true
-            hoverEnabled: false
-
-            onReleased: {
-                if (typeof (plantSensorPages) !== "undefined") plantSensorPages.interactive = isPhone
-                vanim.duration = 266
-            }
-            onPositionChanged: (mouse) => {
-                if (typeof (plantSensorPages) !== "undefined") {
-                    // So we don't swipe pages as we drag the indicator
-                    plantSensorPages.interactive = false
-                }
-                vanim.duration = 16
-
-                var mouseMapped = mapToItem(clickableGraphArea, mouse.x, mouse.y)
-                aioGraph.moveIndicator(mouseMapped, true)
-                mouse.accepted = true
-            }
-        }
+        Behavior on x { NumberAnimation { id: vanim; duration: 0; easing.type: Easing.InOutCubic; } }
 
         onXChanged: {
             if (isPhone) return // verticalIndicator default to middle
@@ -294,7 +323,7 @@ Item {
         columns: 2
         rows: 2
 
-        transitions: Transition { AnchorAnimation { duration: 133; } }
+        //transitions: Transition { AnchorAnimation { duration: 133; } }
         //move: Transition { NumberAnimation { properties: "x"; duration: 133; } }
 
         states: [
@@ -395,6 +424,8 @@ Item {
             //
         }
 
+        vanim.duration = 0
+
         dateIndicator.visible = false
         dataIndicator.visible = false
         verticalIndicator.visible = false
@@ -456,4 +487,6 @@ Item {
             }
         }
     }
+
+    ////////////////
 }

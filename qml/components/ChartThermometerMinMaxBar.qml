@@ -125,16 +125,17 @@ Item {
 
         Rectangle {
             id: rectangle_temp
+            anchors.horizontalCenter: parent.horizontalCenter
+
             width: www
             height: 0
             radius: 16
-            anchors.horizontalCenter: parent.horizontalCenter
 
             color: Theme.colorGreen
             opacity: 0.9
 
-            border.color: "#77eeeeee"
-            border.width: 1
+            border.color: Qt.darker(color, 1.05)
+            border.width: 2
 
             Rectangle {
                 id: rectangle_temp_mean
@@ -183,7 +184,7 @@ Item {
             color: Theme.colorBlue
             opacity: 0.9
 
-            border.color: "#2695c5"
+            border.color: Qt.darker(color, 1.1)
             border.width: 2
 
             Row {
@@ -217,7 +218,7 @@ Item {
             color: Theme.colorBlue
             opacity: 0.9
 
-            border.color: "#2695c5"
+            border.color: Qt.darker(color, 1.1)
             border.width: 2
 
             Row {

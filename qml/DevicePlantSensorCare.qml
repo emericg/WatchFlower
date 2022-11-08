@@ -66,7 +66,7 @@ Item {
                     subHeader.height = 52
                 }
             }
-        } else {
+        } else { // isDesktop
             if (devicePlantSensorCare.width < 575) {
                 buttonPanel.anchors.rightMargin = 0
                 buttonPanel.anchors.right = undefined
