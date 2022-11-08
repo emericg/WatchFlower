@@ -24,7 +24,6 @@
 #include "utils_versionchecker.h"
 
 #include "SettingsManager.h"
-#include "DeviceManager.h"
 #include "NotificationManager.h"
 
 #include <QSqlQuery>
@@ -187,6 +186,22 @@ bool DeviceSensor::getSqlDeviceInfos()
     else if ((m_deviceName.startsWith("Flower power")) && (m_deviceFirmware.size() == 5))
     {
         if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
+    else if (m_deviceName == "Grow care garden" && m_deviceFirmware.size() == 5)
+    {
+        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE_MAX))
+        {
+            m_firmware_uptodate = true;
+            Q_EMIT sensorUpdated();
+        }
+    }
+    else if (m_deviceName == "TY" && m_deviceFirmware.size() == 4)
+    {
+        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE_TUYA))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();

@@ -222,7 +222,14 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
             {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
+                if (m_deviceName == "Flower care" &&
+                    VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
+                {
+                    m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
+                }
+                if (m_deviceName == "Grow care garden" &&
+                    VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE_MAX))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();
@@ -243,7 +250,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
 
             // Ask for a data reading
             if (m_deviceName == "Grow care garden")
-                QTimer::singleShot(666, this, SLOT(askForReading()));
+                QTimer::singleShot(1000, this, SLOT(askForReading()));
             else
                 askForReading();
         }

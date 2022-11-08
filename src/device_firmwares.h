@@ -24,7 +24,7 @@
 /* ************************************************************************** */
 
 #define LATEST_KNOWN_FIRMWARE_FLOWERCARE        "3.3.5"
-#define LATEST_KNOWN_FIRMWARE_FLOWERCAREMAX     "3.6.6"
+#define LATEST_KNOWN_FIRMWARE_FLOWERCARE_MAX    "3.6.6"
 #define LATEST_KNOWN_FIRMWARE_FLOWERCARE_TUYA   "9.17"
 #define LATEST_KNOWN_FIRMWARE_FLOWERPOWER       "2.0.3"
 #define LATEST_KNOWN_FIRMWARE_ROPOT             "1.3.6"
