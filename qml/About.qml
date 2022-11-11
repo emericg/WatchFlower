@@ -39,7 +39,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: -(screenPaddingRight + 16)
 
-                height: 92
+                height: 96
                 color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
                 Row {
@@ -120,6 +120,15 @@ Item {
                         source: "qrc:/assets/logos/github.svg"
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                     }
+                }
+
+                Rectangle {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    height: 1
+                    visible: isDesktop
+                    color: Theme.colorSeparator
                 }
             }
 
@@ -448,6 +457,74 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
+                }
+            }
+
+            ////////
+
+            Item {
+                height: 16
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                Rectangle {
+                    height: 1
+                    color: Theme.colorSeparator
+                    anchors.left: parent.left
+                    anchors.leftMargin: -(screenPaddingLeft + 16)
+                    anchors.right: parent.right
+                    anchors.rightMargin: -(screenPaddingRight + 16)
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+
+            Item {
+                id: supportedsensors
+                height: 32
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                IconSvg {
+                    id: supportedsensorsImg
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                Text {
+                    id: supportedsensorsTxt
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Check supported sensors")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                }
+
+                IconSvg {
+                    width: 20
+                    height: 20
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    visible: singleColumn
+
+                    source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
                 }
             }
 
