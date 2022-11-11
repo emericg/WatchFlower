@@ -537,7 +537,6 @@ Loader {
 
                     ItemNoData {
                         id: noDataIndicator
-                        visible: (currentDevice.countDataNamed("temperature", 14) <= 1)
                     }
 
                     Loader {

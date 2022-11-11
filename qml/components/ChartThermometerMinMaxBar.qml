@@ -82,12 +82,11 @@ Item {
         id: background
         anchors.fill: parent
         color: (index % 2 === 0) ? Theme.colorBackground : Theme.colorForeground
-        opacity: 0.66
     }
 
     Loader { // 'no data' indicator
         anchors.bottom: dayoftheweek.top
-        anchors.bottomMargin: isPhone ? 12 : 16
+        anchors.bottomMargin: 12
         anchors.horizontalCenter: parent.horizontalCenter
 
         active: (modelData.tempMean < -40)
@@ -103,7 +102,7 @@ Item {
     Text {
         id: dayoftheweek
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: isPhone ? 10 : 16
+        anchors.bottomMargin: isPhone ? 10 : 12
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: modelData.day
