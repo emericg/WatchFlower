@@ -89,15 +89,16 @@ Only one measurement is sent per advertisement message.
 | HHCCJCY01    | 0x9800       |
 | HHCCJCY09    | 0xBC03       |
 | HHCCPOT002   | 0x5D01       |
-
+| -            |              |
 | LYWSDCGQ     | 0xAA01       |
 | CGG1         | 0x4703       |
 | CGG1-M       | 0x480B       |
 | LYWSD02      | 0x5B04       |
 | CGDK2        | 0x6F06       |
 | MHO-C303     | 0xD306       |
+| -            |              |
 | JQJCY01YM    | 0xDF02       |
-
+| -            |              |
 | YLKG01YL     | 0x0315       |
 | YLKG07YL     | 0xB603       |
 | YLAI003      | 0xBF07       |

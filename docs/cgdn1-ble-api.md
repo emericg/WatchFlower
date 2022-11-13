@@ -8,7 +8,6 @@
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A 18650 battery is used as internal power source
 
-
 ## Protocol
 
 The device uses BLE GATT for communication.  
@@ -43,7 +42,7 @@ TODO
 
 CGDN1 broadcast sensor values over `service data` with the `0xFDCD` 16 bits service UUID.  
 
-Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more information on advertisement data for this device.  
+Check out the [Qingping](qingping-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
 ## Reference
 

@@ -42,7 +42,6 @@
 #include "devices/device_esp32_airqualitymonitor.h"
 #include "devices/device_esp32_higrow.h"
 #include "devices/device_esp32_geigercounter.h"
-#include "devices/device_ess_generic.h"
 
 #include "utils_app.h"
 

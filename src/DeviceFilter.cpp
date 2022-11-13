@@ -166,6 +166,8 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
             } else if (device->getName() == "Qingping Temp RH Barometer") {
                 return "p";
             } else if (device->getName().startsWith("6003#")) { // air quality
+                return "t";
+            } else if (device->getName() == "CGDN1") {
                 return "w";
             } else if (device->getName() == "JQJCY01YM") {
                 return "x";

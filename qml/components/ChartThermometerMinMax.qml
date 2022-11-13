@@ -33,7 +33,7 @@ Item {
 
             currentDevice.updateChartData_thermometerMinMax(daysMax)
 
-            mmGraph.visible = (currentDevice.countDataNamed("temperature", daysMax) >= 1)
+            mmGraph.visible = currentDevice.countDataNamed("temperature", daysMax)
             //mmGraphFlick.contentX = (mmGraph.width - mmGraphFlick.width) // WIP
         }
     }
