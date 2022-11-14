@@ -157,20 +157,11 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/graphThermometer"))
             m_graphThermometer = settings.value("settings/graphThermometer").toString();
 
-        if (settings.contains("settings/graphShowDots"))
-            m_graphShowDots = settings.value("settings/graphShowDots").toBool();
+        if (settings.contains("settings/graphAioDays"))
+            m_graphAioDays = settings.value("settings/graphAioDays").toInt();
 
-        if (settings.contains("settings/compactView"))
-            m_compactView = settings.value("settings/compactView").toBool();
-        else
-        {
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_MACOS)
-            // these platforms have HiDPI screens
-            m_compactView = true;
-#else
-            m_compactView = false;
-#endif
-        }
+        if (settings.contains("settings/graphAioShowDots"))
+            m_graphAioShowDots = settings.value("settings/graphAioShowDots").toBool();
 
         if (settings.contains("settings/bigIndicator"))
             m_bigIndicator = settings.value("settings/bigIndicator").toBool();
@@ -242,9 +233,9 @@ bool SettingsManager::writeSettings()
         //settings.setValue("settings/updateIntervalEnv", m_updateIntervalEnvironmental);
         settings.setValue("settings/graphHistory", m_graphHistogram);
         settings.setValue("settings/graphThermometer", m_graphThermometer);
-        settings.setValue("settings/graphShowDots", m_graphShowDots);
+        settings.setValue("settings/graphAioDays", m_graphAioDays);
+        settings.setValue("settings/graphAioShowDots", m_graphAioShowDots);
         settings.setValue("settings/bigIndicator", m_bigIndicator);
-        settings.setValue("settings/compactView", m_compactView);
         settings.setValue("settings/tempUnit", m_tempUnit);
         settings.setValue("settings/dynaScale", m_dynaScale);
         settings.setValue("settings/orderBy", m_orderBy);
@@ -328,16 +319,9 @@ void SettingsManager::resetSettings()
     Q_EMIT graphHistogramChanged();
     m_graphThermometer = "minmax";
     Q_EMIT graphThermometerChanged();
-    m_graphShowDots = false;
-    Q_EMIT graphShowDotsChanged();
-
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(Q_OS_MACOS)
-    // these platforms have HiDPI screens
-    m_compactView = true;
-#else
-    m_compactView = false;
-#endif
-    Q_EMIT compactViewChanged();
+    m_graphAioDays = 14;
+    m_graphAioShowDots = false;
+    Q_EMIT graphAioChanged();
 
     m_bigIndicator = false;
     Q_EMIT bigIndicatorChanged();
@@ -561,23 +545,23 @@ void SettingsManager::setGraphThermometer(const QString &value)
     }
 }
 
-void SettingsManager::setGraphShowDots(const bool value)
+void SettingsManager::setGraphAioDays(const int value)
 {
-    if (m_graphShowDots != value)
+    if (m_graphAioDays != value)
     {
-        m_graphShowDots = value;
+        m_graphAioDays = value;
         writeSettings();
-        Q_EMIT graphShowDotsChanged();
+        Q_EMIT graphAioChanged();
     }
 }
 
-void SettingsManager::setCompactView(const bool value)
+void SettingsManager::setGraphAioShowDots(const bool value)
 {
-    if (m_compactView != value)
+    if (m_graphAioShowDots != value)
     {
-        m_compactView = value;
+        m_graphAioShowDots = value;
         writeSettings();
-        Q_EMIT compactViewChanged();
+        Q_EMIT graphAioChanged();
     }
 }
 

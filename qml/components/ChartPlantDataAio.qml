@@ -9,7 +9,7 @@ Item {
     anchors.fill: parent
 
     property bool useOpenGL: true
-    property bool showGraphDots: settingsManager.graphShowDots
+    property bool showGraphDots: settingsManager.graphAioShowDots
     property color legendColor: Theme.colorSubText
 
     function loadGraph() {
@@ -44,7 +44,7 @@ Item {
 
         // graph visibility
         aioGraph.visible = (hygroData.count > 1)
-        showGraphDots = (settingsManager.graphShowDots && hygroData.count < 16)
+        showGraphDots = (settingsManager.graphAioShowDots && tempData.count < 16)
 
         //// AXIS
         axisHygro.min = 0

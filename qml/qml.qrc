@@ -59,5 +59,6 @@
         <file alias="ItemNoPlant.qml">components/ItemNoPlant.qml</file>
         <file alias="ItemNoPlants.qml">components/ItemNoPlants.qml</file>
         <file alias="ItemNoJournal.qml">components/ItemNoJournal.qml</file>
+        <file alias="SectionTitle.qml">components/SectionTitle.qml</file>
     </qresource>
 </RCC>

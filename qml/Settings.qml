@@ -43,37 +43,10 @@ Item {
 
             ////////////////
 
-            Rectangle { // title
-                height: 48
+            SectionTitle {
                 anchors.left: parent.left
-                anchors.right: parent.right
-
-                color: Theme.colorForeground
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Application")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
+                text: qsTr("Application")
+                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
             }
 
             ////////////////
@@ -483,48 +456,17 @@ Item {
 
             ////////////////
 
-            Rectangle { // title
-                height: 48
+            SectionTitle {
                 anchors.left: parent.left
-                anchors.right: parent.right
-
-                color: Theme.colorForeground
+                text: qsTr("Background updates")
+                source: "qrc:/assets/icons_material/baseline-android-24px.svg"
                 visible: (Qt.platform.os === "android")
-
-                IconSvg {
-                    id: image_androidservice
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-android-24px.svg"
-                }
-
-                Text {
-                    id: text_androidservice
-                    anchors.left: image_androidservice.right
-                    anchors.leftMargin: 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Background updates")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
 
                 ButtonExperimental {
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
                     height: 32
-
-                    visible: (Qt.platform.os === "android")
 
                     text: qsTr("experimental")
                     primaryColor: Theme.colorRed
@@ -713,37 +655,10 @@ Item {
 
             ////////////////
 
-            Rectangle { // title
-                height: 48
+            SectionTitle {
                 anchors.left: parent.left
-                anchors.right: parent.right
-
-                color: Theme.colorForeground
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Bluetooth")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
+                text: qsTr("Bluetooth")
+                source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
             }
 
             ////////
@@ -988,36 +903,10 @@ Item {
 
             ////////////////
 
-            Rectangle { // title
-                height: 48
+            SectionTitle {
                 anchors.left: parent.left
-                anchors.right: parent.right
-                color: Theme.colorForeground
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Plant sensors")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
+                text: qsTr("Plant sensors")
+                source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
             }
 
             ////////////////
@@ -1294,35 +1183,10 @@ Item {
 
             ////////////////
 
-            Rectangle { // title
-                height: 48
+            SectionTitle {
                 anchors.left: parent.left
-                anchors.right: parent.right
-                color: Theme.colorForeground
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Thermometers")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
+                text: qsTr("Thermometers")
+                source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
             }
 
             ////////////////
@@ -1449,51 +1313,11 @@ Item {
 
             ////////////////
 /*
-            Rectangle {
+            SectionTitle {
                 anchors.left: parent.left
-                anchors.right: parent.right
-                height: 48
-
+                text: qsTr("External database")
+                source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 visible: isDesktop
-                color: Theme.colorForeground
-
-                IconSvg {
-                    id: image_database
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
-                }
-
-                Text {
-                    id: text_database
-                    anchors.left: image_database.right
-                    anchors.leftMargin: 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("External database")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
-
-                SwitchThemedDesktop {
-                    id: switch_database_enabled
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                    z: 1
-
-                    checked: settingsManager.mysql
-                    onClicked: settingsManager.mysql = checked
-                }
             }
 
             ////////////////
@@ -1502,15 +1326,15 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + 16 + 48
                 anchors.right: parent.right
-                anchors.rightMargin: 12
-                height: UtilsNumber.alignTo(legend_database.contentHeight, 16)
+                height: UtilsNumber.alignTo(legend_mysql.contentHeight, 16)
 
                 visible: isDesktop
 
                 Text {
-                    id: legend_database
+                    id: legend_mysql
                     anchors.left: parent.left
-                    anchors.right: parent.right
+                    anchors.right: switch_mysql.left
+                    anchors.rightMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Connects to a remote MySQL compatible database, instead of the embedded database. Allows multiple instances of the application to share data. Database setup is at your own charge.")
@@ -1519,6 +1343,17 @@ Item {
                     color: Theme.colorSubText
                     font.pixelSize: Theme.fontSizeContentSmall
                     verticalAlignment: Text.AlignBottom
+                }
+
+                SwitchThemedDesktop {
+                    id: switch_mysql
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    checked: settingsManager.mysql
+                    onClicked: settingsManager.mysql = checked
                 }
             }
 
@@ -1537,38 +1372,11 @@ Item {
 */
             ////////////////
 
-            Rectangle { // title
-                height: 48
+            SectionTitle {
                 anchors.left: parent.left
-                anchors.right: parent.right
-
+                text: qsTr("Data archiving")
+                source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
                 visible: deviceManager.hasDevices
-                color: Theme.colorForeground
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    color: Theme.colorIcon
-                    source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 24 + 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Data archiving")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    font.bold: false
-                    color: Theme.colorText
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                }
             }
 
             ////////////////
@@ -1580,7 +1388,6 @@ Item {
                 anchors.rightMargin: screenPaddingRight + 16
 
                 topPadding: 8
-
                 visible: deviceManager.hasDevices
 
                 Text {

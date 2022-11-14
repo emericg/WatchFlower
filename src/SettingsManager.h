@@ -62,8 +62,8 @@ class SettingsManager: public QObject
     Q_PROPERTY(QString tempUnit READ getTempUnit WRITE setTempUnit NOTIFY tempUnitChanged)
     Q_PROPERTY(QString graphHistory READ getGraphHistogram WRITE setGraphHistogram NOTIFY graphHistogramChanged)
     Q_PROPERTY(QString graphThermometer READ getGraphThermometer WRITE setGraphThermometer NOTIFY graphThermometerChanged)
-    Q_PROPERTY(bool graphShowDots READ getGraphShowDots WRITE setGraphShowDots NOTIFY graphShowDotsChanged)
-    Q_PROPERTY(bool compactView READ getCompactView WRITE setCompactView NOTIFY compactViewChanged)
+    Q_PROPERTY(int graphAioDays READ getGraphAioDays WRITE setGraphAioDays NOTIFY graphAioChanged)
+    Q_PROPERTY(bool graphAioShowDots READ getGraphAioShowDots WRITE setGraphAioShowDots NOTIFY graphAioChanged)
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
 
@@ -96,10 +96,10 @@ class SettingsManager: public QObject
 
     // Application specific
     bool m_startMinimized = false;
-    bool m_systrayEnabled = true;
-    bool m_notificationsEnabled = true;
+    bool m_systrayEnabled = false;
+    bool m_notificationsEnabled = false;
 
-    bool m_bluetoothControl = false;
+    bool m_bluetoothControl = true;
     bool m_bluetoothLimitScanningRange = false;
     unsigned m_bluetoothSimUpdates = 2;
 
@@ -108,15 +108,16 @@ class SettingsManager: public QObject
     unsigned m_updateIntervalThermometer = s_intervalThermometerUpdate;
     unsigned m_updateIntervalEnvironmental = s_intervalEnvironmentalUpdate;
 
+    unsigned m_dataRetentionDays = 90;
+
     QString m_tempUnit = "C";
     QString m_graphHistogram = "weekly";
     QString m_graphThermometer = "minmax";
-    bool m_graphShowDots = true;
-    bool m_compactView = true;
+    int m_graphAioDays = 14;
+    bool m_graphAioShowDots = true;
     bool m_bigIndicator = true;
     bool m_dynaScale = true;
     QString m_orderBy = "model";
-    unsigned m_dataRetentionDays = 90;
 
     bool m_mysql = false;
     QString m_mysqlHost;
@@ -162,8 +163,7 @@ Q_SIGNALS:
     void tempUnitChanged();
     void graphHistogramChanged();
     void graphThermometerChanged();
-    void graphShowDotsChanged();
-    void compactViewChanged();
+    void graphAioChanged();
     void bigIndicatorChanged();
     void dynaScaleChanged();
     void orderByChanged();
@@ -241,11 +241,11 @@ public:
     QString getGraphThermometer() const { return m_graphThermometer; }
     void setGraphThermometer(const QString &value);
 
-    bool getGraphShowDots() const { return m_graphShowDots; }
-    void setGraphShowDots(const bool value);
+    int getGraphAioDays() const { return m_graphAioDays; }
+    void setGraphAioDays(const int value);
 
-    bool getCompactView() const { return m_compactView; }
-    void setCompactView(const bool value);
+    bool getGraphAioShowDots() const { return m_graphAioShowDots; }
+    void setGraphAioShowDots(const bool value);
 
     bool getBigIndicator() const { return m_bigIndicator; }
     void setBigIndicator(const bool value);
