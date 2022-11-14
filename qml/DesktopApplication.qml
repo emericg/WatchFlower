@@ -243,9 +243,7 @@ ApplicationWindow {
         }
 
         if (appContent.state === "DeviceList") {
-            if (screenDeviceList.selectionList.length !== 0) {
-                screenDeviceList.exitSelectionMode()
-            }
+            screenDeviceList.backAction()
         } else if (appContent.state === "DevicePlantSensor") {
             screenDevicePlantSensor.backAction()
         } else if (appContent.state === "DeviceThermometer") {
@@ -289,7 +287,7 @@ ApplicationWindow {
     MouseArea {
         anchors.fill: parent
         z: 99
-        acceptedButtons: Qt.BackButton | Qt.ForwardButton
+        acceptedButtons: (Qt.BackButton | Qt.ForwardButton)
         onClicked: (mouse) => {
             if (mouse.button === Qt.BackButton) {
                 backAction()

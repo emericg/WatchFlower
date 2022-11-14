@@ -46,8 +46,20 @@ class DeviceManager: public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool hasDevices READ areDevicesAvailable NOTIFY devicesListUpdated)
+
     Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
     Q_PROPERTY(int deviceCount READ getDeviceCount NOTIFY devicesListUpdated)
+
+    Q_PROPERTY(DeviceFilter *devicesPlantList READ getDevicesPlantFiltered NOTIFY devicesListUpdated)
+    Q_PROPERTY(int devicePlantCount READ getDevicePlantCount NOTIFY devicesListUpdated)
+    Q_PROPERTY(DeviceFilter *devicesThermoList READ getDevicesThermoFiltered NOTIFY devicesListUpdated)
+    Q_PROPERTY(int deviceThermoCount READ getDeviceThermoCount NOTIFY devicesListUpdated)
+    Q_PROPERTY(DeviceFilter *devicesEnvList READ getDevicesEnvFiltered NOTIFY devicesListUpdated)
+    Q_PROPERTY(int deviceEnvCount READ getDeviceEnvCount NOTIFY devicesListUpdated)
+
+    Q_PROPERTY(DeviceFilter *devicesNearby READ getDevicesNearby NOTIFY devicesNearbyUpdated)
+
+    ////////
 
     Q_PROPERTY(bool listening READ isListening NOTIFY listeningChanged)
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
@@ -59,8 +71,6 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothEnabled READ hasBluetoothEnabled NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothPermissions READ hasBluetoothPermissions NOTIFY bluetoothChanged)
-
-    Q_PROPERTY(DeviceFilter *devicesNearby READ getDevicesNearby NOTIFY devicesNearbyUpdated)
 
     static const int ble_scanning_duration = 30;
     static const int ble_listening_duration = 60;
@@ -87,6 +97,13 @@ class DeviceManager: public QObject
 
     DeviceModel *m_devices_model = nullptr;
     DeviceFilter *m_devices_filter = nullptr;
+
+    DeviceModel *m_devicesPlant_model = nullptr;
+    DeviceFilter *m_devicesPlant_filter = nullptr;
+    DeviceModel *m_devicesThermo_model = nullptr;
+    DeviceFilter *m_devicesThermo_filter = nullptr;
+    DeviceModel *m_devicesEnv_model = nullptr;
+    DeviceFilter *m_devicesEnv_filter = nullptr;
 
     QList <QObject *> m_devices_updating_queue;
     QList <QObject *> m_devices_updating;
@@ -201,6 +218,13 @@ public:
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
     int getDeviceCount() const { return m_devices_model->getDeviceCount(); }
 
+    DeviceFilter *getDevicesPlantFiltered() const { return m_devicesPlant_filter; }
+    int getDevicePlantCount() const { return m_devicesPlant_model->getDeviceCount(); }
+    DeviceFilter *getDevicesThermoFiltered() const { return m_devicesThermo_filter; }
+    int getDeviceThermoCount() const { return m_devicesThermo_model->getDeviceCount(); }
+    DeviceFilter *getDevicesEnvFiltered() const { return m_devicesEnv_filter; }
+    int getDeviceEnvCount() const { return m_devicesEnv_model->getDeviceCount(); }
+
     Q_INVOKABLE void orderby_manual();
     Q_INVOKABLE void orderby_model();
     Q_INVOKABLE void orderby_name();
@@ -215,10 +239,18 @@ public:
     Q_INVOKABLE QString exportDataFolder();
     bool exportData(const QString &exportFilePath);
 
-    Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index) const
+    Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index, const int deviceType = 0) const
     {
-        QModelIndex proxyIndex = m_devices_filter->index(index, 0);
-        return QVariant::fromValue(m_devices_filter->data(proxyIndex, DeviceModel::PointerRole));
+        DeviceFilter *filter = m_devices_filter;
+        if (deviceType > 0)
+        {
+            if (deviceType == DeviceUtils::DEVICE_PLANTSENSOR) filter = m_devicesPlant_filter;
+            if (deviceType == DeviceUtils::DEVICE_THERMOMETER) filter = m_devicesThermo_filter;
+            if (deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL) filter = m_devicesEnv_filter;
+        }
+
+        QModelIndex proxyIndex = filter->index(index, 0);
+        return QVariant::fromValue(filter->data(proxyIndex, DeviceModel::PointerRole));
     }
 
     void invalidate();

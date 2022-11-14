@@ -9,24 +9,47 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    Component.onCompleted: {
+        checkStatus()
+        loadList()
+    }
+
+    function backAction() {
+        if (isSelected()) exitSelectionMode()
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    property bool splitView: settingsManager.splitView
     property bool deviceAvailable: deviceManager.hasDevices
     property bool bluetoothAvailable: deviceManager.bluetooth
     property bool bluetoothPermissionsAvailable: deviceManager.bluetoothPermissions
 
-    Component.onCompleted: checkStatus()
     onBluetoothAvailableChanged: checkStatus()
     onBluetoothPermissionsAvailableChanged: checkStatus()
     onDeviceAvailableChanged: { checkStatus(); exitSelectionMode(); }
+    onSplitViewChanged: loadList()
+
+    function loadList() {
+        exitSelectionMode()
+
+        if (splitView) {
+            loaderDeviceList.source = "DeviceListSplit.qml"
+        } else {
+            loaderDeviceList.source = "DeviceListUnified.qml"
+        }
+
+        selectionCount = Qt.binding(function() { return loaderDeviceList.item.selectionCount })
+    }
 
     function checkStatus() {
-
         if (!utilsApp.checkMobileBleLocationPermission()) {
             //utilsApp.getMobileBleLocationPermission()
         }
 
         if (deviceManager.hasDevices) {
             // The device list is shown
-            itemStatus.source = ""
+            loaderStatus.source = ""
 
             if (!deviceManager.bluetooth) {
                 rectangleBluetoothStatus.setBluetoothWarning()
@@ -40,49 +63,28 @@ Item {
             rectangleBluetoothStatus.hide()
 
             if (!deviceManager.bluetooth) {
-                itemStatus.source = "ItemNoBluetooth.qml"
+                loaderStatus.source = "ItemNoBluetooth.qml"
             } else {
-                itemStatus.source = "ItemNoDevice.qml"
+                loaderStatus.source = "ItemNoDevice.qml"
             }
         }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property bool selectionMode: false
-    property var selectionList: []
-    property int selectionCount: 0
+    property int selectionCount
 
-    function selectDevice(index) {
-        // make sure it's not already selected
-        if (deviceManager.getDeviceByProxyIndex(index).selected) return
-
-        // then add
-        selectionMode = true
-        selectionList.push(index)
-        selectionCount++
-
-        deviceManager.getDeviceByProxyIndex(index).selected = true
-    }
-    function deselectDevice(index) {
-        var i = selectionList.indexOf(index)
-        if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
-        if (selectionList.length <= 0 || selectionCount <= 0) { exitSelectionMode() }
-
-        deviceManager.getDeviceByProxyIndex(index).selected = false
+    function isSelected() {
+        if (loaderDeviceList.status !== Loader.Ready) return false
+        return loaderDeviceList.item.isSelected()
     }
     function exitSelectionMode() {
-        selectionMode = false
-        selectionList = []
-        selectionCount = 0
-
-        for (var i = 0; i < devicesView.count; i++) {
-            deviceManager.getDeviceByProxyIndex(i).selected = false
-        }
+        if (loaderDeviceList.status !== Loader.Ready) return
+        loaderDeviceList.item.exitSelectionMode()
     }
 
     function updateSelectedDevice() {
-        for (var i = 0; i < devicesView.count; i++) {
+        for (var i = 0; i < deviceManager.deviceCount; i++) {
             if (deviceManager.getDeviceByProxyIndex(i).selected) {
                 deviceManager.updateDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
@@ -90,7 +92,7 @@ Item {
         exitSelectionMode()
     }
     function syncSelectedDevice() {
-        for (var i = 0; i < devicesView.count; i++) {
+        for (var i = 0; i < deviceManager.deviceCount; i++) {
             if (deviceManager.getDeviceByProxyIndex(i).selected) {
                 deviceManager.syncDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
@@ -99,7 +101,7 @@ Item {
     }
     function removeSelectedDevice() {
         var devicesAddr = []
-        for (var i = 0; i < devicesView.count; i++) {
+        for (var i = 0; i < deviceManager.deviceCount; i++) {
             if (deviceManager.getDeviceByProxyIndex(i).selected) {
                 devicesAddr.push(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
@@ -110,11 +112,9 @@ Item {
         exitSelectionMode()
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
     PopupDeleteDevice {
         id: confirmDeleteDevice
-        onConfirmed: screenDeviceList.removeSelectedDevice()
+        onConfirmed: removeSelectedDevice()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -309,73 +309,50 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    GridView {
-        id: devicesView
-
-        anchors.top: rowbar.bottom
-        anchors.topMargin: singleColumn ? 0 : 8
-        anchors.left: screenDeviceList.left
-        anchors.leftMargin: 6
-        anchors.right: screenDeviceList.right
-        anchors.rightMargin: 6
-        anchors.bottom: screenDeviceList.bottom
-        anchors.bottomMargin: singleColumn ? 0 : 8
-
-        property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
-
-        property int cellWidthTarget: {
-            if (singleColumn) return devicesView.width
-            if (isTablet) return (bigWidget ? 350 : 280)
-            return (bigWidget ? 440 : 320)
-        }
-        property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
-
-        cellWidth: (devicesView.width / cellColumnsTarget)
-        cellHeight: (bigWidget ? 144 : 100)
-
-        ScrollBar.vertical: ScrollBar {
-            visible: false
-            anchors.right: parent.right
-            anchors.rightMargin: -6
-            policy: ScrollBar.AsNeeded
-        }
-
-        model: deviceManager.devicesList
-        delegate: DeviceWidget {
-            width: devicesView.cellWidth
-            height: devicesView.cellHeight
-            bigAssMode: devicesView.bigWidget
-            singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
-        }
-    }
-
     Loader {
-        id: itemStatus
+        id: loaderStatus
         anchors.fill: parent
         asynchronous: true
     }
 
-    Row {
+    ////////////////////////////////////////////////////////////////////////////
+
+    Loader {
+        id: loaderDeviceList
+        anchors.fill: parent
+        anchors.topMargin: rowbar.height
+        asynchronous: false
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Loader {
         anchors.right: parent.right
         anchors.rightMargin: 12
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 12
-        spacing: 12
 
-        visible: isDesktop
+        active: isDesktop
+        asynchronous: true
 
-        ButtonWireframe {
-            text: qsTr("devices")
-            fullColor: true
-            primaryColor: Theme.colorSecondary
-            onClicked: screenDeviceBrowser.loadScreen()
-            enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
-        }
-        ButtonWireframe {
-            text: qsTr("plants")
-            fullColor: true
-            primaryColor: Theme.colorPrimary
-            onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
+        sourceComponent: Row {
+            spacing: 12
+
+            ButtonWireframe {
+                text: qsTr("devices")
+                fullColor: true
+                primaryColor: Theme.colorSecondary
+                onClicked: screenDeviceBrowser.loadScreen()
+                enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
+            }
+            ButtonWireframe {
+                text: qsTr("plants")
+                fullColor: true
+                primaryColor: Theme.colorPrimary
+                onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
+            }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

@@ -250,15 +250,14 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        id: bottomSeparator
+    Rectangle { // bottomSeparator
         height: 1
         anchors.left: parent.left
         anchors.leftMargin: -6
         anchors.right: parent.right
         anchors.rightMargin: -6
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
+        anchors.bottomMargin: -1
 
         visible: singleColumn
         color: Theme.colorSeparator
@@ -302,11 +301,11 @@ Item {
                 if (mouse.button === Qt.LeftButton) {
                     // multi selection
                     if ((mouse.modifiers & Qt.ControlModifier) ||
-                        (screenDeviceList.selectionMode)) {
+                        (deviceList.selectionMode)) {
                         if (!boxDevice.selected) {
-                            screenDeviceList.selectDevice(index)
+                            deviceList.selectDevice(index, boxDevice.deviceType)
                         } else {
-                            screenDeviceList.deselectDevice(index)
+                            deviceList.deselectDevice(index, boxDevice.deviceType)
                         }
                         return
                     }
@@ -331,9 +330,9 @@ Item {
                 if (mouse.button === Qt.MiddleButton) {
                    // multi selection
                    if (!boxDevice.selected) {
-                       screenDeviceList.selectDevice(index)
+                       deviceList.selectDevice(index, boxDevice.deviceType)
                    } else {
-                       screenDeviceList.deselectDevice(index)
+                       deviceList.deselectDevice(index, boxDevice.deviceType)
                    }
                    return
                 }
@@ -343,9 +342,9 @@ Item {
                 // multi selection
                 if (!boxDevice.selected) {
                     utilsApp.vibrate(25)
-                    screenDeviceList.selectDevice(index)
+                    deviceList.selectDevice(index, boxDevice.deviceType)
                 } else {
-                    screenDeviceList.deselectDevice(index)
+                    deviceList.deselectDevice(index, boxDevice.deviceType)
                 }
             }
         }

@@ -169,6 +169,8 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/dynaScale"))
             m_dynaScale = settings.value("settings/dynaScale").toBool();
 
+        if (settings.contains("settings/splitView"))
+            m_splitView = settings.value("settings/splitView").toBool();
         if (settings.contains("settings/orderBy"))
             m_orderBy = settings.value("settings/orderBy").toString();
 
@@ -238,6 +240,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/bigIndicator", m_bigIndicator);
         settings.setValue("settings/tempUnit", m_tempUnit);
         settings.setValue("settings/dynaScale", m_dynaScale);
+        settings.setValue("settings/splitView", m_splitView);
         settings.setValue("settings/orderBy", m_orderBy);
 
         settings.setValue("database/enabled", m_mysql);
@@ -323,12 +326,15 @@ void SettingsManager::resetSettings()
     m_graphAioShowDots = false;
     Q_EMIT graphAioChanged();
 
+    m_orderBy = "model";
+    Q_EMIT orderByChanged();
+    m_splitView = false;
+    Q_EMIT splitViewChanged();
+
     m_bigIndicator = false;
     Q_EMIT bigIndicatorChanged();
     m_dynaScale = false;
     Q_EMIT dynaScaleChanged();
-    m_orderBy = "model";
-    Q_EMIT orderByChanged();
 
     m_mysql = false;
     m_mysqlHost = "";
@@ -582,6 +588,16 @@ void SettingsManager::setDynaScale(const bool value)
         m_dynaScale = value;
         writeSettings();
         Q_EMIT dynaScaleChanged();
+    }
+}
+
+void SettingsManager::setSplitView(const bool value)
+{
+    if (m_splitView != value)
+    {
+        m_splitView = value;
+        writeSettings();
+        Q_EMIT splitViewChanged();
     }
 }
 

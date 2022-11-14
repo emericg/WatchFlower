@@ -88,7 +88,7 @@ public:
 
 public slots:
     void addDevice(Device *d);
-    void removeDevice(Device *d);
+    void removeDevice(Device *d, bool del);
     void sanetize();
 };
 

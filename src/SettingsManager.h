@@ -58,6 +58,7 @@ class SettingsManager: public QObject
     Q_PROPERTY(uint updateIntervalPlant READ getUpdateIntervalPlant WRITE setUpdateIntervalPlant NOTIFY updateIntervalPlantChanged)
     Q_PROPERTY(uint updateIntervalThermo READ getUpdateIntervalThermo WRITE setUpdateIntervalThermo NOTIFY updateIntervalThermoChanged)
     Q_PROPERTY(uint updateIntervalEnv READ getUpdateIntervalEnv WRITE setUpdateIntervalEnv NOTIFY updateIntervalEnvChanged)
+    Q_PROPERTY(bool splitView READ getSplitView WRITE setSplitView NOTIFY splitViewChanged)
     Q_PROPERTY(QString orderBy READ getOrderBy WRITE setOrderBy NOTIFY orderByChanged)
     Q_PROPERTY(QString tempUnit READ getTempUnit WRITE setTempUnit NOTIFY tempUnitChanged)
     Q_PROPERTY(QString graphHistory READ getGraphHistogram WRITE setGraphHistogram NOTIFY graphHistogramChanged)
@@ -117,6 +118,8 @@ class SettingsManager: public QObject
     bool m_graphAioShowDots = true;
     bool m_bigIndicator = true;
     bool m_dynaScale = true;
+
+    bool m_splitView = false;
     QString m_orderBy = "model";
 
     bool m_mysql = false;
@@ -166,6 +169,7 @@ Q_SIGNALS:
     void graphAioChanged();
     void bigIndicatorChanged();
     void dynaScaleChanged();
+    void splitViewChanged();
     void orderByChanged();
     void mysqlChanged();
     void mqttChanged();
@@ -252,6 +256,9 @@ public:
 
     bool getDynaScale() const { return m_dynaScale; }
     void setDynaScale(const bool value);
+
+    bool getSplitView() const { return m_splitView; }
+    void setSplitView(const bool value);
 
     QString getOrderBy() const { return m_orderBy; }
     void setOrderBy(const QString &value);

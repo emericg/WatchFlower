@@ -66,11 +66,24 @@ DeviceManager::DeviceManager(bool daemon)
 {
     m_daemonMode = daemon;
 
-    // Data model init
+    // Data model init (unified)
     m_devices_model = new DeviceModel(this);
     m_devices_filter = new DeviceFilter(this);
     m_devices_filter->setSourceModel(m_devices_model);
     m_devices_filter->setDynamicSortFilter(true);
+
+    // Data model init (split)
+    m_devicesPlant_model = new DeviceModel(this);
+    m_devicesPlant_filter = new DeviceFilter(this);
+    m_devicesPlant_filter->setSourceModel(m_devicesPlant_model);
+    m_devicesThermo_model = new DeviceModel(this);
+    m_devicesThermo_filter = new DeviceFilter(this);
+    m_devicesThermo_filter->setSourceModel(m_devicesThermo_model);
+    m_devicesEnv_model = new DeviceModel(this);
+    m_devicesEnv_filter = new DeviceFilter(this);
+    m_devicesEnv_filter->setSourceModel(m_devicesEnv_model);
+
+    // Data model filtering
     SettingsManager *sm = SettingsManager::getInstance();
     if (sm)
     {
@@ -167,6 +180,19 @@ DeviceManager::DeviceManager(bool daemon)
 
                 m_devices_model->addDevice(d);
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
+
+                if (d->isPlantSensor())
+                {
+                    m_devicesPlant_model->addDevice(d);
+                }
+                else if (d->isThermometer())
+                {
+                    m_devicesThermo_model->addDevice(d);
+                }
+                else if (d->isEnvironmentalSensor())
+                {
+                    m_devicesEnv_model->addDevice(d);
+                }
             }
         }
     }
@@ -1478,8 +1504,21 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
         // Add it to the UI
         m_devices_model->addDevice(d);
-        Q_EMIT devicesListUpdated();
 
+        if (d->isPlantSensor())
+        {
+            m_devicesPlant_model->addDevice(d);
+        }
+        else if (d->isThermometer())
+        {
+            m_devicesThermo_model->addDevice(d);
+        }
+        else if (d->isEnvironmentalSensor())
+        {
+            m_devicesEnv_model->addDevice(d);
+        }
+
+        Q_EMIT devicesListUpdated();
         qDebug() << "Device added (from BLE discovery): " << d->getName() << "/" << d->getAddress();
     }
     else
@@ -1530,7 +1569,10 @@ void DeviceManager::removeDevice(const QString &address)
             }
 
             // Remove device
-            m_devices_model->removeDevice(dd);
+            m_devices_model->removeDevice(dd, true);
+            m_devicesPlant_model->removeDevice(dd, false);
+            m_devicesThermo_model->removeDevice(dd, false);
+            m_devicesEnv_model->removeDevice(dd, false);
             Q_EMIT devicesListUpdated();
 
             break;
@@ -1567,53 +1609,64 @@ void DeviceManager::invalidate()
     m_devices_filter->invalidate();
 }
 
+void DeviceManager::orderby(int role, Qt::SortOrder order)
+{
+    m_devices_filter->setSortRole(role);
+    m_devices_filter->sort(0, order);
+    m_devices_filter->invalidate();
+
+    if (m_devicesPlant_filter) {
+        m_devicesPlant_filter->setSortRole(role);
+        m_devicesPlant_filter->sort(0, order);
+        m_devicesPlant_filter->invalidate();
+    }
+    if (m_devicesThermo_filter) {
+        m_devicesThermo_filter->setSortRole(role);
+        m_devicesThermo_filter->sort(0, order);
+        m_devicesThermo_filter->invalidate();
+    }
+    if (m_devicesEnv_filter) {
+        m_devicesEnv_filter->setSortRole(role);
+        m_devicesEnv_filter->sort(0, order);
+        m_devicesEnv_filter->invalidate();
+    }
+}
+
+/* ************************************************************************** */
+
 void DeviceManager::orderby_manual()
 {
-    m_devices_filter->setSortRole(DeviceModel::DeviceModelRole);
-    m_devices_filter->sort(0, Qt::AscendingOrder);
-    m_devices_filter->invalidate();
+    orderby(DeviceModel::ManualIndexRole, Qt::AscendingOrder);
 }
 
 void DeviceManager::orderby_model()
 {
-    m_devices_filter->setSortRole(DeviceModel::DeviceModelRole);
-    m_devices_filter->sort(0, Qt::AscendingOrder);
-    m_devices_filter->invalidate();
+    orderby(DeviceModel::DeviceModelRole, Qt::AscendingOrder);
 }
 
 void DeviceManager::orderby_name()
 {
-    m_devices_filter->setSortRole(DeviceModel::DeviceNameRole);
-    m_devices_filter->sort(0, Qt::AscendingOrder);
-    m_devices_filter->invalidate();
+    orderby(DeviceModel::DeviceNameRole, Qt::AscendingOrder);
 }
 
 void DeviceManager::orderby_location()
 {
-    m_devices_filter->setSortRole(DeviceModel::AssociatedLocationRole);
-    m_devices_filter->sort(0, Qt::AscendingOrder);
-    m_devices_filter->invalidate();
+    orderby(DeviceModel::AssociatedLocationRole, Qt::AscendingOrder);
 }
 
 void DeviceManager::orderby_waterlevel()
 {
-    m_devices_filter->setSortRole(DeviceModel::SoilMoistureRole);
-    m_devices_filter->sort(0, Qt::AscendingOrder);
-    m_devices_filter->invalidate();
+    orderby(DeviceModel::SoilMoistureRole, Qt::AscendingOrder);
 }
 
 void DeviceManager::orderby_plant()
 {
-    m_devices_filter->setSortRole(DeviceModel::PlantNameRole);
-    m_devices_filter->sort(0, Qt::AscendingOrder);
-    m_devices_filter->invalidate();
+    orderby(DeviceModel::PlantNameRole, Qt::AscendingOrder);
 }
 
 void DeviceManager::orderby_insideoutside()
 {
-    m_devices_filter->setSortRole(DeviceModel::InsideOutsideRole);
-    m_devices_filter->sort(0, Qt::AscendingOrder);
-    m_devices_filter->invalidate();
+    orderby(DeviceModel::InsideOutsideRole, Qt::AscendingOrder);
 }
 
 /* ************************************************************************** */

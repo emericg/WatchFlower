@@ -300,6 +300,57 @@ Item {
 
             ////////
 
+            Item {
+                id: element_splitView
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight
+
+                IconSvg {
+                    id: image_splitView
+                    width: 24
+                    height: 24
+                    anchors.left: parent.left
+                    anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                }
+
+                Text {
+                    id: text_splitView
+                    height: 40
+                    anchors.left: image_splitView.right
+                    anchors.leftMargin: 24
+                    anchors.right: switch_splitView.left
+                    anchors.rightMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("Split device list in categories")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                    wrapMode: Text.WordWrap
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                SwitchThemedDesktop {
+                    id: switch_splitView
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    z: 1
+
+                    checked: settingsManager.splitView
+                    onClicked: settingsManager.splitView = checked
+                }
+            }
+
+            ////////
+
             Rectangle { // separator
                 anchors.left: parent.left
                 anchors.right: parent.right

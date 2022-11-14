@@ -45,7 +45,7 @@ Popup {
             Text {
                 width: parent.width
 
-                text: qsTr("Are you sure you want to delete selected sensor(s)?")
+                text: qsTr("Are you sure you want to delete selected sensor(s)?", "", screenDeviceList.selectionCount)
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContentVeryBig
                 color: Theme.colorText
@@ -55,7 +55,7 @@ Popup {
             Text {
                 width: parent.width
 
-                text: qsTr("Data from the sensors are kept for an additional 90 days, in case you would like to re-add a sensor later.")
+                text: qsTr("Data from the sensor(s) are kept for an additional 90 days, in case you would like to re-add a sensor later.", "", screenDeviceList.selectionCount)
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContent
                 color: Theme.colorSubText
