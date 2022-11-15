@@ -83,7 +83,6 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const uint16_t adv_mode,
              << " - " << adv_mode << " - 0x" << adv_id << ")";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
-
     if (ba.size() >= 21) // Qingping data protocol // 21 bytes messages
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
@@ -114,12 +113,11 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const uint16_t adv_mode,
         int pres = -99.f;
 
         // get data
-        if ((data[0] == 0x88 && data[1] == 0x16) || // CGG1
-            (data[0] == 0x08 && data[1] == 0x07) || // CGG1
-            (data[0] == 0x88 && data[1] == 0x10) || // CGDK2
-            (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
+        if ((data[0] == 0x88 && data[1] == 0x16) || (data[0] == 0x08 && data[1] == 0x07) || // CGG1
+            (data[0] == 0x88 && data[1] == 0x10) || (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
             (data[0] == 0x08 && data[1] == 0x09) || // CGP1W
-            (data[0] == 0x08 && data[1] == 0x0c))   // CGD1
+            (data[0] == 0x08 && data[1] == 0x0c) || // CGD1
+            (data[0] == 0x08 && data[1] == 0x0e))   // CGDN1
         {
             temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 10.f;
             if (temp != m_temperature)
@@ -153,6 +151,10 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const uint16_t adv_mode,
 
             batt = static_cast<int8_t>(data[21]);
             setBattery(batt);
+        }
+        else
+        {
+            qDebug() << "Qingping data: unknown device ID >" << data[0] << data[1];
         }
 
         if (m_temperature > -99.f && m_humidity > -99.f && m_pressure > -99)

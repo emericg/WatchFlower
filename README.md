@@ -77,10 +77,10 @@ Please note that most Chinese devices have many names, usually no official manuf
 | 2ACD3-WS02<br>2ACD3-WS07 |  2ACD3-WS02 | 2ACD3-WS08<br>KEU-WA59D |
 | | | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
 
-| Air Box WP6003 | Honeywell HCHO detector|
-| :------------: | :--------------------: |
-| ![WP6003](docs/wp6003.svg) | ![JQJCY01YM](docs/jqjcy01ym.svg) |
-| | JQJCY01YM |
+| Air Box WP6003 | Honeywell HCHO detector | Qingping Air Monitor Lite |
+| :------------: | :---------------------: | :-----------------------: |
+| ![WP6003](docs/wp6003.svg) | ![JQJCY01YM](docs/jqjcy01ym.svg) | ![CGDN1](docs/cgdn1.svg) |
+| | JQJCY01YM | CGDN1 |
 | [shop](https://www.banggood.com/custlink/mK3yOI9teA) | |
 
 | ESP32 Air Quality Monitor | ESP32 Weather Station | ESP32 Geiger Counter |

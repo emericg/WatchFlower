@@ -88,12 +88,9 @@ void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t
              << " - " << adv_mode << " - 0x" << adv_id << ")";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
-    // MiBeacon protocol / 12-20 bytes messages
-
-    if (ba.size() >= 12)
+    if (ba.size() >= 24) // Qingping data protocol // 24 bytes messages
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
-        const int data_size = ba.size();
 
         // Save mac address (for macOS and iOS)
         if (!hasAddressMAC())
@@ -115,139 +112,108 @@ void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t
             setAddressMAC(mac);
         }
 
-        if (data_size >= 15)
-        {
-            int batt = -99;
-            float temp = -99.f;
-            float humi = -99.f;
-            float co2 = -99.f;
-            float pm2 = -99.f;
-            float pm10 = -99.f;
+        float temp = -99.f;
+        float humi = -99.f;
+        float co2 = -99.f;
+        float pm2 = -99.f;
+        float pm10 = -99.f;
 
-            // get data
-            if (data[11] == 4 && data_size >= 16)
+        // get data
+        if ((data[0] == 0x88 && data[1] == 0x16) || (data[0] == 0x08 && data[1] == 0x07) || // CGG1
+            (data[0] == 0x88 && data[1] == 0x10) || (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
+            (data[0] == 0x08 && data[1] == 0x09) || // CGP1W
+            (data[0] == 0x08 && data[1] == 0x0c) || // CGD1
+            (data[0] == 0x08 && data[1] == 0x0e))   // CGDN1
+        {
+            temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 10.f;
+            if (temp != m_temperature)
             {
-                temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (temp != m_temperature)
-                {
-                    if (temp > -30.f && temp < 100.f)
-                    {
-                        m_temperature = temp;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[11] == 6 && data_size >= 16)
-            {
-                humi = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (humi != m_humidity)
-                {
-                    if (humi >= 0.f && humi <= 100.f)
-                    {
-                        m_humidity = humi;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[11] == 10 && data_size >= 15)
-            {
-                batt = static_cast<int8_t>(data[14]);
-                setBattery(batt);
-            }
-            else if (data[11] == 13 && data_size >= 18)
-            {
-                temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (temp != m_temperature)
+                if (temp > -30.f && temp < 100.f)
                 {
                     m_temperature = temp;
                     Q_EMIT dataUpdated();
                 }
-                humi = static_cast<int16_t>(data[16] + (data[17] << 8)) / 10.f;
-                if (humi != m_humidity)
+            }
+            humi = static_cast<int16_t>(data[12] + (data[13] << 8)) / 10.f;
+            if (humi != m_humidity)
+            {
+                if (humi >= 0.f && humi <= 100.f)
                 {
                     m_humidity = humi;
                     Q_EMIT dataUpdated();
                 }
             }
-/*
-            else if (data[11] == 16 && data_size >= 16)
+
+            pm2 = static_cast<int16_t>(data[16] + (data[17] << 8));
+            if (pm2 != m_pm_25)
             {
-                co2 = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (co2 != m_co2)
+                if (pm2 >= 0 && pm2 <= 1000)
                 {
-                    if (co2 >= 0.f && co2 <= 100.f)
-                    {
-                        m_co2 = co2;
-                        Q_EMIT dataUpdated();
-                    }
+                    m_pm_25 = pm2;
+                    Q_EMIT dataUpdated();
                 }
             }
-            else if (data[11] == 16 && data_size >= 16)
+            pm10 = static_cast<int16_t>(data[18] + (data[19] << 8));
+            if (pm10 != m_pm_10)
             {
-                pm2 = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (pm2 != m_pm_25)
+                if (pm10 >= 0 && pm10 <= 1000)
                 {
-                    if (pm2 >= 0.f && pm2 <= 100.f)
-                    {
-                        m_pm_25 = pm2;
-                        Q_EMIT dataUpdated();
-                    }
+                    m_pm_10 = pm10;
+                    Q_EMIT dataUpdated();
                 }
             }
-            else if (data[11] == 16 && data_size >= 16)
+
+            co2 = static_cast<int16_t>(data[22] + (data[23] << 8));
+            if (co2 != m_co2)
             {
-                pm10 = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (pm10 != m_pm_10)
+                if (co2 >= 0 && co2 <= 9999)
                 {
-                    if (pm10 >= 0.f && pm10 <= 100.f)
-                    {
-                        m_pm_10 = pm10;
-                        Q_EMIT dataUpdated();
-                    }
+                    m_co2 = co2;
+                    Q_EMIT dataUpdated();
                 }
             }
-*/
-            else
-            {
-                qDebug() << "MiBeacon: unknown tag >" << data[11];
-            }
+        }
+        else
+        {
+            qDebug() << "Qingping data: unknown device ID >" << data[0] << data[1];
+        }
 
-            if (m_temperature > -99.f && m_humidity > -99 && m_co2 > -99.f && m_pm_25 > -99.f && m_pm_10 > -99.f)
-            {
-                m_lastUpdate = QDateTime::currentDateTime();
+        if (m_temperature > -99.f && m_humidity > -99 && m_co2 > -99.f && m_pm_25 > -99.f && m_pm_10 > -99.f)
+        {
+            m_lastUpdate = QDateTime::currentDateTime();
 
-                if (needsUpdateDb_mini())
+            if (needsUpdateDb_mini())
+            {
+                if (m_dbInternal || m_dbExternal)
                 {
-                    if (m_dbInternal || m_dbExternal)
+                    // SQL date format YYYY-MM-DD HH:MM:SS
+
+                    QSqlQuery addData;
+                    addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, temperature, humidity, co2, pm25, pm10)"
+                                    " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :temp, :humi, :co2, :pm25, :pm10)");
+                    addData.bindValue(":deviceAddr", getAddress());
+                    addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
+                    addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
+                    addData.bindValue(":temp", m_temperature);
+                    addData.bindValue(":humi", m_humidity);
+                    addData.bindValue(":co2", m_co2);
+                    addData.bindValue(":pm25", m_pm_25);
+                    addData.bindValue(":pm10", m_pm_10);
+
+                    if (addData.exec())
                     {
-                        // SQL date format YYYY-MM-DD HH:MM:SS
-
-                        QSqlQuery addData;
-                        addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, temperature, humidity, co2, pm25, pm10)"
-                                        " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :temp, :humi, :co2, :pm25, :pm10)");
-                        addData.bindValue(":deviceAddr", getAddress());
-                        addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
-                        addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
-                        addData.bindValue(":temp", m_temperature);
-                        addData.bindValue(":humi", m_humidity);
-                        addData.bindValue(":co2", m_co2);
-                        addData.bindValue(":pm25", m_pm_25);
-                        addData.bindValue(":pm10", m_pm_10);
-
-                        if (addData.exec())
-                        {
-                            m_lastUpdateDatabase = m_lastUpdate;
-                        }
-                        else
-                        {
-                            qWarning() << "> DeviceCGDN1 addData.exec() ERROR"
-                                       << addData.lastError().type() << ":" << addData.lastError().text();
-                        }
+                        m_lastUpdateDatabase = m_lastUpdate;
                     }
-
-                    refreshDataFinished(true);
+                    else
+                    {
+                        qWarning() << "> DeviceCGDN1 addData.exec() ERROR"
+                                   << addData.lastError().type() << ":" << addData.lastError().text();
+                    }
                 }
+
+                refreshDataFinished(true);
             }
+        }
 /*
             if (batt > -99 || temp > -99.f || humi > -99.f || co2 > -99.f || pm2 > -99.f || pm10 > -99.f)
             {
@@ -261,7 +227,6 @@ void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t
             }
 */
         }
-    }
 }
 
 /* ************************************************************************** */

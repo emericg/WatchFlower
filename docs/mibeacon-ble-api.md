@@ -57,7 +57,7 @@ Only one measurement is sent per advertisement message.
 | 02-03 | bytes     | 0x9800            | Product ID                           |
 | 04    | uint8     |                   | Frame count                          |
 | 05-10 | bytes     | C4:7C:8D:66:XX:XX | MAC address                          |
-| 11    | byte      |                   | ?                                    |
+| 11    | byte      |                   | capability byte?                     |
 | 12-13 | bytes     |                   | Type of measurement                  |
 | 14+   | data      |                   | Payload                              |
 

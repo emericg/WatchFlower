@@ -896,14 +896,14 @@ Item {
                     limitMin = 850
                     limitMax = 1500
                     gaugeValue.value = boxDevice.co2
-                } else if (primary === "pm25") {
+                } else if (primaryValue === "pm25") {
                     gaugeLegend.text = qsTr("PM2.5")
                     gaugeValue.from = 0
                     gaugeValue.to = 240
                     limitMin = 60
                     limitMax = 120
                     gaugeValue.value = boxDevice.pm25
-                } else if (primary === "pm10") {
+                } else if (primaryValue === "pm10") {
                     gaugeLegend.text = qsTr("PM10")
                     gaugeValue.from = 0
                     gaugeValue.to = 500

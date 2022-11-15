@@ -114,12 +114,11 @@ void DeviceHygrotempCGD1::parseAdvertisementData(const uint16_t adv_mode,
         float humi = -99.f;
 
         // get data
-        if ((data[0] == 0x88 && data[1] == 0x16) || // CGG1
-            (data[0] == 0x08 && data[1] == 0x07) || // CGG1
-            (data[0] == 0x88 && data[1] == 0x10) || // CGDK2
-            (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
+        if ((data[0] == 0x88 && data[1] == 0x16) || (data[0] == 0x08 && data[1] == 0x07) || // CGG1
+            (data[0] == 0x88 && data[1] == 0x10) || (data[0] == 0x08 && data[1] == 0x10) || // CGDK2
             (data[0] == 0x08 && data[1] == 0x09) || // CGP1W
-            (data[0] == 0x08 && data[1] == 0x0c))   // CGD1
+            (data[0] == 0x08 && data[1] == 0x0c) || // CGD1
+            (data[0] == 0x08 && data[1] == 0x0e))   // CGDN1
         {
             temp = static_cast<int32_t>(data[10] + (data[11] << 8)) / 10.f;
             if (temp != m_temperature)
@@ -143,6 +142,10 @@ void DeviceHygrotempCGD1::parseAdvertisementData(const uint16_t adv_mode,
 
             batt = static_cast<int8_t>(data[16]);
             setBattery(batt);
+        }
+        else
+        {
+            qDebug() << "Qingping data: unknown device ID >" << data[0] << data[1];
         }
 
         if (m_temperature > -99.f && m_humidity > -99.f)
