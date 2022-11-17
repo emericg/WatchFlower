@@ -15,7 +15,7 @@ env:
   VERSION: "5.0"
   APPLICATION: "WatchFlower"
   QMAKE_PROJECT: "WatchFlower.pro"
-  QT_VERSION: "6.4.0"
+  QT_VERSION: "6.4.1"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
