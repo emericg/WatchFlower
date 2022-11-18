@@ -199,13 +199,15 @@ Item {
                     }
                 }
             }
-            onReleased: {
+            onReleased: (mouse) =>{
                 if (typeof (plantSensorPages) !== "undefined") {
                     // Re-enable page swipe after we dragged the indicator
                     plantSensorPages.interactive = isPhone
                 }
 
-                vanim.duration = 233
+                if (mouse.button !== Qt.RightButton) {
+                    vanim.duration = 233
+                }
             }
 
             onPositionChanged: (mouse) => {
