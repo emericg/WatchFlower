@@ -12,6 +12,23 @@ Item {
     property bool showGraphDots: settingsManager.graphAioShowDots
     property color legendColor: Theme.colorSubText
 
+    property int days: settingsManager.graphAioDays
+    property int daysVisible: settingsManager.graphAioDays
+    property int daysTick: isPhone ? 4 : settingsManager.graphAioDays
+
+    Connections {
+        target: settingsManager
+        function onGraphAioDaysChanged() {
+            days = settingsManager.graphAioDays
+            updateGraph()
+            clickableGraphArea.forceUpdate()
+
+            //var av07 = (currentDevice.countDataNamed("temperature", 7) > 1)
+            //var av14 = av07 || (currentDevice.countDataNamed("temperature", 14) > 1)
+            //var av31 = av14 || (currentDevice.countDataNamed("temperature", 31) > 1)
+        }
+    }
+
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartPlantDataAio // loadGraph() >> " + currentDevice)
@@ -33,8 +50,6 @@ Item {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartPlantDataAio // updateGraph() >> " + currentDevice)
 
-        var days = 14
-
         //// DATA
         if (currentDevice.isPlantSensor) {
             currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData)
@@ -43,7 +58,7 @@ Item {
         }
 
         // graph visibility
-        aioGraph.visible = (hygroData.count > 1)
+        aioGraph.visible = (tempData.count > 1)
         showGraphDots = (settingsManager.graphAioShowDots && tempData.count < 16)
 
         //// AXIS
@@ -115,7 +130,7 @@ Item {
         ValueAxis { id: axisLumi; visible: false; gridVisible: false; }
         DateTimeAxis { id: axisTime; visible: true;
                        labelsFont.pixelSize: Theme.fontSizeContentVerySmall; labelsColor: legendColor;
-                       color: legendColor;
+                       color: legendColor; tickCount: daysTick;
                        gridLineColor: Theme.colorSeparator; }
 
         LineSeries {
@@ -158,6 +173,7 @@ Item {
             onClicked: (mouse) => {
                 if (isMobile) {
                     if (mouse.button === Qt.LeftButton) {
+                        lastMouseMap = mouse
                         aioGraph.moveIndicator(mouse, false)
                         mouse.accepted = true
                     } else if (mouse.button === Qt.RightButton) {
@@ -166,9 +182,16 @@ Item {
                 }
             }
 
+            onPressAndHold: {
+                if (isMobile) {
+                    smsmsm.showHide()
+                }
+            }
+
             onPressed: (mouse) => {
                 if (isDesktop) {
                     if (mouse.button === Qt.LeftButton) {
+                        lastMouseMap = mouse
                         aioGraph.moveIndicator(mouse, false)
                         mouse.accepted = true
                     } else if (mouse.button === Qt.RightButton) {
@@ -195,11 +218,14 @@ Item {
 
                     vanim.duration = 0
 
-                    var mouseMapped = mapToItem(clickableGraphArea, mouse.x, mouse.y)
-                    aioGraph.moveIndicator(mouseMapped, true)
+                    lastMouseMap = mouse
+                    aioGraph.moveIndicator(lastMouseMap, true)
                     mouse.accepted = true
                 }
             }
+
+            property var lastMouseMap: null
+            function forceUpdate() { aioGraph.moveIndicator(lastMouseMap, true) }
         }
 
         function moveIndicator(mouse, isMoving) {
@@ -249,11 +275,10 @@ Item {
 
         Item {
             id: legend_area
-
-            width: aioGraph.plotArea.width
-            height: aioGraph.plotArea.height
             x: aioGraph.plotArea.x
             y: aioGraph.plotArea.y
+            width: aioGraph.plotArea.width
+            height: aioGraph.plotArea.height
 
             //Rectangle { anchors.fill: parent; color: "red"; opacity: 0.1; }
         }
@@ -263,13 +288,100 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    MouseArea {
+        anchors.fill: indicators
+        anchors.margins: -8
+        onClicked: resetIndicator()
+    }
+
+    onWidthChanged: resetIndicator()
+
+    function isIndicator() {
+        return verticalIndicator.visible
+    }
+
+    function resetIndicator() {
+        if (appContent.state === "DevicePlantSensor" && indicatorsLoader.status === Loader.Ready) {
+            if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
+            dataIndicators.resetDataBars()
+        }
+        if (appContent.state === "DeviceThermometer") {
+            //
+        }
+
+        vanim.duration = 0
+
+        dateIndicator.visible = false
+        dataIndicator.visible = false
+        verticalIndicator.visible = false
+        verticalIndicator.clickedCoordinates = null
+    }
+
+    function updateIndicator() {
+        if (!dateIndicator.visible) return
+
+        // set date & time
+        var date = new Date(verticalIndicator.clickedCoordinates.x)
+        var date_string = date.toLocaleDateString()
+        //: "at" is used for DATE at HOUR
+        var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
+        dateIndicator.text = date_string + " " + time_string
+
+        // search index corresponding to the timestamp
+        var x1 = -1
+        var x2 = -1
+        for (var i = 0; i < tempData.count; i++) {
+            var graph_at_x = tempData.at(i).x
+            var dist = (graph_at_x - verticalIndicator.clickedCoordinates.x) / 1000000
+
+            if (Math.abs(dist) < 0.5) {
+                // nearest neighbor
+                if (appContent.state === "DevicePlantSensor") {
+                    dataIndicators.updateDataBars(hygroData.at(i).y, conduData.at(i).y, -99,
+                                                  tempData.at(i).y, -99, lumiData.at(i).y)
+                } else if (appContent.state === "DeviceThermometer") {
+                    dataIndicator.visible = true
+                    dataIndicator.text = (settingsManager.tempUnit === "F") ?
+                                            UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + qsTr("°F") :
+                                            tempData.at(i).y.toFixed(1) + qsTr("°C")
+                    dataIndicator.text += " " + hygroData.at(i).y.toFixed(0) + "%"
+                }
+                break
+            } else {
+                if (dist < 0) {
+                    if (x1 < i) x1 = i
+                } else {
+                    x2 = i
+                    break
+                }
+            }
+        }
+
+        if (x1 >= 0 && x2 > x1) {
+            // linear interpolation
+            if (appContent.state === "DevicePlantSensor") {
+                dataIndicators.updateDataBars(qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x),
+                                              qpoint_lerp(conduData.at(x1), conduData.at(x2), verticalIndicator.clickedCoordinates.x),
+                                              -99,
+                                              qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x),
+                                              -99,
+                                              qpoint_lerp(lumiData.at(x1), lumiData.at(x2), verticalIndicator.clickedCoordinates.x))
+            } else if (appContent.state === "DeviceThermometer") {
+                dataIndicator.visible = true
+                var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x)
+                dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                dataIndicator.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x).toFixed(0) + "%"
+            }
+        }
+    }
+
     Rectangle {
         id: verticalIndicator
 
-        x: aioGraph.x + aioGraph.plotArea.x
-        y: aioGraph.y + aioGraph.plotArea.y
+        x: legend_area_overlay.x
+        y: legend_area_overlay.y
         width: 2
-        height: aioGraph.plotArea.height
+        height: legend_area_overlay.height
 
         visible: false
         opacity: 0.66
@@ -312,8 +424,8 @@ Item {
 
     Grid {
         id: indicators
-        anchors.top: parent.top
-        anchors.topMargin: isPhone ? 16 : 20
+        anchors.top: legend_area_overlay.top
+        anchors.topMargin: (isPhone ? 8 : 12) + 8
         anchors.leftMargin: isPhone ? 20 : 24
         anchors.rightMargin: isPhone ? 20 : 24
         anchors.horizontalCenter: parent.horizontalCenter
@@ -370,11 +482,12 @@ Item {
                 anchors.leftMargin: -12
                 anchors.rightMargin: -12
                 anchors.bottomMargin: -8
+
                 z: -1
-                radius: 4
-                color: Theme.colorForeground
-                border.width: Theme.componentBorderWidth
-                border.color: Theme.colorSeparator
+                radius: height
+                color: Theme.colorComponentBackground
+                border.width: 2
+                border.color: Theme.colorComponentDown
             }
         }
 
@@ -392,101 +505,81 @@ Item {
                 anchors.leftMargin: -12
                 anchors.rightMargin: -12
                 anchors.bottomMargin: -8
+
                 z: -1
-                radius: 4
-                color: Theme.colorForeground
-                border.width: Theme.componentBorderWidth
-                border.color: Theme.colorSeparator
+                radius: height
+                color: Theme.colorComponentBackground
+                border.width: 2
+                border.color: Theme.colorComponentDown
             }
         }
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
-    MouseArea {
-        anchors.fill: indicators
-        anchors.margins: -8
-        onClicked: resetIndicator()
-    }
+    Item {
+        id: legend_area_overlay
+        x: aioGraph.x + aioGraph.plotArea.x
+        y: aioGraph.y + aioGraph.plotArea.y
+        width: aioGraph.plotArea.width
+        height: aioGraph.plotArea.height
 
-    onWidthChanged: resetIndicator()
+        Row {
+            anchors.left: parent.left
+            anchors.leftMargin: 8
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
+            spacing: 8
 
-    function isIndicator() {
-        return verticalIndicator.visible
-    }
+            RoundButtonIcon {
+                width: 34
+                height: 34
+                anchors.verticalCenter: parent.verticalCenter
 
-    function resetIndicator() {
-        if (appContent.state === "DevicePlantSensor" && indicatorsLoader.status === Loader.Ready) {
-            if (typeof devicePlantSensorData === "undefined" || !devicePlantSensorData) return
-            dataIndicators.resetDataBars()
-        }
-        if (appContent.state === "DeviceThermometer") {
-            //
-        }
+                background: true
+                source: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
-        vanim.duration = 0
+                visible: isDesktop
+                onClicked: smsmsm.showHide()
+            }
 
-        dateIndicator.visible = false
-        dataIndicator.visible = false
-        verticalIndicator.visible = false
-        verticalIndicator.clickedCoordinates = null
-    }
+            SelectorMenu {
+                id: smsmsm
+                height: 32
+                anchors.verticalCenter: parent.verticalCenter
 
-    function updateIndicator() {
-        if (!dateIndicator.visible) return
-
-        // set date & time
-        var date = new Date(verticalIndicator.clickedCoordinates.x)
-        var date_string = date.toLocaleDateString()
-        //: "at" is used for DATE at HOUR
-        var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
-        dateIndicator.text = date_string + " " + time_string
-
-        // search index corresponding to the timestamp
-        var x1 = -1
-        var x2 = -1
-        for (var i = 0; i < tempData.count; i++) {
-            var graph_at_x = tempData.at(i).x
-            var dist = (graph_at_x - verticalIndicator.clickedCoordinates.x) / 1000000
-
-            if (Math.abs(dist) < 0.5) {
-                // nearest neighbor
-                if (appContent.state === "DevicePlantSensor") {
-                    dataIndicators.updateDataBars(hygroData.at(i).y, conduData.at(i).y, -99,
-                                                  tempData.at(i).y, -99, lumiData.at(i).y)
-                } else if (appContent.state === "DeviceThermometer") {
-                    dataIndicator.visible = true
-                    dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + qsTr("°F") : tempData.at(i).y.toFixed(1) + qsTr("°C")
-                    dataIndicator.text += " " + hygroData.at(i).y.toFixed(0) + "%"
+                function showHide() {
+                    if (smsmsm.opacity > 0) smsmsm.opacity = 0
+                    else smsmsm.opacity = 1
                 }
-                break
-            } else {
-                if (dist < 0) {
-                    if (x1 < i) x1 = i
-                } else {
-                    x2 = i
-                    break
+
+                enabled: (opacity > 0)
+                opacity: 0
+                Behavior on opacity { OpacityAnimator { duration: 133 } }
+
+                model: ListModel {
+                    id: lmSelectorMenuTxt2
+                    ListElement { idx: 1; txt: "31"; src: ""; sz: 0; }
+                    ListElement { idx: 2; txt: "14"; src: ""; sz: 0; }
+                    ListElement { idx: 3; txt: "7"; src: ""; sz: 0; }
+                }
+
+                currentSelection: {
+                    if (settingsManager.graphAioDays === 31) return 1
+                    if (settingsManager.graphAioDays === 14) return 2
+                    if (settingsManager.graphAioDays === 7) return 3
+                    return 2
+                }
+
+                onMenuSelected: (index) => {
+                    if (index === 1) settingsManager.graphAioDays = 31
+                    else if (index === 2) settingsManager.graphAioDays = 14
+                    else if (index === 3) settingsManager.graphAioDays = 7
+                    else settingsManager.graphAioDays = 14
                 }
             }
         }
-
-        if (x1 >= 0 && x2 > x1) {
-            // linear interpolation
-            if (appContent.state === "DevicePlantSensor") {
-                dataIndicators.updateDataBars(qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x),
-                                              qpoint_lerp(conduData.at(x1), conduData.at(x2), verticalIndicator.clickedCoordinates.x),
-                                              -99,
-                                              qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x),
-                                              -99,
-                                              qpoint_lerp(lumiData.at(x1), lumiData.at(x2), verticalIndicator.clickedCoordinates.x))
-            } else if (appContent.state === "DeviceThermometer") {
-                dataIndicator.visible = true
-                var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x)
-                dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
-                dataIndicator.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x).toFixed(0) + "%"
-            }
-        }
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 }

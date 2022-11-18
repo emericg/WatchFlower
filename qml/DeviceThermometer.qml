@@ -142,7 +142,10 @@ Loader {
             swipeBox.interactive = false
             swipeBox.enableAnimation()
 
-            graphLoader.source = "" // force graph reload
+            // force graph reload
+            graphLoader.source = ""
+            graphLoader.opacity = 0
+            noDataIndicator.visible = false
 
             loadGraph()
             updateHeader()
@@ -233,7 +236,12 @@ Loader {
             var reload = !(settingsManager.graphThermometer === "lines" && graphLoader.source === "ChartPlantDataAio.qml") ||
                          !(settingsManager.graphThermometer === "minmax" && graphLoader.source === "ChartThermometerMinMax.qml")
 
-            if (graphLoader.status !== Loader.Ready || reload) {
+            if (reload) {
+                graphLoader.source = ""
+                graphLoader.opacity = 0
+            }
+
+            if (graphLoader.status !== Loader.Ready) {
                 if (settingsManager.graphThermometer === "lines") {
                     graphLoader.source = "ChartPlantDataAio.qml"
                 } else {
@@ -537,6 +545,7 @@ Loader {
 
                     ItemNoData {
                         id: noDataIndicator
+                        visible: false
                     }
 
                     Loader {
@@ -546,10 +555,16 @@ Loader {
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
 
+                        opacity: 0
+                        Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }
+
                         asynchronous: true
                         onLoaded: {
                             thermoChart.loadGraph()
                             thermoChart.updateGraph()
+
+                            graphLoader.opacity = 1
+                            noDataIndicator.visible = (currentDevice.countDataNamed("temperature", thermoChart.daysVisible) <= 1)
                         }
                     }
                 }

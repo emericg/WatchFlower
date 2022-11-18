@@ -10,7 +10,7 @@ Rectangle {
     height: width
     radius: width
     color: Theme.colorForeground
-    opacity: 0.8
+    opacity: 0.33
 
     IconSvg {
         anchors.centerIn: parent

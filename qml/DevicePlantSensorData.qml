@@ -14,7 +14,7 @@ Item {
     property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : (isPhone ? 3 : 2)
 
     property var dataIndicators: indicatorsLoader.item
-    property var dataChart: chartAioLoader.item
+    property var dataChart: graphLoader.item
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -23,19 +23,20 @@ Item {
         if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorData // loadData() >> " + currentDevice)
 
-        chartAioLoader.opacity = 0
-        chartAioLoader.source = "" // force graph reload
+        // force graph reload
+        graphLoader.source = ""
+        graphLoader.opacity = 0
+        noDataIndicator.visible = false
 
         loadIndicators()
         loadGraph()
-
         updateHeader()
         updateData()
     }
 
     function loadGraph() {
-        if (chartAioLoader.status !== Loader.Ready) {
-            chartAioLoader.source = "ChartPlantDataAio.qml"
+        if (graphLoader.status !== Loader.Ready) {
+            graphLoader.source = "ChartPlantDataAio.qml"
         } else {
             dataChart.loadGraph()
             dataChart.updateGraph()
@@ -113,7 +114,7 @@ Item {
     }
 
     function updateGraph() {
-        if (chartAioLoader.status === Loader.Ready) dataChart.updateGraph()
+        if (graphLoader.status === Loader.Ready) dataChart.updateGraph()
     }
 
     function backAction() {
@@ -134,11 +135,11 @@ Item {
     }
 
     function isHistoryMode() {
-        if (chartAioLoader.status === Loader.Ready) return dataChart.isIndicator()
+        if (graphLoader.status === Loader.Ready) return dataChart.isIndicator()
         return false
     }
     function resetHistoryMode() {
-        if (chartAioLoader.status === Loader.Ready) dataChart.resetIndicator()
+        if (graphLoader.status === Loader.Ready) dataChart.resetIndicator()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -425,31 +426,36 @@ Item {
 
         Item {
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
-            height: (contentGrid_lvl1.columns === 1) ? (contentGrid_lvl1.height - contentGrid_lvl1.spacing - contentGrid_lvl2.height) : contentGrid_lvl1.height
+            height: {
+                if (contentGrid_lvl1.columns === 1) return (contentGrid_lvl1.height - contentGrid_lvl1.spacing - contentGrid_lvl2.height)
+                else return contentGrid_lvl1.height
+            }
             clip: true
 
             ItemNoData {
                 id: noDataIndicator
-                visible: (currentDevice.countDataNamed("temperature", 14) <= 1)
+                visible: false
             }
+
             ItemLoadData {
                 id: loadingIndicator
-                visible: !isDesktop && !noDataIndicator.visible
+                visible: !noDataIndicator.visible
             }
 
             Loader {
-                id: chartAioLoader
+                id: graphLoader
                 anchors.fill: parent
 
                 opacity: 0
-                Behavior on opacity { OpacityAnimator { duration: 133 } }
-                //visible: (chartAioLoader.status === Loader.Ready)
+                Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }
 
                 asynchronous: true
                 onLoaded: {
                     dataChart.loadGraph()
                     dataChart.updateGraph()
-                    chartAioLoader.opacity = 1
+
+                    graphLoader.opacity = 1
+                    noDataIndicator.visible = (currentDevice.countDataNamed("temperature", dataChart.daysVisible) <= 1)
                 }
             }
         }

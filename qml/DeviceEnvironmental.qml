@@ -239,7 +239,9 @@ Loader {
             swipeBox.interactive = false
             swipeBox.enableAnimation()
 
-            graphLoader.source = "" // force graph reload
+            // force graph reload
+            graphLoader.source = ""
+            graphLoader.opacity = 0
 
             loadIndicator()
             loadGraph()
@@ -395,8 +397,6 @@ Loader {
         }
 
         function loadGraph() {
-            graphLoader.visible = false
-
             if (isAirMonitor) {
                 if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
                     if (graphLoader.status !== Loader.Ready) {
@@ -1158,28 +1158,23 @@ Loader {
 */
                                 }
                             }
-/*
-                            Rectangle {
-                                width: parent.width
 
-                                visible: (isDesktop && singleColumn && !headerUnicolor)
-                                height: 2
-                                opacity: 0.5
-                                color: Theme.colorSeparator
-                            }
-*/
                             ////////////////////////////////////////////////////
 
                             Loader {
                                 id: graphLoader
                                 width: parent.width
                                 height: (sensorFlick.height - airBoxes.height - weatherBoxes.height)
-                                //height: singleColumn ? 360 : (sensorFlick.height - airBox.height - weatherBox.height)
+
+                                opacity: 0
+                                Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }
 
                                 asynchronous: true
                                 onLoaded: {
                                     historyChart.loadGraph()
                                     historyChart.updateGraph()
+
+                                    graphLoader.opacity = 1
                                 }
                             }
 
@@ -1187,6 +1182,8 @@ Loader {
                         }
                     }
                 }
+
+                ////////////////
 
                 DevicePlantSensorSettings {
                     id: plantSensorSettings
