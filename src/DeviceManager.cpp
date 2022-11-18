@@ -310,14 +310,14 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
 {
     //qDebug() << "DeviceManager::enableBluetooth() enforce:" << enforceUserPermissionCheck;
 
+    bool btA_was = m_btA;
+    bool btE_was = m_btE;
+    bool btP_was = m_btP;
+
 #if defined(Q_OS_IOS)
     checkBluetoothIos();
     return;
 #endif
-
-    bool btA_was = m_btA;
-    bool btE_was = m_btE;
-    bool btP_was = m_btP;
 
     // Invalid adapter? (ex: plugged off)
     if (m_bluetoothAdapter && !m_bluetoothAdapter->isValid())
@@ -347,11 +347,6 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
         if (m_bluetoothAdapter->hostMode() > QBluetoothLocalDevice::HostMode::HostPoweredOff)
         {
             m_btE = true; // was already activated
-
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-            // Already powered on? Power on again anyway. It helps on android...
-            //m_bluetoothAdapter->powerOn();
-#endif
         }
         else // Try to activate the adapter
         {
@@ -460,8 +455,8 @@ void DeviceManager::startBleAgent()
         {
             //qDebug() << "Scanning method supported:" << m_discoveryAgent->supportedDiscoveryMethods();
 
-            connect(m_discoveryAgent, QOverload<QBluetoothDeviceDiscoveryAgent::Error>::of(&QBluetoothDeviceDiscoveryAgent::errorOccurred),
-                    this, &DeviceManager::deviceDiscoveryError, Qt::UniqueConnection);
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::errorOccurred,
+                    this, &DeviceManager::deviceDiscoveryError);
         }
         else
         {
@@ -493,10 +488,10 @@ void DeviceManager::checkBluetoothIos()
         disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
                    this, &DeviceManager::updateNearbyBleDevice);
 
-        disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                   this, &DeviceManager::deviceDiscoveryFinished);
         connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                this, &DeviceManager::bluetoothHostModeStateChangedIos, Qt::UniqueConnection);
+                this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
+        connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
+                this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
 
         m_discoveryAgent->setLowEnergyDiscoveryTimeout(8); // 8ms
         m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
@@ -517,7 +512,6 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
         if (m_btE)
         {
             m_btE = false;
-            refreshDevices_stop();
             Q_EMIT bluetoothChanged();
         }
     }
@@ -527,7 +521,6 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
         m_btA = false;
         m_btE = false;
-        refreshDevices_stop();
         Q_EMIT bluetoothChanged();
     }
     else if (error == QBluetoothDeviceDiscoveryAgent::InvalidBluetoothAdapterError)
@@ -539,7 +532,6 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
         if (m_btE)
         {
             m_btE = false;
-            refreshDevices_stop();
             Q_EMIT bluetoothChanged();
         }
     }
@@ -549,7 +541,6 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
         m_btA = false;
         m_btE = false;
-        refreshDevices_stop();
         Q_EMIT bluetoothChanged();
     }
     else if (error == QBluetoothDeviceDiscoveryAgent::UnsupportedDiscoveryMethod)
@@ -558,7 +549,6 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
         m_btE = false;
         m_btP = false;
-        refreshDevices_stop();
         Q_EMIT bluetoothChanged();
     }
     else
@@ -567,14 +557,22 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
 
         m_btA = false;
         m_btE = false;
-        refreshDevices_stop();
         Q_EMIT bluetoothChanged();
     }
+
+    listenDevices_stop();
+    refreshDevices_stop();
+    scanDevices_stop();
 
     if (m_scanning)
     {
         m_scanning = false;
         Q_EMIT scanningChanged();
+    }
+    if (m_listening)
+    {
+        m_listening = false;
+        Q_EMIT listeningChanged();
     }
 }
 
@@ -592,6 +590,14 @@ void DeviceManager::deviceDiscoveryFinished()
         m_listening = false;
         Q_EMIT listeningChanged();
     }
+
+#if defined(Q_OS_IOS)
+    if (!m_btE)
+    {
+        m_btE = true;
+        Q_EMIT bluetoothChanged();
+    }
+#endif
 }
 
 void DeviceManager::deviceDiscoveryStopped()
@@ -607,18 +613,6 @@ void DeviceManager::deviceDiscoveryStopped()
     {
         m_listening = false;
         Q_EMIT listeningChanged();
-    }
-}
-
-void DeviceManager::bluetoothHostModeStateChangedIos()
-{
-    //qDebug() << "DeviceManager::bluetoothHostModeStateChangedIos()";
-
-    if (!m_btE)
-    {
-        m_btA = true;
-        m_btE = true;
-        Q_EMIT bluetoothChanged();
     }
 }
 
@@ -697,8 +691,6 @@ void DeviceManager::scanDevices_start()
 
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                         this, &DeviceManager::deviceDiscoveryFinished, Qt::UniqueConnection);
-                connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
-                        this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
                 connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled,
                         this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
 
@@ -739,6 +731,8 @@ void DeviceManager::scanDevices_stop()
         {
             disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
                        this, &DeviceManager::addBleDevice);
+            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
+                       this, &DeviceManager::updateBleDevice);
 
             m_discoveryAgent->stop();
 

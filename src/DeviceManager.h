@@ -155,7 +155,6 @@ private slots:
     void bluetoothStatusChanged();
 
     // QBluetoothDeviceDiscoveryAgent related
-    void bluetoothHostModeStateChangedIos();
     void addNearbyBleDevice(const QBluetoothDeviceInfo &info);
     void updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void addBleDevice(const QBluetoothDeviceInfo &info);
