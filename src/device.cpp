@@ -1288,13 +1288,11 @@ void Device::deviceConnected()
     if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
         m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
     {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
         // Keep screen on
         UtilsScreen *utilsScreen = UtilsScreen::getInstance();
-        if (utilsScreen)
-        {
-            utilsScreen->keepScreenOn(true);
-        }
-
+        if (utilsScreen) utilsScreen->keepScreenOn(true);
+#endif
         // Stop timeout timer, we'll be long...
         m_timeoutTimer.stop();
     }
@@ -1348,11 +1346,10 @@ void Device::deviceDisconnected()
     if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
         m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
     {
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
         UtilsScreen *utilsScreen = UtilsScreen::getInstance();
-        if (utilsScreen)
-        {
-            utilsScreen->keepScreenOn(false);
-        }
+        if (utilsScreen) utilsScreen->keepScreenOn(false);
+#endif
     }
 
     if (m_ble_status == DeviceUtils::DEVICE_UPDATING)
