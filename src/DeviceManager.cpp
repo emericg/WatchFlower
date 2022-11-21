@@ -196,6 +196,13 @@ DeviceManager::DeviceManager(bool daemon)
             }
         }
     }
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+    // Configure update timer (only started on desktop)
+    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceManager::refreshDevices_check);
+    m_updateTimer.setInterval(30*60*1000); // every 30m
+    m_updateTimer.start();
+#endif
 }
 
 DeviceManager::~DeviceManager()

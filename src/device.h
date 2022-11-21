@@ -178,9 +178,6 @@ protected:
     QDateTime m_lastError;
     bool m_firmware_uptodate = false;
 
-    QTimer m_updateTimer;
-    void setUpdateTimer(int updateIntervalMin = 0);
-
     int m_timeoutInterval = 12;
     QTimer m_timeoutTimer;
     void setTimeoutTimer();

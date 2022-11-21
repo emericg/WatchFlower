@@ -41,9 +41,6 @@ DeviceSensor::DeviceSensor(const QString &deviceAddr, const QString &deviceName,
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedout);
-
-    // Configure update timer (only started on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
 }
 
 DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
@@ -52,9 +49,6 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
     connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedout);
-
-    // Configure update timer (only started on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceSensor::refreshStart);
 }
 
 DeviceSensor::~DeviceSensor()
