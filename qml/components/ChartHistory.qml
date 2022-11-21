@@ -65,6 +65,12 @@ Item {
                         txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(floatprecision)
                         txt += suffix.replace("<br>", "")
                     }
+                    if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value_max > -99 &&
+                        graphRepeater.itemAt(graphGrid.barSelectionIndex).value_max !== graphRepeater.itemAt(graphGrid.barSelectionIndex).value) {
+                        txt += "  (max " + graphRepeater.itemAt(graphGrid.barSelectionIndex).value_max.toFixed(floatprecision)
+                        txt += suffix.replace("<br>", "")
+                        txt += ")"
+                    }
                 }
                 return txt
             }
@@ -190,7 +196,7 @@ Item {
                         if (uuu === ChartHistory.Data.LuminosityMmol) return modelData.luminosityMmol
                         return -99
                     }
-                    property real value2: {
+                    property real value_max: {
                         if (uuu === ChartHistory.Data.Temperature) return modelData.temperatureMax
                         if (uuu === ChartHistory.Data.LuminosityLux) return modelData.luminosityLuxMax
                         return -99
@@ -248,13 +254,13 @@ Item {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         width: parent.width
-                        height: UtilsNumber.normalize(value2, valueMin, valueMax) * parent.height
+                        height: UtilsNumber.normalize(value_max, valueMin, valueMax) * parent.height
 
                         border.width: (graphRow.barSpacing / 2)
                         border.color: Theme.colorBackground
 
                         clip: false
-                        visible: (value2 > -80 && value2 > value+1)
+                        visible: (value_max > -80 && value_max > value+1)
                         radius: graphRow.barRadius
                         color: chartHistory.color
                         opacity: 0.33
