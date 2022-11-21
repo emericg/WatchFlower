@@ -213,8 +213,8 @@ Item {
                 ////////////
 
                 function open() {
-                    datePicker.openDate(currentDateTime) // to keep date
-                    //datePicker.openDate(new Date()) // to reset date
+                    currentDateTime = new Date() // to reset date
+                    datePicker.openDate(currentDateTime)
 
                     entry = null
                     entryType = JournalUtils.JOURNAL_WATER
@@ -224,7 +224,8 @@ Item {
                 }
 
                 function edit(eee) {
-                    datePicker.openDate(eee.date)
+                    currentDateTime = eee.date
+                    datePicker.openDate(currentDateTime)
 
                     entry = eee
                     entryType = eee.type

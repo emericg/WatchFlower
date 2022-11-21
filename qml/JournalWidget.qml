@@ -41,8 +41,18 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
 
             color: UtilsPlantJournal.getJournalEntryColor(modelData.type)
-            border.color: selected ? Theme.colorSecondary : Theme.colorSeparator
+            border.color: Theme.colorSeparator
             border.width: 4
+
+            Rectangle {
+                anchors.fill: parent
+                anchors.margins: -6
+                radius: width
+                z: -1
+                opacity: selected ? 0.5 : 0
+                Behavior on opacity { OpacityAnimator { duration: 133 } }
+                color: (Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader
+            }
 
             Rectangle {
                 anchors.top: parent.bottom
