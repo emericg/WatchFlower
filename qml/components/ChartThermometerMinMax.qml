@@ -9,10 +9,12 @@ Item {
 
     property int widgetWidthTarget: (isPhone ? 48 : 64)
     property int widgetWidth: 48
+
     property int graphMin: currentDevice.tempMin
     property int graphMax: currentDevice.tempMax
 
-    property int daysVisible: 7
+    property int days: 14
+    property int daysVisible: 14
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return

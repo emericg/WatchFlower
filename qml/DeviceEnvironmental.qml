@@ -55,7 +55,7 @@ Loader {
 
         property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
 
-        property var historyChart: graphLoader.item
+        property var envChart: graphLoader.item
 
         property int itemCount_AirMonitor: 3
         property int itemCount_GeigerCounter: 2
@@ -140,7 +140,7 @@ Loader {
         onPrimaryChanged: {
             currentDevice.setSetting("primary", primary)
             loadIndicator()
-            if (graphLoader.status === Loader.Ready) historyChart.updateGraph()
+            if (graphLoader.status === Loader.Ready) envChart.updateGraph()
         }
 
         ////////
@@ -184,6 +184,7 @@ Loader {
             } else {
                 if (currentDevice.hasVocSensor) primary = "voc"
                 else if (currentDevice.hasCo2Sensor) primary = "co2"
+                else if (currentDevice.hasPM25Sensor) primary = "pm25"
                 else if (currentDevice.hasPM10Sensor) primary = "pm10"
                 else if (currentDevice.hasHchoSensor) primary = "hcho"
                 else if (currentDevice.hasGeigerCounter) primary = "nuclear"
@@ -242,9 +243,11 @@ Loader {
             // force graph reload
             graphLoader.source = ""
             graphLoader.opacity = 0
+            noDataIndicator.visible = false
 
             loadIndicator()
             loadGraph()
+            updateGraph()
             updateHeader()
             updateData()
 
@@ -398,14 +401,15 @@ Loader {
 
         function loadGraph() {
             if (isAirMonitor) {
-                if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
+                if (currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor ||
+                    currentDevice.hasVocSensor || currentDevice.hasHchoSensor ||
+                    currentDevice.hasCo2Sensor) {
                     if (graphLoader.status !== Loader.Ready) {
                         graphLoader.source = "ChartEnvironmentalVoc.qml"
                     } else {
-                        historyChart.loadGraph()
-                        historyChart.updateGraph()
+                        envChart.loadGraph()
+                        envChart.updateGraph()
                     }
-                    currentDevice.updateChartData_environmentalVoc(31)
                     graphLoader.visible = true
                 }
             }
@@ -417,8 +421,10 @@ Loader {
 
             // GRAPH
             if (isAirMonitor) {
-                if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
-                    currentDevice.updateChartData_environmentalVoc(31)
+                if (currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor) {
+                    currentDevice.updateChartData_environmentalEnv(90)
+                } else if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
+                    currentDevice.updateChartData_environmentalVoc(90)
                 }
             }
         }
@@ -1161,20 +1167,30 @@ Loader {
 
                             ////////////////////////////////////////////////////
 
-                            Loader {
-                                id: graphLoader
+                            Item {
                                 width: parent.width
                                 height: (sensorFlick.height - airBoxes.height - weatherBoxes.height)
 
-                                opacity: 0
-                                Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }
+                                ItemNoData {
+                                    id: noDataIndicator
+                                    visible: false
+                                }
 
-                                asynchronous: true
-                                onLoaded: {
-                                    historyChart.loadGraph()
-                                    historyChart.updateGraph()
+                                Loader {
+                                    id: graphLoader
+                                    anchors.fill: parent
 
-                                    graphLoader.opacity = 1
+                                    opacity: 0
+                                    Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }
+
+                                    asynchronous: true
+                                    onLoaded: {
+                                        envChart.loadGraph()
+                                        envChart.updateGraph()
+
+                                        graphLoader.opacity = 1
+                                        noDataIndicator.visible = (currentDevice.countDataNamed("temperature", envChart.daysVisible) < 1)
+                                    }
                                 }
                             }
 

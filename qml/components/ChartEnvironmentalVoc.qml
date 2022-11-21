@@ -15,6 +15,9 @@ Item {
     property int limitMin: -1
     property int limitMax: -1
 
+    property int days: 14
+    property int daysVisible: 14
+
     ////////////////////////////////////////////////////////////////////////////
 
     function loadGraph() {
@@ -34,7 +37,15 @@ Item {
             limitMin = 850
             limitMax = 1500
             scaleMax = 2000
+        } else if (itemDeviceEnvironmental.primary === "pm1" ||
+                   itemDeviceEnvironmental.primary === "pm25" ||
+                   itemDeviceEnvironmental.primary === "pm10") {
+            limitMin = 250
+            limitMax = 750
+            scaleMax = 1000
         }
+
+        chartEnvironmentalVoc.visible = currentDevice.countDataNamed("temperature", daysVisible)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -111,7 +122,7 @@ Item {
             }
         }
 
-        ////////
+        ////////////////
 
         Rectangle {
             id: vocLegendHor
@@ -123,7 +134,7 @@ Item {
             color: Theme.colorSeparator
         }
 
-        ////////////////////////////////////////////////////////////////////
+        ////////////////
 
         Item {
             anchors.fill: parent
@@ -169,6 +180,14 @@ Item {
                                     valueMin = modelData.co2Min
                                     valueMean = modelData.co2Mean
                                     valueMax = modelData.co2Max
+                                } else if (itemDeviceEnvironmental.primary === "pm25") {
+                                    valueMin = modelData.pm25Min
+                                    valueMean = modelData.pm25Mean
+                                    valueMax = modelData.pm25Max
+                                } else if (itemDeviceEnvironmental.primary === "pm10") {
+                                    valueMin = modelData.pm10Min
+                                    valueMean = modelData.pm10Mean
+                                    valueMax = modelData.pm10Max
                                 }
 
                                 if (valueMax > scaleMax) valueMax = scaleMax
@@ -252,5 +271,7 @@ Item {
                 }
             }
         }
+
+        ///////////////
     }
 }

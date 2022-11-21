@@ -564,7 +564,7 @@ Loader {
                             thermoChart.updateGraph()
 
                             graphLoader.opacity = 1
-                            noDataIndicator.visible = (currentDevice.countDataNamed("temperature", thermoChart.daysVisible) <= 1)
+                            noDataIndicator.visible = (currentDevice.countDataNamed("temperature", thermoChart.daysVisible) < 1)
                         }
                     }
                 }
