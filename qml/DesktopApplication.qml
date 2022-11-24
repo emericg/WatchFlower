@@ -426,6 +426,7 @@ ApplicationWindow {
             screenDeviceList.exitSelectionMode()
             appHeader.setActiveMenu()
 
+            if (state === "Tutorial") return
             if (previousStates[previousStates.length-1] !== state) previousStates.push(state)
             if (previousStates.length > 4) previousStates.splice(0, 1)
             //console.log("states > " + appContent.previousStates)

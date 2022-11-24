@@ -353,11 +353,11 @@ function getDeviceSensorIcon(sensorId) {
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_WIND_SPEED) {
         src = "qrc:/assets/icons_material/baseline-air-24px.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PM1) {
-        src = "qrc:/assets/icons_material/baseline-air-24px.svg"
+        src = "qrc:/assets/icons_material/baseline-air_filter-24px.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PM25) {
-        src = "qrc:/assets/icons_material/baseline-air-24px.svg"
+        src = "qrc:/assets/icons_material/baseline-air_filter-24px.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PM10) {
-        src = "qrc:/assets/icons_material/baseline-air-24px.svg"
+        src = "qrc:/assets/icons_material/baseline-air_filter-24px.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_O2) {
         src = "qrc:/assets/icons_material/baseline-air-24px.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_O3) {

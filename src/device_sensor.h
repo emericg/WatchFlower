@@ -264,7 +264,7 @@ protected:
     int m_mmolMin = 999999;
     int m_mmolMax = -99;
 
-    // history control
+    // device history control
     int m_history_entryCount = -1;
     int m_history_entryIndex = -1;
     int m_history_sessionCount = -1;

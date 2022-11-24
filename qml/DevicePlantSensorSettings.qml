@@ -172,9 +172,9 @@ Item {
                                     anchors.leftMargin: 6
                                     anchors.verticalCenter: parent.verticalCenter
 
-                                    source: "qrc:/assets/icons_material/baseline-new_releases-24px.svg"
-                                    color: Theme.colorIcon
-                                    visible: !currentDevice.deviceFirmwareUpToDate
+                                    source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                                    color: Theme.colorGreen
+                                    visible: currentDevice.deviceFirmwareUpToDate
                                 }
                             }
                         }
