@@ -110,10 +110,12 @@ public:
     Q_INVOKABLE bool removeJournalEntry(const int id);
 
     // Chart plant "history"
-    Q_INVOKABLE void updateChartData_history_month(int maxDays);
-    Q_INVOKABLE void updateChartData_history_month(const QDateTime &f, const QDateTime &l);
-    Q_INVOKABLE void updateChartData_history_day();
+    Q_INVOKABLE void updateChartData_history_today();
+    Q_INVOKABLE void updateChartData_history_thismonth(int maxDays);
+
     Q_INVOKABLE void updateChartData_history_day(const QDateTime &d);
+    Q_INVOKABLE void updateChartData_history_week(const QDateTime &f, const QDateTime &l);
+    Q_INVOKABLE void updateChartData_history_month(int maxDays, const QDateTime &f, const QDateTime &l);
 
     // Chart plant "AIO"
     Q_INVOKABLE void getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,

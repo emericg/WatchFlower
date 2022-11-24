@@ -201,20 +201,38 @@ class ChartDataHistory: public QObject
 
 public:
     ChartDataHistory(const QDateTime &dt,
-                     float sm, float sc, float st,
-                     float t, float h, float l,
+                     QObject *parent) : QObject(parent)
+    {
+        datetime = dt;
+    }
+    ChartDataHistory(const QDateTime &dt,
+                     float sm, float sc,
+                     float t, float l,
                      QObject *parent) : QObject(parent)
     {
         datetime = dt;
 
         soilMoisture = sm;
         soilConductivity = sc;
-        soilTemperature = st;
         temperature = t;
-        humidity = h;
         luminosityLux = l;
     }
+    ChartDataHistory(const QDateTime &dt,
+                     float sm, float sc,
+                     float t, float l,
+                     float tm, float lm,
+                     QObject *parent) : QObject(parent)
+    {
+        datetime = dt;
 
+        soilMoisture = sm;
+        soilConductivity = sc;
+        temperature = t;
+        luminosityLux = l;
+
+        temperatureMax = tm;
+        luminosityLuxMax = lm;
+    }
     ChartDataHistory(const QDateTime &dt,
                      float sm, float sc, float st,
                      float t, float h, float l,

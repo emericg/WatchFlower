@@ -5,6 +5,10 @@ import ThemeEngine 1.0
 Item {
     id: devicePlantSensorHistory
 
+    property int offset_month: 0
+    property int offset_week: 0
+    property int offset_day: 0
+
     function loadData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.isPlantSensor) return
@@ -48,6 +52,10 @@ Item {
         resetHistoryMode()
         updateHistoryMode()
 
+        offset_month = 0
+        offset_week = 0
+        offset_day = 0
+
         updateColors()
         updateData()
         updateSize()
@@ -62,10 +70,10 @@ Item {
     function updateData() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         if (!currentDevice.isPlantSensor) return
-        //console.log("ItemDeviceHistory // updateData() >> " + currentDevice)
+        //console.log("DevicePlantSensorHistory // updateData() >> " + currentDevice)
 
-        currentDevice.updateChartData_history_month(31)
-        currentDevice.updateChartData_history_day()
+        currentDevice.updateChartData_history_thismonth(31)
+        currentDevice.updateChartData_history_today()
     }
 
     function updateHistoryMode() {
@@ -263,7 +271,6 @@ Item {
         anchors.bottom: parent.bottom
 
         onWidthChanged: updateSize()
-        //onHeightChanged: updateSize()
 
         property int columns: 1
         property var mode: ChartHistory.Span.Weekly

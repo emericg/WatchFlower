@@ -19,8 +19,8 @@ Item {
     property real limitMin: -1
     property real limitMax: -1
 
-    property var ddd
-    property var uuu
+    property var ddd // ui mode: duo?
+    property var uuu // data mode
 
     enum Span {
         Daily = 0,
