@@ -504,7 +504,7 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("Check supported sensors")
+                    text: qsTr("List of supported sensors")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText

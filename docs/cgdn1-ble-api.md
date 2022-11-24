@@ -30,7 +30,7 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 ## Services, characteristics and handles
 
-The name advertised by the devices is `unknown`.  
+The name advertised by the devices is `Qingping Air Monitor Lite`.  
 
 TODO
 

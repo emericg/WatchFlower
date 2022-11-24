@@ -40,7 +40,6 @@ DeviceCGDN1::DeviceCGDN1(const QString &deviceAddr, const QString &deviceName, Q
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
-    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
     m_deviceSensors += DeviceUtils::SENSOR_CO2;
@@ -53,7 +52,6 @@ DeviceCGDN1::DeviceCGDN1(const QBluetoothDeviceInfo &d, QObject *parent):
 {
     m_deviceType = DeviceUtils::DEVICE_ENVIRONMENTAL;
     m_deviceBluetoothMode = DeviceUtils::DEVICE_BLE_ADVERTISEMENT;
-    m_deviceCapabilities += DeviceUtils::DEVICE_BATTERY;
     m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
     m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
     m_deviceSensors += DeviceUtils::SENSOR_CO2;

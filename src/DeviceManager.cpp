@@ -37,6 +37,7 @@
 #include "devices/device_hygrotemp_square.h"
 #include "devices/device_hygrotemp_lywsdcgq.h"
 #include "devices/device_thermobeacon.h"
+#include "devices/device_cgdn1.h"
 #include "devices/device_jqjcy01ym.h"
 #include "devices/device_wp6003.h"
 #include "devices/device_esp32_airqualitymonitor.h"
@@ -166,6 +167,8 @@ DeviceManager::DeviceManager(bool daemon)
 
             else if (deviceName.startsWith("WP6003"))
                 d = new DeviceWP6003(deviceAddr, deviceName, this);
+            else if (deviceName == "Qingping Air Monitor Lite")
+                d = new DeviceCGDN1(deviceAddr, deviceName, this);
             else if (deviceName == "JQJCY01YM")
                 d = new DeviceJQJCY01YM(deviceAddr, deviceName, this);
             else if (deviceName == "AirQualityMonitor")
@@ -1404,8 +1407,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC" ||
         info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M" ||
         info.name() == "Qingping Temp RH Lite" ||
-        info.name() == "Qingping Alarm Clock" ||
         info.name() == "Qingping Temp RH Barometer" ||
+        info.name() == "Qingping Alarm Clock" ||
+        info.name() == "Qingping Air Monitor Lite" ||
         info.name().startsWith("6003#") ||
         info.name() == "JQJCY01YM" ||
         info.name() == "AirQualityMonitor" ||
@@ -1444,6 +1448,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
         else if (info.name().startsWith("6003#"))
             d = new DeviceWP6003(info, this);
+        else if (info.name() == "Qingping Air Monitor Lite")
+            d = new DeviceCGDN1(info, this);
         else if (info.name() == "JQJCY01YM")
             d = new DeviceJQJCY01YM(info, this);
         else if (info.name() == "AirQualityMonitor")

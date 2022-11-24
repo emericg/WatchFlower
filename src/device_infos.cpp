@@ -51,7 +51,7 @@ DeviceInfosSensor::DeviceInfosSensor(const QString &sensor, const QString &strin
     else if (sensor == "Wind direction") m_sensor = DeviceUtils::SENSOR_WIND_DIRECTION;
 
     else if (sensor == "PM1") m_sensor = DeviceUtils::SENSOR_PM1;
-    else if (sensor == "PM25") m_sensor = DeviceUtils::SENSOR_PM25;
+    else if (sensor == "PM2.5") m_sensor = DeviceUtils::SENSOR_PM25;
     else if (sensor == "PM10") m_sensor = DeviceUtils::SENSOR_PM10;
     else if (sensor == "O2") m_sensor = DeviceUtils::SENSOR_O2;
     else if (sensor == "O3") m_sensor = DeviceUtils::SENSOR_O3;
