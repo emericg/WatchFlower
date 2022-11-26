@@ -177,6 +177,11 @@ public class QShareUtils
             targetedIntent.setPackage(targetPackageName);
             // collect all these targetedIntents
             targetedIntents.add(targetedIntent);
+
+            // did some changes to make it run with API 30+ and Android 13 devices.
+            // removed KitKat check and added queries to AndroidManifest
+            // thx: https://forum.qt.io/topic/127170/android-11-qdir-mkdir-does-not-always-work/11
+            context.grantUriPermission(targetPackageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         }
 
         // check if there are apps found for our Intent to avoid that there was only our own removed app before
