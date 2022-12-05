@@ -26,7 +26,9 @@
 #include "DatabaseManager.h"
 #include "SettingsManager.h"
 #include "DeviceManager.h"
+
 #include "NotificationManager.h"
+#include "utils_log.h"
 
 #include <QtCore/private/qandroidextras_p.h>
 #include <QCoreApplication>

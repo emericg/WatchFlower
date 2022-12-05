@@ -13,11 +13,6 @@ QT     += qml quick quickcontrols2 svg widgets charts
 
 # Project features #############################################################
 
-# Use Qt Quick compiler
-ios | android { CONFIG += qtquickcompiler }
-
-win32 { DEFINES += _USE_MATH_DEFINES }
-
 # MobileUI and MobileSharing for mobile OS
 include(src/thirdparty/MobileUI/MobileUI.pri)
 include(src/thirdparty/MobileSharing/MobileSharing.pri)
@@ -158,6 +153,14 @@ lupdate_only {
 
 # Build settings ###############################################################
 
+ios | android { CONFIG += qtquickcompiler }
+
+win32 { DEFINES += _USE_MATH_DEFINES }
+
+DEFINES += QT_DEPRECATED_WARNINGS
+
+CONFIG(release, debug|release) : DEFINES += NDEBUG QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
+
 unix {
     # Enables AddressSanitizer
     #QMAKE_CXXFLAGS += -fsanitize=address,undefined
@@ -165,17 +168,12 @@ unix {
     #QMAKE_LFLAGS += -fsanitize=address,undefined
 }
 
-DEFINES += QT_DEPRECATED_WARNINGS
-
-CONFIG(release, debug|release) : DEFINES += NDEBUG QT_NO_DEBUG QT_NO_DEBUG_OUTPUT
-
 # Build artifacts ##############################################################
 
 OBJECTS_DIR = build/$${QT_ARCH}/
 MOC_DIR     = build/$${QT_ARCH}/
 RCC_DIR     = build/$${QT_ARCH}/
 UI_DIR      = build/$${QT_ARCH}/
-QMLCACHE_DIR= build/$${QT_ARCH}/
 
 DESTDIR     = bin/
 
