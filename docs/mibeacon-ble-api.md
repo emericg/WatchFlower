@@ -46,8 +46,14 @@ Only one measurement is sent per advertisement message.
 
 #### Frame control (first 2 bytes)
 
-| bits  | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
+| bits   | Type      | Description                          |
+| ------ | --------- | ------------------------------------ |
+| 0x8000 | flag      |                                      |
+| 0x4000 | flag      | data is present flag                 |
+| 0x2000 | flag      | capability byte present flag         |
+| 0x1000 | flag      |                                      |
+| 0x0800 | flag      | encrypted data flag                  |
+
 
 #### Protocol (version 0x70?)
 

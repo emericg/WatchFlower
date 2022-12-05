@@ -1,5 +1,5 @@
 // UtilsDeviceSensors.js
-// Version 3
+// Version 4
 
 .import DeviceUtils 1.0 as DeviceUtils
 .import ThemeEngine 1.0 as ThemeEngine
@@ -19,9 +19,15 @@ function isDeviceSupported(deviceName) {
         deviceName === "ClearGrass Temp & RH" || deviceName === "Qingping Temp & RH M" ||
         deviceName === "Qingping Temp RH Lite" ||
         deviceName === "Qingping Alarm Clock" || deviceName === "Qingping Temp RH Barometer" ||
+        deviceName === "Qingping Air Monitor Lite" ||
         deviceName === "WP6003" || deviceName === "JQJCY01YM" || deviceName === "AirQualityMonitor" ||
         deviceName === "GeigerCounter")
         return true
+
+    if (deviceName.startWith("Flower power") || deviceName.startWith("Parrot pot") ||
+        deviceName.startWith("6003#"))
+        return true
+
     return false
 }
 
@@ -51,6 +57,8 @@ function getDeviceImage(deviceName) {
 
     if (deviceName === "WP6003") return "qrc:/devices/wp6003.svg"
     if (deviceName === "JQJCY01YM") return "qrc:/devices/jqjcy01ym.svg"
+    if (deviceName === "Qingping Air Monitor Lite") return "qrc:/devices/cgdn1.svg"
+
     return ""
 }
 

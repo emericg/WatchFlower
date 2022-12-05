@@ -110,6 +110,19 @@ Example with a CGP1W advertisement message:
 | ---------- | ---------- | -------------------------------------------------- |
 | pressure   | uint16_le  | Air pressure in kPa, divide by 10 to get hPa       |
 
+###### CO2
+
+| name       | length     | description                                        |
+| ---------- | ---------- | -------------------------------------------------- |
+| CO2        | uint16_le  | CO2 in ppm                                         |
+
+###### Particulate Matter
+
+| name        | length    | description                                        |
+| ------------| --------- | -------------------------------------------------- |
+| PM 2.5      | uint16_le | PM 2.5 in µg/m³                                    |
+| PM 10       | uint16_le | PM 10 in µg/m³                                     |
+
 ## Reference
 
 [1] -  
