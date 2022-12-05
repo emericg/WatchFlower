@@ -29,6 +29,9 @@ DEFINES += QAPPLICATION_CLASS=QApplication
 # Various utils
 include(src/thirdparty/AppUtils/AppUtils.pri)
 
+# Better handling of Bluetooth in the background
+#android { DEFINES += QT_CONNECTIVITY_PATCHED }
+
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \
