@@ -125,6 +125,11 @@ int main(int argc, char *argv[])
 
     // GUI application /////////////////////////////////////////////////////////
 
+#if defined(Q_OS_ANDROID)
+    // Set navbar color, same as the loading screen
+    MobileUI::setNavbarColor("white");
+#endif
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     // NVIDIA suspend&resume hack
     auto format = QSurfaceFormat::defaultFormat();
@@ -145,8 +150,6 @@ int main(int argc, char *argv[])
     QIcon appIcon(":/assets/logos/watchflower.svg");
     app.setWindowIcon(appIcon);
 #endif
-
-    MobileUI::setNavbarColor("white");
 
     // Init components
     SettingsManager *sm = SettingsManager::getInstance();
