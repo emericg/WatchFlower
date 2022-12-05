@@ -20,6 +20,9 @@ Loader {
         // load screen
         devicePlantSensor.active = true
         devicePlantSensor.item.loadDevice()
+
+        // change screen
+        appContent.state = "DevicePlantSensor"
     }
 
     ////////
@@ -212,7 +215,7 @@ Loader {
             if (isDesktop) appHeader.setActiveDeviceData()
         }
 
-        ////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
 
         ItemBannerSync {
             id: bannerSync
@@ -283,5 +286,7 @@ Loader {
                 }
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////
     }
 }

@@ -168,28 +168,20 @@ Item {
 
                 text: {
                     if (Qt.platform.os === "android") {
-                        if (!deviceManager.bluetoothEnabled) qsTr("Enable")
-                        else if (!deviceManager.bluetoothPermissions) qsTr("About")
-                        else qsTr("Retry")
-                    } else {
-                        qsTr("Retry")
+                        if (!deviceManager.bluetoothEnabled) return qsTr("Enable")
+                        else if (!deviceManager.bluetoothPermissions) return qsTr("About")
                     }
+                    return qsTr("Retry")
                 }
                 onClicked: {
-                    if (Qt.platform.os === "android") {
-                        if (!deviceManager.bluetooth) {
-                            deviceManager.enableBluetooth()
-                        } else if (!deviceManager.bluetoothPermissions) {
-                            //utilsApp.getMobileBleLocationPermission()
-                            //deviceManager.checkBluetoothPermissions()
+                    if (Qt.platform.os === "android" && !deviceManager.bluetoothPermissions) {
+                        //utilsApp.getMobileBleLocationPermission()
+                        //deviceManager.checkBluetoothPermissions()
 
-                            // someone clicked 'never ask again'?
-                            screenPermissions.loadScreenFrom("DeviceList")
-                        } else {
-                            deviceManager.checkBluetooth()
-                        }
+                        // someone clicked 'never ask again'?
+                        screenPermissions.loadScreenFrom("DeviceList")
                     } else {
-                        deviceManager.checkBluetooth()
+                        deviceManager.enableBluetooth(settingsManager.bluetoothControl)
                     }
                 }
             }

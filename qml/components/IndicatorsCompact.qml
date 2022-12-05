@@ -16,8 +16,7 @@ Item {
         return Theme.colorForeground
     }
 
-    property int legendWidth: 92
-    Component.onCompleted: updateLegendSize()
+    property int legendWidth: 80
 
     ////////////////////////////////////////////////////////////////////////////
 

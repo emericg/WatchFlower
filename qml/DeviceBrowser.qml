@@ -122,7 +122,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
-                    text: qsTr("The device browser help you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don't pick them up.")
+                    text: qsTr("The device browser helps you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don't pick them up.")
                     textFormat: Text.StyledText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -223,7 +223,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
-                    text: qsTr("The device browser help you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don't pick them up.")
+                    text: qsTr("The device browser helps you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don't pick them up.")
                     textFormat: Text.StyledText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText

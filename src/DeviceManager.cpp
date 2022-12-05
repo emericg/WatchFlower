@@ -332,6 +332,7 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     // Invalid adapter? (ex: plugged off)
     if (m_bluetoothAdapter && !m_bluetoothAdapter->isValid())
     {
+        qDebug() << "DeviceManager::enableBluetooth() deleting current adapter";
         delete m_bluetoothAdapter;
         m_bluetoothAdapter = nullptr;
     }

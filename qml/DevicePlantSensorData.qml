@@ -146,10 +146,12 @@ Item {
 
     Rectangle {
         id: subHeaderBackground
-        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
         width: parent.width
         height: (uiMode === 1) ? itemHeader.height : contentGrid_lvl2.height
+        //Behavior on height { NumberAnimation { duration: 133 } }
+
         visible: (uiMode !== 3)
+        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
         Rectangle {
             anchors.left: parent.left
@@ -231,7 +233,7 @@ Item {
 
                         Text {
                             id: labelPlant
-                            width: (dataIndicators) ? dataIndicators.legendWidth : 128
+                            width: (dataIndicators) ? dataIndicators.legendWidth : 80
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -301,7 +303,7 @@ Item {
 
                         Text {
                             id: labelLocation
-                            width: (dataIndicators) ? dataIndicators.legendWidth : 128
+                            width: (dataIndicators) ? dataIndicators.legendWidth : 80
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -371,7 +373,7 @@ Item {
 
                         Text {
                             id: labelStatus
-                            width: (dataIndicators) ? dataIndicators.legendWidth : 128
+                            width: (dataIndicators) ? dataIndicators.legendWidth : 80
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -414,7 +416,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     width: parent.width
 
-                    asynchronous: true
+                    asynchronous: false
                     onLoaded: {
                         dataIndicators.loadIndicators()
                     }

@@ -554,7 +554,7 @@ Rectangle {
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: (!deviceManager.syncing)
 
-            text: qsTr("Refresh sensors data")
+            text: qsTr("Refresh sensor data")
             tooltipText: text
             source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             iconColor: Theme.colorHeaderContent

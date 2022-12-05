@@ -415,7 +415,7 @@ Drawer {
                         anchors.leftMargin: screenPaddingLeft + 56
                         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Refresh sensors data")
+                        text: qsTr("Refresh sensor data")
                         font.pixelSize: 13
                         font.bold: true
                         color: buttonRefresh.enabled ? Theme.colorText : Theme.colorSubText

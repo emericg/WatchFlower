@@ -22,6 +22,9 @@ Loader {
         // load screen
         deviceThermometer.active = true
         deviceThermometer.item.loadDevice()
+
+        // change screen
+        appContent.state = "DeviceThermometer"
     }
 
     ////////
@@ -290,7 +293,7 @@ Loader {
             if (graphLoader.status === Loader.Ready) thermoChart.resetIndicator()
         }
 
-        ////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
 
         Flow {
             anchors.fill: parent
@@ -574,5 +577,7 @@ Loader {
                 }
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////
     }
 }

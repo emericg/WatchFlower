@@ -224,8 +224,8 @@ Item {
 
                 IconSvg {
                     id: authorImg
-                    width: 31
-                    height: 31
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
@@ -283,8 +283,8 @@ Item {
 
                 IconSvg {
                     id: rateImg
-                    width: 31
-                    height: 31
+                    width: 32
+                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
@@ -343,8 +343,8 @@ Item {
                 anchors.rightMargin: 0
 
                 IconSvg {
-                    width: 27
-                    height: 27
+                    width: 28
+                    height: 28
                     anchors.left: parent.left
                     anchors.leftMargin: 2
                     anchors.verticalCenter: parent.verticalCenter
@@ -365,16 +365,75 @@ Item {
                     color: Theme.colorText
                 }
 
+                IconSvg {
+                    width: 24
+                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: -2
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                    color: Theme.colorIcon
+                }
+
                 MouseArea {
-                    anchors.top: parent.top
-                    anchors.left: parent.left
-                    anchors.right: singleColumn ? parent.right : tutoTxt.right
-                    anchors.rightMargin: singleColumn ? 0 : -24
-                    anchors.bottom: parent.bottom
+                    anchors.fill: parent
                     onClicked: screenTutorial.loadScreenFrom("About")
                 }
             }
 
+            ////////
+
+            Item {
+                id: permissions
+                height: 48
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                visible: (Qt.platform.os === "android")
+
+                IconSvg {
+                    id: permissionsImg
+                    width: 32
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                Text {
+                    id: permissionsTxt
+                    anchors.left: parent.left
+                    anchors.leftMargin: 48
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    text: qsTr("About permissions")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorText
+                }
+
+                IconSvg {
+                    width: 24
+                    height: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: -2
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                    color: Theme.colorIcon
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: screenPermissions.loadScreenFrom("About")
+                }
+            }
             ////////
 
             IconSvg {
@@ -448,7 +507,6 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: singleColumn
 
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                     color: Theme.colorIcon
@@ -504,7 +562,7 @@ Item {
                     anchors.leftMargin: 48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    text: qsTr("List of supported sensors")
+                    text: qsTr("Supported sensors")
                     textFormat: Text.PlainText
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
@@ -516,7 +574,6 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: 0
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: singleColumn
 
                     source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
                     color: Theme.colorIcon
@@ -525,77 +582,6 @@ Item {
                 MouseArea {
                     anchors.fill: parent
                     onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
-                }
-            }
-
-            ////////
-
-            Item {
-                height: 16
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                visible: (Qt.platform.os === "android")
-
-                Rectangle {
-                    height: 1
-                    color: Theme.colorSeparator
-                    anchors.left: parent.left
-                    anchors.leftMargin: -(screenPaddingLeft + 16)
-                    anchors.right: parent.right
-                    anchors.rightMargin: -(screenPaddingRight + 16)
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
-
-            Item {
-                id: permissions
-                height: 32
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-
-                visible: (Qt.platform.os === "android")
-
-                IconSvg {
-                    id: permissionsImg
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: 4
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
-                    color: Theme.colorIcon
-                }
-
-                Text {
-                    id: permissionsTxt
-                    anchors.left: parent.left
-                    anchors.leftMargin: 48
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("About app permissions")
-                    textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeContent
-                    color: Theme.colorText
-                }
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.right: parent.right
-                    anchors.rightMargin: 0
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
-                    color: Theme.colorIcon
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: screenPermissions.loadScreenFrom("About")
                 }
             }
 

@@ -42,12 +42,15 @@ Rectangle {
                 tutorialPages.enableAnimation()
             }
 
+            ////////////////
+
             SwipeView {
                 id: tutorialPages
                 anchors.fill: parent
                 anchors.leftMargin: screenPaddingLeft
                 anchors.rightMargin: screenPaddingRight
                 anchors.bottomMargin: 56
+                property int margins: isPhone ? 24 : 40
 
                 currentIndex: 0
                 onCurrentIndexChanged: {
@@ -79,11 +82,11 @@ Rectangle {
 
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
-                            text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi '<b>Flower Care</b>' and '<b>RoPot</b>' or Parrot '<b>Flower Power</b>' sensors.")
+                            text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi '<b>Flower Care</b>' or Parrot '<b>Flower Power</b>' sensors.")
                             textFormat: Text.StyledText
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             font.pixelSize: Theme.fontSizeContentBig
@@ -99,12 +102,11 @@ Rectangle {
                             color: Theme.colorHeaderContent
                             fillMode: Image.PreserveAspectFit
                         }
-
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
                             text: qsTr("It also works great with a couple of <b>thermometers</b> and other sensors like <b>air quality monitors</b> and <b>weather stations</b>!")
                             textFormat: Text.StyledText
@@ -113,8 +115,18 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
+                        ButtonWireframeIcon {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            layoutDirection: Qt.RightToLeft
+                            fullColor: true
+                            primaryColor: Theme.colorHeaderHighlight
+                            text: qsTr("Supported sensors")
+                            source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                        }
                     }
                 }
+
+                ////////
 
                 Item {
                     id: page2
@@ -127,9 +139,9 @@ Rectangle {
 
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
                             text: qsTr("To start using WatchFlower, you'll need to <b>scan</b> for <b>compatible Bluetooth sensors</b> around you.")
                             textFormat: Text.StyledText
@@ -149,9 +161,9 @@ Rectangle {
                         }
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
                             text: qsTr("You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.")
                             textFormat: Text.StyledText
@@ -163,6 +175,8 @@ Rectangle {
                     }
                 }
 
+                ////////
+
                 Item {
                     id: page3
 
@@ -170,20 +184,34 @@ Rectangle {
                         anchors.right: parent.right
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 32
+                        spacing: 20
 
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
-                            text: qsTr("Once <b>paired</b>, sensors will periodically <b>sync</b> their data.")
+                            text: qsTr("Once <b>paired</b>, sensors will periodically <b>sync</b> their data when you use WatchFlower.")
                             textFormat: Text.StyledText
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: Theme.fontSizeContentBig
+                        }
+                        Text {
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
+                            anchors.left: parent.left
+                            anchors.leftMargin: tutorialPages.margins
+
+                            visible: (Qt.platform.os !== "ios")
+                            text: qsTr("WatchFlower <b>might</b> be able to sync sensors in the background. Check out the <b>settings</b> page for instructions.")
+                            textFormat: Text.StyledText
+                            color: Theme.colorHeaderContent
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            horizontalAlignment: Text.AlignHCenter
+                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
@@ -196,11 +224,11 @@ Rectangle {
                         }
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
-                            text: qsTr("Click on one of the sensors to access <b>detailed infos</b>, <b>graphs</b> and <b>historical data</b>.")
+                            text: qsTr("Keep in mind that Bluetooth only works in <b>close proximity</b>.")
                             textFormat: Text.StyledText
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
@@ -209,6 +237,8 @@ Rectangle {
                         }
                     }
                 }
+
+                ////////
 
                 Item {
                     id: page4
@@ -217,24 +247,47 @@ Rectangle {
                         anchors.right: parent.right
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 32
+                        spacing: 20
 
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
-                            text: qsTr("You can <b>name your plants</b> and set devices <b>location</b>.")
+                            text: qsTr("Click on sensors to access <b>historical data</b>, <b>graphs</b> and <b>detailed infos</b>.") + "<br>" +
+                                  qsTr("You can set a custom <b>name</b> and a <b>location</b> for each sensor.")
                             textFormat: Text.StyledText
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: Theme.fontSizeContentBig
+                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         IconSvg {
-                            width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
-                            height: width*0.328
+                            width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.66 : 0.3)
+                            height: width*0.2
+                            anchors.horizontalCenter: parent.horizontalCenter
+
+                            source: "qrc:/assets/tutorial/welcome-plants.svg"
+                            color: Theme.colorHeaderContent
+                            fillMode: Image.PreserveAspectFit
+                        }
+                        Text {
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
+                            anchors.left: parent.left
+                            anchors.leftMargin: tutorialPages.margins
+
+                            text: qsTr("You can also <b>choose a plant</b> from our database to automatically set <b>optimal limits</b> and get <b>plant care tips</b>!")
+                            textFormat: Text.StyledText
+                            color: Theme.colorHeaderContent
+                            wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                            horizontalAlignment: Text.AlignHCenter
+                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
+                        }
+                        IconSvg {
+                            width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.66 : 0.3)
+                            height: width*0.1797
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             source: "qrc:/assets/tutorial/welcome-limits.svg"
@@ -243,27 +296,36 @@ Rectangle {
                         }
                         Text {
                             anchors.right: parent.right
-                            anchors.rightMargin: 32
+                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
-                            anchors.leftMargin: 32
+                            anchors.leftMargin: tutorialPages.margins
 
-                            text: qsTr("Set <b>limits</b> like <b>optimal moisture level</b> or <b>temperature range</b> and more depending on available sensors metrics.")
+                            text: qsTr("You can always customize <b>limits</b> (like <b>moisture level</b> or <b>temperature range</b>) to your liking.")
                             textFormat: Text.StyledText
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: Theme.fontSizeContentBig
+                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
+                        }
+                        ButtonWireframe {
+                            anchors.horizontalCenter: parent.horizontalCenter
+                            fullColor: true
+                            primaryColor: Theme.colorHeaderHighlight
+                            text: qsTr("Let's start!")
+                            onClicked: tutorialPages.currentIndex++
                         }
                     }
                 }
+
+                ////////
             }
 
-            ////////
+            ////////////////
 
             Text {
                 id: pagePrevious
                 anchors.left: parent.left
-                anchors.leftMargin: 32
+                anchors.leftMargin: tutorialPages.margins
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
                 visible: (tutorialPages.currentIndex !== 0)
@@ -282,6 +344,7 @@ Rectangle {
                     hoverEnabled: true
                     onEntered: parent.opacity = 1
                     onExited: parent.opacity = 0.8
+                    onCanceled: parent.opacity = 0.8
                     onClicked: tutorialPages.currentIndex--
                 }
             }
@@ -290,7 +353,7 @@ Rectangle {
                 id: pageIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: 16
+                anchors.bottomMargin: tutorialPages.margins/2
 
                 count: tutorialPages.count
                 currentIndex: tutorialPages.currentIndex
@@ -299,10 +362,10 @@ Rectangle {
             Text {
                 id: pageNext
                 anchors.right: parent.right
-                anchors.rightMargin: 32
+                anchors.rightMargin: tutorialPages.margins
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
-                text: (tutorialPages.currentIndex === tutorialPages.count-1) ? qsTr("All right!") : qsTr("Next")
+                text: (tutorialPages.currentIndex === tutorialPages.count-1) ? qsTr("Start") : qsTr("Next")
                 textFormat: Text.PlainText
                 color: Theme.colorHeaderContent
                 font.bold: true
@@ -316,9 +379,12 @@ Rectangle {
                     hoverEnabled: true
                     onEntered: parent.opacity = 1
                     onExited: parent.opacity = 0.8
+                    onCanceled: parent.opacity = 0.8
                     onClicked: tutorialPages.currentIndex++
                 }
             }
+
+            ////////////////
         }
     }
 }

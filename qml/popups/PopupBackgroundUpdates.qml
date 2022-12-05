@@ -164,7 +164,7 @@ Popup {
                     Text {
                         width: parent.width
                         text: qsTr("Your phone will do its best to prevent this application from running in the background.") + "<br>" +
-                              qsTr("Some settings needs to be switched <b>manually</b> from the Android <b>application info panel</b>:")
+                              qsTr("Some settings need to be switched <b>manually</b> from the Android <b>application info panel</b>:")
                         textFormat: Text.StyledText
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorSubText

@@ -528,10 +528,10 @@ Item {
 
         Row {
             anchors.left: parent.left
-            anchors.leftMargin: 8
+            anchors.leftMargin: 6
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 8
-            spacing: 8
+            anchors.bottomMargin: 6
+            spacing: 6
 
             RoundButtonIcon {
                 width: 34
