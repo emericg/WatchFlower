@@ -45,7 +45,7 @@ AndroidService::AndroidService(QObject *parent) : QObject(parent)
     m_settingsManager = SettingsManager::getInstance();
 
     //m_notificationManager = NotificationManager::getInstance(); // DEBUG
-    //m_notificationManager->setNotification2("AndroidService starting", QDateTime::currentDateTime().toString());
+    //m_notificationManager->setNotification("AndroidService starting", QDateTime::currentDateTime().toString());
 
     // Configure update timer
     connect(&m_workTimer, &QTimer::timeout, this, &AndroidService::gotowork);
@@ -68,7 +68,7 @@ void AndroidService::setWorkTimer(int workInterval_mins)
 void AndroidService::gotowork()
 {
     //m_notificationManager = NotificationManager::getInstance(); // DEBUG
-    //m_notificationManager->setNotification2("AndroidService gotowork", QDateTime::currentDateTime().toString());
+    //m_notificationManager->setNotification("AndroidService gotowork", QDateTime::currentDateTime().toString());
 
     // Reload settings, user might have changed them
     m_settingsManager->reloadSettings();

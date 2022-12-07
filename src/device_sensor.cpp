@@ -87,9 +87,12 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
         {
             QString title;
             QString message;
+            int channel = 1;
 
             if (isPlantSensor())
             {
+                channel = 1;
+
                 // 'water me' notification // Only if the sensor has a plant
                 if (m_soilMoisture > 0 && m_soilMoisture < m_soilMoisture_limit_min)
                 {
@@ -104,8 +107,15 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                 }
             }
 
+            if (isThermometer())
+            {
+                channel = 2;
+            }
+
             if (isEnvironmentalSensor())
             {
+                channel = 3;
+
                 // 'ventilate' notification
                 if ((hasVocSensor() && m_voc > 1000) ||
                     (hasHchoSensor() && m_hcho > 1000) ||
@@ -127,7 +137,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
             // Send notification
             if (!title.isEmpty() && !message.isEmpty())
             {
-                nm->setNotification2(title, message);
+                nm->setNotification(title, message, channel);
             }
         }
     }

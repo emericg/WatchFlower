@@ -59,18 +59,7 @@ NotificationManager::~NotificationManager()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void NotificationManager::setNotification(const QString &message, int channel)
-{
-    //if (m_notification == notification) return;
-
-    m_message = message;
-    m_title = "";
-    m_channel = channel;
-
-    Q_EMIT notificationChanged();
-}
-
-void NotificationManager::setNotification2(const QString &title, const QString &message, int channel)
+void NotificationManager::setNotification(const QString &title, const QString &message, int channel)
 {
     //if (m_title == title && m_notification == notification) return;
 
@@ -81,9 +70,15 @@ void NotificationManager::setNotification2(const QString &title, const QString &
     Q_EMIT notificationChanged();
 }
 
-QString NotificationManager::getNotification() const
+void NotificationManager::setNotificationShort(const QString &message)
 {
-    return m_message;
+    //if (m_notification == notification) return;
+
+    m_message = message;
+    m_title = "";
+    m_channel = 0;
+
+    Q_EMIT notificationChanged();
 }
 
 /* ************************************************************************** */
@@ -110,13 +105,15 @@ void NotificationManager::updateNotificationAndroid()
 #if defined(Q_OS_ANDROID)
     QJniObject javaTitle = QJniObject::fromString(m_title);
     QJniObject javaMessage = QJniObject::fromString(m_message);
+    jint javaChannel = m_channel;
 
     QJniObject::callStaticMethod<void>(
                     "com/emeric/watchflower/WatchFlowerAndroidNotifier",
                     "notify",
-                    "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V",
+                    "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;I)V",
                     QNativeInterface::QAndroidApplication::context(),
                     javaTitle.object<jstring>(),
-                    javaMessage.object<jstring>());
+                    javaMessage.object<jstring>(),
+                    javaChannel);
 #endif
 }

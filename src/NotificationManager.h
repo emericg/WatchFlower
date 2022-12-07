@@ -34,7 +34,7 @@ class NotificationManager : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString notification READ getNotification WRITE setNotification NOTIFY notificationChanged)
+    Q_PROPERTY(QString notification READ getNotificationShort WRITE setNotificationShort NOTIFY notificationChanged)
 
     static NotificationManager *instance;
 
@@ -44,9 +44,10 @@ class NotificationManager : public QObject
 public:
     static NotificationManager *getInstance();
 
-    void setNotification(const QString &message, int channel = 0);
-    void setNotification2(const QString &title, const QString &message, int channel = 0);
-    QString getNotification() const;
+    void setNotification(const QString &title, const QString &message, int channel = 0);
+
+    void setNotificationShort(const QString &message);
+    QString getNotificationShort() const { return m_message; }
 
 signals:
     void notificationChanged();

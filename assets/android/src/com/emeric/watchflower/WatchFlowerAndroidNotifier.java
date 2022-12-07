@@ -34,11 +34,38 @@ import android.graphics.Color;
 
 public class WatchFlowerAndroidNotifier {
 
-    private static String channelId = "WatchFlower";
-    private static String channelName = "WatchFlower Notifier";
+    private static String channelId = "watchflower_app";
+    private static String channelName = "WatchFlower";
+    private static int channelColor = Color.WHITE;
     private static int channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
 
-    public static void notify(Context context, String title, String message) {
+    public static void notify(Context context, String title, String message, int channel) {
+
+        if (channel == 0) {
+            channelId = "watchflower_app";
+            channelName = "app notifications";
+            channelColor = Color.WHITE;
+            channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
+        }
+        if (channel == 1) {
+            channelId = "watchflower_plant";
+            channelName = "plant notifications";
+            channelColor = Color.BLUE;
+            channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
+        }
+        if (channel == 2) {
+            channelId = "watchflower_thermometer";
+            channelName = "thermometer notifications";
+            channelColor = Color.GREEN;
+            channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
+        }
+        if (channel == 3) {
+            channelId = "watchflower_environmental";
+            channelName = "environmental notifications";
+            channelColor = Color.YELLOW;
+            channelImportance = NotificationManager.IMPORTANCE_HIGH;
+        }
+
         try {
             //Context context = getApplicationContext();
             NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -47,12 +74,12 @@ public class WatchFlowerAndroidNotifier {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, channelImportance);
                 notificationChannel.enableLights(true);
+                notificationChannel.setLightColor(channelColor);
                 notificationChannel.enableVibration(false);
-                notificationChannel.setLightColor(Color.GREEN);
                 //notificationChannel.setVibrationPattern(new long[]{500,500,500,500,500});
                 notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-                notificationManager.createNotificationChannel(notificationChannel);
 
+                notificationManager.createNotificationChannel(notificationChannel);
                 builder = new Notification.Builder(context, notificationChannel.getId());
             } else {
                 builder = new Notification.Builder(context);
@@ -69,11 +96,14 @@ public class WatchFlowerAndroidNotifier {
             //builder.setColor(Color.WHITE);
             builder.setContentTitle(title);
             builder.setContentText(message);
+            builder.setWhen(System.currentTimeMillis());
+            builder.setShowWhen(true);
             builder.setContentIntent(resultPendingIntent);
             builder.setDefaults(Notification.DEFAULT_SOUND);
+            builder.setOnlyAlertOnce(true);
             builder.setAutoCancel(true);
 
-            notificationManager.notify(0, builder.build());
+            notificationManager.notify(channel, builder.build());
         } catch (Exception e) {
             e.printStackTrace();
         }
