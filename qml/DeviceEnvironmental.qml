@@ -186,11 +186,12 @@ Loader {
                 primary = currentDevice.getSetting("primary")
             } else {
                 if (currentDevice.hasVocSensor) primary = "voc"
+                else if (currentDevice.hasCoSensor) primary = "co"
                 else if (currentDevice.hasCo2Sensor) primary = "co2"
                 else if (currentDevice.hasPM25Sensor) primary = "pm25"
                 else if (currentDevice.hasPM10Sensor) primary = "pm10"
                 else if (currentDevice.hasHchoSensor) primary = "hcho"
-                else if (currentDevice.hasGeigerCounter) primary = "nuclear"
+                else if (currentDevice.hasGeigerCounter) primary = "radioactivity"
                 else primary = "hygrometer"
             }
 
@@ -225,6 +226,7 @@ Loader {
             if (currentDevice.hasPM10Sensor) itemCount_AirMonitor++
             if (currentDevice.hasVocSensor) itemCount_AirMonitor++
             if (currentDevice.hasHchoSensor) itemCount_AirMonitor++
+            if (currentDevice.hasCoSensor) itemCount_AirMonitor++
             if (currentDevice.hasCo2Sensor) itemCount_AirMonitor++
             if (itemCount_AirMonitor > 3) itemCount_AirMonitor = 3
             airFlow.updateSize()
@@ -254,8 +256,8 @@ Loader {
             updateHeader()
             updateData()
 
-            if (isMobile) mobileMenu.setActiveDeviceData()
-            if (isDesktop) appHeader.setActiveDeviceData()
+            mobileMenu.setActiveDeviceData()
+            appHeader.setActiveDeviceData()
         }
 
         function loadIndicator() {
@@ -314,50 +316,43 @@ Loader {
             if (!currentDevice.isEnvironmentalSensor) return
             //console.log("DeviceEnvironmental // updateHeader() >> " + currentDevice)
 
-            //indicatorDisconnected.visible = !currentDevice.hasDataToday
             //indicatorAirQuality.visible = isAirMonitor && currentDevice.hasDataToday
             //indicatorRadioactivity.visible = isGeigerCounter && currentDevice.hasDataToday
             //indicatorHygrometer.visible = isWeatherStation && currentDevice.hasDataToday
 
             // Indicators
             if (primary === "hygrometer") {
-                //indicatorAirQuality.visible = false
-                //indicatorRadioactivity.visible = false
-                //indicatorHygrometer.visible = true
 
-                if (currentDevice.temperatureC < -40) {
-                    sensorTemp.visible = false
-                    heatIndex.visible = false
-                    sensorHygro.visible = false
-                } else {
-                    if (currentDevice.temperatureC >= -40) {
-                        sensorTemp.text = currentDevice.getTempString()
-                        sensorTemp.visible = true
-                    }
-                    if (currentDevice.humidity >= 0) {
+                if (currentDevice.hasTemperatureSensor && currentDevice.temperatureC >= -40) {
+                    sensorTemp.text = currentDevice.getTempString()
+                    sensorTemp.visible = true
+                }
+
+                if (currentDevice.hasHumiditySensor) {
+                    if (currentDevice.humidity >= 0 && currentDevice.humidity <= 100) {
                         sensorHygro.text = currentDevice.humidity.toFixed(0) + "% " + qsTr("humidity")
                         sensorHygro.visible = true
-                    }
-                    if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
-                        if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
-                            heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
-                            heatIndex.visible = true
+
+                        if (currentDevice.temperatureC >= 27 && currentDevice.humidity >= 40) {
+                            if (currentDevice.getHeatIndex() > (currentDevice.temperature + 1)) {
+                                heatIndex.text = qsTr("feels like %1").arg(currentDevice.getHeatIndexString())
+                                heatIndex.visible = true
+                            } else {
+                                heatIndex.visible = false
+                            }
                         } else {
                             heatIndex.visible = false
                         }
-                    } else {
-                        heatIndex.visible = false
+
+                        if (currentDevice.deviceIsOutside) {
+                            dewPoint.text = qsTr("dew point %1").arg(currentDevice.getDewPointString())
+                            dewPoint.visible = true
+                        }
                     }
                 }
             } else if (primary === "barometer") {
-                //indicatorAirQuality.visible = false
-                //indicatorRadioactivity.visible = false
-                //indicatorHygrometer.visible = true
+                // TODO
             } else if (isAirMonitor) {
-                //indicatorAirQuality.visible = true
-                //indicatorRadioactivity.visible = false
-                //indicatorHygrometer.visible = false
-
                 if (primary === "voc") indicatorAirQuality.value = currentDevice.voc
                 else if (primary === "hcho") indicatorAirQuality.value = currentDevice.hcho
                 else if (primary === "co2") indicatorAirQuality.value = currentDevice.co2
@@ -370,11 +365,6 @@ Loader {
                 else if (primary === "pm25") indicatorAirQuality.value = currentDevice.pm25
                 else if (primary === "pm10") indicatorAirQuality.value = currentDevice.pm10
             }
-
-            // Battery level
-            //imageBattery.visible = (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
-            //imageBattery.source = UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
-            //imageBattery.color = UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
 
             // Status
             updateStatusText()
@@ -489,7 +479,11 @@ Loader {
                         height: width
                         anchors.centerIn: parent
 
-                        visible: (currentDevice && isAirMonitor && currentDevice.hasDataToday)
+                        visible: (currentDevice && currentDevice.hasDataToday &&
+                                  (primary === "voc" || primary === "hcho" ||
+                                   primary === "co" || primary === "co2" ||
+                                   primary === "pm1" || primary === "pm25" || primary === "pm10"))
+
                         color: cccc
                     }
 
@@ -502,7 +496,8 @@ Loader {
                         anchors.centerIn: parent
                         spacing: 2
 
-                        visible: (currentDevice && primary === "hygrometer")
+                        visible: (currentDevice && currentDevice.hasDataToday &&
+                                  (primary === "hygrometer" || primary === "barometer"))
 
                         Text {
                             id: sensorTemp
@@ -512,6 +507,17 @@ Loader {
                             font.pixelSize: isPhone ? 44 : 48
                             color: cccc
                         }
+                        Text {
+                            id: sensorHygro
+                            anchors.horizontalCenter: parent.horizontalCenter
+
+                            font.bold: false
+                            font.pixelSize: isPhone ? 22 : 24
+                            color: cccc
+                            opacity: 0.8
+                        }
+
+                        Item { width: 1; height: 1; } // spacer
 
                         Text {
                             id: heatIndex
@@ -521,13 +527,12 @@ Loader {
                             font.pixelSize: isPhone ? 19 : 20
                             color: cccc
                         }
-
                         Text {
-                            id: sensorHygro
+                            id: dewPoint
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             font.bold: false
-                            font.pixelSize: isPhone ? 22 : 24
+                            font.pixelSize: isPhone ? 18 : 19
                             color: cccc
                         }
                     }
@@ -540,7 +545,7 @@ Loader {
                         height: isMobile ? 128 : 160
                         anchors.centerIn: parent
 
-                        visible: (currentDevice && isGeigerCounter && currentDevice.hasDataToday)
+                        visible: (currentDevice && currentDevice.hasDataToday && primary === "radioactivity")
                         color: cccc
                         source: "qrc:/assets/icons_custom/nuclear_icon_big.svg"
 
@@ -558,6 +563,28 @@ Loader {
                             OpacityAnimator { from: indicatorRadioactivity.minOpacity; to: indicatorRadioactivity.maxOpacity; duration: indicatorRadioactivity.duration }
                             OpacityAnimator { from: indicatorRadioactivity.maxOpacity; to: indicatorRadioactivity.minOpacity; duration: indicatorRadioactivity.duration }
                         }
+                    }
+
+                    ////////////////
+
+                    IconSvg {
+                        id: imageBattery
+                        width: isPhone ? 20 : 24
+                        height: isPhone ? 32 : 36
+                        rotation: 90
+                        anchors.top: {
+                            if (indicatorAirQuality.visible) return indicatorAirQuality.bottom
+                            if (indicatorHygrometer.visible) return indicatorHygrometer.bottom
+                            if (indicatorRadioactivity.visible) return indicatorRadioactivity.bottom
+                            return indicatorAirQuality.bottom
+                        }
+                        anchors.topMargin: 12
+                        anchors.horizontalCenter: parent.horizontalCenter
+
+                        visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
+                        source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
+                        fillMode: Image.PreserveAspectCrop
+                        color: UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
                     }
                 }
 
@@ -852,7 +879,7 @@ Loader {
                                         precision: 0
                                         onSensorSelection: primary = "hcho"
                                     }
-/*
+
                                     ItemEnvBox {
                                         id: o2
                                         width: airFlow.www
@@ -912,7 +939,7 @@ Loader {
                                         precision: 0
                                         onSensorSelection: primary = "co"
                                     }
-*/
+
                                     ItemEnvBox {
                                         id: co2
                                         width: airFlow.www
@@ -987,7 +1014,7 @@ Loader {
                                         precision: 2
                                         limit_mid: 1
                                         limit_high: 10
-                                        onSensorSelection: primary = "radiation"
+                                        onSensorSelection: primary = "radioactivity"
                                     }
 
                                     ItemEnvBox {
@@ -1000,7 +1027,7 @@ Loader {
                                         precision: 2
                                         limit_mid: 1
                                         limit_high: 10
-                                        onSensorSelection: primary = "radiation"
+                                        onSensorSelection: primary = "radioactivity"
                                     }
                                 }
 
@@ -1067,7 +1094,7 @@ Loader {
                                         icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
                                         value: currentDevice.temperature
                                         precision: 1
-                                        //onSensorSelection: primary = "temperature"
+                                        onSensorSelection: primary = "hygrometer"
                                     }
                                     ItemWeatherBox {
                                         id: humi
@@ -1080,7 +1107,7 @@ Loader {
                                         icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
                                         value: currentDevice.humidity
                                         precision: 0
-                                        //onSensorSelection: primary = "humidity"
+                                        onSensorSelection: primary = "hygrometer"
                                     }
                                     ItemWeatherBox {
                                         id: pres

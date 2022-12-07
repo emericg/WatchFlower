@@ -211,8 +211,8 @@ Loader {
             plantSensorCare.updateHeader()
             plantSensorCare.updateLimits()
 
-            if (isMobile) mobileMenu.setActiveDeviceData()
-            if (isDesktop) appHeader.setActiveDeviceData()
+            mobileMenu.setActiveDeviceData()
+            appHeader.setActiveDeviceData()
         }
 
         ////////////////////////////////////////////////////////////////////////

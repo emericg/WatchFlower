@@ -70,10 +70,19 @@ Item {
                 else
                     loaderIndicators.sourceComponent = componentText_1l
             } else if (boxDevice.isEnvironmentalSensor) {
-                if (boxDevice.deviceName === "GeigerCounter")
-                    loaderIndicators.sourceComponent = componentText_1l
-                else
-                    loaderIndicators.sourceComponent = componentEnvironmentalGauge
+                if (boxDevice.hasSetting("primary")) {
+                    var primary = boxDevice.getSetting("primary")
+                    if (primary === "hygrometer") {
+                        if (boxDevice.hasHumiditySensor)
+                            loaderIndicators.sourceComponent = componentText_2l
+                        else
+                            loaderIndicators.sourceComponent = componentText_1l
+                    } else if (primary === "radioactivity") {
+                        loaderIndicators.sourceComponent = componentText_1l
+                    } else {
+                        loaderIndicators.sourceComponent = componentEnvironmentalGauge
+                    }
+                }
             }
 
             if (loaderIndicators.item) {
@@ -311,7 +320,7 @@ Item {
                     }
 
                     // regular click
-                    if (boxDevice.isDataAvailable()) {
+                    //if (boxDevice.isDataAvailable()) {
                         selectedDevice = boxDevice
 
                         if (boxDevice.isPlantSensor) {
@@ -324,7 +333,7 @@ Item {
                             screenDeviceEnvironmental.loadDevice(boxDevice)
                             appContent.state = "DeviceEnvironmental"
                         }
-                    }
+                    //}
                 }
 
                 if (mouse.button === Qt.MiddleButton) {
@@ -772,13 +781,26 @@ Item {
             function initData() { }
 
             function updateData() {
-                if (boxDevice.isThermometer) {
-                    text.text = boxDevice.temperature.toFixed(1)
-                    unit.text = "°"
-                } else if (boxDevice.isEnvironmentalSensor) {
+                if (boxDevice.isEnvironmentalSensor) {
                     if (boxDevice.hasGeigerCounter) {
                         text.text = boxDevice.radioactivityH.toFixed(2)
                         unit.text = qsTr("µSv/h")
+                    } else if (boxDevice.hasTemperatureSensor) {
+                        text.text = boxDevice.temperature.toFixed(1)
+                        unit.text = "°"
+                    }
+                } else {
+                    if (boxDevice.hasTemperatureSensor) {
+                        text.text = boxDevice.temperature.toFixed(1)
+                        unit.text = "°"
+                    }
+                    else if (boxDevice.hasHumiditySensor) {
+                        text.text = boxDevice.humidity.toFixed(0)
+                        unit.text = "%"
+                    }
+                    else if (boxDevice.hasPressureSensor) {
+                        text.text = boxDevice.pressure.toFixed(0)
+                        unit.text = "hPa"
                     }
                 }
             }
@@ -816,15 +838,8 @@ Item {
             function initData() { }
 
             function updateData() {
-                if (boxDevice.isThermometer) {
-                    textOne.text = boxDevice.temperature.toFixed(1) + "°"
-                    if (boxDevice.humidity > 0) textTwo.text = boxDevice.humidity.toFixed(0) + "%"
-                } else if (boxDevice.isEnvironmentalSensor) {
-                    //
-                } else {
-                    textOne.text = boxDevice.temperature.toFixed(1) + "°"
-                    textTwo.text = boxDevice.humidity.toFixed(0) + "%"
-                }
+                if (boxDevice.temperature > -40) textOne.text = boxDevice.temperature.toFixed(1) + "°"
+                if (boxDevice.humidity > 0) textTwo.text = boxDevice.humidity.toFixed(0) + "%"
             }
 
             Text {

@@ -154,8 +154,8 @@ Loader {
             updateHeader()
             updateData()
 
-            if (isMobile) mobileMenu.setActiveDeviceData()
-            if (isDesktop) appHeader.setActiveDeviceData()
+            mobileMenu.setActiveDeviceData()
+            appHeader.setActiveDeviceData()
         }
 
         function updateHeader() {

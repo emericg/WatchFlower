@@ -72,6 +72,7 @@ ApplicationWindow {
         signal deviceHistoryButtonClicked()
         signal devicePlantButtonClicked()
         signal deviceSettingsButtonClicked()
+        function setActiveDeviceData() {}
     }
 
     // Events handling /////////////////////////////////////////////////////////

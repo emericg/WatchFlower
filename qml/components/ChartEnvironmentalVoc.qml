@@ -231,9 +231,9 @@ Item {
 
                                     y: {
                                         if (valueMean >= scaleMax) return 1
-                                        return barItem.height - ((valueMean / scaleMax) * barItem.height)
+                                        return (parent.height - ((valueMean / scaleMax) * parent.height))
                                     }
-                                    visible: valueMean > 0
+                                    visible: (valueMean > 0)
                                     width: parent.width - 2
                                     height: width
                                     radius: width

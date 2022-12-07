@@ -360,10 +360,12 @@ ApplicationWindow {
         DeviceThermometer {
             id: screenDeviceThermometer
             anchors.fill: parent
+            anchors.bottomMargin: mobileMenu.hhv
         }
         DeviceEnvironmental {
             id: screenDeviceEnvironmental
             anchors.fill: parent
+            anchors.bottomMargin: mobileMenu.hhv
         }
         Settings {
             id: screenSettings
