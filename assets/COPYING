@@ -8,19 +8,25 @@
 - assets/devices/welcome-*.svg          // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
 
 # Device icons:
+- docs/cgdn1.svg                        // Emeric Grange // CC BY-SA 4.0
 - docs/flowercare.svg                   // Emeric Grange // CC BY-SA 4.0
 - docs/flowercaremax.svg                // Emeric Grange // CC BY-SA 4.0
 - docs/flowerpower.svg                  // Emeric Grange // CC BY-SA 4.0
 - docs/higrow.svg                       // Emeric Grange // CC BY-SA 4.0
 - docs/hygrotemp_alarm.svg              // Emeric Grange // CC BY-SA 4.0
-- docs/hygrotemp_clock.svg              // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_cgd1.svg               // Emeric Grange // CC BY-SA 4.0
 - docs/hygrotemp_cgdk2.svg              // Emeric Grange // CC BY-SA 4.0
-- docs/hygrotemp_cgg2.svg               // Emeric Grange // CC BY-SA 4.0
-- docs/hygrotemp_lcd.svg                // Emeric Grange // CC BY-SA 4.0
-- docs/hygrotemp_square_eink.svg        // Emeric Grange // CC BY-SA 4.0
-- docs/hygrotemp_square_lcd.svg         // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_cgg1.svg               // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_cgp1w.svg              // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_clock.svg              // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_lywsd03mmc.svg         // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_lywsdcgq.svg           // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_mhoc401.svg            // Emeric Grange // CC BY-SA 4.0
+- docs/hygrotemp_xmwsdjo4mmc.svg        // Emeric Grange // CC BY-SA 4.0
+- docs/jqjcy01ym.svg                    // Emeric Grange // CC BY-SA 4.0
 - docs/parrotpot.svg                    // Emeric Grange // CC BY-SA 4.0
 - docs/ropot.svg                        // Emeric Grange // CC BY-SA 4.0
+- docs/thermobeacon_diamond.svg         // Emeric Grange // CC BY-SA 4.0
 - docs/thermobeacon_round.svg           // Emeric Grange // CC BY-SA 4.0
 - docs/thermobeacon_square.svg          // Emeric Grange // CC BY-SA 4.0
 - docs/wp6003.svg                       // Emeric Grange // CC BY-SA 4.0
