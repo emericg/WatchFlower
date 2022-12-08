@@ -896,6 +896,8 @@ void DevicePlantSensor::updateChartData_history_thismonth(int maxDays)
     }
 }
 
+/* ************************************************************************** */
+
 void DevicePlantSensor::updateChartData_history_month(int maxDays, const QDateTime &f, const QDateTime &l)
 {
     if (!f.isValid() || !l.isValid()) return;

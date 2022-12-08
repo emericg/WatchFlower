@@ -34,7 +34,7 @@ Item {
 
             arcWidth: (isMobile ? 7 : 10)
             arcBegin: 0
-            arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 2
+            arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 1
             arcOffset: 225
             arcColor: (Theme.currentTheme === ThemeEngine.THEME_PLANT ? Theme.colorLightGreen : Theme.colorGreen)
             arcOpacity: 1
@@ -48,8 +48,8 @@ Item {
             animationValue: false
 
             arcWidth: (isMobile ? 7 : 10)
-            arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 2
-            arcEnd: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) - 2
+            arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 1
+            arcEnd: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) - 1
             arcOffset: 225
             arcColor: Theme.colorOrange
             arcOpacity: 1
@@ -63,7 +63,7 @@ Item {
             animationValue: false
 
             arcWidth: (isMobile ? 7 : 10)
-            arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 2
+            arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 1
             arcEnd: 270
             arcOffset: 225
             arcColor: Theme.colorRed
@@ -76,7 +76,7 @@ Item {
     ProgressCircle { // actual indicator
         id: indicator
         anchors.fill: parent
-        anchors.margins: (isMobile ? 12 : 20)
+        anchors.margins: (isMobile ? 11 : 16)
 
         arcOffset: 225
         arcBegin: 0

@@ -143,7 +143,11 @@ Loader {
         onPrimaryChanged: {
             currentDevice.setSetting("primary", primary)
             loadIndicator()
-            if (graphLoader.status === Loader.Ready) envChart.updateGraph()
+            updateHeader()
+            loadGraph()
+            if (graphLoader.status === Loader.Ready) {
+                updateGraph()
+            }
         }
 
         ////////
@@ -394,16 +398,20 @@ Loader {
 
         function loadGraph() {
             if (isAirMonitor) {
-                if (currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor ||
+                if (currentDevice.hasPM1Sensor || currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor ||
                     currentDevice.hasVocSensor || currentDevice.hasHchoSensor ||
-                    currentDevice.hasCo2Sensor) {
-                    if (graphLoader.status !== Loader.Ready) {
-                        graphLoader.source = "ChartEnvironmentalVoc.qml"
+                    currentDevice.hasCoSensor || currentDevice.hasCo2Sensor) {
+                    if (primary === "hygrometer") {
+                        graphLoader.source = ""
+                        graphLoader.opacity = 0
                     } else {
-                        envChart.loadGraph()
-                        envChart.updateGraph()
+                        if (graphLoader.status !== Loader.Ready) {
+                            graphLoader.source = "ChartEnvironmentalVoc.qml"
+                        } else {
+                            envChart.loadGraph()
+                            envChart.updateGraph()
+                        }
                     }
-                    graphLoader.visible = true
                 }
             }
         }
@@ -879,7 +887,7 @@ Loader {
                                         precision: 0
                                         onSensorSelection: primary = "hcho"
                                     }
-
+/*
                                     ItemEnvBox {
                                         id: o2
                                         width: airFlow.www
@@ -939,7 +947,7 @@ Loader {
                                         precision: 0
                                         onSensorSelection: primary = "co"
                                     }
-
+*/
                                     ItemEnvBox {
                                         id: co2
                                         width: airFlow.www

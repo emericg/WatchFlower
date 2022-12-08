@@ -69,7 +69,7 @@ Item {
 
                     asynchronous: true
                     smooth: true
-                    opacity: 0.15
+                    opacity: 0.75
                     color: Theme.colorIcon
                     fillMode: Image.PreserveAspectFit
 

@@ -968,8 +968,9 @@ Item {
             ProgressArc {
                 id: gaugeValue
                 anchors.fill: parent
+                anchors.margins: isPhone ? 0 : 2
 
-                arcWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
+                arcWidth: isPhone ? 8 : (bigAssMode ? 10 : 8)
                 arcSpan: 270
 
                 from: 0

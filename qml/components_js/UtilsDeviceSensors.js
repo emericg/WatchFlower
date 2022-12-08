@@ -24,8 +24,8 @@ function isDeviceSupported(deviceName) {
         deviceName === "GeigerCounter")
         return true
 
-    if (deviceName.startWith("Flower power") || deviceName.startWith("Parrot pot") ||
-        deviceName.startWith("6003#"))
+    if (deviceName.startsWith("Flower power") || deviceName.startsWith("Parrot pot") ||
+        deviceName.startsWith("6003#"))
         return true
 
     return false
