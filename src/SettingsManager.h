@@ -305,8 +305,11 @@ public:
     void setMqttTopics(const QString &value);
 
     // Utils
-    Q_INVOKABLE void reloadSettings();
+    Q_INVOKABLE QString getSettingsDirectory();
     Q_INVOKABLE void resetSettings();
+    Q_INVOKABLE bool saveSettings();
+    Q_INVOKABLE bool restoreSettings();
+    void reloadSettings();
 };
 
 /* ************************************************************************** */

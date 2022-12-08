@@ -69,6 +69,34 @@ DatabaseManager::~DatabaseManager()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+QString DatabaseManager::getDatabaseDirectory()
+{
+    return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+}
+
+bool DatabaseManager::saveDatabase()
+{
+    // database dir
+    QString internalPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir internalDir(internalPath);
+
+    // save dir
+    QString externalPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+    QDir externalDir(externalPath);
+    if (!externalDir.exists()) externalDir.mkpath(externalPath);
+
+    return QFile::copy(internalPath + "/data.db",
+                       externalPath + "/watchflower_database_" + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ ".db");
+}
+
+bool DatabaseManager::restoreDatabase()
+{
+    return false;
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
 bool DatabaseManager::openDatabase_sqlite()
 {
     if (QSqlDatabase::isDriverAvailable("QSQLITE"))

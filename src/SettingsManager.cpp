@@ -27,6 +27,10 @@
 #include <QLocale>
 #include <QDebug>
 
+#include <QStandardPaths>
+#include <QDir>
+#include <QFile>
+
 /* ************************************************************************** */
 
 SettingsManager *SettingsManager::instance = nullptr;
@@ -49,6 +53,35 @@ SettingsManager::SettingsManager()
 SettingsManager::~SettingsManager()
 {
     //
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+QString SettingsManager::getSettingsDirectory()
+{
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    return settings.fileName();
+}
+
+bool SettingsManager::saveSettings()
+{
+    // settings file?
+    QSettings settings(QCoreApplication::organizationName(), QCoreApplication::applicationName());
+    QString internalPath = settings.fileName();
+
+    // save dir
+    QString externalPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+    QDir externalDir(externalPath);
+    if (!externalDir.exists()) externalDir.mkpath(externalPath);
+
+    return QFile::copy(internalPath,
+                       externalPath + "/watchflower_settings_" + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ ".ini");
+}
+
+bool SettingsManager::restoreSettings()
+{
+    return false;
 }
 
 /* ************************************************************************** */

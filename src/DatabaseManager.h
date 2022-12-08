@@ -47,7 +47,6 @@ class DatabaseManager: public QObject
     void closeDatabase();
 
     void createDatabase();
-    void resetDatabase();
     void deleteDatabase();
 
     bool tableExists(const QString &tableName);
@@ -65,6 +64,11 @@ public:
 
     Q_INVOKABLE bool hasDatabaseInternal() const { return m_dbInternalOpen; }
     Q_INVOKABLE bool hasDatabaseExternal() const { return m_dbExternalOpen; }
+
+    Q_INVOKABLE QString getDatabaseDirectory();
+    Q_INVOKABLE void resetDatabase();
+    Q_INVOKABLE bool saveDatabase();
+    Q_INVOKABLE bool restoreDatabase();
 };
 
 /* ************************************************************************** */
