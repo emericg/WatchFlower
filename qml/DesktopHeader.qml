@@ -367,7 +367,10 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (!singleColumn && menuDevice.visible)
+            visible: (!singleColumn && menuDevice.visible &&
+                      (buttonRefreshHistory.visible ||
+                       buttonRefreshRealtime.visible ||
+                       buttonRefreshData.visible))
         }
 
         // DEVICE MENU //////////

@@ -304,7 +304,7 @@ Loader {
                     anchors.rightMargin: 12
 
                     topPadding: -12
-                    bottomPadding: isDesktop ? 12 : 0
+                    bottomPadding: 0
                     visible: element_appThemeAuto.visible
 
                     text: settingsManager.appThemeAuto ?
@@ -365,6 +365,25 @@ Loader {
                         checked: settingsManager.splitView
                         onClicked: settingsManager.splitView = checked
                     }
+                }
+                Text {
+                    id: legend_splitView
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.right: parent.right
+                    anchors.rightMargin: 12
+
+                    topPadding: -12
+                    bottomPadding: isDesktop ? 12 : 0
+                    visible: element_splitView.visible
+
+                    text: settingsManager.splitView ?
+                              qsTr("Devices will be split into categories (plant sensors, thermometers, air quality monitors)") :
+                              qsTr("Devices will be shown together.")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContentSmall
                 }
 
                 ////////
