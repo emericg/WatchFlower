@@ -164,7 +164,7 @@ Drawer {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            appContent.state = "Settings"
+                            screenSettings.loadScreen()
                             appDrawer.close()
                         }
                     }
@@ -202,7 +202,7 @@ Drawer {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            appContent.state = "About"
+                            screenAbout.loadScreen()
                             appDrawer.close()
                         }
                     }

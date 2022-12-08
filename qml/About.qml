@@ -4,15 +4,29 @@ import QtQuick.Controls 2.15
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
-Item {
+Loader {
     id: aboutScreen
-    width: 480
-    height: 720
-    anchors.fill: parent
+
+    function loadScreen() {
+        // load screen
+        aboutScreen.active = true
+        //aboutScreen.item.loadScreen()
+
+        // change screen
+        appContent.state = "About"
+    }
+
+    function backAction() {
+        if (aboutScreen.status === Loader.Ready)
+            aboutScreen.item.backAction()
+    }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Flickable {
+    active: false
+
+    asynchronous: false
+    sourceComponent: Flickable {
         anchors.fill: parent
         contentWidth: parent.width
         contentHeight: column.height

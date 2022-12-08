@@ -137,7 +137,7 @@ Rectangle {
             colorHighlight: Theme.colorTabletmenuHighlight
 
             selected: (appContent.state === "Settings")
-            onClicked: appContent.state = "Settings"
+            onClicked: screenSettings.loadScreen()
         }
         MobileMenuItem_horizontal {
             id: menuAbout
@@ -150,7 +150,7 @@ Rectangle {
             colorHighlight: Theme.colorTabletmenuHighlight
 
             selected: (appContent.state === "About" || appContent.state === "Permissions")
-            onClicked: appContent.state = "About"
+            onClicked: screenAbout.loadScreen()
         }
     }
 

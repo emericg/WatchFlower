@@ -162,21 +162,21 @@ ApplicationWindow {
         }
 
         function onPlantsButtonClicked() { appContent.state = "DeviceList" }
-        function onSettingsButtonClicked() { appContent.state = "Settings" }
-        function onAboutButtonClicked() { appContent.state = "About" }
+        function onSettingsButtonClicked() { screenSettings.loadScreen() }
+        function onAboutButtonClicked() { screenAbout.loadScreen() }
     }
 
     Connections {
         target: systrayManager
         function onSensorsClicked() { appContent.state = "DeviceList" }
-        function onSettingsClicked() { appContent.state = "Settings" }
+        function onSettingsClicked() { screenSettings.loadScreen() }
     }
 
     Connections {
         target: menubarManager
         function onSensorsClicked() { appContent.state = "DeviceList" }
-        function onSettingsClicked() { appContent.state = "Settings" }
-        function onAboutClicked() { appContent.state = "About" }
+        function onSettingsClicked() { screenSettings.loadScreen() }
+        function onAboutClicked() { screenAbout.loadScreen() }
         function onTutorialClicked() { screenTutorial.loadScreenFrom(appContent.state) }
     }
 
@@ -316,7 +316,7 @@ ApplicationWindow {
     }
     Shortcut {
         sequence: StandardKey.Preferences
-        onActivated: appContent.state = "Settings"
+        onActivated: screenSettings.loadScreen()
     }
     Shortcut {
         sequences: [StandardKey.Close]
