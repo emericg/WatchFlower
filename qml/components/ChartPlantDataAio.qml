@@ -324,10 +324,11 @@ Item {
 
         // set date & time
         var date = new Date(verticalIndicator.clickedCoordinates.x)
-        var date_string = date.toLocaleDateString()
+        var date_string = date.toLocaleDateString(Qt.locale(), Locale.ShortFormat)
+        var time_string = date.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+
         //: "at" is used for DATE at HOUR
-        var time_string = qsTr("at") + " " + UtilsNumber.padNumber(date.getHours(), 2) + ":" + UtilsNumber.padNumber(date.getMinutes(), 2)
-        dateIndicator.text = date_string + " " + time_string
+        dateIndicator.text = date_string + " " + qsTr("at") + " " + time_string
 
         // search index corresponding to the timestamp
         var x1 = -1

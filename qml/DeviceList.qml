@@ -72,7 +72,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property int selectionCount
+    property int selectionCount: 0
 
     function isSelected() {
         if (loaderDeviceList.status !== Loader.Ready) return false

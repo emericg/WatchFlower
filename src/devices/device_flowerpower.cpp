@@ -385,7 +385,9 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                 m_temperature > -10.f && m_temperature < 100.f &&
                 m_luminosityLux >= 0 && m_luminosityLux < 200000)
             {
-                // Sometimes, Parrot devices send obviously wrong data over BLE (while they are warming up?)
+                // Sometimes, Parrot devices send obviously wrong data over BLE
+                // Maybe the sensor is warming up?
+                qWarning() << "Parrot sensor values error";
             }
 
             m_lastUpdate = QDateTime::currentDateTime();

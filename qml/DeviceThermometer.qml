@@ -153,6 +153,7 @@ Loader {
             loadGraph()
             updateHeader()
             updateData()
+            sensorSettings.updateHeader()
 
             mobileMenu.setActiveDeviceData()
             appHeader.setActiveDeviceData()
@@ -573,7 +574,7 @@ Loader {
                 }
 
                 DevicePlantSensorSettings {
-                    id: plantSensorSettings
+                    id: sensorSettings
                 }
             }
         }

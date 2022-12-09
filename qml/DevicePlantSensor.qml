@@ -210,6 +210,7 @@ Loader {
             plantSensorCare.loadData()
             plantSensorCare.updateHeader()
             plantSensorCare.updateLimits()
+            plantSensorSettings.updateHeader()
 
             mobileMenu.setActiveDeviceData()
             appHeader.setActiveDeviceData()

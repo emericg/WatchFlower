@@ -13,6 +13,8 @@ Flickable {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("PlantCareLimits // updateLimits() >> " + currentDevice)
 
+        plantCareLimits.contentY = 0
+
         itemHygro.visible = currentDevice.hasSoilMoistureSensor
         itemCondu.visible = currentDevice.hasSoilConductivitySensor
         itemTemp.visible = currentDevice.hasTemperatureSensor

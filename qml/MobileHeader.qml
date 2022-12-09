@@ -181,7 +181,7 @@ Rectangle {
                 visible: (deviceManager.bluetooth &&
                           (appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceThermometer" ||
-                           (appContent.state === "DeviceEnvironmental" && selectedDevice.hasBluetoothConnection)))
+                           appContent.state === "DeviceEnvironmental"))
 
                 onClicked: {
                     rightMenuClicked()

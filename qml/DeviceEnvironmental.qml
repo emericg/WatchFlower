@@ -259,6 +259,7 @@ Loader {
             updateGraph()
             updateHeader()
             updateData()
+            sensorSettings.updateHeader()
 
             mobileMenu.setActiveDeviceData()
             appHeader.setActiveDeviceData()
@@ -807,17 +808,18 @@ Loader {
                                     function updateSize() {
                                         var availableWidth = swipeBox.width - (anchors.leftMargin + anchors.rightMargin)
                                         var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                        if (cellColumnsTarget >= itemCount_AirMonitor) {
-                                            www = (availableWidth - (spacing * itemCount_AirMonitor)) / itemCount_AirMonitor
-                                            if (www > wwwMax) www = wwwMax
-                                        } else {
+                                        if (itemCount_AirMonitor >= cellColumnsTarget) {
                                             www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
+                                        } else {
+                                            www = (availableWidth - (spacing * itemCount_AirMonitor)) / itemCount_AirMonitor
                                         }
-                                        //console.log("--- wwww: " + www)
+                                        if (www > (availableWidth/2)) www = (availableWidth/2)
+                                        if (www > wwwMax) www = wwwMax
+                                        //console.log("--- airFlow cellWidth: " + www)
                                     }
 
                                     property int wwwTarget: isPhone ? 96 : 140
-                                    property int wwwMax: 200
+                                    property int wwwMax: 240
                                     property int www: wwwTarget
 
                                     ItemEnvBox {
@@ -999,13 +1001,14 @@ Loader {
                                     function updateSize() {
                                         var availableWidth = swipeBox.width - (anchors.leftMargin + anchors.rightMargin)
                                         var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                        if (cellColumnsTarget >= itemCount_GeigerCounter) {
-                                            www = (availableWidth - (spacing * itemCount_GeigerCounter)) / itemCount_GeigerCounter
-                                            if (www > wwwMax) www = wwwMax
-                                        } else {
+                                        if (itemCount_GeigerCounter >= cellColumnsTarget) {
                                             www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
+                                        } else {
+                                            www = (availableWidth - (spacing * itemCount_GeigerCounter)) / itemCount_GeigerCounter
                                         }
-                                        //console.log("--- wwww: " + www)
+                                        if (www > (availableWidth/2)) www = (availableWidth/2)
+                                        if (www > wwwMax) www = wwwMax
+                                        //console.log("--- radFlow cellWidth: " + www)
                                     }
 
                                     property int wwwTarget: 128
@@ -1075,20 +1078,20 @@ Loader {
 
                                     onWidthChanged: updateSize()
                                     function updateSize() {
-                                        var availableWidth = swipeBox.width - (anchors.leftMargin)
+                                        var availableWidth = swipeBox.width - (anchors.leftMargin + anchors.rightMargin)
                                         var cellColumnsTarget = Math.trunc(availableWidth / (wwwTarget + spacing))
-                                        if (cellColumnsTarget >= itemCount_WeatherStation) {
-                                            www = (availableWidth - (spacing * itemCount_WeatherStation)) / itemCount_WeatherStation
-                                            if (www > wwwMax) www = wwwMax
-                                        } else {
+                                        if (itemCount_WeatherStation >= cellColumnsTarget) {
                                             www = (availableWidth - (spacing * cellColumnsTarget)) / cellColumnsTarget
-                                            if (www > wwwMax) www = wwwMax
+                                        } else {
+                                            www = (availableWidth - (spacing * itemCount_WeatherStation)) / itemCount_WeatherStation
                                         }
-                                        //console.log("--- wwww: " + www)
+                                        if (www > (availableWidth/2)) www = (availableWidth/2)
+                                        if (www > wwwMax) www = wwwMax
+                                        //console.log("--- weatherFlow cellWidth: " + www)
                                     }
 
                                     property int wwwTarget: isPhone ? 92 : 128
-                                    property int wwwMax: 160
+                                    property int wwwMax: 240
                                     property int www: wwwTarget
 
                                     ItemWeatherBox {
@@ -1240,7 +1243,7 @@ Loader {
                 ////////////////
 
                 DevicePlantSensorSettings {
-                    id: plantSensorSettings
+                    id: sensorSettings
                 }
 
                 ////////////////
