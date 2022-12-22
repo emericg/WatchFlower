@@ -87,7 +87,9 @@ T.ComboBox {
 
         contentItem: Text {
             leftPadding: control.leftPadding
-            text: modelData
+            text: control.textRole
+                ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole])
+                : modelData
             color: highlighted ? "black" : Theme.colorSubText
             font.pixelSize: Theme.fontSizeComponent
             elide: Text.ElideRight
