@@ -1,7 +1,7 @@
 # ![WatchFlower](assets/android/res/drawable-xhdpi/splashicon.png)
 
 [![GitHub release](https://img.shields.io/github/release/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/releases)
-[![GitHub action](https://img.shields.io/github/workflow/status/emericg/WatchFlower/Desktop%20CI%20builds.svg?style=flat-square)](https://github.com/emericg/WatchFlower/actions)
+[![GitHub action](https://img.shields.io/github/actions/workflow/status/emericg/WatchFlower/builds_desktop.yml?style=flat-square)](https://github.com/emericg/WatchFlower/actions)
 [![GitHub issues](https://img.shields.io/github/issues/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/issues)
 [![GitHub contributors](https://img.shields.io/github/contributors/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/graphs/contributors)
 [![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-brightgreen.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0)
@@ -106,7 +106,7 @@ You will need a C++17 compiler and Qt 6.3+ with the following 'additional librai
 - Qt Connectivity
 - Qt Charts
 
-For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (22+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
+For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (23+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
 For Windows builds, you'll need the MSVC 2019+ compiler. Bluetooth won't work with MinGW.  
 For macOS and iOS builds, you'll need Xcode 12+ installed.  
 
