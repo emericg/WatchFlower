@@ -301,6 +301,7 @@ Item {
         opacity: boxDevice.deviceEnabled ? 1 : 0.66
 
         MouseArea {
+            id: mousearea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
@@ -982,4 +983,6 @@ Item {
             }
         }
     }
+
+    ////////////////
 }

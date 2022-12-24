@@ -74,7 +74,6 @@ Rectangle {
                     id: page1
 
                     Column {
-                        id: column
                         anchors.right: parent.right
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter

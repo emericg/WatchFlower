@@ -47,7 +47,7 @@ Loader {
 
             ////////////////
 
-            Rectangle {
+            Rectangle { // header
                 anchors.left: parent.left
                 anchors.leftMargin: -(screenPaddingLeft + 16)
                 anchors.right: parent.right
@@ -60,13 +60,13 @@ Loader {
                     id: logo
                     anchors.left: parent.left
                     anchors.leftMargin: 16
+                    anchors.verticalCenter: parent.verticalCenter
 
                     z: 2
                     height: 92
                     spacing: 16
 
-                    Image {
-                        id: imageLogo
+                    Image { // logo
                         width: 92
                         height: 92
                         anchors.verticalCenter: parent.verticalCenter
@@ -265,6 +265,7 @@ Loader {
 
                     MouseArea {
                         anchors.fill: parent
+                        anchors.margins: -12
                         acceptedButtons: Qt.NoButton
                         cursorShape: authorTxt.hoveredLink ? Qt.PointingHandCursor : Qt.ArrowCursor
                     }
@@ -337,11 +338,14 @@ Loader {
                     anchors.right: singleColumn ? parent.right : rateTxt.right
                     anchors.rightMargin: singleColumn ? 0 : -24
                     anchors.bottom: parent.bottom
+
                     onClicked: {
                         if (Qt.platform.os === "android")
                             Qt.openUrlExternally("market://details?id=com.emeric.watchflower")
                         else if (Qt.platform.os === "ios")
                             Qt.openUrlExternally("itms-apps://itunes.apple.com/app/1476046123")
+                        else
+                            Qt.openUrlExternally("https://github.com/emericg/WatchFlower/stargazers")
                     }
                 }
             }
@@ -391,7 +395,12 @@ Loader {
                 }
 
                 MouseArea {
-                    anchors.fill: parent
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : tutoTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+
                     onClicked: screenTutorial.loadScreenFrom("About")
                 }
             }
@@ -444,7 +453,12 @@ Loader {
                 }
 
                 MouseArea {
-                    anchors.fill: parent
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : permissionsTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+
                     onClicked: screenPermissions.loadScreenFrom("About")
                 }
             }
@@ -527,7 +541,12 @@ Loader {
                 }
 
                 MouseArea {
-                    anchors.fill: parent
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : releasenotesTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+
                     onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
                 }
             }
@@ -594,7 +613,12 @@ Loader {
                 }
 
                 MouseArea {
-                    anchors.fill: parent
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.right: singleColumn ? parent.right : supportedsensorsTxt.right
+                    anchors.rightMargin: singleColumn ? 0 : -24
+                    anchors.bottom: parent.bottom
+
                     onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
                 }
             }
@@ -794,6 +818,7 @@ Loader {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -804,6 +829,7 @@ Loader {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -814,6 +840,7 @@ Loader {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -824,6 +851,7 @@ Loader {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -834,6 +862,7 @@ Loader {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                     Text {
                         anchors.left: parent.left
@@ -844,6 +873,7 @@ Loader {
                         textFormat: Text.PlainText
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
+                        wrapMode: Text.WordWrap
                     }
                 }
             }
