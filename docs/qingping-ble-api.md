@@ -37,7 +37,8 @@ Multiple measurement can be sent per advertisement message.
 
 | Bytes | Type      | Value             | Description                          |
 | ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | bytes     | 0x0810            | Product ID?                          |
+| 00    | byte      | 0x08              | Brand? Revision?                     |
+| 01    | byte      | 0x10              | Product ID?                          |
 | 02-07 | bytes     | 58:2D:34:12:XX:XX | MAC address                          |
 
 Then each payload element use this format: (and can be chainloaded)
@@ -69,13 +70,15 @@ Example with a CGP1W advertisement message:
 
 | Device       | Product IDs              |
 | ------------ | ------------------------ |
-| CGG1         | 0x0807 / 0x8816          |
-| CGDK2        | 0x0810 / 0x8810          |
-| CGD1         | 0x080C                   |
-| CGDN1        | 0x080E                   |
-| CGP1W        | 0x0809                   |
-| CGPR1        | 0x0812                   |
-| CGH1         | 0x0804 / 0x4804          |
+| CGG1         | 0x01 / 0x07 / 0x16       |
+| CGDK2        | 0x10                     |
+| CGF1W        | 0x15                     |
+| CGD1         | 0x0C                     |
+| CGDN1        | 0x0E                     |
+| CGM1         | 0x0F                     |
+| CGP1W        | 0x09 / 0x24              |
+| CGPR1        | 0x12                     |
+| CGH1         | 0x04                     |
 
 #### Type of measurement
 
