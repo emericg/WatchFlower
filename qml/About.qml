@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -10,7 +10,6 @@ Loader {
     function loadScreen() {
         // load screen
         aboutScreen.active = true
-        //aboutScreen.item.loadScreen()
 
         // change screen
         appContent.state = "About"
@@ -28,7 +27,7 @@ Loader {
     asynchronous: false
     sourceComponent: Flickable {
         anchors.fill: parent
-        contentWidth: parent.width
+        contentWidth: -1
         contentHeight: column.height
 
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds

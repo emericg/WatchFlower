@@ -146,7 +146,6 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("WatchFlower");
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    // Application icon
     QIcon appIcon(":/assets/logos/watchflower.svg");
     app.setWindowIcon(appIcon);
 #endif
