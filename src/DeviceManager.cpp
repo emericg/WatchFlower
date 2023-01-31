@@ -320,14 +320,14 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
 {
     //qDebug() << "DeviceManager::enableBluetooth() enforce:" << enforceUserPermissionCheck;
 
-    bool btA_was = m_btA;
-    bool btE_was = m_btE;
-    bool btP_was = m_btP;
-
 #if defined(Q_OS_IOS)
     checkBluetoothIos();
     return;
 #endif
+
+    bool btA_was = m_btA;
+    bool btE_was = m_btE;
+    bool btP_was = m_btP;
 
     // Invalid adapter? (ex: plugged off)
     if (m_bluetoothAdapter && !m_bluetoothAdapter->isValid())
@@ -424,6 +424,12 @@ void DeviceManager::bluetoothHostModeStateChanged(QBluetoothLocalDevice::HostMod
 {
     qDebug() << "DeviceManager::bluetoothHostModeStateChanged() host mode now:" << state;
 
+    if (state != m_ble_hostmode)
+    {
+        m_ble_hostmode = state;
+        Q_EMIT hostModeChanged();
+    }
+
     if (state > QBluetoothLocalDevice::HostPoweredOff)
     {
         m_btE = true;
@@ -516,6 +522,8 @@ void DeviceManager::checkBluetoothIos()
 
 void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error error)
 {
+    if (error <= QBluetoothDeviceDiscoveryAgent::NoError) return;
+
     if (error == QBluetoothDeviceDiscoveryAgent::PoweredOffError)
     {
         qWarning() << "The Bluetooth adaptor is powered off, power it on before doing discovery.";
@@ -548,7 +556,7 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
     }
     else if (error == QBluetoothDeviceDiscoveryAgent::UnsupportedPlatformError)
     {
-        qWarning() << "deviceDiscoveryError() Unsupported platform.";
+        qWarning() << "deviceDiscoveryError() Unsupported Platform.";
 
         m_btA = false;
         m_btE = false;
@@ -557,6 +565,22 @@ void DeviceManager::deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error e
     else if (error == QBluetoothDeviceDiscoveryAgent::UnsupportedDiscoveryMethod)
     {
         qWarning() << "deviceDiscoveryError() Unsupported Discovery Method.";
+
+        m_btE = false;
+        m_btP = false;
+        Q_EMIT bluetoothChanged();
+    }
+    else if (error == QBluetoothDeviceDiscoveryAgent::LocationServiceTurnedOffError)
+    {
+        qWarning() << "deviceDiscoveryError() Location Service Turned Off Error.";
+
+        m_btE = false;
+        m_btP = false;
+        Q_EMIT bluetoothChanged();
+    }
+    else if (error == QBluetoothDeviceDiscoveryAgent::MissingPermissionsError)
+    {
+        qWarning() << "deviceDiscoveryError() Missing Permissions Error.";
 
         m_btE = false;
         m_btP = false;

@@ -79,6 +79,7 @@ bool DatabaseManager::saveDatabase()
     // database dir
     QString internalPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
     QDir internalDir(internalPath);
+    if (!internalDir.exists()) return false;
 
     // save dir
     QString externalPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
@@ -302,8 +303,7 @@ void DatabaseManager::resetDatabase()
         m_dbExternalOpen = false;
 
         // remove db file
-        QFile dbFile(dbName);
-        dbFile.remove();
+        QFile::remove(dbName);
     }
 }
 

@@ -102,6 +102,7 @@ class Device: public QObject
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
     Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
     Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
+    Q_PROPERTY(bool connected READ isConnected NOTIFY statusUpdated)
     Q_PROPERTY(bool working READ isWorking NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
@@ -298,6 +299,7 @@ public:
     int getAction() const { return m_ble_action; }
     int getStatus() const { return m_ble_status; }
     bool isBusy() const;                //!< Is currently doing/trying something?
+    bool isConnected() const;           //!< Is currently connected
     bool isWorking() const;             //!< Is currently working?
     bool isUpdating() const;            //!< Is currently being updated?
     bool isErrored() const;             //!< Has emitted a BLE error
@@ -343,6 +345,7 @@ public:
 
     // Start actions
     Q_INVOKABLE void actionConnect();
+    Q_INVOKABLE void actionDisconnect();
     Q_INVOKABLE void actionScan();
     Q_INVOKABLE void actionScanWithValues();
     Q_INVOKABLE void actionClearData();
