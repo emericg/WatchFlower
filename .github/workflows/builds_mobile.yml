@@ -12,10 +12,9 @@ on:
 #-------------------------------------------------------------------------------
 
 env:
-  VERSION: "5.0"
   APPLICATION: "WatchFlower"
-  QMAKE_PROJECT: "WatchFlower.pro"
-  QT_VERSION: "6.4.0"
+  APPLICATION_VERSION: "5.0"
+  QT_VERSION: "6.4.2"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -71,7 +70,7 @@ jobs:
         run: |
              export PATH=$Qt6_DIR/bin:$PATH
              qmake --version
-             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
+             qmake ${{env.APPLICATION}}.pro CONFIG+=release
              make -j$(nproc)
 
   ## iOS build #################################################################
@@ -107,5 +106,5 @@ jobs:
              export PATH=$Qt6_DIR/bin:$PATH
              ln -s /Users/runner/work/${{env.APPLICATION}}/Qt/${{env.QT_VERSION}}/macos /Users/runner/work/${{env.APPLICATION}}/Qt/${{env.QT_VERSION}}/clang_64
              qmake --version
-             qmake ${{env.QMAKE_PROJECT}} CONFIG+=release
+             qmake ${{env.APPLICATION}}.pro CONFIG+=release
              make -j$(nproc)
