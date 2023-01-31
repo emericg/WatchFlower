@@ -282,7 +282,12 @@ Item {
 
         radius: 4
         border.width: 2
-        border.color: singleColumn ? "transparent" : Theme.colorSeparator
+        border.color: {
+            if (singleColumn) return "transparent"
+            if (mousearea.containsPress) return Theme.colorSecondary
+            return Theme.colorSeparator
+        }
+        Behavior on border.color { ColorAnimation { duration: 133 } }
 
         color: boxDevice.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
         Behavior on color { ColorAnimation { duration: 133 } }

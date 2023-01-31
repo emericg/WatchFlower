@@ -74,7 +74,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
         // Plant sensor?
         if (isPlantSensor())
         {
-            // Reorder the device list by water level, if needed
+            // Reorder the sensor list by water level, if needed
             if (sm->getOrderBy() == "waterlevel")
             {
                 // FIXME

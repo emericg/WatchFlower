@@ -48,7 +48,7 @@ Item {
         }
 
         if (deviceManager.hasDevices) {
-            // The device list is shown
+            // The sensor list is shown
             loaderStatus.source = ""
 
             if (!deviceManager.bluetooth) {
@@ -59,7 +59,7 @@ Item {
                 rectangleBluetoothStatus.hide()
             }
         } else {
-            // The device list is not populated
+            // The sensor list is not populated
             rectangleBluetoothStatus.hide()
 
             if (!deviceManager.bluetooth) {

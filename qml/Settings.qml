@@ -347,7 +347,7 @@ Loader {
                         anchors.rightMargin: 16
                         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Split device list in categories")
+                        text: qsTr("Split sensor list in categories")
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText

@@ -97,7 +97,7 @@ void SystrayManager::initSystray()
         m_sysTrayMenu = new QMenu();
         if (m_sysTrayMenu)
         {
-            m_actionDeviceList = new QAction(tr("Device list"));
+            m_actionDeviceList = new QAction(tr("Sensor list"));
             m_actionSettings = new QAction(tr("Settings") + "        ");
             m_actionShow = new QAction(tr("Hide"));
             if (!m_saved_view ||
