@@ -56,7 +56,6 @@ Loader {
                 color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
                 Row {
-                    id: logo
                     anchors.left: parent.left
                     anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter

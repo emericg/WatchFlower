@@ -45,7 +45,7 @@ Item {
     Rectangle {
         id: background
         anchors.fill: control
-        anchors.margins: (Theme.componentRadius / 2)
+        anchors.margins: (Theme.componentBorderWidth / 2)
 
         color: control.colorBackgroundHighlight
         opacity: {

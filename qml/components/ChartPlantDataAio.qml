@@ -168,7 +168,7 @@ Item {
             id: clickableGraphArea
             anchors.fill: aioGraph
 
-            acceptedButtons: Qt.LeftButton | Qt.RightButton
+            acceptedButtons: (Qt.LeftButton | Qt.RightButton)
 
             onClicked: (mouse) => {
                 if (isMobile) {
