@@ -52,6 +52,7 @@ jobs:
       - name: Install Qt (desktop)
         uses: jurplel/install-qt-action@v3
         with:
+          aqtversion: '==3.1.*'
           version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qtshadertools qt5compat
 
@@ -59,6 +60,7 @@ jobs:
       - name: Install Qt (Android)
         uses: jurplel/install-qt-action@v3
         with:
+          aqtversion: '==3.1.*'
           version: ${{env.QT_VERSION}}
           host: 'linux'
           target: 'android'
@@ -88,6 +90,7 @@ jobs:
       - name: Install Qt (desktop)
         uses: jurplel/install-qt-action@v3
         with:
+          aqtversion: '==3.1.*'
           version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qtshadertools qt5compat
 
@@ -95,6 +98,7 @@ jobs:
       - name: Install Qt (iOS)
         uses: jurplel/install-qt-action@v3
         with:
+          aqtversion: '==3.1.*'
           version: ${{env.QT_VERSION}}
           host: 'mac'
           target: 'ios'
