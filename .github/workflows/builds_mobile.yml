@@ -48,24 +48,18 @@ jobs:
       #       sdkmanager "ndk;23.1.7779620"
       #       sdkmanager "build-tools;30.0.3"
 
-      # Install Qt (desktop)
-      - name: Install Qt (desktop)
-        uses: jurplel/install-qt-action@v3
-        with:
-          aqtversion: '==3.1.*'
-          version: ${{env.QT_VERSION}}
-          modules: qtconnectivity qtcharts qtshadertools qt5compat
-
-      # Install Qt (Android)
+      # Install Qt (Android & desktop)
       - name: Install Qt (Android)
         uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: '==3.1.*'
           version: ${{env.QT_VERSION}}
           host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'
           modules: qtconnectivity qtcharts qtshadertools qt5compat
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--autodesktop'
 
       # Build application
       - name: Build application
@@ -86,23 +80,18 @@ jobs:
         with:
           submodules: recursive
 
-      # Install Qt (desktop)
-      - name: Install Qt (desktop)
-        uses: jurplel/install-qt-action@v3
-        with:
-          aqtversion: '==3.1.*'
-          version: ${{env.QT_VERSION}}
-          modules: qtconnectivity qtcharts qtshadertools qt5compat
-
-      # Install Qt (iOS)
+      # Install Qt (iOS & desktop)
       - name: Install Qt (iOS)
         uses: jurplel/install-qt-action@v3
         with:
-          aqtversion: '==3.1.*'
           version: ${{env.QT_VERSION}}
           host: 'mac'
           target: 'ios'
           modules: qtconnectivity qtcharts qtshadertools qt5compat
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--autodesktop'
+
 
       # Build application
       - name: Build application
