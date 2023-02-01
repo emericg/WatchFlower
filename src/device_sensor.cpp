@@ -23,6 +23,7 @@
 #include "device_firmwares.h"
 #include "utils_versionchecker.h"
 
+#include "DeviceManager.h"
 #include "SettingsManager.h"
 #include "NotificationManager.h"
 
@@ -69,33 +70,26 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
     {
         SettingsManager *sm = SettingsManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
-        if (!sm || !nm) return;
+        DeviceManager *dm = static_cast<DeviceManager *>(parent());
+        if (!sm || !nm || !dm) return;
 
-        // Plant sensor?
-        if (isPlantSensor())
-        {
-            // Reorder the sensor list by water level, if needed
-            if (sm->getOrderBy() == "waterlevel")
-            {
-                // FIXME
-                //if (parent()) static_cast<DeviceManager *>(parent())->invalidate();
-            }
-        }
+        // FIXME // Plant sensor? Reorder the sensor list by water level (if needed)
+        //if (isPlantSensor() && sm->getOrderBy() == "waterlevel") dm->invalidate();
 
         // Notifications enabled?
         if (sm->getNotifs())
         {
             QString title;
             QString message;
-            int channel = 1;
+            int channel = 0;
 
             if (isPlantSensor())
             {
-                channel = 1;
-
-                // 'water me' notification // Only if the sensor has a plant
-                if (m_soilMoisture > 0 && m_soilMoisture < m_soilMoisture_limit_min)
+                // 'water me' notification // Only if the sensor has a plant?
+                if (sm->getNotifWater() &&
+                    m_soilMoisture > 0 && m_soilMoisture < m_soilMoisture_limit_min)
                 {
+                    channel = 1;
                     title = tr("Plant Alarm");
 
                     if (!m_associatedName.isEmpty())
@@ -105,14 +99,33 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                     else
                         message = tr("You need to water one of your plant!");
                 }
+
+                // 'sub zero' temperature notification
+                if (sm->getNotifSubzero() &&
+                    ((hasTemperatureSensor() && m_temperature > -99.f && m_temperature < 4.f) ||
+                     (hasSoilTemperatureSensor() && m_soilTemperature > -99.f && m_soilTemperature < 4.f)))
+                {
+                    channel = 2;
+                    title = tr("Sub zero temperature warning");
+                    message = tr("It might freeze tonight!");
+                }
             }
 
             if (isThermometer())
             {
                 channel = 2;
+
+                // 'sub zero' temperature notification // Only if the sensor is outside?
+                if (sm->getNotifSubzero() && isOutside() &&
+                    (hasTemperatureSensor() && m_temperature > -99.f && m_temperature < 4.f))
+                {
+                    channel = 2;
+                    title = tr("Sub zero temperature warning");
+                    message = tr("It might freeze tonight!");
+                }
             }
 
-            if (isEnvironmentalSensor())
+            if (isEnvironmentalSensor() && sm->getNotifEnv())
             {
                 channel = 3;
 
@@ -131,6 +144,16 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                     title = tr("Radiation warning");
                     if (m_rm > 1) message = tr("Radiation levels are high!");
                     if (m_rm > 10) message = tr("Radiation levels are very high, please advise!");
+                }
+            }
+
+            if (hasBatteryLevel() && sm->getNotifBatt())
+            {
+                if (m_deviceBattery < 10)
+                {
+                    channel = 4;
+                    title = tr("Low battery");
+                    message = tr("Sensor '%1' has low battery level").arg(m_deviceName);
                 }
             }
 
@@ -902,8 +925,8 @@ void DeviceSensor::checkDataAvailability()
         if (isPlantSensor())
         {
             // If we have immediate data (<12h old)
-            if (m_soilMoisture > 0 || m_soilConductivity > 0 || m_soilTemperature > 0 ||
-                m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0)
+            if (m_soilMoisture > 0 || m_soilConductivity > 0 || m_soilTemperature > 0.f ||
+                m_temperature > -20.f || m_humidity > 0.f || m_luminosityLux > 0)
                 status = true;
 
             tableName = "plantData";
@@ -911,7 +934,7 @@ void DeviceSensor::checkDataAvailability()
         else if (isThermometer())
         {
             // If we have immediate data (<12h old)
-            if (m_temperature > -20.f || m_humidity > 0 || m_pressure > 0)
+            if (m_temperature > -20.f || m_humidity > 0.f || m_pressure > 0.f)
                 status = true;
 
             tableName = "thermoData";
@@ -919,8 +942,8 @@ void DeviceSensor::checkDataAvailability()
         else if (isEnvironmentalSensor())
         {
             // If we have immediate data (<12h old)
-            if (m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0 ||
-                m_pm_10 > 0 || m_co2 > 0 || m_voc > 0 || m_rm > 0)
+            if (m_temperature > -20.f || m_humidity > 0.f || m_luminosityLux > 0 ||
+                m_pm_10 > 0.f || m_co2 > 0.f || m_voc > 0.f || m_rm > 0.f)
                 status = true;
 
             tableName = "sensorData";

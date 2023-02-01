@@ -158,6 +158,14 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/notifsEnabled"))
             m_notificationsEnabled = settings.value("settings/notifsEnabled").toBool();
+        if (settings.contains("settings/notifsBatt"))
+            m_notif_batt = settings.value("settings/notifsBatt").toBool();
+        if (settings.contains("settings/notifsWater"))
+            m_notif_water = settings.value("settings/notifsWater").toBool();
+        if (settings.contains("settings/notifsSubzero"))
+            m_notif_subzero = settings.value("settings/notifsSubzero").toBool();
+        if (settings.contains("settings/notifsEnv"))
+            m_notif_env = settings.value("settings/notifsEnv").toBool();
 
         if (settings.contains("settings/updateIntervalBackground"))
             m_updateIntervalBackground = settings.value("settings/updateIntervalBackground").toInt();
@@ -186,13 +194,10 @@ bool SettingsManager::readSettings()
 
         if (settings.contains("settings/graphHistory"))
             m_graphHistogram = settings.value("settings/graphHistory").toString();
-
         if (settings.contains("settings/graphThermometer"))
             m_graphThermometer = settings.value("settings/graphThermometer").toString();
-
         if (settings.contains("settings/graphAioDays"))
             m_graphAioDays = settings.value("settings/graphAioDays").toInt();
-
         if (settings.contains("settings/graphAioShowDots"))
             m_graphAioShowDots = settings.value("settings/graphAioShowDots").toBool();
 
@@ -262,6 +267,10 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/startMinimized", m_startMinimized);
         settings.setValue("settings/trayEnabled", m_systrayEnabled);
         settings.setValue("settings/notifsEnabled", m_notificationsEnabled);
+        settings.setValue("settings/notifsBatt", m_notif_batt);
+        settings.setValue("settings/notifsWater", m_notif_water);
+        settings.setValue("settings/notifsSubzero", m_notif_subzero);
+        settings.setValue("settings/notifsEnv", m_notif_env);
         //settings.setValue("settings/updateIntervalBackground", m_updateIntervalBackground);
         settings.setValue("settings/updateIntervalPlant", m_updateIntervalPlant);
         settings.setValue("settings/updateIntervalThermo", m_updateIntervalThermometer);
@@ -327,6 +336,10 @@ void SettingsManager::resetSettings()
     m_systrayEnabled = true;
     Q_EMIT systrayChanged();
     m_notificationsEnabled = true;
+    m_notif_batt = true;
+    m_notif_water = true;
+    m_notif_subzero = true;
+    m_notif_env = true;
     Q_EMIT notifsChanged();
     m_updateIntervalBackground = s_intervalBackgroundUpdate;
     Q_EMIT updateIntervalBackgroundChanged();
@@ -480,6 +493,46 @@ void SettingsManager::setNotifs(const bool value)
     if (m_notificationsEnabled != value)
     {
         m_notificationsEnabled = value;
+        writeSettings();
+        Q_EMIT notifsChanged();
+    }
+}
+
+void SettingsManager::setNotifBatt(const bool value)
+{
+    if (m_notif_batt != value)
+    {
+        m_notif_batt = value;
+        writeSettings();
+        Q_EMIT notifsChanged();
+    }
+}
+
+void SettingsManager::setNotifSubzero(const bool value)
+{
+    if (m_notif_subzero != value)
+    {
+        m_notif_subzero = value;
+        writeSettings();
+        Q_EMIT notifsChanged();
+    }
+}
+
+void SettingsManager::setNotifWater(const bool value)
+{
+    if (m_notif_water != value)
+    {
+        m_notif_water = value;
+        writeSettings();
+        Q_EMIT notifsChanged();
+    }
+}
+
+void SettingsManager::setNotifEnv(const bool value)
+{
+    if (m_notif_env != value)
+    {
+        m_notif_env = value;
         writeSettings();
         Q_EMIT notifsChanged();
     }

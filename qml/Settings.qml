@@ -537,8 +537,8 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.minimized
-                        onClicked: settingsManager.minimized = checked
+                        checked: settingsManager.startMinimized
+                        onClicked: settingsManager.startMinimized = checked
                     }
                 }
 

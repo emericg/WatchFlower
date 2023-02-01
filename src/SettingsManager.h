@@ -48,9 +48,14 @@ class SettingsManager: public QObject
     Q_PROPERTY(uint appUnits READ getAppUnits WRITE setAppUnits NOTIFY appUnitsChanged)
     Q_PROPERTY(QString appLanguage READ getAppLanguage WRITE setAppLanguage NOTIFY appLanguageChanged)
 
+    Q_PROPERTY(bool startMinimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
     Q_PROPERTY(bool systray READ getSysTray WRITE setSysTray NOTIFY systrayChanged)
     Q_PROPERTY(bool notifications READ getNotifs WRITE setNotifs NOTIFY notifsChanged)
-    Q_PROPERTY(bool minimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
+    Q_PROPERTY(bool notif_battery READ getNotifBatt WRITE setNotifBatt NOTIFY notifsChanged)
+    Q_PROPERTY(bool notif_water READ getNotifWater WRITE setNotifWater NOTIFY notifsChanged)
+    Q_PROPERTY(bool notif_subzero READ getNotifSubzero WRITE setNotifSubzero NOTIFY notifsChanged)
+    Q_PROPERTY(bool notif_env READ getNotifEnv WRITE setNotifEnv NOTIFY notifsChanged)
+
     Q_PROPERTY(bool bluetoothControl READ getBluetoothControl WRITE setBluetoothControl NOTIFY bluetoothControlChanged)
     Q_PROPERTY(bool bluetoothLimitScanningRange READ getBluetoothLimitScanningRange WRITE setBluetoothLimitScanningRange NOTIFY bluetoothLimitScanningRangeChanged)
     Q_PROPERTY(uint bluetoothSimUpdates READ getBluetoothSimUpdates WRITE setBluetoothSimUpdates NOTIFY bluetoothSimUpdatesChanged)
@@ -99,6 +104,10 @@ class SettingsManager: public QObject
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
+    bool m_notif_batt = true;
+    bool m_notif_water = true;
+    bool m_notif_subzero = true;
+    bool m_notif_env = true;
 
     bool m_bluetoothControl = true;
     bool m_bluetoothLimitScanningRange = false;
@@ -214,6 +223,15 @@ public:
 
     bool getNotifs() const { return m_notificationsEnabled; }
     void setNotifs(const bool value);
+
+    bool getNotifBatt() const { return m_notif_batt; }
+    void setNotifBatt(const bool value);
+    bool getNotifWater() const { return m_notif_water; }
+    void setNotifWater(const bool value);
+    bool getNotifSubzero() const { return m_notif_subzero; }
+    void setNotifSubzero(const bool value);
+    bool getNotifEnv() const { return m_notif_env; }
+    void setNotifEnv(const bool value);
 
     bool getBluetoothControl() const { return m_bluetoothControl; }
     void setBluetoothControl(const bool value);

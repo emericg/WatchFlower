@@ -65,6 +65,12 @@ public class WatchFlowerAndroidNotifier {
             channelColor = Color.YELLOW;
             channelImportance = NotificationManager.IMPORTANCE_HIGH;
         }
+        if (channel == 4) {
+            channelId = "watchflower_sensors";
+            channelName = "sensor related notifications";
+            channelColor = Color.WHITE;
+            channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
+        }
 
         try {
             //Context context = getApplicationContext();
