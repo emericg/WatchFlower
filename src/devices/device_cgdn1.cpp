@@ -180,7 +180,7 @@ void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t
             qDebug() << "Qingping data: unknown device ID >" << data[0] << data[1];
         }
 
-        if (m_temperature > -99.f && m_humidity > -99 && m_co2 > -99.f && m_pm_25 > -99.f && m_pm_10 > -99.f)
+        if (m_temperature > -99.f && m_humidity > -99.f && m_co2 > -99.f && m_pm_25 > -99.f && m_pm_10 > -99.f)
         {
             m_lastUpdate = QDateTime::currentDateTime();
 

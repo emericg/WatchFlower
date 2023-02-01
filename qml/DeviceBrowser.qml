@@ -94,7 +94,7 @@ Item {
 
                 color: Theme.colorComponentBackground
                 border.color: Theme.colorSeparator
-                border.width: 1
+                border.width: 2
 
                 MouseArea {
                     anchors.fill: parent
@@ -196,7 +196,7 @@ Item {
 
                 color: Theme.colorComponentBackground
                 border.color: Theme.colorSeparator
-                border.width: 1
+                border.width: 2
 
                 MouseArea {
                     anchors.fill: parent

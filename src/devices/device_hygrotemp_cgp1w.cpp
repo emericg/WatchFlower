@@ -161,7 +161,7 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const uint16_t adv_mode,
             qDebug() << "Qingping data: unknown device ID >" << data[0] << data[1];
         }
 
-        if (m_temperature > -99.f && m_humidity > -99.f && m_pressure > -99)
+        if (m_temperature > -99.f && m_humidity > -99.f && m_pressure > -99.f)
         {
             m_lastUpdate = QDateTime::currentDateTime();
 

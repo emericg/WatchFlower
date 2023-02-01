@@ -456,7 +456,7 @@ void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
         int battlvl = mapNumber(battv, 2300, 3100, 0, 100);
         setBattery(battlvl);
 
-        if (m_temperature > -99.f && m_humidity > -99)
+        if (m_temperature > -99.f && m_humidity > -99.f)
         {
             m_lastUpdate = QDateTime::currentDateTime();
 

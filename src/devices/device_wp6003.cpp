@@ -269,7 +269,7 @@ bool DeviceWP6003::hasData() const
     //qDebug() << "DeviceWP6003::hasData()";
 
     // If we have immediate data (<12h old)
-    if (m_temperature > 0 || m_voc > 0 || m_co2 > 0)
+    if (m_temperature > 0.f || m_voc > 0.f || m_co2 > 0.f)
         return true;
 
     // Otherwise, check if we have stored data

@@ -32,15 +32,18 @@ class UtilsLog : public QObject
 {
     Q_OBJECT
 
+    bool m_logging = false;
     QString m_logPath;
     QFile m_logFile;
 
     // Singleton
     static UtilsLog *instance;
+    UtilsLog(const bool enabled);
     UtilsLog();
     ~UtilsLog();
 
 public:
+    static UtilsLog *getInstance(const bool enabled);
     static UtilsLog *getInstance();
 
     bool openLogFile(const QString &path = QString());

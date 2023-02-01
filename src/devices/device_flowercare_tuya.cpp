@@ -20,8 +20,6 @@
  */
 
 #include "device_flowercare_tuya.h"
-#include "utils_versionchecker.h"
-#include "thirdparty/RC4/rc4.h"
 
 #include <cstdint>
 #include <cmath>

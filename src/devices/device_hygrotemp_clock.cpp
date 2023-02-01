@@ -481,7 +481,7 @@ void DeviceHygrotempClock::parseAdvertisementData(const uint16_t adv_mode,
                 }
             }
 
-            if (m_temperature > -99.f && m_humidity > -99)
+            if (m_temperature > -99.f && m_humidity > -99.f)
             {
                 m_lastUpdate = QDateTime::currentDateTime();
 

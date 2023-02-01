@@ -238,7 +238,7 @@ bool DeviceJQJCY01YM::hasData() const
     //qDebug() << "DeviceJQJCY01YM::hasData()";
 
     // If we have immediate data (<12h old)
-    if (m_temperature > 0 || m_humidity > 0 || m_hcho > 0)
+    if (m_temperature > 0.f || m_humidity > 0.f || m_hcho > 0.f)
         return true;
 
     // Otherwise, check if we have stored data

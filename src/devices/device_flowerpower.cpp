@@ -347,8 +347,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                 rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
                 m_temperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
-                if (m_temperature < -10.0) m_temperature = -10.0;
-                if (m_temperature > 55.0) m_temperature = 55.0;
+                if (m_temperature < -10.f) m_temperature = -10.f;
+                if (m_temperature > 55.f) m_temperature = 55.f;
 
                 /////////
 
