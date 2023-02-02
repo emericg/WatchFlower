@@ -102,12 +102,12 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
 
                 // 'sub zero' temperature notification
                 if (sm->getNotifSubzero() &&
-                    ((hasTemperatureSensor() && m_temperature > -99.f && m_temperature < 4.f) ||
-                     (hasSoilTemperatureSensor() && m_soilTemperature > -99.f && m_soilTemperature < 4.f)))
+                    ((hasTemperatureSensor() && m_temperature > -99.f && m_temperature < 2.f) ||
+                     (hasSoilTemperatureSensor() && m_soilTemperature > -99.f && m_soilTemperature < 2.f)))
                 {
                     channel = 2;
                     title = tr("Sub zero temperature warning");
-                    message = tr("It might freeze tonight!");
+                    message = tr("It might freeze soon!");
                 }
             }
 
@@ -117,11 +117,11 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
 
                 // 'sub zero' temperature notification // Only if the sensor is outside?
                 if (sm->getNotifSubzero() && isOutside() &&
-                    (hasTemperatureSensor() && m_temperature > -99.f && m_temperature < 4.f))
+                    (hasTemperatureSensor() && m_temperature > -99.f && m_temperature < 2.f))
                 {
                     channel = 2;
                     title = tr("Sub zero temperature warning");
-                    message = tr("It might freeze tonight!");
+                    message = tr("It might freeze soon!");
                 }
             }
 

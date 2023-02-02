@@ -49,7 +49,7 @@ jobs:
       #       sdkmanager "build-tools;30.0.3"
 
       # Install Qt (Android & desktop)
-      - name: Install Qt (Android)
+      - name: Install Qt (Android & desktop)
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}
@@ -81,7 +81,7 @@ jobs:
           submodules: recursive
 
       # Install Qt (iOS & desktop)
-      - name: Install Qt (iOS)
+      - name: Install Qt (iOS & desktop)
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}

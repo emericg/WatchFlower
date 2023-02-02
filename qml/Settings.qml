@@ -727,9 +727,9 @@ Loader {
                     anchors.right: parent.right
                     anchors.rightMargin: 12
                     topPadding: -12
-                    bottomPadding: 12
+                    bottomPadding: settingsManager.notifications ? 0 : 12
 
-                    visible: (element_notifications.visible)
+                    visible: (element_notifications.visible && !settingsManager.notifications)
                     opacity: settingsManager.systray ? 1 : 0.4
 
                     text: settingsManager.notifications ?
@@ -739,6 +739,148 @@ Loader {
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
                     font.pixelSize: Theme.fontSizeContentSmall
+                }
+
+                ////////
+
+                Item {
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight
+
+                    visible: settingsManager.systray && settingsManager.notifications
+
+                    Text {
+                        height: 32
+                        anchors.left: parent.left
+                        anchors.leftMargin: 64
+                        anchors.right: switch_notif_battery.left
+                        anchors.rightMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: "- " + qsTr("battery level")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeContent
+                        color: Theme.colorSubText
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    SwitchThemedDesktop {
+                        id: switch_notif_battery
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
+                        anchors.verticalCenter: parent.verticalCenter
+                        z: 1
+
+                        checked: settingsManager.notif_battery
+                        onClicked: settingsManager.notif_battery = checked
+                    }
+                }
+                Item {
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight
+
+                    visible: settingsManager.systray && settingsManager.notifications
+
+                    Text {
+                        height: 32
+                        anchors.left: parent.left
+                        anchors.leftMargin: 64
+                        anchors.right: switch_notif_water.left
+                        anchors.rightMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: "- " + qsTr("water level")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeContent
+                        color: Theme.colorSubText
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    SwitchThemedDesktop {
+                        id: switch_notif_water
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
+                        anchors.verticalCenter: parent.verticalCenter
+                        z: 1
+
+                        checked: settingsManager.notif_water
+                        onClicked: settingsManager.notif_water = checked
+                    }
+                }
+                Item {
+                    height: 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight
+
+                    visible: settingsManager.systray && settingsManager.notifications
+
+                    Text {
+                        height: 32
+                        anchors.left: parent.left
+                        anchors.leftMargin: 64
+                        anchors.right: switch_notif_subzero.left
+                        anchors.rightMargin: 16
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: "- " + qsTr("freeze warnings")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeContent
+                        color: Theme.colorSubText
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    SwitchThemedDesktop {
+                        id: switch_notif_subzero
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
+                        anchors.verticalCenter: parent.verticalCenter
+                        z: 1
+
+                        checked: settingsManager.notif_subzero
+                        onClicked: settingsManager.notif_subzero = checked
+                    }
+                }
+                Item {
+                    height: settingsManager.notifications ? 44 : 32
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight
+
+                    visible: settingsManager.systray && settingsManager.notifications
+
+                    Text {
+                        height: 32
+                        anchors.left: parent.left
+                        anchors.leftMargin: 64
+                        anchors.right: switch_notif_env.left
+                        anchors.rightMargin: 16
+
+                        text: "- " + qsTr("environmental warnings")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeContent
+                        color: Theme.colorSubText
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    SwitchThemedDesktop {
+                        id: switch_notif_env
+                        height: 32
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
+                        z: 1
+
+                        checked: settingsManager.notif_env
+                        onClicked: settingsManager.notif_env = checked
+                    }
                 }
 
                 ////////
@@ -1383,18 +1525,20 @@ Loader {
                         anchors.verticalCenter: text_thermometer_unit.verticalCenter
                         spacing: 12
 
-                        RadioButtonThemed {
-                            text: qsTr("°C")
+                        SelectorMenu {
+                            height: 32
+                            anchors.verticalCenter: parent.verticalCenter
 
-                            checked: (settingsManager.tempUnit === 'C')
-                            onClicked: settingsManager.tempUnit = 'C'
-                        }
+                            model: ListModel {
+                                ListElement { idx: 1; txt: qsTr("°C"); src: ""; sz: 16; }
+                                ListElement { idx: 2; txt: qsTr("°F"); src: ""; sz: 16; }
+                            }
 
-                        RadioButtonThemed {
-                            text: qsTr("°F")
-
-                            checked: (settingsManager.tempUnit === 'F')
-                            onClicked: settingsManager.tempUnit = 'F'
+                            currentSelection: (settingsManager.tempUnit === 'C') ? 1 : 2
+                            onMenuSelected: (index) => {
+                                currentSelection = index
+                                settingsManager.tempUnit = (index === 1) ? 'C' : 'F'
+                            }
                         }
                     }
                 }
