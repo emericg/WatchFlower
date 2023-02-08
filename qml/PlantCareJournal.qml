@@ -51,8 +51,8 @@ Item {
         anchors.fill: parent
 
         active: false
-
         asynchronous: true
+
         sourceComponent: ListView {
             id: entriesView
             anchors.fill: parent
@@ -174,8 +174,8 @@ Item {
         anchors.fill: parent
 
         active: false
-
         asynchronous: false
+
         sourceComponent: Item {
 
             function isEditorOpen() {

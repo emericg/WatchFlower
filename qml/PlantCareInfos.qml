@@ -48,6 +48,7 @@ Item {
 
         active: false
         asynchronous: true
+
         sourceComponent: Flickable {
             id: itemPlantViewer
             contentWidth: (uiMode === 1) ? -1 : plantScreen.width

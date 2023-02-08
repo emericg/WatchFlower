@@ -23,8 +23,8 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     active: false
-
     asynchronous: false
+
     sourceComponent: Flickable {
         anchors.fill: parent
         contentWidth: -1

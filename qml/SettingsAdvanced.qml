@@ -24,8 +24,8 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     active: false
-
     asynchronous: false
+
     sourceComponent: Item {
         id: itemSettingsAdvanced
         implicitWidth: 480

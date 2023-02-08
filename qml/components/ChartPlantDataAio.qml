@@ -1,5 +1,5 @@
-import QtQuick 2.15
-import QtCharts 2.15
+import QtQuick
+import QtCharts
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -489,7 +489,7 @@ Item {
                 z: -1
                 radius: height
                 color: Theme.colorComponentBackground
-                border.width: 2
+                border.width: Theme.componentBorderWidth
                 border.color: Theme.colorComponentDown
             }
         }

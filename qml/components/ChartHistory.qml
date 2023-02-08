@@ -1,6 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Shapes 1.0
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Shapes
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -289,8 +289,8 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             active: (value > -80)
-
                             asynchronous: true
+
                             sourceComponent: {
                                 if (ddd === ChartHistory.Span.Weekly)
                                     return legendHorizontal

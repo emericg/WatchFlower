@@ -51,8 +51,8 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     active: false
-
     asynchronous: true
+
     sourceComponent: Item {
         function backAction() {
             if (isPlantClicked()) {

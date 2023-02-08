@@ -1,5 +1,6 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
 
 import ThemeEngine 1.0
 
@@ -53,7 +54,9 @@ Popup {
             Text {
                 width: parent.width
 
-                text: qsTr("Are you sure you want to blacklist the selected sensor?")
+                text: !deviceIsBlacklisted ?
+                          qsTr("Are you sure you want to blacklist the selected sensor?") :
+                          qsTr("Are you sure you want to whitelist the selected sensor?")
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContentVeryBig
                 color: Theme.colorText
@@ -64,22 +67,45 @@ Popup {
                 width: parent.width
                 spacing: 12
 
-                Rectangle {
+                RowLayout {
                     width: parent.width
                     height: 36
-                    color: Theme.colorForeground
+                    spacing: 12
 
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: 12
-                        anchors.verticalCenter: parent.verticalCenter
+                    Rectangle {
+                        Layout.preferredWidth: deviceNameTxt.contentWidth + 24
+                        Layout.preferredHeight: 36
+                        color: Theme.colorForeground
 
-                        text: deviceName + "   " + deviceAddress
-                        textFormat: Text.PlainText
-                        font.bold: false
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorSubText
-                        wrapMode: Text.WordWrap
+                        Text {
+                            id: deviceNameTxt
+                            anchors.centerIn: parent
+
+                            text: deviceName
+                            textFormat: Text.PlainText
+                            font.bold: false
+                            font.pixelSize: Theme.fontSizeContent
+                            color: Theme.colorSubText
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+                    Rectangle {
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 36
+                        color: Theme.colorForeground
+
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 12
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: deviceAddress
+                            textFormat: Text.PlainText
+                            font.bold: false
+                            font.pixelSize: Theme.fontSizeContent
+                            color: Theme.colorSubText
+                            wrapMode: Text.WordWrap
+                        }
                     }
                 }
                 Text {
@@ -92,7 +118,6 @@ Popup {
                     wrapMode: Text.WordWrap
                 }
                 Text {
-
                     width: parent.width
 
                     text: qsTr("If the sensor is already handled by the application, nothing will happen unless you delete it from the sensor list.")

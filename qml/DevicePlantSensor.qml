@@ -35,8 +35,8 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     active: false
-
     asynchronous: false
+
     sourceComponent: Item {
         id: itemDevicePlantSensor
         implicitWidth: 480

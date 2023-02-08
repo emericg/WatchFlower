@@ -37,8 +37,8 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     active: false
-
     asynchronous: false
+
     sourceComponent: Item {
         id: itemDeviceThermometer
         implicitWidth: 480

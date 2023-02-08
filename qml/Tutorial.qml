@@ -31,8 +31,8 @@ Rectangle {
         anchors.fill: parent
 
         active: (appContent.state === "Tutorial")
-
         asynchronous: true
+
         sourceComponent: Item {
             id: itemTutorial
 
