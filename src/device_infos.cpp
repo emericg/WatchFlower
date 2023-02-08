@@ -132,6 +132,7 @@ void DeviceInfos::load(const QJsonObject &obj)
     m_battery = obj["battery"].toString();
     m_screen = obj["screen"].toString();
     m_ipx = obj["ipx"].toString();
+    m_needsOfficialApp = obj["onboarding"].toBool();
 
     for (const auto &vv: obj["sensors"].toArray())
     {
@@ -193,6 +194,7 @@ bool DeviceInfos::loadSlow(const QString &name, const QString &model, const QStr
                 m_battery = obj["battery"].toString();
                 m_screen = obj["screen"].toString();
                 m_ipx = obj["ipx"].toString();
+                m_needsOfficialApp = obj["onboarding"].toBool();
 
                 for (const auto &vv: obj["sensors"].toArray())
                 {

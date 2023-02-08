@@ -85,6 +85,8 @@ class DeviceInfos: public QObject
     Q_PROPERTY(QString deviceScreen READ getDeviceScreen CONSTANT)
     Q_PROPERTY(QString deviceIPrating READ getDeviceIPrating CONSTANT)
 
+    Q_PROPERTY(bool deviceNeedsOfficialApp READ getDeviceNeedsOfficialApp CONSTANT)
+
     Q_PROPERTY(QVariant deviceSensors READ getDeviceSensors CONSTANT)
     Q_PROPERTY(QVariant deviceCapabilities READ getDeviceCapabilities CONSTANT)
 
@@ -95,6 +97,7 @@ class DeviceInfos: public QObject
     QString m_battery;
     QString m_screen;
     QString m_ipx;
+    bool m_needsOfficialApp = false;
 
     QList <QObject *> m_sensors;
     QList <QObject *> m_capabilities;
@@ -106,6 +109,7 @@ class DeviceInfos: public QObject
     QString getDeviceBattery() { return m_battery; }
     QString getDeviceScreen() { return m_screen; }
     QString getDeviceIPrating() { return m_ipx; }
+    bool getDeviceNeedsOfficialApp() { return m_needsOfficialApp; }
 
     QVariant getDeviceSensors() { return QVariant::fromValue(m_sensors); }
     QVariant getDeviceCapabilities() { return QVariant::fromValue(m_capabilities); }

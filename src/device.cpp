@@ -67,11 +67,16 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
     }
 
-    // Device name hack // Remove MAC address from device name
+    // Device name hacks // Remove MAC address from device names
     {
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
-        else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
+
+        if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
+            m_deviceAddressMAC = m_deviceName.last(12);
+            for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
+            m_deviceName = "WP6003";
+        }
     }
 
     // Database
@@ -109,11 +114,16 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
         qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
     }
 
-    // Device name hack // Remove MAC address from device name
+    // Device name hacks // Remove MAC address from device names
     {
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
-        else if (m_deviceName.startsWith("6003#")) m_deviceName = "WP6003";
+
+        if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
+            m_deviceAddressMAC = m_deviceName.last(12);
+            for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
+            m_deviceName = "WP6003";
+        }
     }
 
     // Database

@@ -28,6 +28,7 @@
     "year": 2022,
     "battery": "1 x CR2032",
     "ipx": "IPX5",
+    "onboarding": true,
     "sensors": [
       ["Soil moisture", "0 → 100%"],
       ["Soil conductivity", ""],
@@ -351,6 +352,7 @@
     "year": "2018",
     "battery": "1 x 18650 (internal)",
     "screen": "OLED",
+    "onboarding": true,
     "sensors": [
       ["Temperature", "0 → 50 °C"],
       ["Humidity", "0 → 99% RH"],

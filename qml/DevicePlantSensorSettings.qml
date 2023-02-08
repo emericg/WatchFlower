@@ -34,7 +34,8 @@ Flickable {
         anchors.right: parent.right
         height: (uiMode === 1) ? maxheight : plantSensorSettings.height
 
-        property int maxheight: 2*topPadding + 3*spacing + itemDevice.height + itemDeviceInfos.height + itemDeviceSensors.height + itemDeviceSettings.height
+        property int maxheight: 2*topPadding + 3*spacing + itemDevice.height + itemDeviceInfos.height +
+                                itemDeviceConnection.height + itemDeviceSensors.height + itemDeviceSettings.height
 
         topPadding: isPhone ? 14 : 16
         padding: isPhone ? 12 : 16
@@ -446,6 +447,66 @@ Flickable {
                             color: Theme.colorHighContrast
                         }
                     }
+                }
+            }
+        }
+
+        ////////////////////////////////
+
+        Rectangle {
+            id: itemDeviceConnection
+            width: www
+            height: itemDeviceConnectionContent.height + 24
+
+            radius: Theme.componentRadius
+            color: Theme.colorForeground
+            border.width: 2
+            border.color: Theme.colorSeparator
+
+            visible: currentDevice.deviceInfos.deviceNeedsOfficialApp
+
+            Column {
+                id: itemDeviceConnectionContent
+                anchors.top: parent.top
+                anchors.topMargin: 12
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                spacing: 4
+
+                Row {
+                    spacing: 8
+
+                    IconSvg {
+                        width: 20; height: 20;
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        color: Theme.colorWarning
+                    }
+
+                    Text {
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("Please advise")
+                        textFormat: Text.PlainText
+                        color: Theme.colorSubText
+                        font.bold: true
+                        font.pixelSize: Theme.fontSizeContentVerySmall
+                        font.capitalization: Font.AllUppercase
+                    }
+                }
+
+                Text {
+                    width: parent.width
+
+                    text: qsTr("This sensor needs to be registered to its official application once before it can be used with third party applications like WatchFlower.")
+                    textFormat: Text.PlainText
+                    color: Theme.colorSubText
+                    font.bold: false
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    wrapMode: Text.WordWrap
                 }
             }
         }
