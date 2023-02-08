@@ -109,8 +109,8 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    color: Theme.colorSubText
                 }
 
                 Text {
@@ -210,8 +210,8 @@ Item {
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                    color: Theme.colorIcon
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    color: Theme.colorSubText
                 }
 
                 Text {

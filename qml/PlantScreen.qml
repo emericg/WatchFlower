@@ -1238,7 +1238,7 @@ Grid {
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                     color: Theme.colorSubText
                 }
 

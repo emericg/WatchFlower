@@ -101,7 +101,7 @@ Popup {
                         primaryColor: Theme.colorSecondary
 
                         text: qsTr("About Bluetooth permissions")
-                        source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                        source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                         sourceSize: 20
 
                         onClicked: {
@@ -195,7 +195,7 @@ Popup {
                         primaryColor: Theme.colorSecondary
 
                         text: qsTr("About battery savers")
-                        source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                        source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                         sourceSize: 20
 
                         onClicked: {
