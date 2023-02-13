@@ -15,14 +15,16 @@ Item {
     property int limitMin: -1
     property int limitMax: -1
 
-    property int days: 14
-    property int daysVisible: 14
+    property int daysTarget: 14
+    property int daysVisible: 0
 
     ////////////////////////////////////////////////////////////////////////////
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartEnvironmentalVoc // loadGraph() >> " + currentDevice)
+
+        daysVisible = 0
     }
 
     function updateGraph() {
@@ -45,7 +47,7 @@ Item {
             scaleMax = 1000
         }
 
-        chartEnvironmentalVoc.visible = currentDevice.countDataNamed("temperature", daysVisible)
+        chartEnvironmentalVoc.visible = currentDevice.countDataNamed("temperature", daysTarget)
     }
 
     ////////////////////////////////////////////////////////////////////////////

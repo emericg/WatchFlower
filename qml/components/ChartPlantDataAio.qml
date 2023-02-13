@@ -12,14 +12,13 @@ Item {
     property bool showGraphDots: settingsManager.graphAioShowDots
     property color legendColor: Theme.colorSubText
 
-    property int days: settingsManager.graphAioDays
+    property int daysTarget: settingsManager.graphAioDays
     property int daysVisible: settingsManager.graphAioDays
     property int daysTick: isPhone ? 4 : settingsManager.graphAioDays
 
     Connections {
         target: settingsManager
         function onGraphAioDaysChanged() {
-            days = settingsManager.graphAioDays
             updateGraph()
             clickableGraphArea.forceUpdate()
 
@@ -52,9 +51,9 @@ Item {
 
         //// DATA
         if (currentDevice.isPlantSensor) {
-            currentDevice.getChartData_plantAIO(days, axisTime, hygroData, conduData, tempData, lumiData)
+            currentDevice.getChartData_plantAIO(daysTarget, axisTime, hygroData, conduData, tempData, lumiData)
         } else if (currentDevice.isThermometer) {
-            currentDevice.getChartData_thermometerAIO(days, axisTime, tempData, hygroData)
+            currentDevice.getChartData_thermometerAIO(daysTarget, axisTime, tempData, hygroData)
         }
 
         // graph visibility
@@ -71,11 +70,22 @@ Item {
         axisLumi.min = 1
         axisLumi.max = 100000
 
-        // Max axis for hygrometry (no need to go higher than 100%)
-        if (currentDevice.hygroMax*1.15 > 100.0) axisHygro.max = 100.0
-        else axisHygro.max = currentDevice.hygroMax*1.15
+        // Min/Max axis for hygrometery / humidity
+        if (currentDevice.isPlantSensor) {
+            if (currentDevice.hygroMin*0.85 < 0.0) axisHygro.min = 0
+            else axisHygro.min = currentDevice.hygroMin*0.85
+            if (currentDevice.hygroMax*1.15 > 100.0) axisHygro.max = 100
+            else axisHygro.max = currentDevice.hygroMax*1.15
+        }
+        if (currentDevice.isThermometer) {
+            if (currentDevice.humiMin*0.85 < 0.0) axisHygro.min = 0
+            else axisHygro.min = currentDevice.humiMin*0.85
+            if (currentDevice.humiMax*1.15 > 100.0) axisHygro.max = 100
+            else axisHygro.max = currentDevice.humiMax*1.15
+        }
 
-        // Max axis for temperature
+        // Min/Max axis for temperature
+        axisTemp.min = currentDevice.tempMin*0.85
         axisTemp.max = currentDevice.tempMax*1.15
 
         // Max axis for conductivity
@@ -83,13 +93,6 @@ Item {
 
         // Max axis for luminosity?
         axisLumi.max = currentDevice.luxMax*3.0
-
-        // Min axis computation, only for thermometers
-        if (!currentDevice.hasSoilMoistureSensor) {
-            if (currentDevice.hygroMin*0.85 < 0.0) axisHygro.min = 0.0
-            else axisHygro.min = currentDevice.hygroMin*0.85
-            axisTemp.min = currentDevice.tempMin*0.85
-        }
 
         //// ADJUSTMENTS
         hygroData.width = 2

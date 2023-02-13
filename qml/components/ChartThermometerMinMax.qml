@@ -13,12 +13,14 @@ Item {
     property int graphMin: currentDevice.tempMin
     property int graphMax: currentDevice.tempMax
 
-    property int days: 14
-    property int daysVisible: 14
+    property int daysTarget: 14
+    property int daysVisible: 0
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartThermometerMinMax // loadGraph() >> " + currentDevice)
+
+        daysVisible = 0
     }
 
     function updateGraph() {
