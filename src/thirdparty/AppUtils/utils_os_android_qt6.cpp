@@ -331,7 +331,7 @@ QString UtilsAndroid::getAppExternalStorage()
     QJniObject activity = QNativeInterface::QAndroidApplication::context();
     if (activity.isValid())
     {
-        QJniObject dir = QJniObject::fromString(QString(""));
+        QJniObject dir = QJniObject::fromString(QStringLiteral(""));
         QJniObject path = activity.callObjectMethod("getExternalFilesDir",
                                                     "(Ljava/lang/String;)Ljava/io/File;",
                                                     dir.object());

@@ -95,8 +95,8 @@ void DeviceFlowerCare_tuya::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        QBluetoothUuid a(QString("00000001-0000-1001-8001-00805f9b07d0")); // W // W no resp
-        QBluetoothUuid b(QString("00000002-0000-1001-8001-00805f9b07d0")); // NOTIFY
+        QBluetoothUuid a(QStringLiteral("00000001-0000-1001-8001-00805f9b07d0")); // W // W no resp
+        QBluetoothUuid b(QStringLiteral("00000002-0000-1001-8001-00805f9b07d0")); // NOTIFY
 
         {
             serviceData = m_bleController->createServiceObject(uuid);
@@ -139,26 +139,6 @@ void DeviceFlowerCare_tuya::bleReadDone(const QLowEnergyCharacteristic &c, const
 {
     //qDebug() << "DeviceFlowerCare_tuya::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
-
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    if (c.uuid().toString() == "{00001a01-0000-1000-8000-00805f9b34fb}")
-    {
-        if (value.size() > 0)
-        {
-/*
-            qDebug() << "* DeviceFlowerCare_tuya update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_deviceBattery;
-            qDebug() << "- m_soilMoisture:" << m_soilMoisture;
-            qDebug() << "- m_soilConductivity:" << m_soilConductivity;
-            qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosityLux:" << m_luminosityLux;
-*/
-        }
-
-        return;
-    }
 }
 
 /* ************************************************************************** */

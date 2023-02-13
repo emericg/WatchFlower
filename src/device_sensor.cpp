@@ -107,7 +107,9 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                 {
                     channel = 2;
                     title = tr("Sub zero temperature warning");
-                    message = tr("It might freeze soon!");
+                    message = tr("Temperature is %1 at %2 on %3").arg(getTempString(),
+                                                                      QDateTime::currentDateTime().toString("hh:mm"),
+                                                                      QDateTime::currentDateTime().toString("MM/dd"));
                 }
             }
 
@@ -121,7 +123,9 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                 {
                     channel = 2;
                     title = tr("Sub zero temperature warning");
-                    message = tr("It might freeze soon!");
+                    message = tr("Temperature is %1 at %2 on %3").arg(getTempString(),
+                                                                      QDateTime::currentDateTime().toString("hh:mm"),
+                                                                      QDateTime::currentDateTime().toString("MM/dd"));
                 }
             }
 

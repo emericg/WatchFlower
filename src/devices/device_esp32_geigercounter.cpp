@@ -140,7 +140,7 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_infos(QLowEnergyService:
 
         if (serviceInfos)
         {
-            QBluetoothUuid f(QString("00002a24-a002-4cbd-b00b-6b519bf2780f")); // firmware version
+            QBluetoothUuid f(QStringLiteral("00002a24-a002-4cbd-b00b-6b519bf2780f")); // firmware version
             QLowEnergyCharacteristic chf = serviceInfos->characteristic(f);
 
             if (chf.value().size() > 0)
@@ -161,7 +161,7 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_battery(QLowEnergyServic
         if (serviceBattery)
         {
             // Characteristic "Battery Level"
-            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
             if (cbat.value().size() == 1)
@@ -182,7 +182,7 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(QLowEnergyService::
         if (serviceData)
         {
 /*
-            QBluetoothUuid d(QString("eeee9a32-a0c1-4cbd-b00b-6b519bf2780f")); // recap data
+            QBluetoothUuid d(QStringLiteral("eeee9a32-a0c1-4cbd-b00b-6b519bf2780f")); // recap data
             QLowEnergyCharacteristic chd = serviceData->characteristic(d);
 
             m_rh = chd.value().toFloat();
@@ -190,7 +190,7 @@ void DeviceEsp32GeigerCounter::serviceDetailsDiscovered_data(QLowEnergyService::
             m_rs = chd.value().toFloat();
             Q_EMIT dataUpdated();
 */
-            QBluetoothUuid rt(QString("eeee9a32-a0d0-4cbd-b00b-6b519bf2780f")); // rt data
+            QBluetoothUuid rt(QStringLiteral("eeee9a32-a0d0-4cbd-b00b-6b519bf2780f")); // rt data
             QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
             m_notificationDesc = chrt.clientCharacteristicConfiguration();
             serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));

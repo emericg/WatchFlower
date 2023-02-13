@@ -136,7 +136,7 @@ void DeviceHygrotempCGDK2::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
         if (serviceInfos)
         {
             // Characteristic "Firmware Revision String"
-            QBluetoothUuid c(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x0b
+            QBluetoothUuid c(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
             if (chc.value().size() > 0)
             {
@@ -166,7 +166,7 @@ void DeviceHygrotempCGDK2::serviceDetailsDiscovered_data(QLowEnergyService::Serv
         {
             // hygrotemp readings
             {
-                QBluetoothUuid a(QString("00000100-0000-1000-8000-00805f9b34fb"));
+                QBluetoothUuid a(QStringLiteral("00000100-0000-1000-8000-00805f9b34fb"));
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 m_notificationDesc = cha.clientCharacteristicConfiguration();
                 serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));

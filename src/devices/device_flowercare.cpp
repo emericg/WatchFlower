@@ -191,7 +191,7 @@ void DeviceFlowerCare::askForReading()
 {
     if (serviceData)
     {
-        QBluetoothUuid b(QString("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
+        QBluetoothUuid b(QStringLiteral("00001a01-0000-1000-8000-00805f9b34fb")); // handle 0x35
         QLowEnergyCharacteristic chb = serviceData->characteristic(b);
         serviceData->readCharacteristic(chb);
     }
@@ -210,7 +210,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             int batt = -1;
             QString fw;
 
-            QBluetoothUuid c(QString("00001a02-0000-1000-8000-00805f9b34fb")); // handle 0x38
+            QBluetoothUuid c(QStringLiteral("00001a02-0000-1000-8000-00805f9b34fb")); // handle 0x38
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
@@ -243,7 +243,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             if (need_modechange) // if firmware > 2.6.6
             {
                 // Change device mode
-                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
+                QBluetoothUuid a(QStringLiteral("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
             }
@@ -257,7 +257,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
 
         if (serviceData)
         {
-            QBluetoothUuid l(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
+            QBluetoothUuid l(QStringLiteral("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
             QLowEnergyCharacteristic chl = serviceData->characteristic(l);
 
             if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
@@ -334,7 +334,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_handshake(QLowEnergyService::Ser
             /// disable notification for 0x12 handle
 
             // Start session command
-            QBluetoothUuid s(QString("00000010-0000-1000-8000-00805f9b34fb")); // handle 0x1b
+            QBluetoothUuid s(QStringLiteral("00000010-0000-1000-8000-00805f9b34fb")); // handle 0x1b
             QLowEnergyCharacteristic chs = serviceHandshake->characteristic(s);
             serviceHandshake->writeCharacteristic(chs, QByteArray::fromHex("90ca85de"), QLowEnergyService::WriteWithResponse);
         }
@@ -354,7 +354,7 @@ void DeviceFlowerCare::serviceDetailsDiscovered_history(QLowEnergyService::Servi
 
         if (serviceHistory && m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
         {
-            QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
+            QBluetoothUuid m(QStringLiteral("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
             QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
             serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A20000"), QLowEnergyService::WriteWithResponse);
         }
@@ -375,13 +375,13 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
         {
 /*
             // Enable notification for 0x12 handle?
-            QBluetoothUuid h(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x13
+            QBluetoothUuid h(QStringLiteral("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x13
             QLowEnergyCharacteristic chh = serviceHandshake->characteristic(h);
             m_notificationHandshake = chh.clientCharacteristicConfiguration();
             serviceHandshake->writeDescriptor(m_notificationHandshake, QByteArray::fromHex("0100"));
 */
             // Send challenge key
-            QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
+            QBluetoothUuid k(QStringLiteral("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
             QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
             serviceHandshake->writeCharacteristic(chk, m_key_challenge, QLowEnergyService::WriteWithResponse);
         }
@@ -393,7 +393,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
         if (m_key_finish.size())
         {
             // Send finish key
-            QBluetoothUuid k(QString("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
+            QBluetoothUuid k(QStringLiteral("00000001-0000-1000-8000-00805f9b34fb")); // handle 0x12
             QLowEnergyCharacteristic chk = serviceHandshake->characteristic(k);
             serviceHandshake->writeCharacteristic(chk, m_key_finish, QLowEnergyService::WriteWithResponse);
             m_key_finish.clear();
@@ -407,7 +407,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
                 // Start reading history?
 /*
                 // Enable notification for 0x3e handle
-                QBluetoothUuid n(QString("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x3f
+                QBluetoothUuid n(QStringLiteral("00002902-0000-1000-8000-00805f9b34fb")); // handle 0x3f
                 QLowEnergyCharacteristic chn = serviceHistory->characteristic(n);
                 m_notificationHistory = chn.clientCharacteristicConfiguration();
                 serviceHistory->writeDescriptor(m_notificationHistory, QByteArray::fromHex("0100"));
@@ -415,20 +415,20 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
                 if (m_device_time < 0)
                 {
                     // Read device time
-                    QBluetoothUuid h(QString("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
+                    QBluetoothUuid h(QStringLiteral("00001a12-0000-1000-8000-00805f9b34fb")); // handle 0x41
                     QLowEnergyCharacteristic chh = serviceHistory->characteristic(h);
                     serviceHistory->readCharacteristic(chh);
                 }
 
                 // Change device mode
-                QBluetoothUuid m(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
+                QBluetoothUuid m(QStringLiteral("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3e
                 QLowEnergyCharacteristic chm = serviceHistory->characteristic(m);
                 serviceHistory->writeCharacteristic(chm, QByteArray::fromHex("A00000"), QLowEnergyService::WriteWithResponse);
             }
             else if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
             {
                 // Change device mode
-                QBluetoothUuid a(QString("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
+                QBluetoothUuid a(QStringLiteral("00001a00-0000-1000-8000-00805f9b34fb")); // handle 0x33
                 QLowEnergyCharacteristic cha = serviceData->characteristic(a);
                 serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
 
@@ -444,7 +444,7 @@ void DeviceFlowerCare::bleWriteDone(const QLowEnergyCharacteristic &c, const QBy
         // Device mode has been changed to 'history'
 
         // Read history entry count or entries
-        QBluetoothUuid i(QString("00001a11-0000-1000-8000-00805f9b34fb")); // handle 0x3c
+        QBluetoothUuid i(QStringLiteral("00001a11-0000-1000-8000-00805f9b34fb")); // handle 0x3c
         QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
         serviceHistory->readCharacteristic(chi);
         return;
@@ -466,7 +466,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
     if (c.uuid().toString() == "{00001a11-0000-1000-8000-00805f9b34fb}")
     {
-        QBluetoothUuid i(QString("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3c
+        QBluetoothUuid i(QStringLiteral("00001a10-0000-1000-8000-00805f9b34fb")); // handle 0x3c
         QLowEnergyCharacteristic chi = serviceHistory->characteristic(i);
 
         if (m_history_entryCount < 0)

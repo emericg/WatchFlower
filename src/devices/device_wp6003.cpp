@@ -113,8 +113,8 @@ void DeviceWP6003::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState
 
         if (serviceData)
         {
-            QBluetoothUuid uuid_tx(QString("0000FFF1-0000-1000-8000-00805F9B34FB"));
-            QBluetoothUuid uuid_rx(QString("0000FFF4-0000-1000-8000-00805F9B34FB"));
+            QBluetoothUuid uuid_tx(QStringLiteral("0000FFF1-0000-1000-8000-00805F9B34FB"));
+            QBluetoothUuid uuid_rx(QStringLiteral("0000FFF4-0000-1000-8000-00805F9B34FB"));
 
             // Characteristic "RX" // NOTIFY
             {
@@ -184,8 +184,8 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
     //qDebug() << "DeviceWP6003::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    QBluetoothUuid uuid_tx(QString("0000FFF1-0000-1000-8000-00805F9B34FB"));
-    QBluetoothUuid uuid_rx(QString("0000FFF4-0000-1000-8000-00805F9B34FB"));
+    QBluetoothUuid uuid_tx(QStringLiteral("0000FFF1-0000-1000-8000-00805F9B34FB"));
+    QBluetoothUuid uuid_rx(QStringLiteral("0000FFF4-0000-1000-8000-00805F9B34FB"));
 
     if (c.uuid() == uuid_rx)
     {

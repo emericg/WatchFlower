@@ -416,6 +416,7 @@ Loader {
                 }
             }
         }
+
         function updateGraph() {
             if (typeof currentDevice === "undefined" || !currentDevice) return
             if (!currentDevice.isEnvironmentalSensor) return

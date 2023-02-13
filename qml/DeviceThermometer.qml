@@ -258,6 +258,7 @@ Loader {
                 thermoChart.updateGraph()
             }
         }
+
         function updateGraph() {
             if (graphLoader.status === Loader.Ready) thermoChart.updateGraph()
         }
