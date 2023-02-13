@@ -96,10 +96,10 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_infos);
-            //connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
         }
     }
 
@@ -262,22 +262,25 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
 
         if (serviceInfos)
         {
-            QBluetoothUuid uuid_fw(QString("00002a26-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_fw(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic cfw = serviceInfos->characteristic(uuid_fw);
             if (cfw.value().size() > 0)
             {
-                QString fw = cfw.value();
-                fw = fw.split('_')[1].split('-')[1];
+                QString fw = cfw.value().split('_')[1].split('-')[1];
                 setFirmware(fw);
-            }
 
-            if (m_deviceFirmware.size() == 6)
-            {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+                if (m_deviceFirmware.size() == 6)
                 {
-                    m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
+                    if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+                    {
+                        m_firmware_uptodate = true;
+                        Q_EMIT sensorUpdated();
+                    }
                 }
+            }
+            else
+            {
+                serviceInfos->readCharacteristic(cfw);
             }
         }
     }
@@ -292,13 +295,17 @@ void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::Servic
         if (serviceBattery)
         {
             // Characteristic "Battery Level"
-            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
             if (cbat.value().size() == 1)
             {
                 int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
                 setBattery(lvl);
+            }
+            else
+            {
+                serviceBattery->readCharacteristic(cbat);
             }
         }
     }
@@ -313,7 +320,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
         if (serviceLive && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
-            QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid led(QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cled = serviceLive->characteristic(led);
             serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
         }
@@ -326,7 +333,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             /////////
 /*
-            QBluetoothUuid lx(QString("39e1fa01-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid lx(QStringLiteral("39e1fa01-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic chlx = serviceLive->characteristic(lx);
 
             rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
@@ -334,7 +341,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 */
             /////////
 
-            QBluetoothUuid sf(QString("39e1fa02-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid sf(QStringLiteral("39e1fa02-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic chsf = serviceLive->characteristic(sf);
 
             rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
@@ -346,7 +353,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             /////////
 
-            QBluetoothUuid st(QString("39e1fa03-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid st(QStringLiteral("39e1fa03-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic chst = serviceLive->characteristic(st);
 
             rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
@@ -355,7 +362,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             /////////
 
-            QBluetoothUuid t(QString("39e1fa04-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid t(QStringLiteral("39e1fa04-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cht = serviceLive->characteristic(t);
 
             rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
@@ -366,7 +373,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             /////////
 /*
-            QBluetoothUuid sm(QString("39e1fa05-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid sm(QStringLiteral("39e1fa05-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic chsm = serviceLive->characteristic(sm);
 
             rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
@@ -379,21 +386,21 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 */
             /////////
 
-            QBluetoothUuid sm_calibrated(QString("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
+            QBluetoothUuid sm_calibrated(QStringLiteral("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
             QLowEnergyCharacteristic chsmc = serviceLive->characteristic(sm_calibrated);
 
             rawData = reinterpret_cast<const quint8 *>(chsmc.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
             m_soilMoisture = std::round(*((float*)&rawValueCal));
 /*
-            QBluetoothUuid at_calibrated(QString("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
+            QBluetoothUuid at_calibrated(QStringLiteral("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
             QLowEnergyCharacteristic chatc = serviceLive->characteristic(at_calibrated);
 
             rawData = reinterpret_cast<const quint8 *>(chatc.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
             m_temperature = std::round(*((float*)&rawValueCal));
 */
-            QBluetoothUuid dli_calibrated(QString("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight?
+            QBluetoothUuid dli_calibrated(QStringLiteral("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight?
             QLowEnergyCharacteristic chdlic = serviceLive->characteristic(dli_calibrated);
 
             rawData = reinterpret_cast<const quint8 *>(chdlic.value().constData());
@@ -448,7 +455,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
 
         if (serviceWatering && m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
-            QBluetoothUuid uuid_wt_lvl(QString("39e1f907-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid uuid_wt_lvl(QStringLiteral("39e1f907-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_lvl);
             if (cwt.value().size() > 0)
             {
@@ -461,7 +468,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
 
         if (serviceWatering && m_ble_action == DeviceUtils::ACTION_WATERING)
         {
-            QBluetoothUuid uuid_wt_trigger(QString("39e1f906-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid uuid_wt_trigger(QStringLiteral("39e1f906-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_trigger);
             serviceWatering->writeCharacteristic(cwt, QByteArray::fromHex("0800"));
         }
@@ -476,7 +483,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceS
 
         if (serviceClock)
         {
-            QBluetoothUuid uuid_clk(QString("39e1fd01-84a8-11e2-afba-0002a5d5c51b"));
+            QBluetoothUuid uuid_clk(QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cclk = serviceClock->characteristic(uuid_clk);
             if (cclk.value().size() > 0)
             {
@@ -517,8 +524,36 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
     //qDebug() << "DeviceParrotPot::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    Q_UNUSED(c)
-    Q_UNUSED(value)
+    //const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+    //const int data_size = value.size();
+
+    // Read firmware version
+    if (c.uuid().toString() == "00002a26-0000-1000-8000-00805f9b34fb")
+    {
+        QString fw = value.split('_')[1].split('-')[1];
+        setFirmware(fw);
+
+        if (m_deviceFirmware.size() == 6)
+        {
+            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+            {
+                m_firmware_uptodate = true;
+                Q_EMIT sensorUpdated();
+            }
+        }
+    }
+
+    // Read battery level
+    if (c.uuid().toString() == "00002a19-0000-1000-8000-00805f9b34fb")
+    {
+        if (value.size() == 1)
+        {
+            int lvl = static_cast<uint8_t>(value.constData()[0]);
+            setBattery(lvl);
+        }
+    }
+
+    // TODOs
 }
 
 void DeviceParrotPot::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)

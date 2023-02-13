@@ -89,9 +89,10 @@ void DeviceFlowerPower::serviceScanDone()
         if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_infos);
+            connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceFlowerPower::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
         }
     }
 
@@ -100,6 +101,7 @@ void DeviceFlowerPower::serviceScanDone()
         if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceFlowerPower::serviceDetailsDiscovered_battery);
+            //connect(serviceBattery, &QLowEnergyService::characteristicRead, this, &DeviceFlowerPower::bleReadDone);
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
@@ -232,22 +234,25 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
         if (serviceInfos)
         {
-            QBluetoothUuid fw(QString("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x17
+            QBluetoothUuid fw(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb")); // handle 0x17
             QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
             if (cfw.value().size() > 0)
             {
-                QString fw = cfw.value();
-                fw = fw.split('_')[1].split('-')[1];
+                QString fw = cfw.value().split('_')[1].split('-')[1];
                 setFirmware(fw);
-            }
 
-            if (m_deviceFirmware.size() == 5)
-            {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+                if (m_deviceFirmware.size() == 5)
                 {
-                    m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
+                    if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+                    {
+                        m_firmware_uptodate = true;
+                        Q_EMIT sensorUpdated();
+                    }
                 }
+            }
+            else
+            {
+                serviceInfos->readCharacteristic(cfw);
             }
         }
     }
@@ -262,13 +267,17 @@ void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::Serv
         if (serviceBattery)
         {
             // Characteristic "Battery Level"
-            QBluetoothUuid uuid_batterylevel(QString("00002a19-0000-1000-8000-00805f9b34fb"));
+            QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
             if (cbat.value().size() == 1)
             {
                 int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
                 setBattery(lvl);
+            }
+            else
+            {
+                serviceBattery->readCharacteristic(cbat);
             }
         }
     }
@@ -283,7 +292,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
         if (serviceLive && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
-            QBluetoothUuid led(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3c
+            QBluetoothUuid led(QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3c
             QLowEnergyCharacteristic cled = serviceLive->characteristic(led);
             serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
             //controller->disconnectFromDevice();
@@ -298,20 +307,20 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 /*
             if (VersionChecker(m_firmware) >= Version("1.1.0"))
             {
-                QBluetoothUuid sm_calibrated(QString("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
-                QBluetoothUuid at_calibrated(QString("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
-                QBluetoothUuid dli_calibrated(QString("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight?
+                QBluetoothUuid sm_calibrated(QStringLiteral("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
+                QBluetoothUuid at_calibrated(QStringLiteral("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
+                QBluetoothUuid dli_calibrated(QStringLiteral("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight?
 
-                QBluetoothUuid ea_calibrated(QString("39e1fa0c-84a8-11e2-afba-0002a5d5c51b")); // ?
-                QBluetoothUuid ecb_calibrated(QString("39e1fa0d-84a8-11e2-afba-0002a5d5c51b")); // ?
-                QBluetoothUuid ecbp_calibrated(QString("39e1fa0e-84a8-11e2-afba-0002a5d5c51b")); // ?
+                QBluetoothUuid ea_calibrated(QStringLiteral("39e1fa0c-84a8-11e2-afba-0002a5d5c51b")); // ?
+                QBluetoothUuid ecb_calibrated(QStringLiteral("39e1fa0d-84a8-11e2-afba-0002a5d5c51b")); // ?
+                QBluetoothUuid ecbp_calibrated(QStringLiteral("39e1fa0e-84a8-11e2-afba-0002a5d5c51b")); // ?
             }
             else
 */
             {
                 /////////
 
-                QBluetoothUuid lx(QString("39e1fa01-84a8-11e2-afba-0002a5d5c51b")); // handle 0x25
+                QBluetoothUuid lx(QStringLiteral("39e1fa01-84a8-11e2-afba-0002a5d5c51b")); // handle 0x25
                 QLowEnergyCharacteristic chlx = serviceLive->characteristic(lx);
 
                 rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
@@ -320,7 +329,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid sf(QString("39e1fa02-84a8-11e2-afba-0002a5d5c51b")); // handle 0x29
+                QBluetoothUuid sf(QStringLiteral("39e1fa02-84a8-11e2-afba-0002a5d5c51b")); // handle 0x29
                 QLowEnergyCharacteristic chsf = serviceLive->characteristic(sf);
 
                 rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
@@ -332,7 +341,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid st(QString("39e1fa03-84a8-11e2-afba-0002a5d5c51b")); // handle 0x2d
+                QBluetoothUuid st(QStringLiteral("39e1fa03-84a8-11e2-afba-0002a5d5c51b")); // handle 0x2d
                 QLowEnergyCharacteristic chst = serviceLive->characteristic(st);
 
                 rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
@@ -341,7 +350,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid t(QString("39e1fa04-84a8-11e2-afba-0002a5d5c51b")); // handle 0x31
+                QBluetoothUuid t(QStringLiteral("39e1fa04-84a8-11e2-afba-0002a5d5c51b")); // handle 0x31
                 QLowEnergyCharacteristic cht = serviceLive->characteristic(t);
 
                 rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
@@ -352,7 +361,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 /////////
 
-                QBluetoothUuid sm(QString("39e1fa05-84a8-11e2-afba-0002a5d5c51b")); // handle 0x35
+                QBluetoothUuid sm(QStringLiteral("39e1fa05-84a8-11e2-afba-0002a5d5c51b")); // handle 0x35
                 QLowEnergyCharacteristic chsm = serviceLive->characteristic(sm);
 
                 rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
@@ -367,12 +376,12 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             /////////
 
             // TODO
-            //QBluetoothUuid live_mesure_period(QString("39e1fa06-84a8-11e2-afba-0002a5d5c51b")); // handle 0x39
-            //QBluetoothUuid led_status(QString("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3c
+            //QBluetoothUuid live_mesure_period(QStringLiteral("39e1fa06-84a8-11e2-afba-0002a5d5c51b")); // handle 0x39
+            //QBluetoothUuid led_status(QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3c
 
             /////////
 
-            QBluetoothUuid lm(QString("39e1fa08-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3f
+            QBluetoothUuid lm(QStringLiteral("39e1fa08-84a8-11e2-afba-0002a5d5c51b")); // handle 0x3f
             QLowEnergyCharacteristic chlm = serviceLive->characteristic(lm);
 
             rawData = reinterpret_cast<const quint8 *>(chlm.value().constData());
@@ -428,7 +437,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_clock(QLowEnergyService::Servic
 
         if (serviceClock)
         {
-            QBluetoothUuid clk(QString("39e1fd01-84a8-11e2-afba-0002a5d5c51b")); // handle 0x70
+            QBluetoothUuid clk(QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b")); // handle 0x70
             QLowEnergyCharacteristic cclk = serviceClock->characteristic(clk);
             if (cclk.value().size() > 0)
             {
@@ -486,11 +495,32 @@ void DeviceFlowerPower::bleReadDone(const QLowEnergyCharacteristic &c, const QBy
     //qDebug() << "DeviceFlowerPower::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    if (c.uuid().toString() == "{x}")
+    //const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+    //const int data_size = value.size();
+
+    // Read firmware version
+    if (c.uuid().toString() == "00002a26-0000-1000-8000-00805f9b34fb")
     {
-        if (value.size() > 0)
+        QString fw = value.split('_')[1].split('-')[1];
+        setFirmware(fw);
+
+        if (m_deviceFirmware.size() == 5)
         {
-            //const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+            {
+                m_firmware_uptodate = true;
+                Q_EMIT sensorUpdated();
+            }
+        }
+    }
+
+    // Read battery level
+    if (c.uuid().toString() == "00002a19-0000-1000-8000-00805f9b34fb")
+    {
+        if (value.size() == 1)
+        {
+            int lvl = static_cast<uint8_t>(value.constData()[0]);
+            setBattery(lvl);
         }
     }
 }
