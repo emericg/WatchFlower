@@ -457,7 +457,7 @@ Item {
                     dataChart.updateGraph()
 
                     graphLoader.opacity = 1
-                    noDataIndicator.visible = (currentDevice.countDataNamed("temperature", dataChart.daysVisible) <= 1)
+                    noDataIndicator.visible = (currentDevice.countDataNamed("temperature", dataChart.daysTarget) <= 1)
                 }
             }
         }

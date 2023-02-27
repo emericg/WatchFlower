@@ -13,7 +13,7 @@ Item {
     property color legendColor: Theme.colorSubText
 
     property int daysTarget: settingsManager.graphAioDays
-    property int daysVisible: settingsManager.graphAioDays
+    property int daysVisible: 0
     property int daysTick: isPhone ? 4 : settingsManager.graphAioDays
 
     Connections {
@@ -31,6 +31,8 @@ Item {
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartPlantDataAio // loadGraph() >> " + currentDevice)
+
+        daysVisible = 0
 
         hygroData.visible = currentDevice.hasSoilMoistureSensor && currentDevice.hasDataNamed("soilMoisture")
         conduData.visible = currentDevice.hasSoilConductivitySensor && currentDevice.hasDataNamed("soilConductivity")
@@ -105,7 +107,7 @@ Item {
         }
 
         // Update indicator (only works if data are changed in database though...)
-        if (dateIndicator.visible) updateIndicator()
+        updateIndicator()
     }
 
     function qpoint_lerp(p0, p1, x) { return (p0.y + (x - p0.x) * ((p1.y - p0.y) / (p1.x - p0.x))) }
@@ -185,12 +187,6 @@ Item {
                 }
             }
 
-            onPressAndHold: {
-                if (isMobile) {
-                    smsmsm.showHide()
-                }
-            }
-
             onPressed: (mouse) => {
                 if (isDesktop) {
                     if (mouse.button === Qt.LeftButton) {
@@ -267,6 +263,7 @@ Item {
             }
 
             // indicators is now visible
+            indicators.visible = true
             dateIndicator.visible = true
             verticalIndicator.visible = true
             verticalIndicator.x = ppp.x
@@ -316,6 +313,7 @@ Item {
 
         vanim.duration = 0
 
+        indicators.visible = false
         dateIndicator.visible = false
         dataIndicator.visible = false
         verticalIndicator.visible = false
@@ -323,6 +321,7 @@ Item {
     }
 
     function updateIndicator() {
+        if (!indicators.visible) return
         if (!dateIndicator.visible) return
 
         // set date & time
@@ -331,7 +330,7 @@ Item {
         var time_string = date.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
 
         //: "at" is used for DATE at HOUR
-        dateIndicator.text = date_string + " " + qsTr("at") + " " + time_string
+        dateIndicatorTxt.text = date_string + " " + qsTr("at") + " " + time_string
 
         // search index corresponding to the timestamp
         var x1 = -1
@@ -347,10 +346,10 @@ Item {
                                                   tempData.at(i).y, -99, lumiData.at(i).y)
                 } else if (appContent.state === "DeviceThermometer") {
                     dataIndicator.visible = true
-                    dataIndicator.text = (settingsManager.tempUnit === "F") ?
+                    dataIndicatorTxt.text = (settingsManager.tempUnit === "F") ?
                                             UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + qsTr("°F") :
                                             tempData.at(i).y.toFixed(1) + qsTr("°C")
-                    dataIndicator.text += " " + hygroData.at(i).y.toFixed(0) + "%"
+                    dataIndicatorTxt.text += " " + hygroData.at(i).y.toFixed(0) + "%"
                 }
                 break
             } else {
@@ -375,8 +374,8 @@ Item {
             } else if (appContent.state === "DeviceThermometer") {
                 dataIndicator.visible = true
                 var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x)
-                dataIndicator.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
-                dataIndicator.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x).toFixed(0) + "%"
+                dataIndicatorTxt.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                dataIndicatorTxt.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x).toFixed(0) + "%"
             }
         }
     }
@@ -431,27 +430,28 @@ Item {
     Grid {
         id: indicators
         anchors.top: legend_area_overlay.top
-        anchors.topMargin: (isPhone ? 8 : 12) + 8
-        anchors.leftMargin: isPhone ? 20 : 24
-        anchors.rightMargin: isPhone ? 20 : 24
+        anchors.topMargin: isPhone ? 12 : 20
+        anchors.leftMargin: 12
+        anchors.rightMargin: 12
         anchors.horizontalCenter: parent.horizontalCenter
 
-        spacing: 32
+        spacing: 8
         layoutDirection: "LeftToRight"
-        columns: 2
-        rows: 2
+        columns: 1
+        rows: 3
 
         //transitions: Transition { AnchorAnimation { duration: 133; } }
         //move: Transition { NumberAnimation { properties: "x"; duration: 133; } }
 
+        state: "reanchoredmid"
         states: [
             State {
                 name: "reanchoredmid"
                 AnchorChanges {
                     target: indicators
                     anchors.right: undefined
-                    anchors.left: undefined
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.left: parent.left
+                    anchors.horizontalCenter: undefined
                 }
             },
             State {
@@ -473,90 +473,87 @@ Item {
                 }
             }
         ]
-
-        Text {
-            id: dateIndicator
-
-            visible: false
-            font.pixelSize: 15
-            font.bold: true
-            color: Theme.colorSubText
-
-            Rectangle {
-                anchors.fill: parent
-                anchors.topMargin: -8
-                anchors.leftMargin: -12
-                anchors.rightMargin: -12
-                anchors.bottomMargin: -8
-
-                z: -1
-                radius: height
-                color: Theme.colorComponentBackground
-                border.width: Theme.componentBorderWidth
-                border.color: Theme.colorComponentDown
-            }
-        }
-
-        Text {
-            id: dataIndicator
-
-            visible: false
-            font.pixelSize: 15
-            font.bold: true
-            color: Theme.colorSubText
-
-            Rectangle {
-                anchors.fill: parent
-                anchors.topMargin: -8
-                anchors.leftMargin: -12
-                anchors.rightMargin: -12
-                anchors.bottomMargin: -8
-
-                z: -1
-                radius: height
-                color: Theme.colorComponentBackground
-                border.width: 2
-                border.color: Theme.colorComponentDown
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Item {
-        id: legend_area_overlay
-        x: aioGraph.x + aioGraph.plotArea.x
-        y: aioGraph.y + aioGraph.plotArea.y
-        width: aioGraph.plotArea.width
-        height: aioGraph.plotArea.height
-
-        Row {
-            anchors.left: parent.left
-            anchors.leftMargin: 6
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 6
-            spacing: 6
+/*
+        Row { // line 1
+            spacing: isPhone ? 12 : 8
+            layoutDirection: (indicators.state === "reanchoredright") ? Qt.RightToLeft : Qt.LeftToRight
 
             RoundButtonIcon {
-                width: 34
-                height: 34
+                width: 32
+                height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
                 background: true
                 source: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
-                visible: isDesktop
-                onClicked: smsmsm.showHide()
+                onClicked: historyIndicator.showHide()
             }
+*/
+            Rectangle { // line 1
+                id: dateIndicator
 
-            SelectorMenu {
-                id: smsmsm
+                width: dateIndicatorTxt.contentWidth + 24
+                height: 32
+                radius: 32
+                visible: false
+
+                color: Theme.colorComponentBackground
+                border.width: Theme.componentBorderWidth
+                border.color: Theme.colorComponentDown
+
+                Text {
+                    id: dateIndicatorTxt
+                    anchors.centerIn: parent
+                    font.pixelSize: 15
+                    font.bold: true
+                    color: Theme.colorSubText
+                }
+            }
+        //}
+
+        Rectangle { // line 2
+            id: dataIndicator
+
+            width: dataIndicatorTxt.contentWidth + 24
+            height: 32
+            radius: 32
+            visible: false
+
+            color: Theme.colorComponentBackground
+            border.width: 2
+            border.color: Theme.colorComponentDown
+
+            Text {
+                id: dataIndicatorTxt
+                anchors.centerIn: parent
+                font.pixelSize: 15
+                font.bold: true
+                color: Theme.colorSubText
+            }
+        }
+
+        Row { // line 3
+            spacing: isPhone ? 12 : 8
+            layoutDirection: (indicators.state === "reanchoredright") ? Qt.RightToLeft : Qt.LeftToRight
+
+            RoundButtonIcon {
+                width: 32
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
+                background: true
+                source: "qrc:/assets/icons_material/outline-settings-24px.svg"
+
+                onClicked: historyIndicator.showHide()
+            }
+
+            SelectorMenu {
+                id: historyIndicator
+                height: 32
+
                 function showHide() {
-                    if (smsmsm.opacity > 0) smsmsm.opacity = 0
-                    else smsmsm.opacity = 1
+                    if (historyIndicator.opacity > 0) historyIndicator.opacity = 0
+                    else historyIndicator.opacity = 1
                 }
 
                 enabled: (opacity > 0)
@@ -585,6 +582,18 @@ Item {
                 }
             }
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Item {
+        id: legend_area_overlay
+        x: aioGraph.x + aioGraph.plotArea.x
+        y: aioGraph.y + aioGraph.plotArea.y
+        width: aioGraph.plotArea.width
+        height: aioGraph.plotArea.height
+
+        // empty right now
     }
 
     ////////////////////////////////////////////////////////////////////////////

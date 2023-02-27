@@ -1231,7 +1231,7 @@ Loader {
                                         envChart.updateGraph()
 
                                         graphLoader.opacity = 1
-                                        noDataIndicator.visible = (currentDevice.countDataNamed("temperature", envChart.daysVisible) < 1)
+                                        noDataIndicator.visible = (currentDevice.countDataNamed("temperature", envChart.daysTarget) < 1)
                                     }
                                 }
                             }
