@@ -5,7 +5,8 @@
 
 * Qingping 'Air Monitor Lite' [CGDN1](https://www.qingping.co/air-monitor-lite/overview)
 * Has sensors to relay temperature, humidity, CO2 and PM 2.5/10
-* Uses Bluetooth Low Energy (BLE) and has a limited range
+* Uses WiFi once setup through the official application (either Qingping+ or Xiaomi Home)
+* Uses Bluetooth Low Energy (BLE) once enabled through Xiaomi Home (> "additional settings" > "BLE Gateway")
 * A 18650 battery is used as internal power source
 
 ## Protocol

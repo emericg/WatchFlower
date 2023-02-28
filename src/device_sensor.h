@@ -153,7 +153,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(float luminosity_bias READ getBiasLuminosity WRITE setBiasLuminosity NOTIFY biasUpdated)
     Q_PROPERTY(float pressure_bias READ getBiasPressure WRITE setBiasPressure NOTIFY biasUpdated)
 
-    // sensor history
+    // sensor history sync
     Q_PROPERTY(int historyUpdatePercent READ getHistoryUpdatePercent NOTIFY progressUpdated)
 
     // graphs
@@ -402,7 +402,7 @@ public:
     float getRH() { return m_rh; }
     float getRM() { return m_rm; }
     float getRS() { return m_rs; }
-    // others
+    // Others
     Q_INVOKABLE QString getTempString() const;
     Q_INVOKABLE float getHeatIndex() const;
     Q_INVOKABLE QString getHeatIndexString() const;
