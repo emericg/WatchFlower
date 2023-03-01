@@ -125,6 +125,18 @@ class DeviceSensor: public Device
     Q_PROPERTY(int mmolMin READ getMmolMin NOTIFY minmaxUpdated)
     Q_PROPERTY(int mmolMax READ getMmolMax NOTIFY minmaxUpdated)
 
+    // history data (min/max)
+    Q_PROPERTY(int hygroMin_history READ getSoilMoistureMin_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(int hygroMax_history READ getSoilMoistureMax_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(int conduMin_history READ getSoilConduMin_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(int conduMax_history READ getSoilConduMax_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(float tempMin_history READ getTempMin_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(float tempMax_history READ getTempMax_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(float humiMin_history READ getHumiMin_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(float humiMax_history READ getHumiMax_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(int luxMin_history READ getLuxMin_history NOTIFY minmaxHistoryUpdated)
+    Q_PROPERTY(int luxMax_history READ getLuxMax_history NOTIFY minmaxHistoryUpdated)
+
     // plant limits
     Q_PROPERTY(int soilMoisture_limitMin READ getLimitSoilMoistureMin WRITE setLimitSoilMoistureMin NOTIFY limitsUpdated)
     Q_PROPERTY(int soilMoisture_limitMax READ getLimitSoilMoistureMax WRITE setLimitSoilMoistureMax NOTIFY limitsUpdated)
@@ -167,6 +179,7 @@ Q_SIGNALS:
     void biasUpdated();
     void limitsUpdated();
     void minmaxUpdated();
+    void minmaxHistoryUpdated();
     void progressUpdated();
     void chartDataHistoryMonthsUpdated();
     void chartDataHistoryWeeksUpdated();
@@ -263,6 +276,35 @@ protected:
     int m_luxMax = -99;
     int m_mmolMin = 999999;
     int m_mmolMax = -99;
+
+    // min/max data (generated - for history graph)
+    int m_soilMoistureMin_history = 999999;
+    int m_soilMoistureMax_history = -99;
+    int m_soilConduMin_history = 999999;
+    int m_soilConduMax_history = -99;
+    float m_soilTempMin_history = 99.f;
+    float m_soilTempMax_history = -99.f;
+    float m_tempMin_history = 999999.f;
+    float m_tempMax_history = -99.f;
+    float m_humiMin_history = 999999.f;
+    float m_humiMax_history = -99.f;
+    int m_luxMin_history = 999999;
+    int m_luxMax_history = -99;
+
+    void resetMinMax_history() {
+        m_soilMoistureMin_history = 999999;
+        m_soilMoistureMax_history = -99;
+        m_soilConduMin_history = 999999;
+        m_soilConduMax_history = -99;
+        m_soilTempMin_history = 99.f;
+        m_soilTempMax_history = -99.f;
+        m_tempMin_history = 999999.f;
+        m_tempMax_history = -99.f;
+        m_humiMin_history = 999999.f;
+        m_humiMax_history = -99.f;
+        m_luxMin_history = 999999;
+        m_luxMax_history = -99;
+    }
 
     // device history control
     int m_history_entryCount = -1;
@@ -476,6 +518,20 @@ public:
     int getLuxMax() const { return m_luxMax; }
     int getMmolMin() const { return m_mmolMin; }
     int getMmolMax() const { return m_mmolMax; }
+
+    // Data min/max
+    int getSoilMoistureMin_history() const { return m_soilMoistureMin_history; }
+    int getSoilMoistureMax_history() const { return m_soilMoistureMax_history; }
+    int getSoilConduMin_history() const { return m_soilConduMin_history; }
+    int getSoilConduMax_history() const { return m_soilConduMax_history; }
+    float getSoilTempMin_history() const { return m_soilTempMin_history; }
+    float getSoilTempMax_history() const { return m_soilTempMax_history; }
+    float getTempMin_history() const { return m_tempMin_history; }
+    float getTempMax_history() const { return m_tempMax_history; }
+    float getHumiMin_history() const { return m_humiMin_history; }
+    float getHumiMax_history() const { return m_humiMax_history; }
+    int getLuxMin_history() const { return m_luxMin_history; }
+    int getLuxMax_history() const { return m_luxMax_history; }
 
     // History sync
     int getHistoryUpdatePercent() const;

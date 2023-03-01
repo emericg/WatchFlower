@@ -30,8 +30,8 @@
 #include <QString>
 #include <QVariant>
 
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QDateTimeAxis>
+class QDateTimeAxis;
+class QLineSeries;
 
 /* ************************************************************************** */
 
@@ -111,14 +111,15 @@ public:
 
     // Chart plant "history"
     Q_INVOKABLE void updateChartData_history_today();
-    Q_INVOKABLE void updateChartData_history_thismonth(int maxDays);
+    Q_INVOKABLE void updateChartData_history_thisweek();
+    Q_INVOKABLE void updateChartData_history_thismonth(const int maxDays = 30);
 
     Q_INVOKABLE void updateChartData_history_day(const QDateTime &d);
     Q_INVOKABLE void updateChartData_history_week(const QDateTime &f, const QDateTime &l);
-    Q_INVOKABLE void updateChartData_history_month(int maxDays, const QDateTime &f, const QDateTime &l);
+    Q_INVOKABLE void updateChartData_history_month(const QDateTime &f, const QDateTime &l, const int maxDays = 30);
 
     // Chart plant "AIO"
-    Q_INVOKABLE void getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
+    Q_INVOKABLE void getChartData_plantAIO(const int maxDays, QDateTimeAxis *axis,
                                            QLineSeries *hygro, QLineSeries *condu,
                                            QLineSeries *temp, QLineSeries *lumi);
 };

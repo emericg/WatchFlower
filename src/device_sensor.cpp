@@ -55,6 +55,19 @@ DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
 DeviceSensor::~DeviceSensor()
 {
     if (m_deviceInfos) delete m_deviceInfos;
+
+    qDeleteAll(m_chartData_history_month);
+    m_chartData_history_month.clear();
+    qDeleteAll(m_chartData_history_week);
+    m_chartData_history_week.clear();
+    qDeleteAll(m_chartData_history_day);
+    m_chartData_history_day.clear();
+
+    qDeleteAll(m_chartData_minmax);
+    m_chartData_minmax.clear();
+
+    qDeleteAll(m_chartData_env);
+    m_chartData_env.clear();
 }
 
 /* ************************************************************************** */
@@ -1329,6 +1342,7 @@ QString DeviceSensor::getDewPointString() const
     return dewString;
 }
 
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 int DeviceSensor::getHistoryUpdatePercent() const

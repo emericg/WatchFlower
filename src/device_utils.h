@@ -205,33 +205,22 @@ public:
     {
         datetime = dt;
     }
-    ChartDataHistory(const QDateTime &dt,
-                     float sm, float sc,
-                     float t, float l,
+    ChartDataHistory(const ChartDataHistory &dt,
                      QObject *parent) : QObject(parent)
     {
-        datetime = dt;
+        datetime = dt.datetime;
 
-        soilMoisture = sm;
-        soilConductivity = sc;
-        temperature = t;
-        luminosityLux = l;
-    }
-    ChartDataHistory(const QDateTime &dt,
-                     float sm, float sc,
-                     float t, float l,
-                     float tm, float lm,
-                     QObject *parent) : QObject(parent)
-    {
-        datetime = dt;
+        soilMoisture = dt.soilMoisture;
+        soilConductivity = dt.soilConductivity;
+        soilTemperature = dt.soilTemperature;
+        soilPH = dt.soilPH;
+        temperature = dt.temperature;
+        humidity = dt.humidity;
+        luminosityLux = dt.luminosityLux;
+        luminosityMmol = dt.luminosityMmol;
 
-        soilMoisture = sm;
-        soilConductivity = sc;
-        temperature = t;
-        luminosityLux = l;
-
-        temperatureMax = tm;
-        luminosityLuxMax = lm;
+        temperatureMax = dt.temperatureMax;
+        luminosityLuxMax = dt.luminosityLuxMax;
     }
     ChartDataHistory(const QDateTime &dt,
                      float sm, float sc, float st,

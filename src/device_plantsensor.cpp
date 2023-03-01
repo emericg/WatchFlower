@@ -25,14 +25,17 @@
 #include "Plant.h"
 #include "Journal.h"
 
+#include <QString>
+#include <QByteArray>
+
 #include <QSqlQuery>
 #include <QSqlError>
 
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include <QString>
-#include <QByteArray>
+#include <QtCharts/QLineSeries>
+#include <QtCharts/QDateTimeAxis>
 
 /* ************************************************************************** */
 
@@ -461,7 +464,7 @@ void DevicePlantSensor::resetLimits()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
+void DevicePlantSensor::getChartData_plantAIO(const int maxDays, QDateTimeAxis *axis,
                                               QLineSeries *hygro, QLineSeries *condu,
                                               QLineSeries *temp, QLineSeries *lumi)
 {
@@ -469,7 +472,9 @@ void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
 
     hygro->clear();
     condu->clear();
+    //soiltemp->clear(); // TODO
     temp->clear();
+    //humi->clear(); // TODO
     lumi->clear();
 
     if (m_dbInternal || m_dbExternal)
@@ -544,6 +549,19 @@ void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
         m_luxMax = 10000;
         m_mmolMin = 0;
         m_mmolMax = 10000;
+        // No database, use fake values
+        m_soilMoistureMin_history = 0;
+        m_soilMoistureMax_history = 50;
+        m_soilConduMin_history = 0;
+        m_soilConduMax_history = 2000;
+        m_soilTempMin_history = 0.f;
+        m_soilTempMax_history = 36.f;
+        m_tempMin_history = 0.f;
+        m_tempMax_history = 36.f;
+        m_humiMin_history = 0;
+        m_humiMax_history = 100;
+        m_luxMin_history = 0;
+        m_luxMax_history = 10000;
 
         Q_EMIT minmaxUpdated();
     }
@@ -554,11 +572,13 @@ void DevicePlantSensor::getChartData_plantAIO(int maxDays, QDateTimeAxis *axis,
 
 void DevicePlantSensor::updateChartData_history_today()
 {
-    int maxHours = 24;
+    //qDebug() << "updateChartData_history_today()";
 
     qDeleteAll(m_chartData_history_day);
     m_chartData_history_day.clear();
+
     ChartDataHistory *previousdata = nullptr;
+    int maxHours = 24;
 
     if (m_dbInternal || m_dbExternal)
     {
@@ -573,8 +593,9 @@ void DevicePlantSensor::updateChartData_history_today()
 
         QSqlQuery graphData;
         graphData.prepare("SELECT " + strftime_long + "," \
-                            "avg(soilMoisture), avg(soilConductivity)," \
-                            "avg(temperature), avg(luminosity) " \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity)," \
+                            "max(temperature), max(luminosity) " \
                           "FROM plantData " \
                           "WHERE deviceAddr = :deviceAddr " \
                             "AND timestamp >= " + datetime_day + " " \
@@ -612,8 +633,9 @@ void DevicePlantSensor::updateChartData_history_today()
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(),
-                                                           graphData.value(3).toFloat(), graphData.value(4).toFloat(),
+                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
+                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
+                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
                                                            this);
                 m_chartData_history_day.push_front(d);
                 previousdata = d;
@@ -658,35 +680,37 @@ void DevicePlantSensor::updateChartData_history_today()
 
 /* ************************************************************************** */
 
-void DevicePlantSensor::updateChartData_history_day(const QDateTime &d)
+void DevicePlantSensor::updateChartData_history_thisweek()
 {
-    //qDebug() << "updateChartData_history_day > " << d;
+    //qDebug() << "updateChartData_history_thisweek()";
 
-    int maxHours = 24;
-    qDeleteAll(m_chartData_history_day);
-    m_chartData_history_day.clear();
+    qDeleteAll(m_chartData_history_week);
+    m_chartData_history_week.clear();
+
     ChartDataHistory *previousdata = nullptr;
+    int maxDays = 7;
 
     if (m_dbInternal || m_dbExternal)
     {
-        QString strftime_long = "strftime('%Y-%m-%d %H:%M', timestamp)"; // sqlite
-        if (m_dbExternal) strftime_long = "DATE_FORMAT(timestamp, '%Y-%m-%d %H:%M')"; // mysql
+        QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
 
-        QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
-        if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
+        QString datetime_weeks = "datetime('now','-" + QString::number(maxDays) + " day')"; // sqlite
+        if (m_dbExternal) datetime_weeks = "DATE_SUB(NOW(), INTERVAL -" + QString::number(maxDays) + " DAY)"; // mysql
 
         QSqlQuery graphData;
-        graphData.prepare("SELECT " + strftime_long + "," \
-                            "avg(soilMoisture), avg(soilConductivity)," \
-                            "avg(temperature), avg(luminosity) " \
+        graphData.prepare("SELECT " + strftime_mid + "," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity)," \
+                            "max(temperature), max(luminosity) " \
                           "FROM plantData " \
                           "WHERE deviceAddr = :deviceAddr " \
-                            "AND timestamp BETWEEN '" + d.toString("yyyy-MM-dd 00:00:00") + "' AND '" + d.toString("yyyy-MM-dd 23:59:59") + "' " \
-                          "GROUP BY " + strftime_short + " " \
-                          "ORDER BY timestamp DESC " \
-                          "LIMIT :maxHours;");
+                            "AND timestamp >= " + datetime_weeks + " " \
+                          "GROUP BY " + strftime_mid + " " \
+                          "ORDER BY timestamp DESC "
+                          "LIMIT :maxDays;");
         graphData.bindValue(":deviceAddr", getAddress());
-        graphData.bindValue(":maxHours", maxHours);
+        graphData.bindValue(":maxDays", maxDays);
 
         if (graphData.exec() == false)
         {
@@ -697,81 +721,77 @@ void DevicePlantSensor::updateChartData_history_day(const QDateTime &d)
 
         while (graphData.next())
         {
-            if (m_chartData_history_day.size() < maxHours)
+            if (m_chartData_history_week.size() < maxDays)
             {
-                // missing hours(s)?
+                // missing day(s)?
                 if (previousdata)
                 {
-                    QDateTime timefromsql = graphData.value(0).toDateTime();
-                    int diff = timefromsql.secsTo(previousdata->getDateTime()) / 3600;
+                    QDateTime datefromsql = graphData.value(0).toDateTime();
+                    int diff = datefromsql.daysTo(previousdata->getDateTime());
                     for (int i = diff; i > 1; i--)
                     {
-                        if (m_chartData_history_day.size() < (maxHours-1))
+                        if (m_chartData_history_week.size() < (maxDays-1))
                         {
-                            QDateTime fakedate(timefromsql.addSecs((i-1) * 3600));
-                            m_chartData_history_day.push_front(new ChartDataHistory(fakedate, this));
+                            QDateTime fakedate(datefromsql.addDays(i-1));
+                            m_chartData_history_week.push_front(new ChartDataHistory(fakedate, this));
                         }
                     }
                 }
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(),
-                                                           graphData.value(3).toFloat(), graphData.value(4).toFloat(),
+                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
+                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
+                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
                                                            this);
-                m_chartData_history_day.push_front(d);
+                m_chartData_history_week.push_front(d);
                 previousdata = d;
             }
         }
 
-        // missing hour(s)?
-        if (previousdata)
+        // missing day(s)?
         {
-            QDateTime first = static_cast<ChartDataHistory *>(m_chartData_history_day.first())->getDateTime();
-            QDateTime last = static_cast<ChartDataHistory *>(m_chartData_history_day.last())->getDateTime();
+            // after
+            QDateTime today = QDateTime::currentDateTime();
+            int missing = maxDays;
+            if (previousdata) missing = static_cast<ChartDataHistory *>(m_chartData_history_week.last())->getDateTime().daysTo(today);
+            for (int i = missing - 1; i >= 0; i--)
+            {
+                QDateTime fakedate(today.addDays(-i));
+                m_chartData_history_week.push_back(new ChartDataHistory(fakedate, this));
+            }
 
-            for (int i = first.time().hour(), h = 1; i > 0; i--, h++)
+            // before
+            today = QDateTime::currentDateTime();
+            for (int i = m_chartData_history_week.size(); i < maxDays; i++)
             {
-                QDateTime fakedate(first.addSecs((-h)*3600));
-                m_chartData_history_day.push_front(new ChartDataHistory(fakedate, this));
-            }
-            for (int i = last.time().hour(), h = 1; i < 23; i++, h++)
-            {
-                QDateTime fakedate(last.addSecs((h)*3600));
-                m_chartData_history_day.push_back(new ChartDataHistory(fakedate, this));
-            }
-        }
-        else
-        {
-            for (int i = 0; i < 24; i++)
-            {
-                QDateTime fakedate(d.date(), QTime(i, 0, 0));
-                m_chartData_history_day.push_back(new ChartDataHistory(fakedate, this));
+                QDateTime fakedate(today.addDays(-i));
+                m_chartData_history_week.push_front(new ChartDataHistory(fakedate, this));
             }
         }
 
-        Q_EMIT chartDataHistoryDaysUpdated();
+        Q_EMIT chartDataHistoryWeeksUpdated();
     }
 }
 
 /* ************************************************************************** */
 
-void DevicePlantSensor::updateChartData_history_thismonth(int maxDays)
+void DevicePlantSensor::updateChartData_history_thismonth(const int maxDays)
 {
+    //qDebug() << "updateChartData_history_thismonth(" << maxDays << ")";
+
     if (maxDays <= 0) return;
     int maxMonths = 1;
 
     qDeleteAll(m_chartData_history_month);
     m_chartData_history_month.clear();
+
     ChartDataHistory *previousdata = nullptr;
 
     if (m_dbInternal || m_dbExternal)
     {
         QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
         if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
-
-        QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
-        if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
 
         QString datetime_months = "datetime('now','-" + QString::number(maxMonths) + " month')"; // sqlite
         if (m_dbExternal) datetime_months = "DATE_SUB(NOW(), INTERVAL -" + QString::number(maxMonths) + " MONTH)"; // mysql
@@ -843,7 +863,24 @@ void DevicePlantSensor::updateChartData_history_thismonth(int maxDays)
             }
         }
 
-        if (minmaxChanged) { Q_EMIT minmaxUpdated(); }
+        if (minmaxChanged)
+        {
+            m_soilMoistureMin_history = m_soilMoistureMin;
+            m_soilMoistureMax_history = m_soilMoistureMax;
+            m_soilConduMin_history = m_soilConduMin;
+            m_soilConduMax_history = m_soilConduMax;
+            m_soilTempMin_history = m_soilTempMin;
+            m_soilTempMax_history = m_soilTempMax;
+            m_tempMin_history = m_tempMin;
+            m_tempMax_history = m_tempMax;
+            m_humiMin_history = m_humiMin;
+            m_humiMax_history = m_humiMax;
+            m_luxMin_history = m_luxMin;
+            m_luxMax_history = m_luxMax;
+
+            Q_EMIT minmaxUpdated();
+            Q_EMIT minmaxHistoryUpdated();
+        }
 
         // missing day(s)?
         {
@@ -877,36 +914,126 @@ void DevicePlantSensor::updateChartData_history_thismonth(int maxDays)
             }
         }
 
-        // weekly graph
-        {
-            //qDeleteAll(m_chartData_history_week); // we only stores refs
-            m_chartData_history_week.clear();
-
-            int sz = m_chartData_history_month.size() - 1;
-            for (int j = sz; j > 0; j--)
-            {
-                m_chartData_history_week.push_front(m_chartData_history_month.at(j));
-                if (m_chartData_history_week.size() >= 7) break;
-            }
-
-            Q_EMIT chartDataHistoryWeeksUpdated();
-        }
-
         Q_EMIT chartDataHistoryMonthsUpdated();
     }
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
-void DevicePlantSensor::updateChartData_history_month(int maxDays, const QDateTime &f, const QDateTime &l)
+void DevicePlantSensor::updateChartData_history_day(const QDateTime &d)
 {
+    //qDebug() << "updateChartData_history_day > " << d;
+
+    if (!d.isValid()) return;
+    int maxHours = 24;
+
+    qDeleteAll(m_chartData_history_day);
+    m_chartData_history_day.clear();
+
+    ChartDataHistory *previousdata = nullptr;
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QString strftime_long = "strftime('%Y-%m-%d %H:%M', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_long = "DATE_FORMAT(timestamp, '%Y-%m-%d %H:%M')"; // mysql
+
+        QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
+
+        QSqlQuery graphData;
+        graphData.prepare("SELECT " + strftime_long + "," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity)," \
+                            "max(temperature), max(luminosity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                            "AND timestamp BETWEEN '" + d.toString("yyyy-MM-dd 00:00:00") + "' AND '" + d.toString("yyyy-MM-dd 23:59:59") + "' " \
+                          "GROUP BY " + strftime_short + " " \
+                          "ORDER BY timestamp DESC " \
+                          "LIMIT :maxHours;");
+        graphData.bindValue(":deviceAddr", getAddress());
+        graphData.bindValue(":maxHours", maxHours);
+
+        if (graphData.exec() == false)
+        {
+            qWarning() << "> graphData.exec() ERROR"
+                       << graphData.lastError().type() << ":" << graphData.lastError().text();
+            return;
+        }
+
+        while (graphData.next())
+        {
+            if (m_chartData_history_day.size() < maxHours)
+            {
+                // missing hours(s)?
+                if (previousdata)
+                {
+                    QDateTime timefromsql = graphData.value(0).toDateTime();
+                    int diff = timefromsql.secsTo(previousdata->getDateTime()) / 3600;
+                    for (int i = diff; i > 1; i--)
+                    {
+                        if (m_chartData_history_day.size() < (maxHours-1))
+                        {
+                            QDateTime fakedate(timefromsql.addSecs((i-1) * 3600));
+                            m_chartData_history_day.push_front(new ChartDataHistory(fakedate, this));
+                        }
+                    }
+                }
+
+                // data
+                ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
+                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
+                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
+                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                           this);
+                m_chartData_history_day.push_front(d);
+                previousdata = d;
+            }
+        }
+
+        // missing hour(s)?
+        if (previousdata)
+        {
+            QDateTime first = static_cast<ChartDataHistory *>(m_chartData_history_day.first())->getDateTime();
+            QDateTime last = static_cast<ChartDataHistory *>(m_chartData_history_day.last())->getDateTime();
+
+            for (int i = first.time().hour(), h = 1; i > 0; i--, h++)
+            {
+                QDateTime fakedate(first.addSecs((-h)*3600));
+                m_chartData_history_day.push_front(new ChartDataHistory(fakedate, this));
+            }
+            for (int i = last.time().hour(), h = 1; i < 23; i++, h++)
+            {
+                QDateTime fakedate(last.addSecs((h)*3600));
+                m_chartData_history_day.push_back(new ChartDataHistory(fakedate, this));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 24; i++)
+            {
+                QDateTime fakedate(d.date(), QTime(i, 0, 0));
+                m_chartData_history_day.push_back(new ChartDataHistory(fakedate, this));
+            }
+        }
+
+        Q_EMIT chartDataHistoryDaysUpdated();
+    }
+}
+
+/* ************************************************************************** */
+
+void DevicePlantSensor::updateChartData_history_week(const QDateTime &f, const QDateTime &l)
+{
+    //qDebug() << "updateChartData_history_week > " << f << " - " << l;
+
     if (!f.isValid() || !l.isValid()) return;
-    if (maxDays <= 0) return;
+    int maxDays = 7;
 
-    //qDebug() << "updateChartData_history_month > " << f << " - " << l;
+    qDeleteAll(m_chartData_history_week);
+    m_chartData_history_week.clear();
 
-    qDeleteAll(m_chartData_history_month);
-    m_chartData_history_month.clear();
     ChartDataHistory *previousdata = nullptr;
 
     if (m_dbInternal || m_dbExternal)
@@ -914,13 +1041,125 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays, const QDateTi
         QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
         if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
 
-        QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
-        if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
+        QSqlQuery graphData;
+        graphData.prepare("SELECT " + strftime_mid + "," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity)," \
+                            "max(temperature), max(luminosity) " \
+                          "FROM plantData " \
+                          "WHERE deviceAddr = :deviceAddr " \
+                            "AND timestamp BETWEEN '" + f.toString("yyyy-MM-dd 00:00:00") + "' AND '" + l.toString("yyyy-MM-dd 23:59:59") + "' " \
+                          "GROUP BY " + strftime_mid + " " \
+                          "ORDER BY timestamp DESC;");
+        graphData.bindValue(":deviceAddr", getAddress());
+
+        if (graphData.exec() == false)
+        {
+            qWarning() << "> graphData.exec() ERROR"
+                       << graphData.lastError().type() << ":" << graphData.lastError().text();
+            return;
+        }
+
+        resetMinMax_history();
+        bool minmaxChanged = false;
+
+        while (graphData.next())
+        {
+            // missing day(s)?
+            if (previousdata)
+            {
+                QDateTime datefromsql = graphData.value(0).toDateTime();
+                int diff = datefromsql.daysTo(previousdata->getDateTime());
+                for (int i = diff; i > 1; i--)
+                {
+                    if (m_chartData_history_week.size() < (maxDays-1))
+                    {
+                        QDateTime fakedate(datefromsql.addDays(i-1));
+                        m_chartData_history_week.push_front(new ChartDataHistory(fakedate, this));
+                    }
+                }
+            }
+
+            // min/max
+            if (graphData.value(1).toInt() < m_soilMoistureMin_history) { m_soilMoistureMin_history = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (graphData.value(2).toInt() < m_soilConduMin_history) { m_soilConduMin_history = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (graphData.value(3).toFloat() < m_soilTempMin_history) { m_soilTempMin_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+            if (graphData.value(4).toFloat() < m_tempMin_history) { m_tempMin_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+            if (graphData.value(5).toInt() < m_humiMin_history) { m_humiMin_history = graphData.value(5).toInt(); minmaxChanged = true; }
+            if (graphData.value(6).toInt() < m_luxMin_history) { m_luxMin_history = graphData.value(6).toInt(); minmaxChanged = true; }
+
+            if (graphData.value(1).toInt() > m_soilMoistureMax_history) { m_soilMoistureMax_history = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (graphData.value(2).toInt() > m_soilConduMax_history) { m_soilConduMax_history = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (graphData.value(3).toFloat() > m_soilTempMax_history) { m_soilTempMax_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+            if (graphData.value(4).toFloat() > m_tempMax_history) { m_tempMax_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+            if (graphData.value(5).toInt() > m_humiMax_history) { m_humiMax_history = graphData.value(5).toInt(); minmaxChanged = true; }
+            if (graphData.value(6).toInt() > m_luxMax_history) { m_luxMax_history = graphData.value(6).toInt(); minmaxChanged = true; }
+
+            // data
+            ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
+                                                       graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
+                                                       graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
+                                                       graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                       this);
+            m_chartData_history_week.push_front(d);
+            previousdata = d;
+        }
+
+        if (minmaxChanged) { Q_EMIT minmaxHistoryUpdated(); }
+
+        // missing day(s)?
+        if (previousdata)
+        {
+            QDateTime first = static_cast<ChartDataHistory *>(m_chartData_history_week.first())->getDateTime();
+            QDateTime last = static_cast<ChartDataHistory *>(m_chartData_history_week.last())->getDateTime();
+
+            for (int i = first.daysTo(f), d = -1; i < 0; i++, d--)
+            {
+                QDateTime fakedate(first.addDays(d));
+                m_chartData_history_week.push_front(new ChartDataHistory(fakedate, this));
+            }
+            for (int i = 0; i < last.daysTo(l); i++)
+            {
+                QDateTime fakedate(last.addDays(i+1));
+                m_chartData_history_week.push_back(new ChartDataHistory(fakedate, this));
+            }
+        }
+        else
+        {
+            for (int i = 0; i < maxDays; i++)
+            {
+                QDateTime fakedate(f.addDays(i));
+                m_chartData_history_week.push_back(new ChartDataHistory(fakedate, this));
+            }
+        }
+
+        Q_EMIT chartDataHistoryWeeksUpdated();
+    }
+}
+
+/* ************************************************************************** */
+
+void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const QDateTime &l, const int maxDays)
+{
+    //qDebug() << "updateChartData_history_month > " << f << " - " << l;
+
+    if (!f.isValid() || !l.isValid()) return;
+    if (maxDays <= 0) return;
+
+    qDeleteAll(m_chartData_history_month);
+    m_chartData_history_month.clear();
+
+    ChartDataHistory *previousdata = nullptr;
+
+    if (m_dbInternal || m_dbExternal)
+    {
+        QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
+        if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
 
         QSqlQuery graphData;
         graphData.prepare("SELECT " + strftime_mid + "," \
-                            "avg(soilMoisture), avg(soilConductivity)," \
-                            "avg(temperature), avg(luminosity)," \
+                            "avg(soilMoisture), avg(soilConductivity), avg(soilTemperature)," \
+                            "avg(temperature), avg(humidity), avg(luminosity)," \
                             "max(temperature), max(luminosity) " \
                           "FROM plantData " \
                           "WHERE deviceAddr = :deviceAddr " \
@@ -937,6 +1176,9 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays, const QDateTi
                        << graphData.lastError().type() << ":" << graphData.lastError().text();
             return;
         }
+
+        resetMinMax_history();
+        bool minmaxChanged = false;
 
         while (graphData.next())
         {
@@ -957,16 +1199,33 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays, const QDateTi
                     }
                 }
 
+                // min/max
+                if (graphData.value(1).toInt() < m_soilMoistureMin_history) { m_soilMoistureMin_history = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (graphData.value(2).toInt() < m_soilConduMin_history) { m_soilConduMin_history = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (graphData.value(3).toFloat() < m_soilTempMin_history) { m_soilTempMin_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (graphData.value(4).toFloat() < m_tempMin_history) { m_tempMin_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+                if (graphData.value(5).toInt() < m_humiMin_history) { m_humiMin_history = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (graphData.value(6).toInt() < m_luxMin_history) { m_luxMin_history = graphData.value(6).toInt(); minmaxChanged = true; }
+
+                if (graphData.value(1).toInt() > m_soilMoistureMax_history) { m_soilMoistureMax_history = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (graphData.value(2).toInt() > m_soilConduMax_history) { m_soilConduMax_history = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (graphData.value(3).toFloat() > m_soilTempMax_history) { m_soilTempMax_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (graphData.value(4).toFloat() > m_tempMax_history) { m_tempMax_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+                if (graphData.value(5).toInt() > m_humiMax_history) { m_humiMax_history = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (graphData.value(6).toInt() > m_luxMax_history) { m_luxMax_history = graphData.value(6).toInt(); minmaxChanged = true; }
+
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(),
-                                                           graphData.value(3).toFloat(), graphData.value(4).toFloat(),
-                                                           graphData.value(5).toFloat(), graphData.value(6).toFloat(),
+                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
+                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
+                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
                                                            this);
                 m_chartData_history_month.push_front(d);
                 previousdata = d;
             }
         }
+
+        if (minmaxChanged) { Q_EMIT minmaxHistoryUpdated(); }
 
         // missing day(s)?
         {
@@ -1002,98 +1261,6 @@ void DevicePlantSensor::updateChartData_history_month(int maxDays, const QDateTi
         }
 
         Q_EMIT chartDataHistoryMonthsUpdated();
-    }
-}
-
-/* ************************************************************************** */
-
-void DevicePlantSensor::updateChartData_history_week(const QDateTime &f, const QDateTime &l)
-{
-    if (!f.isValid() || !l.isValid()) return;
-    int maxDays = 7;
-
-    //qDebug() << "updateChartData_history_week > " << f << " - " << l;
-
-    qDeleteAll(m_chartData_history_week);
-    m_chartData_history_week.clear();
-    ChartDataHistory *previousdata = nullptr;
-
-    if (m_dbInternal || m_dbExternal)
-    {
-        QString strftime_mid = "strftime('%Y-%m-%d', timestamp)"; // sqlite
-        if (m_dbExternal) strftime_mid = "DATE_FORMAT(timestamp, '%Y-%m-%d')"; // mysql
-
-        QSqlQuery graphData;
-        graphData.prepare("SELECT " + strftime_mid + "," \
-                            "avg(soilMoisture), avg(soilConductivity)," \
-                            "avg(temperature), avg(luminosity) " \
-                          "FROM plantData " \
-                          "WHERE deviceAddr = :deviceAddr " \
-                            "AND timestamp BETWEEN '" + f.toString("yyyy-MM-dd 00:00:00") + "' AND '" + l.toString("yyyy-MM-dd 23:59:59") + "' " \
-                          "GROUP BY " + strftime_mid + " " \
-                          "ORDER BY timestamp DESC;");
-        graphData.bindValue(":deviceAddr", getAddress());
-
-        if (graphData.exec() == false)
-        {
-            qWarning() << "> graphData.exec() ERROR"
-                       << graphData.lastError().type() << ":" << graphData.lastError().text();
-            return;
-        }
-
-        while (graphData.next())
-        {
-            // missing day(s)?
-            if (previousdata)
-            {
-                QDateTime datefromsql = graphData.value(0).toDateTime();
-                int diff = datefromsql.daysTo(previousdata->getDateTime());
-                for (int i = diff; i > 1; i--)
-                {
-                    if (m_chartData_history_week.size() < (maxDays-1))
-                    {
-                        QDateTime fakedate(datefromsql.addDays(i-1));
-                        m_chartData_history_week.push_front(new ChartDataHistory(fakedate, this));
-                    }
-                }
-            }
-
-            // data
-            ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                       graphData.value(1).toFloat(), graphData.value(2).toFloat(),
-                                                       graphData.value(3).toFloat(), graphData.value(4).toFloat(),
-                                                       this);
-            m_chartData_history_week.push_front(d);
-            previousdata = d;
-        }
-
-        // missing day(s)?
-        if (previousdata)
-        {
-            QDateTime first = static_cast<ChartDataHistory *>(m_chartData_history_week.first())->getDateTime();
-            QDateTime last = static_cast<ChartDataHistory *>(m_chartData_history_week.last())->getDateTime();
-
-            for (int i = first.daysTo(f), d = -1; i < 0; i++, d--)
-            {
-                QDateTime fakedate(first.addDays(d));
-                m_chartData_history_week.push_front(new ChartDataHistory(fakedate, this));
-            }
-            for (int i = 0; i < last.daysTo(l); i++)
-            {
-                QDateTime fakedate(last.addDays(i+1));
-                m_chartData_history_week.push_back(new ChartDataHistory(fakedate, this));
-            }
-        }
-        else
-        {
-            for (int i = 0; i < maxDays; i++)
-            {
-                QDateTime fakedate(f.addDays(i));
-                m_chartData_history_week.push_back(new ChartDataHistory(fakedate, this));
-            }
-        }
-
-        Q_EMIT chartDataHistoryWeeksUpdated();
     }
 }
 
