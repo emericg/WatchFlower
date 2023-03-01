@@ -241,7 +241,15 @@ Item {
                 width: (parent.width / 2)
 
                 clip: true
-                color: Theme.colorForeground
+                color: Theme.colorBackground
+
+                Rectangle {
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    anchors.bottom: parent.bottom
+                    width: 2
+                    color: Theme.colorLowContrast
+                }
 
                 Rectangle {
                     anchors.centerIn: cc
@@ -249,36 +257,37 @@ Item {
                     height: width
                     radius: width
                     color: Theme.colorForeground
-                    opacity: 0.5
+                    opacity: 0.16
                     border.width: 2
                     border.color: Theme.colorLowContrast
                 }
                 Rectangle {
                     anchors.centerIn: cc
-                    width: parent.width
+                    width: (parent.width * 1.0)
                     height: width
                     radius: width
                     color: Theme.colorForeground
-                    opacity: 0.66
+                    opacity: 0.33
                     border.width: 2
                     border.color: Theme.colorLowContrast
                 }
                 Rectangle {
                     anchors.centerIn: cc
-                    width: (parent.width / 1.5)
+                    width: (parent.width * 0.66)
                     height: width
                     radius: width
                     color: Theme.colorForeground
-                    opacity: 0.8
+                    opacity: 0.6
                     border.width: 2
                     border.color: Theme.colorLowContrast
                 }
                 Rectangle {
                     anchors.centerIn: cc
-                    width: (parent.width / 3)
+                    width: (parent.width * 0.33)
                     height: width
                     radius: width
                     color: Theme.colorForeground
+                    opacity: 1.0
                     border.width: 2
                     border.color: Theme.colorLowContrast
                 }
@@ -333,7 +342,7 @@ Item {
                         //property int a: Math.floor(Math.random() * radar.width - (radar.width / 2))
                         //property int b: Math.sqrt(Math.pow(c, 2) - Math.pow(a, 2))
 
-                        // Using angle
+                        // Using angles
                         property real alpha: Math.random() * (3.14/2) + (3.14/4)
                         property real a: c * Math.cos(alpha)
                         property real b: c * Math.sin(alpha)

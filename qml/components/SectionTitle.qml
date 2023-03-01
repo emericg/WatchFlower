@@ -14,6 +14,9 @@ Rectangle {
     radius: singleColumn ? 0 : Theme.componentRadius
     color: Theme.colorForeground
 
+    border.width: 0
+    border.color: Theme.colorSeparator
+
     property string text
     property string source
     property int fontSize: Theme.fontSizeContent

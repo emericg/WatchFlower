@@ -3,17 +3,22 @@ import QtQuick
 import ThemeEngine 1.0
 import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
-Rectangle {
+Item {
     id: deviceNearbyWidget
     implicitWidth: 480
     implicitHeight: 48
 
     opacity: (device.rssi < 0) ? 1 : 0.66
-    color: (device.selected) ? Theme.colorForeground : Theme.colorBackground
 
     property var device: pointer
     property bool deviceSupported: UtilsDeviceSensors.isDeviceSupported(device.deviceName)
     property bool deviceBlacklisted: deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
+
+    Rectangle {
+        anchors.fill: parent
+        opacity: 0.33
+        color: (device.selected) ? ((Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader) : Theme.colorBackground
+    }
 
     Connections {
         target: deviceManager
@@ -71,8 +76,8 @@ Rectangle {
             visible: deviceSupported
             enabled: true
 
-            source: deviceBlacklisted ? "qrc:/assets/icons_material/outline-remove_circle-24px.svg"
-                                      : "qrc:/assets/icons_material/outline-add_circle-24px.svg"
+            source: deviceBlacklisted ? "qrc:/assets/icons_material/outline-add_circle-24px.svg"
+                                      : "qrc:/assets/icons_material/outline-remove_circle-24px.svg"
             color: {
                 if (ma.hovered) return Theme.colorPrimary
                 if (deviceBlacklisted) return Theme.colorRed
