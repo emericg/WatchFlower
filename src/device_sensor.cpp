@@ -277,7 +277,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "ClearGrass Temp & RH") && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
+        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGG1))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
@@ -285,7 +285,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName.startsWith("Qingping Temp & RH")) && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
+        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGDK2))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();
@@ -293,7 +293,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "LYWSD02") && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CLOCK))
+        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD02))
         {
             m_firmware_uptodate = true;
             Q_EMIT sensorUpdated();

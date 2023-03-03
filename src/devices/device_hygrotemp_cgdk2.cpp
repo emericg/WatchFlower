@@ -146,7 +146,7 @@ void DeviceHygrotempCGDK2::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
 
             if (m_deviceFirmware.size() == 10)
             {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_EINK))
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGDK2))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT sensorUpdated();

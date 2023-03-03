@@ -132,7 +132,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
             if (device->getName() == "Flower care" ||
                 device->getName() == "Flower mate" ||
                 device->getName() == "TY" ||
-                device->getName() == "Grow care garden") { // plant sensors
+                device->getName() == "Grow care garden") { /////// plant sensors
                 return "a";
             } else if (device->getName() == "Flower power") {
                 return "b";
@@ -142,7 +142,7 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "d";
             } else if (device->getName() == "HiGrow") {
                 return "e";
-            } else if (device->getName() == "ThermoBeacon") { // thermometers
+            } else if (device->getName() == "ThermoBeacon") { ///// thermometers
                 return "f";
             } else if (device->getName() == "MJ_HT_V1") {
                 return "g";
@@ -165,7 +165,9 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "o";
             } else if (device->getName() == "Qingping Temp RH Barometer") {
                 return "p";
-            } else if (device->getName().startsWith("6003#")) { // air quality
+            } else if (device->getName() == "ATC") {
+                return "q";
+            } else if (device->getName().startsWith("6003#")) { //// air quality
                 return "t";
             } else if (device->getName() == "CGDN1") {
                 return "w";

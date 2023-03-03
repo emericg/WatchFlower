@@ -259,7 +259,7 @@ protected:
     float m_luminosity_bias = 0.f;
     float m_pressure_bias = 0.f;
 
-    // min/max data (generated - 30 days period)
+    // min/max data (last 30 days period)
     int m_soilMoistureMin = 999999;
     int m_soilMoistureMax = -99;
     int m_soilConduMin = 999999;
@@ -277,7 +277,7 @@ protected:
     int m_mmolMin = 999999;
     int m_mmolMax = -99;
 
-    // min/max data (generated - for history graph)
+    // min/max data (for history graph)
     int m_soilMoistureMin_history = 999999;
     int m_soilMoistureMax_history = -99;
     int m_soilConduMin_history = 999999;
@@ -501,7 +501,7 @@ public:
     void setLimitMmolMin(int limitMmolMin) { if (m_luminosityMmol_limit_min == limitMmolMin) return; m_luminosityMmol_limit_min = limitMmolMin; setSqlPlantLimits(); }
     void setLimitMmolMax(int limitMmolMax) { if (m_luminosityMmol_limit_max == limitMmolMax) return; m_luminosityMmol_limit_max = limitMmolMax; setSqlPlantLimits(); }
 
-    // Data min/max
+    // Data min/max (last 30 days)
     int getSoilMoistureMin() const { return m_soilMoistureMin; }
     int getSoilMoistureMax() const { return m_soilMoistureMax; }
     int getSoilConduMin() const { return m_soilConduMin; }
@@ -519,7 +519,7 @@ public:
     int getMmolMin() const { return m_mmolMin; }
     int getMmolMax() const { return m_mmolMax; }
 
-    // Data min/max
+    // Data min/max (for history graph)
     int getSoilMoistureMin_history() const { return m_soilMoistureMin_history; }
     int getSoilMoistureMax_history() const { return m_soilMoistureMax_history; }
     int getSoilConduMin_history() const { return m_soilConduMin_history; }
