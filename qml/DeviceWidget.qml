@@ -284,7 +284,7 @@ Item {
         border.width: 2
         border.color: {
             if (singleColumn) return "transparent"
-            if (mousearea.containsPress) return Theme.colorSecondary
+            if (mousearea.containsPress) return Qt.lighter(Theme.colorSecondary, 1.1)
             return Theme.colorSeparator
         }
         Behavior on border.color { ColorAnimation { duration: 133 } }

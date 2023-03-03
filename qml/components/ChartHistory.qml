@@ -19,8 +19,8 @@ Item {
     property real limitMin: -1
     property real limitMax: -1
 
-    property var ddd // ui mode: duo?
-    property var uuu // data mode
+    property var hhh // history mode
+    property var ddd // data mode
 
     enum Span {
         Daily = 0,
@@ -165,18 +165,18 @@ Item {
             property int barHeight: height
             property int barRadius: singleColumn ? 2 : 4
             property int barSpacing: {
-                if (ddd === ChartHistory.Span.Daily) return 1
-                if (ddd === ChartHistory.Span.Weekly) return 4
-                if (ddd === ChartHistory.Span.Monthly) return 1
+                if (hhh === ChartHistory.Span.Daily) return 1
+                if (hhh === ChartHistory.Span.Weekly) return 4
+                if (hhh === ChartHistory.Span.Monthly) return 1
             }
 
             Repeater {
                 id: graphRepeater
 
                 model: {
-                    if (ddd === ChartHistory.Span.Daily) return currentDevice.aioHistoryData_day
-                    if (ddd === ChartHistory.Span.Weekly) return currentDevice.aioHistoryData_week
-                    if (ddd === ChartHistory.Span.Monthly) return currentDevice.aioHistoryData_month
+                    if (hhh === ChartHistory.Span.Daily) return currentDevice.aioHistoryData_day
+                    if (hhh === ChartHistory.Span.Weekly) return currentDevice.aioHistoryData_week
+                    if (hhh === ChartHistory.Span.Monthly) return currentDevice.aioHistoryData_month
                     return null
                 }
 
@@ -186,19 +186,19 @@ Item {
                     height: graphRow.barHeight
 
                     property real value: {
-                        if (uuu === ChartHistory.Data.SoilMoisture) return modelData.soilMoisture
-                        if (uuu === ChartHistory.Data.SoilConductivity) return modelData.soilConductivity
-                        if (uuu === ChartHistory.Data.SoilTemperature) return modelData.soilTemperature
-                        if (uuu === ChartHistory.Data.SoilPH) return modelData.soilPH
-                        if (uuu === ChartHistory.Data.Temperature) return modelData.temperature
-                        if (uuu === ChartHistory.Data.Humidity) return modelData.humidity
-                        if (uuu === ChartHistory.Data.LuminosityLux) return modelData.luminosityLux
-                        if (uuu === ChartHistory.Data.LuminosityMmol) return modelData.luminosityMmol
+                        if (ddd === ChartHistory.Data.SoilMoisture) return modelData.soilMoisture
+                        if (ddd === ChartHistory.Data.SoilConductivity) return modelData.soilConductivity
+                        if (ddd === ChartHistory.Data.SoilTemperature) return modelData.soilTemperature
+                        if (ddd === ChartHistory.Data.SoilPH) return modelData.soilPH
+                        if (ddd === ChartHistory.Data.Temperature) return modelData.temperature
+                        if (ddd === ChartHistory.Data.Humidity) return modelData.humidity
+                        if (ddd === ChartHistory.Data.LuminosityLux) return modelData.luminosityLux
+                        if (ddd === ChartHistory.Data.LuminosityMmol) return modelData.luminosityMmol
                         return -99
                     }
                     property real value_max: {
-                        if (uuu === ChartHistory.Data.Temperature) return modelData.temperatureMax
-                        if (uuu === ChartHistory.Data.LuminosityLux) return modelData.luminosityLuxMax
+                        if (ddd === ChartHistory.Data.Temperature) return modelData.temperatureMax
+                        if (ddd === ChartHistory.Data.LuminosityLux) return modelData.luminosityLuxMax
                         return -99
                     }
 
@@ -207,7 +207,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (ddd === ChartHistory.Span.Daily) {
+                            if (hhh === ChartHistory.Span.Daily) {
                                 if (graphGrid.barSelectionHours === modelData.hour) {
                                     graphGrid.barSelectionHours = -1
                                     graphGrid.barSelectionIndex = -1
@@ -234,7 +234,7 @@ Item {
                         anchors.fill: parent
 
                         color: {
-                            if (ddd === ChartHistory.Span.Daily) {
+                            if (hhh === ChartHistory.Span.Daily) {
                                 return (graphGrid.barSelectionHours === modelData.hour) ? "#fcea32" : Theme.colorForeground
                             } else {
                                 return (graphGrid.barSelectionDays === modelData.day) ? "#fcea32" : Theme.colorForeground
@@ -284,17 +284,17 @@ Item {
 
                         Loader {
                             id: legendLoader
-                            anchors.top: (ddd === ChartHistory.Span.Weekly) ? undefined : parent.top
-                            anchors.bottom: (ddd === ChartHistory.Span.Weekly) ? parent.bottom : undefined
+                            anchors.top: (hhh === ChartHistory.Span.Weekly) ? undefined : parent.top
+                            anchors.bottom: (hhh === ChartHistory.Span.Weekly) ? parent.bottom : undefined
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             active: (value > -80)
                             asynchronous: true
 
                             sourceComponent: {
-                                if (ddd === ChartHistory.Span.Weekly)
+                                if (hhh === ChartHistory.Span.Weekly)
                                     return legendHorizontal
-                                if (ddd !== ChartHistory.Span.Weekly && !isPhone)
+                                if (hhh !== ChartHistory.Span.Weekly && !isPhone)
                                     return legendVertical
                             }
 
@@ -361,20 +361,20 @@ Item {
                         anchors.topMargin: isPhone ? 3 : 6
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        rotation: (ddd === ChartHistory.Span.Weekly) ? 0 : -40
+                        rotation: (hhh === ChartHistory.Span.Weekly) ? 0 : -40
                         visible: true
                         text: {
-                            if (ddd === ChartHistory.Span.Monthly) {
+                            if (hhh === ChartHistory.Span.Monthly) {
                                 return modelData.day
-                            } else if (ddd === ChartHistory.Span.Weekly) {
+                            } else if (hhh === ChartHistory.Span.Weekly) {
                                 return modelData.datetime.toLocaleString(Qt.locale(), "ddd")
-                            } else if (ddd === ChartHistory.Span.Daily) {
+                            } else if (hhh === ChartHistory.Span.Daily) {
                                 return modelData.datetime.toLocaleString(Qt.locale(), "HH")
                             }
                         }
                         color: Theme.colorSubText
                         opacity: 0.66
-                        font.pixelSize: (ddd === ChartHistory.Span.Weekly) ? (isPhone ? 10 : 12) : (isPhone ? 8 : 10)
+                        font.pixelSize: (hhh === ChartHistory.Span.Weekly) ? (isPhone ? 10 : 12) : (isPhone ? 8 : 10)
                         font.bold: false
                         horizontalAlignment: Text.AlignHCenter
                     }
@@ -402,7 +402,7 @@ Item {
             visible: (barHeight > contentHeight+8)
 
             text: {
-                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
+                if (ddd === ChartHistory.Data.Temperature || ddd === ChartHistory.Data.SoilTemperature)
                     if (settingsManager.tempUnit === "F")
                         return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix
                 return value.toFixed(floatprecision) + suffix
@@ -433,7 +433,7 @@ Item {
             rotation: 90
             color: "white"
             text: {
-                if (uuu === ChartHistory.Data.Temperature || uuu === ChartHistory.Data.SoilTemperature)
+                if (ddd === ChartHistory.Data.Temperature || ddd === ChartHistory.Data.SoilTemperature)
                     if (settingsManager.tempUnit === "F")
                         return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix.replace("<br>", "")
                 return value.toFixed(floatprecision) + suffix.replace("<br>", "")

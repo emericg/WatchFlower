@@ -65,12 +65,15 @@ Item {
         resetHistoryMode()
         updateHistoryMode()
 
+        updateSize()
+
+        selectors.visible = false
         selector_month.value = 0
         selector_week.value = 0
         selector_day.value = 0
-
-        updateSize()
-        updateData()
+        currentDevice.updateChartData_history_thismonth(30)
+        currentDevice.updateChartData_history_thisweek()
+        currentDevice.updateChartData_history_today()
     }
 
     function updateHeader() {
@@ -80,13 +83,60 @@ Item {
     }
 
     function updateData() {
-        if (typeof currentDevice === "undefined" || !currentDevice) return
-        if (!currentDevice.isPlantSensor) return
         //console.log("DevicePlantSensorHistory // updateData() >> " + currentDevice)
 
-        currentDevice.updateChartData_history_thismonth(30)
-        currentDevice.updateChartData_history_thisweek()
-        currentDevice.updateChartData_history_today()
+        resetHistoryMode()
+
+        var today = new Date()
+        var offset = 0
+
+        if (settingsManager.graphHistory === "daily") {
+            offset = selector_day.value
+        } else if (settingsManager.graphHistory === "weekly") {
+            offset = selector_week.value
+        } else if (settingsManager.graphHistory === "monthly") {
+            offset = selector_month.value
+        }
+
+        if (settingsManager.graphHistory === "daily") {
+
+            if (offset === 0) {
+                currentDevice.updateChartData_history_today()
+            } else {
+                var d1 = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)
+                d1.setTime(d1.getTime() - ((24*60*60*1000) * -offset)) // days offset
+                currentDevice.updateChartData_history_day(d1)
+            }
+
+        } else if (settingsManager.graphHistory === "weekly") {
+
+            if (offset === 0) {
+                currentDevice.updateChartData_history_thisweek()
+            } else {
+                var lastmonday = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0);
+                var day = lastmonday.getDay() || 7;
+                if (day !== 1) { lastmonday.setHours(-24 * (day - 1)); }
+
+                var w1 = new Date(lastmonday)
+                w1.setTime(w1.getTime() - ((-offset) * (7*24*60*60*1000))) // weeks offset
+                var w2 = new Date(lastmonday)
+                w2.setTime(w2.getTime() - ((-offset-1) * (7*24*60*60*1000)) - (24*60*60*1000))
+
+                currentDevice.updateChartData_history_week(w1, w2)
+            }
+
+        } else if (settingsManager.graphHistory === "monthly") {
+
+            if (offset === 0) {
+                currentDevice.updateChartData_history_thismonth(30)
+            } else {
+                var m1 = new Date(today.getFullYear(), today.getMonth()+offset, 1, 0, 0, 0)
+                var m2 = new Date(today.getFullYear(), today.getMonth()+offset+1, 0, 0, 0, 0)
+
+                currentDevice.updateChartData_history_month(m1, m2, m2.getDate())
+            }
+
+        }
     }
 
     function updateHistoryMode() {
@@ -206,8 +256,15 @@ Item {
             }
             color: Theme.colorText
             font.pixelSize: 24
-            //font.capitalization: Font.Capitalize
             horizontalAlignment: wideMode ? Text.AlignLeft : Text.AlignHCenter
+        }
+
+        Item {
+            id: selectorsContainerOne
+            width: buttonPanel.width
+            anchors.right: buttonPanel.left
+            anchors.rightMargin: 16
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         Row {
@@ -225,7 +282,14 @@ Item {
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Month")
-                onClicked: settingsManager.graphHistory = "monthly"
+                onClicked: {
+                    if (settingsManager.graphHistory === "monthly") {
+                        selectors.visible = !(selectors.visible && selector_month.value === 0)
+                    } else {
+                        settingsManager.graphHistory = "monthly"
+                        if (!selectors.visible && selector_month.value !== 0) selectors.visible = true
+                    }
+                }
             }
 
             ButtonWireframe {
@@ -237,7 +301,14 @@ Item {
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Week")
-                onClicked: settingsManager.graphHistory = "weekly"
+                onClicked: {
+                    if (settingsManager.graphHistory === "weekly") {
+                        selectors.visible = !(selectors.visible && selector_week.value === 0)
+                    } else {
+                        settingsManager.graphHistory = "weekly"
+                        if (!selectors.visible && selector_week.value !== 0) selectors.visible = true
+                    }
+                }
             }
 
             ButtonWireframe {
@@ -249,7 +320,14 @@ Item {
                 secondaryColor: Theme.colorBackground
 
                 text: qsTr("Day")
-                onClicked: settingsManager.graphHistory = "daily"
+                onClicked: {
+                    if (settingsManager.graphHistory === "daily") {
+                        selectors.visible = !(selectors.visible && selector_day.value === 0)
+                    } else {
+                        settingsManager.graphHistory = "daily"
+                        if (!selectors.visible && selector_day.value !== 0) selectors.visible = true
+                    }
+                }
             }
         }
 
@@ -265,6 +343,77 @@ Item {
         }
     }
 
+    Rectangle {
+        id: subsubHeader
+        anchors.top: subHeader.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        z: 4
+        clip: true
+        height: (singleColumn && selectors.visible) ? 40 : 0
+        Behavior on height { NumberAnimation { duration: 133 } }
+        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+
+        Item {
+            id: selectorsContainerTwo
+            anchors.left: parent.left
+            anchors.leftMargin: 12
+            anchors.right: parent.right
+            anchors.rightMargin: 12
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.verticalCenterOffset: -4
+        }
+    }
+
+    Row {
+        id: selectors
+        parent: singleColumn ? selectorsContainerTwo : selectorsContainerOne
+
+        anchors.centerIn: parent
+        visible: false
+
+        SpinBoxHistory {
+            id: selector_month
+            width: buttonPanel.width
+            height: isPhone ? 32 : 36
+            visible: (settingsManager.graphHistory === "monthly")
+
+            from: -2
+            to: 0
+            value: 0
+
+            hhh: ChartHistory.Span.Monthly
+            onValueModified: updateData()
+        }
+        SpinBoxHistory {
+            id: selector_week
+            width: buttonPanel.width
+            height: isPhone ? 32 : 36
+            visible: (settingsManager.graphHistory === "weekly")
+
+            from: -3
+            to: 0
+            value: 0
+
+            hhh: ChartHistory.Span.Weekly
+            onValueModified: updateData()
+        }
+        SpinBoxHistory {
+            id: selector_day
+            width: buttonPanel.width
+            height: isPhone ? 32 : 36
+            visible: (settingsManager.graphHistory === "daily")
+
+            from: -6
+            to: 0
+            value: 0
+
+            hhh: ChartHistory.Span.Daily
+            onValueModified: updateData()
+        }
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     property int graphCount: 4
@@ -274,7 +423,7 @@ Item {
     Flow {
         id: graphGrid
 
-        anchors.top: subHeader.bottom
+        anchors.top: subsubHeader.bottom
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -306,8 +455,8 @@ Item {
             property int duo: 1
 
             title: qsTr("Soil moisture")
-            ddd: graphGrid.mode
-            uuu: ChartHistory.Data.SoilMoisture
+            hhh: graphGrid.mode
+            ddd: ChartHistory.Data.SoilMoisture
             color: Theme.colorBlue
             suffix: "%"
             floatprecision: 0
@@ -327,8 +476,8 @@ Item {
             property int duo: 1
 
             title: qsTr("Soil conductivity")
-            ddd: graphGrid.mode
-            uuu: ChartHistory.Data.SoilConductivity
+            hhh: graphGrid.mode
+            ddd: ChartHistory.Data.SoilConductivity
             color: Theme.colorRed
             suffix: " " + "<br>" + qsTr("µs/cm")
             floatprecision: 0
@@ -348,8 +497,8 @@ Item {
             property int duo: 1
 
             title: qsTr("Soil temperature")
-            ddd: graphGrid.mode
-            uuu: ChartHistory.Data.SoilTemperature
+            hhh: graphGrid.mode
+            ddd: ChartHistory.Data.SoilTemperature
             color: Qt.darker(Theme.colorGreen, 1.1)
             suffix: "°"
             floatprecision: 1
@@ -369,8 +518,8 @@ Item {
             property int duo: 1
 
             title: qsTr("Temperature")
-            ddd: graphGrid.mode
-            uuu: ChartHistory.Data.Temperature
+            hhh: graphGrid.mode
+            ddd: ChartHistory.Data.Temperature
             color: Theme.colorGreen
             suffix: "°"
             floatprecision: 1
@@ -390,8 +539,8 @@ Item {
             property int duo: 1
 
             title: qsTr("Humidity")
-            ddd: graphGrid.mode
-            uuu: ChartHistory.Data.Humidity
+            hhh: graphGrid.mode
+            ddd: ChartHistory.Data.Humidity
             color: Theme.colorBlue
             suffix: "%"
             floatprecision: 1
@@ -411,8 +560,8 @@ Item {
             property int duo: 1
 
             title: qsTr("Luminosity")
-            ddd: graphGrid.mode
-            uuu: ChartHistory.Data.LuminosityLux
+            hhh: graphGrid.mode
+            ddd: ChartHistory.Data.LuminosityLux
             color: Theme.colorYellow
             suffix: " " + "<br>" + qsTr("lux")
             floatprecision: 0

@@ -541,6 +541,7 @@ Item {
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
+                border: true
                 background: true
                 source: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
