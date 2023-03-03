@@ -488,9 +488,13 @@ void DeviceHygrotempClock::parseAdvertisementData(const uint16_t adv_mode,
                 if (needsUpdateDb_mini())
                 {
                     addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
-                }
 
-                refreshDataFinished(true);
+                    refreshDataFinished(true);
+                }
+                else
+                {
+                    refreshAdvertisement();
+                }
             }
 /*
             if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)

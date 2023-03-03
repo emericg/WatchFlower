@@ -215,6 +215,10 @@ void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t
 
                 refreshDataFinished(true);
             }
+            else
+            {
+                refreshAdvertisement();
+            }
         }
 /*
             if (batt > -99 || temp > -99.f || humi > -99.f || co2 > -99.f || pm2 > -99.f || pm10 > -99.f)

@@ -463,9 +463,13 @@ void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
             if (needsUpdateDb_mini())
             {
                 addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);
-            }
 
-            refreshDataFinished(true);
+                refreshDataFinished(true);
+            }
+            else
+            {
+                refreshAdvertisement();
+            }
         }
 /*
         if (temp > -99.f || humi > -99.f)

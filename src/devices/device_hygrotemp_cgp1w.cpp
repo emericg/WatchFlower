@@ -169,9 +169,13 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const uint16_t adv_mode,
             {
                 addDatabaseRecord_weatherstation(m_lastUpdate.toSecsSinceEpoch(),
                                                  m_temperature, m_humidity, m_pressure);
-            }
 
-            refreshDataFinished(true);
+                refreshDataFinished(true);
+            }
+            else
+            {
+                refreshAdvertisement();
+            }
         }
 /*
         if (batt > -99 || temp > -99.f || humi > -99.f || pres > -99)

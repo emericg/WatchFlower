@@ -216,6 +216,10 @@ void DeviceJQJCY01YM::parseAdvertisementData(const uint16_t adv_mode,
 
                     refreshDataFinished(true);
                 }
+                else
+                {
+                    refreshAdvertisement();
+                }
             }
 /*
             if (batt > -99 || temp > -99.f || humi > -99.f || form > -99.f)

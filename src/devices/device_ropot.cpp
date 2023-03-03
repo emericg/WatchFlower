@@ -723,9 +723,13 @@ void DeviceRopot::parseAdvertisementData(const uint16_t adv_mode,
                     //addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
                     //                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,
                     //                  m_temperature, -99.f, -99.f);
-                }
 
-                refreshDataFinished(true);
+                    refreshDataFinished(true);
+                }
+                else
+                {
+                    refreshAdvertisement();
+                }
             }
 /*
             if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)

@@ -224,6 +224,7 @@ protected:
     virtual void refreshHistoryFinished(bool status);
     virtual void refreshRealtime();
     virtual void refreshRealtimeFinished();
+    virtual void refreshAdvertisement();
 
     virtual bool getSqlDeviceInfos();
 

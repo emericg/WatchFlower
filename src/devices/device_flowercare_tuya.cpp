@@ -187,9 +187,13 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
                 addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
                                   humi, fert, -99.f, -99.f,
                                   temp, -99.f, lumi);
-            }
 
-            refreshDataFinished(true);
+                refreshDataFinished(true);
+            }
+            else
+            {
+                refreshAdvertisement();
+            }
 /*
             qDebug() << "* service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
             if (batt > -99) qDebug() << "- battery:" << batt;

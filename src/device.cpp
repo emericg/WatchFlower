@@ -556,7 +556,7 @@ void Device::refreshHistoryFinished(bool status)
     Q_EMIT dataUpdated();
     Q_EMIT historyUpdated();
 
-    checkDataAvailability();
+    checkDataAvailability(); // TODO // probably need more than that
 
     // Inform device manager
     Q_EMIT deviceSynced(this);
@@ -578,6 +578,14 @@ void Device::refreshRealtimeFinished()
 
     m_ble_status = DeviceUtils::DEVICE_OFFLINE;
     Q_EMIT statusUpdated();
+}
+
+void Device::refreshAdvertisement()
+{
+    //qDebug() << "Device::refreshAdvertisement()" << getAddress() << getName();
+
+    Q_EMIT dataUpdated();
+    Q_EMIT realtimeUpdated();
 }
 
 /* ************************************************************************** */
