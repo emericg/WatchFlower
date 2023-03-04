@@ -149,12 +149,12 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
 {
 /*
     qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << adv_id << ")";
+             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
-    // service data / 16b UUID 0xfd50 / 9 bytes messages
+    // service data / 16b UUID 0xFD50 / 9 bytes messages
 
-    if (ba.size() == 9)
+    if (adv_id == 0xFD50 && ba.size() == 9)
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
 

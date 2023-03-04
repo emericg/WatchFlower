@@ -85,7 +85,9 @@ void DeviceHygrotempATC::parseAdvertisementData(const uint16_t adv_mode, const u
     const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
     const int data_size = ba.size();
 
-    if (adv_id == 0xFE95 && ba.size() >= 12) // MiBeacon
+    // MiBeacon protocol / 16b UUID 0xFE95 / 12-20 bytes messages
+
+    if (adv_id == 0xFE95 && ba.size() >= 12)
     {
         // Save mac address (for macOS and iOS)
         if (!hasAddressMAC())

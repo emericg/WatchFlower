@@ -78,7 +78,7 @@ void DeviceHygrotempCGD1::parseAdvertisementData(const uint16_t adv_mode,
 {
 /*
     qDebug() << "DeviceHygrotempCGD1::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << adv_id << ")";
+             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
 

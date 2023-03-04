@@ -579,13 +579,13 @@ void DeviceRopot::parseAdvertisementData(const uint16_t adv_mode,
 {
 /*
     qDebug() << "DeviceRopot::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << adv_id << ")";
+             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
-    // MiBeacon protocol / 12-10 bytes messages
+    // MiBeacon protocol / 16b UUID 0xFE95 / 12-20 bytes messages
     // RoPot uses 16 bytes messages
 
-    if (ba.size() >= 12)
+    if (adv_id == 0xFE95 && ba.size() >= 12)
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
         const int data_size = ba.size();

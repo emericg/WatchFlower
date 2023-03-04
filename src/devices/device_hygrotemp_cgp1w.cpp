@@ -80,7 +80,7 @@ void DeviceHygrotempCGP1W::parseAdvertisementData(const uint16_t adv_mode,
 {
 /*
     qDebug() << "DeviceHygrotempCGP1W::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << adv_id << ")";
+             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
     if (ba.size() >= 21) // Qingping data protocol // 21 bytes messages
