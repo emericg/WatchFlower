@@ -29,6 +29,7 @@
 #include "devices/device_flowerpower.h"
 #include "devices/device_parrotpot.h"
 #include "devices/device_ropot.h"
+#include "devices/device_hygrotemp_atc.h"
 #include "devices/device_hygrotemp_cgd1.h"
 #include "devices/device_hygrotemp_cgdk2.h"
 #include "devices/device_hygrotemp_cgg1.h"
@@ -164,6 +165,8 @@ DeviceManager::DeviceManager(bool daemon)
                 d = new DeviceHygrotempCGD1(deviceAddr, deviceName, this);
             else if (deviceName == "Qingping Temp RH Barometer")
                 d = new DeviceHygrotempCGP1W(deviceAddr, deviceName, this);
+            else if (deviceName == "ATC")
+                d = new DeviceHygrotempATC(deviceAddr, deviceName, this);
 
             else if (deviceName.startsWith("WP6003"))
                 d = new DeviceWP6003(deviceAddr, deviceName, this);
@@ -1435,6 +1438,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         info.name() == "Qingping Temp RH Barometer" ||
         info.name() == "Qingping Alarm Clock" ||
         info.name() == "Qingping Air Monitor Lite" ||
+        info.name().startsWith("ATC_") ||
         info.name().startsWith("6003#") ||
         info.name() == "JQJCY01YM" ||
         info.name() == "AirQualityMonitor" ||
@@ -1470,6 +1474,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             d = new DeviceHygrotempCGD1(info, this);
         else if (info.name() == "Qingping Temp RH Barometer")
             d = new DeviceHygrotempCGP1W(info, this);
+        else if (info.name().startsWith("ATC_"))
+            d = new DeviceHygrotempATC(info, this);
 
         else if (info.name().startsWith("6003#"))
             d = new DeviceWP6003(info, this);

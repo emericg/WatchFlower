@@ -71,6 +71,7 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
     {
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
+        else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
 
         if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
             m_deviceAddressMAC = m_deviceName.last(12);
@@ -118,6 +119,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     {
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
+        else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
 
         if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
             m_deviceAddressMAC = m_deviceName.last(12);

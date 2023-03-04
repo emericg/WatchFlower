@@ -36,13 +36,12 @@ qt_add_executable(WatchFlower
     src/DeviceManager_export.cpp
     src/DeviceFilter.cpp src/DeviceFilter.h
     src/device_utils.h src/device_firmwares.h
-    src/devices/device_esp32_airqualitymonitor.cpp src/devices/device_esp32_airqualitymonitor.h
-    src/devices/device_esp32_geigercounter.cpp src/devices/device_esp32_geigercounter.h
-    src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
-    src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
     src/devices/device_flowercare.cpp src/devices/device_flowercare.h
     src/devices/device_flowercare_tuya.cpp src/devices/device_flowercare_tuya.h
     src/devices/device_flowerpower.cpp src/devices/device_flowerpower.h
+    src/devices/device_ropot.cpp src/devices/device_ropot.h
+    src/devices/device_parrotpot.cpp src/devices/device_parrotpot.h
+    src/devices/device_hygrotemp_atc.cpp src/devices/device_hygrotemp_atc.h
     src/devices/device_hygrotemp_cgd1.cpp src/devices/device_hygrotemp_cgd1.h
     src/devices/device_hygrotemp_cgdk2.cpp src/devices/device_hygrotemp_cgdk2.h
     src/devices/device_hygrotemp_cgg1.cpp src/devices/device_hygrotemp_cgg1.h
@@ -50,11 +49,14 @@ qt_add_executable(WatchFlower
     src/devices/device_hygrotemp_clock.cpp src/devices/device_hygrotemp_clock.h
     src/devices/device_hygrotemp_lywsdcgq.cpp src/devices/device_hygrotemp_lywsdcgq.h
     src/devices/device_hygrotemp_square.cpp src/devices/device_hygrotemp_square.h
-    src/devices/device_jqjcy01ym.cpp src/devices/device_jqjcy01ym.h
-    src/devices/device_parrotpot.cpp src/devices/device_parrotpot.h
-    src/devices/device_ropot.cpp src/devices/device_ropot.h
     src/devices/device_thermobeacon.cpp src/devices/device_thermobeacon.h
+    src/devices/device_cgdn1.cpp src/devices/device_cgdn1.h
+    src/devices/device_jqjcy01ym.cpp src/devices/device_jqjcy01ym.h
     src/devices/device_wp6003.cpp src/devices/device_wp6003.h
+    src/devices/device_esp32_airqualitymonitor.cpp src/devices/device_esp32_airqualitymonitor.h
+    src/devices/device_esp32_geigercounter.cpp src/devices/device_esp32_geigercounter.h
+    src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
+    src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
     src/thirdparty/RC4/rc4.cpp src/thirdparty/RC4/rc4.h
     src/main.cpp
     qml/qml.qrc
