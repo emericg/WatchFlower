@@ -107,6 +107,7 @@ T.SpinBox {
             anchors.fill: parent
             anchors.margins: 6
             opacity: enabled ? 1 : 0.4
+            color: Theme.colorComponentText
             source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
         }
     }
@@ -131,6 +132,7 @@ T.SpinBox {
             anchors.fill: parent
             anchors.margins: 6
             opacity: enabled ? 1 : 0.4
+            color: Theme.colorComponentText
             source: "qrc:/assets/icons_material/baseline-chevron_left-24px.svg"
         }
     }

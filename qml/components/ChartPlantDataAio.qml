@@ -542,7 +542,10 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
 
                 border: true
+                borderColor: Theme.colorComponentBorder
                 background: true
+                backgroundColor: Theme.colorComponentBackground
+                iconColor: Theme.colorSubText
                 source: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
                 onClicked: historyIndicator.showHide()
