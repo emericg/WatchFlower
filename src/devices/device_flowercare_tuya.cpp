@@ -160,7 +160,6 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
 
         int batt = -99;
         float temp = -99.f;
-        float humi = -99.f;
         int lumi = -99;
         int moist = -99;
         int fert = -99;
@@ -168,16 +167,16 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
         batt = static_cast<int8_t>(data[6]);
         setBattery(batt);
 
-        humi = static_cast<int16_t>(data[0]);
+        moist = static_cast<int16_t>(data[0]);
         temp = static_cast<int16_t>(data[2] + (data[1] << 8)) / 10.f;
         lumi = static_cast<int16_t>(data[3] + (data[4] << 8) + (data[5] << 16));
         fert = static_cast<int16_t>(data[8] + (data[7] << 8));
 
-        if (areValuesValid(humi, fert, -99.f, -99.f, temp, -99.f, lumi))
+        if (areValuesValid(moist, fert, -99.f, -99.f, temp, -99.f, lumi))
         {
             m_lastUpdate = QDateTime::currentDateTime();
 
-            m_soilMoisture = humi;
+            m_soilMoisture = moist;
             m_soilConductivity = fert;
             m_temperature = temp;
             m_luminosityLux = lumi;
@@ -185,7 +184,7 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
             if (needsUpdateDb_mini())
             {
                 addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                  humi, fert, -99.f, -99.f,
+                                  moist, fert, -99.f, -99.f,
                                   temp, -99.f, lumi);
 
                 refreshDataFinished(true);
@@ -197,11 +196,10 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
 /*
             qDebug() << "* service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
             if (batt > -99) qDebug() << "- battery:" << batt;
-            if (temp > -99) qDebug() << "- temperature:" << temp;
-            if (humi > -99) qDebug() << "- humidity:" << humi;
-            if (lumi > -99) qDebug() << "- luminosity:" << lumi;
             if (moist > -99)qDebug() << "- soil moisture:" << moist;
             if (fert > -99) qDebug() << "- soil conductivity:" << fert;
+            if (temp > -99) qDebug() << "- temperature:" << temp;
+            if (lumi > -99) qDebug() << "- luminosity:" << lumi;
 */
         }
     }

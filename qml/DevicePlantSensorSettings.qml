@@ -463,7 +463,7 @@ Flickable {
             border.width: 2
             border.color: Theme.colorSeparator
 
-            visible: currentDevice.deviceInfos.deviceNeedsOfficialApp
+            visible: currentDevice.deviceInfos && currentDevice.deviceInfos.deviceNeedsOfficialApp
 
             Column {
                 id: itemDeviceConnectionContent

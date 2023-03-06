@@ -100,6 +100,7 @@ Only one measurement is sent per advertisement message.
 | CGG1         | 0x4703       |
 | CGG1-M       | 0x480B       |
 | LYWSD02      | 0x5B04       |
+| LYWSD03MMC   | 0x5B05       |
 | CGDK2        | 0x6F06       |
 | MHO-C303     | 0xD306       |
 | -            |              |

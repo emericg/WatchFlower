@@ -59,17 +59,10 @@ private:
     void serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState);
 
     QLowEnergyService *serviceData = nullptr;
-    QLowEnergyDescriptor m_notificationHandshake;
-    QLowEnergyDescriptor m_notificationHistory;
 
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-
-    // Handshake
-    QString m_deviceMacAddress;
-    QByteArray m_key_challenge;
-    QByteArray m_key_finish;
 };
 
 /* ************************************************************************** */

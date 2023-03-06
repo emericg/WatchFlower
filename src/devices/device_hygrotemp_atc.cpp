@@ -114,6 +114,7 @@ void DeviceHygrotempATC::parseAdvertisementData(const uint16_t adv_mode, const u
             int batt = -99;
             float temp = -99.f;
             float humi = -99.f;
+
             // get data
             if (data[11] == 4 && data_size >= 16)
             {

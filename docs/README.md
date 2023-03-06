@@ -6,8 +6,8 @@ Supported devices
 
 | Flower Care                          | HHCC Plant Technology                 |
 | ------------------------------------ | ------------------------------------- |
-| Product ID                           | HHCCJCY01 / HHCCJCY10                 |
-| FCC ID                               | 2AJEPHHCCJCY01HHCC / 2AJEPHHCCJCY10   |
+| Product ID                           | HHCCJCY01                             |
+| FCC ID                               | 2AJEPHHCCJCY01HHCC                    |
 | <img src="flowercare.svg" width="256">                                      ||
 | Battery                              | 1 x CR2032                            |
 | Soil moisture                        | 0 → 100%                              |
@@ -16,6 +16,19 @@ Supported devices
 | Luminosity                           | 0 → 100k lux (± 100 lux)              |
 | IP Code                              | IPX5                                  |
 | BLE API                              | [link](flowercare-ble-api.md)         |
+
+| Tuya Flower Care                     | HHCC Plant Technology                 |
+| ------------------------------------ | ------------------------------------- |
+| Product ID                           | HHCCJCY10                             |
+| FCC ID                               | 2AJEPHHCCJCY10                        |
+| <img src="flowercare.svg" width="256">                                      ||
+| Battery                              | 1 x CR2032                            |
+| Soil moisture                        | 0 → 100%                              |
+| Soil conductivity                    |                                       |
+| Temperature                          | -15 → 50 °C (± 0.5 °C)                |
+| Luminosity                           | 0 → 100k lux (± 100 lux)              |
+| IP Code                              | IPX5                                  |
+| BLE API                              | [link](flowercare_tuya-ble-api.md)    |
 
 | Flower Care Max                      | HHCC Plant Technology                 |
 | ------------------------------------ | ------------------------------------- |
@@ -131,6 +144,7 @@ Supported devices
 | Temp & RH Monitor Lite               | Qingping                              |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | CGDK2                                 |
+| FCC ID                               | 2AQ3F-CGDK2                           |
 | <img src="hygrotemp_cgdk2.svg" width="256">                                 ||
 | Screen                               | LCD                                   |
 | Battery                              | 1 x CR2430                            |

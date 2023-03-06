@@ -94,7 +94,6 @@ Loader {
             function onCurrentThemeChanged() {
                 plantSensorData.updateHeader()
                 plantSensorHistory.updateHeader()
-                plantSensorHistory.updateColors()
                 plantSensorCare.updateHeader()
             }
         }

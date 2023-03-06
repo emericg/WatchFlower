@@ -3,7 +3,7 @@
 
 ## About Flower Care
 
-* Xiaomi [Flower Care](http://www.huahuacaocao.com/product) sensors are meant to keep your plants alive by monitoring their environment
+* [Flower Care](http://www.huahuacaocao.com/product) sensors are meant to keep your plants alive by monitoring their environment
 * Has sensors to relay temperature, light intensity, soil moisture and soil fertility (via electrical conductivity)
 * Uses Bluetooth Low Energy (BLE) and has a limited range
 * A CR2032 coin cell battery is used as power source for Flower Care
@@ -16,7 +16,10 @@ VegTrug **Grow Care Garden** (GCLS002)
 
 If you have a `white` Flower Care, it's an international variant of Xiaomi Flower Care. Or an old Chinese variant.  
 If you have a `green` Flower Care, it's a Chinese variant of Xiaomi Flower Care.  
+
 If you have a `pink` Flower Care, it's a Flower Care variant from Tuya.  
+Please check the page of the "Tuya" [Flower Care](flowercare-ble-api.md)  
+
 If you have a `black` Flower Care, it's a Flower Care **WITHOUT BLUETOOTH**. It won't work with any app.  
 
 ## Features
