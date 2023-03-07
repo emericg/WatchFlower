@@ -286,10 +286,10 @@ Loader {
                 indicatorAirQuality.value = currentDevice.hcho
             } else if (primary === "co2") {
                 indicatorAirQuality.legend = (currentDevice.haseCo2Sensor ? qsTr("eCO2") : qsTr("CO2"))
-                indicatorAirQuality.limitMin = 850
-                indicatorAirQuality.limitMax = 1500
+                indicatorAirQuality.limitMin = 1000
+                indicatorAirQuality.limitMax = 2000
                 indicatorAirQuality.valueMin = 0
-                indicatorAirQuality.valueMax = 2000
+                indicatorAirQuality.valueMax = 3000
                 indicatorAirQuality.value = currentDevice.co2
             } else if (primary === "pm25") {
                 indicatorAirQuality.legend = qsTr("PM2.5")
@@ -960,8 +960,8 @@ Loader {
                                         legend: qsTr("ppm")
                                         value: currentDevice.co2
                                         precision: 0
-                                        limit_mid: 850
-                                        limit_high: 1500
+                                        limit_mid: 1000
+                                        limit_high: 2000
                                         onSensorSelection: primary = "co2"
                                     }
                                 }

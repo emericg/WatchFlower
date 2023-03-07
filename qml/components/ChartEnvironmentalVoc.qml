@@ -36,8 +36,8 @@ Item {
             limitMax = 1000
             scaleMax = 1500
         } else if (itemDeviceEnvironmental.primary === "co2") {
-            limitMin = 850
-            limitMax = 1500
+            limitMin = 1000
+            limitMax = 2000
             scaleMax = 2000
         } else if (itemDeviceEnvironmental.primary === "pm1" ||
                    itemDeviceEnvironmental.primary === "pm25" ||
