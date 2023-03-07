@@ -82,156 +82,62 @@ void DeviceJQJCY01YM::parseAdvertisementData(const uint16_t adv_mode,
                                              const QByteArray &ba)
 {
 /*
-    qDebug() << "DeviceJQJCY01YM::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
+    qDebug() << "DeviceJQJCY01YM::parseAdvertisementData()" << m_deviceName << m_deviceAddress
+             << "[mode: " << adv_mode << " /  id: 0x" << QString::number(adv_id, 16) << "]";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
     // MiBeacon protocol / 16b UUID 0xFE95 / 12-20 bytes messages
     // JQJCY01YM uses 15, 16 and 18 bytes messages
-
-    if (adv_id == 0xFE95 && ba.size() >= 12)
+    if (parseBeaconXiaomi(adv_mode, adv_id, ba))
     {
-        const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
-        const int data_size = ba.size();
-
-        // Save mac address (for macOS and iOS)
-        if (!hasAddressMAC())
+        if (m_temperature > -99.f && m_humidity > -99 && m_hcho > -99.f)
         {
-            QString mac;
+            m_lastUpdate = QDateTime::currentDateTime();
 
-            mac += ba.mid(10,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(9,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(8,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(7,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(6,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(5,1).toHex().toUpper();
-
-            setAddressMAC(mac);
-        }
-
-        if (data_size >= 15)
-        {
-            int batt = -99;
-            float temp = -99.f;
-            float humi = -99.f;
-            float form = -99.f;
-
-            // get data
-            if (data[11] == 4 && data_size >= 16)
+            if (needsUpdateDb_mini())
             {
-                temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (temp != m_temperature)
+                if (m_dbInternal || m_dbExternal)
                 {
-                    if (temp > -30.f && temp < 100.f)
+                    // SQL date format YYYY-MM-DD HH:MM:SS
+
+                    QSqlQuery addData;
+                    addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, temperature, humidity, hcho)"
+                                    " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :temp, :humi, :hcho)");
+                    addData.bindValue(":deviceAddr", getAddress());
+                    addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
+                    addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
+                    addData.bindValue(":temp", m_temperature);
+                    addData.bindValue(":humi", m_humidity);
+                    addData.bindValue(":hcho", m_hcho);
+
+                    if (addData.exec())
                     {
-                        m_temperature = temp;
-                        Q_EMIT dataUpdated();
+                        m_lastUpdateDatabase = m_lastUpdate;
+                    }
+                    else
+                    {
+                        qWarning() << "> DeviceJQJCY01YM addData.exec() ERROR"
+                                   << addData.lastError().type() << ":" << addData.lastError().text();
                     }
                 }
-            }
-            else if (data[11] == 6 && data_size >= 16)
-            {
-                humi = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (humi != m_humidity)
-                {
-                    if (humi >= 0.f && humi <= 100.f)
-                    {
-                        m_humidity = humi;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[11] == 10 && data_size >= 15)
-            {
-                batt = static_cast<int8_t>(data[14]);
-                setBattery(batt);
-            }
-            else if (data[11] == 13 && data_size >= 18)
-            {
-                temp = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (temp != m_temperature)
-                {
-                    m_temperature = temp;
-                    Q_EMIT dataUpdated();
-                }
-                humi = static_cast<int16_t>(data[16] + (data[17] << 8)) / 10.f;
-                if (humi != m_humidity)
-                {
-                    m_humidity = humi;
-                    Q_EMIT dataUpdated();
-                }
-            }
-            else if (data[11] == 16 && data_size >= 16)
-            {
-                form = static_cast<int16_t>(data[14] + (data[15] << 8)) / 10.f;
-                if (form != m_hcho)
-                {
-                    if (form >= 0.f && form <= 100.f)
-                    {
-                        m_hcho = form*100; // mg to µg
-                        Q_EMIT dataUpdated();
-                    }
-                }
+
+                refreshDataFinished(true);
             }
             else
             {
-                qDebug() << "MiBeacon: unknown tag >" << data[11];
+                refreshAdvertisement();
             }
-
-            if (m_temperature > -99.f && m_humidity > -99 && m_hcho > -99.f)
-            {
-                m_lastUpdate = QDateTime::currentDateTime();
-
-                if (needsUpdateDb_mini())
-                {
-                    if (m_dbInternal || m_dbExternal)
-                    {
-                        // SQL date format YYYY-MM-DD HH:MM:SS
-
-                        QSqlQuery addData;
-                        addData.prepare("REPLACE INTO sensorData (deviceAddr, timestamp_rounded, timestamp, temperature, humidity, hcho)"
-                                        " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :temp, :humi, :hcho)");
-                        addData.bindValue(":deviceAddr", getAddress());
-                        addData.bindValue(":timestamp_rounded", m_lastUpdate.toString("yyyy-MM-dd hh:00:00"));
-                        addData.bindValue(":timestamp", m_lastUpdate.toString("yyyy-MM-dd hh:mm:ss"));
-                        addData.bindValue(":temp", m_temperature);
-                        addData.bindValue(":humi", m_humidity);
-                        addData.bindValue(":hcho", m_hcho);
-
-                        if (addData.exec())
-                        {
-                            m_lastUpdateDatabase = m_lastUpdate;
-                        }
-                        else
-                        {
-                            qWarning() << "> DeviceJQJCY01YM addData.exec() ERROR"
-                                       << addData.lastError().type() << ":" << addData.lastError().text();
-                        }
-                    }
-
-                    refreshDataFinished(true);
-                }
-                else
-                {
-                    refreshAdvertisement();
-                }
-            }
-/*
-            if (batt > -99 || temp > -99.f || humi > -99.f || form > -99.f)
-            {
-                qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
-                if (batt > -99) qDebug() << "- battery:" << batt;
-                if (temp > -99) qDebug() << "- temperature:" << temp;
-                if (humi > -99) qDebug() << "- humidity:" << humi;
-                if (form > -99) qDebug() << "- formaldehyde:" << form;
-            }
-*/
         }
+/*
+        if (batt > -99 || temp > -99.f || humi > -99.f || form > -99.f)
+        {
+            qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
+            if (batt > -99) qDebug() << "- battery:" << batt;
+            if (temp > -99) qDebug() << "- temperature:" << temp;
+            if (humi > -99) qDebug() << "- humidity:" << humi;
+            if (form > -99) qDebug() << "- formaldehyde:" << form;
+        }
+*/
     }
 }
 

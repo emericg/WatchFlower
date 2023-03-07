@@ -419,8 +419,8 @@ void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
                                                 const QByteArray &ba)
 {
 /*
-    qDebug() << "DeviceThermoBeacon::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
+    qDebug() << "DeviceThermoBeacon::parseAdvertisementData()" << m_deviceName << m_deviceAddress
+             << "[mode: " << adv_mode << " /  id: 0x" << QString::number(adv_id, 16) << "]";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
     // 20 bytes message

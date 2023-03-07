@@ -47,6 +47,7 @@ SOURCES  += src/main.cpp \
             src/device.cpp \
             src/device_infos.cpp \
             src/device_sensor.cpp \
+            src/device_sensor_advertisement.cpp \
             src/device_plantsensor.cpp \
             src/device_thermometer.cpp \
             src/device_environmental.cpp \

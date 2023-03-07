@@ -1420,7 +1420,7 @@ void Device::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
 
 void Device::parseAdvertisementData(const uint16_t, const uint16_t, const QByteArray &)
 {
-    //qDebug() << "Device::parseAdvertisementData(" << m_deviceAddress << ")";
+    //qDebug() << "Device::parseAdvertisementData(" << m_deviceName << m_deviceAddress << ")";
 }
 
 /* ************************************************************************** */

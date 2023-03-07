@@ -23,11 +23,11 @@
      borderopacity="1"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.2303142"
-     inkscape:cx="34.576644"
-     inkscape:cy="60.025054"
+     inkscape:zoom="23.91493"
+     inkscape:cx="65.858441"
+     inkscape:cy="24.712596"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g1051"
      showgrid="true"
      units="px"
      borderlayer="true"
@@ -103,7 +103,7 @@
        style="opacity:0.8;stroke:none;stroke-width:0.178769"
        d="m 10.36315,284.76595 a 0.34664262,0.34664262 0 0 0 0.490223,0 0.34664262,0.34664262 0 0 0 7e-6,-0.49023 0.34664262,0.34664262 0 0 0 -0.490223,1e-5 0.34664262,0.34664262 0 0 0 -7e-6,0.49022 z" />
     <rect
-       style="opacity:0.1;fill:#242424;stroke-width:0.659379;paint-order:markers fill stroke"
+       style="opacity:0.33;fill:#242424;stroke-width:0.659379;paint-order:markers fill stroke"
        id="rect587"
        width="2.3812499"
        height="10.583333"
@@ -125,7 +125,7 @@
     <path
        id="rect883-7-35"
        style="opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.350027"
-       d="M 11.662041,275.20331 H 9.3706267 v 3.20798 h 2.2914143 z"
+       d="M 11.657283,275.4018 H 9.3658692 v 3.20798 h 2.2914138 z"
        sodipodi:nodetypes="ccccc" />
   </g>
 </svg>

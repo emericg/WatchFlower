@@ -89,7 +89,7 @@ class DeviceSensor: public Device
     Q_PROPERTY(float heatIndex READ getHeatIndex NOTIFY dataUpdated)
     Q_PROPERTY(float dewPoint READ getDewPoint NOTIFY dataUpdated)
     // environmental data
-    Q_PROPERTY(int pressure READ getPressure NOTIFY dataUpdated)
+    Q_PROPERTY(float pressure READ getPressure NOTIFY dataUpdated)
     Q_PROPERTY(int luminosityLux READ getLuminosityLux NOTIFY dataUpdated)
     Q_PROPERTY(int luminosityMmol READ getLuminosityMmol NOTIFY dataUpdated)
     Q_PROPERTY(int uv READ getUV NOTIFY dataUpdated)
@@ -353,6 +353,10 @@ protected:
 
     virtual bool hasData() const;
 
+    bool parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
+    bool parseBeaconQingping(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
+    bool parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
+
 public:
     DeviceSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
@@ -420,7 +424,7 @@ public:
     float getTempF() const { return (m_temperature * 9.f/5.f + 32.f); }
     float getHumidity() const { return m_humidity; }
     // Environmental
-    int getPressure() const { return m_pressure; }
+    float getPressure() const { return m_pressure; }
     int getLuminosityLux() const { return m_luminosityLux; }
     int getLuminosityMmol() const { return m_luminosityMmol; }
     int getUV() const { return m_uv; }

@@ -639,172 +639,43 @@ void DeviceFlowerCare::parseAdvertisementData(const uint16_t adv_mode,
                                               const QByteArray &ba)
 {
 /*
-    qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
+    qDebug() << "DeviceFlowerCare::parseAdvertisementData()" << m_deviceName << m_deviceAddress
+             << "[mode: " << adv_mode << " /  id: 0x" << QString::number(adv_id, 16) << "]";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
     // MiBeacon protocol / 16b UUID 0xFE95 / 12-20 bytes messages
-
-    if (adv_id == 0xFE95 && ba.size() >= 12)
+    if (parseBeaconXiaomi(adv_mode, adv_id, ba))
     {
-        const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
-        const int data_size = ba.size();
-
-        // Save mac address (for macOS and iOS)
-        if (!hasAddressMAC())
+        if (m_soilMoisture > -99 && m_soilConductivity > -99 && m_temperature > -99.f && m_luminosityLux > -99)
         {
-            QString mac;
+            m_lastUpdate = QDateTime::currentDateTime();
 
-            mac += ba.mid(10,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(9,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(8,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(7,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(6,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(5,1).toHex().toUpper();
+            if (needsUpdateDb_mini())
+            {
+                //addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                //                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                //                  m_temperature, -99.f, m_luminosityLux);
 
-            setAddressMAC(mac);
+                refreshDataFinished(true);
+            }
+            else
+            {
+                refreshAdvertisement();
+            }
         }
-
-        if (data_size >= 16)
-        {
-            int batt = -99;
-            float temp = -99.f;
-            float humi = -99.f;
-            int lumi = -99;
-            float form = -99.f;
-            int moist = -99;
-            int fert = -99;
-
-            // get data
-            if (data[12] == 4 && data_size >= 17)
-            {
-                temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                if (temp != m_temperature)
-                {
-                    if (temp > -30.f && temp < 100.f)
-                    {
-                        m_temperature = temp;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[12] == 6 && data_size >= 17)
-            {
-                humi = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                if (humi != m_humidity)
-                {
-                    if (humi >= 0.f && humi <= 100.f)
-                    {
-                        m_humidity = humi;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[12] == 7 && data_size >= 18)
-            {
-                lumi = static_cast<int32_t>(data[15] + (data[16] << 8) + (data[17] << 16));
-                if (lumi != m_luminosityLux)
-                {
-                    if (lumi >= 0 && lumi < 150000)
-                    {
-                        m_luminosityLux = lumi;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[12] == 8 && data_size >= 17)
-            {
-                moist = static_cast<int16_t>(data[15] + (data[16] << 8));
-                if (moist != m_soilMoisture)
-                {
-                    if (moist >= 0 && moist <= 100)
-                    {
-                        m_soilMoisture = moist;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[12] == 9 && data_size >= 17)
-            {
-                fert = static_cast<int16_t>(data[15] + (data[16] << 8));
-                if (fert != m_soilConductivity)
-                {
-                    if (fert >= 0 && fert < 20000)
-                    {
-                        m_soilConductivity = fert;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-            else if (data[12] == 10 && data_size >= 16)
-            {
-                batt = static_cast<int8_t>(data[15]);
-                setBattery(batt);
-            }
-            else if (data[12] == 13 && data_size >= 19)
-            {
-                temp = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                if (temp != m_temperature)
-                {
-                    m_temperature = temp;
-                    Q_EMIT dataUpdated();
-                }
-                humi = static_cast<int16_t>(data[17] + (data[18] << 8)) / 10.f;
-                if (humi != m_humidity)
-                {
-                    m_humidity = humi;
-                    Q_EMIT dataUpdated();
-                }
-            }
-            else if (data[12] == 16 && data_size >= 17)
-            {
-                form = static_cast<int16_t>(data[15] + (data[16] << 8)) / 10.f;
-                if (form != m_hcho)
-                {
-                    if (form >= 0.f && form <= 100.f)
-                    {
-                        m_hcho = form;
-                        Q_EMIT dataUpdated();
-                    }
-                }
-            }
-
-            if (m_soilMoisture > -99 && m_soilConductivity > -99 && m_temperature > -99.f && m_luminosityLux > -99)
-            {
-                m_lastUpdate = QDateTime::currentDateTime();
-
-                if (needsUpdateDb_mini())
-                {
-                    //addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                    //                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,
-                    //                  m_temperature, -99.f, m_luminosityLux);
-
-                    refreshDataFinished(true);
-                }
-                else
-                {
-                    refreshAdvertisement();
-                }
-            }
 /*
-            if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
-            {
-                qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
-                if (batt > -99) qDebug() << "- battery:" << batt;
-                if (temp > -99) qDebug() << "- temperature:" << temp;
-                if (humi > -99) qDebug() << "- humidity:" << humi;
-                if (lumi > -99) qDebug() << "- luminosity:" << lumi;
-                if (form > -99) qDebug() << "- formaldehyde:" << form;
-                if (moist > -99)qDebug() << "- soil moisture:" << moist;
-                if (fert > -99) qDebug() << "- soil conductivity:" << fert;
-            }
-*/
+        if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
+        {
+            qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
+            if (batt > -99) qDebug() << "- battery:" << batt;
+            if (temp > -99) qDebug() << "- temperature:" << temp;
+            if (humi > -99) qDebug() << "- humidity:" << humi;
+            if (lumi > -99) qDebug() << "- luminosity:" << lumi;
+            if (form > -99) qDebug() << "- formaldehyde:" << form;
+            if (moist > -99)qDebug() << "- soil moisture:" << moist;
+            if (fert > -99) qDebug() << "- soil conductivity:" << fert;
         }
+*/
     }
 }
 

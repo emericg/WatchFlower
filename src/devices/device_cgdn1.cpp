@@ -82,104 +82,12 @@ void DeviceCGDN1::addLowEnergyService(const QBluetoothUuid &uuid)
 void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &ba)
 {
 /*
-    qDebug() << "DeviceCGDN1::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
+    qDebug() << "DeviceCGDN1::parseAdvertisementData()" << m_deviceName << m_deviceAddress
+             << "[mode: " << adv_mode << " /  id: 0x" << QString::number(adv_id, 16) << "]";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
-    if (ba.size() >= 24) // Qingping data protocol // 24 bytes messages
+    if (parseBeaconQingping(adv_mode, adv_id, ba))
     {
-        const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
-
-        // Save mac address (for macOS and iOS)
-        if (!hasAddressMAC())
-        {
-            QString mac;
-
-            mac += ba.mid(10,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(9,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(8,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(7,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(6,1).toHex().toUpper();
-            mac += ':';
-            mac += ba.mid(5,1).toHex().toUpper();
-
-            setAddressMAC(mac);
-        }
-
-        float temp = -99.f;
-        float humi = -99.f;
-        float co2 = -99.f;
-        float pm2 = -99.f;
-        float pm10 = -99.f;
-
-        // get data
-        if ((data[0] == 0x04 || data[0] == 0x08 || data[0] == 0x80 || data[0] == 0x88) &&
-            ((data[1] == 0x01 || data[1] == 0x07 || data[1] == 0x16) || // CGG1
-             (data[1] == 0x10) || // CGDK2
-             (data[1] == 0x09) || // CGP1W
-             (data[1] == 0x15) || // CGF1W
-             (data[1] == 0x1e) || // CGC1
-             (data[1] == 0x0c) || // CGD1
-             (data[1] == 0x0e || data[1] == 0x24) ||  // CGDN1
-             (data[1] == 0x0f))) // CGM1
-        {
-            temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 10.f;
-            if (temp != m_temperature)
-            {
-                if (temp > -30.f && temp < 100.f)
-                {
-                    m_temperature = temp;
-                    Q_EMIT dataUpdated();
-                }
-            }
-            humi = static_cast<int16_t>(data[12] + (data[13] << 8)) / 10.f;
-            if (humi != m_humidity)
-            {
-                if (humi >= 0.f && humi <= 100.f)
-                {
-                    m_humidity = humi;
-                    Q_EMIT dataUpdated();
-                }
-            }
-
-            pm2 = static_cast<int16_t>(data[16] + (data[17] << 8));
-            if (pm2 != m_pm_25)
-            {
-                if (pm2 >= 0 && pm2 <= 1000)
-                {
-                    m_pm_25 = pm2;
-                    Q_EMIT dataUpdated();
-                }
-            }
-            pm10 = static_cast<int16_t>(data[18] + (data[19] << 8));
-            if (pm10 != m_pm_10)
-            {
-                if (pm10 >= 0 && pm10 <= 1000)
-                {
-                    m_pm_10 = pm10;
-                    Q_EMIT dataUpdated();
-                }
-            }
-
-            co2 = static_cast<int16_t>(data[22] + (data[23] << 8));
-            if (co2 != m_co2)
-            {
-                if (co2 >= 0 && co2 <= 9999)
-                {
-                    m_co2 = co2;
-                    Q_EMIT dataUpdated();
-                }
-            }
-        }
-        else
-        {
-            qDebug() << "Qingping data: unknown device ID >" << data[0] << data[1];
-        }
-
         if (m_temperature > -99.f && m_humidity > -99.f && m_co2 > -99.f && m_pm_25 > -99.f && m_pm_10 > -99.f)
         {
             m_lastUpdate = QDateTime::currentDateTime();
@@ -221,18 +129,18 @@ void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t
             }
         }
 /*
-            if (batt > -99 || temp > -99.f || humi > -99.f || co2 > -99.f || pm2 > -99.f || pm10 > -99.f)
-            {
-                qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
-                if (batt > -99) qDebug() << "- battery:" << batt;
-                if (temp > -99) qDebug() << "- temperature:" << temp;
-                if (humi > -99) qDebug() << "- humidity:" << humi;
-                if (co2 > -99) qDebug() << "- co2:" << co2;
-                if (pm2 > -99) qDebug() << "- pm 2.5:" << pm2;
-                if (pm10 > -99) qDebug() << "- pm 10 :" << pm10;
-            }
-*/
+        if (batt > -99 || temp > -99.f || humi > -99.f || co2 > -99.f || pm2 > -99.f || pm10 > -99.f)
+        {
+            qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
+            if (batt > -99) qDebug() << "- battery:" << batt;
+            if (temp > -99) qDebug() << "- temperature:" << temp;
+            if (humi > -99) qDebug() << "- humidity:" << humi;
+            if (co2 > -99) qDebug() << "- co2:" << co2;
+            if (pm2 > -99) qDebug() << "- pm 2.5:" << pm2;
+            if (pm10 > -99) qDebug() << "- pm 10 :" << pm10;
         }
+*/
+    }
 }
 
 /* ************************************************************************** */

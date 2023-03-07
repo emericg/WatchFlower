@@ -148,12 +148,11 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
                                                    const QByteArray &ba)
 {
 /*
-    qDebug() << "DeviceFlowerCare::parseAdvertisementData(" << m_deviceAddress
-             << " - " << adv_mode << " - 0x" << QString::number(adv_id, 16) << ")";
+    qDebug() << "DeviceFlowerCare::parseAdvertisementData()" << m_deviceName << m_deviceAddress
+             << "[mode: " << adv_mode << " /  id: 0x" << QString::number(adv_id, 16) << "]";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
     // service data / 16b UUID 0xFD50 / 9 bytes messages
-
     if (adv_id == 0xFD50 && ba.size() == 9)
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
@@ -164,10 +163,10 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
         int moist = -99;
         int fert = -99;
 
-        batt = static_cast<int8_t>(data[6]);
+        batt = static_cast<int>(data[6]);
         setBattery(batt);
 
-        moist = static_cast<int16_t>(data[0]);
+        moist = static_cast<int>(data[0]);
         temp = static_cast<int16_t>(data[2] + (data[1] << 8)) / 10.f;
         lumi = static_cast<int16_t>(data[3] + (data[4] << 8) + (data[5] << 16));
         fert = static_cast<int16_t>(data[8] + (data[7] << 8));
