@@ -20,7 +20,6 @@
  */
 
 #include "device_thermobeacon.h"
-#include "SettingsManager.h"
 #include "utils_maths.h"
 
 #include <cstdint>
@@ -112,20 +111,18 @@ void DeviceThermoBeacon::serviceScanDone()
 void DeviceThermoBeacon::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceThermoBeacon::addLowEnergyService(" << uuid.toString() << ")";
-/*
+
     if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
     {
         delete serviceInfos;
         serviceInfos = nullptr;
 
-        //if (m_deviceFirmware.isEmpty() || m_deviceFirmware == "UNKN")
-        {
-            serviceInfos = controller->createServiceObject(uuid);
-            if (!serviceInfos)
-                qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
-        }
+        // Disabled, there is nothing of interest there
+        //serviceInfos = controller->createServiceObject(uuid);
+        //if (!serviceInfos)
+        //    qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
     }
-*/
+
     if (uuid.toString() == "{0000ffe0-0000-1000-8000-00805f9b34fb}") // (custom) data service
     {
         delete serviceData;
@@ -147,7 +144,7 @@ void DeviceThermoBeacon::serviceDetailsDiscovered_infos(QLowEnergyService::Servi
 
         if (serviceInfos)
         {
-            //
+            // Disabled, there is nothing of interest over there
         }
     }
 }

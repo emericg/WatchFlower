@@ -133,50 +133,54 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 device->getName() == "Flower mate" ||
                 device->getName() == "TY" ||
                 device->getName() == "Grow care garden") { /////// plant sensors
-                return "a";
+                return "aa";
             } else if (device->getName() == "Flower power") {
-                return "b";
+                return "ab";
             } else if (device->getName() == "ropot") {
-                return "c";
+                return "ac";
             } else if (device->getName() == "Parrot pot") {
-                return "d";
+                return "ad";
             } else if (device->getName() == "HiGrow") {
-                return "e";
+                return "ae";
+            } else if (device->getName() == "bparasite") {
+                return "af";
             } else if (device->getName() == "ThermoBeacon") { ///// thermometers
-                return "f";
+                return "ba";
             } else if (device->getName() == "MJ_HT_V1") {
-                return "g";
+                return "bb";
             } else if (device->getName() == "LYWSD02") {
-                return "h";
+                return "bc";
             } else if (device->getName() == "LYWSD03MMC") {
-                return "i";
+                return "bd";
             } else if (device->getName() == "MHO-C303") {
-                return "j";
+                return "be";
             } else if (device->getName() == "MHO-C401") {
-                return "k";
+                return "bf";
             } else if (device->getName() == "XMWSDJO4MMC") {
-                return "l";
+                return "bg";
+            } else if (device->getName() == "MJWSD05MMC") {
+                return "bh";
             } else if (device->getName() == "ClearGrass Temp & RH" ||
                        device->getName().startsWith("Qingping Temp & RH")) {
-                return "m";
+                return "bi";
             } else if (device->getName() == "Qingping Temp RH Lite" ) {
-                return "n";
+                return "bj";
             } else if (device->getName() == "Qingping Alarm Clock") {
-                return "o";
+                return "bk";
             } else if (device->getName() == "Qingping Temp RH Barometer") {
-                return "p";
+                return "bl";
             } else if (device->getName() == "ATC") {
-                return "q";
+                return "bz";
             } else if (device->getName().startsWith("6003#")) { //// air quality
-                return "t";
+                return "ca";
             } else if (device->getName() == "CGDN1") {
-                return "w";
+                return "cb";
             } else if (device->getName() == "JQJCY01YM") {
-                return "x";
+                return "cd";
             } else if (device->getName() == "AirQualityMonitor") {
-                return "y";
+                return "ce";
             } else if (device->getName() == "GeigerCounter") {
-                return "z";
+                return "cz";
             } else {
                 return "zzz";
             }

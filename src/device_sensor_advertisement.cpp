@@ -62,7 +62,7 @@ enum Qingping_sensors {
     qp_air_pressure             = 0x07,
     qp_particulate_matter       = 0x12,
     qp_co2                      = 0x13,
-    qp_door_state               = 0x0f,
+    qp_door_state               = 0x0F,
 };
 
 enum BtHome_sensors {
@@ -101,6 +101,38 @@ enum BtHome_sensors {
     bth_volume_uint16           = 0x48,
     bth_volume_flow_uint16      = 0x49,
     bth_UVindex_uint8           = 0x46,
+
+    bth_binary_battery          = 0x15,
+    bth_binary_batterycharging  = 0x16,
+    bth_binary_carbonmonoxide   = 0x17,
+    bth_binary_cold             = 0x18,
+    bth_binary_connectivity     = 0x19,
+    bth_binary_door             = 0x1A,
+    bth_binary_garagedoor       = 0x1B,
+    bth_binary_gas              = 0x1C,
+    bth_binary_generic          = 0x0F,
+    bth_binary_heat             = 0x1D,
+    bth_binary_light            = 0x1E,
+    bth_binary_lock             = 0x1F,
+    bth_binary_moisture         = 0x20,
+    bth_binary_motion           = 0x21,
+    bth_binary_moving           = 0x22,
+    bth_binary_occupancy        = 0x23,
+    bth_binary_opening          = 0x11,
+    bth_binary_plug             = 0x24,
+    bth_binary_power            = 0x10,
+    bth_binary_presence         = 0x25,
+    bth_binary_problem          = 0x26,
+    bth_binary_running          = 0x27,
+    bth_binary_safety           = 0x28,
+    bth_binary_smoke            = 0x29,
+    bth_binary_sound            = 0x2A,
+    bth_binary_tamper           = 0x2B,
+    bth_binary_vibration        = 0x2C,
+    bth_binary_window           = 0x2D,
+
+    bth_event_button            = 0x3A,
+    bth_event_dimmer            = 0x3C,
 };
 
 /* ************************************************************************** */
@@ -325,9 +357,14 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
                     }
                 }
             }
+            else if (payload_data_type == 0x100b)
+            {
+                pos += 2; // but what is it?
+            }
             else
             {
                 qDebug() << "* MiBeacon payload ERROR >" << getName() << getAddress() << "(" << data_size << ") bytes";
+                qDebug() << "- data  >  0x" << ba.toHex();
                 qDebug() << "- payload_data_type: 0x" << QString::number(payload_data_type, 16);
                 qDebug() << "- position:" << pos << " / " << data_size;
             }
@@ -488,6 +525,7 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             else
             {
                 qDebug() << "* Qingping payload ERROR >" << getName() << getAddress() << "(" << data_size << ") bytes";
+                qDebug() << "- data  >  0x" << ba.toHex();
                 qDebug() << "- payload_data_type: 0x" << QString::number(payload_data_type, 16);
                 qDebug() << "- payload_data_size:" << payload_data_size;
                 qDebug() << "- position:" << pos << " / " << data_size;
@@ -768,16 +806,27 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
                     }
                 }
             }
+            else if (object_type == bth_voltage_p_uint16)
+            {
+                float voltage = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8)) / 1000.f;
+                pos += 2;
+                Q_UNUSED(voltage)
+            }
+            else if (object_type == bth_binary_power)
+            {
+                bool power = data[pos++];
+                Q_UNUSED(power)
+            }
             else
             {
                 qDebug() << "* BtHome payload ERROR >" << getName() << getAddress() << "(" << data_size << ") bytes";
+                qDebug() << "- data  >  0x" << ba.toHex();
                 qDebug() << "- object_type: 0x" << QString::number(object_type, 16);
+                qDebug() << "- object_length: " << object_length;
                 qDebug() << "- position:" << pos << " / " << data_size;
 
-                if (object_length > 0)
-                    pos += object_length;
-                else
-                    break; // we are lost...
+                if (object_length > 0) pos += object_length; // we ignore data if we know its size
+                else break; // otherwise we are lost...
             }
         }
 /*

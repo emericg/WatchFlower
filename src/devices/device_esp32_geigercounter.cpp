@@ -204,13 +204,6 @@ void DeviceEsp32GeigerCounter::bleReadDone(const QLowEnergyCharacteristic &c, co
 {
     //qDebug() << "DeviceEsp32GeigerCounter::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
-
-    const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-
-    if (c.uuid().toString() == "{x}")
-    {
-        Q_UNUSED(data)
-    }
 }
 
 void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)

@@ -155,7 +155,8 @@ DeviceManager::DeviceManager(bool daemon)
                 d = new DeviceHygrotempLYWSDCGQ(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02" || deviceName == "MHO-C303")
                 d = new DeviceHygrotempClock(deviceAddr, deviceName, this);
-            else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401" || deviceName == "XMWSDJO4MMC")
+            else if (deviceName == "LYWSD03MMC" || deviceName == "MHO-C401" ||
+                     deviceName == "XMWSDJO4MMC" || deviceName == "MJWSD05MMC")
                 d = new DeviceHygrotempSquare(deviceAddr, deviceName, this);
             else if (deviceName == "ClearGrass Temp & RH" || deviceName == "Qingping Temp & RH M")
                 d = new DeviceHygrotempCGG1(deviceAddr, deviceName, this);
@@ -1432,7 +1433,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         info.name() == "ThermoBeacon" ||
         info.name() == "MJ_HT_V1" ||
         info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
-        info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC" ||
+        info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
+        info.name() == "XMWSDJO4MMC" || info.name() == "MJWSD05MMC" ||
         info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M" ||
         info.name() == "Qingping Temp RH Lite" ||
         info.name() == "Qingping Temp RH Barometer" ||
@@ -1464,7 +1466,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             d = new DeviceHygrotempLYWSDCGQ(info, this);
         else if (info.name() == "LYWSD02" || info.name() == "MHO-C303")
             d = new DeviceHygrotempClock(info, this);
-        else if (info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" || info.name() == "XMWSDJO4MMC")
+        else if (info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
+                 info.name() == "XMWSDJO4MMC" || info.name() == "MJWSD05MMC")
             d = new DeviceHygrotempSquare(info, this);
         else if (info.name() == "ClearGrass Temp & RH" || info.name() == "Qingping Temp & RH M")
             d = new DeviceHygrotempCGG1(info, this);

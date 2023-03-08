@@ -524,9 +524,6 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
     //qDebug() << "DeviceParrotPot::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    //const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
-    //const int data_size = value.size();
-
     // Read firmware version
     if (c.uuid().toString() == "00002a26-0000-1000-8000-00805f9b34fb")
     {
@@ -552,8 +549,6 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
             setBattery(lvl);
         }
     }
-
-    // TODOs
 }
 
 void DeviceParrotPot::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)

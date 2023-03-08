@@ -104,8 +104,6 @@ void DeviceFlowerCare::serviceScanDone()
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceData->discoverDetails(); });
-            //auto ret = QtConcurrent::run([this](){ serviceData->discoverDetails(); });
-            //QMetaObject::invokeMethod(QCoreApplication::instance(), [] () { serviceData->discoverDetails(); });
         }
     }
 
@@ -119,7 +117,6 @@ void DeviceFlowerCare::serviceScanDone()
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceHandshake->discoverDetails(); });
-            //auto ret = QtConcurrent::run([this](){ serviceHandshake->discoverDetails(); });
         }
     }
 
@@ -133,7 +130,6 @@ void DeviceFlowerCare::serviceScanDone()
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceHistory->discoverDetails(); });
-            //auto ret = QtConcurrent::run([this](){ serviceHistory->discoverDetails(); });
         }
     }
 }
@@ -664,14 +660,13 @@ void DeviceFlowerCare::parseAdvertisementData(const uint16_t adv_mode,
             }
         }
 /*
-        if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
+        if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || moist > -99 || fert > -99)
         {
             qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
             if (batt > -99) qDebug() << "- battery:" << batt;
             if (temp > -99) qDebug() << "- temperature:" << temp;
             if (humi > -99) qDebug() << "- humidity:" << humi;
             if (lumi > -99) qDebug() << "- luminosity:" << lumi;
-            if (form > -99) qDebug() << "- formaldehyde:" << form;
             if (moist > -99)qDebug() << "- soil moisture:" << moist;
             if (fert > -99) qDebug() << "- soil conductivity:" << fert;
         }

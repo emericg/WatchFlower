@@ -60,6 +60,21 @@ void DeviceEssGeneric::serviceScanDone()
 {
     //qDebug() << "DeviceEssGeneric::serviceScanDone(" << m_deviceAddress << ")";
 
+    if (serviceInfos)
+    {
+        if (serviceInfos->state() == QLowEnergyService::RemoteService)
+        {
+            connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceEssGeneric::serviceDetailsDiscovered_infos);
+
+            // Windows hack, see: QTBUG-80770 and QTBUG-78488
+            QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(); });
+
+            // Other potential hacks?
+            //auto ret = QtConcurrent::run([this](){ serviceInfos->discoverDetails(); });
+            //QMetaObject::invokeMethod(QCoreApplication::instance(), [] () { serviceInfos->discoverDetails(); });
+        }
+    }
+
     if (serviceBattery)
     {
         if (serviceBattery->state() == QLowEnergyService::RemoteService)
@@ -92,6 +107,18 @@ void DeviceEssGeneric::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceEssGeneric::addLowEnergyService(" << uuid.toString() << ")";
 
+    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
+    {
+        delete serviceInfos;
+        serviceInfos = nullptr;
+
+        serviceInfos = m_bleController->createServiceObject(uuid);
+        if (!serviceInfos)
+        {
+            qWarning() << "Cannot create service (infos) for uuid:" << uuid.toString();
+        }
+    }
+
     if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
     {
         delete serviceBattery;
@@ -99,7 +126,9 @@ void DeviceEssGeneric::addLowEnergyService(const QBluetoothUuid &uuid)
 
         serviceBattery = m_bleController->createServiceObject(uuid);
         if (!serviceBattery)
+        {
             qWarning() << "Cannot create service (battery) for uuid:" << uuid.toString();
+        }
     }
 
     if (uuid.toString() == "{0000181A-0000-1000-8000-00805f9b34fb}") // Environmental sensing service
@@ -109,11 +138,42 @@ void DeviceEssGeneric::addLowEnergyService(const QBluetoothUuid &uuid)
 
         serviceEnvironmentalSensing = m_bleController->createServiceObject(uuid);
         if (!serviceEnvironmentalSensing)
+        {
             qWarning() << "Cannot create service (environmental sensing) for uuid:" << uuid.toString();
+        }
     }
 }
 
 /* ************************************************************************** */
+
+void DeviceEssGeneric::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
+{
+    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    {
+        //qDebug() << "DeviceEssGeneric::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
+
+        if (serviceInfos)
+        {
+            // Characteristic "Model Number String"
+            QBluetoothUuid uuid_model(QStringLiteral("00002a24-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cmd = serviceInfos->characteristic(uuid_model);
+            if (cmd.value().size() > 0)
+            {
+                QString model = cmd.value();
+                Q_UNUSED(model)
+            }
+
+            // Characteristic "Firmware Revision String"
+            QBluetoothUuid uuid_firmware(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cfw = serviceInfos->characteristic(uuid_firmware);
+            if (cfw.value().size() > 0)
+            {
+               QString firmware = cfw.value();
+               setFirmware(firmware);
+            }
+        }
+    }
+}
 
 void DeviceEssGeneric::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
@@ -126,7 +186,6 @@ void DeviceEssGeneric::serviceDetailsDiscovered_battery(QLowEnergyService::Servi
             // Characteristic "Battery Level"
             QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
-
             if (cbat.value().size() == 1)
             {
                 int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
@@ -167,6 +226,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
             if (cpres.isValid())
             {
                 m_pressure = cpres.value().toUInt() / 10.0;
+                Q_EMIT dataUpdated();
 
                 m_deviceSensors += DeviceUtils::SENSOR_PRESSURE;
                 Q_EMIT sensorsUpdated();
@@ -177,6 +237,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
             if (ctemp.isValid())
             {
                 m_temperature = ctemp.value().toInt() / 100.0;
+                Q_EMIT dataUpdated();
 
                 m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
                 Q_EMIT sensorsUpdated();
@@ -187,6 +248,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
             if (chum.isValid())
             {
                 m_humidity = chum.value().toInt() / 100.0;
+                Q_EMIT dataUpdated();
 
                 m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
                 Q_EMIT sensorsUpdated();
@@ -197,6 +259,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
             if (cuv.isValid())
             {
                 m_uv = cuv.value().toUInt();
+                Q_EMIT dataUpdated();
 
                 m_deviceSensors += DeviceUtils::SENSOR_UV;
                 Q_EMIT sensorsUpdated();
