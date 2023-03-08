@@ -41,6 +41,7 @@ qt_add_executable(WatchFlower
     src/devices/device_flowerpower.cpp src/devices/device_flowerpower.h
     src/devices/device_ropot.cpp src/devices/device_ropot.h
     src/devices/device_parrotpot.cpp src/devices/device_parrotpot.h
+    src/devices/device_bparasite.cpp src/devices/device_bparasite.h
     src/devices/device_hygrotemp_atc.cpp src/devices/device_hygrotemp_atc.h
     src/devices/device_hygrotemp_cgd1.cpp src/devices/device_hygrotemp_cgd1.h
     src/devices/device_hygrotemp_cgdk2.cpp src/devices/device_hygrotemp_cgdk2.h

@@ -29,6 +29,7 @@
 #include "devices/device_flowerpower.h"
 #include "devices/device_parrotpot.h"
 #include "devices/device_ropot.h"
+#include "devices/device_bparasite.h"
 #include "devices/device_hygrotemp_atc.h"
 #include "devices/device_hygrotemp_cgd1.h"
 #include "devices/device_hygrotemp_cgdk2.h"
@@ -146,6 +147,8 @@ DeviceManager::DeviceManager(bool daemon)
                 d = new DeviceFlowerPower(deviceAddr, deviceName, this);
             else if (deviceName.startsWith("Parrot pot"))
                 d = new DeviceParrotPot(deviceAddr, deviceName, this);
+            else if (deviceName == "bparasite")
+                d = new DeviceBParasite(deviceAddr, deviceName, this);
             else if (deviceName == "HiGrow")
                 d = new DeviceEsp32HiGrow(deviceAddr, deviceName, this);
 
@@ -1430,6 +1433,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         info.name().startsWith("Flower power") ||
         info.name().startsWith("Parrot pot") ||
         info.name() == "HiGrow" ||
+        info.name() == "bparasite" ||
         info.name() == "ThermoBeacon" ||
         info.name() == "MJ_HT_V1" ||
         info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
@@ -1457,6 +1461,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             d = new DeviceFlowerPower(info, this);
         else if (info.name().startsWith("Parrot pot"))
             d = new DeviceParrotPot(info, this);
+        else if (info.name() == "bparasite")
+            d = new DeviceBParasite(info, this);
         else if (info.name() == "HiGrow")
             d = new DeviceEsp32HiGrow(info, this);
 
