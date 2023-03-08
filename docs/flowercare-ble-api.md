@@ -27,7 +27,7 @@ If you have a `black` Flower Care, it's a Flower Care **WITHOUT BLUETOOTH**. It 
 * Read real-time sensor values
 * Read historical sensor values
 * Temperature (-10 - 60 °C ± 0.5 °C)
-* Light Monitor (0 - 100000 lux ± 100 lux)
+* Light intensity (0 - 100000 lux ± 100 lux)
 * Soil moisture
 * Soil fertility
 * Notification LED

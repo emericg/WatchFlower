@@ -95,6 +95,18 @@ Supported devices
 | IP Code                              | None                                  |
 | BLE API                              | [link](https://github.com/emericg/esp32-environmental-sensors/blob/master/HiGrow/doc/higrow-ble-api.md) |
 
+| b-parasite                           | N/A                                   |
+| ------------------------------------ | ------------------------------------- |
+| Product ID                           | N/A                                   |
+| <img src="bparasite.svg" width="256">                                       ||
+| Battery                              | 1 x CR2032                            |
+| Soil moisture                        |                                       |
+| Temperature                          |                                       |
+| Humidity                             |                                       |
+| Luminosity                           |                                       |
+| IP Code                              | None                                  |
+| BLE API                              | [link](bparasite-ble-api.md)          |
+
 
 # Thermometers
 
@@ -192,6 +204,16 @@ Supported devices
 | Humidity                             | 0 → 99.9% RH                          |
 | BLE API                              | [link](xmwsdjo4mmc-ble-api.md)        |
 
+| Mijia Smart Thermometer 3            | Miaomiaoce (MMC)                      |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | MJWSD05MMC                            |
+| <img src="hygrotemp_mjwsd05mmc.svg" width="256">                            ||
+| Screen                               | LCD                                   |
+| Battery                              | 1 x CR2450                            |
+| Temperature                          | 0 → 60 °C                             |
+| Humidity                             | 0 → 99.9% RH                          |
+| BLE API                              | [link](mjwsd05mmc-ble-api.md)         |
+
 | Digital Hygrometer (?)               | Miaomiaoce (MMC)                      |
 | ------------------------------------ | ------------------------------------- |
 | ID                                   | MHO-C401                              |
@@ -270,6 +292,9 @@ Supported devices
 | PM2.5                                | 0 → 500 µg/m³                         |
 | PM10                                 | 0 → 500 µg/m³                         |
 | BLE API                              | [link](cgdn1-ble-api.md)              |
+
+
+# Other sensors
 
 * Generic implementation for Bluetooth Low Energy "[Environmental Sensing Service](ess-ble-api.md)"
 

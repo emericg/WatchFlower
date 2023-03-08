@@ -46,12 +46,12 @@ You can also create your own sensors and use them with WatchFlower! Checkout thi
 
 Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can. You can use the affiliate links below to be sure of what you are buying.
 
-| Flower Care | Flower Care | Flower Care Max | RoPot | Flower Power | Parrot Pot | HiGrow |
-| :---------: | :---------: | :-------------: | :---: | :----------: | :--------: | :----: |
-| ![FlowerCare](docs/flowercare.svg) | ![FlowerCare](docs/flowercare.svg) | ![FlowerCare Max](docs/flowercaremax.svg) | ![RoPot](docs/ropot.svg) | ![FlowerPower](docs/flowerpower.svg) | ![ParrotPot](docs/parrotpot.svg) | ![HiGrow](docs/higrow.svg) |
-| HHCCJCY01 | HHCCJCY10 | HHCCJCY09 <br> GCLS002 | HHCCPOT002 | RKXHAWAII | 2AG61POT | |
-| Xiaomi / VegTrug / ...<br>(International and Chinese versions) | Tuya | Xiaomi and VegTrug variants | Xiaomi and VegTrug variants | | (monitoring only) | (with custom firmware) |
-| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | | | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
+| Flower Care | Flower Care | Flower Care Max | RoPot | Flower Power | Parrot Pot |
+| :---------: | :---------: | :-------------: | :---: | :----------: | :--------: |
+| ![FlowerCare](docs/flowercare.svg) | ![FlowerCare](docs/flowercare.svg) | ![FlowerCare Max](docs/flowercaremax.svg) | ![RoPot](docs/ropot.svg) | ![FlowerPower](docs/flowerpower.svg) | ![ParrotPot](docs/parrotpot.svg) |
+| HHCCJCY01 | HHCCJCY10 | HHCCJCY09 <br> GCLS002 | HHCCPOT002 | RKXHAWAII | 2AG61POT |
+| Xiaomi / VegTrug / ...<br>(International and Chinese versions) | Tuya | Xiaomi and VegTrug variants | Xiaomi and VegTrug variants | | (monitoring only) |
+| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | | |
 
 | Xiaomi MiJia Bluetooth Hygrometer (LCD) | ClearGrass Temp & RH Monitor (EInk) | Qingping Temp & RH Monitor Lite (LCD) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
@@ -82,6 +82,13 @@ Please note that most Chinese devices have many names, usually no official manuf
 | ![WP6003](docs/wp6003.svg) | ![JQJCY01YM](docs/jqjcy01ym.svg) | ![CGDN1](docs/cgdn1.svg) |
 | | JQJCY01YM | CGDN1 |
 | [shop](https://www.banggood.com/custlink/mK3yOI9teA) | |
+
+| b-parasite                        | HiGrow                            |
+| :-------------------------------: | :-------------------------------: |
+| ![b-parasite](docs/bparasite.svg) | ![HiGrow](docs/higrow.svg)        |
+|                                   |                                   |
+| (with custom firmware)            | (with custom firmware)            |
+| [firmware](https://github.com/rbaron/b-parasite) | [firmware](https://github.com/emericg/esp32-environmental-sensors/tree/master/HiGrow) |
 
 | ESP32 Air Quality Monitor | ESP32 Weather Station | ESP32 Geiger Counter |
 | :-----------------------: | :-------------------: | :------------------: |

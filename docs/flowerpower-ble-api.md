@@ -13,7 +13,7 @@
 * Read real-time sensor values
 * Read historical sensor values
 * Temperature
-* Light Monitor
+* Light intensity
 * Soil moisture
 * Soil fertility
 * Soil temperature
