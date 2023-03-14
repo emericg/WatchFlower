@@ -903,11 +903,11 @@ void DevicePlantSensor::updateChartData_history_thismonth(const int maxDays)
             }
         }
 
-        // first vs last (for months less than 31 days long)
+        // first vs last day (for months less than 31 days long)
         if (m_chartData_history_month.size() > 1)
         {
             while (!m_chartData_history_month.isEmpty() &&
-                   static_cast<ChartDataHistory *>(m_chartData_history_month.first())->getDay() ==
+                   static_cast<ChartDataHistory *>(m_chartData_history_month.first())->getDay() <=
                    static_cast<ChartDataHistory *>(m_chartData_history_month.last())->getDay())
             {
                 m_chartData_history_month.pop_front();
@@ -1246,17 +1246,6 @@ void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const 
             {
                 QDateTime fakedate(today.addDays(-i));
                 m_chartData_history_month.push_front(new ChartDataHistory(fakedate, this));
-            }
-        }
-
-        // first vs last (for months less than 31 days long)
-        if (m_chartData_history_month.size() > 1)
-        {
-            while (!m_chartData_history_month.isEmpty() &&
-                   static_cast<ChartDataHistory *>(m_chartData_history_month.first())->getDay() ==
-                   static_cast<ChartDataHistory *>(m_chartData_history_month.last())->getDay())
-            {
-                m_chartData_history_month.pop_front();
             }
         }
 
