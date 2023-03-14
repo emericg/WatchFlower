@@ -62,5 +62,6 @@
         <file alias="ItemNoPlants.qml">components/ItemNoPlants.qml</file>
         <file alias="ItemNoJournal.qml">components/ItemNoJournal.qml</file>
         <file alias="SectionTitle.qml">components/SectionTitle.qml</file>
+        <file alias="SpinBoxHistory.qml">components/SpinBoxHistory.qml</file>
     </qresource>
 </RCC>

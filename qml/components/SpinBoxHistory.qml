@@ -44,9 +44,9 @@ T.SpinBox {
 
             text: {
                 if (control.value === 0) {
-                    if (control.hhh === ChartHistory.Span.Monthly) return qsTr("this month")
-                    else if (control.hhh === ChartHistory.Span.Weekly) return qsTr("this week")
-                    else if (control.hhh === ChartHistory.Span.Daily) return qsTr("today")
+                    if (control.hhh === ChartHistory.Span.Monthly) return qsTr("last 30 days")
+                    else if (control.hhh === ChartHistory.Span.Weekly) return qsTr("last 7 days")
+                    else if (control.hhh === ChartHistory.Span.Daily) return qsTr("last 24 hours")
                 } else if (control.value === -1) {
                     if (control.hhh === ChartHistory.Span.Monthly) return qsTr("last month")
                     else if (control.hhh === ChartHistory.Span.Weekly) return qsTr("last week")
@@ -93,7 +93,7 @@ T.SpinBox {
         implicitWidth: Theme.componentHeight
         implicitHeight: Theme.componentHeight
 
-        width: control.height
+        width: control.height + 12
         height: control.height
         radius: control.height
         x: control.mirrored ? 0 : control.width - width
@@ -104,8 +104,9 @@ T.SpinBox {
         border.color: Theme.colorComponentBorder
 
         IconSvg {
-            anchors.fill: parent
-            anchors.margins: 6
+            width: 24
+            height: 24
+            anchors.centerIn: parent
             opacity: enabled ? 1 : 0.4
             color: Theme.colorComponentText
             source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
@@ -118,7 +119,7 @@ T.SpinBox {
         implicitWidth: Theme.componentHeight
         implicitHeight: Theme.componentHeight
 
-        width: control.height
+        width: control.height + 12
         height: control.height
         radius: control.height
         x: control.mirrored ? control.width - width : 0
@@ -129,8 +130,9 @@ T.SpinBox {
         border.color: Theme.colorComponentBorder
 
         IconSvg {
-            anchors.fill: parent
-            anchors.margins: 6
+            width: 24
+            height: 24
+            anchors.centerIn: parent
             opacity: enabled ? 1 : 0.4
             color: Theme.colorComponentText
             source: "qrc:/assets/icons_material/baseline-chevron_left-24px.svg"
