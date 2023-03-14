@@ -146,6 +146,7 @@ TRANSLATIONS = i18n/watchflower_ca.ts \
                i18n/watchflower_nb.ts \
                i18n/watchflower_nl.ts \
                i18n/watchflower_nn.ts \
+               i18n/watchflower_pt.ts \
                i18n/watchflower_pt_BR.ts \
                i18n/watchflower_ru.ts \
                i18n/watchflower_zh_CN.ts \
