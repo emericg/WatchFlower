@@ -46,12 +46,6 @@ class DeviceEssGeneric: public DeviceEnvironmental
 {
     Q_OBJECT
 
-public:
-    DeviceEssGeneric(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
-    DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    virtual ~DeviceEssGeneric();
-
-private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
@@ -62,6 +56,15 @@ private:
     QLowEnergyService *serviceInfos = nullptr;
     QLowEnergyService *serviceBattery = nullptr;
     QLowEnergyService *serviceEnvironmentalSensing = nullptr;
+
+    void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
+    void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
+    void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
+
+public:
+    DeviceEssGeneric(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
+    DeviceEssGeneric(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    virtual ~DeviceEssGeneric();
 };
 
 /* ************************************************************************** */

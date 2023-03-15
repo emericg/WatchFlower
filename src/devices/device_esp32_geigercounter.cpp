@@ -204,6 +204,9 @@ void DeviceEsp32GeigerCounter::bleReadDone(const QLowEnergyCharacteristic &c, co
 {
     //qDebug() << "DeviceEsp32GeigerCounter::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
+
+    Q_UNUSED(c)
+    Q_UNUSED(value)
 }
 
 void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
@@ -294,6 +297,8 @@ bool DeviceEsp32GeigerCounter::areValuesValid(const float rad_m) const
 bool DeviceEsp32GeigerCounter::addDatabaseRecord(const int64_t timestamp, const float rad_m)
 {
     bool status = false;
+
+    Q_UNUSED(timestamp)
 
     if (areValuesValid(rad_m))
     {

@@ -45,14 +45,6 @@ class DeviceFlowerCare_tuya: public DevicePlantSensor
 {
     Q_OBJECT
 
-public:
-    DeviceFlowerCare_tuya(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
-    DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceFlowerCare_tuya();
-
-    void parseAdvertisementData(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
-
-private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
@@ -60,9 +52,12 @@ private:
 
     QLowEnergyService *serviceData = nullptr;
 
-    void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
-    void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
-    void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
+public:
+    DeviceFlowerCare_tuya(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
+    DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceFlowerCare_tuya();
+
+    void parseAdvertisementData(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
 };
 
 /* ************************************************************************** */

@@ -100,13 +100,24 @@ DevicePlantSensor::~DevicePlantSensor()
 bool DevicePlantSensor::areValuesValid(const int sm, const int sc, const float st, const float w,
                                        const float t, const float h, const int l) const
 {
-    if (sm < 0 || sm > 100) return false;
-    if (sc < 0 || sc > 10000) return false;
-    if (t < -30.f || t > 100.f) return false;
+    if (hasSoilMoistureSensor())
+    {
+        if (sm < 0 || sm > 100) return false;
+    }
+
+    if (hasSoilConductivitySensor())
+    {
+        if (sc < 0 || sc > 10000) return false;
+    }
 
     if (hasSoilTemperatureSensor())
     {
         if (st < -10.f || t > 100.f) return false;
+    }
+
+    if (hasTemperatureSensor())
+    {
+        if (t < -30.f || t > 100.f) return false;
     }
 
     if (hasHumiditySensor())

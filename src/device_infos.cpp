@@ -162,6 +162,7 @@ void DeviceInfos::load(const QJsonObject &obj)
 bool DeviceInfos::loadSlow(const QString &name, const QString &model, const QString &modelId)
 {
     //qDebug() << "DeviceInfos::loadSlow(" << name << model << modelId << ")";
+    Q_UNUSED(modelId)
 
     QFile file(":/devices/devices_sensors.json");
 
@@ -255,6 +256,7 @@ DeviceInfosLoader::~DeviceInfosLoader()
 DeviceInfos *DeviceInfosLoader::getDeviceInfos(const QString &name, const QString &model, const QString &modelId)
 {
     //qDebug() << "DeviceInfosLoader::getDeviceInfos(" << name << model << modelId << ")";
+    Q_UNUSED(modelId)
 
     DeviceInfos *dev = nullptr;
 

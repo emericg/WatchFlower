@@ -305,6 +305,8 @@ bool DeviceEsp32AirQualityMonitor::addDatabaseRecord(const int64_t timestamp,
 {
     bool status = false;
 
+    Q_UNUSED(timestamp)
+
     if (areValuesValid(temperature, humidity, pressure, voc, co2))
     {
         if (m_dbInternal || m_dbExternal)

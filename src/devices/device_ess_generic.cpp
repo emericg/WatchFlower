@@ -145,6 +145,7 @@ void DeviceEssGeneric::addLowEnergyService(const QBluetoothUuid &uuid)
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
 
 void DeviceEssGeneric::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
@@ -268,4 +269,26 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
     }
 }
 
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+void DeviceEssGeneric::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+{
+    qDebug() << "DeviceEssGeneric::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "DATA: 0x" << value.toHex();
+}
+
+void DeviceEssGeneric::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
+{
+    qDebug() << "DeviceEssGeneric::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "DATA: 0x" << value.toHex();
+}
+
+void DeviceEssGeneric::bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
+{
+    qDebug() << "DeviceEssGeneric::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
+    qDebug() << "DATA: 0x" << value.toHex();
+}
+
+/* ************************************************************************** */
 /* ************************************************************************** */

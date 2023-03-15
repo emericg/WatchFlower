@@ -113,32 +113,7 @@ void DeviceFlowerCare_tuya::serviceDetailsDiscovered_data(QLowEnergyService::Ser
     if (newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerCare_tuya::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
-
-        if (serviceData)
-        {
-            //
-        }
     }
-}
-
-/* ************************************************************************** */
-
-void DeviceFlowerCare_tuya::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
-{
-    //qDebug() << "DeviceFlowerCare_tuya::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    //qDebug() << "DATA: 0x" << value.toHex();
-}
-
-void DeviceFlowerCare_tuya::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
-{
-    //qDebug() << "DeviceFlowerCare_tuya::bleReadNotify(" << m_deviceAddress << ")";
-    //qDebug() << "DATA: 0x" << value.toHex();
-}
-
-void DeviceFlowerCare_tuya::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
-{
-    //qDebug() << "DeviceFlowerCare_tuya::bleReadDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
-    //qDebug() << "DATA: 0x" << value.toHex();
 }
 
 /* ************************************************************************** */
@@ -153,7 +128,7 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
     // service data / 16b UUID 0xFD50 / 9 bytes messages
-    if (adv_id == 0xFD50 && ba.size() == 9)
+    if (adv_mode == DeviceUtils::BLE_ADV_SERVICEDATA && adv_id == 0xFD50 && ba.size() == 9)
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
 

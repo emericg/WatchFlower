@@ -35,7 +35,6 @@ SOURCES  += src/main.cpp \
             src/SystrayManager.cpp \
             src/MenubarManager.cpp \
             src/NotificationManager.cpp \
-            src/AndroidService.cpp \
             src/PlantDatabase.cpp \
             src/Plant.cpp \
             src/Journal.cpp \
@@ -80,7 +79,6 @@ HEADERS  += src/SettingsManager.h \
             src/MenubarManager.h \
             src/SystrayManager.h \
             src/NotificationManager.h \
-            src/AndroidService.h \
             src/PlantDatabase.h \
             src/Plant.h \
             src/Journal.h \
@@ -341,6 +339,9 @@ android {
     # Bundle name
     QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
     QMAKE_BUNDLE = watchflower
+
+    SOURCES  += $${PWD}/src/AndroidService.cpp
+    HEADERS  += $${PWD}/src/AndroidService.h
 
     OTHER_FILES += $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerBootServiceBroadcastReceiver.java \
                    $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerAndroidService.java \

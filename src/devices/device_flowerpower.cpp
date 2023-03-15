@@ -473,6 +473,9 @@ void DeviceFlowerPower::bleWriteDone(const QLowEnergyCharacteristic &c, const QB
 {
     //qDebug() << "DeviceFlowerPower::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
+
+    Q_UNUSED(c)
+    Q_UNUSED(value)
 }
 
 void DeviceFlowerPower::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
@@ -511,6 +514,9 @@ void DeviceFlowerPower::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
 {
     //qDebug() << "DeviceFlowerPower::bleReadNotify(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
+
+    Q_UNUSED(c)
+    Q_UNUSED(value)
 }
 
 /* ************************************************************************** */
