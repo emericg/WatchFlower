@@ -63,7 +63,7 @@ Item {
             return (bigWidget ? 440 : 320)
         }
         cellWidth: (devicesView.width / cellColumnsTarget)
-        property int cellHeight: {
+        cellHeight: {
             if (isPhone) return 100
             if (bigWidget) return 144
             return 112
