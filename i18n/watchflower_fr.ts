@@ -479,7 +479,7 @@
     <message>
         <location filename="../qml/DeviceEnvironmental.qml" line="1118"/>
         <source>%RH</source>
-        <translation type="unfinished">% HR</translation>
+        <translation>% HR</translation>
     </message>
     <message>
         <location filename="../qml/DeviceEnvironmental.qml" line="1130"/>
@@ -585,25 +585,25 @@
     <message numerus="yes">
         <location filename="../qml/DeviceListSplit.qml" line="95"/>
         <source>Plant sensor(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Capteur de plante</numerusform>
+            <numerusform>Capteurs de plantes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/DeviceListSplit.qml" line="122"/>
         <source>Thermometer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Thermomètre</numerusform>
+            <numerusform>Thermomètres</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/DeviceListSplit.qml" line="149"/>
         <source>Environmental sensor(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Capteur environnemental</numerusform>
+            <numerusform>Capteurs environnementaux</numerusform>
         </translation>
     </message>
 </context>
@@ -991,13 +991,13 @@
     <message>
         <location filename="../src/device_sensor.cpp" line="113"/>
         <source>You need to water one of your plant!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vous avez besoin d&apos;arroser une de vos plantes !</translation>
     </message>
     <message>
         <location filename="../src/device_sensor.cpp" line="122"/>
         <location filename="../src/device_sensor.cpp" line="138"/>
         <source>Sub zero temperature warning</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Avertissement de température négative</translation>
     </message>
     <message>
         <location filename="../src/device_sensor.cpp" line="123"/>
@@ -1033,12 +1033,12 @@
     <message>
         <location filename="../src/device_sensor.cpp" line="172"/>
         <source>Low battery</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Batterie faible</translation>
     </message>
     <message>
         <location filename="../src/device_sensor.cpp" line="173"/>
         <source>Sensor &apos;%1&apos; has low battery level</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Le capteur &apos;%1&apos; a un niveau de batterie faible</translation>
     </message>
     <message>
         <source>You need to water one of your (unnamed) plants!</source>
@@ -2173,12 +2173,12 @@
     <message>
         <location filename="../qml/popups/PopupBackgroundUpdates.qml" line="197"/>
         <source>About battery savers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">À propos des économiseurs de batterie</translation>
     </message>
     <message>
         <location filename="../qml/popups/PopupBackgroundUpdates.qml" line="212"/>
         <source>Application info panel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Panneau d&apos;informations sur l&apos;application</translation>
     </message>
     <message>
         <location filename="../qml/popups/PopupBackgroundUpdates.qml" line="228"/>
@@ -2303,9 +2303,9 @@
     <message numerus="yes">
         <location filename="../qml/popups/PopupDeleteDevice.qml" line="48"/>
         <source>Are you sure you want to delete selected sensor(s)?</source>
-        <translation type="unfinished">
-            <numerusform>Êtes-vous sûr de vouloir supprimer le(s) capteur(s) sélectionné(s) ?</numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Êtes-vous sûr de vouloir supprimer le capteur sélectionné ?</numerusform>
+            <numerusform>Êtes-vous sûr de vouloir supprimer les capteurs sélectionnés ?</numerusform>
         </translation>
     </message>
     <message>
@@ -2315,9 +2315,9 @@
     <message numerus="yes">
         <location filename="../qml/popups/PopupDeleteDevice.qml" line="58"/>
         <source>Data from the sensor(s) are kept for an additional 90 days, in case you would like to re-add a sensor later.</source>
-        <translation type="unfinished">
+        <translation>
+            <numerusform>Les données du capteur sont conservées pendant 90 jours supplémentaires, dans le cas ou vous voudriez ré-ajouter un capteur ultérieurement.</numerusform>
             <numerusform>Les données des capteurs sont conservées pendant 90 jours supplémentaires, dans le cas ou vous voudriez ré-ajouter un capteur ultérieurement.</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -2697,72 +2697,72 @@
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="47"/>
         <source>last 30 days</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">30 derniers jours</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="48"/>
         <source>last 7 days</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">7 derniers jours</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="49"/>
         <source>last 24 hours</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">24 dernières heures</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="51"/>
         <source>last month</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">le mois dernier</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="52"/>
         <source>last week</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">la semaine dernière</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="53"/>
         <source>yesterday</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">hier</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="56"/>
         <source>two</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">deux</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="57"/>
         <source>three</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">trois</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="58"/>
         <source>four</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">quatre</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="59"/>
         <source>five</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">cinq</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="60"/>
         <source>six</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">six</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="63"/>
         <source>months</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mois</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="64"/>
         <source>weeks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">semaines</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="65"/>
         <source>days</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">jours</translation>
     </message>
     <message>
         <location filename="../qml/components/SpinBoxHistory.qml" line="67"/>
@@ -2817,12 +2817,12 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="88"/>
         <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;b&gt;WatchFlower&lt;/b&gt; est une application de supervision de plantes pour les capteurs Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; ou Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="122"/>
         <source>Supported sensors</source>
-        <translation type="unfinished"></translation>
+        <translation>Capteurs pris en charge</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="145"/>
@@ -2837,17 +2837,17 @@
     <message>
         <location filename="../qml/Tutorial.qml" line="194"/>
         <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use WatchFlower.</source>
-        <translation type="unfinished"></translation>
+        <translation>Une fois les capteurs &lt;b&gt;appairés&lt;/b&gt;, l&apos;application va périodiquement &lt;b&gt;synchroniser&lt;/b&gt; leurs données quand vous utilisez WatchFlower.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="208"/>
         <source>WatchFlower &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">WatchFlower &lt;b&gt;peut&lt;/b&gt; être en mesure de synchroniser les capteurs en arrière-plan. Consultez la page &lt;b&gt;paramètres&lt;/b&gt; pour les instructions.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="230"/>
         <source>Keep in mind that Bluetooth only works in &lt;b&gt;close proximity&lt;/b&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">N&apos;oubliez pas que le Bluetooth ne fonctionne qu&apos;à &lt;b&gt;proximité&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/Tutorial.qml" line="257"/>

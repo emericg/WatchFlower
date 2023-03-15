@@ -502,25 +502,25 @@
     <message numerus="yes">
         <location filename="../qml/DeviceListSplit.qml" line="95"/>
         <source>Plant sensor(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Plant sensor</numerusform>
+            <numerusform>Plant sensors</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/DeviceListSplit.qml" line="122"/>
         <source>Thermometer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Thermometer</numerusform>
+            <numerusform>Thermometers</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/DeviceListSplit.qml" line="149"/>
         <source>Environmental sensor(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Environmental sensor</numerusform>
+            <numerusform>Environmental sensors</numerusform>
         </translation>
     </message>
 </context>
@@ -1991,17 +1991,17 @@
     <message numerus="yes">
         <location filename="../qml/popups/PopupDeleteDevice.qml" line="48"/>
         <source>Are you sure you want to delete selected sensor(s)?</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Are you sure you want to delete selected sensor?</numerusform>
+            <numerusform>Are you sure you want to delete selected sensors?</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <location filename="../qml/popups/PopupDeleteDevice.qml" line="58"/>
         <source>Data from the sensor(s) are kept for an additional 90 days, in case you would like to re-add a sensor later.</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Data from the sensor are kept for an additional 90 days, in case you would like to re-add a sensor later.</numerusform>
+            <numerusform>Data from the sensors are kept for an additional 90 days, in case you would like to re-add a sensor later.</numerusform>
         </translation>
     </message>
     <message>
