@@ -64,7 +64,7 @@ Item {
         property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
 
         cellWidth: (devicesView.width / cellColumnsTarget)
-        cellHeight: (bigWidget ? 144 : 100)
+        cellHeight: (bigWidget ? 144 : 112)
 
         ScrollBar.vertical: ScrollBar {
             visible: false

@@ -72,7 +72,7 @@ Item {
         property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
 
         property int cellWidth: (devicesView.width / cellColumnsTarget)
-        property int cellHeight: (bigWidget ? 144 : 100)
+        property int cellHeight: (bigWidget ? 144 : 112)
 
         // multi selection
         // per category ordering
