@@ -22,22 +22,19 @@ finish-args:
   - --share=network
 
 cleanup:
-- /bin/__pypache__
-- /bin/rst*
-- /include
-- /lib/cmake
-- /lib/cups
-- /lib/pkgconfig
-- /lib/python*
-- /share/doc
-- /share/man
-- /share/zsh
-- /src
-- '*.a'
-- '*.la'
-
-build-options:
-  append-ld-library-path: /app/lib
+  - /bin/__pypache__
+  - /bin/rst*
+  - /include
+  - /lib/cmake
+  - /lib/cups
+  - /lib/pkgconfig
+  - /lib/python*
+  - /share/doc
+  - /share/man
+  - /share/zsh
+  - /src
+  - '*.a'
+  - '*.la'
 
 modules:
   - name: libical # required by bluez
@@ -252,9 +249,9 @@ modules:
           stable-only: true
           url-template: https://download.qt.io/archive/qt/$major.$minor/$version/submodules/qt5compat-everywhere-src-$version.tar.xz
 
-- name: watchflower
-  buildsystem: qmake
-  sources:
-    - type: archive
-      url: https://github.com/emericg/WatchFlower/archive/refs/tags/v4.1.tar.gz
-      sha256: b8df8c1eecddc8f378f7be3450c7b5599704c3ad14b722bbccba9a6bd85ae58e
+  - name: watchflower
+    buildsystem: qmake
+    sources:
+      - type: archive
+        url: https://github.com/emericg/WatchFlower/archive/refs/tags/v5.0.tar.gz
+        sha256: 
