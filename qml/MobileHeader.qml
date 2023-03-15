@@ -179,7 +179,7 @@ Rectangle {
                 height: headerHeight
 
                 visible: (deviceManager.bluetooth &&
-                          (appContent.state === "DevicePlantSensor" ||
+                          ((appContent.state === "DevicePlantSensor" && selectedDevice.hasBluetoothConnection) ||
                            appContent.state === "DeviceThermometer" ||
                            appContent.state === "DeviceEnvironmental"))
 

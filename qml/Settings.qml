@@ -552,7 +552,7 @@ Loader {
 
                     ButtonExperimental {
                         anchors.right: parent.right
-                        anchors.rightMargin: 8
+                        anchors.rightMargin: 12
                         anchors.verticalCenter: parent.verticalCenter
                         height: 32
 
@@ -743,143 +743,137 @@ Loader {
 
                 ////////
 
-                Item {
-                    height: 32
+                Column {
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
+                    topPadding: -12
                     visible: settingsManager.systray && settingsManager.notifications
 
-                    Text {
+                    Item {
                         height: 32
                         anchors.left: parent.left
-                        anchors.leftMargin: 64
-                        anchors.right: switch_notif_battery.left
-                        anchors.rightMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: "- " + qsTr("battery level")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorSubText
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    SwitchThemedDesktop {
-                        id: switch_notif_battery
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
-                        checked: settingsManager.notif_battery
-                        onClicked: settingsManager.notif_battery = checked
+                        Text {
+                            height: 32
+                            anchors.left: parent.left
+                            anchors.leftMargin: 64
+                            anchors.right: switch_notif_battery.left
+                            anchors.rightMargin: 16
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: "- " + qsTr("battery level")
+                            textFormat: Text.PlainText
+                            wrapMode: Text.WordWrap
+                            font.pixelSize: Theme.fontSizeContent
+                            color: Theme.colorSubText
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        SwitchThemedDesktop {
+                            id: switch_notif_battery
+                            anchors.right: parent.right
+                            anchors.rightMargin: screenPaddingRight
+                            anchors.verticalCenter: parent.verticalCenter
+                            z: 1
+
+                            checked: settingsManager.notif_battery
+                            onClicked: settingsManager.notif_battery = checked
+                        }
                     }
-                }
-                Item {
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
-
-                    visible: settingsManager.systray && settingsManager.notifications
-
-                    Text {
+                    Item {
                         height: 32
                         anchors.left: parent.left
-                        anchors.leftMargin: 64
-                        anchors.right: switch_notif_water.left
-                        anchors.rightMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: "- " + qsTr("water level")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorSubText
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    SwitchThemedDesktop {
-                        id: switch_notif_water
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
-                        checked: settingsManager.notif_water
-                        onClicked: settingsManager.notif_water = checked
+                        Text {
+                            height: 32
+                            anchors.left: parent.left
+                            anchors.leftMargin: 64
+                            anchors.right: switch_notif_water.left
+                            anchors.rightMargin: 16
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: "- " + qsTr("water level")
+                            textFormat: Text.PlainText
+                            wrapMode: Text.WordWrap
+                            font.pixelSize: Theme.fontSizeContent
+                            color: Theme.colorSubText
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        SwitchThemedDesktop {
+                            id: switch_notif_water
+                            anchors.right: parent.right
+                            anchors.rightMargin: screenPaddingRight
+                            anchors.verticalCenter: parent.verticalCenter
+                            z: 1
+
+                            checked: settingsManager.notif_water
+                            onClicked: settingsManager.notif_water = checked
+                        }
                     }
-                }
-                Item {
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
-
-                    visible: settingsManager.systray && settingsManager.notifications
-
-                    Text {
+                    Item {
                         height: 32
                         anchors.left: parent.left
-                        anchors.leftMargin: 64
-                        anchors.right: switch_notif_subzero.left
-                        anchors.rightMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: "- " + qsTr("freeze warnings")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorSubText
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    SwitchThemedDesktop {
-                        id: switch_notif_subzero
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
-                        checked: settingsManager.notif_subzero
-                        onClicked: settingsManager.notif_subzero = checked
+                        Text {
+                            height: 32
+                            anchors.left: parent.left
+                            anchors.leftMargin: 64
+                            anchors.right: switch_notif_subzero.left
+                            anchors.rightMargin: 16
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: "- " + qsTr("freeze warnings")
+                            textFormat: Text.PlainText
+                            wrapMode: Text.WordWrap
+                            font.pixelSize: Theme.fontSizeContent
+                            color: Theme.colorSubText
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        SwitchThemedDesktop {
+                            id: switch_notif_subzero
+                            anchors.right: parent.right
+                            anchors.rightMargin: screenPaddingRight
+                            anchors.verticalCenter: parent.verticalCenter
+                            z: 1
+
+                            checked: settingsManager.notif_subzero
+                            onClicked: settingsManager.notif_subzero = checked
+                        }
                     }
-                }
-                Item {
-                    height: settingsManager.notifications ? 44 : 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
-
-                    visible: settingsManager.systray && settingsManager.notifications
-
-                    Text {
-                        height: 32
+                    Item {
+                        height: settingsManager.notifications ? 44 : 32
                         anchors.left: parent.left
-                        anchors.leftMargin: 64
-                        anchors.right: switch_notif_env.left
-                        anchors.rightMargin: 16
-
-                        text: "- " + qsTr("environmental warnings")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorSubText
-                        verticalAlignment: Text.AlignVCenter
-                    }
-                    SwitchThemedDesktop {
-                        id: switch_notif_env
-                        height: 32
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
-                        z: 1
 
-                        checked: settingsManager.notif_env
-                        onClicked: settingsManager.notif_env = checked
+                        Text {
+                            height: 32
+                            anchors.left: parent.left
+                            anchors.leftMargin: 64
+                            anchors.right: switch_notif_env.left
+                            anchors.rightMargin: 16
+
+                            text: "- " + qsTr("environmental warnings")
+                            textFormat: Text.PlainText
+                            wrapMode: Text.WordWrap
+                            font.pixelSize: Theme.fontSizeContent
+                            color: Theme.colorSubText
+                            verticalAlignment: Text.AlignVCenter
+                        }
+                        SwitchThemedDesktop {
+                            id: switch_notif_env
+                            height: 32
+                            anchors.right: parent.right
+                            anchors.rightMargin: screenPaddingRight
+                            z: 1
+
+                            checked: settingsManager.notif_env
+                            onClicked: settingsManager.notif_env = checked
+                        }
                     }
                 }
 

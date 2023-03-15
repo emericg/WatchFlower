@@ -395,8 +395,8 @@ Item {
                 text: qsTr("Click on the icons to ask for permission.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
+                color: Theme.colorText
+                font.pixelSize: Theme.fontSizeContent
 
                 IconSvg {
                     width: 32
@@ -405,7 +405,7 @@ Item {
                     anchors.leftMargin: -48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                     color: Theme.colorSubText
                 }
             }

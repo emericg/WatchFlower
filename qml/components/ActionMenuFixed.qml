@@ -23,6 +23,10 @@ Popup {
 
     signal menuSelected(var index)
 
+    property bool partonevisible: (actionUpdate.visible || actionRealtime.visible)
+    property bool parttwovisible: (actionHistoryRefresh.visible || actionHistoryClear.visible)
+    property bool partthreevisible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible || actionShowSettings.visible)
+
     ////////////////////////////////////////////////////////////////////////////
 
     background: Rectangle {
@@ -81,7 +85,7 @@ Popup {
         Rectangle {
             width: parent.width; height: 1;
             color: Theme.colorSeparator
-            visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
+            visible: (partonevisible && parttwovisible)
         }
 
         ActionMenuItem {
@@ -121,7 +125,7 @@ Popup {
         Rectangle {
             width: parent.width; height: 1;
             color: Theme.colorSeparator
-            visible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible)
+            visible: ((partonevisible || parttwovisible) && partthreevisible)
         }
 
         ActionMenuItem {
@@ -177,9 +181,11 @@ Popup {
 
             index: 16
             text: qsTr("Switch graph")
-            source: (settingsManager.graphThermometer === "minmax") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg"
             layoutDirection: actionMenu.layoutDirection
             visible: (appContent.state === "DeviceThermometer")
+            source: (settingsManager.graphThermometer === "minmax") ?
+                        "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" :
+                        "qrc:/assets/icons_material/baseline-timeline-24px.svg"
 
             onClicked: {
                 if (settingsManager.graphThermometer === "minmax") settingsManager.graphThermometer = "lines"
