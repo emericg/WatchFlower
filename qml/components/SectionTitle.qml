@@ -10,7 +10,7 @@ Rectangle {
     anchors.right: parent.right
     anchors.rightMargin: singleColumn ? 0 : 12
 
-    height: isHdpi ? 44 : 48
+    height: (isDesktop && isHdpi) ? 44 : 48
     radius: singleColumn ? 0 : Theme.componentRadius
     color: Theme.colorForeground
 

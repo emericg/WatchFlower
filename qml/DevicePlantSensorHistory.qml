@@ -351,6 +351,7 @@ Item {
 
         z: 4
         clip: true
+        opacity: 0.66
         height: (singleColumn && selectors.visible) ? 40 : 0
         Behavior on height { NumberAnimation { duration: 133 } }
         color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
@@ -362,7 +363,6 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: 12
             anchors.verticalCenter: parent.verticalCenter
-            anchors.verticalCenterOffset: -4
         }
     }
 

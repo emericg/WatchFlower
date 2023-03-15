@@ -1223,7 +1223,7 @@ Grid {
 
                 width: (parent.width / 2) - 24
                 height: infoText.contentHeight + 16
-                radius: 4
+                radius: Theme.componentRadius
                 z: 2
 
                 color: Theme.colorComponentBackground
@@ -1238,8 +1238,9 @@ Grid {
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
-                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    opacity: 0.66
                     color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                 }
 
                 Text {

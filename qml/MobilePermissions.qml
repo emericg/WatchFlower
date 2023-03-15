@@ -405,8 +405,9 @@ Item {
                     anchors.leftMargin: -48
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    opacity: 0.66
                     color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                 }
             }
 
