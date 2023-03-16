@@ -3,44 +3,45 @@
           package="com.emeric.watchflower" android:installLocation="auto"
           android:versionCode="05000001" android:versionName="5.0">
 
-    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true"/>
+    <supports-screens android:anyDensity="true" android:largeScreens="true" android:normalScreens="true" android:smallScreens="true" />
 
     <!-- Request legacy Bluetooth permissions (up to Android 11 / SDK 30) -->
-    <uses-permission android:name="android.permission.BLUETOOTH"/> <!-- android:maxSdkVersion="30" -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/> <!-- android:maxSdkVersion="30" -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- android:maxSdkVersion="30" -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- android:maxSdkVersion="30" -->
 
     <!-- Request new Bluetooth permissions (Android 12+ / SDK 31) -->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:minSdkVersion="31" android:usesPermissionFlags="neverForLocation"/>
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" android:minSdkVersion="31"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" android:minSdkVersion="31" android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" android:minSdkVersion="31" />
 
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="28"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:minSdkVersion="29"/>
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" android:maxSdkVersion="28" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" android:minSdkVersion="29" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" android:minSdkVersion="29"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" android:minSdkVersion="29" />
 
-    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
-    <uses-feature android:name="android.hardware.location.network" android:required="false"/>
-    <uses-feature android:name="android.hardware.location.gps" android:required="false"/>
+    <uses-feature android:name="android.hardware.bluetooth_le" android:required="true" />
+    <uses-feature android:name="android.hardware.location.network" android:required="false" />
+    <uses-feature android:name="android.hardware.location.gps" android:required="false" />
 
-    <application android:name="org.qtproject.qt.android.bindings.QtApplication" android:label="WatchFlower"
-                 android:hardwareAccelerated="true" android:extractNativeLibs="true" android:allowNativeHeapPointerTagging="false"
+    <application android:name="org.qtproject.qt.android.bindings.QtApplication"
+                 android:label="WatchFlower"
+                 android:hardwareAccelerated="true" android:allowNativeHeapPointerTagging="false"
+                 android:allowBackup="true" android:fullBackupOnly="false"
                  android:theme="@style/AppTheme" android:icon="@mipmap/ic_launcher" android:roundIcon="@mipmap/ic_launcher_round">
 
-        <activity android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
-                  android:name="org.qtproject.qt.android.bindings.QtActivity" android:label="WatchFlower"
-                  android:screenOrientation="unspecified" android:launchMode="singleTop"
-                  android:windowSoftInputMode="adjustResize">
+        <activity android:name="org.qtproject.qt.android.bindings.QtActivity" android:label="WatchFlower"
+                  android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density"
+                  android:screenOrientation="unspecified" android:launchMode="singleTop" android:windowSoftInputMode="adjustResize" android:exported="true">
 
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
-            <meta-data android:name="android.app.arguments" android:value="-- %%INSERT_APP_ARGUMENTS%% --"/>
-            <meta-data android:name="android.app.extract_android_style" android:value="none"/>
+            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --" />
+            <meta-data android:name="android.app.arguments" android:value="-- %%INSERT_APP_ARGUMENTS%% --" />
+            <meta-data android:name="android.app.extract_android_style" android:value="none" />
 
             <!-- Splash screen -->
             <!-- Orientation-specific (portrait/landscape) data is checked first. If not available for current orientation,
@@ -49,8 +50,8 @@
                  are done populating your window with content. -->
             <!-- meta-data android:name="android.app.splash_screen_drawable_portrait" android:resource="@drawable/logo_portrait" / -->
             <!-- meta-data android:name="android.app.splash_screen_drawable_landscape" android:resource="@drawable/logo_landscape" / -->
-            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splash"/>
-            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>
+            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splash" />
+            <meta-data android:name="android.app.splash_screen_sticky" android:value="true" />
             <!-- Splash screen -->
 
             <!-- Background running -->
@@ -58,7 +59,7 @@
                           application still try to draw after
                           "applicationStateChanged(Qt::ApplicationSuspended)"
                           signal is sent! -->
-            <meta-data android:name="android.app.background_running" android:value="false"/>
+            <meta-data android:name="android.app.background_running" android:value="false" />
             <!-- Background running -->
 
         </activity>
@@ -71,20 +72,20 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths"/>
+                android:resource="@xml/filepaths" />
         </provider>
 
         <!-- Android service(s) -->
-        <receiver android:name=".WatchFlowerBootServiceBroadcastReceiver">
+        <receiver android:name=".WatchFlowerBootServiceBroadcastReceiver" android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <service android:process=":qt_service" android:name=".WatchFlowerAndroidService">
-            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
-            <meta-data android:name="android.app.arguments" android:value="--service"/>
-            <meta-data android:name="android.app.background_running" android:value="true"/>
+            <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --" />
+            <meta-data android:name="android.app.arguments" android:value="--service" />
+            <meta-data android:name="android.app.background_running" android:value="true" />
         </service>
 
     </application>

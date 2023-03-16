@@ -26,7 +26,7 @@ qt_add_executable(WatchFlower
     src/Journal.cpp src/Journal.h
     src/device.cpp src/device.h
     src/device_infos.cpp src/device_infos.h
-    src/device_sensor.cpp src/device_sensor.h
+    src/device_sensor.cpp src/device_sensor_advertisement.cpp src/device_sensor.h
     src/device_plantsensor.cpp src/device_plantsensor.h
     src/device_thermometer.cpp src/device_thermometer.h
     src/device_environmental.cpp src/device_environmental.h
