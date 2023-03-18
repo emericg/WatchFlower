@@ -11,6 +11,7 @@ Item {
     implicitHeight: 128
 
     property var boxDevice: pointer
+
     property bool hasHygro: boxDevice.isPlantSensor &&
                             ((boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0) ||
                              (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity")))
@@ -56,9 +57,6 @@ Item {
 
     function initBoxData() {
         //console.log("DeviceWidget // initBoxData() >> " + boxDevice)
-
-        // Set icon
-        imageDevice.source = UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
 
         // Load indicators
         if (!loaderIndicators.sourceComponent) {
@@ -162,98 +160,7 @@ Item {
         }
     }
 
-    function updateSensorIcon() {
-        if (boxDevice.isPlantSensor) {
-            if (hasHygro) {
-                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
-                    imageDevice.source = "qrc:/assets/icons_custom/pot_flower-24px.svg"
-                else
-                    imageDevice.source = "qrc:/assets/icons_material/outline-local_florist-24px.svg"
-            } else {
-                if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
-                    imageDevice.source = "qrc:/assets/icons_custom/pot_empty-24px.svg"
-                else
-                    imageDevice.source = "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
-            }
-        }
-    }
-
-    function updateSensorWarnings() {
-        // Warnings icons (for sensors with available data)
-
-        if (boxDevice.isDataToday()) {
-
-            if (boxDevice.isPlantSensor) {
-
-                alarmWater.visible = false
-                alarmFreeze.visible = false
-
-                // Water me notif
-                if (hasHygro && boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) {
-                    alarmWater.visible = true
-                    alarmWater.source = "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
-                    alarmFreeze.color = Theme.colorBlue
-                } else if (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) {
-                    alarmWater.visible = true
-                    alarmWater.source = "qrc:/assets/icons_material/duotone-water_full-24px.svg"
-                    alarmFreeze.color = Theme.colorYellow
-                }
-
-                // Extreme temperature notif
-                if (boxDevice.temperatureC > 40) {
-                    alarmFreeze.visible = true
-                    alarmFreeze.color = Theme.colorYellow
-                    alarmFreeze.source = "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
-                } else if (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80) {
-                    alarmFreeze.visible = true
-                    alarmFreeze.source = "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
-
-                    if (boxDevice.temperatureC <= -4)
-                        alarmFreeze.color = Theme.colorRed
-                    else if (boxDevice.temperatureC <= -2)
-                        alarmFreeze.color = Theme.colorYellow
-                    else
-                        alarmFreeze.color = Theme.colorBlue
-                }
-
-            } else if (boxDevice.isEnvironmentalSensor) {
-
-                alarmVentilate.visible = false
-                alarmRadiation.visible = false
-                //alarmWarning.visible = false
-
-                // Air warning
-                if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
-                    (boxDevice.hasHchoSensor && boxDevice.hcho > 1000) ||
-                    (boxDevice.hasCo2Sensor && boxDevice.co2 > 1500)) {
-                    alarmVentilate.visible = true
-                    alarmVentilate.color = Theme.colorRed
-                } else if ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
-                           (boxDevice.hasHchoSensor && boxDevice.hcho > 500) ||
-                           (boxDevice.hasCo2Sensor && boxDevice.co2 > 1000) ||
-                           (boxDevice.hasPM25Sensor && boxDevice.pm25 > 120) ||
-                           (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350)) {
-                    alarmVentilate.visible = true
-                    alarmVentilate.color = Theme.colorYellow
-                }
-
-                // Radiation warning
-                if (boxDevice.hasGeigerCounter) {
-                    if (boxDevice.radioactivityM > 1) {
-                        alarmRadiation.visible = true
-                        if (boxDevice.radioactivityM > 10)
-                            alarmRadiation.color = Theme.colorRed
-                        else
-                            alarmRadiation.color = Theme.colorYellow
-                    }
-                }
-            }
-        }
-    }
-
     function updateSensorData() {
-        updateSensorIcon()
-        updateSensorWarnings()
         if (loaderIndicators.item) loaderIndicators.item.updateData()
     }
 
@@ -343,13 +250,13 @@ Item {
                 }
 
                 if (mouse.button === Qt.MiddleButton) {
-                   // multi selection
-                   if (!boxDevice.selected) {
-                       deviceList.selectDevice(index, boxDevice.deviceType)
-                   } else {
-                       deviceList.deselectDevice(index, boxDevice.deviceType)
-                   }
-                   return
+                    // multi selection
+                    if (!boxDevice.selected) {
+                        deviceList.selectDevice(index, boxDevice.deviceType)
+                    } else {
+                        deviceList.deselectDevice(index, boxDevice.deviceType)
+                    }
+                    return
                 }
             }
 
@@ -389,6 +296,24 @@ Item {
                 visible: (wideAssMode || bigAssMode)
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
+
+                source: {
+                    if (boxDevice.isPlantSensor) {
+                        if (hasHygro) {
+                            if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
+                                return "qrc:/assets/icons_custom/pot_flower-24px.svg"
+                            else
+                                return "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                        } else {
+                            if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
+                                return "qrc:/assets/icons_custom/pot_empty-24px.svg"
+                            else
+                                return "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+                        }
+                    } else {
+                        return UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
+                    }
+                }
             }
 
             Column {
@@ -401,7 +326,6 @@ Item {
                     textFormat: Text.PlainText
                     color: Theme.colorText
                     font.pixelSize: bigAssMode ? 22 : 20
-                    //font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
@@ -413,7 +337,6 @@ Item {
                     textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: bigAssMode ? 20 : 18
-                    //font.capitalization: Font.Capitalize
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
@@ -474,97 +397,146 @@ Item {
 
             visible: boxDevice.hasDataToday
 
-            IconSvg {
-                id: alarmWater
-                width: bigAssMode ? 28 : 24
-                height: bigAssMode ? 28 : 24
-                anchors.verticalCenter: parent.verticalCenter
+            Loader { // alarmWater
+                asynchronous: true
+                active: (hasHygro &&
+                         (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) ||
+                         (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax))
 
-                visible: false
-                source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
-                color: Theme.colorBlue
-            }
-            IconSvg {
-                id: alarmFreeze
-                width: bigAssMode ? 28 : 24
-                height: bigAssMode ? 28 : 24
-                anchors.verticalCenter: parent.verticalCenter
+                sourceComponent: IconSvg {
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
+                    anchors.verticalCenter: parent.verticalCenter
 
-                visible: false
-                source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
-                color: Theme.colorYellow
-            }
-            IconSvg {
-                id: alarmVentilate
-                width: bigAssMode ? 28 : 24
-                height: bigAssMode ? 28 : 24
-                anchors.verticalCenter: parent.verticalCenter
-
-                visible: false
-                source: "qrc:/assets/icons_material/baseline-air-24px.svg"
-                color: Theme.colorYellow
-
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: parent.width + 8
-                    height: width
-                    radius: width
-                    z: -1
-
-                    color: parent.color
-
-                    SequentialAnimation on opacity {
-                        running: visible
-                        loops: Animation.Infinite
-
-                        PropertyAnimation { to: 0.1; duration: 1000; }
-                        PropertyAnimation { to: 0.33; duration: 1000; }
+                    source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                    color: {
+                        if (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) {
+                            return Theme.colorBlue
+                        } else if (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) {
+                            return Theme.colorYellow
+                        }
                     }
                 }
             }
-            IconSvg {
-                id: alarmRadiation
-                width: bigAssMode ? 28 : 24
-                height: bigAssMode ? 28 : 24
-                anchors.verticalCenter: parent.verticalCenter
 
-                visible: false
+            Loader { // alarmFreeze
                 asynchronous: true
-                source: "qrc:/assets/icons_custom/nuclear_icon.svg"
-                color: Theme.colorYellow
+                active: ((boxDevice.temperatureC > 40) ||
+                         (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80))
 
-                Rectangle {
-                    anchors.centerIn: parent
-                    width: parent.width + 8
-                    height: width
-                    radius: width
-                    z: -1
+                sourceComponent: IconSvg {
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
+                    anchors.verticalCenter: parent.verticalCenter
 
-                    color: Qt.lighter(parent.color, 1.66)
-
-                    SequentialAnimation on opacity {
-                        running: visible
-                        alwaysRunToEnd: true
-                        loops: Animation.Infinite
-
-                        PropertyAnimation { to: 0; duration: 1000; }
-                        PropertyAnimation { to: 1; duration: 1000; }
+                    visible: false
+                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                    color: {
+                        if (boxDevice.temperatureC <= -4)
+                            return Theme.colorRed
+                        else
+                            return Theme.colorYellow
                     }
                 }
             }
-/*
-            IconSvg {
-                id: alarmWarning
-                width: bigAssMode ? 28 : 24
-                height: bigAssMode ? 28 : 24
-                anchors.verticalCenter: parent.verticalCenter
 
-                visible: false
+            Loader { // alarmVentilate
                 asynchronous: true
-                source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
-                color: Theme.colorYellow
+                active: ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
+                         (boxDevice.hasHchoSensor && boxDevice.hcho > 500) ||
+                         (boxDevice.hasCo2Sensor && boxDevice.co2 > 1000) ||
+                         (boxDevice.hasPM25Sensor && boxDevice.pm25 > 120) ||
+                         (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350))
+
+                sourceComponent: IconSvg {
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-air-24px.svg"
+                    color: {
+                        if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
+                            (boxDevice.hasHchoSensor && boxDevice.hcho > 1000) ||
+                            (boxDevice.hasCo2Sensor && boxDevice.co2 > 2000)) {
+                            return Theme.colorRed
+                        } else if ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
+                                  (boxDevice.hasHchoSensor && boxDevice.hcho > 500) ||
+                                  (boxDevice.hasCo2Sensor && boxDevice.co2 > 1000) ||
+                                  (boxDevice.hasPM25Sensor && boxDevice.pm25 > 120) ||
+                                  (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350)) {
+                            return Theme.colorYellow
+                        }
+                    }
+
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width + 8
+                        height: width
+                        radius: width
+
+                        z: -1
+                        color: parent.color
+
+                        SequentialAnimation on opacity {
+                            loops: Animation.Infinite
+                            PropertyAnimation { to: 0.1; duration: 1000; }
+                            PropertyAnimation { to: 0.33; duration: 1000; }
+                        }
+                    }
+                }
             }
-*/
+
+            Loader { // alarmRadiation
+                asynchronous: true
+                active: (boxDevice.hasGeigerCounter && boxDevice.radioactivityM > 1)
+
+                sourceComponent: IconSvg {
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_custom/nuclear_icon.svg"
+                    color: {
+                        if (boxDevice.radioactivityM > 10)
+                            return Theme.colorRed
+                        else
+                            return Theme.colorYellow
+                    }
+
+                    Rectangle {
+                        anchors.centerIn: parent
+                        width: parent.width + 8
+                        height: width
+                        radius: width
+                        z: -1
+
+                        color: Qt.lighter(parent.color, 1.66)
+
+                        SequentialAnimation on opacity {
+                            running: visible
+                            alwaysRunToEnd: true
+                            loops: Animation.Infinite
+
+                            PropertyAnimation { to: 0; duration: 1000; }
+                            PropertyAnimation { to: 1; duration: 1000; }
+                        }
+                    }
+                }
+            }
+
+            Loader { // alarmWarning
+                asynchronous: true
+                active: false
+
+                sourceComponent: IconSvg {
+                    width: bigAssMode ? 28 : 24
+                    height: bigAssMode ? 28 : 24
+                    anchors.verticalCenter: parent.verticalCenter
+
+                    source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                    color: Theme.colorYellow
+                }
+            }
         }
 
         ////////////////
