@@ -179,8 +179,8 @@ You could also give WatchFlower binary the _net_raw_ and _net_admin_ capabilitie
 #### Third party projects used by WatchFlower
 
 * [Qt6](https://www.qt.io) ([LGPL v3](https://www.gnu.org/licenses/lgpl-3.0.txt))
-* [MobileUI](src/thirdparty/MobileUI/README.md) ([MIT](https://opensource.org/licenses/MIT))
-* [MobileSharing](src/thirdparty/MobileSharing/README.md) ([MIT](https://opensource.org/licenses/MIT))
+* [MobileUI](src/thirdparty/MobileUI/) ([MIT](https://opensource.org/licenses/MIT))
+* [MobileSharing](src/thirdparty/MobileSharing/) ([MIT](https://opensource.org/licenses/MIT))
 * [SingleApplication](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
 * RC4 code from Christophe Devine ([GPL v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt))
 * Graphical resources: [assets/COPYING](assets/COPYING)
