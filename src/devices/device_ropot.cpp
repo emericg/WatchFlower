@@ -602,20 +602,13 @@ void DeviceRopot::parseAdvertisementData(const uint16_t adv_mode,
             {
                 refreshAdvertisement();
             }
-        }
 /*
-        if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || form > -99.f || moist > -99 || fert > -99)
-        {
-            qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
-            if (batt > -99) qDebug() << "- battery:" << batt;
-            if (temp > -99) qDebug() << "- temperature:" << temp;
-            if (humi > -99) qDebug() << "- humidity:" << humi;
-            if (lumi > -99) qDebug() << "- luminosity:" << lumi;
-            if (form > -99) qDebug() << "- formaldehyde:" << form;
-            if (moist > -99)qDebug() << "- soil moisture:" << moist;
-            if (fert > -99) qDebug() << "- soil conductivity:" << fert;
-        }
+            qDebug() << "* MiBeacon service data:" << getName() << getAddress();
+            if (m_soilMoisture > -99) qDebug() << "- soil moisture:" << m_soilMoisture;
+            if (m_soilConductivity > -99) qDebug() << "- soil conductivity:" << m_soilConductivity;
+            if (m_temperature > -99) qDebug() << "- temperature:" << m_temperature;
 */
+        }
     }
 }
 

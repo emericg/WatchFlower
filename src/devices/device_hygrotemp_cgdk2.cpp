@@ -269,16 +269,13 @@ void DeviceHygrotempCGDK2::parseAdvertisementData(const uint16_t adv_mode,
             {
                 refreshAdvertisement();
             }
-        }
 /*
-        if (batt > -99 || temp > -99.f || humi > -99.f)
-        {
-            qDebug() << "* CGDK2 service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
-            if (batt > -99) qDebug() << "- battery:" << batt;
-            if (temp > -99) qDebug() << "- temperature:" << temp;
-            if (humi > -99) qDebug() << "- humidity:" << humi;
-        }
+            qDebug() << "* Qingping service data:" << getName() << getAddress();
+            if (m_deviceBattery > -99) qDebug() << "- battery:" << m_deviceBattery;
+            if (m_temperature > -99) qDebug() << "- temperature:" << m_temperature;
+            if (m_humidity > -99) qDebug() << "- humidity:" << m_humidity;
 */
+        }
     }
 }
 

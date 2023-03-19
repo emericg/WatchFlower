@@ -252,13 +252,16 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             {
                 moist = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (moist != m_soilMoisture)
+                if (moist >= 0 && moist <= 100)
                 {
-                    if (moist >= 0 && moist <= 100)
+                    if (moist != m_soilMoisture)
                     {
-                        m_soilMoisture = moist;
-                        Q_EMIT dataUpdated();
-                        status = true;
+                        if (m_deviceName != "ropot") // ropot hack // device always broadcast 0
+                        {
+                            m_soilMoisture = moist;
+                            Q_EMIT dataUpdated();
+                            status = true;
+                        }
                     }
                 }
             }
@@ -266,9 +269,9 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             {
                 fert = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (fert != m_soilConductivity)
+                if (fert >= 0 && fert < 20000)
                 {
-                    if (fert >= 0 && fert < 20000)
+                    if (fert != m_soilConductivity)
                     {
                         m_soilConductivity = fert;
                         Q_EMIT dataUpdated();
@@ -280,9 +283,9 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             {
                 temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (temp != m_temperature)
+                if (temp > -30.f && temp < 100.f)
                 {
-                    if (temp > -30.f && temp < 100.f)
+                    if (temp != m_temperature)
                     {
                         m_temperature = temp;
                         Q_EMIT dataUpdated();
@@ -291,9 +294,9 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
                 }
                 humi = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (humi != m_humidity)
+                if (humi >= 0.f && humi <= 100.f)
                 {
-                    if (humi >= 0.f && humi <= 100.f)
+                    if (humi != m_humidity)
                     {
                         m_humidity = humi;
                         Q_EMIT dataUpdated();
@@ -305,9 +308,9 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             {
                 temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (temp != m_temperature)
+                if (temp > -30.f && temp < 100.f)
                 {
-                    if (temp > -30.f && temp < 100.f)
+                    if (temp != m_temperature)
                     {
                         m_temperature = temp;
                         Q_EMIT dataUpdated();
@@ -319,9 +322,9 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             {
                 humi = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (humi != m_humidity)
+                if (humi >= 0.f && humi <= 100.f)
                 {
-                    if (humi >= 0.f && humi <= 100.f)
+                    if (humi != m_humidity)
                     {
                         m_humidity = humi;
                         Q_EMIT dataUpdated();
@@ -333,9 +336,9 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             {
                 lumi = static_cast<int32_t>(data[pos] + (data[pos+1] << 8) + (data[pos+2] << 16));
                 pos += 3;
-                if (lumi != m_luminosityLux)
+                if (lumi >= 0 && lumi < 150000)
                 {
-                    if (lumi >= 0 && lumi < 150000)
+                    if (lumi != m_luminosityLux)
                     {
                         m_luminosityLux = lumi;
                         Q_EMIT dataUpdated();
@@ -347,9 +350,9 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             {
                 hcho = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (hcho != m_hcho)
+                if (hcho >= 0.f && hcho <= 100.f)
                 {
-                    if (hcho >= 0.f && hcho <= 100.f)
+                    if (hcho != m_hcho)
                     {
                         m_hcho = hcho;
                         Q_EMIT dataUpdated();
@@ -373,7 +376,8 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             Q_UNUSED(pos);
         }
 /*
-        if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || hcho > -99.f)
+        if (batt > -99 || moist > -99.f || fert > -99.f ||
+            temp > -99.f || humi > -99.f || lumi > -99 || hcho > -99.f)
         {
             qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
             if (batt > -99) qDebug() << "- battery:" << batt;
@@ -448,9 +452,9 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             {
                 temp = static_cast<int32_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (temp != m_temperature)
+                if (temp > -30.f && temp < 100.f)
                 {
-                    if (temp > -30.f && temp < 100.f)
+                    if (temp != m_temperature)
                     {
                         m_temperature = temp;
                         Q_EMIT dataUpdated();
@@ -459,9 +463,9 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
                 }
                 humi = static_cast<int32_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (humi != m_humidity)
+                if (humi >= 0.f && humi <= 100.f)
                 {
-                    if (humi >= 0.f && humi <= 100.f)
+                    if (humi != m_humidity)
                     {
                         m_humidity = humi;
                         Q_EMIT dataUpdated();
@@ -473,9 +477,9 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             {
                 pres = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (pres != m_pressure)
+                if (pres >= 0 && pres <= 2000)
                 {
-                    if (pres >= 0 && pres <= 2000)
+                    if (pres != m_pressure)
                     {
                         m_pressure = pres;
                         Q_EMIT dataUpdated();
@@ -487,9 +491,9 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             {
                 pm25 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (pm25 != m_pm_25)
+                if (pm25 >= 0 && pm25 <= 1000)
                 {
-                    if (pm25 >= 0 && pm25 <= 1000)
+                    if (pm25 != m_pm_25)
                     {
                         m_pm_25 = pm25;
                         Q_EMIT dataUpdated();
@@ -498,9 +502,9 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
                 }
                 pm10 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (pm10 != m_pm_10)
+                if (pm10 >= 0 && pm10 <= 1000)
                 {
-                    if (pm10 >= 0 && pm10 <= 1000)
+                    if (pm10 != m_pm_10)
                     {
                         m_pm_10 = pm10;
                         Q_EMIT dataUpdated();
@@ -512,9 +516,9 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             {
                 co2 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (co2 != m_co2)
+                if (co2 >= 0 && co2 <= 9999)
                 {
-                    if (co2 >= 0 && co2 <= 9999)
+                    if (co2 != m_co2)
                     {
                         m_co2 = co2;
                         Q_EMIT dataUpdated();
@@ -644,9 +648,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
                 pos += 2;
-                if (temp != m_temperature)
+                if (temp > -30.f && temp < 100.f)
                 {
-                    if (temp > -30.f && temp < 100.f)
+                    if (temp != m_temperature)
                     {
                         m_temperature = temp;
                         Q_EMIT dataUpdated();
@@ -658,9 +662,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 100.f;
                 pos += 2;
-                if (temp != m_temperature)
+                if (temp > -30.f && temp < 100.f)
                 {
-                    if (temp > -30.f && temp < 100.f)
+                    if (temp != m_temperature)
                     {
                         m_temperature = temp;
                         Q_EMIT dataUpdated();
@@ -671,9 +675,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             else if (object_type == bth_humidity_uint8)
             {
                 humi = static_cast<float>(data[pos++]);
-                if (humi != m_humidity)
+                if (humi >= 0.f && humi <= 100.f)
                 {
-                    if (humi >= 0.f && humi <= 100.f)
+                    if (humi != m_humidity)
                     {
                         m_humidity = humi;
                         Q_EMIT dataUpdated();
@@ -685,9 +689,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 humi = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8)) / 100.f;
                 pos += 2;
-                if (humi != m_humidity)
+                if (humi >= 0.f && humi <= 100.f)
                 {
-                    if (humi >= 0.f && humi <= 100.f)
+                    if (humi != m_humidity)
                     {
                         m_humidity = humi;
                         Q_EMIT dataUpdated();
@@ -699,9 +703,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 lumi = static_cast<uint32_t>(data[pos] + (data[pos+1] << 8) + (data[pos+2] << 16)) / 100.f;
                 pos += 3;
-                if (lumi != m_luminosityLux)
+                if (lumi >= 0 && lumi < 150000)
                 {
-                    if (lumi >= 0 && lumi < 150000)
+                    if (lumi != m_luminosityLux)
                     {
                         m_luminosityLux = lumi;
                         Q_EMIT dataUpdated();
@@ -713,9 +717,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 moist = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8)) / 100.f;
                 pos += 2;
-                if (moist != m_soilMoisture)
+                if (moist >= 0 && moist <= 100)
                 {
-                    if (moist >= 0 && moist <= 100)
+                    if (moist != m_soilMoisture)
                     {
                         m_soilMoisture = moist;
                         Q_EMIT dataUpdated();
@@ -726,9 +730,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             else if (object_type == bth_moisture_uint8)
             {
                 moist = static_cast<uint8_t>(data[pos++]);
-                if (moist != m_soilMoisture)
+                if (moist >= 0 && moist <= 100)
                 {
-                    if (moist >= 0 && moist <= 100)
+                    if (moist != m_soilMoisture)
                     {
                         m_soilMoisture = moist;
                         Q_EMIT dataUpdated();
@@ -740,9 +744,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 pres = static_cast<uint32_t>(data[pos] + (data[pos+1] << 8) + (data[pos+2] << 16)) / 100.f;
                 pos += 3;
-                if (pres != m_pressure)
+                if (pres >= 0 && pres <= 2000)
                 {
-                    if (pres >= 0 && pres <= 2000)
+                    if (pres != m_pressure)
                     {
                         m_pressure = pres;
                         Q_EMIT dataUpdated();
@@ -754,9 +758,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 voc = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (voc != m_voc)
+                if (voc >= 0 && voc <= 9999)
                 {
-                    if (voc >= 0 && voc <= 9999)
+                    if (voc != m_voc)
                     {
                         m_voc = voc;
                         Q_EMIT dataUpdated();
@@ -768,9 +772,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 co2 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (co2 != m_co2)
+                if (co2 >= 0 && co2 <= 9999)
                 {
-                    if (co2 >= 0 && co2 <= 9999)
+                    if (co2 != m_co2)
                     {
                         m_co2 = co2;
                         Q_EMIT dataUpdated();
@@ -782,9 +786,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 pm25 = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (pm25 != m_pm_25)
+                if (pm25 >= 0 && pm25 <= 1000)
                 {
-                    if (pm25 >= 0 && pm25 <= 1000)
+                    if (pm25 != m_pm_25)
                     {
                         m_pm_25 = pm25;
                         Q_EMIT dataUpdated();
@@ -796,9 +800,9 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             {
                 pm10 = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8));
                 pos += 2;
-                if (pm10 != m_pm_10)
+                if (pm10 >= 0 && pm10 <= 1000)
                 {
-                    if (pm10 >= 0 && pm10 <= 1000)
+                    if (pm10 != m_pm_10)
                     {
                         m_pm_10 = pm10;
                         Q_EMIT dataUpdated();
@@ -830,8 +834,8 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
         }
 /*
-        if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 || pres > -99 ||
-            voc > -99.f || co2 > -99.f || pm25 > -99.f || pm10 > -99.f)
+        if (batt > -99 || temp > -99.f || humi > -99.f || lumi > -99 ||
+            pres > -99 || voc > -99.f || co2 > -99.f || pm25 > -99.f || pm10 > -99.f)
         {
             qDebug() << "* BtHome service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
             if (batt > -99) qDebug() << "- battery:" << batt;

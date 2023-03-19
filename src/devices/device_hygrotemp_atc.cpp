@@ -99,16 +99,13 @@ void DeviceHygrotempATC::parseAdvertisementData(const uint16_t adv_mode, const u
             {
                 refreshRealtimeFinished();
             }
-        }
 /*
-        if (m_deviceBattery > -99 || m_temperature > -99.f || m_humidity > -99.f)
-        {
-            qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << ba.size() << ") bytes";
+            qDebug() << "* ATC service data:" << getName() << getAddress();
             if (m_deviceBattery > -99) qDebug() << "- battery:" << m_deviceBattery;
             if (m_temperature > -99) qDebug() << "- temperature:" << m_temperature;
             if (m_humidity > -99) qDebug() << "- humidity:" << m_humidity;
-        }
 */
+        }
     }
 }
 

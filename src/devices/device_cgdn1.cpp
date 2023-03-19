@@ -127,19 +127,16 @@ void DeviceCGDN1::parseAdvertisementData(const uint16_t adv_mode, const uint16_t
             {
                 refreshAdvertisement();
             }
-        }
 /*
-        if (batt > -99 || temp > -99.f || humi > -99.f || co2 > -99.f || pm2 > -99.f || pm10 > -99.f)
-        {
-            qDebug() << "* MiBeacon service data:" << getName() << getAddress() << "(" << data_size << ") bytes";
-            if (batt > -99) qDebug() << "- battery:" << batt;
-            if (temp > -99) qDebug() << "- temperature:" << temp;
-            if (humi > -99) qDebug() << "- humidity:" << humi;
-            if (co2 > -99) qDebug() << "- co2:" << co2;
-            if (pm2 > -99) qDebug() << "- pm 2.5:" << pm2;
-            if (pm10 > -99) qDebug() << "- pm 10 :" << pm10;
-        }
+            qDebug() << "* MiBeacon service data:" << getName() << getAddress();
+            if (m_deviceBattery > -99) qDebug() << "- battery:" << m_deviceBattery;
+            if (m_temperature > -99) qDebug() << "- temperature:" << m_temperature;
+            if (m_humidity > -99) qDebug() << "- humidity:" << m_humidity;
+            if (m_co2 > -99) qDebug() << "- co2:" << m_co2;
+            if (m_pm_25 > -99) qDebug() << "- pm 2.5:" << m_pm_25;
+            if (m_pm_10 > -99) qDebug() << "- pm 10 :" << m_pm_10;
 */
+        }
     }
 }
 

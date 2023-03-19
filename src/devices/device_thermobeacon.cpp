@@ -467,17 +467,15 @@ void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
             {
                 refreshAdvertisement();
             }
-        }
+
 /*
-        if (temp > -99.f || humi > -99.f)
-        {
-            qDebug() << "* DeviceThermoBeacon manufacturer data:" << getAddress();
+            qDebug() << "* ThermoBeacon manufacturer data:" << getAddress();
             qDebug() << "- battery:" << m_deviceBattery;
-            qDebug() << "- temperature:" << temp;
-            qDebug() << "- humidity:" << humi;
+            qDebug() << "- temperature:" << m_temperature;
+            qDebug() << "- humidity:" << m_humidity;
             qDebug() << "- device_time:" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
-        }
 */
+        }
     }
 }
 

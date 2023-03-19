@@ -168,12 +168,12 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
                 refreshAdvertisement();
             }
 /*
-            qDebug() << "* service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
-            if (batt > -99) qDebug() << "- battery:" << batt;
-            if (moist > -99)qDebug() << "- soil moisture:" << moist;
-            if (fert > -99) qDebug() << "- soil conductivity:" << fert;
-            if (temp > -99) qDebug() << "- temperature:" << temp;
-            if (lumi > -99) qDebug() << "- luminosity:" << lumi;
+            qDebug() << "* Tuya service data:" << getName() << getAddress() << "(" << value.size() << ") bytes";
+            if (m_deviceBattery > -99) qDebug() << "- battery:" << m_deviceBattery;
+            if (m_soilMoisture > -99) qDebug() << "- soil moisture:" << m_soilMoisture;
+            if (m_soilConductivity > -99) qDebug() << "- soil conductivity:" << m_soilConductivity;
+            if (m_temperature > -99) qDebug() << "- temperature:" << m_temperature;
+            if (m_luminosityLux > -99) qDebug() << "- luminosity:" << m_luminosityLux;
 */
         }
     }
