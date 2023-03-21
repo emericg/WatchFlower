@@ -109,8 +109,9 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: 8
 
-                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    opacity: 0.66
                     color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                 }
 
                 Text {
@@ -210,8 +211,9 @@ Item {
                     anchors.leftMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    opacity: 0.66
                     color: Theme.colorSubText
+                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                 }
 
                 Text {
@@ -256,7 +258,7 @@ Item {
                     width: (parent.width * 1.5)
                     height: width
                     radius: width
-                    color: Theme.colorForeground
+                    color: Qt.darker(Theme.colorForeground, 1.1)
                     opacity: 0.16
                     border.width: 2
                     border.color: Theme.colorLowContrast
@@ -266,7 +268,7 @@ Item {
                     width: (parent.width * 1.0)
                     height: width
                     radius: width
-                    color: Theme.colorForeground
+                    color: Qt.darker(Theme.colorForeground, 1.1)
                     opacity: 0.33
                     border.width: 2
                     border.color: Theme.colorLowContrast
@@ -276,7 +278,7 @@ Item {
                     width: (parent.width * 0.66)
                     height: width
                     radius: width
-                    color: Theme.colorForeground
+                    color: Qt.darker(Theme.colorForeground, 1.1)
                     opacity: 0.6
                     border.width: 2
                     border.color: Theme.colorLowContrast
@@ -286,7 +288,7 @@ Item {
                     width: (parent.width * 0.33)
                     height: width
                     radius: width
-                    color: Theme.colorForeground
+                    color: Qt.darker(Theme.colorForeground, 1.1)
                     opacity: 1.0
                     border.width: 2
                     border.color: Theme.colorLowContrast

@@ -64,6 +64,7 @@ T.SpinBox {
                     else if (control.hhh === ChartHistory.Span.Weekly) dr = qsTr("weeks")
                     else if (control.hhh === ChartHistory.Span.Daily) dr = qsTr("days")
 
+                    //: Used like this: "two months ago", or "one week ago"
                     return qsTr("%0 %1 ago").arg(nb).arg(dr)
                 }
             }

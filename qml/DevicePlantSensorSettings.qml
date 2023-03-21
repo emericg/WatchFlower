@@ -489,7 +489,7 @@ Flickable {
                     Text {
                         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Please advise")
+                        text: qsTr("Be advised")
                         textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true

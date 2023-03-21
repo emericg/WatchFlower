@@ -546,7 +546,7 @@ Item {
                 background: true
                 backgroundColor: Theme.colorComponentBackground
                 iconColor: Theme.colorSubText
-                source: "qrc:/assets/icons_material/outline-settings-24px.svg"
+                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
 
                 onClicked: historyIndicator.showHide()
             }

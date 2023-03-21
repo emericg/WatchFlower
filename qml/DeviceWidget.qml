@@ -863,6 +863,8 @@ Item {
                     if (boxDevice.hasVocSensor) primaryValue = "voc"
                     else if (boxDevice.hasCo2Sensor) primaryValue = "co2"
                     else if (boxDevice.hasPM10Sensor) primaryValue = "pm10"
+                    else if (boxDevice.hasPM25Sensor) primaryValue = "pm25"
+                    else if (boxDevice.hasPM1Sensor) primaryValue = "pm1"
                     else if (boxDevice.hasHchoSensor) primaryValue = "hcho"
                     else if (boxDevice.hasGeigerCounter) primaryValue = "nuclear"
                     else primaryValue = "hygrometer"
@@ -889,13 +891,6 @@ Item {
                     limitMin = 1000
                     limitMax = 2000
                     gaugeValue.value = boxDevice.co2
-                } else if (primaryValue === "pm25") {
-                    gaugeLegend.text = qsTr("PM2.5")
-                    gaugeValue.from = 0
-                    gaugeValue.to = 240
-                    limitMin = 60
-                    limitMax = 120
-                    gaugeValue.value = boxDevice.pm25
                 } else if (primaryValue === "pm10") {
                     gaugeLegend.text = qsTr("PM10")
                     gaugeValue.from = 0
@@ -903,6 +898,20 @@ Item {
                     limitMin = 100
                     limitMax = 350
                     gaugeValue.value = boxDevice.pm10
+                } else if (primaryValue === "pm25") {
+                    gaugeLegend.text = qsTr("PM2.5")
+                    gaugeValue.from = 0
+                    gaugeValue.to = 240
+                    limitMin = 60
+                    limitMax = 120
+                    gaugeValue.value = boxDevice.pm25
+                } else if (primaryValue === "pm1") {
+                    gaugeLegend.text = qsTr("PM1")
+                    gaugeValue.from = 0
+                    gaugeValue.to = 240
+                    limitMin = 60
+                    limitMax = 120
+                    gaugeValue.value = boxDevice.pm1
                 }
             }
 
@@ -920,9 +929,9 @@ Item {
                 else if (primaryValue === "o3") gaugeValue.value = boxDevice.o3
                 else if (primaryValue === "no2") gaugeValue.value = boxDevice.no2
                 else if (primaryValue === "so2") gaugeValue.value = boxDevice.so2
-                else if (primaryValue === "pm1") gaugeValue.value = boxDevice.pm1
-                else if (primaryValue === "pm25") gaugeValue.value = boxDevice.pm25
                 else if (primaryValue === "pm10") gaugeValue.value = boxDevice.pm10
+                else if (primaryValue === "pm25") gaugeValue.value = boxDevice.pm25
+                else if (primaryValue === "pm1") gaugeValue.value = boxDevice.pm1
 
                 // limits
                 if (limitMin > 0 && limitMax > 0) {
