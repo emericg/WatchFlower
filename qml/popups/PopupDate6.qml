@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 import QtQuick.Controls
 
 import ThemeEngine 1.0
@@ -21,30 +22,30 @@ Popup {
 
     //property var locale: Qt.locale()
 
-    property var today: new Date()
-    property bool isToday: false
+    property date today: new Date()
+    property date initialDate
+    property date selectedDate
+
+    property bool isSelectedDateToday: false
 
     property var minDate: null
     property var maxDate: null
 
-    property date initialDate
-    property date currentDate
+    ////////////////////////////////////////////////////////////////////////////
 
     signal updateDate(var newdate)
 
     function openDate(date) {
+        //console.log("openDate(" + date + ")")
+
+        today = new Date()
+        initialDate = date
+        selectedDate = date
+
         minDate = null
         maxDate = null
 
-        initialDate = date
-        currentDate = date
-
-        today = new Date()
         printDate()
-
-        // visual hacks
-        //dow.width = dow.width - 8
-        grid.width = dow.width - 8
 
         popupDate.open()
     }
@@ -57,13 +58,16 @@ Popup {
     }
 
     function printDate() {
-        bigDay.text = currentDate.toLocaleString(locale, "dddd")
-        bigDate.text = currentDate.toLocaleString(locale, "dd MMMM yyyy")
+        bigDay.text = selectedDate.toLocaleString(locale, "dddd")
+        bigDate.text = selectedDate.toLocaleString(locale, "dd MMMM yyyy")
 
         var thismonth = new Date(grid.year, grid.month)
         bigMonth.text = thismonth.toLocaleString(locale, "MMMM")
 
-        isToday = (today.toLocaleString(locale, "dd MMMM yyyy") === currentDate.toLocaleString(locale, "dd MMMM yyyy"))
+        if (thismonth.getFullYear() !== today.getFullYear())
+            bigMonth.text += " " + thismonth.toLocaleString(locale, "yyyy")
+
+        isSelectedDateToday = (today.toLocaleString(locale, "dd MMMM yyyy") === selectedDate.toLocaleString(locale, "dd MMMM yyyy"))
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -109,14 +113,14 @@ Popup {
 
                 Text {
                     id: bigDay
-                    text: currentDate.toLocaleString(locale, "dddd") // "Vendredi"
+                    text: selectedDate.toLocaleString(locale, "dddd") // "Vendredi"
                     font.pixelSize: 24
                     font.capitalization: Font.Capitalize
                     color: "white"
                 }
                 Text {
                     id: bigDate
-                    text: currentDate.toLocaleString(locale, "dd MMMM yyyy") // "15 octobre 2020"
+                    text: selectedDate.toLocaleString(locale, "dd MMMM yyyy") // "15 octobre 2020"
                     font.pixelSize: 20
                     color: "white"
                 }
@@ -174,7 +178,7 @@ Popup {
                     id: bigMonth
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    text: currentDate.toLocaleString(locale, "MMMM") // "Octobre"
+                    text: selectedDate.toLocaleString(locale, "MMMM") // "Octobre"
                     font.capitalization: Font.Capitalize
                     font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
@@ -232,22 +236,27 @@ Popup {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
 
-                    opacity: (model.month === grid.month ? 1 : 0.2)
+                    property bool isSelected: (model.day === selectedDate.getDate() &&
+                                               model.month === selectedDate.getMonth() &&
+                                               model.year === selectedDate.getFullYear())
+
+                    property bool isToday: (model.day === popupDate.today.getDate() &&
+                                            model.month === popupDate.today.getMonth() &&
+                                            model.year === popupDate.today.getFullYear())
+
                     text: model.day
                     font: grid.font
                     //font.bold: model.today
-                    color: selected ? "white" : Theme.colorSubText
+                    color: isSelected ? "white" : Theme.colorSubText
+                    opacity: (model.month === grid.month ? 1 : 0.2)
 
-                    property bool selected: (model.day === currentDate.getDate() &&
-                                             model.month === currentDate.getMonth() &&
-                                             model.year === currentDate.getFullYear())
                     Rectangle {
                         z: -1
                         anchors.fill: parent
                         radius: width
-                        color: selected ? Theme.colorSecondary : "transparent"
+                        color: isSelected ? Theme.colorSecondary : "transparent"
                         border.color: Theme.colorSecondary
-                        border.width: (model.today) ? Theme.componentBorderWidth : 0
+                        border.width: isToday ? Theme.componentBorderWidth : 0
                     }
                 }
 
@@ -255,30 +264,30 @@ Popup {
                     if (date.getMonth() === grid.month) {
                         // validate date (min / max)
                         if (minDate && maxDate) {
-                            const diffMinTime = (minDate - date);
-                            const diffMinDays = -Math.ceil(diffMinTime / (1000 * 60 * 60 * 24) - 1);
-                            //console.log(diffMinDays + " diffMinDays");
+                            const diffMinTime = (minDate - date)
+                            const diffMinDays = -Math.ceil(diffMinTime / (1000 * 60 * 60 * 24) - 1)
+                            //console.log(diffMinDays + " diffMinDays")
                             const diffMaxTime = (minDate - date);
-                            const diffMaxDays = -Math.ceil(diffMaxTime / (1000 * 60 * 60 * 24) - 1);
-                            //console.log(diffMaxDays + " diffMaxDays");
+                            const diffMaxDays = -Math.ceil(diffMaxTime / (1000 * 60 * 60 * 24) - 1)
+                            //console.log(diffMaxDays + " diffMaxDays")
 
                             if (diffMinDays > -1 && diffMaxDays < 1) {
-                                date.setHours(currentDate.getHours(),
-                                              currentDate.getMinutes(),
-                                              currentDate.getSeconds())
-                                currentDate = date
+                                date.setHours(selectedDate.getHours(),
+                                              selectedDate.getMinutes(),
+                                              selectedDate.getSeconds())
+                                selectedDate = date
                             }
                         } else {
-                            const diffTime = (today - date);
-                            const diffDays = -Math.ceil(diffTime / (1000 * 60 * 60 * 24) - 1);
-                            //console.log(diffDays + " days");
+                            const diffTime = (today - date)
+                            const diffDays = -Math.ceil(diffTime / (1000 * 60 * 60 * 24) - 1)
+                            //console.log(diffDays + " days")
 
-                            // validate date (-7 / today)
-                            if (diffDays > -7 && diffDays < 1) {
-                                date.setHours(currentDate.getHours(),
-                                              currentDate.getMinutes(),
-                                              currentDate.getSeconds())
-                                currentDate = date
+                            // validate date (-21 / today)
+                            if (diffDays > -21 && diffDays < 1) {
+                                date.setHours(selectedDate.getHours(),
+                                              selectedDate.getMinutes(),
+                                              selectedDate.getSeconds())
+                                selectedDate = date
                             }
                         }
 
@@ -312,13 +321,15 @@ Popup {
                     fullColor: true
 
                     onClicked: {
-                        updateDate(currentDate)
+                        updateDate(selectedDate)
                         popupDate.close()
                     }
                 }
             }
+
+            ////////
         }
 
-        ////////
+        ////////////////
     }
 }

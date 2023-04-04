@@ -25,10 +25,13 @@ Item {
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
-            width: singleColumn ? 48 : 72
+            width: singleColumn ? 48 : 96
+            height: 24
 
             text: modelData.date.toLocaleString(Qt.locale(), "dd MMMM")
+            wrapMode: Text.WordWrap
             horizontalAlignment: isPhone ? Text.AlignLeft : Text.AlignRight
+            verticalAlignment: Text.AlignVCenter
             color: Theme.colorSubText
             font.bold: false
             font.pixelSize: isPhone ? Theme.fontSizeContent : Theme.fontSizeContentBig

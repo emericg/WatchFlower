@@ -82,7 +82,7 @@ Item {
                     height: 40
                     anchors.top: parent.top
                     anchors.left: parent.left
-                    anchors.leftMargin: singleColumn ? 0 : 88
+                    anchors.leftMargin: singleColumn ? 0 : 112
 
                     source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
                     iconColor: "white"
@@ -134,7 +134,7 @@ Item {
                     width: 40
                     height: 40
                     anchors.left: parent.left
-                    anchors.leftMargin: singleColumn ? 0 : 88
+                    anchors.leftMargin: singleColumn ? 0 : 112
                     anchors.bottom: parent.bottom
 
                     source: "qrc:/assets/icons_material/baseline-add-24px.svg"
