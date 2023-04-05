@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2017 Ekkehard Gentz (ekke)
  * Copyright (c) 2020 Emeric Grange
  *

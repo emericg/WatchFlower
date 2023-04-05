@@ -1,4 +1,4 @@
-/*
+/*!
  * Copyright (c) 2016 J-P Nurmi
  * Copyright (c) 2022 Emeric Grange
  *
