@@ -23,8 +23,10 @@
 #include "SystrayManager.h"
 
 #include <QString>
-#include <QtCore/qjniobject.h>
-#include <QtCore/qcoreapplication.h>
+#if defined(Q_OS_ANDROID)
+#include <QJniObject>
+#include <QCoreApplication>
+#endif
 
 /* ************************************************************************** */
 
