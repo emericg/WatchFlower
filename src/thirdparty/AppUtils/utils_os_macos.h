@@ -34,13 +34,13 @@
  * \brief macOS utils
  *
  * Use with "LIBS += -framework IOKit"
+ *
+ * Registering and unregistering for sleep and wake notifications:
+ * - https://developer.apple.com/library/archive/qa/qa1340/_index.html
  */
 class UtilsMacOS
 {
 public:
-    /*!
-     * - https://developer.apple.com/library/archive/qa/qa1340/_index.html
-     */
     static uint32_t screenKeepOn(const QString &application, const QString &reason);
     static void screenKeepAuto(uint32_t screensaverId);
 };

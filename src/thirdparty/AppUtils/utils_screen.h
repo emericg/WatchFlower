@@ -69,10 +69,7 @@ class UtilsScreen: public QObject
     double getScreenSize_inch() { return m_screenSizeInch; }
 
     // Actual screen
-    QGuiApplication *m_app = nullptr;
-    QScreen *m_scr = nullptr;
-
-    void setAppWindow(QGuiApplication *app);
+    const QScreen *m_scr = nullptr;
 
     // Singleton
     static UtilsScreen *instance;
@@ -83,13 +80,11 @@ Q_SIGNALS:
     void screenChanged();
 
 public slots:
-    //void primaryScreenChanged(QScreen *scr);
-    void getScreenInfos(QScreen *scr);
+    void getScreenInfos(const QScreen *scr);
 
 public:
     static UtilsScreen *getInstance();
 
-    //Q_INVOKABLE void getScreenInfos(QScreen *scr);
     Q_INVOKABLE void printScreenInfos();
 
     Q_INVOKABLE QVariantMap getSafeAreaMargins(QQuickWindow *window);

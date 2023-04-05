@@ -27,6 +27,7 @@
 #include <QQuickWindow>
 #include <objc/runtime.h>
 #include <AppKit/AppKit.h>
+
 #import <Foundation/Foundation.h>
 
 static MacOSDockHandler *instance = nullptr;

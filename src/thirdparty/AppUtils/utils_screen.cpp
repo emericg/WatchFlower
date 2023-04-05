@@ -32,18 +32,14 @@
 
 #if defined(Q_OS_ANDROID)
 #include "utils_os_android.h"
-#endif
-#if defined(Q_OS_IOS)
+#elif defined(Q_OS_IOS)
 #include "utils_os_ios.h"
 #include <QtGui/qpa/qplatformwindow.h>
-#endif
-#if defined(Q_OS_MACOS)
+#elif defined(Q_OS_MACOS)
 #include "utils_os_macos.h"
-#endif
-#if defined(Q_OS_LINUX)
+#elif defined(Q_OS_LINUX)
 #include "utils_os_linux.h"
-#endif
-#if defined(Q_OS_WINDOWS)
+#elif defined(Q_OS_WINDOWS)
 #include "utils_os_windows.h"
 #endif
 
@@ -63,7 +59,16 @@ UtilsScreen *UtilsScreen::getInstance()
 
 UtilsScreen::UtilsScreen()
 {
-    setAppWindow(qApp);
+    if (qApp)
+    {
+        connect(qApp, &QGuiApplication::primaryScreenChanged, this, &UtilsScreen::getScreenInfos);
+
+        getScreenInfos(qApp->primaryScreen());
+    }
+    else
+    {
+        qWarning() << "UtilsScreen::UtilsScreen() QGuiApplication is NULL";
+    }
 }
 
 UtilsScreen::~UtilsScreen()
@@ -73,24 +78,12 @@ UtilsScreen::~UtilsScreen()
 
 /* ************************************************************************** */
 
-void UtilsScreen::setAppWindow(QGuiApplication *app)
+void UtilsScreen::getScreenInfos(const QScreen *scr)
 {
-    if (!app) return;
-
-    m_app = app;
-    connect(m_app, &QGuiApplication::primaryScreenChanged, this, &UtilsScreen::getScreenInfos);
-
-    getScreenInfos(m_app->primaryScreen());
-}
-
-/* ************************************************************************** */
-
-void UtilsScreen::getScreenInfos(QScreen *scr)
-{
-    //qDebug() << "UtilsScreen::getScreenInfos()";
-
     if (scr)
     {
+        //qDebug() << "UtilsScreen::getScreenInfos()";
+
         m_scr = scr;
 
         m_screenWidth = scr->size().width();
@@ -109,23 +102,28 @@ void UtilsScreen::getScreenInfos(QScreen *scr)
     }
     else
     {
-        qWarning() << "UtilsScreen::getScreenInfos() Unable to get screen infos, NULL QScreen";
+        qWarning() << "UtilsScreen::getScreenInfos() QScreen is NULL";
     }
 }
 
 void UtilsScreen::printScreenInfos()
 {
-    qDebug() << "UtilsScreen::printScreenInfos()";
-
     if (m_scr)
     {
-        qDebug() << "- screen geometry    " << m_scr->size();
-        qDebug() << "- screen geometry (dpi corrected)  " << m_scr->size() * m_scr->devicePixelRatio();
-        qDebug() << "- screen dpi         " << m_scr->physicalDotsPerInch();
-        qDebug() << "- screen pixel ratio " << m_scr->devicePixelRatio();
+        qDebug() << "UtilsScreen::printScreenInfos()";
+        qDebug() << "-" << m_scr->name() << m_scr->model() << m_scr->manufacturer();
 
+        qDebug() << "- screen size (diagonal, inches)   " << m_screenSizeInch;
         qDebug() << "- screen size (physical, mm)       " << m_scr->physicalSize();
-        qDebug() << "- screen size (diagonal in inches) " << m_screenSizeInch;
+        qDebug() << "- screen refresh rate (Hz)         " << m_scr->refreshRate();
+
+        qDebug() << "- screen geometry      " << m_scr->size();
+        qDebug() << "- screen geometry (dpi corrected)  " << m_scr->size() * m_scr->devicePixelRatio();
+
+        qDebug() << "- screen dpi (physical)" << m_scr->physicalDotsPerInch();
+        qDebug() << "- screen dpi (logical) " << m_scr->logicalDotsPerInch();
+
+        qDebug() << "- screen pixel ratio   " << m_scr->devicePixelRatio();
     }
     else
     {
@@ -160,7 +158,7 @@ QVariantMap UtilsScreen::getSafeAreaMargins(QQuickWindow *window)
     }
     else
     {
-        qDebug() << "getSafeAreaMargins() No QQuickWindow available";
+        qWarning() << "UtilsScreen::getSafeAreaMargins() QQuickWindow is NULL";
     }
 
     return map;

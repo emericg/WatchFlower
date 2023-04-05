@@ -24,8 +24,8 @@
 #define UTILS_VERSIONCHECKER_H
 /* ************************************************************************** */
 
+#include <cstdio>
 #include <QString>
-#include <QDebug>
 
 struct VersionChecker
 {
@@ -46,11 +46,6 @@ struct VersionChecker
     }
     bool operator < (const VersionChecker &other)
     {
-/*
-        qDebug() << "operator <";
-        qDebug() << major << "." << minor << "." << revision << "." << build;
-        qDebug() << other.major << "." << other.minor << "." << other.revision << "." << other.build;
-*/
         if (major < other.major)
             return true;
         if (major > other.major)
@@ -92,6 +87,8 @@ struct VersionChecker
         return false;
     }
 };
+
+/* ************************************************************************** */
 /*
 static void testUtilsVersionStringComparison()
 {

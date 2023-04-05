@@ -30,7 +30,7 @@
 
 #include <QObject>
 
-QT_FORWARD_DECLARE_CLASS(QQuickWindow)
+class QQuickWindow;
 
 /*!
  * \brief macOS dock click handler
