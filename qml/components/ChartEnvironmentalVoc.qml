@@ -91,7 +91,7 @@ Item {
                         dashPattern: [ 1, 4 ]
                         startX: 0
                         startY: 0
-                        PathLine { x: chartEnvironmentalVoc.width; y: 0; }
+                        PathLine { x: vocFlickable.width; y: 0; }
                     }
                 }
             }
@@ -112,7 +112,7 @@ Item {
                         dashPattern: [ 1, 4 ]
                         startX: 0
                         startY: 0
-                        PathLine { x: chartEnvironmentalVoc.width; y: 0; }
+                        PathLine { x: vocFlickable.width; y: 0; }
                     }
                 }
             }

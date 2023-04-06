@@ -61,7 +61,7 @@ Item {
             function setPlant() {
                 plantScreen.currentPlant = currentDevice.plant
 
-                if (typeof itemPlantViewer !== "undefined" || itemPlantViewer) {
+                if (typeof itemPlantViewer !== "undefined" && itemPlantViewer) {
                     itemPlantViewer.contentX = 0
                     itemPlantViewer.contentY = 0
                 }

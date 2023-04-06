@@ -66,16 +66,16 @@ SystrayManager::~SystrayManager()
 
 /* ************************************************************************** */
 
-void SystrayManager::setupSystray(QApplication *app, QQuickWindow *view)
+void SystrayManager::setupSystray(QQuickWindow *window)
 {
-    if (!app || !view)
+    if (!qApp || !window)
     {
         qWarning() << "SystrayManager::setupSystray() no QApplication or QQuickWindow passed";
         return;
     }
 
-    m_saved_app = app;
-    m_saved_view = view;
+    m_saved_app = qApp;
+    m_saved_window = window;
 }
 
 /* ************************************************************************** */
@@ -86,7 +86,7 @@ void SystrayManager::initSystray()
     return;
 #endif
 
-    if (!m_saved_app || !m_saved_view)
+    if (!m_saved_app || !m_saved_window)
     {
         qWarning() << "SystrayManager::initSystray() no QApplication or QQuickWindow saved";
         return;
@@ -100,10 +100,10 @@ void SystrayManager::initSystray()
             m_actionDeviceList = new QAction(tr("Sensor list"));
             m_actionSettings = new QAction(tr("Settings") + "        ");
             m_actionShow = new QAction(tr("Hide"));
-            if (!m_saved_view ||
-                m_saved_view->isVisible() == false ||
-                m_saved_view->visibility() == QWindow::Hidden ||
-                m_saved_view->visibility() == QWindow::Minimized)
+            if (!m_saved_window ||
+                m_saved_window->isVisible() == false ||
+                m_saved_window->visibility() == QWindow::Hidden ||
+                m_saved_window->visibility() == QWindow::Minimized)
             {
                 m_actionShow->setText(tr("Show"));
             }
@@ -155,7 +155,7 @@ bool SystrayManager::installSystray()
             m_sysTray->show();
 
             connect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
-            connect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
+            connect(m_saved_window, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
 
             // Show greetings
             //m_sysTray->showMessage("WatchFlower", tr("WatchFlower is running in the background!"));
@@ -211,7 +211,7 @@ void SystrayManager::removeSystray()
     if (m_sysTray)
     {
         m_retryTimer.stop();
-        disconnect(m_saved_view, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
+        disconnect(m_saved_window, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
         disconnect(m_sysTray, &QSystemTrayIcon::activated, this, &SystrayManager::trayClicked);
         disconnect(m_sysTray, &QSystemTrayIcon::destroyed, this, &SystrayManager::aboutToBeDestroyed);
 
@@ -224,7 +224,7 @@ void SystrayManager::removeSystray()
 
 /* ************************************************************************** */
 
-void SystrayManager::sendNotification(QString &text)
+void SystrayManager::sendNotification(const QString &text)
 {
     if (m_sysTray && QSystemTrayIcon::isSystemTrayAvailable())
     {
@@ -234,7 +234,7 @@ void SystrayManager::sendNotification(QString &text)
 
 /* ************************************************************************** */
 
-void SystrayManager::trayClicked(QSystemTrayIcon::ActivationReason r)
+void SystrayManager::trayClicked(const QSystemTrayIcon::ActivationReason r)
 {
     // Context, DoubleClick, Trigger, MiddleClick
 
@@ -250,28 +250,28 @@ void SystrayManager::trayClicked(QSystemTrayIcon::ActivationReason r)
 
 void SystrayManager::showHideButton()
 {
-    if (m_saved_view->isVisible())
+    if (m_saved_window->isVisible())
     {
-        m_saved_view->hide();
+        m_saved_window->hide();
     }
     else
     {
-        m_saved_view->show();
-        m_saved_view->raise();
+        m_saved_window->show();
+        m_saved_window->raise();
     }
 }
 
 void SystrayManager::sensorsButton()
 {
-    m_saved_view->show();
-    m_saved_view->raise();
+    m_saved_window->show();
+    m_saved_window->raise();
     Q_EMIT sensorsClicked();
 }
 
 void SystrayManager::settingsButton()
 {
-    m_saved_view->show();
-    m_saved_view->raise();
+    m_saved_window->show();
+    m_saved_window->raise();
     Q_EMIT settingsClicked();
 }
 
@@ -279,7 +279,7 @@ void SystrayManager::settingsButton()
 
 void SystrayManager::visibilityChanged()
 {
-    if (m_saved_view->isVisible())
+    if (m_saved_window->isVisible())
     {
         m_actionShow->setText(tr("Hide"));
     }

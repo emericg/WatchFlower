@@ -45,8 +45,9 @@ class UtilsLog : public QObject
     ~UtilsLog();
 
 public:
-    static UtilsLog *getInstance(const bool enabled);
-    static UtilsLog *getInstance();
+    static UtilsLog *getInstance(const bool enabled = true);
+
+    void setEnabled(const bool enabled);
 
     bool openLogFile(const QString &path = QString());
 

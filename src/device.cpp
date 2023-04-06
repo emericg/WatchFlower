@@ -32,6 +32,7 @@
 #include <QBluetoothAddress>
 #include <QBluetoothServiceInfo>
 #include <QLowEnergyService>
+#include <QLowEnergyConnectionParameters>
 
 #include <QJsonDocument>
 #include <QSqlQuery>

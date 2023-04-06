@@ -41,10 +41,10 @@ class MacOSDockHandler : public QObject
 {
     Q_OBJECT
 
-    QQuickWindow *m_saved_view = nullptr;
-
     MacOSDockHandler();
     ~MacOSDockHandler();
+
+    QQuickWindow *m_saved_window = nullptr;
 
 signals:
     void dockIconClicked();
@@ -52,7 +52,7 @@ signals:
 public:
     static MacOSDockHandler *getInstance();
 
-    void setupDock(QQuickWindow *view);
+    void setupDock(QQuickWindow *window);
 
     Q_INVOKABLE static void toggleDockIconVisibility(bool show);
 };

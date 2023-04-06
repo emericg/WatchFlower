@@ -56,7 +56,6 @@
 #include <QBluetoothDeviceDiscoveryAgent>
 #include <QBluetoothAddress>
 #include <QBluetoothDeviceInfo>
-#include <QLowEnergyConnectionParameters>
 
 #include <QSqlDatabase>
 #include <QSqlDriver>
@@ -219,7 +218,6 @@ DeviceManager::~DeviceManager()
 {
     delete m_bluetoothAdapter;
     delete m_discoveryAgent;
-    delete m_ble_params;
 
     delete m_devices_nearby_filter;
     delete m_devices_nearby_model;
@@ -1650,6 +1648,20 @@ void DeviceManager::removeDeviceData(const QString &address)
 
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+QVariant DeviceManager::getDeviceByProxyIndex(const int index, const DeviceUtils::DeviceType deviceType) const
+{
+    DeviceFilter *filter = m_devices_filter;
+    if (deviceType > 0)
+    {
+        if (deviceType == DeviceUtils::DEVICE_PLANTSENSOR) filter = m_devicesPlant_filter;
+        if (deviceType == DeviceUtils::DEVICE_THERMOMETER) filter = m_devicesThermo_filter;
+        if (deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL) filter = m_devicesEnv_filter;
+    }
+
+    QModelIndex proxyIndex = filter->index(index, 0);
+    return QVariant::fromValue(filter->data(proxyIndex, DeviceModel::PointerRole));
+}
 
 void DeviceManager::invalidate()
 {

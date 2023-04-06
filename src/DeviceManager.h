@@ -32,9 +32,9 @@
 
 #include <QBluetoothLocalDevice>
 #include <QBluetoothDeviceDiscoveryAgent>
-QT_FORWARD_DECLARE_CLASS(QBluetoothDeviceInfo)
-QT_FORWARD_DECLARE_CLASS(QLowEnergyController)
-QT_FORWARD_DECLARE_CLASS(QLowEnergyConnectionParameters)
+
+class QBluetoothDeviceInfo;
+class QLowEnergyController;
 
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ class DeviceManager: public QObject
 
     QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
-    QLowEnergyConnectionParameters *m_ble_params = nullptr;
     QBluetoothLocalDevice::HostMode m_ble_hostmode = QBluetoothLocalDevice::HostPoweredOff;
 
     QList <QString> m_devices_blacklist;
@@ -232,6 +231,9 @@ public:
     DeviceFilter *getDevicesEnvFiltered() const { return m_devicesEnv_filter; }
     int getDeviceEnvCount() const { return m_devicesEnv_model->getDeviceCount(); }
 
+    Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index,
+                                               const DeviceUtils::DeviceType deviceType = DeviceUtils::DEVICE_UNKNOWN) const;
+
     Q_INVOKABLE void orderby_manual();
     Q_INVOKABLE void orderby_model();
     Q_INVOKABLE void orderby_name();
@@ -241,26 +243,13 @@ public:
     Q_INVOKABLE void orderby_insideoutside();
     void orderby(int role, Qt::SortOrder order);
 
+    void invalidate();
+
+    // Device data export
     Q_INVOKABLE bool exportDataSave();
     Q_INVOKABLE QString exportDataOpen();
     Q_INVOKABLE QString exportDataFolder();
     bool exportData(const QString &exportFilePath);
-
-    Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index, const int deviceType = 0) const
-    {
-        DeviceFilter *filter = m_devices_filter;
-        if (deviceType > 0)
-        {
-            if (deviceType == DeviceUtils::DEVICE_PLANTSENSOR) filter = m_devicesPlant_filter;
-            if (deviceType == DeviceUtils::DEVICE_THERMOMETER) filter = m_devicesThermo_filter;
-            if (deviceType == DeviceUtils::DEVICE_ENVIRONMENTAL) filter = m_devicesEnv_filter;
-        }
-
-        QModelIndex proxyIndex = filter->index(index, 0);
-        return QVariant::fromValue(filter->data(proxyIndex, DeviceModel::PointerRole));
-    }
-
-    void invalidate();
 };
 
 /* ************************************************************************** */

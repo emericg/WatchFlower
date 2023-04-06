@@ -45,19 +45,6 @@ UtilsLog *UtilsLog::getInstance(const bool enabled)
     }
 }
 
-UtilsLog *UtilsLog::getInstance()
-{
-    if (instance == nullptr)
-    {
-        instance = new UtilsLog();
-        return instance;
-    }
-    else
-    {
-        return instance;
-    }
-}
-
 UtilsLog::UtilsLog(const bool enabled)
 {
     m_logging = enabled;
@@ -75,6 +62,12 @@ UtilsLog::~UtilsLog()
 }
 
 /* ************************************************************************** */
+
+void UtilsLog::setEnabled(const bool enabled)
+{
+    m_logging = enabled;
+    openLogFile();
+}
 
 bool UtilsLog::openLogFile(const QString &path)
 {

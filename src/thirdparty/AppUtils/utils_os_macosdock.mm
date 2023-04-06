@@ -75,18 +75,18 @@ MacOSDockHandler::~MacOSDockHandler()
 
 /* ************************************************************************** */
 
-void MacOSDockHandler::setupDock(QQuickWindow *view)
+void MacOSDockHandler::setupDock(QQuickWindow *window)
 {
-    if (!view)
+    if (!window)
     {
         qWarning() << "MacOSDockHandler::setupDock() no QQuickWindow passed";
         return;
     }
 
-    m_saved_view = view;
+    m_saved_window = window;
 
-    QObject::connect(this, &MacOSDockHandler::dockIconClicked, m_saved_view, &QQuickWindow::show);
-    QObject::connect(this, &MacOSDockHandler::dockIconClicked, m_saved_view, &QQuickWindow::raise);
+    QObject::connect(this, &MacOSDockHandler::dockIconClicked, m_saved_window, &QQuickWindow::show);
+    QObject::connect(this, &MacOSDockHandler::dockIconClicked, m_saved_window, &QQuickWindow::raise);
 }
 
 void MacOSDockHandler::toggleDockIconVisibility(bool show)
