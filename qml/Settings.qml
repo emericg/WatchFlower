@@ -1512,27 +1512,22 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    Row {
+                    SelectorMenu {
                         id: row_thermometer_unit
+                        height: 32
                         anchors.right: parent.right
                         anchors.rightMargin: 12
-                        anchors.verticalCenter: text_thermometer_unit.verticalCenter
-                        spacing: 12
+                        anchors.verticalCenter: parent.verticalCenter
 
-                        SelectorMenu {
-                            height: 32
-                            anchors.verticalCenter: parent.verticalCenter
+                        model: ListModel {
+                            ListElement { idx: 1; txt: qsTr("°C"); src: ""; sz: 16; }
+                            ListElement { idx: 2; txt: qsTr("°F"); src: ""; sz: 16; }
+                        }
 
-                            model: ListModel {
-                                ListElement { idx: 1; txt: qsTr("°C"); src: ""; sz: 16; }
-                                ListElement { idx: 2; txt: qsTr("°F"); src: ""; sz: 16; }
-                            }
-
-                            currentSelection: (settingsManager.tempUnit === 'C') ? 1 : 2
-                            onMenuSelected: (index) => {
-                                currentSelection = index
-                                settingsManager.tempUnit = (index === 1) ? 'C' : 'F'
-                            }
+                        currentSelection: (settingsManager.tempUnit === 'C') ? 1 : 2
+                        onMenuSelected: (index) => {
+                            currentSelection = index
+                            settingsManager.tempUnit = (index === 1) ? 'C' : 'F'
                         }
                     }
                 }
