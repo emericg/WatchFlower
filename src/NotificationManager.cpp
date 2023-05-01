@@ -22,7 +22,6 @@
 #include "NotificationManager.h"
 #include "SystrayManager.h"
 
-#include <QString>
 #if defined(Q_OS_ANDROID)
 #include <QJniObject>
 #include <QCoreApplication>
