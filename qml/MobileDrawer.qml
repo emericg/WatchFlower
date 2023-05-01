@@ -4,8 +4,9 @@ import QtQuick.Controls
 import ThemeEngine 1.0
 
 Drawer {
-    width: parent.width*0.8
-    height: parent.height
+    //width: parent.width*0.8
+    width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
+    height: appWindow.height
 
     ////////////////////////////////////////////////////////////////////////////
 

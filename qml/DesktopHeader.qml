@@ -9,7 +9,7 @@ Rectangle {
     z: 10
     color: Theme.colorHeader
 
-    property int headerHeight: isHdpi ? 60 : 64
+    property int headerHeight: isHdpi ? 58 : 64
 
     ////////////////////////////////////////////////////////////////////////////
 

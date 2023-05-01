@@ -86,6 +86,9 @@ Flickable {
                 spacing: 12
 
                 Column {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+
                     Text {
                         text: qsTr("Bluetooth name")
                         textFormat: Text.PlainText
@@ -95,15 +98,20 @@ Flickable {
                         font.capitalization: Font.AllUppercase
                     }
                     Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         text: currentDevice.deviceName
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
                         font.capitalization: Font.Capitalize
                         color: Theme.colorHighContrast
+                        elide: Text.ElideRight
                     }
                 }
 
                 Column {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     Text {
                         text: qsTr("Bluetooth address")
                         textFormat: Text.PlainText
@@ -113,6 +121,8 @@ Flickable {
                         font.capitalization: Font.AllUppercase
                     }
                     Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         text: (Qt.platform.os === "osx" || Qt.platform.os === "ios") ?
                                   currentDevice.deviceAddress :
                                   "[" + currentDevice.deviceAddress + "]"
@@ -120,6 +130,7 @@ Flickable {
                         color: Theme.colorHighContrast
                         font.pixelSize: Theme.fontSizeContentBig
                         font.capitalization: Font.AllUppercase
+                        elide: Text.ElideRight
                     }
                 }
 
