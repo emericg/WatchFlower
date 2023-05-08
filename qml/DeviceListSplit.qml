@@ -86,7 +86,7 @@ Item {
             anchors.right: parent.right
 
             topPadding: 12
-            bottomPadding: 12
+            bottomPadding: 8
             spacing: singleColumn ? 0 : 8
 
             ////////

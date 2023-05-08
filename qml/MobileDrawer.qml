@@ -401,8 +401,7 @@ Drawer {
                         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                         color: buttonRefresh.enabled ? Theme.colorText : Theme.colorSubText
 
-                        NumberAnimation on rotation {
-                            id: refreshAnimation
+                        NumberAnimation on rotation { // refreshAnimation
                             duration: 2000
                             from: 0
                             to: 360

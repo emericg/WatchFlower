@@ -16,8 +16,6 @@ ApplicationWindow {
     property bool isTablet: false
     property bool isHdpi: (utilsScreen.screenDpi >= 128 || utilsScreen.screenPar >= 2.0)
 
-    property var selectedDevice: null
-
     // Desktop stuff ///////////////////////////////////////////////////////////
 
     minimumWidth: isHdpi ? 400 : 480
@@ -349,6 +347,8 @@ ApplicationWindow {
 
     // QML /////////////////////////////////////////////////////////////////////
 
+    property var selectedDevice: null
+
     PopupCalibration {
         id: popupCalibration
     }
@@ -544,4 +544,6 @@ ApplicationWindow {
             }
         ]
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

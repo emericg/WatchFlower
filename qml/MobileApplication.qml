@@ -20,8 +20,6 @@ ApplicationWindow {
     property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize < 7.0))
     property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize >= 7.0))
 
-    property var selectedDevice: null
-
     // Mobile stuff ////////////////////////////////////////////////////////////
 
     // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation
@@ -287,6 +285,8 @@ ApplicationWindow {
     property bool wideWideMode: (width >= 640)
 
     // QML /////////////////////////////////////////////////////////////////////
+
+    property var selectedDevice: null
 
     PopupCalibration {
         id: popupCalibration
@@ -591,4 +591,6 @@ ApplicationWindow {
             color: Theme.colorText
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

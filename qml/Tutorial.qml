@@ -119,8 +119,10 @@ Rectangle {
                             layoutDirection: Qt.RightToLeft
                             fullColor: true
                             primaryColor: Theme.colorHeaderHighlight
+
                             text: qsTr("Supported sensors")
                             source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                            onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
                         }
                     }
                 }

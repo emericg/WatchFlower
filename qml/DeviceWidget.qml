@@ -112,21 +112,6 @@ Item {
             textStatus.color = Theme.colorYellow
             textStatus.text = qsTr("Disabled")
         }
-
-        // Image
-        if (!boxDevice.isDataToday()) {
-            if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
-            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
-            } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
-            } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
-                imageStatus.source = "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
-            } else {
-                imageStatus.source = "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-            }
-        }
     }
 
     function updateSensorSettings() {
@@ -145,7 +130,6 @@ Item {
             textTitle.text = boxDevice.deviceName
         }
         // Location
-        textLocation.font.pixelSize = bigAssMode ? 20 : 18
         if (boxDevice.deviceLocationName) {
             textLocation.visible = true
             textLocation.text = boxDevice.deviceLocationName
@@ -592,6 +576,19 @@ Item {
             color: Theme.colorIcon
             opacity: 0.8
 
+            source: {
+                if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
+                    return "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
+                } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
+                    return "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
+                } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
+                    return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+                } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
+                    return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+                }
+                return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+            }
+
             SequentialAnimation on opacity {
                 id: refreshAnimation
                 loops: Animation.Infinite
@@ -959,6 +956,7 @@ Item {
 
                 arcWidth: isPhone ? 8 : (bigAssMode ? 10 : 8)
                 arcSpan: 270
+                arcCap: "round"
 
                 from: 0
                 to: 1500

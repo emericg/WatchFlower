@@ -256,10 +256,10 @@ Loader {
 
                     text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
                     textFormat: Text.StyledText
-                    onLinkActivated: Qt.openUrlExternally(link)
                     font.pixelSize: Theme.fontSizeContent
                     color: Theme.colorText
                     linkColor: Theme.colorText
+                    onLinkActivated: (link) => { Qt.openUrlExternally(link) }
 
                     MouseArea {
                         anchors.fill: parent
@@ -879,4 +879,6 @@ Loader {
             ////////
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }
