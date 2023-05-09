@@ -44,44 +44,38 @@ You can also create your own sensors and use them with WatchFlower! Checkout thi
 
 > WatchFlower is NOT associated with Xiaomi, Parrot, or any device manufacturer.
 
-Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can. You can use the affiliate links below to be sure of what you are buying.
+Please note that most Chinese devices have many names, usually no official manufacturer, sometimes a couple of variants potentially sold as the same base model. We do our best to identify them as clearly as we can.
 
 | Flower Care | Flower Care | Flower Care Max | RoPot | Flower Power | Parrot Pot |
 | :---------: | :---------: | :-------------: | :---: | :----------: | :--------: |
 | ![FlowerCare](docs/flowercare.svg) | ![FlowerCare](docs/flowercare.svg) | ![FlowerCare Max](docs/flowercaremax.svg) | ![RoPot](docs/ropot.svg) | ![FlowerPower](docs/flowerpower.svg) | ![ParrotPot](docs/parrotpot.svg) |
 | HHCCJCY01 | HHCCJCY10 | HHCCJCY09 <br> GCLS002 | HHCCPOT002 | RKXHAWAII | 2AG61POT |
 | Xiaomi / VegTrug / ...<br>(International and Chinese versions) | Tuya | Xiaomi and VegTrug variants | Xiaomi and VegTrug variants | | (monitoring only) |
-| [shop](https://www.banggood.com/custlink/DKKDVksMWv) | | | | | |
 
 | Xiaomi MiJia Bluetooth Hygrometer (LCD) | ClearGrass Temp & RH Monitor (EInk) | Qingping Temp & RH Monitor Lite (LCD) |
 | :-----------------------------: | :----------------------------------: | :-------------------------: |
 | ![LYWSDCGQ](docs/hygrotemp_lywsdcgq.svg) | ![CGG1](docs/hygrotemp_cgg1.svg) | ![CGDK2](docs/hygrotemp_cgdk2.svg) |
 | LYWSDCGQ | CGG1 | CGDK2 |
-| [shop](https://www.banggood.com/custlink/3KDK5qQqvj) | [shop](https://www.banggood.com/custlink/KvKGHkAMDT) | |
 
 | Miaomiaoce Thermo-Hygrometer 2 (LCD) | Miaomiaoce Thermo-Hygrometer 2 (EInk) | Miaomiaoce Thermo-Hygrometer (EInk) |
 | :----------------------------------: | :---------------------------------: | :---------------------------------: |
 | ![LYWSD03MMC](docs/hygrotemp_lywsd03mmc.svg) | ![MHO-C401](docs/hygrotemp_mhoc401.svg) | ![XMWSDJO4MMC](docs/hygrotemp_xmwsdjo4mmc.svg) |
 | LYWSD03MMC | MHO-C401 | XMWSDJO4MMC |
-| [shop](https://www.banggood.com/custlink/vG33kIGiqv) / [shop](https://www.banggood.com/custlink/Kv3DuJio9Q) | [shop](https://www.banggood.com/custlink/GGGdWczfB6) | [shop](https://www.banggood.com/custlink/3DmR2A33n6) |
 
 | Miaomiaoce Digital Hygrometer Clock (EInk) | Miaomiaoce Digital Hygrometer Alarm (EInk) | Qingping Bluetooth Alarm Clock (LCD) | Qingping Temp & RH Barometer Pro S (LCD) |
 | :----------------------------------------: | :----------------------------------------: | :----------------------------------: | :--------------------------------------: |
 | ![HygroTempClock](docs/hygrotemp_clock.svg) | ![HygroTempAlarm](docs/hygrotemp_alarm.svg) | ![CGD1](docs/hygrotemp_cgd1.svg) | ![CGP1W](docs/hygrotemp_cgp1w.svg) |
 | LYWSD02 | MHO-C303 | CGD1 | CGP1W |
-| [shop](https://www.banggood.com/custlink/v3GmHzAQ9k) | [shop](https://www.banggood.com/custlink/3DvyFIBoC7) | | | |
 
 | ThermoBeacon (round keychain) | ThermoBeacon (diamond keychain) | ThermoBeacon (LCD) |
 | :---------------------------: | :-----------------------------: | :----------------: |
 | ![ThermoBeacon](docs/thermobeacon_round.svg) | ![ThermoBeacon](docs/thermobeacon_diamond.svg) | ![ThermoBeacon](docs/thermobeacon_square.svg) |
 | 2ACD3-WS02<br>2ACD3-WS07 |  2ACD3-WS02 | 2ACD3-WS08<br>KEU-WA59D |
-| | | [shop](https://www.banggood.com/custlink/DKKYiqcRij) |
 
 | Air Box WP6003 | Honeywell HCHO detector | Qingping Air Monitor Lite |
 | :------------: | :---------------------: | :-----------------------: |
 | ![WP6003](docs/wp6003.svg) | ![JQJCY01YM](docs/jqjcy01ym.svg) | ![CGDN1](docs/cgdn1.svg) |
 | | JQJCY01YM | CGDN1 |
-| [shop](https://www.banggood.com/custlink/mK3yOI9teA) | |
 
 | b-parasite                        | HiGrow                            |
 | :-------------------------------: | :-------------------------------: |

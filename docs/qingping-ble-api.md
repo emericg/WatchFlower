@@ -74,7 +74,7 @@ Example with a CGP1W advertisement message:
 | CGDK2        | 0x10                     |
 | CGF1W        | 0x15                     |
 | CGD1         | 0x0C                     |
-| CGDN1        | 0x0E                     |
+| CGDN1        | 0x0E / 0x24              |
 | CGM1         | 0x0F                     |
 | CGP1W        | 0x09 / 0x24              |
 | CGPR1        | 0x12                     |

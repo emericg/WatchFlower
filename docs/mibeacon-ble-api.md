@@ -84,6 +84,7 @@ Only one measurement is sent per advertisement message. Allegedly it supports mu
 | CGG1         | 0x0347       |
 | CGG1-M       | 0x0B48       |
 | LYWSD02      | 0x045B       |
+| LYWSD02MMC   | 0x16E4/0x2542|
 | LYWSD03MMC   | 0x055B       |
 | CGDK2        | 0x066F       |
 | MHO-C303     | 0x06D3       |
@@ -177,6 +178,7 @@ Only one measurement is sent per advertisement message. Allegedly it supports mu
 0x01AA = LYWSDCGQ
 0x045B = LYWSD02
 0x16e4 = LYWSD02MMC
+0x2542 = LYWSD02MMC
 0x055B = LYWSD03MMC
 0x098B = MCCGQ02HL
 0x06d3 = MHO-C303
@@ -185,6 +187,7 @@ Only one measurement is sent per advertisement message. Allegedly it supports mu
 0x04E9 = MJZNMSQ01YD
 0x2832 = MJWSD05MMC
 0x00DB = MMC-T201-1
+0x0391 = MMC-W505
 0x03DD = MUE4094RT
 0x0489 = M1S-T500
 0x0A8D = RTCGQ02LM
