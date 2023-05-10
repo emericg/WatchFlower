@@ -325,7 +325,7 @@ Item {
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorWarning
                     background: true
 
                     onClicked: {
@@ -364,6 +364,21 @@ Item {
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ButtonWireframeIcon {
+                height: 36
+                anchors.left: parent.left
+                anchors.leftMargin: 64
+
+                primaryColor: Theme.colorPrimary
+                secondaryColor: Theme.colorBackground
+
+                text: qsTr("Location settings")
+                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                sourceSize: 20
+
+                onClicked: utilsApp.openAndroidLocationSettings()
             }
 
             ////////

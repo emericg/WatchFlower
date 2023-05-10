@@ -115,10 +115,27 @@ public:
      */
     static bool getPermission_phonestate();
 
+    /* ********************************************************************** */
+
     /*!
      * \return True if device GPS is turned on.
      */
     static bool isGpsEnabled();
+
+    /*!
+     * \return True if device GPS is turned on (using QGpsUtils.java).
+     */
+    static bool gpsutils_isGpsEnabled();
+
+    /*!
+     * \return True if device GPS has been turned on turned on (using QGpsUtils.java).
+     */
+    static bool gpsutils_forceGpsEnabled();
+
+    /*!
+     * \brief Open the Android location settings intent (using QGpsUtils.java).
+     */
+    static void gpsutils_openLocationSettings();
 
     /* ********************************************************************** */
 
@@ -211,11 +228,16 @@ public:
     /* ********************************************************************** */
 
     /*!
+     * \brief Open the Android application info intent for the given package name.
      * \param packageName: the application package, for instance 'com.application.identifier'.
-     *
-     * Open the Android application info intent for the given package name.
      */
     static void openApplicationInfo(const QString &packageName);
+
+    /*!
+     * \brief Open the Android location settings intent.
+     * \note WIP doesn't actually work...
+     */
+    static void openLocationSettings();
 };
 
 /* ************************************************************************** */

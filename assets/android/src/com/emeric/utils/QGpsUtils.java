@@ -62,7 +62,7 @@ public class QGpsUtils
 
             return gps_enabled;
 
-        } else {
+        } else { // up to API level 27
 
             final int locationMode;
             try {
@@ -87,7 +87,11 @@ public class QGpsUtils
         }
     }
 
-    public static Intent forceGpsEnabled(final Context context) {
+    public static boolean forceGpsEnabled(final Context context) {
+        return false;
+    }
+
+    public static Intent openLocationSettings() {
         Intent gpsActivationIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         return gpsActivationIntent;
     }

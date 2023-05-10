@@ -72,11 +72,12 @@ public:
 
     // mobile related
 
-    static Q_INVOKABLE void vibrate(int ms);
-
     static Q_INVOKABLE int getAndroidSdkVersion();
 
     static Q_INVOKABLE void openAndroidAppInfo(const QString &packageName);
+    static Q_INVOKABLE void openAndroidLocationSettings();
+
+    static Q_INVOKABLE void vibrate(int ms);
 
     static Q_INVOKABLE bool checkMobileStoragePermissions();
     static Q_INVOKABLE bool getMobileStoragePermissions();
@@ -101,6 +102,7 @@ public:
     static Q_INVOKABLE bool getMobileCameraPermission();
 
     static Q_INVOKABLE bool isMobileGpsEnabled();
+    static Q_INVOKABLE void forceMobileGpsEnabled();
 
     static Q_INVOKABLE QString getMobileDeviceModel();
     static Q_INVOKABLE QString getMobileDeviceSerial();

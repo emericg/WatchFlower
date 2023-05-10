@@ -260,6 +260,14 @@ void UtilsApp::openAndroidAppInfo(const QString &packageName)
     Q_UNUSED(packageName)
 }
 
+void UtilsApp::openAndroidLocationSettings()
+{
+#if defined(Q_OS_ANDROID)
+    //UtilsAndroid::openLocationSettings();
+    UtilsAndroid::gpsutils_openLocationSettings();
+#endif
+}
+
 bool UtilsApp::checkMobileLocationPermission()
 {
 #if defined(Q_OS_ANDROID)
@@ -433,9 +441,16 @@ bool UtilsApp::getMobileCameraPermission()
 bool UtilsApp::isMobileGpsEnabled()
 {
 #if defined(Q_OS_ANDROID)
-    return UtilsAndroid::isGpsEnabled();
+    return UtilsAndroid::gpsutils_isGpsEnabled();
 #else
     return false;
+#endif
+}
+
+void UtilsApp::forceMobileGpsEnabled()
+{
+#if defined(Q_OS_ANDROID)
+    UtilsAndroid::gpsutils_forceGpsEnabled();
 #endif
 }
 
