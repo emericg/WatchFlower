@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import ThemeEngine 1.0
-//import PlantUtils 1.0
+import PlantUtils 1.0
 import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
 
 Grid {
@@ -64,13 +64,10 @@ Grid {
         col3.contentY = 0
 
         plantNameBotanical.text = currentPlant.nameBotanical
-        plantNameVariety.text = currentPlant.nameVariety
-        plantNameCommon.text = currentPlant.nameCommon
+        plantNameVariety.text = "" + currentPlant.nameVariety + ""
+        plantNameCommon.text = "« " + currentPlant.nameCommon + " »"
         plantCategory.text = currentPlant.category
         plantOrigin.text = currentPlant.origin
-
-        itemType.text = UtilsPlantDatabase.getPlantTypeText(currentPlant.type)
-        itemType.color = UtilsPlantDatabase.getPlantTypeColor(currentPlant.type)
 
         // tags
         plantTags.model = currentPlant.tags
@@ -84,7 +81,7 @@ Grid {
         plantColorFlower.model = currentPlant.colorsFlower
         itemColorFruit.visible = (currentPlant.colorsFruit.length > 0)
         plantColorFruit.model = currentPlant.colorsFruit
-/*
+
         // sizes
         if (currentPlant.diameter) {
             plantDiameterTxt.text = currentPlant.diameter + " cm"
@@ -109,65 +106,63 @@ Grid {
             //}
         }
 
-        // calendar
-        //plantBlooming.text = currentPlant.calendarPlanting
-        //currentPlant.calendarGrowing
-        //currentPlant.calendarBlooming
-        //currentPlant.calendarFruiting
-*/
+        var colorDisabled = Theme.colorLowContrast // Theme.colorMaterialGrey
+
         // sunlight
         rectangleSunlight.visible = currentPlant.sunlight
         if (currentPlant.sunlight) {
-            plantSunlight.text = currentPlant.sunlight
+            plantSunlight.text = UtilsPlantDatabase.getSunlightText(currentPlant.sunlight)
 
-            sunlight4.color = currentPlant.sunlight.includes("full sun") ? Theme.colorYellow : Qt.lighter(Theme.colorYellow, 1.8)
-            sunlight3.color = currentPlant.sunlight.includes("part sun") ? Qt.lighter(Theme.colorYellow, 1.25) : Qt.lighter(Theme.colorYellow, 1.8)
-            sunlight2.color = currentPlant.sunlight.includes("part shade") ? Qt.lighter(Theme.colorYellow, 1.45) : Qt.lighter(Theme.colorYellow, 1.85)
-            sunlight1.color = currentPlant.sunlight.includes("shade to") ||
-                              currentPlant.sunlight.includes("to shade") ? Qt.lighter(Theme.colorYellow, 1.55) : Qt.lighter(Theme.colorYellow, 1.9)
+            sunlight1.color = colorDisabled
+            sunlight2.color = colorDisabled
+            sunlight3.color = colorDisabled
+            sunlight4.color = colorDisabled
 
-            if (currentPlant.sunlight === "full sun") {
-                sunlight4.color = Theme.colorYellow
-                sunlight3.color = Qt.lighter(Theme.colorYellow, 1.25)
-                sunlight2.color = Qt.lighter(Theme.colorYellow, 1.45)
-                sunlight1.color = Qt.lighter(Theme.colorYellow, 1.55)
-            }
-            if (currentPlant.sunlight === "full sun to part shade") {
-                sunlight3.color = Qt.lighter(Theme.colorYellow, 1.25)
+            var parts = currentPlant.sunlight.split('-')
+            for (var i = parts[0]; i <= (parts[1] || parts[0]); i++) {
+                if (i == 1 || currentPlant.sunlight === "4") sunlight1.color = Theme.colorYellow
+                if (i == 2 || currentPlant.sunlight === "4") sunlight2.color = Theme.colorYellow
+                if (i == 3 || currentPlant.sunlight === "4") sunlight3.color = Theme.colorYellow
+                if (i == 4 || currentPlant.sunlight === "4") sunlight4.color = Theme.colorYellow
             }
         }
 
         // watering
         rectangleWatering.visible = currentPlant.watering
         if (currentPlant.watering) {
-            //plantWatering.text = currentPlant.watering
-            var watwat = currentPlant.watering.charAt(0)
-            var watStr = ""
-            if (watwat == 1) watStr = qsTr("low water needs") + "<br>"
-            else if (watwat == 2) watStr = qsTr("medium water needs") + "<br>"
-            else if (watwat == 3) watStr = qsTr("high water needs") + "<br>"
-            else if (watwat == 4) watStr = qsTr("keep moist") + "<br>"
-            if (currentPlant.watering.includes("dry")) watStr += qsTr("water when soil is dry")
-            if (currentPlant.watering.includes("spay")) watStr += qsTr("spray water on leaves")
+            plantWatering.text = UtilsPlantDatabase.getWateringText(currentPlant.watering)
 
-            var colorWaterDisabled = Theme.colorLowContrast // Qt.lighter(Theme.colorBlue, 1.6)
-            water2.color = watwat >= 2 ? Theme.colorBlue : colorWaterDisabled
-            water3.color = watwat >= 3 ? Theme.colorBlue : colorWaterDisabled
-            water4.color = watwat >= 4 ? Theme.colorBlue : colorWaterDisabled
-            plantWatering.text = watStr
+            water2.color = colorDisabled
+            water3.color = colorDisabled
+            water4.color = colorDisabled
+
+            var total = currentPlant.watering.split(',')
+            var parts = total[0].split('-')
+            if (parts.length > 1) {
+                for (var i = parts[0]; i <= (parts[1] || parts[0]); i++) {
+                    if (i == 2) water2.color = Theme.colorBlue
+                    if (i == 3) water3.color = Theme.colorBlue
+                    if (i == 4) water4.color = Theme.colorBlue
+                }
+            } else {
+                water2.color = (parts[0] >= 2) ? Theme.colorBlue : colorDisabled
+                water3.color = (parts[0] >= 3) ? Theme.colorBlue : colorDisabled
+                water4.color = (parts[0] >= 4) ? Theme.colorBlue : colorDisabled
+            }
         }
 
         // Fertilization
-        rectangleFertilization.visible = currentPlant.fertilization
-        plantFertilization.text = currentPlant.fertilization
+        plantFertilization.text = UtilsPlantDatabase.getFertilizationText(currentPlant.fertilization)
+        plantFertilizationTags.text = UtilsPlantDatabase.getFertilizationTagsText(currentPlant.fertilization)
+        rectangleFertilization.visible = plantFertilization.text
 
         // Pruning
-        rectanglePruning.visible = currentPlant.pruning
-        plantPruning.text = currentPlant.pruning
+        plantPruning.text = UtilsPlantDatabase.getPruningText(currentPlant.pruning)
+        rectanglePruning.visible = plantPruning.text
 
         // Soil
-        rectangleSoil.visible = currentPlant.soil
-        plantSoil.text = currentPlant.soil
+        plantSoil.text = UtilsPlantDatabase.getSoilText(currentPlant.soil)
+        rectangleSoil.visible = plantSoil.text
 
         // limit sliders
         rangeSlider_soilMoist.setValues(currentPlant.soilMoist_min, currentPlant.soilMoist_max)
@@ -264,7 +259,7 @@ Grid {
                     Column {
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        visible: plantNameVariety.text
+                        visible: currentPlant.nameVariety
 
                         Text {
                             text: qsTr("variety")
@@ -364,7 +359,7 @@ Grid {
                     Column {
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        visible: plantNameVariety.text
+                        visible: currentPlant && currentPlant.nameVariety
 
                         Text {
                             text: qsTr("variety")
@@ -388,7 +383,7 @@ Grid {
                     Column {
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        visible: plantNameCommon.text
+                        visible: currentPlant && currentPlant.nameCommon
 
                         Text {
                             text: qsTr("common name")
@@ -487,14 +482,6 @@ Grid {
 
             ////////
 
-            ItemTag {
-                id: itemType
-                visible: text
-                color: Theme.colorGreen
-                textColor: "white"
-                textSize: Theme.fontSizeContentSmall
-            }
-
             Flow {
                 id: itemTags
                 anchors.left: parent.left
@@ -505,10 +492,11 @@ Grid {
                     id: plantTags
 
                     ItemTag {
-                        text: UtilsPlantDatabase.getPlantTagText(modelData)
+                        text: UtilsPlantDatabase.getPlantTagsText(modelData)
+                        textBold: true
                         textColor: "white"
                         textSize: Theme.fontSizeContentSmall
-                        color: UtilsPlantDatabase.getPlantTagColor(modelData)
+                        color: UtilsPlantDatabase.getPlantTagsColor(modelData)
                     }
                 }
             }
@@ -689,7 +677,7 @@ Grid {
             }
 
             ////////
-/*
+
             Row {
                 anchors.left: parent.left
                 anchors.right: parent.right
@@ -735,7 +723,6 @@ Grid {
                     }
                 }
             }
-*/
 /*
             Column {
                 anchors.left: parent.left
@@ -821,6 +808,57 @@ Grid {
             Column {
                 anchors.left: parent.left
                 anchors.right: parent.right
+                spacing: 4
+
+                visible: currentPlant && currentPlant.hardiness
+
+                Text {
+                    text: qsTr("hardiness")
+                    textFormat: Text.PlainText
+                    color: Theme.colorSubText
+                    font.bold: true
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    font.capitalization: Font.AllUppercase
+                }
+
+                PlantHardinessWidget {
+                    id: hw
+
+                    plant: currentPlant
+                }
+            }
+
+            ////////
+
+            Column {
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                visible: currentPlant && (currentPlant.calendarPlanting.length > 0 || currentPlant.calendarFertilizing.length > 0 ||
+                                          currentPlant.calendarGrowing.length > 0 || currentPlant.calendarBlooming.length > 0 ||
+                                          currentPlant.calendarFruiting.length > 0)
+
+                Text {
+                    text: qsTr("calendar")
+                    textFormat: Text.PlainText
+                    color: Theme.colorSubText
+                    font.bold: true
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    font.capitalization: Font.AllUppercase
+                }
+
+                PlantCalendarWidget {
+                    id: plantCalendarWidget
+
+                    plant: currentPlant
+                }
+            }
+
+            ////////
+
+            Column {
+                anchors.left: parent.left
+                anchors.right: parent.right
                 spacing: 8
 
                 Text {
@@ -885,7 +923,7 @@ Grid {
         contentHeight: columnCare.height + 32
         interactive: (uiMode !== 1)
 
-        Column  {
+        Column {
             id: columnCare
             width: plantScreen.www2
             spacing: 16
@@ -912,56 +950,46 @@ Grid {
                     border.color: Theme.colorSeparator
 
                     Item {
-                        anchors.fill: parent
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
                         anchors.margins: 2
-                        clip: true
+                        width: parent.width - 8
+                        height: parent.height - 8
 
-                        Rectangle {
+                        IconSvg {
                             id: sunlight1
-                            anchors.verticalCenter: parent.bottom
-                            anchors.horizontalCenter: parent.right
-                            width: plantScreen.www2 * 0.95 - 4 - 8
-                            height: width
-                            radius: width
-                            //opacity: 0.8
+                            anchors.fill: parent
+                            opacity: 0.16
                             color: Theme.colorYellow
-                            border.width: 2
-                            border.color: "white"
+                            source: "qrc:/assets/icons_custom/sunlight4-24px.svg"
                         }
-                        Rectangle {
+                        IconSvg {
                             id: sunlight2
-                            anchors.verticalCenter: parent.bottom
-                            anchors.horizontalCenter: parent.right
-                            width: plantScreen.www2 * 0.68
-                            height: width
-                            radius: width
-                            //opacity: 0.33
+                            anchors.fill: parent
+                            opacity: 0.4
                             color: Theme.colorYellow
-                            border.width: 2
-                            border.color: "white"
+                            source: "qrc:/assets/icons_custom/sunlight3-24px.svg"
                         }
-                        Rectangle {
+                        IconSvg {
                             id: sunlight3
-                            anchors.verticalCenter: parent.bottom
-                            anchors.horizontalCenter: parent.right
-                            width: plantScreen.www2 * 0.45
-                            height: width
-                            radius: width
-                            //opacity: 0.5
+                            anchors.fill: parent
+                            opacity: 0.6
                             color: Theme.colorYellow
-                            border.width: 2
-                            border.color: "white"
+                            source: "qrc:/assets/icons_custom/sunlight2-24px.svg"
                         }
-                        Rectangle {
+                        IconSvg {
                             id: sunlight4
-                            anchors.verticalCenter: parent.bottom
-                            anchors.horizontalCenter: parent.right
-                            width: plantScreen.www2 * 0.25
-                            height: width
-                            radius: width
+                            anchors.fill: parent
+                            opacity: 1
                             color: Theme.colorYellow
-                            border.width: 2
-                            border.color: "white"
+                            source: "qrc:/assets/icons_custom/sunlight1-24px.svg"
+                        }
+                        IconSvg {
+                            id: sunlight_borders
+                            anchors.fill: parent
+                            opacity: 1
+                            color: Theme.colorLowContrast
+                            source: "qrc:/assets/icons_custom/sunlight_borders-24px.svg"
                         }
                     }
 
@@ -1006,71 +1034,47 @@ Grid {
                     border.width: 2
                     border.color: Theme.colorSeparator
 
-                    IconSvg {
-                        id: water4
-                        anchors.horizontalCenter: parent.horizontalCenter
+                    Item {
+                        anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 2
-                        width: plantScreen.www2 * 0.38
-                        height: width
-                        opacity: 0.5
-                        color: Theme.colorBlue
-                        source: "qrc:/assets/icons_custom/droplet-24px.svg"
+                        anchors.margins: 2
+                        width: parent.width - 8
+                        height: parent.height - 8
 
                         IconSvg {
+                            id: water4
                             anchors.fill: parent
-                            color: "white"
-                            source: "qrc:/assets/icons_custom/dropletborder-24px.svg"
+                            opacity: 0.2
+                            color: Theme.colorBlue
+                            source: "qrc:/assets/icons_custom/droplet4-24px.svg"
                         }
-                    }
-                    IconSvg {
-                        id: water3
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 2
-                        width: plantScreen.www2 * 0.28
-                        height: width
-                        opacity: 0.66
-                        color: Theme.colorBlue
-                        source: "qrc:/assets/icons_custom/droplet-24px.svg"
-
                         IconSvg {
+                            id: water3
                             anchors.fill: parent
-                            color: "white"
-                            source: "qrc:/assets/icons_custom/dropletborder-24px.svg"
+                            opacity: 0.5
+                            color: Theme.colorBlue
+                            source: "qrc:/assets/icons_custom/droplet3-24px.svg"
                         }
-                    }
-                    IconSvg {
-                        id: water2
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 2
-                        width: plantScreen.www2 * 0.18
-                        height: width
-                        opacity: 0.8
-                        color: Theme.colorBlue
-                        source: "qrc:/assets/icons_custom/droplet-24px.svg"
-
                         IconSvg {
+                            id: water2
                             anchors.fill: parent
-                            color: "white"
-                            source: "qrc:/assets/icons_custom/dropletborder-24px.svg"
+                            opacity: 0.66
+                            color: Theme.colorBlue
+                            source: "qrc:/assets/icons_custom/droplet2-24px.svg"
                         }
-                    }
-                    IconSvg {
-                        id: water1
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        anchors.bottom: parent.bottom
-                        anchors.bottomMargin: 2
-                        width: plantScreen.www2 * 0.1
-                        height: width
-                        color: Theme.colorBlue
-                        source: "qrc:/assets/icons_custom/droplet-24px.svg"
-
                         IconSvg {
+                            id: water1
                             anchors.fill: parent
-                            color: "white"
-                            source: "qrc:/assets/icons_custom/dropletborder-24px.svg"
+                            opacity: 1
+                            color: Theme.colorBlue
+                            source: "qrc:/assets/icons_custom/droplet1-24px.svg"
+                        }
+                        IconSvg {
+                            id: water_borders
+                            anchors.fill: parent
+                            opacity: 1
+                            color: Theme.colorLowContrast
+                            source: "qrc:/assets/icons_custom/droplet_borders-24px.svg"
                         }
                     }
 
@@ -1135,6 +1139,18 @@ Grid {
                         id: plantFertilization
                         anchors.left: parent.left
                         anchors.right: parent.right
+
+                        visible: text
+                        font.pixelSize: Theme.fontSizeContentBig
+                        color: Theme.colorText
+                        wrapMode: Text.WordWrap
+                    }
+                    Text {
+                        id: plantFertilizationTags
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
+                        visible: text
                         font.pixelSize: Theme.fontSizeContentBig
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
@@ -1209,10 +1225,17 @@ Grid {
                         id: plantSoil
                         anchors.left: parent.left
                         anchors.right: parent.right
+
+                        visible: text
                         font.pixelSize: Theme.fontSizeContentBig
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                    }
+                    }/*
+                    Image {
+                        width: parent.width
+                        fillMode: Image.PreserveAspectFit
+                        source: "qrc:/assets/plants/soil_triangle.png"
+                    }*/
                 }
             }
 
@@ -1259,27 +1282,6 @@ Grid {
                     font.pixelSize: Theme.fontSizeContent
                 }
             }
-/*
-            Column {
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Text {
-                    text: qsTr("calendar")
-                    textFormat: Text.PlainText
-                    color: Theme.colorSubText
-                    font.bold: true
-                    font.pixelSize: Theme.fontSizeContentSmall
-                    font.capitalization: Font.AllUppercase
-                }
-
-                PlantCalendarWidget {
-                    id: plantCalendarWidget
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                }
-            }
-*/
         }
     }
 

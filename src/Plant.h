@@ -44,31 +44,33 @@ class Plant: public QObject
     Q_PROPERTY(QString origin READ getOrigin CONSTANT)
     Q_PROPERTY(QString category READ getCategory CONSTANT)
     Q_PROPERTY(QString taxonomy READ getTaxonomy CONSTANT)
-    Q_PROPERTY(QString type READ getType CONSTANT)
+
+    Q_PROPERTY(QStringList tags READ getTags CONSTANT)
+
+    Q_PROPERTY(QString diameter READ getSizeDiameter CONSTANT)
+    Q_PROPERTY(QString height READ getSizeHeight CONSTANT)
 
     Q_PROPERTY(QString hardiness READ getHardiness CONSTANT)
     Q_PROPERTY(QString careLevel READ getCareLevel CONSTANT)
     Q_PROPERTY(QString growthRate READ getGrowthRate CONSTANT)
     Q_PROPERTY(QString foliage READ getFoliage CONSTANT)
-    Q_PROPERTY(QStringList tags READ getTags CONSTANT)
 
-    Q_PROPERTY(QString diameter READ getSizeDiameter CONSTANT)
-    Q_PROPERTY(QString height READ getSizeHeight CONSTANT)
     Q_PROPERTY(QStringList colorsLeaf READ getColorsLeaf CONSTANT)
     Q_PROPERTY(QStringList colorsBract READ getColorsBract CONSTANT)
     Q_PROPERTY(QStringList colorsFlower READ getColorsFlower CONSTANT)
     Q_PROPERTY(QStringList colorsFruit READ getColorsFruit CONSTANT)
 
-    Q_PROPERTY(QString calendarPlanting READ getCalendarPlanting CONSTANT)
-    Q_PROPERTY(QString calendarGrowing READ getCalendarGrowth CONSTANT)
-    Q_PROPERTY(QString calendarBlooming READ getCalendarBlooming CONSTANT)
-    Q_PROPERTY(QString calendarFruiting READ getCalendarFruiting CONSTANT)
+    Q_PROPERTY(QStringList calendarPlanting READ getCalendarPlanting CONSTANT)
+    Q_PROPERTY(QStringList calendarFertilizing READ getCalendarFertilizing CONSTANT)
+    Q_PROPERTY(QStringList calendarGrowing READ getCalendarGrowing CONSTANT)
+    Q_PROPERTY(QStringList calendarBlooming READ getCalendarBlooming CONSTANT)
+    Q_PROPERTY(QStringList calendarFruiting READ getCalendarFruiting CONSTANT)
 
-    Q_PROPERTY(QString soil READ getSoil CONSTANT)
     Q_PROPERTY(QString sunlight READ getSunlight CONSTANT)
     Q_PROPERTY(QString watering READ getWatering CONSTANT)
     Q_PROPERTY(QString fertilization READ getFertilization CONSTANT)
     Q_PROPERTY(QString pruning READ getPruning CONSTANT)
+    Q_PROPERTY(QString soil READ getSoil CONSTANT)
 
     Q_PROPERTY(int soilMoist_min READ getSoilMoist_min CONSTANT)
     Q_PROPERTY(int soilMoist_max READ getSoilMoist_max CONSTANT)
@@ -87,14 +89,12 @@ class Plant: public QObject
     Q_PROPERTY(int lightMmol_min READ getLightMmol_min CONSTANT)
     Q_PROPERTY(int lightMmol_max READ getLightMmol_max CONSTANT)
 
-    int cache_version = 0;
-
     // names
     QString name;
     QString name_botanical;
     QString name_botanical_url;
     QString name_variety;
-    QString name_common;
+    QString name_common_en;
 
     // infos
     QString origin;
@@ -106,29 +106,28 @@ class Plant: public QObject
     QString hardiness;
     QString foliage;
 
-    QString type;
-
-    QStringList tags;
-
     QString size_diameter;
     QString size_height;
+
+    QStringList tags;
 
     QStringList colors_leaf;
     QStringList colors_bract;
     QStringList colors_flower;
     QStringList colors_fruit;
 
-    QString period_planting;
-    QString period_growth;
-    QString period_blooming;
-    QString period_fruiting;
+    QStringList calendar_planting;
+    QStringList calendar_fertilizing;
+    QStringList calendar_growing;
+    QStringList calendar_blooming;
+    QStringList calendar_fruiting;
 
     // maintenance infos
-    QString soil;
     QString sunlight;
     QString watering;
     QString fertilizing;
     QString pruning;
+    QString soil;
 
     // sensor limits
     int soilRH_min = -99;
@@ -152,12 +151,11 @@ class Plant: public QObject
     const QString &getNameBotanical() { return name_botanical; }
     const QString &getNameBotanical_url() { return name_botanical_url; }
     const QString &getNameVariety() { return name_variety; }
-    const QString &getNameCommon() { return name_common; }
+    const QString &getNameCommon() { return name_common_en; }
 
     const QString &getOrigin() { return origin; }
     const QString &getCategory() { return category; }
     const QString &getTaxonomy() { return taxonomy; }
-    const QString &getType() { return type; }
     QStringList getTags() { return tags; }
 
     const QString &getCareLevel() { return careLevel; }
@@ -165,18 +163,19 @@ class Plant: public QObject
     const QString &getHardiness() { return hardiness; }
     const QString &getFoliage() { return foliage; }
 
-    QStringList getColorsLeaf() { return colors_leaf; }
-    QStringList getColorsBract() { return colors_bract; } // unused?
-    QStringList getColorsFlower() { return colors_flower; }
-    QStringList getColorsFruit() { return colors_fruit; }
-
     QString getSizeDiameter() { return size_diameter; }
     QString getSizeHeight() { return size_height; }
 
-    QString getCalendarPlanting() { return period_planting; }
-    QString getCalendarGrowth() { return period_growth; }
-    QString getCalendarBlooming() { return period_blooming; }
-    QString getCalendarFruiting() { return period_fruiting; }
+    QStringList getColorsLeaf() { return colors_leaf; }
+    QStringList getColorsBract() { return colors_bract; }
+    QStringList getColorsFlower() { return colors_flower; }
+    QStringList getColorsFruit() { return colors_fruit; }
+
+    QStringList getCalendarPlanting() { return calendar_planting; }
+    QStringList getCalendarFertilizing() { return calendar_fertilizing; }
+    QStringList getCalendarGrowing() { return calendar_growing; }
+    QStringList getCalendarBlooming() { return calendar_blooming; }
+    QStringList getCalendarFruiting() { return calendar_fruiting; }
 
     QString getSoil() { return soil; }
     QString getSunlight() { return sunlight; }
@@ -208,10 +207,12 @@ public:
     ~Plant();
 
     const QString &getName() { return name; }
-    QString getNameFilter() { return name + " - " + name_common; }
+    QString getNameFilter() { return name + " - " + name_common_en; }
+
+    static const int current_cache_version = 2;
 
     void read_csv_watchflower(const QStringList &plantSections);
-    bool read_json_watchflower(QJsonObject &json);
+    void read_json_watchflower(QJsonObject &json);
     void write_json_watchflower(QJsonObject &json) const;
 
     void print() const;

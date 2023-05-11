@@ -35,8 +35,8 @@ SOURCES  += src/main.cpp \
             src/SystrayManager.cpp \
             src/MenubarManager.cpp \
             src/NotificationManager.cpp \
-            src/PlantDatabase.cpp \
             src/Plant.cpp \
+            src/PlantDatabase.cpp \
             src/Journal.cpp \
             src/DeviceManager.cpp \
             src/DeviceManager_advertisement.cpp \
@@ -79,8 +79,9 @@ HEADERS  += src/SettingsManager.h \
             src/MenubarManager.h \
             src/SystrayManager.h \
             src/NotificationManager.h \
-            src/PlantDatabase.h \
             src/Plant.h \
+            src/PlantUtils.h \
+            src/PlantDatabase.h \
             src/Journal.h \
             src/DeviceManager.h \
             src/DeviceFilter.h \

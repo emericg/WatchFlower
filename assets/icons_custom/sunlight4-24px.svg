@@ -5,8 +5,8 @@
    viewBox="0 0 24 24"
    version="1.1"
    id="svg6"
-   sodipodi:docname="duotone-water_full-24px.svg"
-   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   sodipodi:docname="sunlight4-24px.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -25,13 +25,14 @@
      inkscape:snap-page="true"
      inkscape:snap-bbox="true"
      inkscape:snap-bbox-edge-midpoints="true"
-     inkscape:zoom="36.375"
-     inkscape:cx="12"
-     inkscape:cy="12"
-     inkscape:current-layer="svg6" />
+     inkscape:zoom="45.498145"
+     inkscape:cx="15.934716"
+     inkscape:cy="9.0772932"
+     inkscape:current-layer="svg6"
+     inkscape:showpageshadow="2"
+     inkscape:deskcolor="#d1d1d1" />
   <path
-     d="M 19.089925,7.0222683 12.055228,0 5.0205307,7.0222683 C 3.081639,8.96116 2.1121931,11.546349 2.1121931,14.032108 c 0,2.485758 0.9694459,5.108234 2.9083376,7.047126 C 6.9594225,23.018125 9.5073254,24 12.055228,24 c 2.547903,0 5.095805,-0.981875 7.034697,-2.920766 1.938892,-1.938892 2.908338,-4.561368 2.908338,-7.047126 0,-2.485759 -0.969446,-5.070948 -2.908338,-7.0098397 z"
-     id="path4"
-     sodipodi:nodetypes="cccsssssc"
-     style="opacity:0.66;stroke-width:1.24288" />
+     id="path507"
+     style="opacity:1;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:2.00001;stroke-dasharray:none;paint-order:markers fill stroke"
+     d="M 24 0 A 24 24.0001 0 0 0 0 24 L 5.9941406 24 A 18.006661 18.006661 0 0 1 24 5.9941406 L 24 0 z " />
 </svg>

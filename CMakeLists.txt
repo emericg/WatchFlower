@@ -22,7 +22,7 @@ qt_add_executable(WatchFlower
     src/MenubarManager.cpp src/MenubarManager.h
     src/NotificationManager.cpp src/NotificationManager.h
     src/PlantDatabase.cpp src/PlantDatabase.h
-    src/Plant.cpp src/Plant.h
+    src/Plant.cpp src/Plant.h src/PlantUtils.h
     src/Journal.cpp src/Journal.h
     src/device.cpp src/device.h
     src/device_infos.cpp src/device_infos.h

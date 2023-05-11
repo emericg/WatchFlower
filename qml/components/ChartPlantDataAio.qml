@@ -483,6 +483,7 @@ Item {
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
+                highlightMode: "off"
                 background: true
                 source: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
@@ -541,8 +542,9 @@ Item {
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
+                highlightMode: "off"
                 border: true
-                borderColor: Theme.colorComponentBorder
+                borderColor: Theme.colorComponentDown
                 background: true
                 backgroundColor: Theme.colorComponentBackground
                 iconColor: Theme.colorSubText

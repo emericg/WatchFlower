@@ -20,6 +20,7 @@
  */
 
 #include "Plant.h"
+#include "PlantUtils.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
@@ -65,75 +66,83 @@ void Plant::read_csv_watchflower(const QStringList &plantSections)
 {
     //qDebug() << "Plant::read_csv_watchflower(" << pid_display << ")";
 
-    //if (plantSections.size() == 24)
-    {
-        int i = 0;
-        // name
-        name = plantSections.at(i++),
-        name_common = plantSections.at(i++);
-        computeNames();
+    int i = 0;
 
-        // basic infos
-        origin = plantSections.at(i++);
-        category = plantSections.at(i++);
-        //taxonomy = plantSections.at(i++);
+    // name
+    name = plantSections.at(i++),
+    name_common_en = plantSections.at(i++);
+    computeNames();
 
-        //size_diameter = plantSections.at(i++);
-        //size_height = plantSections.at(i++);
+    // basic infos
+    origin = plantSections.at(i++);
+    category = plantSections.at(i++);
+    //taxonomy = plantSections.at(i++);
 
-        colors_leaf = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
-        colors_bract = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
-        colors_flower = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
-        colors_fruit = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
+    size_diameter = plantSections.at(i++);
+    size_height = plantSections.at(i++);
 
-        //period_planting = plantSections.at(i++);
-        //period_growth = plantSections.at(i++);
-        //period_blooming = plantSections.at(i++);
-        //period_fruiting = plantSections.at(i++);
+    colors_leaf = PlantUtils::colorssvg_tostringlist(plantSections.at(i++));
+    colors_flower = PlantUtils::colorssvg_tostringlist(plantSections.at(i++));
+    colors_bract = PlantUtils::colorssvg_tostringlist(plantSections.at(i++));
+    colors_fruit = PlantUtils::colorssvg_tostringlist(plantSections.at(i++));
 
-        // tags
-        tags = plantSections.at(i++).split(", ", Qt::SkipEmptyParts);
+    calendar_planting = PlantUtils::calendar_tostringlist(plantSections.at(i++));
+    calendar_fertilizing = PlantUtils::calendar_tostringlist(plantSections.at(i++));
+    calendar_growing = PlantUtils::calendar_tostringlist(plantSections.at(i++));
+    calendar_blooming = PlantUtils::calendar_tostringlist(plantSections.at(i++));
+    calendar_fruiting = PlantUtils::calendar_tostringlist(plantSections.at(i++));
 
-        // maintenance infos
-        sunlight = plantSections.at(i++);
-        watering = plantSections.at(i++);
-        //fertilizing = plantSections.at(i++);
-        //pruning = plantSections.at(i++);
-        //soil = plantSections.at(i++);
+    // tags
+    tags = plantSections.at(i++).split(",", Qt::SkipEmptyParts);
 
-        // sensor parameters
-        soilRH_min = plantSections.at(i++).toInt();
-        soilRH_max = plantSections.at(i++).toInt();
-        soilEC_min = plantSections.at(i++).toInt();
-        soilEC_max = plantSections.at(i++).toInt();
-        soilPH_min = plantSections.at(i++).toFloat();
-        soilPH_max = plantSections.at(i++).toFloat();
-        envTemp_min = plantSections.at(i++).toInt();
-        envTemp_max = plantSections.at(i++).toInt();
-        //envTempIdeal_min = plantSections.at(i++).toInt();
-        //envTempIdeal_max = plantSections.at(i++).toInt();
-        envHumi_min = plantSections.at(i++).toInt();
-        envHumi_max = plantSections.at(i++).toInt();
-        lightLux_min = plantSections.at(i++).toInt();
-        lightLux_max = plantSections.at(i++).toInt();
-        lightMmol_min = plantSections.at(i++).toInt();
-        lightMmol_max = plantSections.at(i++).toInt();
-    }
+    // other infos
+    //care_level = plantSections.at(i++);
+    //growth_rate = plantSections.at(i++);
+    //hardiness = plantSections.at(i++);
+    //foliage = plantSections.at(i++);
+
+    // maintenance infos
+    sunlight = plantSections.at(i++);
+    watering = plantSections.at(i++);
+    fertilizing = plantSections.at(i++);
+    pruning = plantSections.at(i++);
+    soil = plantSections.at(i++);
+
+    // sensor parameters
+    soilRH_min = plantSections.at(i++).toInt();
+    soilRH_max = plantSections.at(i++).toInt();
+    soilEC_min = plantSections.at(i++).toInt();
+    soilEC_max = plantSections.at(i++).toInt();
+    soilPH_min = plantSections.at(i++).toFloat();
+    soilPH_max = plantSections.at(i++).toFloat();
+    envTemp_min = plantSections.at(i++).toInt();
+    envTemp_max = plantSections.at(i++).toInt();
+    //envTempIdeal_min = plantSections.at(i++).toInt();
+    //envTempIdeal_max = plantSections.at(i++).toInt();
+    envHumi_min = plantSections.at(i++).toInt();
+    envHumi_max = plantSections.at(i++).toInt();
+    lightLux_min = plantSections.at(i++).toInt();
+    lightLux_max = plantSections.at(i++).toInt();
+    lightMmol_min = plantSections.at(i++).toInt();
+    lightMmol_max = plantSections.at(i++).toInt();
+
+    // re-add some spaces
+    category.replace(",", ", ");
+    size_diameter.replace("≥", "≥ ");
+    size_diameter.replace("≤", "≤ ");
+    size_height.replace("≥", "≥ ");
+    size_height.replace("≤", "≤ ");
 }
 
 /* ************************************************************************** */
 
-bool Plant::read_json_watchflower(QJsonObject &json)
+void Plant::read_json_watchflower(QJsonObject &json)
 {
-    ///
-    if (json.contains("cache") && json["cache"].isString())
-        cache_version = json["cache"].toInt();
-
     ///
     if (json.contains("name") && json["name"].isString())
         name = json["name"].toString();
     if (json.contains("name_common") && json["name_common"].isString())
-        name_common = json["name_common"].toString();
+        name_common_en = json["name_common"].toString();
 
     computeNames();
 
@@ -146,16 +155,32 @@ bool Plant::read_json_watchflower(QJsonObject &json)
             origin = infos["origin"].toString();
         if (infos.contains("category") && infos["category"].isString())
             category = infos["category"].toString();
-        if (infos.contains("type") && infos["type"].isString())
-            type = infos["type"].toString();
+        if (infos.contains("taxonomy") && infos["taxonomy"].isString())
+            taxonomy = infos["taxonomy"].toString();
 
         if (infos.contains("size_height") && infos["size_height"].isString())
             size_height = infos["size_height"].toString();
         if (infos.contains("size_diameter") && infos["size_diameter"].isString())
             size_diameter = infos["size_diameter"].toString();
 
-        // TODO // periods
+        if (infos.contains("care_level") && infos["care_level"].isString())
+            careLevel = infos["care_level"].toString();
+        if (infos.contains("growth_rate") && infos["growth_rate"].isString())
+            growthRate = infos["growth_rate"].toString();
+        if (infos.contains("hardiness") && infos["hardiness"].isString())
+            hardiness = infos["hardiness"].toString();
+        if (infos.contains("foliage") && infos["foliage"].isString())
+            foliage = infos["foliage"].toString();
 
+        if (infos.contains("tags") && infos["tags"].isArray())
+        {
+            for (const auto &t:infos["tags"].toArray().toVariantList())
+            {
+                tags.push_back(t.toString());
+            }
+        }
+
+        /// colors
         if (infos.contains("colors_leaf") && infos["colors_leaf"].isArray())
         {
             for (const auto &c: infos["colors_leaf"].toArray().toVariantList())
@@ -185,11 +210,40 @@ bool Plant::read_json_watchflower(QJsonObject &json)
             }
         }
 
-        if (infos.contains("tags") && infos["tags"].isArray())
+        /// calendar
+        if (infos.contains("calendar_planting") && infos["calendar_planting"].isArray())
         {
-            for (const auto &t:infos["tags"].toArray().toVariantList())
+            for (const auto &c: infos["calendar_planting"].toArray().toVariantList())
             {
-                tags.push_back(t.toString());
+                calendar_planting.push_back(c.toString());
+            }
+        }
+        if (infos.contains("calendar_fertilizing") && infos["calendar_fertilizing"].isArray())
+        {
+            for (const auto &c: infos["calendar_fertilizing"].toArray().toVariantList())
+            {
+                calendar_fertilizing.push_back(c.toString());
+            }
+        }
+        if (infos.contains("calendar_growing") && infos["calendar_growing"].isArray())
+        {
+            for (const auto &c: infos["calendar_growing"].toArray().toVariantList())
+            {
+                calendar_growing.push_back(c.toString());
+            }
+        }
+        if (infos.contains("calendar_blooming") && infos["calendar_blooming"].isArray())
+        {
+            for (const auto &c: infos["calendar_blooming"].toArray().toVariantList())
+            {
+                calendar_blooming.push_back(c.toString());
+            }
+        }
+        if (infos.contains("calendar_fruiting") && infos["calendar_fruiting"].isArray())
+        {
+            for (const auto &c: infos["calendar_fruiting"].toArray().toVariantList())
+            {
+                calendar_fruiting.push_back(c.toString());
             }
         }
     }
@@ -236,31 +290,45 @@ bool Plant::read_json_watchflower(QJsonObject &json)
         if (metrics.contains("light_mmol_max")) lightMmol_max = metrics["light_mmol_max"].toInt();
     }
 
-    return true;
+    /// RECAP?
+    //print();
 }
 
 /* ************************************************************************** */
 
 void Plant::write_json_watchflower(QJsonObject &jsonObject) const
 {
+    jsonObject.insert("cache_version", Plant::current_cache_version);
+
     jsonObject.insert("name", QJsonValue::fromVariant(name));
-    if (!name_common.isEmpty()) jsonObject.insert("name_common", QJsonValue::fromVariant(name_common));
+    jsonObject.insert("name_common", QJsonValue::fromVariant(name_common_en));
 
     QJsonObject infosObject; ///////////////////////////////////////////////////
     infosObject.insert("origin", QJsonValue::fromVariant(origin));
     infosObject.insert("category", QJsonValue::fromVariant(category));
-    infosObject.insert("type", QJsonValue::fromVariant(type));
+    infosObject.insert("taxonomy", QJsonValue::fromVariant(taxonomy));
+
     infosObject.insert("size_height", QJsonValue::fromVariant(size_height));
     infosObject.insert("size_diameter", QJsonValue::fromVariant(size_diameter));
-    infosObject.insert("period_planting", QJsonValue::fromVariant(period_planting));
-    infosObject.insert("period_growth", QJsonValue::fromVariant(period_growth));
-    infosObject.insert("period_blooming", QJsonValue::fromVariant(period_blooming));
-    infosObject.insert("period_fruiting", QJsonValue::fromVariant(period_fruiting));
+
     infosObject.insert("colors_leaf", QJsonValue::fromVariant(colors_leaf).toArray());
     infosObject.insert("colors_bract", QJsonValue::fromVariant(colors_bract).toArray());
     infosObject.insert("colors_flower", QJsonValue::fromVariant(colors_flower).toArray());
     infosObject.insert("colors_fruit", QJsonValue::fromVariant(colors_fruit).toArray());
+
+    infosObject.insert("calendar_planting", QJsonValue::fromVariant(calendar_planting).toArray());
+    infosObject.insert("calendar_fertilizing", QJsonValue::fromVariant(calendar_fertilizing).toArray());
+    infosObject.insert("calendar_growing", QJsonValue::fromVariant(calendar_growing).toArray());
+    infosObject.insert("calendar_blooming", QJsonValue::fromVariant(calendar_blooming).toArray());
+    infosObject.insert("calendar_fruiting", QJsonValue::fromVariant(calendar_fruiting).toArray());
+
     infosObject.insert("tags", QJsonValue::fromVariant(tags).toArray());
+
+    if (!careLevel.isEmpty()) infosObject.insert("care_level", QJsonValue::fromVariant(careLevel));
+    if (!growthRate.isEmpty()) infosObject.insert("growth_rate", QJsonValue::fromVariant(growthRate));
+    if (!hardiness.isEmpty()) infosObject.insert("hardiness", QJsonValue::fromVariant(hardiness));
+    if (!foliage.isEmpty()) infosObject.insert("foliage", QJsonValue::fromVariant(foliage));
+
     jsonObject.insert("infos", infosObject);
 
     QJsonObject careObject; ////////////////////////////////////////////////////
@@ -325,27 +393,31 @@ void Plant::print() const
     qDebug() << ">" << name_botanical;
     qDebug() << ">" << name_botanical_url;
     qDebug() << ">" << name_variety;
-    qDebug() << ">" << name_common;
+    qDebug() << ">" << name_common_en;
 
     qDebug() << "* basic infos";
     qDebug() << "- origin:  " << origin;
     qDebug() << "- category:" << category;
-    qDebug() << "- type:" << type;
+    qDebug() << "- taxonomy:" << taxonomy;
+
     qDebug() << "- diameter:" << size_diameter;
     qDebug() << "- height:  " << size_height;
+
+    qDebug() << "* tags";
+    qDebug() << "-" << tags;
+
+    qDebug() << "* colors";
     qDebug() << "- colors leaf:     " << colors_leaf;
     qDebug() << "- colors bract:    " << colors_bract;
     qDebug() << "- colors flower:   " << colors_flower;
     qDebug() << "- colors fruit:    " << colors_fruit;
 
-    qDebug() << "* tags";
-    qDebug() << "-" << tags;
-
     qDebug() << "* calendar";
-    qDebug() << "- planting:    " << period_planting;
-    qDebug() << "- growth:      " << period_growth;
-    qDebug() << "- blooming:    " << period_blooming;
-    qDebug() << "- fruiting:    " << period_fruiting;
+    qDebug() << "- planting:    " << calendar_planting;
+    qDebug() << "- fertilizing: " << calendar_fertilizing;
+    qDebug() << "- growing:     " << calendar_growing;
+    qDebug() << "- blooming:    " << calendar_blooming;
+    qDebug() << "- fruiting:    " << calendar_fruiting;
 
     qDebug() << "* maintenance infos";
     qDebug() << "-" << sunlight;

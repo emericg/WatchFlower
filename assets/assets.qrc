@@ -21,8 +21,6 @@
         <file>icons_fontawesome/lungs-solid.svg</file>
         <file>icons_custom/duotone-date_all-24px.svg</file>
         <file>icons_custom/duotone-plant_care-24px.svg</file>
-        <file>icons_custom/droplet-24px.svg</file>
-        <file>icons_custom/dropletborder-24px.svg</file>
         <file>icons_custom/indicators-24px.svg</file>
         <file>icons_custom/inside-24px.svg</file>
         <file>icons_custom/nuclear_icon.svg</file>
@@ -32,6 +30,17 @@
         <file>icons_custom/pot_flower-24px.svg</file>
         <file>icons_custom/thermometer-24px.svg</file>
         <file>icons_custom/thermometer_big-24px.svg</file>
+
+        <file>icons_custom/sunlight1-24px.svg</file>
+        <file>icons_custom/sunlight2-24px.svg</file>
+        <file>icons_custom/sunlight3-24px.svg</file>
+        <file>icons_custom/sunlight4-24px.svg</file>
+        <file>icons_custom/sunlight_borders-24px.svg</file>
+        <file>icons_custom/droplet1-24px.svg</file>
+        <file>icons_custom/droplet2-24px.svg</file>
+        <file>icons_custom/droplet3-24px.svg</file>
+        <file>icons_custom/droplet4-24px.svg</file>
+        <file>icons_custom/droplet_borders-24px.svg</file>
 
         <file>icons_material/baseline-ac_unit-24px.svg</file>
         <file>icons_material/baseline-add-24px.svg</file>

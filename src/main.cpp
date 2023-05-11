@@ -26,6 +26,7 @@
 #include "NotificationManager.h"
 #include "DeviceManager.h"
 #include "PlantDatabase.h"
+#include "PlantUtils.h"
 #include "Journal.h"
 
 #include "utils_app.h"
@@ -184,6 +185,7 @@ int main(int argc, char *argv[])
     MobileUI::registerQML();
     DeviceUtils::registerQML();
     JournalUtils::registerQML();
+    PlantUtils::registerQML();
 
     // Then we start the UI
     QQmlApplicationEngine engine;
@@ -195,8 +197,9 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("menubarManager", mb);
     engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("utilsApp", utilsApp);
-    engine_context->setContextProperty("utilsLanguage", utilsLanguage);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
+    engine_context->setContextProperty("utilsLanguage", utilsLanguage);
+    //engine_context->setContextProperty("utilsPlant", utilsPlant);
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
 
     // Load the main view

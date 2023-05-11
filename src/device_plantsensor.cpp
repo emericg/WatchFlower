@@ -226,6 +226,8 @@ bool DevicePlantSensor::loadPlant()
             {
                 if (m_plantCache.isEmpty())
                 {
+                    qDebug() << "DevicePlantSensor::loadPlant() plant cache is empty";
+
                     setPlantName(m_plantName);
                 }
                 else
@@ -233,10 +235,28 @@ bool DevicePlantSensor::loadPlant()
                     QJsonDocument plantDoc = QJsonDocument().fromJson(m_plantCache.toUtf8());
                     QJsonObject plantObj = plantDoc.object();
 
-                    m_plant = new Plant(this);
-                    m_plant->read_json_watchflower(plantObj);
-                    //m_plant->print();
-                    Q_EMIT plantUpdated();
+                    /// Check format first
+                    int cache_version = 0;
+                    if (plantObj.contains("cache_version"))
+                    {
+                        cache_version = plantObj["cache_version"].toInt();
+                    }
+
+                    if (cache_version == Plant::current_cache_version)
+                    {
+                        /// Parse cache
+                        m_plant = new Plant(this);
+                        m_plant->read_json_watchflower(plantObj);
+                        Q_EMIT plantUpdated();
+                    }
+                    else
+                    {
+                        qDebug() << "DevicePlantSensor::loadPlant() plant cache is old ("
+                                 << cache_version << "vs" << Plant::current_cache_version;
+
+                        /// Regenerate cache?
+                        setPlantName(m_plantName, false);
+                    }
                 }
             }
 
@@ -360,7 +380,7 @@ bool DevicePlantSensor::removeJournalEntry(const int id)
 
 /* ************************************************************************** */
 
-void DevicePlantSensor::setPlantName(const QString &plant)
+void DevicePlantSensor::setPlantName(const QString &plant, const bool setLimits)
 {
     //qDebug() << "DevicePlantSensor::setPlantName()" << plant;
 
@@ -379,7 +399,7 @@ void DevicePlantSensor::setPlantName(const QString &plant)
         {
             QJsonObject plantObj;
             temp->write_json_watchflower(plantObj);
-            //qDebug() << "json> " << plantObj;
+            //qDebug() << "json > " << plantObj;
 
             m_plant = new Plant(this);
             m_plant->read_json_watchflower(plantObj);
@@ -388,7 +408,7 @@ void DevicePlantSensor::setPlantName(const QString &plant)
             m_plantCache = QJsonDocument(plantObj).toJson(QJsonDocument::Compact);
 
             QSqlQuery setPlant;
-            setPlant.prepare("UPDATE  plants SET plantName = :plantName, plantCache = :plantCache "
+            setPlant.prepare("UPDATE plants SET plantName = :plantName, plantCache = :plantCache "
                              "WHERE deviceAddr = :deviceAddr;");
             setPlant.bindValue(":plantName", m_plantName);
             setPlant.bindValue(":plantCache", m_plantCache);
@@ -400,27 +420,31 @@ void DevicePlantSensor::setPlantName(const QString &plant)
                            << setPlant.lastError().type() << ":" << setPlant.lastError().text();
             }
 
-            // plant limits
-            if (m_plant->getSoilMoist_min() > 0) m_soilMoisture_limit_min = m_plant->getSoilMoist_min();
-            if (m_plant->getSoilMoist_max() > 0) m_soilMoisture_limit_max = m_plant->getSoilMoist_max();
-            if (m_plant->getSoilCondu_min() > 0) m_soilConductivity_limit_min = m_plant->getSoilCondu_min();
-            if (m_plant->getSoilCondu_max() > 0) m_soilConductivity_limit_max = m_plant->getSoilCondu_max();
-            if (m_plant->getSoilPH_min() > 0) m_soilPH_limit_min = m_plant->getSoilPH_min();
-            if (m_plant->getSoilPH_max() > 0) m_soilPH_limit_max = m_plant->getSoilPH_max();
-            // hygrometer limits
-            if (m_plant->getEnvTemp_min() > 0) m_temperature_limit_min = m_plant->getEnvTemp_min();;
-            if (m_plant->getEnvTemp_max() > 0) m_temperature_limit_max = m_plant->getEnvTemp_max();
-            if (m_plant->getEnvHumi_min() > 0) m_humidity_limit_min = m_plant->getEnvHumi_min();
-            if (m_plant->getEnvHumi_max() > 0) m_humidity_limit_max = m_plant->getEnvHumi_max();
-            // environmental limits
-            if (m_plant->getLightLux_min() > 0) m_luminosityLux_limit_min = m_plant->getLightLux_min();
-            if (m_plant->getLightLux_max() > 0) m_luminosityLux_limit_max = m_plant->getLightLux_max();
-            if (m_plant->getLightMmol_min() > 0) m_luminosityMmol_limit_min = m_plant->getLightMmol_min();
-            if (m_plant->getLightMmol_max() > 0) m_luminosityMmol_limit_max = m_plant->getLightMmol_max();
+            if (setLimits)
+            {
+                // plant limits
+                if (m_plant->getSoilMoist_min() > 0) m_soilMoisture_limit_min = m_plant->getSoilMoist_min();
+                if (m_plant->getSoilMoist_max() > 0) m_soilMoisture_limit_max = m_plant->getSoilMoist_max();
+                if (m_plant->getSoilCondu_min() > 0) m_soilConductivity_limit_min = m_plant->getSoilCondu_min();
+                if (m_plant->getSoilCondu_max() > 0) m_soilConductivity_limit_max = m_plant->getSoilCondu_max();
+                if (m_plant->getSoilPH_min() > 0) m_soilPH_limit_min = m_plant->getSoilPH_min();
+                if (m_plant->getSoilPH_max() > 0) m_soilPH_limit_max = m_plant->getSoilPH_max();
+                // hygrometer limits
+                if (m_plant->getEnvTemp_min() > 0) m_temperature_limit_min = m_plant->getEnvTemp_min();;
+                if (m_plant->getEnvTemp_max() > 0) m_temperature_limit_max = m_plant->getEnvTemp_max();
+                if (m_plant->getEnvHumi_min() > 0) m_humidity_limit_min = m_plant->getEnvHumi_min();
+                if (m_plant->getEnvHumi_max() > 0) m_humidity_limit_max = m_plant->getEnvHumi_max();
+                // environmental limits
+                if (m_plant->getLightLux_min() > 0) m_luminosityLux_limit_min = m_plant->getLightLux_min();
+                if (m_plant->getLightLux_max() > 0) m_luminosityLux_limit_max = m_plant->getLightLux_max();
+                if (m_plant->getLightMmol_min() > 0) m_luminosityMmol_limit_min = m_plant->getLightMmol_min();
+                if (m_plant->getLightMmol_max() > 0) m_luminosityMmol_limit_max = m_plant->getLightMmol_max();
+
+                setSqlPlantLimits();
+                Q_EMIT limitsUpdated();
+            }
 
             Q_EMIT plantUpdated();
-            Q_EMIT limitsUpdated();
-            setSqlPlantLimits();
         }
     }
 }
@@ -433,8 +457,8 @@ void DevicePlantSensor::resetPlant()
         m_plant = nullptr;
     }
 
-    m_plantName = "";
-    m_plantCache = "";
+    m_plantName.clear();
+    m_plantCache.clear();
     Q_EMIT plantUpdated();
 
     QSqlQuery setPlant;

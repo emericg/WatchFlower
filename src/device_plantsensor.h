@@ -101,7 +101,7 @@ public:
     virtual ~DevicePlantSensor();
 
     // Plant
-    Q_INVOKABLE void setPlantName(const QString &plant);
+    Q_INVOKABLE void setPlantName(const QString &plant, const bool setLimits = true);
     Q_INVOKABLE void resetPlant();
     Q_INVOKABLE void resetLimits();
 
