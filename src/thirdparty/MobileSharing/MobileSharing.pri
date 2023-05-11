@@ -6,7 +6,7 @@ SOURCES += $${PWD}/SharingUtils.cpp \
 HEADERS += $${PWD}/SharingUtils.h \
            $${PWD}/SharingApplication.h
 
-#INCLUDEPATH += $${PWD}
+INCLUDEPATH += $${PWD}
 
 android {
     versionAtLeast(QT_VERSION, 6.0) {
