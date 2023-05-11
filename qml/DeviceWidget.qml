@@ -392,14 +392,12 @@ Item {
                     height: bigAssMode ? 28 : 24
                     anchors.verticalCenter: parent.verticalCenter
 
-                    source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
-                    color: {
-                        if (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) {
-                            return Theme.colorBlue
-                        } else if (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) {
-                            return Theme.colorYellow
-                        }
-                    }
+                    source: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
+                                "qrc:/assets/icons_material/duotone-water_full-24px.svg" :
+                                "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                    color: (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin - 5 ||
+                            boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax + 5) ?
+                                Theme.colorYellow : Theme.colorBlue
                 }
             }
 
@@ -646,7 +644,9 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    height: UtilsNumber.normalize(boxDevice.soilMoisture, boxDevice.soilMoisture_limitMin - 1, boxDevice.soilMoisture_limitMax) * rowRight.height
+                    height: UtilsNumber.normalize(boxDevice.soilMoisture,
+                                                  boxDevice.soilMoisture_limitMin - 1,
+                                                  boxDevice.soilMoisture_limitMax) * rowRight.height
 
                     color: Theme.colorBlue
                     radius: rectangleSensors.sensorRadius
@@ -676,7 +676,9 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    height: UtilsNumber.normalize(boxDevice.soilConductivity, boxDevice.soilConductivity_limitMin, boxDevice.soilConductivity_limitMax) * rowRight.height
+                    height: UtilsNumber.normalize(boxDevice.soilConductivity,
+                                                  boxDevice.soilConductivity_limitMin,
+                                                  boxDevice.soilConductivity_limitMax) * rowRight.height
 
                     color: Theme.colorRed
                     radius: rectangleSensors.sensorRadius
@@ -704,7 +706,9 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    height: UtilsNumber.normalize(boxDevice.temperatureC, boxDevice.temperature_limitMin - 1, boxDevice.temperature_limitMax) * rowRight.height
+                    height: UtilsNumber.normalize(boxDevice.temperatureC,
+                                                  boxDevice.temperature_limitMin - 1,
+                                                  boxDevice.temperature_limitMax) * rowRight.height
 
                     color: Theme.colorGreen
                     radius: rectangleSensors.sensorRadius
@@ -734,7 +738,9 @@ Item {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    height: UtilsNumber.normalize(boxDevice.luminosityLux, boxDevice.luminosityLux_limitMin, boxDevice.luminosityLux_limitMax) * rowRight.height
+                    height: UtilsNumber.normalize(boxDevice.luminosityLux,
+                                                  boxDevice.luminosityLux_limitMin,
+                                                  boxDevice.luminosityLux_limitMax) * rowRight.height
 
                     color: Theme.colorYellow
                     radius: rectangleSensors.sensorRadius

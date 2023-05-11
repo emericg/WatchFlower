@@ -36,8 +36,8 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        implicitWidth: 256
-        implicitHeight: 56
+        implicitWidth: 96
+        implicitHeight: 48
 
         Rectangle { // mouseBackground
             width: mouseArea.pressed ? control.width*2 : 0
