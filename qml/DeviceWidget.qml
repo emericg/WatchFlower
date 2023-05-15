@@ -26,7 +26,7 @@ Item {
         function onSensorsUpdated() { initBoxData() }
         function onCapabilitiesUpdated() { initBoxData() }
         function onStatusUpdated() { updateSensorStatus() }
-        function onSettingsUpdated() { updateSensorStatus(); updateSensorSettings(); }
+        function onSettingsUpdated() { updateSensorStatus(); updateSensorTitle(); }
         function onDataUpdated() { updateSensorData() }
         function onRefreshUpdated() { updateSensorData() }
         function onLimitsUpdated() { updateSensorData() }
@@ -34,7 +34,7 @@ Item {
     Connections {
         target: ThemeEngine
         function onCurrentThemeChanged() {
-            updateSensorSettings()
+            updateSensorTitle()
             updateSensorStatus()
             updateSensorData()
         }
@@ -42,12 +42,12 @@ Item {
     Connections {
         target: settingsManager
         function onAppLanguageChanged() {
-            updateSensorSettings()
+            updateSensorTitle()
             updateSensorStatus()
             updateSensorData()
         }
         function onTempUnitChanged() {
-            if (loaderIndicators.item) loaderIndicators.item.updateData()
+            updateSensorData()
         }
     }
 
@@ -89,7 +89,7 @@ Item {
             }
         }
 
-        updateSensorSettings()
+        updateSensorTitle()
         updateSensorStatus()
         updateSensorData()
     }
@@ -114,7 +114,7 @@ Item {
         }
     }
 
-    function updateSensorSettings() {
+    function updateSensorTitle() {
         // Title
         if (boxDevice.isPlantSensor) {
             if (boxDevice.deviceAssociatedName !== "")
@@ -263,7 +263,7 @@ Item {
             anchors.topMargin: bigAssMode ? 16 : 8
             anchors.left: parent.left
             anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
-            anchors.right: (rowRight.width > 0) ? rowRight.left : imageStatus.left
+            anchors.right: rowRight.left
             anchors.rightMargin: singleColumn ? 0 : 8
             anchors.bottom: parent.bottom
             anchors.bottomMargin: bigAssMode ? 16 : 8
@@ -326,7 +326,6 @@ Item {
                 }
 
                 Row {
-                    id: row
                     height: bigAssMode ? 26 : 22
                     anchors.left: parent.left
                     spacing: 8
@@ -548,6 +547,51 @@ Item {
 
             ////
 
+            Item {
+                anchors.verticalCenter: parent.verticalCenter
+                width: parent.height * 0.5
+                height: parent.height
+
+                visible: !boxDevice.hasDataToday
+
+                IconSvg {
+                    id: imageStatus
+                    anchors.centerIn: parent
+                    width: 32
+                    height: 32
+
+                    color: Theme.colorIcon
+                    opacity: 0.8
+
+                    source: {
+                        if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
+                            return "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
+                        } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
+                            return "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
+                        } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
+                            return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+                        } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
+                            return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+                        }
+                        return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                    }
+
+                    SequentialAnimation on opacity {
+                        id: refreshAnimation
+                        loops: Animation.Infinite
+                        running: (visible &&
+                                  boxDevice.status === DeviceUtils.DEVICE_CONNECTING ||
+                                  boxDevice.status === DeviceUtils.DEVICE_CONNECTED ||
+                                  boxDevice.status === DeviceUtils.DEVICE_WORKING)
+                        alwaysRunToEnd: true
+                        OpacityAnimator { from: 0.8; to: 0; duration: 750 }
+                        OpacityAnimator { from: 0; to: 0.8; duration: 750 }
+                    }
+                }
+            }
+
+            ////
+
             IconSvg {
                 id: imageForward
                 width: 32
@@ -561,44 +605,6 @@ Item {
         }
 
         ////////////////
-
-        IconSvg {
-            id: imageStatus
-            width: 32
-            height: 32
-            anchors.right: parent.right
-            anchors.rightMargin: singleColumn ? 56 : 36
-            anchors.verticalCenter: parent.verticalCenter
-
-            visible: !boxDevice.hasDataToday
-            color: Theme.colorIcon
-            opacity: 0.8
-
-            source: {
-                if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
-                    return "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
-                } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
-                    return "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
-                } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
-                    return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
-                } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
-                    return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
-                }
-                return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
-            }
-
-            SequentialAnimation on opacity {
-                id: refreshAnimation
-                loops: Animation.Infinite
-                running: (visible &&
-                          boxDevice.status === DeviceUtils.DEVICE_CONNECTING ||
-                          boxDevice.status === DeviceUtils.DEVICE_CONNECTED ||
-                          boxDevice.status === DeviceUtils.DEVICE_WORKING)
-                alwaysRunToEnd: true
-                OpacityAnimator { from: 0.8; to: 0; duration: 750 }
-                OpacityAnimator { from: 0; to: 0.8; duration: 750 }
-            }
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -615,12 +621,8 @@ Item {
             property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
             property int sensorRadius: bigAssMode ? 3 : 2
 
-            function initData() {
-                //
-            }
-            function updateData() {
-                //
-            }
+            function initData() { }
+            function updateData() { }
 
             Item {
                 id: hygro
@@ -781,7 +783,7 @@ Item {
                     }
                     else if (boxDevice.hasPressureSensor) {
                         text.text = boxDevice.pressure.toFixed(0)
-                        unit.text = "hPa"
+                        unit.text = qsTr("hPa")
                     }
                 }
             }
