@@ -4,10 +4,12 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: rectangleHeaderBar
-    width: parent.width
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
     height: screenPaddingStatusbar + screenPaddingNotch + headerHeight
-    z: 10
     color: Theme.colorHeader
+    z: 10
 
     // prevent clicks below this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }

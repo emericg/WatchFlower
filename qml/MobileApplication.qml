@@ -134,8 +134,6 @@ ApplicationWindow {
 
     MobileHeader {
         id: appHeader
-        width: appWindow.width
-        anchors.top: appWindow.top
     }
 
     MobileDrawer {

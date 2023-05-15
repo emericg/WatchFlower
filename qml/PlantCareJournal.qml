@@ -66,8 +66,13 @@ Item {
             spacing: 16
 
             property int entrySelected: -1
-            onCountChanged: {
+
+            function deselectEntries() {
                 entrySelected = -1
+            }
+
+            onCountChanged: {
+                deselectEntries()
                 Qt.callLater(entriesView.positionViewAtEnd)
             }
 
@@ -158,6 +163,7 @@ Item {
                         text: qsTr("Add a new entry")
 
                         onClicked: {
+                            entriesView.deselectEntries()
                             journalEditorLoader.active = true
                             journalEditorLoader.item.openEditor()
                         }
@@ -167,7 +173,7 @@ Item {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
     Loader {
         id: journalEditorLoader
@@ -290,7 +296,6 @@ Item {
                             anchors.right: parent.right
                             height: (uiMode === 1) ? 40 : 44
 
-                            //visible: singleColumn
                             fullColor: true
                             text: entryEditor.currentDateTime.toLocaleDateString(Qt.locale())
                             primaryColor: Theme.colorSecondary
@@ -395,7 +400,7 @@ Item {
                         source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
 
                         onClicked: {
-                            //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
+                            //console.log("Edit entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
                             entryEditor.entry.editEntry(entryEditor.entryType, entryEditor.currentDateTime, entryComment.text)
                             entryEditor.close()
                         }
@@ -419,8 +424,8 @@ Item {
                     }
                 }
             }
-
-            ////////////////////////////////////////////////////////////////////
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

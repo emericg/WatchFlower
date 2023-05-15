@@ -4,7 +4,10 @@ import ThemeEngine 1.0
 
 Rectangle {
     id: rectangleHeaderBar
-    width: parent.width
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+
     height: headerHeight
     z: 10
     color: Theme.colorHeader

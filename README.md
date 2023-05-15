@@ -109,7 +109,7 @@ You will need a C++17 compiler and Qt 6.3+ with the following 'additional librai
 
 For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (23+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
 For Windows builds, you'll need the MSVC 2019+ compiler. Bluetooth won't work with MinGW.  
-For macOS and iOS builds, you'll need Xcode 12+ installed.  
+For macOS and iOS builds, you'll need Xcode 13+ installed.  
 
 #### Building WatchFlower
 

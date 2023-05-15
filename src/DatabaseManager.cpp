@@ -122,10 +122,6 @@ bool DatabaseManager::openDatabase_sqlite()
 
             if (dbDirectory.exists())
             {
-                // pre-migration
-                QFile::copy(dbPath+"/datas.db", dbPath+"/data_save_v2.db");
-                QFile::rename(dbPath+"/datas.db", dbPath+"/data.db");
-
                 dbPath += "/data.db";
 
                 QSqlDatabase dbFile(QSqlDatabase::addDatabase("QSQLITE"));
@@ -163,7 +159,7 @@ bool DatabaseManager::openDatabase_sqlite()
                         QSqlQuery sanitizePastData3("DELETE FROM sensorData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
 
                         // Basic check to see if the device clock is correctly set
-                        if (QDate::currentDate().year() >= 2022)
+                        if (QDate::currentDate().year() >= 2023)
                         {
                             // Delete everything that's in the future
                             QSqlQuery sanitizeFuruteData1("DELETE FROM plantData WHERE timestamp > DATE('now', '+1 days')");

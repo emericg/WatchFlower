@@ -25,12 +25,12 @@ Item {
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
-            width: singleColumn ? 48 : 96
+            width: singleColumn ? 56 : 96
             height: 24
 
-            text: modelData.date.toLocaleString(Qt.locale(), "dd MMMM")
+            text: modelData.date.toLocaleString(Qt.locale(), singleColumn ? "dd MMM" : "dd MMMM")
             wrapMode: Text.WordWrap
-            horizontalAlignment: isPhone ? Text.AlignLeft : Text.AlignRight
+            horizontalAlignment: singleColumn ? Text.AlignLeft : Text.AlignRight
             verticalAlignment: Text.AlignVCenter
             color: Theme.colorSubText
             font.bold: false

@@ -41,11 +41,17 @@ Popup {
         today = new Date()
         initialDate = date
         selectedDate = date
+        grid.year = date.getFullYear()
+        grid.month = date.getMonth()
 
         minDate = null
         maxDate = null
 
         printDate()
+
+        // visual hacks
+        //dow.width = dow.width - 8
+        grid.width = dow.width - 8
 
         popupDate.open()
     }
@@ -139,6 +145,7 @@ Popup {
                 onClicked: {
                     grid.month = today.getMonth()
                     grid.year = today.getFullYear()
+                    printDate()
                 }
             }
         }
@@ -210,6 +217,7 @@ Popup {
                 anchors.right: parent.right
                 anchors.rightMargin: 4
 
+                Layout.fillWidth: true
                 //locale: popupDate.locale
 
                 delegate: Text {
@@ -228,6 +236,7 @@ Popup {
                 anchors.right: parent.right
                 anchors.rightMargin: 4
 
+                Layout.fillWidth: true
                 //locale: popupDate.locale
 
                 delegate: Text {
