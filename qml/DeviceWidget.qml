@@ -56,36 +56,29 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function initBoxData() {
-        //console.log("DeviceWidget // initBoxData() >> " + boxDevice)
-
         // Load indicators
-        if (!loaderIndicators.sourceComponent) {
-            if (boxDevice.isPlantSensor) {
+        if (boxDevice.isPlantSensor) {
+            if (!loaderIndicators.sourceComponent) {
                 loaderIndicators.sourceComponent = componentPlantSensor
-            } else if (boxDevice.isThermometer) {
+            }
+        } else if (boxDevice.isThermometer) {
+            if (!loaderIndicators.sourceComponent) {
                 if (boxDevice.hasHumiditySensor)
                     loaderIndicators.sourceComponent = componentText_2l
                 else
                     loaderIndicators.sourceComponent = componentText_1l
-            } else if (boxDevice.isEnvironmentalSensor) {
-                if (boxDevice.hasSetting("primary")) {
-                    var primary = boxDevice.getSetting("primary")
-                    if (primary === "hygrometer") {
-                        if (boxDevice.hasHumiditySensor)
-                            loaderIndicators.sourceComponent = componentText_2l
-                        else
-                            loaderIndicators.sourceComponent = componentText_1l
-                    } else if (primary === "radioactivity") {
-                        loaderIndicators.sourceComponent = componentText_1l
-                    } else {
-                        loaderIndicators.sourceComponent = componentEnvironmentalGauge
-                    }
-                }
             }
-
-            if (loaderIndicators.item) {
+        } else if (boxDevice.isEnvironmentalSensor) {
+            if (boxDevice.primary === "hygrometer") {
+                if (boxDevice.hasHumiditySensor)
+                    loaderIndicators.sourceComponent = componentText_2l
+                else
+                    loaderIndicators.sourceComponent = componentText_1l
+            } else if (boxDevice.primary === "radioactivity") {
+                loaderIndicators.sourceComponent = componentText_1l
+            } else {
+                loaderIndicators.sourceComponent = componentEnvironmentalGauge
                 loaderIndicators.item.initData()
-                loaderIndicators.item.updateData()
             }
         }
 
@@ -857,60 +850,61 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             anchors.verticalCenterOffset: 4
 
-            property string primaryValue: "voc"
+            property string primarySensor: "voc"
             property int limitMin: -1
             property int limitMax: -1
 
             function initData() {
-                if (boxDevice.hasSetting("primary")) {
-                    primaryValue = boxDevice.getSetting("primary")
-                } else {
-                    if (boxDevice.hasVocSensor) primaryValue = "voc"
-                    else if (boxDevice.hasCo2Sensor) primaryValue = "co2"
-                    else if (boxDevice.hasPM10Sensor) primaryValue = "pm10"
-                    else if (boxDevice.hasPM25Sensor) primaryValue = "pm25"
-                    else if (boxDevice.hasPM1Sensor) primaryValue = "pm1"
-                    else if (boxDevice.hasHchoSensor) primaryValue = "hcho"
-                    else if (boxDevice.hasGeigerCounter) primaryValue = "nuclear"
-                    else primaryValue = "hygrometer"
+                // primary sensor
+                primarySensor = boxDevice.primary
+                if (primarySensor.length <= 0) {
+                    if (boxDevice.hasVocSensor) primarySensor = "voc"
+                    else if (boxDevice.hasCo2Sensor) primarySensor = "co2"
+                    else if (boxDevice.hasPM10Sensor) primarySensor = "pm10"
+                    else if (boxDevice.hasPM25Sensor) primarySensor = "pm25"
+                    else if (boxDevice.hasPM1Sensor) primarySensor = "pm1"
+                    else if (boxDevice.hasHchoSensor) primarySensor = "hcho"
+                    else if (boxDevice.hasGeigerCounter) primarySensor = "nuclear"
+                    else primarySensor = "hygrometer"
                 }
 
-                if (primaryValue === "voc") {
+                // values
+                if (primarySensor === "voc") {
                     gaugeLegend.text = qsTr("VOC")
                     gaugeValue.from = 0
                     gaugeValue.to = 1500
                     limitMin = 500
                     limitMax = 1000
                     gaugeValue.value = boxDevice.voc
-                } else if (primaryValue === "hcho") {
+                } else if (primarySensor === "hcho") {
                     gaugeLegend.text = qsTr("HCHO")
                     gaugeValue.from = 0
                     gaugeValue.to = 1000
                     limitMin = 250
                     limitMax = 750
                     gaugeValue.value = boxDevice.hcho
-                } else if (primaryValue === "co2") {
+                } else if (primarySensor === "co2") {
                     gaugeLegend.text = boxDevice.haseCo2Sensor ? qsTr("eCO₂") : qsTr("CO₂")
                     gaugeValue.from = 0
                     gaugeValue.to = 3000
                     limitMin = 1000
                     limitMax = 2000
                     gaugeValue.value = boxDevice.co2
-                } else if (primaryValue === "pm10") {
+                } else if (primarySensor === "pm10") {
                     gaugeLegend.text = qsTr("PM10")
                     gaugeValue.from = 0
                     gaugeValue.to = 500
                     limitMin = 100
                     limitMax = 350
                     gaugeValue.value = boxDevice.pm10
-                } else if (primaryValue === "pm25") {
+                } else if (primarySensor === "pm25") {
                     gaugeLegend.text = qsTr("PM2.5")
                     gaugeValue.from = 0
                     gaugeValue.to = 240
                     limitMin = 60
                     limitMax = 120
                     gaugeValue.value = boxDevice.pm25
-                } else if (primaryValue === "pm1") {
+                } else if (primarySensor === "pm1") {
                     gaugeLegend.text = qsTr("PM1")
                     gaugeValue.from = 0
                     gaugeValue.to = 240
@@ -921,22 +915,18 @@ Item {
             }
 
             function updateData() {
-                if (boxDevice.hasSetting("primary")) {
-                    primaryValue = boxDevice.getSetting("primary")
-                }
-
                 // value
-                if (primaryValue === "voc") gaugeValue.value = boxDevice.voc
-                else if (primaryValue === "hcho") gaugeValue.value = boxDevice.hcho
-                else if (primaryValue === "co2") gaugeValue.value = boxDevice.co2
-                else if (primaryValue === "co") gaugeValue.value = boxDevice.co
-                else if (primaryValue === "o2") gaugeValue.value = boxDevice.o2
-                else if (primaryValue === "o3") gaugeValue.value = boxDevice.o3
-                else if (primaryValue === "no2") gaugeValue.value = boxDevice.no2
-                else if (primaryValue === "so2") gaugeValue.value = boxDevice.so2
-                else if (primaryValue === "pm10") gaugeValue.value = boxDevice.pm10
-                else if (primaryValue === "pm25") gaugeValue.value = boxDevice.pm25
-                else if (primaryValue === "pm1") gaugeValue.value = boxDevice.pm1
+                if (primarySensor === "voc") gaugeValue.value = boxDevice.voc
+                else if (primarySensor === "hcho") gaugeValue.value = boxDevice.hcho
+                else if (primarySensor === "co2") gaugeValue.value = boxDevice.co2
+                else if (primarySensor === "co") gaugeValue.value = boxDevice.co
+                else if (primarySensor === "o2") gaugeValue.value = boxDevice.o2
+                else if (primarySensor === "o3") gaugeValue.value = boxDevice.o3
+                else if (primarySensor === "no2") gaugeValue.value = boxDevice.no2
+                else if (primarySensor === "so2") gaugeValue.value = boxDevice.so2
+                else if (primarySensor === "pm10") gaugeValue.value = boxDevice.pm10
+                else if (primarySensor === "pm25") gaugeValue.value = boxDevice.pm25
+                else if (primarySensor === "pm1") gaugeValue.value = boxDevice.pm1
 
                 // limits
                 if (limitMin > 0 && limitMax > 0) {

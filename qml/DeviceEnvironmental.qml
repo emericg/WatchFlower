@@ -141,13 +141,11 @@ Loader {
         }
 
         onPrimaryChanged: {
-            currentDevice.setSetting("primary", primary)
+            currentDevice.primary = primary
+
             loadIndicator()
             updateHeader()
             loadGraph()
-            if (graphLoader.status === Loader.Ready) {
-                updateGraph()
-            }
         }
 
         ////////
@@ -186,9 +184,9 @@ Loader {
         function loadDevice() {
             //console.log("DeviceEnvironmental // loadDevice() >> " + currentDevice)
 
-            if (currentDevice.hasSetting("primary")) {
-                primary = currentDevice.getSetting("primary")
-            } else {
+            // Get primary sensor
+            primary = currentDevice.primary
+            if (primary.length <= 0) {
                 if (currentDevice.hasVocSensor) primary = "voc"
                 else if (currentDevice.hasCoSensor) primary = "co"
                 else if (currentDevice.hasCo2Sensor) primary = "co2"

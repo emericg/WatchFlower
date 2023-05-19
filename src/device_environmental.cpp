@@ -41,6 +41,11 @@ DeviceEnvironmental::DeviceEnvironmental(const QString &deviceAddr, const QStrin
         getSqlSensorBias();
         getSqlSensorLimits();
 
+        if (!m_additionalSettings.value("primary").isUndefined())
+        {
+            m_primary = m_additionalSettings.value("primary").toString();
+        }
+
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlSensorData(12*60);
     }
@@ -61,6 +66,11 @@ DeviceEnvironmental::DeviceEnvironmental(const QBluetoothDeviceInfo &d, QObject 
         getSqlSensorBias();
         getSqlSensorLimits();
 
+        if (!m_additionalSettings.value("primary").isUndefined())
+        {
+            m_primary = m_additionalSettings.value("primary").toString();
+        }
+
         // Load initial data into the GUI (if they are no more than 12h old)
         getSqlSensorData(12*60);
     }
@@ -73,6 +83,21 @@ DeviceEnvironmental::DeviceEnvironmental(const QBluetoothDeviceInfo &d, QObject 
 DeviceEnvironmental::~DeviceEnvironmental()
 {
     //
+}
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+void DeviceEnvironmental::setPrimary(const QString &value)
+{
+    if (m_primary != value)
+    {
+        if (setSetting("primary", value))
+        {
+            m_primary = value;
+            Q_EMIT sensorsUpdated();
+        }
+    }
 }
 
 /* ************************************************************************** */

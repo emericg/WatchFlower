@@ -37,6 +37,13 @@ class DeviceEnvironmental: public DeviceSensor
 {
     Q_OBJECT
 
+    Q_PROPERTY(QString primary READ getPrimary WRITE setPrimary NOTIFY sensorsUpdated)
+
+    QString m_primary;
+
+    QString getPrimary() { return m_primary; }
+    void setPrimary(const QString &value);
+
 public:
     DeviceEnvironmental(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceEnvironmental(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
