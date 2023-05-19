@@ -644,14 +644,12 @@ void DeviceFlowerCare::parseAdvertisementData(const uint16_t adv_mode,
     {
         if (m_soilMoisture > -99 && m_soilConductivity > -99 && m_temperature > -99.f && m_luminosityLux > -99)
         {
-            m_lastUpdate = QDateTime::currentDateTime();
+            // At this point, don't update m_lastUpdate and don't insert records into database
+            // Because the 4 data aren't updated at the same time, it will only cause problems
+            // Just tell the UI new "partial" data are available
 
             if (needsUpdateDb_mini())
             {
-                //addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                //                  m_soilMoisture, m_soilConductivity, -99.f, -99.f,
-                //                  m_temperature, -99.f, m_luminosityLux);
-
                 refreshDataFinished(true);
             }
             else
