@@ -163,8 +163,8 @@ bool DeviceThermometer::addDatabaseRecord_hygrometer(const int64_t timestamp,
             addData.bindValue(":timestamp", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
             addData.bindValue(":temp", t);
             addData.bindValue(":humi", h);
-            status = addData.exec();
 
+            status = addData.exec();
             if (status)
             {
                 m_lastUpdateDatabase = tmcd;

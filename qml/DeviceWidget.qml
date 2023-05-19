@@ -88,7 +88,13 @@ Item {
     }
 
     function updateSensorStatus() {
-        // Text
+        // Status
+        if (!boxDevice.deviceEnabled) {
+            textStatus.color = Theme.colorYellow
+            textStatus.text = qsTr("Disabled")
+            return
+        }
+
         textStatus.text = UtilsDeviceSensors.getDeviceStatusText(boxDevice.status)
         textStatus.color = UtilsDeviceSensors.getDeviceStatusColor(boxDevice.status)
 
@@ -100,10 +106,6 @@ Item {
                 textStatus.color = Theme.colorYellow
                 textStatus.text = qsTr("Synced")
             }
-        }
-        if (!boxDevice.deviceEnabled) {
-            textStatus.color = Theme.colorYellow
-            textStatus.text = qsTr("Disabled")
         }
     }
 
