@@ -153,6 +153,7 @@ TRANSLATIONS = i18n/watchflower_ca.ts \
 
 lupdate_only {
     SOURCES += qml/*.qml qml/*.js \
+               qml/popups/*.qml \
                qml/components/*.qml qml/components_generic/*.qml qml/components_js/*.js
 }
 
@@ -221,7 +222,7 @@ macx {
     QMAKE_BUNDLE = watchflower
 
     # OS icons
-    ICON = $${PWD}/assets/macos/$$lower($${TARGET}).icns
+    ICON = $${PWD}/assets/macos/$${TARGET}.icns
     #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
     #QMAKE_ASSET_CATALOGS = $${PWD}/assets/macos/Images.xcassets
 
@@ -230,7 +231,7 @@ macx {
 
     # OS entitlement (sandbox and stuff)
     ENTITLEMENTS.name = CODE_SIGN_ENTITLEMENTS
-    ENTITLEMENTS.value = $${PWD}/assets/macos/$$lower($${TARGET}).entitlements
+    ENTITLEMENTS.value = $${PWD}/assets/macos/$${TARGET}.entitlements
     QMAKE_MAC_XCODE_SETTINGS += ENTITLEMENTS
 
     # Target architecture(s)
@@ -319,7 +320,7 @@ macx {
 
 win32 {
     # OS icon
-    RC_ICONS = $${PWD}/assets/windows/$$lower($${TARGET}).ico
+    RC_ICONS = $${PWD}/assets/windows/$${TARGET}.ico
 
     # Deploy step
     deploy.commands = $$quote(windeployqt $${OUT_PWD}/$${DESTDIR}/ --qmldir qml/)

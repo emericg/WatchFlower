@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key>
 	<string>WatchFlower</string>
 	<key>CFBundleIconFile</key>
-	<string>watchflower.icns</string>
+	<string>WatchFlower.icns</string>
 	<key>CFBundleGetInfoString</key>
 	<string>Created by Qt/QMake</string>
 	<key>CFBundleIdentifier</key>
