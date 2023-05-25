@@ -120,6 +120,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                 {
                     channel = 2;
                     title = tr("Sub zero temperature warning");
+                    //: Used like this: "Temperature is 9° at 14:59 on 05/21"
                     message = tr("Temperature is %1 at %2 on %3").arg(getTempString(),
                                                                       QDateTime::currentDateTime().toString("hh:mm"),
                                                                       QDateTime::currentDateTime().toString("MM/dd"));

@@ -368,7 +368,7 @@ public:
         SOIL_CHALK,
         SOIL_LIMESTONE,
         SOIL_SPHAGNUM_MOSS,
-        SOIL_PEAT_PERLIT_MIX,
+        SOIL_PEAT_PERLITE_MIX,
         SOIL_PEAT,
     };
     Q_ENUM(Soils)

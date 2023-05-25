@@ -211,11 +211,11 @@ function getSoilText(soil) {
 
     else if (soil == PlantUtils.PlantUtils.SOIL_COARSE_SAND) txt = qsTr("coarse sandy soil")
 
-    else if (soil == PlantUtils.PlantUtils.SOIL_CHALK) txt = qsTr("chalk")
-    else if (soil == PlantUtils.PlantUtils.SOIL_LIMESTONE) txt = qsTr("limestone")
+    else if (soil == PlantUtils.PlantUtils.SOIL_CHALK) txt = qsTr("chalk soil")
+    else if (soil == PlantUtils.PlantUtils.SOIL_LIMESTONE) txt = qsTr("limestone soil")
     else if (soil == PlantUtils.PlantUtils.SOIL_SPHAGNUM_MOSS) txt = qsTr("sphagnum moss")
-    else if (soil == PlantUtils.PlantUtils.SOIL_PEAT_PERLIT_MIX) txt = qsTr("peat and perlit mixed")
-    else if (soil == PlantUtils.PlantUtils.SOIL_PEAT) txt = qsTr("peat soil")
+    else if (soil == PlantUtils.PlantUtils.SOIL_PEAT_PERLITE_MIX) txt = qsTr("peat and perlite mixed")
+    else if (soil == PlantUtils.PlantUtils.SOIL_PEAT) txt = qsTr("peaty soil")
 
     // also print soil type?
     var soiltype = getSoilTypeText(soil)

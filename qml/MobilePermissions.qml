@@ -407,7 +407,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
-                text: qsTr("Click on the icons to ask for permission.")
+                text: qsTr("Click on the icons to ask for a permission.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorText

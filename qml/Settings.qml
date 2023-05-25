@@ -657,7 +657,7 @@ Loader {
                     visible: (element_worker.visible && isDesktop)
 
                     text: settingsManager.systray ?
-                              qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensor data at regular interval.") :
+                              qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
                               qsTr("WatchFlower is only active while the window is open.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
