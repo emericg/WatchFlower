@@ -28,6 +28,7 @@
   </description>
 
   <releases>
+    <release version="5.2" date="2023-06-15" />
     <release version="5.1" date="2023-05-24" />
     <release version="5.0" date="2023-03-15" />
     <release version="4.1" date="2022-07-01" />
