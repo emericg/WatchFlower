@@ -1,4 +1,4 @@
-# ![WatchFlower](assets/android/res/drawable-xhdpi/splashicon.png)
+# ![WatchFlower](assets/android/res/drawable-xxxhdpi/splashicon.png)
 
 [![GitHub release](https://img.shields.io/github/release/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/releases)
 [![GitHub action](https://img.shields.io/github/actions/workflow/status/emericg/WatchFlower/builds_desktop.yml?style=flat-square)](https://github.com/emericg/WatchFlower/actions)
