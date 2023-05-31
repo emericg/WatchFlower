@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt_BR" sourcelanguage="en">
+<TS version="2.1" language="pt_PT" sourcelanguage="en">
   <context>
     <name>About</name>
     <message>
@@ -10,6 +10,15 @@
     <message>
       <source>What do you want to know?</source>
       <translation type="unfinished">What do you want to know?</translation>
+    </message>
+    <message>
+      <location filename="../qml/About.qml" line="88"/>
+      <source>version %1 %2</source>
+      <translation type="unfinished">version %1 %2</translation>
+    </message>
+    <message>
+      <source>Website</source>
+      <translation type="unfinished">Website</translation>
     </message>
     <message>
       <location filename="../qml/About.qml" line="108"/>
@@ -24,19 +33,12 @@
       <translation type="unfinished">SUPPORT</translation>
     </message>
     <message>
-      <location filename="../qml/About.qml" line="131"/>
-      <source>GitHub</source>
-      <translation type="unfinished">GitHub</translation>
+      <source>A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
+      <translation type="unfinished">A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</translation>
     </message>
     <message>
-      <location filename="../qml/About.qml" line="219"/>
-      <source>A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi &apos;Flower Care&apos; or Parrot &apos;Flower Power&apos;.</source>
-      <translation type="unfinished">A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi &apos;Flower Care&apos; or Parrot &apos;Flower Power&apos;.</translation>
-    </message>
-    <message>
-      <location filename="../qml/About.qml" line="524"/>
-      <source>Release notes</source>
-      <translation type="unfinished">Release notes</translation>
+      <source>GitHub page</source>
+      <translation type="unfinished">GitHub page</translation>
     </message>
     <message>
       <location filename="../qml/About.qml" line="436"/>
@@ -59,17 +61,19 @@
       <translation type="unfinished">Special thanks to our translators:</translation>
     </message>
     <message>
-      <source>Website</source>
-      <translation type="unfinished">Website</translation>
-    </message>
-    <message>
-      <source>GitHub page</source>
-      <translation type="unfinished">GitHub page</translation>
-    </message>
-    <message>
       <location filename="../qml/About.qml" line="378"/>
       <source>Open the tutorial</source>
       <translation type="unfinished">Open the tutorial</translation>
+    </message>
+    <message>
+      <location filename="../qml/About.qml" line="131"/>
+      <source>GitHub</source>
+      <translation type="unfinished">GitHub</translation>
+    </message>
+    <message>
+      <location filename="../qml/About.qml" line="219"/>
+      <source>A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi &apos;Flower Care&apos; or Parrot &apos;Flower Power&apos;.</source>
+      <translation type="unfinished">A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi &apos;Flower Care&apos; or Parrot &apos;Flower Power&apos;.</translation>
     </message>
     <message>
       <location filename="../qml/About.qml" line="315"/>
@@ -77,13 +81,13 @@
       <translation type="unfinished">Rate the application</translation>
     </message>
     <message>
-      <location filename="../qml/About.qml" line="88"/>
-      <source>version %1 %2</source>
-      <translation type="unfinished">version %1 %2</translation>
+      <location filename="../qml/About.qml" line="524"/>
+      <source>Release notes</source>
+      <translation type="unfinished">Release notes</translation>
     </message>
     <message>
-      <source>A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</source>
-      <translation type="unfinished">A plant monitoring application for Xiaomi &apos;Flower Care&apos; and &apos;RoPot&apos; Bluetooth sensors and thermometers.</translation>
+      <source>About app permissions</source>
+      <translation type="unfinished">About app permissions</translation>
     </message>
     <message>
       <location filename="../qml/About.qml" line="257"/>
@@ -98,8 +102,36 @@
       <translation type="unfinished">Update data</translation>
     </message>
     <message>
+      <source>Real time data</source>
+      <translation type="unfinished">Real time data</translation>
+    </message>
+    <message>
+      <source>Update history</source>
+      <translation type="unfinished">Update history</translation>
+    </message>
+    <message>
+      <source>Clear history</source>
+      <translation type="unfinished">Clear history</translation>
+    </message>
+    <message>
+      <source>Blink LED</source>
+      <translation type="unfinished">Blink LED</translation>
+    </message>
+    <message>
+      <source>Watering</source>
+      <translation type="unfinished">Watering</translation>
+    </message>
+    <message>
       <source>Switch graph</source>
       <translation type="unfinished">Switch graph</translation>
+    </message>
+    <message>
+      <source>Calibrate sensor</source>
+      <translation type="unfinished">Calibrate sensor</translation>
+    </message>
+    <message>
+      <source>Reboot sensor</source>
+      <translation type="unfinished">Reboot sensor</translation>
     </message>
   </context>
   <context>
@@ -321,6 +353,10 @@
   <context>
     <name>DeviceBrowser</name>
     <message>
+      <source>The device browser help you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don&apos;t pick them up.</source>
+      <translation type="unfinished">The device browser help you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan don&apos;t pick them up.</translation>
+    </message>
+    <message>
       <location filename="../qml/DeviceBrowser.qml" line="126"/>
       <location filename="../qml/DeviceBrowser.qml" line="228"/>
       <source>The device browser helps you locate nearby BLE devices. You can also use this screen to blacklist sensors so the scan doesn&apos;t pick them up.</source>
@@ -456,6 +492,10 @@
       <translation type="unfinished">hPa</translation>
     </message>
     <message>
+      <source>Sound level</source>
+      <translation type="unfinished">Sound level</translation>
+    </message>
+    <message>
       <location filename="../qml/DeviceEnvironmental.qml" line="1140"/>
       <source>Luminosity</source>
       <translation type="unfinished">Luminosity</translation>
@@ -484,6 +524,10 @@
       <translation type="unfinished">Retry</translation>
     </message>
     <message>
+      <source>Bluetooth permissions missing...</source>
+      <translation type="unfinished">Bluetooth permissions missing...</translation>
+    </message>
+    <message>
       <location filename="../qml/DeviceList.qml" line="193"/>
       <source>Bluetooth is disabled...</source>
       <translation type="unfinished">Bluetooth is disabled...</translation>
@@ -492,14 +536,6 @@
       <location filename="../qml/DeviceList.qml" line="197"/>
       <source>Bluetooth permission is missing...</source>
       <translation type="unfinished">Bluetooth permission is missing...</translation>
-    </message>
-    <message numerus="yes">
-      <location filename="../qml/DeviceList.qml" line="242"/>
-      <source>%n device(s) selected</source>
-      <translation type="unfinished">
-        <numerusform>%n device(s) selected</numerusform>
-        <numerusform>%n device(s) selected</numerusform>
-      </translation>
     </message>
     <message>
       <location filename="../qml/DeviceList.qml" line="280"/>
@@ -534,6 +570,14 @@
     <message>
       <source>Bluetooth disabled...</source>
       <translation type="unfinished">Bluetooth disabled...</translation>
+    </message>
+    <message numerus="yes">
+      <location filename="../qml/DeviceList.qml" line="242"/>
+      <source>%n device(s) selected</source>
+      <translation type="unfinished">
+        <numerusform>%n device(s) selected</numerusform>
+        <numerusform>%n device(s) selected</numerusform>
+      </translation>
     </message>
   </context>
   <context>
@@ -699,8 +743,28 @@
       <translation type="unfinished">MAC Address</translation>
     </message>
     <message>
+      <source>Update %1 available with official application</source>
+      <translation type="unfinished">Update %1 available with official application</translation>
+    </message>
+    <message>
       <source>Battery</source>
       <translation type="unfinished">Battery</translation>
+    </message>
+    <message>
+      <source>Last sync</source>
+      <translation type="unfinished">Last sync</translation>
+    </message>
+    <message>
+      <source>Last move</source>
+      <translation type="unfinished">Last move</translation>
+    </message>
+    <message>
+      <source>inside</source>
+      <translation type="unfinished">inside</translation>
+    </message>
+    <message>
+      <source>outside</source>
+      <translation type="unfinished">outside</translation>
     </message>
     <message>
       <source>Moisture</source>
@@ -782,6 +846,10 @@
   <context>
     <name>DevicePlantSensorSettings</name>
     <message>
+      <source>Device</source>
+      <translation type="unfinished">Device</translation>
+    </message>
+    <message>
       <source>Address</source>
       <translation type="unfinished">Address</translation>
     </message>
@@ -861,6 +929,10 @@
       <location filename="../qml/DevicePlantSensorSettings.qml" line="503"/>
       <source>Be advised</source>
       <translation type="unfinished">Be advised</translation>
+    </message>
+    <message>
+      <source>Please advise</source>
+      <translation type="unfinished">Please advise</translation>
     </message>
     <message>
       <location filename="../qml/DevicePlantSensorSettings.qml" line="515"/>
@@ -1230,9 +1302,17 @@
   <context>
     <name>ItemNoDevice</name>
     <message>
+      <source>On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</source>
+      <translation type="unfinished">On Android 6+, scanning for Bluetooth Low Energy devices requires location permission. The application is neither using nor storing your location. Sorry for the inconvenience.</translation>
+    </message>
+    <message>
       <location filename="../qml/components/ItemNoDevice.qml" line="78"/>
       <source>On Android 6+, scanning for Bluetooth Low Energy devices requires &lt;b&gt;location permission&lt;/b&gt;.</source>
       <translation type="unfinished">On Android 6+, scanning for Bluetooth Low Energy devices requires &lt;b&gt;location permission&lt;/b&gt;.</translation>
+    </message>
+    <message>
+      <source>Some devices also require the actual &lt;b&gt;GPS to be turned on&lt;/b&gt;.</source>
+      <translation type="unfinished">Some devices also require the actual &lt;b&gt;GPS to be turned on&lt;/b&gt;.</translation>
     </message>
     <message>
       <location filename="../qml/components/ItemNoDevice.qml" line="90"/>
@@ -1464,21 +1544,6 @@
       <translation type="unfinished">About</translation>
     </message>
     <message>
-      <location filename="../qml/MobileDrawer.qml" line="312"/>
-      <source>Order by:</source>
-      <translation type="unfinished">Order by:</translation>
-    </message>
-    <message>
-      <location filename="../qml/MobileDrawer.qml" line="314"/>
-      <source>water level</source>
-      <translation type="unfinished">water level</translation>
-    </message>
-    <message>
-      <location filename="../qml/MobileDrawer.qml" line="316"/>
-      <source>plant name</source>
-      <translation type="unfinished">plant name</translation>
-    </message>
-    <message>
       <location filename="../qml/MobileDrawer.qml" line="318"/>
       <source>sensor model</source>
       <translation type="unfinished">sensor model</translation>
@@ -1507,6 +1572,21 @@
       <location filename="../qml/MobileDrawer.qml" line="639"/>
       <source>Device browser</source>
       <translation type="unfinished">Device browser</translation>
+    </message>
+    <message>
+      <location filename="../qml/MobileDrawer.qml" line="312"/>
+      <source>Order by:</source>
+      <translation type="unfinished">Order by:</translation>
+    </message>
+    <message>
+      <location filename="../qml/MobileDrawer.qml" line="314"/>
+      <source>water level</source>
+      <translation type="unfinished">water level</translation>
+    </message>
+    <message>
+      <location filename="../qml/MobileDrawer.qml" line="316"/>
+      <source>plant name</source>
+      <translation type="unfinished">plant name</translation>
     </message>
     <message>
       <location filename="../qml/MobileDrawer.qml" line="320"/>
@@ -1625,6 +1705,10 @@
       <translation type="unfinished">Click on the icons to ask for a permission.</translation>
     </message>
     <message>
+      <source>Click on the icons to ask for permission.</source>
+      <translation type="unfinished">Click on the icons to ask for permission.</translation>
+    </message>
+    <message>
       <location filename="../qml/MobilePermissions.qml" line="435"/>
       <source>If it has no effect, you may have previously refused a permission and clicked on &quot;don&apos;t ask again&quot;.</source>
       <translation type="unfinished">If it has no effect, you may have previously refused a permission and clicked on &quot;don&apos;t ask again&quot;.</translation>
@@ -1653,6 +1737,18 @@
     <message>
       <source>Official information</source>
       <translation type="unfinished">Official information</translation>
+    </message>
+    <message>
+      <source>Some devices also require the GPS to be turned on.</source>
+      <translation type="unfinished">Some devices also require the GPS to be turned on.</translation>
+    </message>
+    <message>
+      <source>Storage write</source>
+      <translation type="unfinished">Storage write</translation>
+    </message>
+    <message>
+      <source>Storage write permission can be needed for exporting sensors data to the SD card.</source>
+      <translation type="unfinished">Storage write permission can be needed for exporting sensors data to the SD card.</translation>
     </message>
     <message>
       <source>Bluetooth control</source>
@@ -1898,6 +1994,11 @@
       <translation type="unfinished">fruit color</translation>
     </message>
     <message>
+      <location filename="../qml/PlantScreen.qml" line="711"/>
+      <source>diameter</source>
+      <translation type="unfinished">diameter</translation>
+    </message>
+    <message>
       <location filename="../qml/PlantScreen.qml" line="464"/>
       <source>Swap plant</source>
       <translation type="unfinished">Swap plant</translation>
@@ -1911,11 +2012,6 @@
       <location filename="../qml/PlantScreen.qml" line="691"/>
       <source>height</source>
       <translation type="unfinished">height</translation>
-    </message>
-    <message>
-      <location filename="../qml/PlantScreen.qml" line="711"/>
-      <source>diameter</source>
-      <translation type="unfinished">diameter</translation>
     </message>
     <message>
       <location filename="../qml/PlantScreen.qml" line="816"/>
@@ -2020,6 +2116,21 @@
       <location filename="../qml/PlantScreen.qml" line="1787"/>
       <source>direct light (indoor)</source>
       <translation type="unfinished">direct light (indoor)</translation>
+    </message>
+  </context>
+  <context>
+    <name>PopupBackgroundData</name>
+    <message>
+      <source>About background updates.</source>
+      <translation type="unfinished">About background updates.</translation>
+    </message>
+    <message>
+      <source>Information</source>
+      <translation type="unfinished">Information</translation>
+    </message>
+    <message>
+      <source>I understand</source>
+      <translation type="unfinished">I understand</translation>
     </message>
   </context>
   <context>
@@ -2162,6 +2273,10 @@
       <source>Cancel</source>
       <translation type="unfinished">Cancel</translation>
     </message>
+    <message>
+      <source>Validate</source>
+      <translation type="unfinished">Validate</translation>
+    </message>
   </context>
   <context>
     <name>PopupDate6</name>
@@ -2213,6 +2328,10 @@
         <numerusform>Are you sure you want to delete selected sensor(s)?</numerusform>
         <numerusform>Are you sure you want to delete selected sensor(s)?</numerusform>
       </translation>
+    </message>
+    <message>
+      <source>Data from the sensors are kept for an additional 90 days, in case you would like to re-add a sensor later.</source>
+      <translation type="unfinished">Data from the sensors are kept for an additional 90 days, in case you would like to re-add a sensor later.</translation>
     </message>
     <message numerus="yes">
       <location filename="../qml/popups/PopupDeleteDevice.qml" line="58"/>
@@ -2297,6 +2416,11 @@
       <translation type="unfinished">Dark mode will switch on automatically between 9 PM and 9 AM.</translation>
     </message>
     <message>
+      <location filename="../qml/Settings.qml" line="660"/>
+      <source>WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
+      <translation type="unfinished">WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</translation>
+    </message>
+    <message>
       <location filename="../qml/Settings.qml" line="736"/>
       <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
       <translation type="unfinished">If a plant needs water, WatchFlower will bring it to your attention!</translation>
@@ -2328,6 +2452,11 @@
       <translation type="unfinished">snow</translation>
     </message>
     <message>
+      <location filename="../qml/Settings.qml" line="157"/>
+      <source>rain</source>
+      <translation type="unfinished">rain</translation>
+    </message>
+    <message>
       <location filename="../qml/Settings.qml" line="207"/>
       <source>day</source>
       <translation type="unfinished">day</translation>
@@ -2341,66 +2470,6 @@
       <location filename="../qml/Settings.qml" line="277"/>
       <source>Automatic dark mode</source>
       <translation type="unfinished">Automatic dark mode</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="428"/>
-      <source>Language</source>
-      <translation type="unfinished">Language</translation>
-    </message>
-    <message>
-      <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-      <translation type="unfinished">WatchFlower can activate your device&apos;s Bluetooth in order to operate.</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1062"/>
-      <source>Simultaneous updates</source>
-      <translation type="unfinished">Simultaneous updates</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="642"/>
-      <source>Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
-      <translation type="unfinished">Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="182"/>
-      <source>plant</source>
-      <translation type="unfinished">plant</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="450"/>
-      <source>auto</source>
-      <comment>short for automatic</comment>
-      <translation type="unfinished">auto</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="660"/>
-      <source>WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
-      <translation type="unfinished">WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="992"/>
-      <source>Limit Bluetooth scanning range</source>
-      <translation type="unfinished">Limit Bluetooth scanning range</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1120"/>
-      <source>How many sensors should be updated at once.</source>
-      <translation type="unfinished">How many sensors should be updated at once.</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1121"/>
-      <source>A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
-      <translation type="unfinished">A lower number improves Bluetooth synchronization reliability, at the expense of speed.</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="549"/>
-      <source>Background updates</source>
-      <translation type="unfinished">Background updates</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="157"/>
-      <source>rain</source>
-      <translation type="unfinished">rain</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="312"/>
@@ -2423,9 +2492,137 @@
       <translation type="unfinished">Devices will be shown together.</translation>
     </message>
     <message>
+      <location filename="../qml/Settings.qml" line="428"/>
+      <source>Language</source>
+      <translation type="unfinished">Language</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="182"/>
+      <source>plant</source>
+      <translation type="unfinished">plant</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="450"/>
+      <source>auto</source>
+      <comment>short for automatic</comment>
+      <translation type="unfinished">auto</translation>
+    </message>
+    <message>
+      <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
+      <translation type="unfinished">WatchFlower can activate your device&apos;s Bluetooth in order to operate.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="992"/>
+      <source>Limit Bluetooth scanning range</source>
+      <translation type="unfinished">Limit Bluetooth scanning range</translation>
+    </message>
+    <message>
+      <source>Will only scan for sensors ~2m around you.</source>
+      <translation type="unfinished">Will only scan for sensors ~2m around you.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1062"/>
+      <source>Simultaneous updates</source>
+      <translation type="unfinished">Simultaneous updates</translation>
+    </message>
+    <message>
+      <source>How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
+      <translation type="unfinished">How many sensors should be updated simultaneously. A lower number improves Bluetooth synchronization reliability, at the expense of speed.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="642"/>
+      <source>Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</source>
+      <translation type="unfinished">Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.</translation>
+    </message>
+    <message>
+      <source>WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.</source>
+      <translation type="unfinished">WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1184"/>
+      <location filename="../qml/Settings.qml" line="1464"/>
+      <source>h.</source>
+      <comment>short for hours</comment>
+      <translation type="unfinished">h.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1227"/>
+      <source>Data indicators style</source>
+      <translation type="unfinished">Data indicators style</translation>
+    </message>
+    <message>
+      <source>Send file</source>
+      <translation type="unfinished">Send file</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1733"/>
+      <source>Host</source>
+      <translation type="unfinished">Host</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1754"/>
+      <source>Port</source>
+      <translation type="unfinished">Port</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1776"/>
+      <source>User</source>
+      <translation type="unfinished">User</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1797"/>
+      <source>Password</source>
+      <translation type="unfinished">Password</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1243"/>
+      <location filename="../qml/Settings.qml" line="1338"/>
+      <source>thin</source>
+      <translation type="unfinished">thin</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1250"/>
+      <location filename="../qml/Settings.qml" line="1376"/>
+      <source>solid</source>
+      <translation type="unfinished">solid</translation>
+    </message>
+    <message>
+      <source>External database</source>
+      <translation type="unfinished">External database</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1618"/>
+      <source>Export up to 90 days of data into a CSV file.</source>
+      <translation type="unfinished">Export up to 90 days of data into a CSV file.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1598"/>
+      <source>Data archiving</source>
+      <translation type="unfinished">Data archiving</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1120"/>
+      <source>How many sensors should be updated at once.</source>
+      <translation type="unfinished">How many sensors should be updated at once.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="1121"/>
+      <source>A lower number improves Bluetooth synchronization reliability, at the expense of speed.</source>
+      <translation type="unfinished">A lower number improves Bluetooth synchronization reliability, at the expense of speed.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Settings.qml" line="549"/>
+      <source>Background updates</source>
+      <translation type="unfinished">Background updates</translation>
+    </message>
+    <message>
       <location filename="../qml/Settings.qml" line="559"/>
       <source>experimental</source>
       <translation type="unfinished">experimental</translation>
+    </message>
+    <message>
+      <source>WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensor data at regular interval.</source>
+      <translation type="unfinished">WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensor data at regular interval.</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="661"/>
@@ -2483,30 +2680,6 @@
       <translation type="unfinished">Sensor scanning range is not limited.</translation>
     </message>
     <message>
-      <location filename="../qml/Settings.qml" line="1184"/>
-      <location filename="../qml/Settings.qml" line="1464"/>
-      <source>h.</source>
-      <comment>short for hours</comment>
-      <translation type="unfinished">h.</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1227"/>
-      <source>Data indicators style</source>
-      <translation type="unfinished">Data indicators style</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1243"/>
-      <location filename="../qml/Settings.qml" line="1338"/>
-      <source>thin</source>
-      <translation type="unfinished">thin</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1250"/>
-      <location filename="../qml/Settings.qml" line="1376"/>
-      <source>solid</source>
-      <translation type="unfinished">solid</translation>
-    </message>
-    <message>
       <location filename="../qml/Settings.qml" line="1289"/>
       <source>Data indicators scale</source>
       <translation type="unfinished">Data indicators scale</translation>
@@ -2520,16 +2693,6 @@
       <location filename="../qml/Settings.qml" line="1312"/>
       <source>dynamic</source>
       <translation type="unfinished">dynamic</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1598"/>
-      <source>Data archiving</source>
-      <translation type="unfinished">Data archiving</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1618"/>
-      <source>Export up to 90 days of data into a CSV file.</source>
-      <translation type="unfinished">Export up to 90 days of data into a CSV file.</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="1631"/>
@@ -2554,24 +2717,12 @@
       <translation type="unfinished">Open folder</translation>
     </message>
     <message>
-      <location filename="../qml/Settings.qml" line="1733"/>
-      <source>Host</source>
-      <translation type="unfinished">Host</translation>
+      <source>Open with</source>
+      <translation type="unfinished">Open with</translation>
     </message>
     <message>
-      <location filename="../qml/Settings.qml" line="1754"/>
-      <source>Port</source>
-      <translation type="unfinished">Port</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1776"/>
-      <source>User</source>
-      <translation type="unfinished">User</translation>
-    </message>
-    <message>
-      <location filename="../qml/Settings.qml" line="1797"/>
-      <source>Password</source>
-      <translation type="unfinished">Password</translation>
+      <source>Dynamic scale for indicators</source>
+      <translation type="unfinished">Dynamic scale for indicators</translation>
     </message>
     <message>
       <location filename="../qml/Settings.qml" line="1412"/>
@@ -2698,6 +2849,10 @@
       <translation type="unfinished">Quit</translation>
     </message>
     <message>
+      <source>Device list</source>
+      <translation type="unfinished">Device list</translation>
+    </message>
+    <message>
       <location filename="../src/SystrayManager.cpp" line="101"/>
       <source>Settings</source>
       <translation type="unfinished">Settings</translation>
@@ -2714,18 +2869,9 @@
       <translation type="unfinished">It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</translation>
     </message>
     <message>
-      <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
-      <translation type="unfinished">&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</translation>
-    </message>
-    <message>
       <location filename="../qml/Tutorial.qml" line="88"/>
       <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
       <translation type="unfinished">&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</translation>
-    </message>
-    <message>
-      <location filename="../qml/Tutorial.qml" line="110"/>
-      <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt; and other sensors like &lt;b&gt;air quality monitors&lt;/b&gt; and &lt;b&gt;weather stations&lt;/b&gt;!</source>
-      <translation type="unfinished">It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt; and other sensors like &lt;b&gt;air quality monitors&lt;/b&gt; and &lt;b&gt;weather stations&lt;/b&gt;!</translation>
     </message>
     <message>
       <location filename="../qml/Tutorial.qml" line="123"/>
@@ -2788,6 +2934,23 @@
       <translation type="unfinished">Start</translation>
     </message>
     <message>
+      <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
+      <translation type="unfinished">You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</translation>
+    </message>
+    <message>
+      <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</source>
+      <translation type="unfinished">Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</translation>
+    </message>
+    <message>
+      <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
+      <translation type="unfinished">&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</translation>
+    </message>
+    <message>
+      <location filename="../qml/Tutorial.qml" line="110"/>
+      <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt; and other sensors like &lt;b&gt;air quality monitors&lt;/b&gt; and &lt;b&gt;weather stations&lt;/b&gt;!</source>
+      <translation type="unfinished">It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt; and other sensors like &lt;b&gt;air quality monitors&lt;/b&gt; and &lt;b&gt;weather stations&lt;/b&gt;!</translation>
+    </message>
+    <message>
       <source>Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</source>
       <translation type="unfinished">Click on one of the sensors to access &lt;b&gt;detailed infos&lt;/b&gt;, &lt;b&gt;graphs&lt;/b&gt; and &lt;b&gt;historical data&lt;/b&gt;.</translation>
     </message>
@@ -2796,21 +2959,13 @@
       <translation type="unfinished">Set &lt;b&gt;limits&lt;/b&gt; like &lt;b&gt;optimal moisture level&lt;/b&gt; or &lt;b&gt;temperature range&lt;/b&gt; and more depending on available sensors metrics.</translation>
     </message>
     <message>
-      <source>All right!</source>
-      <translation type="unfinished">All right!</translation>
-    </message>
-    <message>
-      <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</source>
-      <translation type="unfinished">Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data.</translation>
-    </message>
-    <message>
-      <source>You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</source>
-      <translation type="unfinished">You can &lt;b&gt;name your plants&lt;/b&gt; and set devices &lt;b&gt;location&lt;/b&gt;.</translation>
-    </message>
-    <message>
       <location filename="../qml/Tutorial.qml" line="334"/>
       <source>Previous</source>
       <translation type="unfinished">Previous</translation>
+    </message>
+    <message>
+      <source>All right!</source>
+      <translation type="unfinished">All right!</translation>
     </message>
     <message>
       <location filename="../qml/Tutorial.qml" line="369"/>
@@ -2843,6 +2998,14 @@
     <message>
       <source>Updating...</source>
       <translation type="unfinished">Updating...</translation>
+    </message>
+    <message>
+      <source>Syncing...</source>
+      <translation type="unfinished">Syncing...</translation>
+    </message>
+    <message>
+      <source>Realtime data</source>
+      <translation type="unfinished">Realtime data</translation>
     </message>
   </context>
   <context>
@@ -3466,11 +3629,6 @@
       <translation type="unfinished">limestone soil</translation>
     </message>
     <message>
-      <location filename="../qml/components_js/UtilsPlantDatabase.js" line="216"/>
-      <source>sphagnum moss</source>
-      <translation type="unfinished">sphagnum moss</translation>
-    </message>
-    <message>
       <location filename="../qml/components_js/UtilsPlantDatabase.js" line="217"/>
       <source>peat and perlite mixed</source>
       <translation type="unfinished">peat and perlite mixed</translation>
@@ -3479,6 +3637,27 @@
       <location filename="../qml/components_js/UtilsPlantDatabase.js" line="218"/>
       <source>peaty soil</source>
       <translation type="unfinished">peaty soil</translation>
+    </message>
+    <message>
+      <source>chalk</source>
+      <translation type="unfinished">chalk</translation>
+    </message>
+    <message>
+      <source>limestone</source>
+      <translation type="unfinished">limestone</translation>
+    </message>
+    <message>
+      <location filename="../qml/components_js/UtilsPlantDatabase.js" line="216"/>
+      <source>sphagnum moss</source>
+      <translation type="unfinished">sphagnum moss</translation>
+    </message>
+    <message>
+      <source>peat and perlit mixed</source>
+      <translation type="unfinished">peat and perlit mixed</translation>
+    </message>
+    <message>
+      <source>peat soil</source>
+      <translation type="unfinished">peat soil</translation>
     </message>
     <message>
       <location filename="../qml/components_js/UtilsPlantDatabase.js" line="231"/>
