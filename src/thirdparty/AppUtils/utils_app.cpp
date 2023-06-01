@@ -57,8 +57,7 @@ UtilsApp::UtilsApp()
     // Set default application path
     m_appPath = QCoreApplication::applicationDirPath();
 
-    //m_appPath = newpath.absolutePath();
-    // Make sure the path is terminated with a separator.
+    // Make sure the path is terminated with a separator?
     //if (!m_appPath.endsWith('/')) m_appPath += '/';
 }
 
@@ -117,6 +116,12 @@ bool UtilsApp::isDebugBuild()
     return true;
 }
 
+QString UtilsApp::qtVersion()
+{
+    return QString(qVersion());
+}
+
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void UtilsApp::appExit()

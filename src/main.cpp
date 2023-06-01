@@ -176,6 +176,11 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
+    bool qtConnectivityPatched = false;
+#if defined(QT_CONNECTIVITY_PATCHED)
+    qtConnectivityPatched = true;
+#endif
+
     // Translate the application
     utilsLanguage->loadLanguage(sm->getAppLanguage());
 
@@ -201,6 +206,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
     //engine_context->setContextProperty("utilsPlant", utilsPlant);
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
+    engine_context->setContextProperty("qtConnectivityPatched", qtConnectivityPatched);
 
     // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
