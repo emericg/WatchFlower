@@ -273,9 +273,12 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
                 {
                     if (fert != m_soilConductivity)
                     {
-                        m_soilConductivity = fert;
-                        Q_EMIT dataUpdated();
-                        status = true;
+                        if (m_deviceName != "ropot") // ropot hack // device always broadcast 0
+                        {
+                            m_soilConductivity = fert;
+                            Q_EMIT dataUpdated();
+                            status = true;
+                        }
                     }
                 }
             }
