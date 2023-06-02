@@ -62,7 +62,9 @@ Loader {
                 ////////////////
 
                 SectionTitle {
-                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 12
+                    anchors.rightMargin: singleColumn ? 0 : 12
+
                     text: qsTr("Application")
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
@@ -545,7 +547,9 @@ Loader {
                 ////////////////
 
                 SectionTitle {
-                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 12
+                    anchors.rightMargin: singleColumn ? 0 : 12
+
                     text: qsTr("Background updates")
                     source: "qrc:/assets/icons_material/baseline-android-24px.svg"
                     visible: (Qt.platform.os === "android")
@@ -880,7 +884,9 @@ Loader {
                 ////////
 
                 SectionTitle {
-                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 12
+                    anchors.rightMargin: singleColumn ? 0 : 12
+
                     text: qsTr("Bluetooth")
                     source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
                 }
@@ -1128,7 +1134,9 @@ Loader {
                 ////////////////
 
                 SectionTitle {
-                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 12
+                    anchors.rightMargin: singleColumn ? 0 : 12
+
                     text: qsTr("Plant sensors")
                     source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
                 }
@@ -1408,7 +1416,9 @@ Loader {
                 ////////////////
 
                 SectionTitle {
-                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 12
+                    anchors.rightMargin: singleColumn ? 0 : 12
+
                     text: qsTr("Thermometers")
                     source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
                 }
@@ -1535,7 +1545,9 @@ Loader {
                 ////////////////
 /*
                 SectionTitle {
-                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 12
+                    anchors.rightMargin: singleColumn ? 0 : 12
+
                     text: qsTr("External database")
                     source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                     visible: isDesktop
@@ -1594,7 +1606,9 @@ Loader {
                 ////////////////
 
                 SectionTitle {
-                    anchors.left: parent.left
+                    anchors.leftMargin: singleColumn ? 0 : 12
+                    anchors.rightMargin: singleColumn ? 0 : 12
+
                     text: qsTr("Data archiving")
                     source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
                     visible: deviceManager.hasDevices

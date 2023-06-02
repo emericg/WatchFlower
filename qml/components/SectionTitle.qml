@@ -6,9 +6,9 @@ import ThemeEngine 1.0
 Rectangle {
     id: control
     anchors.left: parent.left
-    anchors.leftMargin: singleColumn ? 0 : 12
+    anchors.leftMargin: 0
     anchors.right: parent.right
-    anchors.rightMargin: singleColumn ? 0 : 12
+    anchors.rightMargin: 0
 
     height: (isDesktop && isHdpi) ? 44 : 48
     radius: singleColumn ? 0 : Theme.componentRadius
@@ -19,7 +19,9 @@ Rectangle {
 
     property string text
     property string source
-    property int fontSize: Theme.fontSizeContent
+
+    property int fontSize: source ? Theme.fontSizeContentBig :
+                                    Theme.fontSizeContentVeryBig
 
     Row {
         anchors.left: parent.left

@@ -9,7 +9,7 @@ Item {
     implicitHeight: 64
 
     width: Math.max(parent.height, content.width + 32)
-    height: parent.height
+    height: parent.height // height drive the size of this element
 
     // actions
     signal clicked()

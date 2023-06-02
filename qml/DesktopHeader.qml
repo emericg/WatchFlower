@@ -385,7 +385,6 @@ Rectangle {
 
             DesktopHeaderItem {
                 id: menuDeviceData
-                width: headerHeight
                 height: headerHeight
 
                 source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
@@ -396,7 +395,6 @@ Rectangle {
             }
             DesktopHeaderItem {
                 id: menuDeviceHistory
-                width: headerHeight
                 height: headerHeight
 
                 visible: (appContent.state === "DevicePlantSensor")
@@ -409,7 +407,6 @@ Rectangle {
             }
             DesktopHeaderItem {
                 id: menuDevicePlant
-                width: headerHeight
                 height: headerHeight
 
                 visible: (appContent.state === "DevicePlantSensor")
@@ -422,7 +419,6 @@ Rectangle {
             }
             DesktopHeaderItem {
                 id: menuDeviceSettings
-                width: headerHeight
                 height: headerHeight
 
                 source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
@@ -597,7 +593,6 @@ Rectangle {
 
             DesktopHeaderItem {
                 id: menuPlants
-                width: headerHeight
                 height: headerHeight
 
                 source: "qrc:/assets/logos/watchflower_tray_dark.svg"
@@ -609,7 +604,6 @@ Rectangle {
             }
             DesktopHeaderItem {
                 id: menuSettings
-                width: headerHeight
                 height: headerHeight
 
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
@@ -621,7 +615,6 @@ Rectangle {
             }
             DesktopHeaderItem {
                 id: menuAbout
-                width: headerHeight
                 height: headerHeight
 
                 source: "qrc:/assets/menus/menu_infos.svg"
@@ -636,7 +629,7 @@ Rectangle {
 
     ////////////
 
-    Rectangle {
+    Rectangle { // bottom separator
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
