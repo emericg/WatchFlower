@@ -361,6 +361,11 @@ ApplicationWindow {
             anchors.fill: parent
             anchors.bottomMargin: mobileMenu.hhv
         }
+        SettingsAdvanced {
+            id: screenSettingsAdvanced
+            anchors.fill: parent
+            anchors.bottomMargin: mobileMenu.hhv
+        }
         MobilePermissions {
             id: screenPermissions
             anchors.fill: parent
@@ -414,6 +419,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -428,6 +434,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -442,6 +449,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -456,6 +464,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: true; enabled: true; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -470,6 +479,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: true; enabled: true; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -484,6 +494,22 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: true; enabled: true; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
+                PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
+                PropertyChanges { target: screenAbout; visible: false; enabled: false; }
+                PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
+            },
+            State {
+                name: "SettingsAdvanced"
+                PropertyChanges { target: appHeader; title: qsTr("Settings"); }
+                PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
+                PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
+                PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: true; enabled: true; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -498,6 +524,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: true; enabled: true; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -512,6 +539,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: true; enabled: true; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }
@@ -526,6 +554,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: true; enabled: true; }
@@ -540,6 +569,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceThermometer; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceEnvironmental; visible: false; enabled: false; }
                 PropertyChanges { target: screenSettings; visible: false; enabled: false; }
+                PropertyChanges { target: screenSettingsAdvanced; visible: false; enabled: false; }
                 PropertyChanges { target: screenPermissions; visible: false; enabled: false; }
                 PropertyChanges { target: screenAbout; visible: false; enabled: false; }
                 PropertyChanges { target: screenPlantBrowser; visible: false; enabled: false; }

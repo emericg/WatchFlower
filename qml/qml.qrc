@@ -11,6 +11,7 @@
         <file>PlantScreen.qml</file>
         <file>About.qml</file>
         <file>Settings.qml</file>
+        <file>SettingsAdvanced.qml</file>
         <file>Tutorial.qml</file>
         <file>JournalWidget.qml</file>
         <file>DeviceList.qml</file>
