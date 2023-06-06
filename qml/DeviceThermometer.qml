@@ -540,7 +540,7 @@ Loader {
                 }
 
                 Item {
-                    ItemBannerSync {
+                    ActionbarSync {
                         id: bannersync
                         z: 5
                         anchors.top: parent.top

@@ -5,7 +5,9 @@ import DeviceUtils 1.0
 
 Rectangle {
     id: statusBox
-    width: parent.width
+    anchors.left: parent.left
+    anchors.right: parent.right
+
     height: (connecting || syncing) ? (isPhone ? 44 : 48) : 0
     Behavior on height { NumberAnimation { duration: 133 } }
 
@@ -72,8 +74,6 @@ Rectangle {
         }
     }
 
-    ////////////////
-
     ButtonCompactable {
         id: buttonCancel
         height: compact ? 36 : 34
@@ -92,13 +92,16 @@ Rectangle {
 
     ////////////////
 
-    Rectangle {
+    Rectangle { // progress bar
         anchors.left: parent.left
         anchors.bottom: parent.bottom
 
-        visible: (currentDevice && currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
         width: currentDevice ? (parent.width * (currentDevice.historyUpdatePercent/100)) : 0
         height: 4
+
+        visible: (currentDevice && currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
         color: Theme.colorActionbarHighlight
     }
+
+    ////////////////
 }

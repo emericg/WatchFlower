@@ -759,7 +759,7 @@ Loader {
                 ////////////////
 
                 Item {
-                    ItemBannerSync {
+                    ActionbarSync {
                         id: bannersync
                         z: 5
                         anchors.left: parent.left

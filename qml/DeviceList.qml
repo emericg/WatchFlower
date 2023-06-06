@@ -128,174 +128,18 @@ Item {
 
         ////////////////
 
-        Rectangle {
+        ActionbarBluetooth {
             id: rectangleBluetoothStatus
             anchors.left: parent.left
             anchors.right: parent.right
-
-            height: 0
-            Behavior on height { NumberAnimation { duration: 133 } }
-
-            clip: true
-            visible: (height > 0)
-            color: Theme.colorActionbar
-
-            // prevent clicks below this area
-            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-            Text {
-                id: textBluetoothStatus
-                anchors.fill: parent
-                anchors.leftMargin: 16
-                anchors.rightMargin: 16
-
-                color: Theme.colorActionbarContent
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignLeft
-                font.bold: isDesktop ? true : false
-                font.pixelSize: Theme.fontSizeComponent
-            }
-
-            ButtonWireframe {
-                id: buttonBluetoothStatus
-                height: 32
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-
-                fullColor: true
-                primaryColor: Theme.colorActionbarHighlight
-
-                text: {
-                    if (Qt.platform.os === "android") {
-                        if (!deviceManager.bluetoothEnabled) return qsTr("Enable")
-                        else if (!deviceManager.bluetoothPermissions) return qsTr("About")
-                    }
-                    return qsTr("Retry")
-                }
-                onClicked: {
-                    if (Qt.platform.os === "android" && !deviceManager.bluetoothPermissions) {
-                        //utilsApp.getMobileBleLocationPermission()
-                        //deviceManager.checkBluetoothPermissions()
-
-                        // someone clicked 'never ask again'?
-                        screenPermissions.loadScreenFrom("DeviceList")
-                    } else {
-                        deviceManager.enableBluetooth(settingsManager.bluetoothControl)
-                    }
-                }
-            }
-
-            function hide() {
-                rectangleBluetoothStatus.height = 0
-            }
-            function setBluetoothWarning() {
-                textBluetoothStatus.text = qsTr("Bluetooth is disabled...")
-                rectangleBluetoothStatus.height = 48
-            }
-            function setPermissionWarning() {
-                textBluetoothStatus.text = qsTr("Bluetooth permission is missing...")
-                rectangleBluetoothStatus.height = 48
-            }
         }
 
         ////////////////
 
-        Rectangle {
-            id: rectangleActions
+        ActionbarSelection {
+            id: rectangleSelections
             anchors.left: parent.left
             anchors.right: parent.right
-
-            height: (screenDeviceList.selectionCount) ? 48 : 0
-            Behavior on height { NumberAnimation { duration: 133 } }
-
-            clip: true
-            visible: (height > 0)
-            color: Theme.colorActionbar
-
-            // prevent clicks below this area
-            MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
-
-            Row {
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 8
-
-                RoundButtonIcon {
-                    id: buttonClear
-                    width: 36
-                    height: 36
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
-                    rotation: 180
-                    iconColor: Theme.colorActionbarContent
-                    backgroundColor: Theme.colorActionbarHighlight
-                    onClicked: screenDeviceList.exitSelectionMode()
-                }
-
-                Text {
-                    id: textActions
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("%n device(s) selected", "", screenDeviceList.selectionCount)
-                    color: Theme.colorActionbarContent
-                    font.bold: true
-                    font.pixelSize: Theme.fontSizeComponent
-                }
-            }
-
-            Row {
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                anchors.verticalCenter: parent.verticalCenter
-                spacing: 8
-
-                ButtonCompactable {
-                    id: buttonDelete
-                    height: compact ? 36 : 34
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    compact: !wideMode
-                    iconColor: Theme.colorActionbarContent
-                    backgroundColor: Theme.colorActionbarHighlight
-                    onClicked: confirmDeleteDevice.open()
-
-                    text: qsTr("Delete")
-                    source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
-                }
-
-                ButtonCompactable {
-                    id: buttonSync
-                    height: !wideMode ? 36 : 34
-                    anchors.verticalCenter: parent.verticalCenter
-                    visible: deviceManager.bluetooth
-
-                    compact: !wideMode
-                    iconColor: Theme.colorActionbarContent
-                    backgroundColor: Theme.colorActionbarHighlight
-                    onClicked: screenDeviceList.syncSelectedDevice()
-
-                    text: qsTr("Synchronize history")
-                    source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-                }
-
-                ButtonCompactable {
-                    id: buttonRefresh
-                    height: !wideMode ? 36 : 34
-                    anchors.verticalCenter: parent.verticalCenter
-                    visible: deviceManager.bluetooth
-
-                    compact: !wideMode
-                    iconColor: Theme.colorActionbarContent
-                    backgroundColor: Theme.colorActionbarHighlight
-                    onClicked: screenDeviceList.updateSelectedDevice()
-
-                    text: qsTr("Refresh")
-                    source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
-                }
-            }
         }
     }
 

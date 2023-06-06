@@ -42,17 +42,21 @@
         <file alias="PopupDeleteData.qml">popups/PopupDeleteData.qml</file>
         <file alias="PopupDeleteDevice.qml">popups/PopupDeleteDevice.qml</file>
 
-        <file alias="ActionMenuFixed.qml">components/ActionMenuFixed.qml</file>
-        <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
-        <file alias="ButtonExperimental.qml">components/ButtonExperimental.qml</file>
+        <file alias="ActionbarBluetooth.qml">components/ActionbarBluetooth.qml</file>
+        <file alias="ActionbarSelection.qml">components/ActionbarSelection.qml</file>
+        <file alias="ActionbarSync.qml">components/ActionbarSync.qml</file>
+
         <file alias="ChartEnvironmentalVoc.qml">components/ChartEnvironmentalVoc.qml</file>
         <file alias="ChartHistory.qml">components/ChartHistory.qml</file>
         <file alias="ChartPlantDataAio.qml">components/ChartPlantDataAio.qml</file>
         <file alias="ChartThermometerMinMax.qml">components/ChartThermometerMinMax.qml</file>
         <file alias="ChartThermometerMinMaxBar.qml">components/ChartThermometerMinMaxBar.qml</file>
+
+        <file alias="ActionMenuFixed.qml">components/ActionMenuFixed.qml</file>
+        <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
+        <file alias="ButtonExperimental.qml">components/ButtonExperimental.qml</file>
         <file alias="IndicatorsCompact.qml">components/IndicatorsCompact.qml</file>
         <file alias="IndicatorsSolid.qml">components/IndicatorsSolid.qml</file>
-        <file alias="ItemBannerSync.qml">components/ItemBannerSync.qml</file>
         <file alias="ItemEnvBox.qml">components/ItemEnvBox.qml</file>
         <file alias="ItemWeatherBox.qml">components/ItemWeatherBox.qml</file>
         <file alias="ItemLoadData.qml">components/ItemLoadData.qml</file>

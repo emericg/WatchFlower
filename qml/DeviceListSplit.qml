@@ -7,6 +7,9 @@ Item {
     id: deviceList
     anchors.fill: parent
 
+    // per category ordering
+    // multi selection support
+
     ////////////////////////////////////////////////////////////////////////////
 
     property bool selectionMode: false
@@ -47,47 +50,45 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Flickable {
-        id: devicesView
         anchors.fill: parent
-        anchors.leftMargin: 6
-        anchors.rightMargin: 6
 
         contentWidth: -1
-        contentHeight: col.height
-
+        contentHeight: devicesView.height
+/*
         ScrollBar.vertical: ScrollBar {
             visible: false
             anchors.right: parent.right
             anchors.rightMargin: -6
             policy: ScrollBar.AsNeeded
         }
-
-        property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
-
-        property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
-        property int cellWidthTarget: {
-            if (singleColumn) return devicesView.width
-            if (isTablet) return (bigWidget ? 350 : 280)
-            return (bigWidget ? 440 : 320)
-        }
-        property int cellWidth: (devicesView.width / cellColumnsTarget)
-        property int cellHeight: {
-            if (isPhone) return 100
-            if (bigWidget) return 144
-            return 112
-        }
-
-        // multi selection
-        // per category ordering
-
+*/
         Column {
-            id: col
+            id: devicesView
             anchors.left: parent.left
+            anchors.leftMargin: 6
             anchors.right: parent.right
+            anchors.rightMargin: 6
 
             topPadding: 12
             bottomPadding: 8
             spacing: singleColumn ? 0 : 8
+
+            ////////
+
+            property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
+
+            property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
+            property int cellWidthTarget: {
+                if (singleColumn) return devicesView.width
+                if (isTablet) return (bigWidget ? 350 : 280)
+                return (bigWidget ? 440 : 320)
+            }
+            property int cellWidth: (devicesView.width / cellColumnsTarget)
+            property int cellHeight: {
+                if (isPhone) return 100
+                if (bigWidget) return 144
+                return 112
+            }
 
             ////////
 
