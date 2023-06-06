@@ -69,7 +69,7 @@ T.SpinBox {
                 }
             }
 
-            color: Theme.colorComponentText
+            color: Theme.colorSubText
             font: control.font
             horizontalAlignment: Qt.AlignHCenter
             verticalAlignment: Qt.AlignVCenter
@@ -100,16 +100,15 @@ T.SpinBox {
         x: control.mirrored ? 0 : control.width - width
         anchors.verticalCenter: control.verticalCenter
 
-        color: Theme.colorBackground
+        color: enabled ? Theme.colorPrimary : Theme.colorComponentBorder
         border.width: Theme.componentBorderWidth
-        border.color: Theme.colorComponentBorder
+        border.color: enabled ? Theme.colorPrimary : Theme.colorComponentBorder
 
         IconSvg {
             width: 24
             height: 24
             anchors.centerIn: parent
-            opacity: enabled ? 1 : 0.4
-            color: Theme.colorComponentText
+            color: "white"
             source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
         }
     }
@@ -126,16 +125,15 @@ T.SpinBox {
         x: control.mirrored ? control.width - width : 0
         anchors.verticalCenter: control.verticalCenter
 
-        color: Theme.colorBackground
+        color: enabled ? Theme.colorPrimary : Theme.colorComponentBorder
         border.width: Theme.componentBorderWidth
-        border.color: Theme.colorComponentBorder
+        border.color: enabled ? Theme.colorPrimary : Theme.colorComponentBorder
 
         IconSvg {
             width: 24
             height: 24
             anchors.centerIn: parent
-            opacity: enabled ? 1 : 0.4
-            color: Theme.colorComponentText
+            color: "white"
             source: "qrc:/assets/icons_material/baseline-chevron_left-24px.svg"
         }
     }

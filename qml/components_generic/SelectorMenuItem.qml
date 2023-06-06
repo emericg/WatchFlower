@@ -4,7 +4,7 @@ import ThemeEngine 1.0
 
 Item {
     id: control
-    implicitWidth: 16 + contentText.width + (source.toString().length ? sourceSize : 0) + 16
+    implicitWidth: 20 + contentText.width + (source.toString().length ? sourceSize : 0) + 20
     implicitHeight: 32
 
     height: parent.height

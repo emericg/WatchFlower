@@ -53,7 +53,7 @@ Flickable {
             radius: Theme.componentRadius
             color: Theme.colorForeground
             border.width: 2
-            border.color: Theme.colorSeparator
+            border.color: Qt.darker(color, 1.03)
 
             IconSvg {
                 anchors.top: parent.top
@@ -311,7 +311,7 @@ Flickable {
             radius: Theme.componentRadius
             color: Theme.colorForeground
             border.width: 2
-            border.color: Theme.colorSeparator
+            border.color: Qt.darker(color, 1.03)
 
             visible: currentDevice.deviceInfos
 
@@ -472,7 +472,7 @@ Flickable {
             radius: Theme.componentRadius
             color: Theme.colorForeground
             border.width: 2
-            border.color: Theme.colorSeparator
+            border.color: Qt.darker(color, 1.03)
 
             visible: currentDevice.deviceInfos && currentDevice.deviceInfos.deviceNeedsOfficialApp
 
@@ -532,7 +532,7 @@ Flickable {
             radius: Theme.componentRadius
             color: Theme.colorForeground
             border.width: 2
-            border.color: Theme.colorSeparator
+            border.color: Qt.darker(color, 1.03)
 
             visible: currentDevice.deviceInfos
 
@@ -647,7 +647,7 @@ Flickable {
             radius: Theme.componentRadius
             color: Theme.colorForeground
             border.width: 2
-            border.color: Theme.colorSeparator
+            border.color: Qt.darker(color, 1.03)
 
             Column {
                 id: itemDeviceSettingsContent
@@ -687,7 +687,7 @@ Flickable {
 
                         color: Theme.colorBackground
                         border.width: (currentDevice && currentDevice.deviceIsInside) ? 2 : 0
-                        border.color: Theme.colorSeparator
+                        border.color: Qt.darker(color, 1.03)
 
                         opacity: (currentDevice && currentDevice.deviceIsInside) ? 1 : 0.5
                         Behavior on opacity { OpacityAnimator { duration: 133 } }
@@ -726,7 +726,7 @@ Flickable {
 
                         color: Theme.colorBackground
                         border.width: (currentDevice && currentDevice.deviceIsOutside) ? 2 : 0
-                        border.color: Theme.colorSeparator
+                        border.color: Qt.darker(color, 1.03)
 
                         opacity: (currentDevice && currentDevice.deviceIsOutside) ? 1 : 0.5
                         Behavior on opacity { OpacityAnimator { duration: 133 } }

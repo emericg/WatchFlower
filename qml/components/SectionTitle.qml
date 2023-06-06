@@ -14,8 +14,8 @@ Rectangle {
     radius: singleColumn ? 0 : Theme.componentRadius
     color: Theme.colorForeground
 
-    border.width: 2
-    border.color: Qt.darker(color, 1.01)
+    border.width: singleColumn ? 0 : Theme.componentBorderWidth
+    border.color: Qt.darker(color, 1.03)
 
     property string text
     property string source

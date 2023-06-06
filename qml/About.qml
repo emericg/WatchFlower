@@ -138,9 +138,9 @@ Loader {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
-                    height: 1
+                    height: 2
                     visible: isDesktop
-                    color: Theme.colorSeparator
+                    border.color: Qt.darker(parent.color, 1.03)
                 }
             }
 

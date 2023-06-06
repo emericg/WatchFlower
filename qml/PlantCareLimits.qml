@@ -572,7 +572,7 @@ Flickable {
 
                 ButtonWireframeIcon {
                     anchors.left: parent.left
-                    anchors.right: parent.right
+                    width: singleColumn ? parent.width : rowButtons.width
 
                     visible: currentDevice.hasPlant
                     primaryColor: Theme.colorPrimary
@@ -585,11 +585,11 @@ Flickable {
                 }
 
                 Row {
+                    id: rowButtons
                     anchors.left: parent.left
-                    anchors.right: parent.right
                     spacing: isPhone ? 12 : 16
 
-                    property int www: singleColumn ? ((width - spacing) / 2) : 256
+                    property int www: singleColumn ? ((parent.width - spacing) / 2) : 256
                     property int hhh: Math.min(www, 140)
 
                     Rectangle {

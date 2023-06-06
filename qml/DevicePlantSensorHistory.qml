@@ -331,7 +331,7 @@ Item {
             }
         }
 
-        Rectangle {
+        Rectangle { // bottom separator
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom

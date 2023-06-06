@@ -182,7 +182,6 @@ Item {
         // Do not reload the same theme
         if (themeIndex === currentTheme) return
 
-
         // Select new theme
         if (themeIndex === ThemeEngine.THEME_SNOW) {
 
@@ -229,7 +228,7 @@ Item {
 
             colorDeviceWidget = "#fdfdfd"
 
-            componentRadius = 20
+            componentRadius = (componentHeight / 2)
 
             colorComponent = "#EFEFEF"
             colorComponentText = "black"
@@ -391,7 +390,7 @@ Item {
 
             colorDeviceWidget = "#fdfdfd"
 
-            componentRadius = 8
+            componentRadius = 6
 
             colorComponent = "#EFEFEF"
             colorComponentText = "black"
