@@ -21,8 +21,8 @@ Grid {
     property int parentWidth: appContent.width // default
     property int parentHeight: parent.height // default
 
-    property int www1: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : 480
-    property int www2: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : 600
+    property int www1: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : (parentWidth - plantScreen.spacing*4) / 3
+    property int www2: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : (parentWidth - plantScreen.spacing*4) / 3
     property int insidemargins: (uiMode === 1) ? 8 : 16
 
     ////////
@@ -191,6 +191,13 @@ Grid {
             spacing: 24
 
             topPadding: (uiMode === 1) ? -plantScreen.padding : 0
+
+            SectionTitle {
+                anchors.leftMargin: singleColumn ? -16 : -2
+                anchors.rightMargin: singleColumn ? -16 : -2
+                visible: (uiMode === 2)
+                text: qsTr("Plant infos")
+            }
 /*
             Image {
                 id: plantPicture
@@ -328,7 +335,7 @@ Grid {
                     anchors.right: parent.right
                     anchors.rightMargin: (uiMode === 1) ? plantScreen.padding : 0
 
-                    topPadding: (uiMode === 1) ? 16 : 0
+                    topPadding: (uiMode === 1) ? 16 : -8
                     bottomPadding: (uiMode === 1) ? 16 : 0
                     spacing: 16
 
@@ -336,6 +343,7 @@ Grid {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         visible: plantNameBotanical.text
+                        spacing: 2
 
                         Text {
                             text: qsTr("plant")
@@ -360,6 +368,7 @@ Grid {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         visible: currentPlant && currentPlant.nameVariety
+                        spacing: 2
 
                         Text {
                             text: qsTr("variety")
@@ -384,6 +393,7 @@ Grid {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         visible: currentPlant && currentPlant.nameCommon
+                        spacing: 2
 
                         Text {
                             text: qsTr("common name")
@@ -410,6 +420,8 @@ Grid {
                         spacing: 16
 
                         Column {
+                            spacing: 2
+
                             Text {
                                 text: qsTr("category")
                                 textFormat: Text.PlainText
@@ -426,6 +438,8 @@ Grid {
                         }
 
                         Column {
+                            spacing: 2
+
                             Text {
                                 text: qsTr("origin")
                                 textFormat: Text.PlainText
@@ -928,13 +942,10 @@ Grid {
             width: plantScreen.www2
             spacing: 16
 
-            Text {
+            SectionTitle {
+                anchors.leftMargin: singleColumn ? -16 : -2
+                anchors.rightMargin: singleColumn ? -16 : -2
                 text: qsTr("Plant care")
-                textFormat: Text.PlainText
-                color: Theme.colorSubText
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContentSmall
-                font.capitalization: Font.AllUppercase
             }
 
             Row {
@@ -944,10 +955,11 @@ Grid {
                     id: rectangleSunlight
                     width: ((plantScreen.www2 - 16) / 2)
                     height: width
-                    radius: 8
+
+                    radius: Theme.componentRadius
                     color: Theme.colorForeground
                     border.width: 2
-                    border.color: Theme.colorSeparator
+                    border.color: Qt.darker(color, 1.03)
 
                     Item {
                         anchors.right: parent.right
@@ -1029,10 +1041,11 @@ Grid {
                     id: rectangleWatering
                     width: ((plantScreen.www2 - 16) / 2)
                     height: width
-                    radius: 8
+
+                    radius: Theme.componentRadius
                     color: Theme.colorForeground
                     border.width: 2
-                    border.color: Theme.colorSeparator
+                    border.color: Qt.darker(color, 1.03)
 
                     Item {
                         anchors.right: parent.right
@@ -1113,10 +1126,11 @@ Grid {
                 id: rectangleFertilization
                 width: plantScreen.www2
                 height: colFert.height + plantScreen.insidemargins*2
-                radius: 8
+
+                radius: Theme.componentRadius
                 color: Theme.colorForeground
                 border.width: 2
-                border.color: Theme.colorSeparator
+                border.color: Qt.darker(color, 1.03)
 
                 Column {
                     id: colFert
@@ -1162,10 +1176,11 @@ Grid {
                 id: rectanglePruning
                 width: plantScreen.www2
                 height: colPrun.height + plantScreen.insidemargins*2
-                radius: 8
+
+                radius: Theme.componentRadius
                 color: Theme.colorForeground
                 border.width: 2
-                border.color: Theme.colorSeparator
+                border.color: Qt.darker(color, 1.03)
 
                 Column {
                     id: colPrun
@@ -1199,10 +1214,11 @@ Grid {
                 id: rectangleSoil
                 width: plantScreen.www2
                 height: colSoil.height + plantScreen.insidemargins*2
-                radius: 8
+
+                radius: Theme.componentRadius
                 color: Theme.colorForeground
                 border.width: 2
-                border.color: Theme.colorSeparator
+                border.color: Qt.darker(color, 1.03)
 
                 Column {
                     id: colSoil
@@ -1250,8 +1266,8 @@ Grid {
                 z: 2
 
                 color: Theme.colorComponentBackground
-                border.color: Theme.colorSeparator
                 border.width: 2
+                border.color: Qt.darker(color, 1.03)
 
                 IconSvg {
                     width: 28
@@ -1298,13 +1314,10 @@ Grid {
             width: plantScreen.www2
             spacing: 24
 
-            Text {
-                text: qsTr("sensor metrics")
-                textFormat: Text.PlainText
-                color: Theme.colorSubText
-                font.bold: true
-                font.pixelSize: Theme.fontSizeContentSmall
-                font.capitalization: Font.AllUppercase
+            SectionTitle {
+                anchors.leftMargin: singleColumn ? -16 : -2
+                anchors.rightMargin: singleColumn ? -16 : -2
+                text: qsTr("Sensor metrics")
             }
 
             Item {
