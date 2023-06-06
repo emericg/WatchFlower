@@ -145,7 +145,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle { // bottomSeparator
+    Rectangle { // bottom separator
         height: 1
         anchors.left: parent.left
         anchors.leftMargin: -6
@@ -158,16 +158,15 @@ Item {
         color: Theme.colorSeparator
     }
 
-    Rectangle {
-        id: deviceWidgetRectangleSeparator
+    Rectangle { // rectangle border
         anchors.fill: deviceWidgetRectangle
+        anchors.topMargin: singleColumn ? -6 : 0
         anchors.leftMargin: singleColumn ? -12 : 0
         anchors.rightMargin: singleColumn ? -12 : 0
-        anchors.topMargin: singleColumn ? -6 : 0
         anchors.bottomMargin: singleColumn ? -6 : 0
 
-        radius: 4
-        border.width: 2
+        radius: Math.min(Theme.componentRadius, 8)
+        border.width: Theme.componentBorderWidth
         border.color: {
             if (singleColumn) return "transparent"
             if (mousearea.containsPress) return Qt.lighter(Theme.colorSecondary, 1.1)
@@ -183,6 +182,31 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////
+
+    Item { // outside indicator
+        anchors.fill: parent
+        anchors.topMargin: singleColumn ? 0 : 8
+        anchors.leftMargin: singleColumn ? -12 : 8
+        clip: true
+
+        Loader {
+            asynchronous: true
+            active: boxDevice.deviceIsOutside
+            sourceComponent: IconSvg {
+                anchors.top: parent.top
+                anchors.topMargin: -40
+                anchors.left: parent.left
+                anchors.leftMargin: -40
+
+                width: 96
+                height: 96
+                opacity: 0.2
+
+                source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                color: Theme.colorYellow
+            }
+        }
+    }
 
     Item {
         id: deviceWidgetRectangle

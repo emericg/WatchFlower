@@ -13,12 +13,10 @@
         <file>Settings.qml</file>
         <file>Tutorial.qml</file>
         <file>JournalWidget.qml</file>
-        <file>DeviceWidget.qml</file>
         <file>DeviceList.qml</file>
         <file>DeviceListUnified.qml</file>
         <file>DeviceListSplit.qml</file>
         <file>DeviceBrowser.qml</file>
-        <file>DeviceNearbyWidget.qml</file>
         <file>DevicePlantSensor.qml</file>
         <file>DevicePlantSensorData.qml</file>
         <file>DevicePlantSensorHistory.qml</file>
@@ -31,6 +29,11 @@
         <file>DeviceEnvironmental.qml</file>
         <file>ThemeEngine.qml</file>
         <file>WindowGeometrySaver.qml</file>
+
+        <file alias="DeviceWidget.qml">widgets/DeviceWidget.qml</file>
+        <file alias="DeviceNearbyWidget.qml">widgets/DeviceNearbyWidget.qml</file>
+        <file alias="DeviceBrowserWidget.qml">widgets/DeviceBrowserWidget.qml</file>
+        <file alias="PlantBrowserWidget.qml">widgets/PlantBrowserWidget.qml</file>
 
         <file alias="PopupBackgroundUpdates.qml">popups/PopupBackgroundUpdates.qml</file>
         <file alias="PopupBlacklistDevice.qml">popups/PopupBlacklistDevice.qml</file>

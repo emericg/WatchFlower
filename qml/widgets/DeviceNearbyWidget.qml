@@ -14,17 +14,19 @@ Item {
     property bool deviceSupported: UtilsDeviceSensors.isDeviceSupported(device.deviceName)
     property bool deviceBlacklisted: deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
 
-    Rectangle {
-        anchors.fill: parent
-        opacity: 0.33
-        color: (device.selected) ? ((Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader) : Theme.colorBackground
-    }
-
     Connections {
         target: deviceManager
         function onDevicesBlacklistUpdated() {
             deviceNearbyWidget.deviceBlacklisted = deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        anchors.fill: parent
+        opacity: 0.33
+        color: (device.selected) ? ((Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader) : Theme.colorBackground
     }
 
     MouseArea {
@@ -166,7 +168,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
+    Rectangle { // bottom separator
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom

@@ -1,0 +1,370 @@
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Shapes
+
+import ThemeEngine 1.0
+import "qrc:/js/UtilsNumber.js" as UtilsNumber
+
+Item {
+    id: sunAndMoonWidget
+    implicitWidth: 480
+    implicitHeight: 128
+
+    property bool bigAssMode: false
+    property bool singleColumn: true
+
+    ////////////////
+
+    Rectangle { // contentRectangle
+        anchors.fill: widgetExterior
+        anchors.leftMargin: singleColumn ? -12 : 0
+        anchors.rightMargin: singleColumn ? -12 : 0
+        anchors.topMargin: singleColumn ? -6 : 0
+        anchors.bottomMargin: singleColumn ? -6 : 0
+
+        radius: 4
+        border.width: 2
+        border.color: singleColumn ? "transparent" : Theme.colorSeparator
+
+        color: Theme.colorDeviceWidget
+        Behavior on color { ColorAnimation { duration: 133 } }
+
+        opacity: (singleColumn ? 0 : 1)
+        Behavior on opacity { OpacityAnimator { duration: 133 } }
+    }
+
+    ////////////////
+
+    Item { // contentItem
+        id: widgetExterior
+        anchors.fill: parent
+        anchors.margins: 6
+
+        Item {
+            id: widgetInterior
+            anchors.fill: parent
+            anchors.margins: singleColumn ? 6 : 12
+
+            ////
+
+            Text {
+                id: title
+                text: qsTr("Sun & Moon")
+                textFormat: Text.PlainText
+                color: Theme.colorText
+                font.pixelSize: bigAssMode ? 22 : 20
+            }
+
+            Row {
+                anchors.right: parent.right
+                anchors.verticalCenter: title.verticalCenter
+                spacing: 4
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: sunAndMoon.moonphaseName
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeComponent
+                    color: Theme.colorSubText
+                }
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "(" + sunAndMoon.moonfraction + "%)"
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeComponent
+                    color: Theme.colorSubText
+                }
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: (sunAndMoon.moonphase > 0.5) ? "↓" : "↑"
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeComponent
+                    color: Theme.colorSubText
+                }
+
+                IconSvg {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
+
+                    rotation: (sunAndMoon.moonphase < 0.5) ? 180 : 0
+/*
+                    //transform: Matrix4x4 { matrix: Qt.matrix4x4( -1, 0, 0, 24, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) }
+                    rotation: {
+                        if (sunAndMoon.moonphaseName === "Evening Crescent") return 180
+                        if (sunAndMoon.moonphaseName === "First Quarter") return 180
+                        if (sunAndMoon.moonphaseName === "Waxing Gibbous") return 180
+                        return 0
+                    }
+*/
+                    source: {
+                        if (sunAndMoon.moonphaseName === "New") return "qrc:/assets/icons_custom/moon_1.svg"
+                        if (sunAndMoon.moonphaseName === "Evening Crescent") return "qrc:/assets/icons_custom/moon_2.svg"
+                        if (sunAndMoon.moonphaseName === "First Quarter") return "qrc:/assets/icons_custom/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Waxing Gibbous") return "qrc:/assets/icons_custom/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Full") return "qrc:/assets/icons_custom/moon_4.svg"
+                        if (sunAndMoon.moonphaseName === "Waning Gibbous") return "qrc:/assets/icons_custom/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Last Quarter") return "qrc:/assets/icons_custom/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Morning Crescent") return "qrc:/assets/icons_custom/moon_2.svg"
+                    }
+                    color: Theme.colorIcon
+                }
+            }
+
+            ////
+
+            Shape {
+                id: shapes
+                anchors.fill: parent
+                anchors.margins: 0
+
+                // multisample
+                layer.enabled: true
+                layer.samples: 4
+
+                property real centerX: (widgetInterior.width / 2)
+                property real centerY: (widgetInterior.height - 28)
+                property real radiusX: (widgetInterior.width / 2)
+                property real radiusY: (widgetInterior.height * (singleColumn ? 0.6 : 0.66))
+                property real sunsunsun: UtilsNumber.mapNumber(sunAndMoon.sunpath, 0, 100, 0, 160)
+                property real moonmoonmoon: UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 0, 160)
+/*
+                Rectangle { // shapes area
+                    anchors.fill: parent
+                    color: "blue"
+                    opacity: 0.1
+                }
+                Rectangle { // center point
+                    width: 8
+                    height: 8
+                    radius: 8
+                    color: "red"
+                    opacity: 0.5
+                    x: shapes.centerX - width/2
+                    y: shapes.centerY - height/2
+                }
+*/
+                ShapePath { // background
+                    id: shape_bg
+                    fillColor: Theme.colorDeviceWidget
+                    strokeColor: Theme.colorSeparator
+                    strokeWidth: 4
+                    capStyle: ShapePath.RoundCap
+
+                    PathAngleArc {
+                        centerX: shapes.centerX
+                        centerY: shapes.centerY
+                        radiusX: shapes.radiusX
+                        radiusY: shapes.radiusY
+                        startAngle: -170
+                        sweepAngle: 160
+                    }
+                }
+                ShapePath { // moon
+                    fillColor: Theme.colorDeviceWidget
+                    strokeColor: Theme.colorBlue
+                    strokeWidth: 4
+                    capStyle: ShapePath.RoundCap
+
+                    PathAngleArc {
+                        centerX: shapes.centerX
+                        centerY: shapes.centerY
+                        radiusX: shapes.radiusX
+                        radiusY: shapes.radiusY
+                        startAngle: -170
+                        sweepAngle: shapes.moonmoonmoon
+                    }
+                }
+                ShapePath { // sun
+                    fillColor: Theme.colorDeviceWidget
+                    strokeColor: Theme.colorYellow
+                    strokeWidth: 4
+                    capStyle: ShapePath.RoundCap
+
+                    PathAngleArc {
+                        centerX: shapes.centerX
+                        centerY: shapes.centerY
+                        radiusX: shapes.radiusX
+                        radiusY: shapes.radiusY
+                        startAngle: -170
+                        sweepAngle: shapes.sunsunsun
+                    }
+                }
+            }
+
+            Rectangle {
+                width: 32
+                height: 32
+                radius: 32
+                //opacity: 0.66
+                color: Theme.colorBackground
+                border.width: 2
+                border.color: Theme.colorSeparator
+
+                visible: (sunAndMoon.sunpath > 0 && sunAndMoon.sunpath < 100)
+                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(sunAndMoon.sunpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(sunAndMoon.sunpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+
+                IconSvg {
+                    anchors.centerIn: parent
+                    width: 24
+                    height: 24
+                    source: "qrc:/assets/icons_material/baseline-brightness_5-24px.svg"
+                    color: Theme.colorOrange
+
+                    NumberAnimation on rotation {
+                        from: 0; to: 360;
+                        duration: 10000
+                        loops: Animation.Infinite
+                        running: (appContent.state === "DeviceList")
+                    }
+                }
+            }
+            Rectangle {
+                width: 32
+                height: 32
+                radius: 32
+                //opacity: 0.66
+                color: Theme.colorBackground
+                border.width: 2
+                border.color: Theme.colorSeparator
+
+                visible: (sunAndMoon.moonpath > 0 && sunAndMoon.moonpath < 100)
+                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+
+                IconSvg {
+                    anchors.centerIn: parent
+                    width: 24
+                    height: 24
+                    source: "qrc:/assets/icons_material/baseline-brightness_2-24px.svg"
+                    color: Theme.colorBlue
+                }
+            }
+
+            ////
+
+            Row {
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+
+                IconSvg {
+                    width: 40
+                    height: 40
+                    source: "qrc:/assets/icons_material/baseline-brightness_5-24px.svg"
+                    color: Theme.colorIcon
+                }
+                Column {
+                    Row {
+                        anchors.left: parent.left
+                        IconSvg {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 16
+                            height: 16
+                            rotation: 90
+                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            color: Theme.colorSubText
+                        }
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: sunAndMoon.sunrise.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                            textFormat: Text.PlainText
+                            color: Theme.colorSubText
+                        }
+                    }
+                    Row {
+                        anchors.left: parent.left
+                        IconSvg {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 16
+                            height: 16
+                            rotation: -90
+                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            color: Theme.colorSubText
+                        }
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: sunAndMoon.sunset.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                            textFormat: Text.PlainText
+                            color: Theme.colorSubText
+                        }
+                    }
+                }
+            }
+
+            ////
+
+            Row {
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 0
+
+                Column {
+                    Row {
+                        anchors.right: parent.right
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: sunAndMoon.moonrise.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                            color: Theme.colorSubText
+                        }
+                        IconSvg {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 16
+                            height: 16
+                            rotation: 90
+                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            color: Theme.colorSubText
+                        }
+                    }
+                    Row {
+                        anchors.right: parent.right
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: sunAndMoon.moonset.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                            color: Theme.colorSubText
+                        }
+                        IconSvg {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 16
+                            height: 16
+                            rotation: -90
+                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            color: Theme.colorSubText
+                        }
+                    }
+                }
+
+                IconSvg {
+                    width: 36
+                    height: 36
+                    source: "qrc:/assets/icons_material/baseline-brightness_2-24px.svg"
+                    color: Theme.colorIcon
+                }
+            }
+        }
+
+        ////
+    }
+
+    ////////////////
+
+    Rectangle { // bottom separator
+        height: 1
+        anchors.left: parent.left
+        anchors.leftMargin: -6
+        anchors.right: parent.right
+        anchors.rightMargin: -6
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -1
+
+        visible: singleColumn
+        color: Theme.colorSeparator
+    }
+}
