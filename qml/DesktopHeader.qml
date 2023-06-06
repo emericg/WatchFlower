@@ -3,16 +3,20 @@ import QtQuick
 import ThemeEngine 1.0
 
 Rectangle {
-    id: rectangleHeaderBar
+    id: headerBar
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
 
     height: headerHeight
-    z: 10
     color: Theme.colorHeader
+    z: 10
+
+    property string headerTitle: "WatchFlower"
 
     property int headerHeight: isHdpi ? 58 : 64
+
+    property bool headerCompact: singleColumn
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -67,12 +71,12 @@ Rectangle {
 
     function setActiveMenu() {
         if (appContent.state === "Tutorial") {
-            title.text = qsTr("Welcome")
+            headerTitle = qsTr("Welcome")
             menus.visible = false
 
             buttonBack.source = "qrc:/assets/menus/menu_close.svg"
         } else {
-            title.text = "WatchFlower"
+            headerTitle = "WatchFlower"
             menus.visible = true
 
             if (appContent.state === "DeviceList") {
@@ -131,8 +135,7 @@ Rectangle {
         }
     }
 
-    Text {
-        id: title
+    Text { // header title
         anchors.left: parent.left
         anchors.leftMargin: 64
         anchors.right: menus.left
@@ -141,7 +144,7 @@ Rectangle {
 
         visible: wideMode
 
-        text: "WatchFlower"
+        text: headerTitle
         font.bold: true
         font.pixelSize: Theme.fontSizeHeader
         color: Theme.colorHeaderContent
@@ -166,6 +169,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (appContent.state === "DeviceThermometer")
 
             source: (settingsManager.graphThermometer === "lines") ? "qrc:/assets/icons_material/duotone-insert_chart-24px.svg" : "qrc:/assets/icons_material/baseline-timeline-24px.svg";
@@ -186,6 +190,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasWaterTank) &&
                       (appContent.state === "DevicePlantSensor"))
@@ -203,6 +208,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasCalibration) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -222,6 +228,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasReboot) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -241,6 +248,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasLED) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -276,6 +284,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasHistory) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -295,6 +304,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: buttonRefreshHistory.visible
 
             source: "qrc:/assets/icons_material/duotone-date_clear-24px.svg"
@@ -323,6 +333,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasRealTime) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -342,6 +353,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasBluetoothConnection) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -387,6 +399,7 @@ Rectangle {
                 id: menuDeviceData
                 height: headerHeight
 
+                text: headerCompact ? "" : qsTr("Data")
                 source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -399,6 +412,7 @@ Rectangle {
 
                 visible: (appContent.state === "DevicePlantSensor")
 
+                text: headerCompact ? "" : qsTr("History")
                 source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -411,6 +425,7 @@ Rectangle {
 
                 visible: (appContent.state === "DevicePlantSensor")
 
+                text: headerCompact ? "" : qsTr("Plant")
                 source: "qrc:/assets/icons_custom/duotone-plant_care-24px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -421,6 +436,7 @@ Rectangle {
                 id: menuDeviceSettings
                 height: headerHeight
 
+                text: headerCompact ? "" : qsTr("Sensor")
                 source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -436,6 +452,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (appContent.state === "DeviceList")
             enabled: visible
 
@@ -510,11 +527,12 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: (!deviceManager.syncing)
 
-            text: qsTr("Search for new sensors")
-            tooltipText: text
+            text: qsTr("Scan")
+            tooltipText: qsTr("Scan for new sensors")
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             iconColor: Theme.colorHeaderContent
             textColor: Theme.colorHeaderContent
@@ -530,11 +548,12 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: (!deviceManager.scanning)
 
-            text: qsTr("Sync sensors history")
-            tooltipText: text
+            text: qsTr("Sync history")
+            tooltipText: qsTr("Sync sensors history")
             source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
             iconColor: Theme.colorHeaderContent
             textColor: Theme.colorHeaderContent
@@ -550,11 +569,12 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
+            compact: headerCompact
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: (!deviceManager.syncing)
 
-            text: qsTr("Refresh sensor data")
-            tooltipText: text
+            text: qsTr("Refresh data")
+            tooltipText: qsTr("Refresh sensor data")
             source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
             iconColor: Theme.colorHeaderContent
             textColor: Theme.colorHeaderContent
@@ -595,6 +615,7 @@ Rectangle {
                 id: menuPlants
                 height: headerHeight
 
+                text: headerCompact ? "" : qsTr("Sensor list")
                 source: "qrc:/assets/logos/watchflower_tray_dark.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -606,6 +627,7 @@ Rectangle {
                 id: menuSettings
                 height: headerHeight
 
+                text: headerCompact ? "" : qsTr("Settings")
                 source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -621,6 +643,7 @@ Rectangle {
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
+                text: headerCompact ? "" : qsTr("About")
                 selected: (appContent.state === "About")
                 onClicked: aboutButtonClicked()
             }

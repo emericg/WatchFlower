@@ -3,19 +3,18 @@ import QtQuick
 import ThemeEngine 1.0
 
 Rectangle {
-    id: rectangleHeaderBar
+    id: headerBar
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
+
     height: screenPaddingStatusbar + screenPaddingNotch + headerHeight
     color: Theme.colorHeader
     z: 10
 
-    // prevent clicks below this area
-    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+    property string headerTitle: "WatchFlower"
 
     property int headerHeight: 52
-    property string title: "WatchFlower"
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -59,6 +58,9 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    // prevent clicks below this area
+    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
+
     ActionMenuFixed {
         id: actionMenu
 
@@ -99,13 +101,13 @@ Rectangle {
             }
         }
 
-        Text { // title
+        Text { // header title
             height: parent.height
             anchors.left: parent.left
             anchors.leftMargin: 64
             anchors.verticalCenter: parent.verticalCenter
 
-            text: title
+            text: headerTitle
             color: Theme.colorHeaderContent
             font.bold: true
             font.pixelSize: Theme.fontSizeHeader
