@@ -149,7 +149,7 @@ Item {
             text: control.text
             textFormat: Text.PlainText
             color: control.iconColor
-            font.pixelSize: Theme.fontSizeComponent
+            font.pixelSize: Theme.componentFontSize
             font.bold: true
             elide: Text.ElideRight
         }

@@ -64,7 +64,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     text: sunAndMoon.moonphaseName
                     textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeComponent
+                    font.pixelSize: Theme.componentFontSize
                     color: Theme.colorSubText
                 }
 
@@ -72,7 +72,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     text: "(" + sunAndMoon.moonfraction + "%)"
                     textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeComponent
+                    font.pixelSize: Theme.componentFontSize
                     color: Theme.colorSubText
                 }
 
@@ -80,7 +80,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     text: (sunAndMoon.moonphase > 0.5) ? "↓" : "↑"
                     textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeComponent
+                    font.pixelSize: Theme.componentFontSize
                     color: Theme.colorSubText
                 }
 

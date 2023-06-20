@@ -5,7 +5,6 @@ import QtQuick.Controls.Material
 
 Item {
     enum ThemeNames {
-
         // WatchFlower
         THEME_PLANT = 0,
         THEME_RAIN = 1,
@@ -27,6 +26,7 @@ Item {
 
     ////////////////
 
+    // Status bar (mobile)
     property int themeStatusbar
     property color colorStatusbar
 
@@ -35,7 +35,7 @@ Item {
     property color colorHeaderContent
     property color colorHeaderHighlight
 
-    // Sidebar
+    // Side bar (desktop)
     property color colorSidebar
     property color colorSidebarContent
     property color colorSidebarHighlight
@@ -45,7 +45,7 @@ Item {
     property color colorActionbarContent
     property color colorActionbarHighlight
 
-    // Tablet bar
+    // Tablet bar (mobile)
     property color colorTabletmenu
     property color colorTabletmenuContent
     property color colorTabletmenuHighlight
@@ -72,30 +72,18 @@ Item {
     property color colorDeviceWidget
     property string sidebarSelector // 'arrow' or 'bar'
 
-    // Qt Quick controls & theming
-    property color colorComponent
-    property color colorComponentText
-    property color colorComponentContent
-    property color colorComponentBorder
-    property color colorComponentDown
-    property color colorComponentBackground
-
-    property int componentHeight: (isDesktop && isHdpi) ? 36 : 40
-    property int componentRadius: 4
-    property int componentBorderWidth: 2
-
     ////////////////
 
     // Palette colors
-    property color colorLightGreen: "#09debc" // unused
+    property color colorLightGreen: "#09debc"
     property color colorGreen
-    property color colorDarkGreen: "#1ea892" // unused
+    property color colorDarkGreen: "#1ea892"
     property color colorBlue
     property color colorYellow
     property color colorOrange
     property color colorRed
-    property color colorGrey: "#555151" // unused
-    property color colorLightGrey: "#a9bcb8" // unused
+    property color colorGrey: "#555151"
+    property color colorLightGrey: "#a9bcb8"
 
     // Fixed colors
     readonly property color colorMaterialBlue: "#2196f3"
@@ -110,14 +98,38 @@ Item {
     readonly property color colorMaterialLightGrey: "#f8f8f8"
     readonly property color colorMaterialGrey: "#eeeeee"
     readonly property color colorMaterialDarkGrey: "#ececec"
+
     readonly property color colorNeutralDay: "#e4e4e4"
     readonly property color colorNeutralNight: "#ffb300"
 
     ////////////////
 
-    // Fonts (sizes in pixel) (WIP)
+    // Qt Quick controls & theming
+    property color colorComponent
+    property color colorComponentText
+    property color colorComponentContent
+    property color colorComponentBorder
+    property color colorComponentDown
+    property color colorComponentBackground
+
+    property int componentMargin: isHdpi ? 12 : 16
+    property int componentMarginL: isHdpi ? 16 : 20
+    property int componentMarginXL: isHdpi ? 20 : 24
+
+    property int componentHeight: (isDesktop && isHdpi) ? 36 : 40
+    property int componentHeightL: (isDesktop && isHdpi) ? 44 : 48
+    property int componentHeightXL: (isDesktop && isHdpi) ? 48 : 56
+
+    property int componentRadius: 4
+    property int componentBorderWidth: 2
+
+    property int componentFontSize: isMobile ? 14 : 15
+
+    ////////////////
+
+    // Fonts (sizes in pixel)
     readonly property int fontSizeHeader: isMobile ? 22 : 26
-    readonly property int fontSizeTitle: 24
+    readonly property int fontSizeTitle: isMobile ? 24 : 28
     readonly property int fontSizeContentVeryVerySmall: 10
     readonly property int fontSizeContentVerySmall: 12
     readonly property int fontSizeContentSmall: 14
@@ -125,7 +137,6 @@ Item {
     readonly property int fontSizeContentBig: 18
     readonly property int fontSizeContentVeryBig: 20
     readonly property int fontSizeContentVeryVeryBig: 22
-    readonly property int fontSizeComponent: isMobile ? 14 : 15
 
     ////////////////////////////////////////////////////////////////////////////
 

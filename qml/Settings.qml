@@ -43,28 +43,24 @@ Loader {
 
         Flickable {
             anchors.fill: parent
-
             contentWidth: -1
-            contentHeight: column.height
+            contentHeight: contentColumn.height
 
             boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
             Column {
-                id: column
+                id: contentColumn
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                topPadding: 12
-                bottomPadding: 12
-                spacing: 8
+                topPadding: Theme.componentMargin
+                bottomPadding: Theme.componentMargin
+                spacing: Theme.componentMargin / 2
 
                 ////////////////
 
-                SectionTitle {
-                    anchors.leftMargin: singleColumn ? 0 : 12
-                    anchors.rightMargin: singleColumn ? 0 : 12
-
+                ListTitle {
                     text: qsTr("Application")
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
@@ -546,10 +542,7 @@ Loader {
 
                 ////////////////
 
-                SectionTitle {
-                    anchors.leftMargin: singleColumn ? 0 : 12
-                    anchors.rightMargin: singleColumn ? 0 : 12
-
+                ListTitle {
                     text: qsTr("Background updates")
                     source: "qrc:/assets/icons_material/baseline-android-24px.svg"
                     visible: (Qt.platform.os === "android")
@@ -883,10 +876,7 @@ Loader {
 
                 ////////
 
-                SectionTitle {
-                    anchors.leftMargin: singleColumn ? 0 : 12
-                    anchors.rightMargin: singleColumn ? 0 : 12
-
+                ListTitle {
                     text: qsTr("Bluetooth")
                     source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
                 }
@@ -1133,10 +1123,7 @@ Loader {
 
                 ////////////////
 
-                SectionTitle {
-                    anchors.leftMargin: singleColumn ? 0 : 12
-                    anchors.rightMargin: singleColumn ? 0 : 12
-
+                ListTitle {
                     text: qsTr("Plant sensors")
                     source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
                 }
@@ -1415,10 +1402,7 @@ Loader {
 
                 ////////////////
 
-                SectionTitle {
-                    anchors.leftMargin: singleColumn ? 0 : 12
-                    anchors.rightMargin: singleColumn ? 0 : 12
-
+                ListTitle {
                     text: qsTr("Thermometers")
                     source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
                 }
@@ -1544,10 +1528,7 @@ Loader {
 
                 ////////////////
 /*
-                SectionTitle {
-                    anchors.leftMargin: singleColumn ? 0 : 12
-                    anchors.rightMargin: singleColumn ? 0 : 12
-
+                ListTitle {
                     text: qsTr("External database")
                     source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                     visible: isDesktop
@@ -1605,10 +1586,7 @@ Loader {
 */
                 ////////////////
 
-                SectionTitle {
-                    anchors.leftMargin: singleColumn ? 0 : 12
-                    anchors.rightMargin: singleColumn ? 0 : 12
-
+                ListTitle {
                     text: qsTr("Data archiving")
                     source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
                     visible: deviceManager.hasDevices

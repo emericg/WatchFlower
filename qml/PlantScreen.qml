@@ -192,10 +192,11 @@ Grid {
 
             topPadding: (uiMode === 1) ? -plantScreen.padding : 0
 
-            SectionTitle {
+            ListTitle {
                 anchors.leftMargin: singleColumn ? -16 : -2
                 anchors.rightMargin: singleColumn ? -16 : -2
                 visible: (uiMode === 2)
+
                 text: qsTr("Plant infos")
             }
 /*
@@ -942,9 +943,10 @@ Grid {
             width: plantScreen.www2
             spacing: 16
 
-            SectionTitle {
+            ListTitle {
                 anchors.leftMargin: singleColumn ? -16 : -2
                 anchors.rightMargin: singleColumn ? -16 : -2
+
                 text: qsTr("Plant care")
             }
 
@@ -1314,9 +1316,10 @@ Grid {
             width: plantScreen.www2
             spacing: 24
 
-            SectionTitle {
+            ListTitle {
                 anchors.leftMargin: singleColumn ? -16 : -2
                 anchors.rightMargin: singleColumn ? -16 : -2
+
                 text: qsTr("Sensor metrics")
             }
 

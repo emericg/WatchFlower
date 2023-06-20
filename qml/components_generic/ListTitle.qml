@@ -1,27 +1,35 @@
 import QtQuick
-import QtQuick.Controls
 
 import ThemeEngine 1.0
 
 Rectangle {
     id: control
+
     anchors.left: parent.left
-    anchors.leftMargin: 0
+    anchors.leftMargin: singleColumn ? 0 : Theme.componentMargin
     anchors.right: parent.right
-    anchors.rightMargin: 0
+    anchors.rightMargin: singleColumn ? 0 : Theme.componentMargin
 
-    height: (isDesktop && isHdpi) ? 44 : 48
+    height: Theme.componentHeightL
     radius: singleColumn ? 0 : Theme.componentRadius
-    color: Theme.colorForeground
+    z: 2
 
+    color: backgroundColor
     border.width: singleColumn ? 0 : Theme.componentBorderWidth
-    border.color: Qt.darker(color, 1.03)
+    border.color: borderColor
 
-    property string text
+    property string text: "title"
     property string source
 
+    // font
     property int fontSize: source ? Theme.fontSizeContentBig :
                                     Theme.fontSizeContentVeryBig
+
+    // colors
+    property string backgroundColor: Theme.colorForeground
+    property string borderColor: Theme.colorSeparator
+
+    ////////////////
 
     Row {
         anchors.left: parent.left
@@ -51,4 +59,6 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
         }
     }
+
+    ////////////////
 }

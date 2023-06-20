@@ -48,7 +48,7 @@ Rectangle {
             text: qsTr("%n device(s) selected", "", screenDeviceList.selectionCount)
             color: Theme.colorActionbarContent
             font.bold: true
-            font.pixelSize: Theme.fontSizeComponent
+            font.pixelSize: Theme.componentFontSize
         }
     }
 

@@ -44,7 +44,7 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         font.bold: isDesktop ? true : false
-        font.pixelSize: Theme.fontSizeComponent
+        font.pixelSize: Theme.componentFontSize
     }
 
     ButtonWireframe {

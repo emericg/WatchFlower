@@ -20,7 +20,7 @@ T.TextField {
     opacity: 1
 
     text: ""
-    font.pixelSize: Theme.fontSizeComponent
+    font.pixelSize: Theme.componentFontSize
     verticalAlignment: Text.AlignVCenter
 
     placeholderText: ""

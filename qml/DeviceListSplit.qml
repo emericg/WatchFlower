@@ -92,7 +92,7 @@ Item {
 
             ////////
 
-            SectionTitle {
+            ListTitle {
                 anchors.leftMargin: singleColumn ? -6 : 6
                 anchors.rightMargin: singleColumn ? -6 : 6
 
@@ -119,7 +119,7 @@ Item {
 
             ////////
 
-            SectionTitle {
+            ListTitle {
                 anchors.leftMargin: singleColumn ? -6 : 6
                 anchors.rightMargin: singleColumn ? -6 : 6
 
@@ -146,7 +146,7 @@ Item {
 
             ////////
 
-            SectionTitle {
+            ListTitle {
                 anchors.leftMargin: singleColumn ? -6 : 6
                 anchors.rightMargin: singleColumn ? -6 : 6
 

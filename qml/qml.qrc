@@ -72,7 +72,6 @@
         <file alias="PlantCalendarWidget.qml">components/PlantCalendarWidget.qml</file>
         <file alias="PlantHardinessWidget.qml">components/PlantHardinessWidget.qml</file>
         <file alias="PlantSizeWidget.qml">components/PlantSizeWidget.qml</file>
-        <file alias="SectionTitle.qml">components/SectionTitle.qml</file>
         <file alias="SpinBoxHistory.qml">components/SpinBoxHistory.qml</file>
     </qresource>
 </RCC>

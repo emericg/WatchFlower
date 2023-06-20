@@ -97,7 +97,7 @@ Item {
 
                     text: qsTr("%1 entries").arg(3403)
                     textFormat: Text.PlainText
-                    font.pixelSize: Theme.fontSizeComponent
+                    font.pixelSize: Theme.componentFontSize
                     color: Theme.colorSubText
                 }
             }

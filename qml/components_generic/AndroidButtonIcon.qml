@@ -45,7 +45,7 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        implicitWidth: 96
+        implicitWidth: 128
         implicitHeight: 48
 
         ////////
@@ -116,7 +116,7 @@ T.Button {
             textFormat: Text.PlainText
 
             font.bold: true
-            font.pixelSize: Theme.fontSizeComponent
+            font.pixelSize: Theme.componentFontSize
 
             elide: Text.ElideMiddle
             //wrapMode: Text.WordWrap

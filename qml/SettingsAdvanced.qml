@@ -39,7 +39,7 @@ Loader {
         }
 
         function backAction() {
-            appContent.state = "DeviceList"
+            screenDeviceList.loadScreen()
         }
 
         ////////////////
@@ -48,25 +48,23 @@ Loader {
             anchors.fill: parent
 
             contentWidth: -1
-            contentHeight: column1.height
+            contentHeight: contentColumn.height
 
             boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
             Column {
-                id: column1
+                id: contentColumn
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + 12
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + 12
 
-                topPadding: 12
-                bottomPadding: 12
-                spacing: 12
+                topPadding: Theme.componentMargin
+                bottomPadding: Theme.componentMargin
+                spacing: Theme.componentMargin
 
                 ////////////////
 
-                SectionTitle {
+                ListTitle {
                     text: "App info"
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
@@ -74,7 +72,11 @@ Loader {
                 ////////////////
 
                 Column {
-                    spacing: 8
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    spacing: Theme.componentMargin / 2
 
                     Text {
                         color: Theme.colorSubText
@@ -110,187 +112,219 @@ Loader {
 
                 ////////////////
 
-                SectionTitle {
+                ListTitle {
                     text: "Local settings"
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
 
                 ////////////////
 
-                TextFieldThemed {
+                Column {
                     anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
                     anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    spacing: Theme.componentMargin / 2
 
-                    text: settingsManager.getSettingsDirectory()
-                    readOnly: true
-
-                    ButtonWireframe {
+                    TextFieldThemed {
+                        anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
 
-                        visible: isDesktop
-                        text: "open"
-                        onClicked: utilsApp.openWith(parent.text)
-                    }
-                }
+                        text: settingsManager.getSettingsDirectory()
+                        readOnly: true
 
-                Row {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    spacing: 8
+                        ButtonWireframe {
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
 
-                    ButtonWireframe {
-                        anchors.verticalCenter: parent.verticalCenter
-                        fullColor: true
-
-                        text: "save"
-                        onClicked: settingsManager.saveSettings()
+                            visible: isDesktop
+                            text: "open"
+                            onClicked: utilsApp.openWith(parent.text)
+                        }
                     }
 
-                    ButtonWireframe {
-                        anchors.verticalCenter: parent.verticalCenter
-                        fullColor: true
-                        primaryColor: Theme.colorWarning
+                    Row {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        spacing: Theme.componentMargin / 2
 
-                        text: "restore"
-                        //onPressAndHold: settingsManager.restoreSettings()
+                        ButtonWireframe {
+                            anchors.verticalCenter: parent.verticalCenter
+                            fullColor: true
+
+                            text: "save"
+                            onClicked: settingsManager.saveSettings()
+                        }
+
+                        ButtonWireframe {
+                            anchors.verticalCenter: parent.verticalCenter
+                            fullColor: true
+                            primaryColor: Theme.colorWarning
+
+                            text: "restore"
+                            //onPressAndHold: settingsManager.restoreSettings()
+                        }
                     }
                 }
 
                 ////////////////
 
-                SectionTitle {
+                ListTitle {
                     text: "Local database"
                     source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 }
 
                 ////////////////
 
-                TextFieldThemed {
+                Column {
                     anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
                     anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    spacing: Theme.componentMargin / 2
 
-                    text: mainDatabase.getDatabaseDirectory()
-                    readOnly: true
-
-                    ButtonWireframe {
+                    TextFieldThemed {
+                        anchors.left: parent.left
                         anchors.right: parent.right
-                        anchors.verticalCenter: parent.verticalCenter
 
-                        visible: isDesktop
-                        text: "open"
-                        onClicked: utilsApp.openWith(parent.text)
-                    }
-                }
+                        text: mainDatabase.getDatabaseDirectory()
+                        readOnly: true
 
-                Row {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    spacing: 8
+                        ButtonWireframe {
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
 
-                    ButtonWireframe {
-                        fullColor: true
-
-                        text: "save"
-                        onClicked: mainDatabase.saveDatabase()
+                            visible: isDesktop
+                            text: "open"
+                            onClicked: utilsApp.openWith(parent.text)
+                        }
                     }
 
-                    ButtonWireframe {
-                        fullColor: true
-                        primaryColor: Theme.colorWarning
+                    Row {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        spacing: Theme.componentMargin / 2
 
-                        text: "restore"
-                        //onPressAndHold: mainDatabase.restoreDatabase()
+                        ButtonWireframe {
+                            fullColor: true
+
+                            text: "save"
+                            onClicked: mainDatabase.saveDatabase()
+                        }
+
+                        ButtonWireframe {
+                            fullColor: true
+                            primaryColor: Theme.colorWarning
+
+                            text: "restore"
+                            //onPressAndHold: mainDatabase.restoreDatabase()
+                        }
                     }
                 }
 
                 ////////////////
 
-                SectionTitle {
+                ListTitle {
                     text: "Remote database"
                     source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 }
 
                 ////////////////
 
-                SwitchThemedDesktop {
-                    id: switch_worker
+                Column {
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    spacing: Theme.componentMargin / 2
 
-                    text: "Enable MySQL database support"
-                    //checked: settingsManager.mysql
-                    //onClicked: settingsManager.mysql = checked
+                    SwitchThemedDesktop {
+                        id: switch_worker
+
+                        text: "Enable MySQL database support"
+                        //checked: settingsManager.mysql
+                        //onClicked: settingsManager.mysql = checked
+                    }
                 }
 
                 ////////////////
 
-                SectionTitle {
+                ListTitle {
                     text: "Logs"
                     source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                 }
 
                 ////////////////
 
-                SwitchThemedDesktop {
-                    id: switch_logs
-
-                    text: "Enable logging"
-                    //checked: settingsManager.logging
-                    //onClicked: settingsManager.logging = checked
-                }
-
-                Row {
+                Column {
                     anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
                     anchors.right: parent.right
-                    spacing: 8
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    spacing: Theme.componentMargin
 
-                    ButtonWireframe {
-                        fullColor: true
-                        text: "show logs"
+                    SwitchThemedDesktop {
+                        id: switch_logs
 
-                        onPressed: {
-                            logFrame.visible
+                        text: "Enable logging"
+                        //checked: settingsManager.logging
+                        //onClicked: settingsManager.logging = checked
+                    }
+
+                    Row {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        spacing: Theme.componentMargin / 2
+
+                        ButtonWireframe {
+                            fullColor: true
+                            text: "show logs"
+
+                            onPressed: {
+                                logFrame.visible
+                            }
+                        }
+
+                        ButtonWireframe {
+                            fullColor: true
+                            primaryColor: Theme.colorWarning
+
+                            text: "reset log"
+                            onPressAndHold: {
+                                utilsLog.clearLog()
+                                logArea.text = utilsLog.getLog()
+                            }
                         }
                     }
 
-                    ButtonWireframe {
-                        fullColor: true
-                        primaryColor: Theme.colorWarning
+                    Rectangle {
+                        id: logFrame
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: 640
+                        anchors.margins: 12
 
-                        text: "reset log"
-                        onPressAndHold: {
-                            utilsLog.clearLog()
-                            logArea.text = utilsLog.getLog()
-                        }
-                    }
-                }
+                        visible: false
+                        color: Theme.colorBackground
+                        border.width: 1
+                        border.color: Theme.colorSeparator
 
-                Rectangle {
-                    id: logFrame
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 640
-                    anchors.margins: 12
-
-                    visible: false
-                    color: Theme.colorBackground
-                    border.width: 1
-                    border.color: Theme.colorSeparator
-
-                    ScrollView {
-                        anchors.fill: parent
-                        ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-                        ScrollBar.vertical.policy: ScrollBar.AsNeeded
-
-                        TextArea {
-                            id: logArea
+                        ScrollView {
                             anchors.fill: parent
-                            anchors.margins: 6
+                            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                            ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
-                            readOnly: true
-                            selectByMouse: false
-                            color: Theme.colorSubText
-                            textFormat: Text.PlainText
-                            font.pixelSize: isDesktop ? 12 : 10
+                            TextArea {
+                                id: logArea
+                                anchors.fill: parent
+                                anchors.margins: 6
+
+                                readOnly: true
+                                selectByMouse: false
+                                color: Theme.colorSubText
+                                textFormat: Text.PlainText
+                                font.pixelSize: isDesktop ? 12 : 10
+                            }
                         }
                     }
                 }

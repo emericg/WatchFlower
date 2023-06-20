@@ -97,7 +97,7 @@ Item {
             text: control.text
             textFormat: Text.PlainText
             color: (!control.selected && control.highlightMode === "content") ? control.colorHighlight : control.colorContent
-            font.pixelSize: Theme.fontSizeComponent
+            font.pixelSize: Theme.componentFontSize
             font.bold: true
             verticalAlignment: Text.AlignVCenter
         }

@@ -75,7 +75,7 @@ Item {
 
         text: control.text
         textFormat: Text.PlainText
-        font.pixelSize: Theme.fontSizeComponent
+        font.pixelSize: Theme.componentFontSize
         verticalAlignment: Text.AlignVCenter
 
         color: control.selected ? control.colorContentHighlight : control.colorContent

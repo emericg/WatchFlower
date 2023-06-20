@@ -16,6 +16,9 @@ T.Button {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
+    leftPadding: 12
+    rightPadding: 12
+
     focusPolicy: Qt.NoFocus
 
     // colors
@@ -36,7 +39,7 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        implicitWidth: 96
+        implicitWidth: 128
         implicitHeight: 48
 
         Rectangle { // mouseBackground
@@ -72,7 +75,7 @@ T.Button {
         textFormat: Text.PlainText
 
         font.bold: false
-        font.pixelSize: Theme.fontSizeComponent
+        font.pixelSize: Theme.componentFontSize
         font.capitalization: Font.AllUppercase
 
         elide: Text.ElideMiddle

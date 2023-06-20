@@ -55,6 +55,8 @@ T.TextField {
     property string colorSelection: Theme.colorPrimary
     property string colorSelectedText: "white"
 
+    ////////////////
+
     Loader {
         id: pathDialogLoader
 
@@ -79,6 +81,16 @@ T.TextField {
         }
     }
 
+    ////////////////
+
+    background: Rectangle {
+        implicitWidth: 256
+        implicitHeight: Theme.componentHeight
+
+        radius: Theme.componentRadius
+        color: control.colorBackground
+    }
+
     PlaceholderText {
         id: placeholder
         x: control.leftPadding
@@ -93,14 +105,6 @@ T.TextField {
         visible: !control.length && !control.preeditText && (!control.activeFocus || control.horizontalAlignment !== Qt.AlignHCenter)
         elide: Text.ElideRight
         renderType: control.renderType
-    }
-
-    background: Rectangle {
-        implicitWidth: 256
-        implicitHeight: Theme.componentHeight
-
-        radius: Theme.componentRadius
-        color: control.colorBackground
     }
 
     ButtonThemed {
@@ -126,4 +130,6 @@ T.TextField {
         border.width: 2
         border.color: control.activeFocus ? control.colorSelection : control.colorBorder
     }
+
+    ////////////////
 }

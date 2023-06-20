@@ -60,7 +60,7 @@ Item {
                 anchors.verticalCenter: title.verticalCenter
                 text: "Chambéry"
                 textFormat: Text.PlainText
-                font.pixelSize: Theme.fontSizeComponent
+                font.pixelSize: Theme.componentFontSize
                 color: Theme.colorSubText
             }
 
@@ -86,7 +86,7 @@ Item {
                             anchors.horizontalCenter: parent.horizontalCenter
                             text: "sunny"
                             textFormat: Text.PlainText
-                            //font.pixelSize: Theme.fontSizeComponent
+                            font.pixelSize: Theme.componentFontSize
                             color: Theme.colorSubText
                         }
                     }

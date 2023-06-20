@@ -66,7 +66,7 @@ Rectangle {
 
             text: actionMenuItem.text
             font.bold: false
-            font.pixelSize: Theme.fontSizeComponent
+            font.pixelSize: Theme.componentFontSize
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
             elide: Text.ElideRight

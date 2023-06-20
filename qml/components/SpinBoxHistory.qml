@@ -19,7 +19,7 @@ T.SpinBox {
     value: 0
     editable: false
 
-    font.pixelSize: Theme.fontSizeComponent
+    font.pixelSize: Theme.componentFontSize
     opacity: enabled ? 1 : 0.4
 
     property var hhh // history mode
