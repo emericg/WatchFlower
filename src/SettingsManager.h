@@ -126,7 +126,7 @@ class SettingsManager: public QObject
     int m_graphAioDays = 14;
     bool m_graphAioShowDots = true;
     bool m_bigIndicator = true;
-    bool m_dynaScale = true;
+    bool m_dynaScale = false;
 
     bool m_splitView = false;
     QString m_orderBy = "model";
