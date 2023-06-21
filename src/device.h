@@ -179,9 +179,12 @@ protected:
     QDateTime m_lastError;
     bool m_firmware_uptodate = false;
 
-    int m_timeoutInterval = 12;
+    const static int s_timeout = 12;
+    const static int s_timeoutConnection = 12;
+    const static int s_timeoutError = 12;
+
     QTimer m_timeoutTimer;
-    void setTimeoutTimer();
+    void setTimeoutTimer(int time_s = s_timeout);
 
     // Device time
     int64_t m_device_time = -1;

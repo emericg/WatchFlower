@@ -594,9 +594,9 @@ void Device::refreshAdvertisement()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::setTimeoutTimer()
+void Device::setTimeoutTimer(int time_s)
 {
-    m_timeoutTimer.setInterval(m_timeoutInterval*1000);
+    m_timeoutTimer.setInterval(time_s*1000);
     m_timeoutTimer.start();
 }
 
