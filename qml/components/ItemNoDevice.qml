@@ -1,6 +1,6 @@
 import QtQuick
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Item {
     id: itemNoDevice
@@ -29,18 +29,19 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
-        id: column
+        id: contentColumn
+
         anchors.left: parent.left
         anchors.leftMargin: 32
         anchors.right: parent.right
         anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -32
+        anchors.verticalCenterOffset: -48
 
         IconSvg { // imageSearch
+            anchors.horizontalCenter: parent.horizontalCenter
             width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
             height: width
-            anchors.horizontalCenter: parent.horizontalCenter
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
             fillMode: Image.PreserveAspectFit
@@ -57,10 +58,27 @@ Item {
             }
         }
 
-        Column {
+        ButtonWireframe { // desktop only
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 256
+            visible: isDesktop
+
+            text: qsTr("Launch detection")
+            fullColor: true
+            primaryColor: Theme.colorPrimary
+
+            onClicked: {
+                checkBluetoothPermissions()
+                retryScan.start()
+            }
+        }
+
+        Column { // mobile only
             anchors.left: parent.left
             anchors.right: parent.right
             spacing: 24
+
+            visible: isMobile
 
             ////////
 
@@ -131,13 +149,16 @@ Item {
                 columns: singleColumn ? 1 : 2
 
                 Item {
-                    width: singleColumn ? column.width : btn1.width
+                    width: singleColumn ? contentColumn.width : btn1.width
                     height: 40
+
+                    visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                     ButtonWireframeIcon {
                         id: btn1
                         anchors.horizontalCenter: parent.horizontalCenter
-                        visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
+
+                        //width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
 
                         text: qsTr("Official information")
                         primaryColor: Theme.colorSubText
@@ -155,12 +176,14 @@ Item {
                 }
 
                 Item {
-                    width: singleColumn ? column.width : btn2.width
+                    width: singleColumn ? contentColumn.width : btn2.width
                     height: 40
 
                     ButtonWireframe {
                         id: btn2
                         anchors.horizontalCenter: parent.horizontalCenter
+
+                        //width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
 
                         text: qsTr("Launch detection")
                         fullColor: true
@@ -197,4 +220,6 @@ Item {
             ////////
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

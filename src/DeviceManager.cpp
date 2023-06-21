@@ -231,7 +231,7 @@ DeviceManager::~DeviceManager()
 
 bool DeviceManager::hasBluetooth() const
 {
-    return (m_btA && m_btE);
+    return (m_btA && m_btE && m_btP);
 }
 
 bool DeviceManager::hasBluetoothAdapter() const
@@ -247,6 +247,11 @@ bool DeviceManager::hasBluetoothEnabled() const
 bool DeviceManager::hasBluetoothPermissions() const
 {
     return m_btP;
+}
+
+bool DeviceManager::hasBluetoothGPS() const
+{
+    return m_btG;
 }
 
 bool DeviceManager::isListening() const
@@ -288,6 +293,7 @@ bool DeviceManager::checkBluetooth()
     bool btA_was = m_btA;
     bool btE_was = m_btE;
     bool btP_was = m_btP;
+    bool btG_was = m_btG;
 
     // Check availability
     if (m_bluetoothAdapter && m_bluetoothAdapter->isValid())

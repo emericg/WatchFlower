@@ -9,11 +9,6 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Component.onCompleted: {
-        checkStatus()
-        loadList()
-    }
-
     function loadScreen() {
         // change screen
         appContent.state = "DeviceList"
@@ -26,19 +21,15 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     property bool splitView: settingsManager.splitView
-    property bool deviceAvailable: deviceManager.hasDevices
-    property bool bluetoothAvailable: deviceManager.bluetooth
-    property bool bluetoothPermissionsAvailable: deviceManager.bluetoothPermissions
-
-    onBluetoothAvailableChanged: checkStatus()
-    onBluetoothPermissionsAvailableChanged: checkStatus()
-    onDeviceAvailableChanged: { checkStatus(); exitSelectionMode(); }
     onSplitViewChanged: loadList()
+
+    property bool deviceAvailable: deviceManager.hasDevices
+    onDeviceAvailableChanged: loadList()
 
     function loadList() {
         exitSelectionMode()
 
-        if (splitView) {
+        if (splitView && deviceManager.deviceCount > 1) {
             loaderDeviceList.source = "DeviceListSplit.qml"
         } else {
             loaderDeviceList.source = "DeviceListUnified.qml"
@@ -47,30 +38,20 @@ Item {
         selectionCount = Qt.binding(function() { return loaderDeviceList.item.selectionCount })
     }
 
-    function checkStatus() {
-        if (!utilsApp.checkMobileBleLocationPermission()) {
-            //utilsApp.getMobileBleLocationPermission()
-        }
-
-        if (deviceManager.hasDevices) {
-            // The sensor list is shown
-            loaderStatus.source = ""
-
-            if (!deviceManager.bluetooth) {
-                rectangleBluetoothStatus.setBluetoothWarning()
-            } else if (!deviceManager.bluetoothPermissions) {
-                rectangleBluetoothStatus.setPermissionWarning()
+    Connections {
+        target: deviceManager
+        function onBluetoothChanged() {
+            if (deviceManager.hasDevices) {
+                if (!deviceManager.bluetooth) {
+                    rectangleBluetoothStatus.setBluetoothWarning()
+                } else if (!deviceManager.bluetoothPermissions) {
+                    rectangleBluetoothStatus.setPermissionWarning()
+                } else {
+                    rectangleBluetoothStatus.hide()
+                }
             } else {
+                // The sensor list is not populated
                 rectangleBluetoothStatus.hide()
-            }
-        } else {
-            // The sensor list is not populated
-            rectangleBluetoothStatus.hide()
-
-            if (!deviceManager.bluetooth) {
-                loaderStatus.source = "ItemNoBluetooth.qml"
-            } else {
-                loaderStatus.source = "ItemNoDevice.qml"
             }
         }
     }
@@ -150,10 +131,10 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Loader {
-        id: loaderStatus
+    ItemNoDevice {
+        id: itemNoDevice
         anchors.fill: parent
-        asynchronous: true
+        visible: !deviceManager.hasDevices
     }
 
     ////////////////////////////////////////////////////////////////////////////

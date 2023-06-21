@@ -71,6 +71,7 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothEnabled READ hasBluetoothEnabled NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothPermissions READ hasBluetoothPermissions NOTIFY bluetoothChanged)
+    Q_PROPERTY(bool bluetoothGPS READ hasBluetoothGPS NOTIFY bluetoothChanged)
     Q_PROPERTY(int bluetoothHostMode READ getBluetoothHostMode NOTIFY hostModeChanged)
 
     static const int ble_scanning_duration = 30;
@@ -83,9 +84,10 @@ class DeviceManager: public QObject
 
     bool m_daemonMode = false;
 
-    bool m_btA = false;
-    bool m_btE = false;
-    bool m_btP = true;
+    bool m_btA = false; //!< do we have a BLE adapter?
+    bool m_btE = false; //!< is the BLE adapter enabled?
+    bool m_btP = false; //!< do we have BLE permissions? (Android and macOS)
+    bool m_btG = false; //!< do we have GPS enabled? (Android)
 
     QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
@@ -133,6 +135,7 @@ class DeviceManager: public QObject
     bool hasBluetoothAdapter() const;
     bool hasBluetoothEnabled() const;
     bool hasBluetoothPermissions() const;
+    bool hasBluetoothGPS() const;
 
     void checkBluetoothIos();
     void startBleAgent();
