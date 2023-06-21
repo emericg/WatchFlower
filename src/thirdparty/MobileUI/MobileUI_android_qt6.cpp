@@ -46,6 +46,15 @@
 #define UI_MODE_NIGHT_YES                       0x00000020
 #define UI_MODE_NIGHT_MASK                      0x00000030
 
+// WindowInsetsController
+#define APPEARANCE_OPAQUE_STATUS_BARS           0x00000001
+#define APPEARANCE_OPAQUE_NAVIGATION_BARS       0x00000002
+#define APPEARANCE_LOW_PROFILE_BARS             0x00000004
+#define APPEARANCE_LIGHT_STATUS_BARS            0x00000008
+#define APPEARANCE_LIGHT_NAVIGATION_BARS        0x00000010
+#define APPEARANCE_SEMI_TRANSPARENT_STATUS_BARS 0x00000020
+#define APPEARANCE_SEMI_TRANSPARENT_NAVIGATION_BARS 0x0030
+
 /* ************************************************************************** */
 
 bool MobileUIPrivate::isAvailable_sys()
@@ -87,7 +96,7 @@ int MobileUIPrivate::getDeviceTheme_sys()
 
 void MobileUIPrivate::setColor_statusbar(const QColor &color)
 {
-     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
         QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
 
@@ -98,6 +107,7 @@ void MobileUIPrivate::setColor_statusbar(const QColor &color)
             visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
         else
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+
         view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
     });
 }
@@ -106,14 +116,36 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
 {
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
-        QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
 
-        int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
-        if (theme == MobileUI::Theme::Light)
-            visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        else
-            visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
+        if (QNativeInterface::QAndroidApplication::sdkVersion() < 30)
+        {
+            // Added in API level 23
+            // Deprecated in API level 30
+
+            QJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+
+            int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
+            if (theme == MobileUI::Theme::Light)
+                visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            else
+                visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+
+            view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
+        }
+        else if (QNativeInterface::QAndroidApplication::sdkVersion() >= 30)
+        {
+            // Added in API level 30
+
+            QJniObject inset = window.callObjectMethod("getInsetsController", "()Landroid/view/WindowInsetsController;");
+
+            int visibility = inset.callMethod<int>("getSystemBarsAppearance", "()I");
+            if (theme == MobileUI::Theme::Light)
+                visibility |= APPEARANCE_LIGHT_STATUS_BARS;
+            else
+                visibility &= ~APPEARANCE_LIGHT_STATUS_BARS;
+
+            inset.callMethod<void>("setSystemBarsAppearance", "(II)V", visibility, APPEARANCE_LIGHT_STATUS_BARS);
+        }
     });
 }
 
@@ -132,6 +164,7 @@ void MobileUIPrivate::setColor_navbar(const QColor &color)
             visibility |= SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         else
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+
         view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
     });
 }
@@ -147,6 +180,7 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
             visibility |= SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
         else
             visibility &= ~SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+
         view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
     });
 }
