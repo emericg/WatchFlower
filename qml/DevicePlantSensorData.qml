@@ -131,7 +131,7 @@ Item {
             return
         }
 
-        appContent.state = "DeviceList"
+        screenDeviceList.loadScreen()
     }
 
     function isHistoryMode() {

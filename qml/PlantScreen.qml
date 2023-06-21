@@ -15,8 +15,8 @@ Grid {
 
     rows: 3
     columns: (uiMode === 1) ? 1 : 3
-    spacing: isPhone ? 12 : 16
-    padding: isPhone ? 12 : 16
+    spacing: Theme.componentMargin
+    padding: Theme.componentMargin
 
     property int parentWidth: appContent.width // default
     property int parentHeight: parent.height // default

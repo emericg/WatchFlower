@@ -5,11 +5,7 @@ import ThemeEngine 1.0
 
 Item {
     id: permissionsScreen
-    width: 480
-    height: 720
     anchors.fill: parent
-    anchors.leftMargin: screenPaddingLeft
-    anchors.rightMargin: screenPaddingRight
 
     property string entryPoint: "About"
 
@@ -20,7 +16,7 @@ Item {
         refreshPermissions()
 
         // Change screen
-        appContent.state = "Permissions"
+        appContent.state = "AboutPermissions"
     }
 
     function loadScreenFrom(screenname) {
@@ -48,14 +44,16 @@ Item {
         anchors.fill: parent
 
         contentWidth: -1
-        contentHeight: column.height
+        contentHeight: contentColumn.height
 
         Column {
-            id: column
+            id: contentColumn
             anchors.left: parent.left
+            anchors.leftMargin: screenPaddingLeft
             anchors.right: parent.right
+            anchors.rightMargin: screenPaddingRight
 
-            topPadding: 16
+            topPadding: 20
             bottomPadding: 16
             spacing: 8
 

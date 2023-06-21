@@ -168,21 +168,19 @@ Loader {
                 return
             }
             if (plantSensorPages.currentIndex === 1) { // history
-                if (plantSensorHistory.isHistoryMode()) {
-                    plantSensorHistory.resetHistoryMode()
-                    return
-                }
-
-                appContent.state = "DeviceList"
+                plantSensorHistory.backAction()
+                return
             }
             if (plantSensorPages.currentIndex === 2) { // plant care
                 plantSensorCare.backAction()
                 return
             }
             if (plantSensorPages.currentIndex === 3) { // sensor settings
-                appContent.state = "DeviceList"
+                plantSensorSettings.backAction()
                 return
             }
+
+            screenDeviceList.loadScreen()
         }
 
         ////////

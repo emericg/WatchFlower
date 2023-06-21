@@ -4,8 +4,7 @@ import QtQuick.Controls
 import ThemeEngine 1.0
 
 Rectangle {
-    width: 480
-    height: 720
+    id: tutorialScreen
     anchors.fill: parent
 
     color: Theme.colorHeader
@@ -41,24 +40,25 @@ Rectangle {
                 tutorialPages.currentIndex = 0
                 tutorialPages.enableAnimation()
             }
+            function exit() {
+                reset()
+                if (entryPoint === "About") screenAbout.loadScreen()
+                else screenDeviceList.loadScreen()
+            }
 
             ////////////////
 
             SwipeView {
                 id: tutorialPages
                 anchors.fill: parent
-                anchors.leftMargin: screenPaddingLeft
-                anchors.rightMargin: screenPaddingRight
                 anchors.bottomMargin: 56
+
                 property int margins: isPhone ? 24 : 40
 
                 currentIndex: 0
                 onCurrentIndexChanged: {
                     if (currentIndex < 0) currentIndex = 0
-                    if (currentIndex > count-1) {
-                        currentIndex = 0 // reset
-                        appContent.state = entryPoint
-                    }
+                    else if (currentIndex > count-1) exit()
                 }
 
                 function enableAnimation() {
@@ -74,16 +74,18 @@ Rectangle {
                     id: page1
 
                     Column {
-                        anchors.right: parent.right
                         anchors.left: parent.left
+                        anchors.leftMargin: screenPaddingLeft
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 32
 
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("<b>WatchFlower</b> is a plant monitoring application for Xiaomi '<b>Flower Care</b>' or Parrot '<b>Flower Power</b>' sensors.")
                             textFormat: Text.StyledText
@@ -102,10 +104,10 @@ Rectangle {
                             fillMode: Image.PreserveAspectFit
                         }
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("It also works great with a couple of <b>thermometers</b> and other sensors like <b>air quality monitors</b> and <b>weather stations</b>!")
                             textFormat: Text.StyledText
@@ -133,16 +135,18 @@ Rectangle {
                     id: page2
 
                     Column {
-                        anchors.right: parent.right
                         anchors.left: parent.left
+                        anchors.leftMargin: screenPaddingLeft
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 32
 
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("To start using WatchFlower, you'll need to <b>scan</b> for <b>compatible Bluetooth sensors</b> around you.")
                             textFormat: Text.StyledText
@@ -161,10 +165,10 @@ Rectangle {
                             fillMode: Image.PreserveAspectFit
                         }
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("You can <b>rescan</b> for new devices at any time, or <b>delete</b> the ones you don't want.")
                             textFormat: Text.StyledText
@@ -182,8 +186,10 @@ Rectangle {
                     id: page3
 
                     Column {
-                        anchors.right: parent.right
                         anchors.left: parent.left
+                        anchors.leftMargin: screenPaddingLeft
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 20
 
@@ -201,10 +207,10 @@ Rectangle {
                             font.pixelSize: Theme.fontSizeContentBig
                         }
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             visible: (Qt.platform.os !== "ios")
                             text: qsTr("WatchFlower <b>might</b> be able to sync sensors in the background. Check out the <b>settings</b> page for instructions.")
@@ -224,10 +230,10 @@ Rectangle {
                             fillMode: Image.PreserveAspectFit
                         }
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("Keep in mind that Bluetooth only works in <b>close proximity</b>.")
                             textFormat: Text.StyledText
@@ -245,16 +251,18 @@ Rectangle {
                     id: page4
 
                     Column {
-                        anchors.right: parent.right
                         anchors.left: parent.left
+                        anchors.leftMargin: screenPaddingLeft
+                        anchors.right: parent.right
+                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 20
 
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("Click on sensors to access <b>historical data</b>, <b>graphs</b> and <b>detailed infos</b>.") + "<br>" +
                                   qsTr("You can set a custom <b>name</b> and a <b>location</b> for each sensor.")
@@ -274,10 +282,10 @@ Rectangle {
                             fillMode: Image.PreserveAspectFit
                         }
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("You can also <b>choose a plant</b> from our database to automatically set <b>optimal limits</b> and get <b>plant care tips</b>!")
                             textFormat: Text.StyledText
@@ -296,10 +304,10 @@ Rectangle {
                             fillMode: Image.PreserveAspectFit
                         }
                         Text {
-                            anchors.right: parent.right
-                            anchors.rightMargin: tutorialPages.margins
                             anchors.left: parent.left
                             anchors.leftMargin: tutorialPages.margins
+                            anchors.right: parent.right
+                            anchors.rightMargin: tutorialPages.margins
 
                             text: qsTr("You can always customize <b>limits</b> (like <b>moisture level</b> or <b>temperature range</b>) to your liking.")
                             textFormat: Text.StyledText
@@ -312,7 +320,7 @@ Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
                             fullColor: true
                             primaryColor: Theme.colorHeaderHighlight
-                            text: qsTr("Let's start!")
+                            text: qsTr("Start")
                             onClicked: tutorialPages.currentIndex++
                         }
                     }
@@ -342,7 +350,7 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true
+                    hoverEnabled: isDesktop
                     onEntered: parent.opacity = 1
                     onExited: parent.opacity = 0.8
                     onCanceled: parent.opacity = 0.8
@@ -377,7 +385,7 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: true
+                    hoverEnabled: isDesktop
                     onEntered: parent.opacity = 1
                     onExited: parent.opacity = 0.8
                     onCanceled: parent.opacity = 0.8

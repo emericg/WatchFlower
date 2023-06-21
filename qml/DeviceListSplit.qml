@@ -135,7 +135,7 @@ Item {
 
                 Repeater {
                     model: deviceManager.devicesThermoList
-                    DeviceWidget {
+                    delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight
                         bigAssMode: devicesView.bigWidget
@@ -162,7 +162,7 @@ Item {
 
                 Repeater {
                     model: deviceManager.devicesEnvList
-                    DeviceWidget {
+                    delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight
                         bigAssMode: devicesView.bigWidget

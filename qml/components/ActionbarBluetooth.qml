@@ -70,7 +70,7 @@ Rectangle {
                 //deviceManager.checkBluetoothPermissions()
 
                 // someone clicked 'never ask again'?
-                screenPermissions.loadScreenFrom("DeviceList")
+                screenAboutPermissions.loadScreenFrom("DeviceList")
             } else {
                 deviceManager.enableBluetooth(settingsManager.bluetoothControl)
             }

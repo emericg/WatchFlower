@@ -4,8 +4,8 @@ import QtQuick.Controls
 import ThemeEngine 1.0
 
 Drawer {
-    //width: parent.width*0.8
-    width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
+    width: (appWindow.screenOrientation === Qt.PortraitOrientation ||
+            appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
     height: appWindow.height
 
     ////////////////////////////////////////////////////////////////////////////
@@ -30,6 +30,7 @@ Drawer {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
+            anchors.rightMargin: 1
             z: 5
 
             Connections {
@@ -107,454 +108,173 @@ Drawer {
             anchors.bottom: parent.bottom
 
             contentWidth: -1
-            contentHeight: column.height
+            contentHeight: contentColumn.height
 
             Column {
-                id: column
+                id: contentColumn
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.rightMargin: 1
 
                 ////////
 
-                Rectangle {
-                    id: rectangleHome
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: (appContent.state === "DeviceList") ? Theme.colorForeground : Theme.colorBackground
+                ListItemDrawer {
+                    highlighted: (appContent.state === "DeviceList")
+                    text: qsTr("Sensors")
+                    iconSource: "qrc:/assets/logos/watchflower_tray_dark.svg"
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            appContent.state = "DeviceList"
-                            appDrawer.close()
-                        }
+                    onClicked: {
+                        screenDeviceList.loadScreen()
+                        appDrawer.close()
                     }
+                }
 
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
+                ListItemDrawer {
+                    highlighted: (appContent.state === "Settings")
+                    text: qsTr("Settings")
+                    iconSource: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
-                        source: "qrc:/assets/logos/watchflower_tray_dark.svg"
-                        color: Theme.colorText
+                    onClicked: {
+                        screenSettings.loadScreen()
+                        appDrawer.close()
                     }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
+                }
 
-                        text: qsTr("Sensors")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
+                ListItemDrawer {
+                    highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
+                    text: qsTr("About")
+                    iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
+
+                    onClicked: {
+                        screenAbout.loadScreen()
+                        appDrawer.close()
                     }
                 }
 
                 ////////
 
-                Rectangle {
-                    id: rectangleSettings
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    color: (appContent.state === "Settings") ? Theme.colorForeground : Theme.colorBackground
+                ListSeparatorPadded { }
 
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            screenSettings.loadScreen()
-                            appDrawer.close()
+                ////////
+
+                ListItemDrawer {
+                    iconSource: "qrc:/assets/icons_material/baseline-sort-24px.svg"
+                    text: {
+                        var txt = qsTr("Order by:") + " "
+                        if (settingsManager.orderBy === "waterlevel") {
+                            txt += qsTr("water level")
+                        } else if (settingsManager.orderBy === "plant") {
+                            txt += qsTr("plant name")
+                        } else if (settingsManager.orderBy === "model") {
+                            txt += qsTr("sensor model")
+                        } else if (settingsManager.orderBy === "location") {
+                            txt += qsTr("location")
+                        }
+                        return txt
+                    }
+
+                    property var sortmode: {
+                        if (settingsManager.orderBy === "waterlevel") {
+                            return 3
+                        } else if (settingsManager.orderBy === "plant") {
+                            return 2
+                        } else if (settingsManager.orderBy === "model") {
+                            return 1
+                        } else { // if (settingsManager.orderBy === "location") {
+                            return 0
                         }
                     }
 
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
+                    onClicked: {
+                        sortmode++
+                        if (sortmode > 3) sortmode = 0
 
-                        source: "qrc:/assets/icons_material/outline-settings-24px.svg"
-                        color: Theme.colorText
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Settings")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
-                    }
-                }
-
-                Rectangle {
-                    id: rectangleAbout
-                    height: 48
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    color: (appContent.state === "About" || appContent.state === "Permissions")
-                           ? Theme.colorForeground : Theme.colorBackground
-
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            screenAbout.loadScreen()
-                            appDrawer.close()
+                        if (sortmode === 0) {
+                            settingsManager.orderBy = "location"
+                            deviceManager.orderby_location()
+                        } else if (sortmode === 1) {
+                            settingsManager.orderBy = "model"
+                            deviceManager.orderby_model()
+                        } else if (sortmode === 2) {
+                            settingsManager.orderBy = "plant"
+                            deviceManager.orderby_plant()
+                        } else if (sortmode === 3) {
+                            settingsManager.orderBy = "waterlevel"
+                            deviceManager.orderby_waterlevel()
                         }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/outline-info-24px.svg"
-                        color: Theme.colorText
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("About")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
                     }
                 }
 
                 ////////
 
-                Item { // spacer
-                    height: 8
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                }
-                Rectangle {
-                    height: 1
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    color: Theme.colorSeparator
-                }
-                Item {
-                    height: 8
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                }
+                ListSeparatorPadded { }
 
                 ////////
 
-                Item {
-                    id: rectangleOrderBy
-                    height: 48
-                    anchors.right: parent.right
-                    anchors.left: parent.left
+                ListItemDrawerButton {
+                    text: qsTr("Refresh sensor data")
 
-                    MouseArea {
-                        anchors.fill: parent
+                    iconSource: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                    iconAnimation: "rotate"
+                    iconAnimated: deviceManager.updating
 
-                        property var sortmode: {
-                            if (settingsManager.orderBy === "waterlevel") {
-                                return 3
-                            } else if (settingsManager.orderBy === "plant") {
-                                return 2
-                            } else if (settingsManager.orderBy === "model") {
-                                return 1
-                            } else { // if (settingsManager.orderBy === "location") {
-                                return 0
-                            }
-                        }
+                    enabled: (deviceManager.bluetooth && !deviceManager.scanning)
 
-                        onClicked: {
-                            sortmode++
-                            if (sortmode > 3) sortmode = 0
-
-                            if (sortmode === 0) {
-                                settingsManager.orderBy = "location"
-                                deviceManager.orderby_location()
-                            } else if (sortmode === 1) {
-                                settingsManager.orderBy = "model"
-                                deviceManager.orderby_model()
-                            } else if (sortmode === 2) {
-                                settingsManager.orderBy = "plant"
-                                deviceManager.orderby_plant()
-                            } else if (sortmode === 3) {
-                                settingsManager.orderBy = "waterlevel"
-                                deviceManager.orderby_waterlevel()
-                            }
-                        }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/baseline-sort-24px.svg"
-                        color: Theme.colorText
-                    }
-                    Text {
-                        id: textOrderBy
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        function setText() {
-                            var txt = qsTr("Order by:") + " "
-                            if (settingsManager.orderBy === "waterlevel") {
-                                txt += qsTr("water level")
-                            } else if (settingsManager.orderBy === "plant") {
-                                txt += qsTr("plant name")
-                            } else if (settingsManager.orderBy === "model") {
-                                txt += qsTr("sensor model")
-                            } else if (settingsManager.orderBy === "location") {
-                                txt += qsTr("location")
-                            }
-                            textOrderBy.text = txt
-                        }
-
-                        Component.onCompleted: textOrderBy.setText()
-                        Connections {
-                            target: settingsManager
-                            function onOrderByChanged() { textOrderBy.setText() }
-                            function onAppLanguageChanged() { textOrderBy.setText() }
-                        }
-
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: Theme.colorText
-                    }
-                }
-
-                ////////
-
-                Item { // spacer
-                    height: 8
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                }
-                Rectangle {
-                    height: 1
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                    color: Theme.colorSeparator
-                }
-                Item {
-                    height: 8
-                    anchors.right: parent.right
-                    anchors.left: parent.left
-                }
-
-                ////////
-
-                Item {
-                    id: buttonRefresh
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions) && !deviceManager.scanning
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            if (!deviceManager.scanning) {
-                                if (deviceManager.updating) {
-                                    deviceManager.refreshDevices_stop()
-                                } else {
-                                    deviceManager.refreshDevices_start()
-                                }
-                                appDrawer.close()
-                            }
-                        }
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-
-                            radius: Theme.componentRadius
-                            color: Theme.colorForeground
-                            opacity: parent.containsPress
-                            Behavior on opacity { OpacityAnimator { duration: 133 } }
-                        }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                        color: buttonRefresh.enabled ? Theme.colorText : Theme.colorSubText
-
-                        NumberAnimation on rotation { // refreshAnimation
-                            duration: 2000
-                            from: 0
-                            to: 360
-                            loops: Animation.Infinite
-                            running: deviceManager.updating
-                            alwaysRunToEnd: true
-                        }
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Refresh sensor data")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: buttonRefresh.enabled ? Theme.colorText : Theme.colorSubText
-                    }
-                }
-
-                ////////
-
-                Item {
-                    id: buttonSync
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions) && !deviceManager.scanning
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            if (!deviceManager.scanning) {
-                                if (deviceManager.syncing) {
-                                    deviceManager.syncDevices_stop()
-                                } else {
-                                    deviceManager.syncDevices_start()
-                                }
-                                appDrawer.close()
-                            }
-                        }
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-
-                            radius: Theme.componentRadius
-                            color: Theme.colorForeground
-                            opacity: parent.containsPress
-                            Behavior on opacity { OpacityAnimator { duration: 133 } }
-                        }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
-                        color: buttonSync.enabled ? Theme.colorText : Theme.colorSubText
-
-                        SequentialAnimation on opacity { // syncAnimation (fade)
-                            loops: Animation.Infinite
-                            running: deviceManager.syncing
-                            alwaysRunToEnd: true
-
-                            PropertyAnimation { to: 0.33; duration: 750; }
-                            PropertyAnimation { to: 1; duration: 750; }
-                        }
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Sync sensors history")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: buttonSync.enabled ? Theme.colorText : Theme.colorSubText
-                    }
-                }
-
-                ////////
-
-                Item {
-                    id: buttonScan
-                    height: 48
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-
-                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
-
-                    MouseArea {
-                        anchors.fill: parent
-
-                        onClicked: {
-                            if (deviceManager.scanning) {
-                                deviceManager.scanDevices_stop()
+                    onClicked: {
+                        if (!deviceManager.scanning) {
+                            if (deviceManager.updating) {
+                                deviceManager.refreshDevices_stop()
                             } else {
-                                deviceManager.scanDevices_start()
+                                deviceManager.refreshDevices_start()
                             }
                             appDrawer.close()
                         }
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.margins: 4
-                            anchors.leftMargin: 8
-                            anchors.rightMargin: 8
-
-                            radius: Theme.componentRadius
-                            color: Theme.colorForeground
-                            opacity: parent.containsPress
-                            Behavior on opacity { OpacityAnimator { duration: 133 } }
-                        }
-                    }
-
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                        color: buttonScan.enabled ? Theme.colorText : Theme.colorSubText
-
-                        SequentialAnimation on opacity { // scanAnimation (fade)
-                            loops: Animation.Infinite
-                            running: deviceManager.scanning
-                            alwaysRunToEnd: true
-
-                            PropertyAnimation { to: 0.33; duration: 750; }
-                            PropertyAnimation { to: 1; duration: 750; }
-                        }
-                    }
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 56
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Search for new sensors")
-                        font.pixelSize: 13
-                        font.bold: true
-                        color: buttonScan.enabled ? Theme.colorText : Theme.colorSubText
                     }
                 }
+
+                ListItemDrawerButton {
+                    text: qsTr("Sync sensors history")
+
+                    iconSource: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
+                    iconAnimation: "fade"
+                    iconAnimated: deviceManager.syncing
+
+                    enabled: (deviceManager.bluetooth && !deviceManager.scanning)
+
+                    onClicked: {
+                        if (!deviceManager.scanning) {
+                            if (deviceManager.syncing) {
+                                deviceManager.syncDevices_stop()
+                            } else {
+                                deviceManager.syncDevices_start()
+                            }
+                            appDrawer.close()
+                        }
+                    }
+                }
+
+                ListItemDrawerButton {
+                    text: qsTr("Search for new sensors")
+
+                    iconSource: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                    iconAnimation: "fade"
+                    iconAnimated: deviceManager.scanning
+
+                    enabled: deviceManager.bluetooth
+
+                    onClicked: {
+                        if (deviceManager.scanning) {
+                            deviceManager.scanDevices_stop()
+                        } else {
+                            deviceManager.scanDevices_start()
+                        }
+                        appDrawer.close()
+                    }
+                }
+
+                ////////
+
+                ListSeparatorPadded { }
 
                 ////////
             }
@@ -565,83 +285,34 @@ Drawer {
         Column {
             anchors.left: parent.left
             anchors.right: parent.right
+            anchors.rightMargin: 1
             anchors.bottom: parent.bottom
 
-            Rectangle {
-                id: rectanglePlantBrowser
-                height: 48
-                anchors.left: parent.left
-                anchors.right: parent.right
-                color: (appContent.state === "PlantBrowser") ? Theme.colorForeground : Theme.colorBackground
+            ListItemDrawer {
+                highlighted: (appContent.state === "PlantBrowser")
+                text: qsTr("Plant browser")
+                iconSource: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        screenPlantBrowser.loadScreenFrom("DeviceList")
-                        appDrawer.close()
-                    }
-                }
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
-                    color: Theme.colorText
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Plant browser")
-                    font.pixelSize: 13
-                    font.bold: true
-                    color: Theme.colorText
+                onClicked: {
+                    screenPlantBrowser.loadScreenFrom("DeviceList")
+                    appDrawer.close()
                 }
             }
 
-            Rectangle {
-                id: rectangleDeviceBrowser
-                height: 48
-                anchors.right: parent.right
-                anchors.left: parent.left
-                color: (appContent.state === "DeviceBrowser") ? Theme.colorForeground : Theme.colorBackground
+            ListItemDrawer {
+                highlighted: (appContent.state === "DeviceBrowser")
+                text: qsTr("Device browser")
+                iconSource: "qrc:/assets/icons_material/baseline-radar-24px.svg"
 
-                enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
+                enabled: deviceManager.bluetooth
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        screenDeviceBrowser.loadScreen()
-                        appDrawer.close()
-                    }
-                }
-
-                IconSvg {
-                    width: 24
-                    height: 24
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
-                    color: rectangleDeviceBrowser.enabled ? Theme.colorText : Theme.colorSubText
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 56
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Device browser")
-                    font.pixelSize: 13
-                    font.bold: true
-                    color: rectangleDeviceBrowser.enabled ? Theme.colorText : Theme.colorSubText
+                onClicked: {
+                    screenDeviceBrowser.loadScreen()
+                    appDrawer.close()
                 }
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////
     }
 }

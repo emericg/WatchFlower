@@ -30,7 +30,7 @@ Item {
             }
         }
 
-        appContent.state = "DeviceList"
+        screenDeviceList.loadScreen()
     }
 
     ////////////////////////////////////////////////////////////////////////////

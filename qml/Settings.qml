@@ -28,6 +28,10 @@ Loader {
     sourceComponent: Item {
         anchors.fill: parent
 
+        function backAction() {
+            screenDeviceList.loadScreen()
+        }
+
         ////////////////
 
         PopupBackgroundUpdates {
@@ -111,7 +115,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         z: 1
-                        spacing: 10
+                        spacing: Theme.componentMargin / 2
 
                         Rectangle {
                             id: rectangleSnow
@@ -420,7 +424,7 @@ Loader {
                         anchors.left: image_language.right
                         anchors.leftMargin: 24
                         anchors.right: combobox_language.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Language")
@@ -436,7 +440,7 @@ Loader {
                         width: wideMode ? 256 : 160
                         height: 36
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         z: 1
@@ -467,14 +471,9 @@ Loader {
                                     currentIndex = i
                             }
                         }
-                        property bool cbinit: false
-                        onCurrentIndexChanged: {
-                            if (cbinit) {
-                                utilsLanguage.loadLanguage(cbAppLanguage.get(currentIndex).text)
-                                settingsManager.appLanguage = cbAppLanguage.get(currentIndex).text
-                            } else {
-                                cbinit = true
-                            }
+                        onActivated: {
+                            utilsLanguage.loadLanguage(cbAppLanguage.get(currentIndex).text)
+                            settingsManager.appLanguage = cbAppLanguage.get(currentIndex).text
                         }
                     }
                 }
@@ -517,7 +516,7 @@ Loader {
                         anchors.left: image_minimized.right
                         anchors.leftMargin: 24
                         anchors.right: switch_minimized.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Start application minimized")
@@ -695,7 +694,7 @@ Loader {
                         anchors.left: image_notifications.right
                         anchors.leftMargin: 24
                         anchors.right: switch_notifications.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Enable notifications")
@@ -759,7 +758,7 @@ Loader {
                             anchors.left: parent.left
                             anchors.leftMargin: 64
                             anchors.right: switch_notif_battery.left
-                            anchors.rightMargin: 16
+                            anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: "- " + qsTr("battery level")
@@ -821,7 +820,7 @@ Loader {
                             anchors.left: parent.left
                             anchors.leftMargin: 64
                             anchors.right: switch_notif_subzero.left
-                            anchors.rightMargin: 16
+                            anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: "- " + qsTr("freeze warnings")
@@ -852,7 +851,7 @@ Loader {
                             anchors.left: parent.left
                             anchors.leftMargin: 64
                             anchors.right: switch_notif_env.left
-                            anchors.rightMargin: 16
+                            anchors.rightMargin: Theme.componentMargin
 
                             text: "- " + qsTr("environmental warnings")
                             textFormat: Text.PlainText
@@ -912,7 +911,7 @@ Loader {
                         anchors.left: image_bluetoothControl.right
                         anchors.leftMargin: 24
                         anchors.right: switch_bluetoothControl.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Bluetooth control")
@@ -982,7 +981,7 @@ Loader {
                         anchors.left: image_bluetoothRange.right
                         anchors.leftMargin: 24
                         anchors.right: switch_bluetoothRange.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Limit Bluetooth scanning range")

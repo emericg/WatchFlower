@@ -18,6 +18,10 @@ Flickable {
         plantSensorSettings.contentY = 0
     }
 
+    function backAction() {
+        screenDeviceList.loadScreen()
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     // 1: single column (single column view or portrait tablet)
@@ -37,10 +41,8 @@ Flickable {
         property int maxheight: 2*topPadding + 3*spacing + itemDevice.height + itemDeviceInfos.height +
                                 itemDeviceConnection.height + itemDeviceSensors.height + itemDeviceSettings.height
 
-        topPadding: isPhone ? 14 : 16
-        padding: isPhone ? 12 : 16
-        bottomPadding: isPhone ? 14 : 16
-        spacing: isPhone ? 12 : 16
+        padding: Theme.componentMargin
+        spacing: Theme.componentMargin
         flow: Flow.TopToBottom
 
         ////////////////////////////////

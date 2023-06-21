@@ -46,7 +46,7 @@ Item {
                 } else {
                     deviceManager.scanNearby_stop()
                     deviceManager.listenDevices_start()
-                    appContent.state = "DeviceList"
+                    screenDeviceList.loadScreen()
                 }
             }
 
@@ -149,7 +149,7 @@ Item {
                 } else {
                     deviceManager.scanNearby_stop()
                     deviceManager.listenDevices_start()
-                    appContent.state = "DeviceList"
+                    screenDeviceList.loadScreen()
                 }
             }
 

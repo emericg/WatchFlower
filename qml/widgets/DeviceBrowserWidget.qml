@@ -46,7 +46,7 @@ Item {
                 id: mousearea
                 anchors.fill: parent
                 acceptedButtons: Qt.LeftButton
-                enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
+                enabled: deviceManager.bluetooth
                 onClicked: screenDeviceBrowser.loadScreen()
             }
         }

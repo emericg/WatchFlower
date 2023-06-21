@@ -14,6 +14,11 @@ Item {
         loadList()
     }
 
+    function loadScreen() {
+        // change screen
+        appContent.state = "DeviceList"
+    }
+
     function backAction() {
         if (isSelected()) exitSelectionMode()
     }

@@ -3,7 +3,7 @@ import QtQuick
 import ThemeEngine 1.0
 
 Rectangle {
-    id: headerBar
+    id: appHeader
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
@@ -21,19 +21,10 @@ Rectangle {
     property string leftMenuMode: "drawer" // drawer / back / close
     signal leftMenuClicked()
 
-    onLeftMenuModeChanged: {
-        if (leftMenuMode === "drawer")
-            leftMenuImg.source = "qrc:/assets/icons_material/baseline-menu-24px.svg"
-        else if (leftMenuMode === "close")
-            leftMenuImg.source = "qrc:/assets/icons_material/baseline-close-24px.svg"
-        else // back
-            leftMenuImg.source = "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
     property string rightMenuMode: "off" // on / off
     signal rightMenuClicked()
+
+    ////////////////////////////////////////////////////////////////////////////
 
     function rightMenuIsOpen() { return actionMenu.visible; }
     function rightMenuClose() { actionMenu.close(); }
@@ -46,15 +37,15 @@ Rectangle {
     signal deviceRefreshRealtimeButtonClicked()
     signal deviceRefreshHistoryButtonClicked()
     signal deviceClearButtonClicked()
-    signal deviceDataButtonClicked() // compatibility
-    signal deviceHistoryButtonClicked() // compatibility
-    signal devicePlantButtonClicked() // compatibility
-    signal deviceSettingsButtonClicked() // compatibility
+    signal deviceDataButtonClicked() // desktop header compatibility
+    signal deviceHistoryButtonClicked() // desktop header compatibility
+    signal devicePlantButtonClicked() // desktop header compatibility
+    signal deviceSettingsButtonClicked() // desktop header compatibility
 
-    function setActiveDeviceData() { } // compatibility
-    function setActiveDeviceHistory() { } // compatibility
-    function setActiveDevicePlant() { } // compatibility
-    function setActiveDeviceSettings() { } // compatibility
+    function setActiveDeviceData() { } // desktop header compatibility
+    function setActiveDeviceHistory() { } // desktop header compatibility
+    function setActiveDevicePlant() { } // desktop header compatibility
+    function setActiveDeviceSettings() { } // desktop header compatibility
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -96,7 +87,11 @@ Rectangle {
                 anchors.left: parent.left
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                source: {
+                    if (leftMenuMode === "drawer") return "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                    if (leftMenuMode === "close") return "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    return "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                }
                 color: Theme.colorHeaderContent
             }
         }
@@ -193,9 +188,9 @@ Rectangle {
                 }
 
                 IconSvg {
+                    anchors.centerIn: parent
                     width: (headerHeight / 2)
                     height: (headerHeight / 2)
-                    anchors.centerIn: parent
 
                     source: "qrc:/assets/icons_material/baseline-more_vert-24px.svg"
                     color: Theme.colorHeaderContent

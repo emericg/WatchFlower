@@ -3,7 +3,7 @@ import QtQuick
 import ThemeEngine 1.0
 
 Rectangle {
-    id: headerBar
+    id: appHeader
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
@@ -21,7 +21,11 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     signal backButtonClicked()
-    signal rightMenuClicked() // compatibility
+    signal rightMenuClicked() // mobile header compatibility
+
+    signal refreshButtonClicked()
+    signal syncButtonClicked()
+    signal scanButtonClicked()
 
     signal deviceRebootButtonClicked()
     signal deviceCalibrateButtonClicked()
@@ -32,17 +36,32 @@ Rectangle {
     signal deviceRefreshHistoryButtonClicked()
     signal deviceClearButtonClicked()
 
+    signal plantsButtonClicked()
+    signal settingsButtonClicked()
+    signal aboutButtonClicked()
+
     signal deviceDataButtonClicked()
     signal deviceHistoryButtonClicked()
     signal devicePlantButtonClicked()
     signal deviceSettingsButtonClicked()
 
-    signal refreshButtonClicked()
-    signal syncButtonClicked()
-    signal scanButtonClicked()
-    signal plantsButtonClicked()
-    signal settingsButtonClicked()
-    signal aboutButtonClicked()
+    function setActiveMenu() {
+        if (appContent.state === "Tutorial") {
+            headerTitle = qsTr("Welcome")
+            menus.visible = false
+
+            buttonBack.source = "qrc:/assets/menus/menu_close.svg"
+        } else {
+            headerTitle = "WatchFlower"
+            menus.visible = true
+
+            if (appContent.state === "DeviceList") {
+                buttonBack.source = "qrc:/assets/menus/menu_logo_large.svg"
+            } else {
+                buttonBack.source = "qrc:/assets/menus/menu_back.svg"
+            }
+        }
+    }
 
     function setActiveDeviceData() {
         menuDeviceData.selected = true
@@ -67,24 +86,6 @@ Rectangle {
         menuDeviceHistory.selected = false
         menuDevicePlant.selected = false
         menuDeviceSettings.selected = true
-    }
-
-    function setActiveMenu() {
-        if (appContent.state === "Tutorial") {
-            headerTitle = qsTr("Welcome")
-            menus.visible = false
-
-            buttonBack.source = "qrc:/assets/menus/menu_close.svg"
-        } else {
-            headerTitle = "WatchFlower"
-            menus.visible = true
-
-            if (appContent.state === "DeviceList") {
-                buttonBack.source = "qrc:/assets/menus/menu_logo_large.svg"
-            } else {
-                buttonBack.source = "qrc:/assets/menus/menu_back.svg"
-            }
-        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

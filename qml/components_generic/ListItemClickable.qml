@@ -58,6 +58,8 @@ T.ItemDelegate {
         anchors.right: parent.right
         anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
+        opacity: control.enabled ? 1 : 0.4
+
         Item {
             Layout.preferredWidth: Theme.componentHeightXL - screenPaddingLeft - Theme.componentMargin
             Layout.preferredHeight: Theme.componentHeightXL

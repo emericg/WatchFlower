@@ -120,62 +120,65 @@ Loader {
             anchors.fill: parent
 
             Rectangle {
-                anchors.fill: plantSearchBox
-                anchors.margins: -12
-                z: 4
-                color: Theme.colorBackground
-            }
-
-            TextFieldThemed {
-                id: plantSearchBox
-                anchors.top: parent.top
-                anchors.topMargin: 14
+                id: plantSearchArea
                 anchors.left: parent.left
-                anchors.leftMargin: 12
                 anchors.right: parent.right
-                anchors.rightMargin: 12
 
-                z: 5
-                height: 40
-                placeholderText: qsTr("Search for plants")
-                selectByMouse: true
-                colorSelectedText: "white"
+                height: plantSearchBox.height + Theme.componentMargin*2
+                color: Theme.colorBackground
+                z: 4
 
-                onDisplayTextChanged: plantDatabase.filter(displayText)
-
-                Row {
+                TextFieldThemed {
+                    id: plantSearchBox
+                    anchors.top: parent.top
+                    anchors.topMargin: Theme.componentMargin
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.componentMargin
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: 12
+                    anchors.rightMargin: Theme.componentMargin
 
-                    Text {
+                    z: 5
+                    height: 40
+                    placeholderText: qsTr("Search for plants")
+                    selectByMouse: true
+                    colorSelectedText: "white"
+
+                    onDisplayTextChanged: plantDatabase.filter(displayText)
+
+                    Row {
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
+                        spacing: Theme.componentMargin
 
-                        text: qsTr("%1 plants").arg(((plantSearchBox.displayText) ? plantDatabase.plantCountFiltered : plantDatabase.plantCount))
-                        font.pixelSize: Theme.fontSizeContentSmall
-                        color: Theme.colorSubText
-                    }
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
 
-                    RoundButtonIcon {
-                        width: 24
-                        height: 24
-                        anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr("%1 plants").arg(((plantSearchBox.displayText) ? plantDatabase.plantCountFiltered : plantDatabase.plantCount))
+                            font.pixelSize: Theme.fontSizeContentSmall
+                            color: Theme.colorSubText
+                        }
 
-                        visible: plantSearchBox.text.length
-                        highlightMode: "color"
-                        source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
+                        RoundButtonIcon {
+                            width: 24
+                            height: 24
+                            anchors.verticalCenter: parent.verticalCenter
 
-                        onClicked: plantSearchBox.text = ""
-                    }
+                            visible: plantSearchBox.text.length
+                            highlightMode: "color"
+                            source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
 
-                    IconSvg {
-                        width: 24
-                        height: 24
-                        anchors.verticalCenter: parent.verticalCenter
+                            onClicked: plantSearchBox.text = ""
+                        }
 
-                        source: "qrc:/assets/icons_material/baseline-search-24px.svg"
-                        color: Theme.colorText
+                        IconSvg {
+                            width: 24
+                            height: 24
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                            color: Theme.colorText
+                        }
                     }
                 }
             }
@@ -183,12 +186,12 @@ Loader {
             ListView {
                 id: plantList
                 anchors.fill: parent
-                anchors.topMargin: 64
+                anchors.topMargin: plantSearchArea.height
                 anchors.leftMargin: 0
                 anchors.rightMargin: 0
 
                 topMargin: 0
-                bottomMargin: 12
+                bottomMargin: 0
                 spacing: 0
 
                 ScrollBar.vertical: ScrollBar {
@@ -207,9 +210,9 @@ Loader {
 
                     Row {
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: 16
+                        spacing: Theme.componentMargin
 
                         Text {
                             text: modelData.name

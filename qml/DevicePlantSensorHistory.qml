@@ -149,6 +149,15 @@ Item {
         }
     }
 
+    function backAction() {
+        if (isHistoryMode()) {
+            resetHistoryMode()
+            return
+        }
+
+        screenDeviceList.loadScreen()
+    }
+
     function isHistoryMode() {
         return graphGrid.hasSelection()
     }

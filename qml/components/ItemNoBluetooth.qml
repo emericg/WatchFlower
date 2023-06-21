@@ -1,6 +1,6 @@
 import QtQuick
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Item {
     id: itemNoBluetooth
@@ -13,8 +13,6 @@ Item {
         height: width
         radius: width
         color: Theme.colorForeground
-
-        signal clicked()
 
         IconSvg {
             anchors.centerIn: parent
@@ -33,7 +31,7 @@ Item {
             anchors.topMargin: 24
             anchors.horizontalCenter: parent.horizontalCenter
 
-            text: qsTr("Bluetooth is disabled...")
+            text: qsTr("Bluetooth is not available...")
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeContentBig
             color: Theme.colorText

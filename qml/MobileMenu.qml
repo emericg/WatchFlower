@@ -7,12 +7,13 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
+    anchors.bottomMargin: screenPaddingBottom
 
     property int hhh: (appWindow.isPhone ? 36 : 48)
     property int hhi: (hhh * 0.666)
     property int hhv: visible ? hhh : 0
 
-    height: hhh + screenPaddingBottom
+    height: hhh
     color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
 
     visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
@@ -76,7 +77,6 @@ Rectangle {
     Row { // main menu
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -screenPaddingBottom
         spacing: (!appWindow.wideMode || (appWindow.isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
 
         visible: (appContent.state === "DeviceList" ||
@@ -96,7 +96,7 @@ Rectangle {
             colorHighlight: Theme.colorTabletmenuHighlight
 
             selected: (appContent.state === "DeviceList")
-            onClicked: appContent.state = "DeviceList"
+            onClicked: screenDeviceList.loadScreen()
         }
         MobileMenuItem_horizontal {
             id: menuPlantBrowser
@@ -149,7 +149,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            selected: (appContent.state === "About" || appContent.state === "Permissions")
+            selected: (appContent.state === "About" || appContent.state === "AboutPermissions")
             onClicked: screenAbout.loadScreen()
         }
     }
@@ -159,7 +159,6 @@ Rectangle {
     Row { // plant care
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -screenPaddingBottom
         spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
 
         visible: (appContent.state === "DevicePlantSensor")
@@ -175,7 +174,6 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            //selected: (appContent.state === "DevicePlantSensor")
             onClicked: mobileMenu.deviceDataButtonClicked()
         }
         MobileMenuItem_horizontal {
@@ -189,7 +187,6 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            //selected: (appContent.state === "DevicePlantSensor")
             onClicked: mobileMenu.deviceHistoryButtonClicked()
         }
         MobileMenuItem_horizontal {
@@ -197,27 +194,25 @@ Rectangle {
             height: mobileMenu.hhh
 
             text: qsTr("Plant")
-            source: "qrc:/assets/icons_material/baseline-iso-24px.svg"
+            source: "qrc:/assets/icons_custom/duotone-plant_care-24px.svg"
             sourceSize: mobileMenu.hhi
 
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            //selected: (appContent.state === "DevicePlantSensor")
             onClicked: mobileMenu.devicePlantButtonClicked()
         }
         MobileMenuItem_horizontal {
             id: menuDeviceSettings
             height: mobileMenu.hhh
 
-            text: qsTr("Settings")
+            text: qsTr("Sensor")
             source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
             sourceSize: mobileMenu.hhi
 
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            //selected: (appContent.state === "DevicePlantSensor")
             onClicked: mobileMenu.deviceSettingsButtonClicked()
         }
     }
@@ -227,7 +222,6 @@ Rectangle {
     Row { // thermometer
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -screenPaddingBottom
         spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
 
         visible: (appContent.state === "DeviceThermometer")
@@ -238,7 +232,6 @@ Rectangle {
     Row { // environmental
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -screenPaddingBottom
         spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
 
         visible: (appContent.state === "DeviceEnvironmental")

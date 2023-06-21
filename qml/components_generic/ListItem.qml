@@ -28,11 +28,21 @@ T.Control {
 
     ////////////////
 
+    background: Rectangle {
+        implicitHeight: Theme.componentHeightXL
+
+        color: Theme.colorBackground
+    }
+
+    ////////////////
+
     contentItem: RowLayout {
         anchors.left: parent.left
         anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
         anchors.right: parent.right
         anchors.rightMargin: screenPaddingRight + Theme.componentMargin / 2
+
+        opacity: control.enabled ? 1 : 0.4
 
         Item {
             Layout.preferredWidth: 56 - screenPaddingLeft - Theme.componentMargin
@@ -61,14 +71,6 @@ T.Control {
             wrapMode: Text.WordWrap
             font.pixelSize: control.textSize
         }
-    }
-
-    ////////////////
-
-    background: Rectangle {
-        implicitHeight: Theme.componentHeightXL
-
-        color: Theme.colorBackground
     }
 
     ////////////////

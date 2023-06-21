@@ -284,7 +284,7 @@ Loader {
                 }
             }
 
-            appContent.state = "DeviceList"
+            screenDeviceList.loadScreen()
         }
 
         function isHistoryMode() {

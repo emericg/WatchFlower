@@ -48,7 +48,7 @@
     <message>
         <location filename="../qml/About.qml" line="596"/>
         <source>Supported sensors</source>
-        <translation>Capteurs pris en charge</translation>
+        <translation type="unfinished">Capteurs pris en charges</translation>
     </message>
     <message>
         <location filename="../qml/About.qml" line="671"/>
