@@ -12,8 +12,6 @@ Rectangle {
     radius: width
     color: Theme.colorForeground
 
-    signal clicked()
-
     IconSvg {
         anchors.centerIn: parent
         width: parent.width*0.66
@@ -21,7 +19,7 @@ Rectangle {
 
         source: "qrc:/assets/logos/watchflower_monochrome.svg"
         fillMode: Image.PreserveAspectFit
-        color: Theme.colorSubText
+        color: Theme.colorIcon
         opacity: 0.8
         smooth: true
     }

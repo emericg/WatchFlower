@@ -39,8 +39,7 @@ Loader {
 
     sourceComponent: Item {
         id: itemDevicePlantSensor
-        implicitWidth: 480
-        implicitHeight: 720
+        anchors.fill: parent
 
         focus: parent.focus
 

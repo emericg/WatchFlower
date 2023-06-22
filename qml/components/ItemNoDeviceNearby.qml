@@ -6,7 +6,7 @@ import ThemeEngine 1.0
 Rectangle {
     id: itemNoDeviceNearby
     anchors.centerIn: parent
-    anchors.verticalCenterOffset: 0
+    anchors.verticalCenterOffset: -40
 
     width: singleColumn ? (parent.width*0.5) : (parent.height*0.4)
     height: width
@@ -20,7 +20,7 @@ Rectangle {
 
         source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
         fillMode: Image.PreserveAspectFit
-        color: Theme.colorSubText
+        color: Theme.colorIcon
         opacity: 0.9
         smooth: true
 
@@ -43,7 +43,7 @@ Rectangle {
 
     Text {
         anchors.top: parent.bottom
-        anchors.topMargin: 16
+        anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: qsTr("Looking for nearby devices...")

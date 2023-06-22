@@ -118,7 +118,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 42
+                    anchors.leftMargin: 8 + 28 + 8
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -169,8 +169,8 @@ Item {
                 anchors.bottom: parent.bottom
                 width: (parent.width / 2)
 
-                topMargin: 6
-                bottomMargin: 6
+                topMargin: 8
+                bottomMargin: 8
 
                 model: deviceManager.devicesNearby
                 delegate: DeviceNearbyWidget {
@@ -220,7 +220,7 @@ Item {
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 42
+                    anchors.leftMargin: 8 + 28 + 8
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 

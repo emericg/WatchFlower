@@ -41,8 +41,7 @@ Loader {
 
     sourceComponent: Item {
         id: itemDeviceEnvironmental
-        implicitWidth: 480
-        implicitHeight: 720
+        anchors.fill: parent
 
         focus: parent.focus
 
@@ -787,7 +786,7 @@ Loader {
                             Rectangle {
                                 id: airBoxes
                                 width: parent.width
-                                height: airFlow.height + (airFlow.anchors.topMargin*2)
+                                height: airFlow.height + (Theme.componentMargin * 2)
 
                                 visible: isAirMonitor
                                 color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
@@ -796,12 +795,13 @@ Loader {
                                 Flow {
                                     id: airFlow
                                     anchors.top: parent.top
-                                    anchors.topMargin: isDesktop ? 20 : 14
+                                    anchors.topMargin: Theme.componentMargin
                                     anchors.left: parent.left
-                                    anchors.leftMargin: isDesktop ? 20 : 14
+                                    anchors.leftMargin: Theme.componentMargin
                                     anchors.right: parent.right
                                     anchors.rightMargin: 0
-                                    spacing: 8
+
+                                    spacing: Theme.componentMargin
 
                                     onWidthChanged: updateSize()
                                     function updateSize() {
@@ -989,12 +989,12 @@ Loader {
                                 Flow {
                                     id: radFlow
                                     anchors.top: parent.top
-                                    anchors.topMargin: isDesktop ? 20 : 12
+                                    anchors.topMargin: Theme.componentMargin
                                     anchors.left: parent.left
-                                    anchors.leftMargin: isDesktop ? 20 : 12
+                                    anchors.leftMargin: Theme.componentMargin
                                     anchors.right: parent.right
                                     anchors.rightMargin: 0
-                                    spacing: 12
+                                    spacing: Theme.componentMargin
 
                                     onWidthChanged: updateSize()
                                     function updateSize() {
@@ -1068,12 +1068,12 @@ Loader {
                                 Flow {
                                     id: weatherFlow
                                     anchors.top: parent.top
-                                    anchors.topMargin: isPhone ? 8 : 14
+                                    anchors.topMargin: Theme.componentMargin
                                     anchors.left: parent.left
-                                    anchors.leftMargin: isPhone ? 8 : 14
+                                    anchors.leftMargin: Theme.componentMargin
                                     anchors.right: parent.right
                                     anchors.rightMargin: 0
-                                    spacing: isPhone ? 8 : 14
+                                    spacing: Theme.componentMargin
 
                                     onWidthChanged: updateSize()
                                     function updateSize() {

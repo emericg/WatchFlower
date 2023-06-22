@@ -21,14 +21,14 @@ Rectangle {
 
         source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
         fillMode: Image.PreserveAspectFit
-        color: Theme.colorSubText
+        color: Theme.colorIcon
         opacity: 0.9
         smooth: true
     }
 
     Text {
         anchors.top: parent.bottom
-        anchors.topMargin: 24
+        anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: qsTr("No log entry...")
@@ -38,7 +38,7 @@ Rectangle {
 
         ButtonWireframe {
             anchors.top: parent.bottom
-            anchors.topMargin: 12
+            anchors.topMargin: 16
             anchors.horizontalCenter: parent.horizontalCenter
 
             fullColor: true

@@ -184,8 +184,6 @@ Item {
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
-
     Item { // outside indicator
         anchors.fill: parent
         anchors.topMargin: singleColumn ? 0 : 8
@@ -210,6 +208,8 @@ Item {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     Item {
         id: deviceWidgetRectangle
@@ -239,20 +239,17 @@ Item {
                     }
 
                     // regular click
-                    //if (boxDevice.isDataAvailable()) {
-                        selectedDevice = boxDevice
-
-                        if (boxDevice.isPlantSensor) {
-                            screenDevicePlantSensor.loadDevice(boxDevice)
-                            appContent.state = "DevicePlantSensor"
-                        } else if (boxDevice.isThermometer) {
-                            screenDeviceThermometer.loadDevice(boxDevice)
-                            appContent.state = "DeviceThermometer"
-                        } else if (boxDevice.isEnvironmentalSensor) {
-                            screenDeviceEnvironmental.loadDevice(boxDevice)
-                            appContent.state = "DeviceEnvironmental"
-                        }
-                    //}
+                    selectedDevice = boxDevice
+                    if (boxDevice.isPlantSensor) {
+                        screenDevicePlantSensor.loadDevice(boxDevice)
+                        appContent.state = "DevicePlantSensor"
+                    } else if (boxDevice.isThermometer) {
+                        screenDeviceThermometer.loadDevice(boxDevice)
+                        appContent.state = "DeviceThermometer"
+                    } else if (boxDevice.isEnvironmentalSensor) {
+                        screenDeviceEnvironmental.loadDevice(boxDevice)
+                        appContent.state = "DeviceEnvironmental"
+                    }
                 }
 
                 if (mouse.button === Qt.MiddleButton) {

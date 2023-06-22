@@ -215,8 +215,8 @@ Drawer {
                     text: qsTr("Refresh sensor data")
 
                     iconSource: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
-                    iconAnimation: "rotate"
-                    iconAnimated: deviceManager.updating
+                    iconAnimation: deviceManager.updating ? "rotate" : "fade"
+                    iconAnimated: deviceManager.updating || deviceManager.listening
 
                     enabled: (deviceManager.bluetooth && !deviceManager.scanning)
 

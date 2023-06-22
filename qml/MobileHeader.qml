@@ -92,7 +92,7 @@ Rectangle {
                     height: parent.height
 
                     pressed: parent.pressed
-                    active: enabled && (parent.down || parent.hovered)
+                    //active: enabled && parent.down
                     color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
                 }
 
@@ -118,7 +118,7 @@ Rectangle {
                 color: Theme.colorHeaderContent
                 font.bold: true
                 font.pixelSize: Theme.fontSizeHeader
-                font.capitalization: Font.Capitalize
+                //font.capitalization: Font.Capitalize
                 verticalAlignment: Text.AlignVCenter
             }
         }
@@ -201,7 +201,7 @@ Rectangle {
                     height: parent.height
 
                     pressed: parent.pressed
-                    active: enabled && (parent.down || parent.hovered)
+                    //active: enabled && parent.down
                     color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
                 }
 

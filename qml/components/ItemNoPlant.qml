@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 Rectangle {
     id: itemNoPlant
     anchors.centerIn: parent
-    anchors.verticalCenterOffset: -48
+    anchors.verticalCenterOffset: -40
 
     width: singleColumn ? (parent.width*0.5) : (parent.height*0.4)
     height: width
@@ -21,13 +21,13 @@ Rectangle {
 
         source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
         fillMode: Image.PreserveAspectFit
-        color: Theme.colorSubText
+        color: Theme.colorIcon
         opacity: 0.9
     }
 
     Text {
         anchors.top: parent.bottom
-        anchors.topMargin: 24
+        anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: qsTr("No plant set...")
@@ -37,7 +37,7 @@ Rectangle {
 
         ButtonWireframe {
             anchors.top: parent.bottom
-            anchors.topMargin: 12
+            anchors.topMargin: 16
             anchors.horizontalCenter: parent.horizontalCenter
 
             fullColor: true

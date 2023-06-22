@@ -101,13 +101,12 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            visible: isDesktop
-
             DeviceBrowserWidget {
                 width: devicesView.cellWidth
                 height: devicesView.cellWidth * 0.33
                 bigAssMode: devicesView.bigWidget
                 singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                visible: isDesktop
             }
 
             PlantBrowserWidget {
@@ -115,6 +114,7 @@ Item {
                 height: devicesView.cellWidth * 0.33
                 bigAssMode: devicesView.bigWidget
                 singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                visible: isDesktop
             }
         }
 

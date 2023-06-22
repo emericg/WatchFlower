@@ -48,6 +48,11 @@ Loader {
         }
     }
 
+    ItemLoadData {
+        id: loadingIndicator
+        visible: (plantBrowser.status !== Loader.Ready)
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
     active: false
@@ -425,4 +430,3 @@ Loader {
         ////////////////////////////////////////////////////////////////////
     }
 }
-

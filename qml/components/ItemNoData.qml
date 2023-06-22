@@ -20,13 +20,13 @@ Rectangle {
 
         source: "qrc:/assets/icons_material/baseline-timeline-24px.svg"
         fillMode: Image.PreserveAspectFit
-        color: Theme.colorSubText
+        color: Theme.colorIcon
         smooth: true
     }
 
     Text {
         anchors.top: parent.bottom
-        anchors.topMargin: 16
+        anchors.topMargin: 20
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: qsTr("Not enough data...")
