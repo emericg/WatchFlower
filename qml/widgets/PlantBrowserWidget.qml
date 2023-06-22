@@ -13,21 +13,24 @@ Item {
     property bool bigAssMode: false
     property bool singleColumn: true
 
+    property int margin: Theme.componentMargin
+    property int halfmargin: Theme.componentMargin / 2
+
     ////////////////
 
     Item {
         id: widgetExterior
         anchors.fill: parent
-        anchors.margins: 6
+        anchors.margins: singleColumn ? 0 : halfmargin
 
         ////
 
         Rectangle {
             anchors.fill: parent
-            anchors.leftMargin: singleColumn ? -12 : 0
-            anchors.rightMargin: singleColumn ? -12 : 0
-            anchors.topMargin: singleColumn ? -6 : 0
-            anchors.bottomMargin: singleColumn ? -6 : 0
+            anchors.topMargin: singleColumn ? -halfmargin : 0
+            anchors.leftMargin: singleColumn ? -margin : 0
+            anchors.rightMargin: singleColumn ? -margin : 0
+            anchors.bottomMargin: singleColumn ? -halfmargin : 0
 
             radius: Math.min(Theme.componentRadius, 8)
             border.width: Theme.componentBorderWidth
@@ -79,10 +82,10 @@ Item {
         Column {
             id: widgetInterior
             anchors.fill: parent
-            anchors.margins: singleColumn ? 6 : 12
-            spacing: 8
+            anchors.margins: margin
+            spacing: halfmargin
 
-            Text {
+            Text { // title
                 anchors.left: parent.left
                 anchors.right: parent.right
 
@@ -113,6 +116,8 @@ Item {
                 color: Theme.colorSubText
             }
         }
+
+        ////
     }
 
     ////////////////
@@ -120,9 +125,9 @@ Item {
     Rectangle { // bottom separator
         height: 1
         anchors.left: parent.left
-        anchors.leftMargin: -6
+        anchors.leftMargin: -halfmargin
         anchors.right: parent.right
-        anchors.rightMargin: -6
+        anchors.rightMargin: -halfmargin
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -1
 

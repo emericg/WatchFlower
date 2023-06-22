@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Layouts
 
 import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
@@ -47,49 +47,16 @@ Flickable {
 
         ////////////////////////////////
 
-        Rectangle {
+        FrameThemed {
             id: itemDevice
             width: www
-            height: itemDeviceContent.height + 24
 
-            radius: Theme.componentRadius
-            color: Theme.colorForeground
-            border.width: 2
-            border.color: Qt.darker(color, 1.03)
-
-            IconSvg {
-                anchors.top: parent.top
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                anchors.bottom: parent.bottom
-                anchors.margins: 0
-
-                width: parent.height * 0.85
-                height: parent.height * 0.85
-
-                asynchronous: true
-                smooth: true
-                opacity: 0.75
-                color: Theme.colorIcon
-                fillMode: Image.PreserveAspectFit
-
-                source: UtilsDeviceSensors.getDeviceImage(currentDevice.deviceName)
-            }
-
-            Column {
-                id: itemDeviceContent
-                anchors.top: parent.top
-                anchors.topMargin: 12
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-
+            ColumnLayout {
+                anchors.fill: parent
                 spacing: 12
 
                 Column {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    Layout.fillWidth: true
 
                     Text {
                         text: qsTr("Bluetooth name")
@@ -100,20 +67,20 @@ Flickable {
                         font.capitalization: Font.AllUppercase
                     }
                     Text {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
+                        width: parent.width
+
                         text: currentDevice.deviceName
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
                         font.capitalization: Font.Capitalize
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                         elide: Text.ElideRight
                     }
                 }
 
                 Column {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    Layout.fillWidth: true
+
                     Text {
                         text: qsTr("Bluetooth address")
                         textFormat: Text.PlainText
@@ -123,13 +90,13 @@ Flickable {
                         font.capitalization: Font.AllUppercase
                     }
                     Text {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
+                        width: parent.width
+
                         text: (Qt.platform.os === "osx" || Qt.platform.os === "ios") ?
                                   currentDevice.deviceAddress :
                                   "[" + currentDevice.deviceAddress + "]"
                         textFormat: Text.PlainText
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContentBig
                         font.capitalization: Font.AllUppercase
                         elide: Text.ElideRight
@@ -137,6 +104,7 @@ Flickable {
                 }
 
                 Column {
+                    Layout.fillWidth: true
                     visible: currentDevice.deviceAddressMAC.length && (Qt.platform.os === "osx" || Qt.platform.os === "ios")
 
                     Text {
@@ -150,7 +118,7 @@ Flickable {
                     Text {
                         text: "[" + currentDevice.deviceAddressMAC + "]"
                         textFormat: Text.PlainText
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContentBig
                         font.capitalization: Font.AllUppercase
                     }
@@ -174,11 +142,12 @@ Flickable {
                             text: currentDevice.deviceFirmware
                             textFormat: Text.PlainText
                             font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+                            color: Theme.colorText
 
                             IconSvg {
                                 id: imageFwUpdate
-                                width: parent.height - 4; height: parent.height - 4;
+                                width: parent.height - 4
+                                height: parent.height - 4
                                 anchors.left: parent.right
                                 anchors.leftMargin: 6
                                 anchors.verticalCenter: parent.verticalCenter
@@ -205,7 +174,7 @@ Flickable {
                             text: currentDevice.deviceBattery + "%"
                             textFormat: Text.PlainText
                             font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+                            color: Theme.colorText
 
                             IconSvg {
                                 id: imageBattery
@@ -237,10 +206,10 @@ Flickable {
                         id: uptime
                         text: currentDevice.deviceUptime.toLocaleString(Locale.ShortFormat)
                         font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                     }
                 }
-/*
+
                 Column {
                     visible: lastmove.text
 
@@ -257,10 +226,10 @@ Flickable {
                         text: currentDevice.lastMove.toLocaleString(Locale.ShortFormat)
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                     }
                 }
-*/
+
                 Column {
                     visible: lastupdate.text
 
@@ -277,7 +246,7 @@ Flickable {
                         text: currentDevice.lastUpdate.toLocaleString(Locale.ShortFormat)
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                     }
                 }
 
@@ -297,7 +266,7 @@ Flickable {
                         text: currentDevice.lastHistorySync.toLocaleString(Locale.ShortFormat)
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                     }
                 }
             }
@@ -305,27 +274,15 @@ Flickable {
 
         ////////////////////////////////
 
-        Rectangle {
+        FrameThemed {
             id: itemDeviceInfos
             width: www
-            height: itemDeviceInfosContent.height + 24
-
-            radius: Theme.componentRadius
-            color: Theme.colorForeground
-            border.width: 2
-            border.color: Qt.darker(color, 1.03)
 
             visible: currentDevice.deviceInfos
 
-            Column {
-                id: itemDeviceInfosContent
-                anchors.top: parent.top
-                anchors.topMargin: 12
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                spacing: 8
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 12
 
                 Column {
                     Text {
@@ -340,7 +297,7 @@ Flickable {
                         text: currentDevice.deviceInfos.deviceModel
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                     }
                 }
 
@@ -357,7 +314,7 @@ Flickable {
                         text: currentDevice.deviceInfos.deviceManufacturer
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                     }
                 }
 
@@ -374,7 +331,7 @@ Flickable {
                         text: currentDevice.deviceInfos.deviceId
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContentBig
-                        color: Theme.colorHighContrast
+                        color: Theme.colorText
                     }
                 }
 
@@ -396,7 +353,7 @@ Flickable {
                             text: currentDevice.deviceInfos.deviceYear
                             textFormat: Text.PlainText
                             font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+                            color: Theme.colorText
                         }
                     }
 
@@ -415,7 +372,7 @@ Flickable {
                             text: currentDevice.deviceInfos.deviceIPrating
                             textFormat: Text.PlainText
                             font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+                            color: Theme.colorText
                         }
                     }
                 }
@@ -438,7 +395,7 @@ Flickable {
                             textFormat: Text.PlainText
                             text: currentDevice.deviceInfos.deviceBattery
                             font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+                            color: Theme.colorText
                         }
                     }
 
@@ -457,7 +414,7 @@ Flickable {
                             text: currentDevice.deviceInfos.deviceScreen
                             textFormat: Text.PlainText
                             font.pixelSize: Theme.fontSizeContentBig
-                            color: Theme.colorHighContrast
+                            color: Theme.colorText
                         }
                     }
                 }
@@ -466,27 +423,15 @@ Flickable {
 
         ////////////////////////////////
 
-        Rectangle {
+        FrameThemed {
             id: itemDeviceConnection
             width: www
-            height: itemDeviceConnectionContent.height + 24
-
-            radius: Theme.componentRadius
-            color: Theme.colorForeground
-            border.width: 2
-            border.color: Qt.darker(color, 1.03)
 
             visible: currentDevice.deviceInfos && currentDevice.deviceInfos.deviceNeedsOfficialApp
 
-            Column {
-                id: itemDeviceConnectionContent
-                anchors.top: parent.top
-                anchors.topMargin: 12
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                spacing: 4
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 12
 
                 Row {
                     spacing: 8
@@ -512,7 +457,7 @@ Flickable {
                 }
 
                 Text {
-                    width: parent.width
+                    Layout.fillWidth: true
 
                     text: qsTr("This sensor needs to be registered to its official application once before it can be used with third party applications like WatchFlower.")
                     textFormat: Text.PlainText
@@ -526,27 +471,15 @@ Flickable {
 
         ////////////////////////////////
 
-        Rectangle {
+        FrameThemed {
             id: itemDeviceSensors
             width: www
-            height: itemDeviceSensorsContent.height + 24
-
-            radius: Theme.componentRadius
-            color: Theme.colorForeground
-            border.width: 2
-            border.color: Qt.darker(color, 1.03)
 
             visible: currentDevice.deviceInfos
 
-            Column {
-                id: itemDeviceSensorsContent
-                anchors.top: parent.top
-                anchors.topMargin: 12
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                spacing: 8
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 12
 
                 Text {
                     visible: repeaterSensors.count
@@ -641,25 +574,13 @@ Flickable {
 
         ////////////////////////////////
 
-        Rectangle {
+        FrameThemed {
             id: itemDeviceSettings
             width: www
-            height: itemDeviceSettingsContent.height + 24
 
-            radius: Theme.componentRadius
-            color: Theme.colorForeground
-            border.width: 2
-            border.color: Qt.darker(color, 1.03)
-
-            Column {
-                id: itemDeviceSettingsContent
-                anchors.top: parent.top
-                anchors.topMargin: 12
-                anchors.left: parent.left
-                anchors.leftMargin: 12
-                anchors.right: parent.right
-                anchors.rightMargin: 12
-                spacing: 8
+            ColumnLayout {
+                anchors.fill: parent
+                spacing: 12
 
                 Text {
                     text: qsTr("Settings")
@@ -670,21 +591,17 @@ Flickable {
                     font.capitalization: Font.AllUppercase
                 }
 
-                SwitchThemedDesktop {
+                SwitchThemed {
                     text: checked ? qsTr("Device is enabled") : qsTr("Device is disabled")
                     checked: currentDevice.deviceEnabled
                     onClicked: currentDevice.deviceEnabled = checked
                 }
 
                 Row {
-                    id: itemInOut
                     spacing: 16
 
-                    Rectangle {
-                        id: rectangleInside
-                        width: 96
-                        height: 96
-                        radius: 96
+                    Rectangle { // rectangle inside
+                        width: 96; height: 96; radius: 96;
                         anchors.bottom: parent.bottom
 
                         color: Theme.colorBackground
@@ -703,7 +620,6 @@ Flickable {
                             anchors.centerIn: parent
 
                             IconSvg {
-                                id: insideImage
                                 width: 40; height: 40;
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 color: Theme.colorIcon
@@ -719,11 +635,8 @@ Flickable {
                         }
                     }
 
-                    Rectangle {
-                        id: rectangleOutside
-                        width: 96
-                        height: 96
-                        radius: 96
+                    Rectangle { // rectangle outside
+                        width: 96; height: 96; radius: 96;
                         anchors.bottom: parent.bottom
 
                         color: Theme.colorBackground
@@ -742,7 +655,6 @@ Flickable {
                             anchors.centerIn: parent
 
                             IconSvg {
-                                id: outsideImage
                                 width: 40; height: 40;
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 source: "qrc:/assets/icons_custom/outside-24px.svg"
@@ -760,9 +672,7 @@ Flickable {
                 }
 
                 Column {
-                    id: itemMacAddr
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    Layout.fillWidth: true
 
                     visible: (Qt.platform.os === "osx" || Qt.platform.os === "ios")
                     topPadding: 8
@@ -778,8 +688,7 @@ Flickable {
                     }
 
                     Text {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
+                        width: parent.width
 
                         text: "The MAC address of the sensor must be set in order for some features (like history synchronization) to work."
                         textFormat: Text.PlainText
@@ -788,8 +697,7 @@ Flickable {
                     }
 
                     Text {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
+                        width: parent.width
 
                         text: "Sorry for the inconvenience."
                         textFormat: Text.PlainText
@@ -798,8 +706,7 @@ Flickable {
                     }
 
                     Rectangle {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
+                        width: parent.width
 
                         height: 36
                         radius: Theme.componentRadius
@@ -824,7 +731,7 @@ Flickable {
 
                             font.pixelSize: 17
                             font.bold: false
-                            color: Theme.colorHighContrast
+                            color: Theme.colorText
 
                             text: currentDevice.deviceAddressMAC
 

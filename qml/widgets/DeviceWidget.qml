@@ -20,6 +20,9 @@ Item {
     property bool bigAssMode: false
     property bool singleColumn: true
 
+    property int margin: Theme.componentMargin
+    property int halfmargin: Theme.componentMargin / 2
+
     Connections {
         target: boxDevice
         function onSensorUpdated() { initBoxData() }
@@ -148,9 +151,9 @@ Item {
     Rectangle { // bottom separator
         height: 1
         anchors.left: parent.left
-        anchors.leftMargin: -6
+        anchors.leftMargin: -halfmargin
         anchors.right: parent.right
-        anchors.rightMargin: -6
+        anchors.rightMargin: -halfmargin
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -1
 
@@ -160,10 +163,10 @@ Item {
 
     Rectangle { // rectangle border
         anchors.fill: deviceWidgetRectangle
-        anchors.topMargin: singleColumn ? -6 : 0
-        anchors.leftMargin: singleColumn ? -12 : 0
-        anchors.rightMargin: singleColumn ? -12 : 0
-        anchors.bottomMargin: singleColumn ? -6 : 0
+        anchors.topMargin: singleColumn ? -halfmargin : 0
+        anchors.leftMargin: singleColumn ? -margin : 0
+        anchors.rightMargin: singleColumn ? -margin : 0
+        anchors.bottomMargin: singleColumn ? -halfmargin : 0
 
         radius: Math.min(Theme.componentRadius, 8)
         border.width: Theme.componentBorderWidth
@@ -186,7 +189,7 @@ Item {
     Item { // outside indicator
         anchors.fill: parent
         anchors.topMargin: singleColumn ? 0 : 8
-        anchors.leftMargin: singleColumn ? -12 : 8
+        anchors.leftMargin: singleColumn ? -margin : 8
         clip: true
 
         Loader {
@@ -211,7 +214,7 @@ Item {
     Item {
         id: deviceWidgetRectangle
         anchors.fill: parent
-        anchors.margins: 6
+        anchors.margins: halfmargin
 
         opacity: boxDevice.deviceEnabled ? 1 : 0.66
 
@@ -405,17 +408,13 @@ Item {
                          (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) ||
                          (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax))
 
-                sourceComponent: IconSvg {
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
+                sourceComponent: AlarmIndicator {
                     source: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
                                 "qrc:/assets/icons_material/duotone-water_full-24px.svg" :
                                 "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
                     color: (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin - 5 ||
                             boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax + 5) ?
-                                Theme.colorYellow : Theme.colorBlue
+                                Theme.colorBlue : Theme.colorBlue
                 }
             }
 
@@ -424,12 +423,7 @@ Item {
                 active: ((boxDevice.temperatureC > 40) ||
                          (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80))
 
-                sourceComponent: IconSvg {
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    visible: false
+                sourceComponent: AlarmIndicator {
                     source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                     color: {
                         if (boxDevice.temperatureC <= -4)
@@ -448,11 +442,7 @@ Item {
                          (boxDevice.hasPM25Sensor && boxDevice.pm25 > 120) ||
                          (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350))
 
-                sourceComponent: IconSvg {
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
+                sourceComponent: AlarmIndicator {
                     source: "qrc:/assets/icons_material/baseline-air-24px.svg"
                     color: {
                         if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
@@ -467,22 +457,6 @@ Item {
                             return Theme.colorYellow
                         }
                     }
-
-                    Rectangle {
-                        anchors.centerIn: parent
-                        width: parent.width + 8
-                        height: width
-                        radius: width
-
-                        z: -1
-                        color: parent.color
-
-                        SequentialAnimation on opacity {
-                            loops: Animation.Infinite
-                            PropertyAnimation { to: 0.1; duration: 1000; }
-                            PropertyAnimation { to: 0.33; duration: 1000; }
-                        }
-                    }
                 }
             }
 
@@ -490,36 +464,13 @@ Item {
                 asynchronous: true
                 active: (boxDevice.hasGeigerCounter && boxDevice.radioactivityM > 1)
 
-                sourceComponent: IconSvg {
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
+                sourceComponent: AlarmIndicator {
                     source: "qrc:/assets/icons_custom/nuclear_icon.svg"
                     color: {
                         if (boxDevice.radioactivityM > 10)
                             return Theme.colorRed
                         else
                             return Theme.colorYellow
-                    }
-
-                    Rectangle {
-                        anchors.centerIn: parent
-                        width: parent.width + 8
-                        height: width
-                        radius: width
-                        z: -1
-
-                        color: Qt.lighter(parent.color, 1.66)
-
-                        SequentialAnimation on opacity {
-                            running: visible
-                            alwaysRunToEnd: true
-                            loops: Animation.Infinite
-
-                            PropertyAnimation { to: 0; duration: 1000; }
-                            PropertyAnimation { to: 1; duration: 1000; }
-                        }
                     }
                 }
             }
@@ -528,11 +479,7 @@ Item {
                 asynchronous: true
                 active: false
 
-                sourceComponent: IconSvg {
-                    width: bigAssMode ? 28 : 24
-                    height: bigAssMode ? 28 : 24
-                    anchors.verticalCenter: parent.verticalCenter
-
+                sourceComponent: AlarmIndicator {
                     source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
                     color: Theme.colorYellow
                 }
@@ -988,6 +935,31 @@ Item {
 
                 background: true
                 backgroundOpacity: 0.33
+            }
+        }
+    }
+
+    ////////////////
+
+    component AlarmIndicator: IconSvg {
+        width: bigAssMode ? 28 : 24
+        height: bigAssMode ? 28 : 24
+        anchors.verticalCenter: parent.verticalCenter
+
+        Rectangle {
+            anchors.centerIn: parent
+            width: parent.width + 8
+            height: width
+            radius: width
+
+            z: -1
+            color: parent.color
+            opacity: 0.08
+
+            SequentialAnimation on opacity {
+                loops: Animation.Infinite
+                PropertyAnimation { to: 0.16; duration: 1500; }
+                PropertyAnimation { to: 0.08; duration: 1500; }
             }
         }
     }

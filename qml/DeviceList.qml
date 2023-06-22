@@ -147,34 +147,4 @@ Item {
     }
 
     ////////////////////////////////////////////////////////////////////////////
-
-    Loader {
-        anchors.right: parent.right
-        anchors.rightMargin: 12
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 12
-
-        active: isDesktop
-        asynchronous: true
-
-        sourceComponent: Row {
-            spacing: 12
-
-            ButtonWireframe {
-                text: qsTr("devices")
-                fullColor: true
-                primaryColor: Theme.colorSecondary
-                onClicked: screenDeviceBrowser.loadScreen()
-                enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
-            }
-            ButtonWireframe {
-                text: qsTr("plants")
-                fullColor: true
-                primaryColor: Theme.colorPrimary
-                onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
-            }
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
 }

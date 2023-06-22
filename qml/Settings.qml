@@ -284,7 +284,7 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_appThemeAuto
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -357,7 +357,7 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_splitView
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -527,7 +527,7 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_minimized
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -602,7 +602,7 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_worker
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -705,7 +705,7 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_notifications
                         anchors.right: parent.right
                         anchors.rightMargin: screenPaddingRight
@@ -768,7 +768,7 @@ Loader {
                             color: Theme.colorSubText
                             verticalAlignment: Text.AlignVCenter
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_battery
                             anchors.right: parent.right
                             anchors.rightMargin: screenPaddingRight
@@ -799,7 +799,7 @@ Loader {
                             color: Theme.colorSubText
                             verticalAlignment: Text.AlignVCenter
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_water
                             anchors.right: parent.right
                             anchors.rightMargin: screenPaddingRight
@@ -830,7 +830,7 @@ Loader {
                             color: Theme.colorSubText
                             verticalAlignment: Text.AlignVCenter
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_subzero
                             anchors.right: parent.right
                             anchors.rightMargin: screenPaddingRight
@@ -860,7 +860,7 @@ Loader {
                             color: Theme.colorSubText
                             verticalAlignment: Text.AlignVCenter
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_env
                             height: 32
                             anchors.right: parent.right
@@ -922,7 +922,7 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_bluetoothControl
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -992,7 +992,7 @@ Loader {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_bluetoothRange
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -1558,7 +1558,7 @@ Loader {
                         verticalAlignment: Text.AlignBottom
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_mysql
                         anchors.right: parent.right
                         anchors.rightMargin: 0
@@ -1650,7 +1650,7 @@ Loader {
                         primaryColor: Theme.colorPrimary
                         secondaryColor: Theme.colorBackground
 
-                        text: qsTr("Export file")
+                        text: qsTr("Export data")
                         onClicked: {
                             if (deviceManager.exportDataSave()) {
                                 text = qsTr("Exported")
@@ -1658,7 +1658,7 @@ Loader {
                                 fullColor = true
                                 if (isDesktop) openFolderButton.visible = true
                             } else {
-                                text = qsTr("Export file")
+                                text = qsTr("Export data")
                                 primaryColor = Theme.colorWarning
                                 fullColor = false
                             }
@@ -1693,7 +1693,7 @@ Loader {
                         text: qsTr("Export file")
                         onClicked: {
                             var file = deviceManager.exportDataOpen()
-                            utilsShare.sendFile(file, "Export file", "text/csv", 0)
+                            utilsShare.sendFile(file, qsTr("Export file"), "text/csv", 0)
                         }
                     }
                 }

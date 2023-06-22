@@ -7,6 +7,9 @@ Item {
     id: deviceList
     anchors.fill: parent
 
+    // list devices
+    // multi selection support
+
     ////////////////////////////////////////////////////////////////////////////
 
     property bool selectionMode: false
@@ -49,10 +52,15 @@ Item {
     GridView {
         id: devicesView
         anchors.fill: parent
-        anchors.topMargin: singleColumn ? 0 : 8
-        anchors.leftMargin: 6
-        anchors.rightMargin: 6
-        anchors.bottomMargin: singleColumn ? 0 : 8
+
+        anchors.topMargin: singleColumn ? 0 : halfmargin
+        anchors.leftMargin: halfmargin
+        anchors.rightMargin: halfmargin
+        anchors.bottomMargin: singleColumn ? 0 : halfmargin
+
+        ////////
+
+        property int halfmargin: Theme.componentMargin / 2
 
         property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
 
@@ -69,13 +77,15 @@ Item {
             return 112
         }
 
+        ////////
+/*
         ScrollBar.vertical: ScrollBar {
-            visible: false
             anchors.right: parent.right
-            anchors.rightMargin: -6
+            anchors.rightMargin: -halfmargin
             policy: ScrollBar.AsNeeded
+            visible: false
         }
-
+*/
         model: deviceManager.devicesList
         delegate: DeviceWidget {
             width: devicesView.cellWidth
@@ -83,6 +93,32 @@ Item {
             bigAssMode: devicesView.bigWidget
             singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
         }
+
+        ////////
+
+        footer: Flow {
+            id: toolsView
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            visible: isDesktop
+
+            DeviceBrowserWidget {
+                width: devicesView.cellWidth
+                height: devicesView.cellWidth * 0.33
+                bigAssMode: devicesView.bigWidget
+                singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+            }
+
+            PlantBrowserWidget {
+                width: devicesView.cellWidth
+                height: devicesView.cellWidth * 0.33
+                bigAssMode: devicesView.bigWidget
+                singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+            }
+        }
+
+        ////////
     }
 
     ////////////////////////////////////////////////////////////////////////////

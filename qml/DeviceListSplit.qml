@@ -7,6 +7,7 @@ Item {
     id: deviceList
     anchors.fill: parent
 
+    // list devices, split per sensor type
     // per category ordering
     // multi selection support
 
@@ -56,24 +57,26 @@ Item {
         contentHeight: devicesView.height
 /*
         ScrollBar.vertical: ScrollBar {
-            visible: false
             anchors.right: parent.right
-            anchors.rightMargin: -6
+            anchors.rightMargin: -halfmargin
             policy: ScrollBar.AsNeeded
+            visible: false
         }
 */
         Column {
             id: devicesView
             anchors.left: parent.left
-            anchors.leftMargin: 6
+            anchors.leftMargin: halfmargin
             anchors.right: parent.right
-            anchors.rightMargin: 6
+            anchors.rightMargin: halfmargin
 
-            topPadding: 12
-            bottomPadding: 8
-            spacing: singleColumn ? 0 : 8
+            topPadding: Theme.componentMargin
+            bottomPadding: Theme.componentMargin - halfmargin
+            spacing: singleColumn ? 0 : halfmargin
 
             ////////
+
+            property int halfmargin: Theme.componentMargin / 2
 
             property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
 
@@ -93,8 +96,8 @@ Item {
             ////////
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -6 : 6
-                anchors.rightMargin: singleColumn ? -6 : 6
+                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
 
                 text: qsTr("Plant sensor(s)", "", deviceManager.devicePlantCount)
                 visible: deviceManager.devicePlantCount
@@ -120,8 +123,8 @@ Item {
             ////////
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -6 : 6
-                anchors.rightMargin: singleColumn ? -6 : 6
+                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
 
                 text: qsTr("Thermometer(s)", "", deviceManager.deviceThermoCount)
                 visible: deviceManager.deviceThermoCount
@@ -147,8 +150,8 @@ Item {
             ////////
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -6 : 6
-                anchors.rightMargin: singleColumn ? -6 : 6
+                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
 
                 text: qsTr("Environmental sensor(s)", "", deviceManager.deviceEnvCount)
                 visible: deviceManager.deviceEnvCount
@@ -168,6 +171,36 @@ Item {
                         bigAssMode: devicesView.bigWidget
                         singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
                     }
+                }
+            }
+
+            ////////
+
+            ListTitle {
+                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+
+                text: qsTr("Tools")
+                fontSize: Theme.fontSizeContentVeryBig
+            }
+
+            Flow {
+                id: toolsView
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                DeviceBrowserWidget {
+                    width: devicesView.cellWidth
+                    height: devicesView.cellWidth * 0.33
+                    bigAssMode: devicesView.bigWidget
+                    singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                }
+
+                PlantBrowserWidget {
+                    width: devicesView.cellWidth
+                    height: devicesView.cellWidth * 0.33
+                    bigAssMode: devicesView.bigWidget
+                    singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
                 }
             }
 

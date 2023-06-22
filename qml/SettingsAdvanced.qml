@@ -238,7 +238,7 @@ Loader {
                     anchors.rightMargin: screenPaddingRight + Theme.componentMargin
                     spacing: Theme.componentMargin / 2
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_worker
 
                         text: "Enable MySQL database support"
@@ -263,7 +263,7 @@ Loader {
                     anchors.rightMargin: screenPaddingRight + Theme.componentMargin
                     spacing: Theme.componentMargin
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_logs
 
                         text: "Enable logging"

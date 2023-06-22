@@ -10,6 +10,7 @@ Rectangle {
 
     height: screenPaddingStatusbar + screenPaddingNotch + headerHeight
     color: Theme.colorHeader
+    clip: false
     z: 10
 
     property string headerTitle: "WatchFlower"
@@ -69,63 +70,72 @@ Rectangle {
         anchors.fill: parent
         anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch
 
-        MouseArea { // left button
-            id: leftArea
-            width: headerHeight
-            height: headerHeight
+        ////////////
+
+        Row { // left area
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.bottom: parent.bottom
 
-            visible: true
-            onClicked: leftMenuClicked()
+            spacing: 12
 
-            IconSvg {
-                id: leftMenuImg
-                width: (headerHeight / 2)
-                height: (headerHeight / 2)
-                anchors.left: parent.left
-                anchors.leftMargin: 16
-                anchors.verticalCenter: parent.verticalCenter
-                source: {
-                    if (leftMenuMode === "drawer") return "qrc:/assets/icons_material/baseline-menu-24px.svg"
-                    if (leftMenuMode === "close") return "qrc:/assets/icons_material/baseline-close-24px.svg"
-                    return "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+            MouseArea { // left button
+                width: headerHeight
+                height: headerHeight
+
+                visible: true
+                onClicked: leftMenuClicked()
+
+                RippleThemed {
+                    anchor: parent
+                    width: parent.width
+                    height: parent.height
+
+                    pressed: parent.pressed
+                    active: enabled && (parent.down || parent.hovered)
+                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
                 }
-                color: Theme.colorHeaderContent
+
+                IconSvg {
+                    anchors.centerIn: parent
+                    width: (headerHeight / 2)
+                    height: (headerHeight / 2)
+
+                    source: {
+                        if (leftMenuMode === "drawer") return "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                        if (leftMenuMode === "close") return "qrc:/assets/icons_material/baseline-close-24px.svg"
+                        return "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                    }
+                    color: Theme.colorHeaderContent
+                }
             }
-        }
 
-        Text { // header title
-            height: parent.height
-            anchors.left: parent.left
-            anchors.leftMargin: 64
-            anchors.verticalCenter: parent.verticalCenter
+            Text { // header title
+                height: parent.height
+                anchors.verticalCenter: parent.verticalCenter
 
-            text: headerTitle
-            color: Theme.colorHeaderContent
-            font.bold: true
-            font.pixelSize: Theme.fontSizeHeader
-            font.capitalization: Font.Capitalize
-            verticalAlignment: Text.AlignVCenter
+                text: headerTitle
+                color: Theme.colorHeaderContent
+                font.bold: true
+                font.pixelSize: Theme.fontSizeHeader
+                font.capitalization: Font.Capitalize
+                verticalAlignment: Text.AlignVCenter
+            }
         }
 
         ////////////
 
         Row { // right area
-            id: menu
             anchors.top: parent.top
             anchors.right: parent.right
-            anchors.rightMargin: 4
             anchors.bottom: parent.bottom
 
             spacing: 4
-            visible: true
 
-            Item { // right indicators
-                width: parent.height
-                height: width
-                anchors.verticalCenter: parent.verticalCenter
+            Item { // right indicator
+                width: headerHeight
+                height: headerHeight
+
                 visible: (appContent.state !== "Tutorial" &&
                           appContent.state !== "DevicePlantSensor" &&
                           appContent.state !== "DeviceThermometer" &&
@@ -171,8 +181,6 @@ Rectangle {
                 }
             }
 
-            ////////////
-
             MouseArea { // right button
                 width: headerHeight
                 height: headerHeight
@@ -187,6 +195,16 @@ Rectangle {
                     actionMenu.open()
                 }
 
+                RippleThemed {
+                    anchor: parent
+                    width: parent.width
+                    height: parent.height
+
+                    pressed: parent.pressed
+                    active: enabled && (parent.down || parent.hovered)
+                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
+                }
+
                 IconSvg {
                     anchors.centerIn: parent
                     width: (headerHeight / 2)
@@ -196,6 +214,8 @@ Rectangle {
                     color: Theme.colorHeaderContent
                 }
             }
+
+            ////////////
         }
     }
 

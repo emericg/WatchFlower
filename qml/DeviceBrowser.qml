@@ -5,8 +5,7 @@ import ThemeEngine 1.0
 
 Item {
     id: deviceBrowser
-    implicitWidth: 480
-    implicitHeight: 800
+    anchors.fill: parent
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -65,7 +64,7 @@ Item {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.bottom: infoBox.visible ? infoBox.top : parent.bottom
+                anchors.bottom: parent.bottom
 
                 topMargin: 6
                 bottomMargin: 6
@@ -83,10 +82,10 @@ Item {
 
             Rectangle {
                 id: infoBox
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.margins: 12
+                anchors.left: devicesView.left
+                anchors.right: devicesView.right
+                anchors.bottom: devicesView.bottom
+                anchors.margins: Theme.componentMargin
 
                 height: infoText.contentHeight + 16
                 radius: 4
@@ -167,7 +166,7 @@ Item {
                 id: devicesView
                 anchors.top: parent.top
                 anchors.left: parent.left
-                anchors.bottom: infoBox.visible ? infoBox.top : parent.bottom
+                anchors.bottom: parent.bottom
                 width: (parent.width / 2)
 
                 topMargin: 6
@@ -186,11 +185,11 @@ Item {
 
             Rectangle {
                 id: infoBox
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                anchors.margins: 12
+                anchors.left: devicesView.left
+                anchors.right: devicesView.right
+                anchors.bottom: devicesView.bottom
+                anchors.margins: Theme.componentMargin
 
-                width: (parent.width / 2) - 24
                 height: infoText.contentHeight + 16
                 radius: 4
                 z: 2
