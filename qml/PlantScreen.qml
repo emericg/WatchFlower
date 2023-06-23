@@ -23,7 +23,7 @@ Grid {
 
     property int www1: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : (parentWidth - plantScreen.spacing*4) / 3
     property int www2: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : (parentWidth - plantScreen.spacing*4) / 3
-    property int insidemargins: (uiMode === 1) ? 8 : 16
+    property int insidemargins: (uiMode === 1) ? 12 : 16
 
     ////////
 
@@ -180,21 +180,21 @@ Grid {
     Flickable { ////////////////////////////////////////////////////////////////
         id: col1
         width: plantScreen.www1
-        height: (uiMode === 1) ? columnPlant.height + 24 : plantScreen.parentHeight
+        height: (uiMode === 1) ? columnPlant.height + Theme.componentMargin : plantScreen.parentHeight
         contentWidth: columnPlant.width
-        contentHeight: columnPlant.height + 32
+        contentHeight: columnPlant.height + Theme.componentMargin
         interactive: (uiMode !== 1)
 
         Column {
             id: columnPlant
             width: plantScreen.www1
-            spacing: 24
+            spacing: Theme.componentMarginL
 
             topPadding: (uiMode === 1) ? -plantScreen.padding : 0
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -16 : -2
-                anchors.rightMargin: singleColumn ? -16 : -2
+                anchors.leftMargin: singleColumn ? -Theme.componentMargin : -2
+                anchors.rightMargin: singleColumn ? -Theme.componentMargin : -2
                 visible: (uiMode === 2)
 
                 text: qsTr("Plant infos")
@@ -229,14 +229,14 @@ Grid {
                 Column {
                     id: columnHeader
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: Theme.componentMargin
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: rectangleHeader.verticalCenter
 
-                    topPadding: 16
-                    bottomPadding: 16
-                    spacing: 16
+                    topPadding: Theme.componentMargin
+                    bottomPadding: Theme.componentMargin
+                    spacing: Theme.componentMargin
 
                     Column {
                         anchors.left: parent.left
@@ -336,9 +336,9 @@ Grid {
                     anchors.right: parent.right
                     anchors.rightMargin: (uiMode === 1) ? plantScreen.padding : 0
 
-                    topPadding: (uiMode === 1) ? 16 : -8
-                    bottomPadding: (uiMode === 1) ? 16 : 0
-                    spacing: 16
+                    topPadding: (uiMode === 1) ? Theme.componentMargin : -(Theme.componentMargin / 2)
+                    bottomPadding: (uiMode === 1) ? Theme.componentMargin : 0
+                    spacing: Theme.componentMargin
 
                     Column {
                         anchors.left: parent.left
@@ -418,7 +418,7 @@ Grid {
                     Flow {
                         anchors.left: parent.left
                         anchors.right: parent.right
-                        spacing: 16
+                        spacing: Theme.componentMargin
 
                         Column {
                             spacing: 2
@@ -464,7 +464,7 @@ Grid {
             RowLayout {
                 anchors.left: parent.left
                 anchors.right: parent.right
-                spacing: 16
+                spacing: Theme.componentMargin
 
                 visible: (appContent.state === "DevicePlantSensor")
 
@@ -501,7 +501,7 @@ Grid {
                 id: itemTags
                 anchors.left: parent.left
                 anchors.right: parent.right
-                spacing: 16
+                spacing: Theme.componentMargin
 
                 Repeater {
                     id: plantTags
@@ -560,7 +560,7 @@ Grid {
             Flow { // colors
                 anchors.left: parent.left
                 anchors.right: parent.right
-                spacing: 16
+                spacing: Theme.componentMarginL
 
                 Column {
                     id: itemColorLeaf
@@ -696,7 +696,7 @@ Grid {
             Row {
                 anchors.left: parent.left
                 anchors.right: parent.right
-                spacing: 16
+                spacing: Theme.componentMarginL
 
                 Column {
                     spacing: 4
@@ -933,29 +933,29 @@ Grid {
     Flickable { ////////////////////////////////////////////////////////////////
         id: col2
         width: plantScreen.www2
-        height: (uiMode === 1) ? columnCare.height + 24 : plantScreen.parentHeight
+        height: (uiMode === 1) ? columnCare.height + Theme.componentMargin : plantScreen.parentHeight
         contentWidth: columnCare.width
-        contentHeight: columnCare.height + 32
+        contentHeight: columnCare.height + Theme.componentMargin
         interactive: (uiMode !== 1)
 
         Column {
             id: columnCare
             width: plantScreen.www2
-            spacing: 16
+            spacing: Theme.componentMargin
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -16 : -2
-                anchors.rightMargin: singleColumn ? -16 : -2
+                anchors.leftMargin: singleColumn ? -Theme.componentMargin : -2
+                anchors.rightMargin: singleColumn ? -Theme.componentMargin : -2
 
                 text: qsTr("Plant care")
             }
 
             Row {
-                spacing: 16
+                spacing: Theme.componentMargin
 
                 Rectangle {
                     id: rectangleSunlight
-                    width: ((plantScreen.www2 - 16) / 2)
+                    width: ((plantScreen.www2 - Theme.componentMargin) / 2)
                     height: width
 
                     radius: Theme.componentRadius
@@ -1041,7 +1041,7 @@ Grid {
 
                 Rectangle {
                     id: rectangleWatering
-                    width: ((plantScreen.www2 - 16) / 2)
+                    width: ((plantScreen.www2 - Theme.componentMargin) / 2)
                     height: width
 
                     radius: Theme.componentRadius
@@ -1262,8 +1262,7 @@ Grid {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                width: (parent.width / 2) - 24
-                height: infoText.contentHeight + 16
+                height: infoText.contentHeight + Theme.componentMargin
                 radius: Theme.componentRadius
                 z: 2
 
@@ -1306,19 +1305,19 @@ Grid {
     Flickable { ////////////////////////////////////////////////////////////////
         id: col3
         width: plantScreen.www2
-        height: (uiMode === 1) ? columnLimits.height + 24 : plantScreen.parentHeight
+        height: (uiMode === 1) ? columnLimits.height + Theme.componentMargin : plantScreen.parentHeight
         contentWidth: columnLimits.width
-        contentHeight: columnLimits.height + 32
+        contentHeight: columnLimits.height + Theme.componentMargin
         interactive: (uiMode !== 1)
 
         Column {
             id: columnLimits
             width: plantScreen.www2
-            spacing: 24
+            spacing: Theme.componentMarginL
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -16 : -2
-                anchors.rightMargin: singleColumn ? -16 : -2
+                anchors.leftMargin: singleColumn ? -Theme.componentMargin : -2
+                anchors.rightMargin: singleColumn ? -Theme.componentMargin : -2
 
                 text: qsTr("Sensor metrics")
             }

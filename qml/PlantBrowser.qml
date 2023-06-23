@@ -14,20 +14,20 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
-        // Load the data
+        // load the data
         plantDatabase.load()
         plantDatabase.filter("")
 
         if (status === Loader.Ready) {
-            // Reset state
+            // reset state
             item.resetPlantClicked()
             item.focusSearchBox()
         } else {
-            // Load the plant browser
+            // load the plant browser
             active = true
         }
 
-        // Change screen
+        // change screen
         appContent.state = "PlantBrowser"
     }
 
@@ -48,12 +48,12 @@ Loader {
         }
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
     ItemLoadData {
         id: loadingIndicator
         visible: (plantBrowser.status !== Loader.Ready)
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 
     active: false
     asynchronous: true

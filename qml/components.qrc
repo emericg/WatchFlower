@@ -13,8 +13,8 @@
         <file alias="IconSvg.qml">components_generic/IconSvg.qml</file>
         <file alias="ItemTag.qml">components_generic/ItemTag.qml</file>
         <file alias="ListTitle.qml">components_generic/ListTitle.qml</file>
-        <file alias="ListItemDrawer.qml">components_generic/ListItemDrawer.qml</file>
-        <file alias="ListItemDrawerButton.qml">components_generic/ListItemDrawerButton.qml</file>
+        <file alias="DrawerItem.qml">components_generic/DrawerItem.qml</file>
+        <file alias="DrawerButton.qml">components_generic/DrawerButton.qml</file>
         <file alias="ListItem.qml">components_generic/ListItem.qml</file>
         <file alias="ListItemClickable.qml">components_generic/ListItemClickable.qml</file>
         <file alias="ListSeparator.qml">components_generic/ListSeparator.qml</file>
@@ -23,7 +23,6 @@
         <file alias="ProgressArc.qml">components_generic/ProgressArc.qml</file>
         <file alias="ProgressCircle.qml">components_generic/ProgressCircle.qml</file>
         <file alias="RangeSliderValueSolid.qml">components_generic/RangeSliderValueSolid.qml</file>
-        <file alias="SectionTitle.qml">components_generic/SectionTitle.qml</file>
         <file alias="SelectorMenu.qml">components_generic/SelectorMenu.qml</file>
         <file alias="SelectorMenuItem.qml">components_generic/SelectorMenuItem.qml</file>
         <file alias="SliderValueSolid.qml">components_generic/SliderValueSolid.qml</file>

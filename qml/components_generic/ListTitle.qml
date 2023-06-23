@@ -18,46 +18,48 @@ Rectangle {
     border.width: singleColumn ? 0 : Theme.componentBorderWidth
     border.color: borderColor
 
-    property string text: "title"
-    property string source
+    property string icon
+    property string iconColor: Theme.colorIcon
+    property int iconSize: 24
 
-    // font
-    property int fontSize: source ? Theme.fontSizeContentBig :
+    property string text: "title"
+    property string textColor: Theme.colorText
+    property int textSize: source ? Theme.fontSizeContentBig :
                                     Theme.fontSizeContentVeryBig
 
-    // colors
     property string backgroundColor: Theme.colorForeground
     property string borderColor: Theme.colorSeparator
 
     ////////////////
 
-    Row {
-        anchors.left: parent.left
-        anchors.leftMargin: 16
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: singleColumn ? 24 : 16
+    IconSvg {
+        anchors.left: control.left
+        anchors.leftMargin: Theme.componentMarginL
+        anchors.verticalCenter: control.verticalCenter
 
-        IconSvg {
-            width: 24
-            height: 24
-            anchors.verticalCenter: parent.verticalCenter
+        width: control.iconSize
+        height: control.iconSize
 
-            source: control.source
-            visible: control.source
-            color: Theme.colorIcon
-        }
+        source: control.icon
+        visible: control.icon
+        color: control.iconColor
+    }
 
-        Text {
-            anchors.verticalCenter: parent.verticalCenter
+    Text {
+        anchors.left: control.left
+        anchors.leftMargin: control.icon ? (singleColumn ? appHeader.headerPosition : Theme.componentMarginL*2 + iconSize)
+                                         : Theme.componentMarginL
+        anchors.right: control.right
+        anchors.rightMargin: Theme.componentMarginL
+        anchors.verticalCenter: control.verticalCenter
 
-            text: control.text
-            textFormat: Text.PlainText
-            font.pixelSize: control.fontSize
-            font.bold: false
-            color: Theme.colorText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-        }
+        text: control.text
+        textFormat: Text.PlainText
+        font.pixelSize: control.textSize
+        font.bold: false
+        color: control.textColor
+        wrapMode: Text.WordWrap
+        verticalAlignment: Text.AlignVCenter
     }
 
     ////////////////

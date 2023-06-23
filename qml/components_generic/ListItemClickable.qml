@@ -12,9 +12,8 @@ T.ItemDelegate {
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(implicitBackgroundHeight /*+ topInset + bottomInset*/,
-                             implicitContentHeight /*+ topPadding + bottomPadding*/,
-                             implicitIndicatorHeight + topPadding + bottomPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight,
+                             implicitContentHeight + topPadding + bottomPadding)
 
     padding: Theme.componentMargin
     spacing: Theme.componentMargin
@@ -59,9 +58,10 @@ T.ItemDelegate {
         anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
         opacity: control.enabled ? 1 : 0.4
+        spacing: 0
 
         Item {
-            Layout.preferredWidth: Theme.componentHeightXL - screenPaddingLeft - Theme.componentMargin
+            Layout.preferredWidth: appHeader.headerPosition - parent.anchors.leftMargin
             Layout.preferredHeight: Theme.componentHeightXL
             Layout.alignment: Qt.AlignTop
 
@@ -69,7 +69,7 @@ T.ItemDelegate {
                 anchors.left: parent.left
                 anchors.leftMargin: (32 - control.iconSize) / 2
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: (control.height !== Theme.componentHeightXL) ? -(Theme.componentMargin / 2) : 0
+                //anchors.verticalCenterOffset: (control.height !== Theme.componentHeightXL) ? -(Theme.componentMargin / 2) : 0
 
                 width: control.iconSize
                 height: control.iconSize

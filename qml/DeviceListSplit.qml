@@ -72,13 +72,14 @@ Item {
 
             topPadding: Theme.componentMargin
             bottomPadding: Theme.componentMargin - halfmargin
-            spacing: singleColumn ? 0 : halfmargin
+            spacing: listWidget ? 0 : halfmargin
 
             ////////
 
-            property int halfmargin: Theme.componentMargin / 2
+            property int halfmargin: (Theme.componentMargin / 2)
 
             property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
+            property bool listWidget: (cellColumnsTarget === 1)
 
             property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
             property int cellWidthTarget: {
@@ -96,12 +97,12 @@ Item {
             ////////
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
-                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
 
                 text: qsTr("Plant sensor(s)", "", deviceManager.devicePlantCount)
+                textSize: Theme.fontSizeContentVeryBig
                 visible: deviceManager.devicePlantCount
-                fontSize: Theme.fontSizeContentVeryBig
             }
 
             Flow {
@@ -114,8 +115,7 @@ Item {
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight
-                        bigAssMode: devicesView.bigWidget
-                        singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                        listMode: devicesView.listWidget
                     }
                 }
             }
@@ -123,12 +123,12 @@ Item {
             ////////
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
-                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
 
                 text: qsTr("Thermometer(s)", "", deviceManager.deviceThermoCount)
+                textSize: Theme.fontSizeContentVeryBig
                 visible: deviceManager.deviceThermoCount
-                fontSize: Theme.fontSizeContentVeryBig
             }
 
             Flow {
@@ -141,8 +141,7 @@ Item {
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight
-                        bigAssMode: devicesView.bigWidget
-                        singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                        listMode: devicesView.listWidget
                     }
                 }
             }
@@ -150,12 +149,12 @@ Item {
             ////////
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
-                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
 
                 text: qsTr("Environmental sensor(s)", "", deviceManager.deviceEnvCount)
+                textSize: Theme.fontSizeContentVeryBig
                 visible: deviceManager.deviceEnvCount
-                fontSize: Theme.fontSizeContentVeryBig
             }
 
             Flow {
@@ -168,8 +167,7 @@ Item {
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight
-                        bigAssMode: devicesView.bigWidget
-                        singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                        listMode: devicesView.listWidget
                     }
                 }
             }
@@ -177,11 +175,11 @@ Item {
             ////////
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
-                anchors.rightMargin: singleColumn ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
+                anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
 
                 text: qsTr("Tools")
-                fontSize: Theme.fontSizeContentVeryBig
+                textSize: Theme.fontSizeContentVeryBig
             }
 
             Flow {
@@ -192,15 +190,13 @@ Item {
                 DeviceBrowserWidget {
                     width: devicesView.cellWidth
                     height: devicesView.cellWidth * 0.33
-                    bigAssMode: devicesView.bigWidget
-                    singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                    listMode: devicesView.listWidget
                 }
 
                 PlantBrowserWidget {
                     width: devicesView.cellWidth
                     height: devicesView.cellWidth * 0.33
-                    bigAssMode: devicesView.bigWidget
-                    singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                    listMode: devicesView.listWidget
                 }
             }
 

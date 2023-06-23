@@ -7,6 +7,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Loader {
     id: settingsScreen
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadScreen() {
         // load screen
         settingsScreen.active = true
@@ -60,44 +62,44 @@ Loader {
 
                 topPadding: Theme.componentMargin
                 bottomPadding: Theme.componentMargin
-                spacing: Theme.componentMargin / 2
+                spacing: 8
+
+                property int padIcon: singleColumn ? Theme.componentMarginL : Theme.componentMarginL
+                property int padText: appHeader.headerPosition
 
                 ////////////////
 
                 ListTitle {
                     text: qsTr("Application")
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
 
                 ////////////////
 
                 Item {
                     id: element_appTheme
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_appTheme
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/duotone-style-24px.svg"
                     }
 
                     Text {
-                        id: text_appTheme
-                        height: 40
-                        anchors.left: image_appTheme.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: appTheme_selector.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Theme")
@@ -105,13 +107,12 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     Row {
                         id: appTheme_selector
                         anchors.right: parent.right
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         z: 1
@@ -249,31 +250,28 @@ Loader {
 
                 Item {
                     id: element_appThemeAuto
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_appThemeAuto
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
                     }
 
                     Text {
-                        id: text_appThemeAuto
-                        height: 40
-                        anchors.left: image_appThemeAuto.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: switch_appThemeAuto.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Automatic dark mode")
@@ -281,7 +279,6 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SwitchThemed {
@@ -301,9 +298,9 @@ Loader {
                 Text {
                     id: legend_appThemeAuto
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
@@ -322,31 +319,28 @@ Loader {
 
                 Item {
                     id: element_splitView
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_splitView
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
                     }
 
                     Text {
-                        id: text_splitView
-                        height: 40
-                        anchors.left: image_splitView.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: switch_splitView.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Split sensor list in categories")
@@ -354,7 +348,6 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SwitchThemed {
@@ -371,9 +364,9 @@ Loader {
                 Text {
                     id: legend_splitView
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: isDesktop ? 12 : 0
@@ -390,39 +383,32 @@ Loader {
 
                 ////////
 
-                Rectangle { // separator
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 1
-                    visible: isDesktop
-                    color: Theme.colorSeparator
-                }
+                ListSeparator { }
+
+                ////////
 
                 Item {
                     id: element_language
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_language
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
                     }
 
                     Text {
-                        id: text_language
-                        height: 40
-                        anchors.left: image_language.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: combobox_language.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
@@ -432,12 +418,11 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     ComboBoxThemed {
                         id: combobox_language
-                        width: wideMode ? 256 : 160
+                        //width: wideMode ? 256 : 160
                         height: 36
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
@@ -478,19 +463,13 @@ Loader {
                     }
                 }
 
-                Rectangle { // separator
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    height: 1
-                    visible: isDesktop
-                    color: Theme.colorSeparator
-                }
+                ListSeparator { visible: isDesktop }
 
                 ////////
 
                 Item {
                     id: element_minimized
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -499,22 +478,19 @@ Loader {
                     visible: isDesktop
 
                     IconSvg {
-                        id: image_minimized
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/duotone-minimize-24px.svg"
                     }
 
                     Text {
-                        id: text_minimized
-                        height: 40
-                        anchors.left: image_minimized.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: switch_minimized.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
@@ -524,7 +500,6 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SwitchThemed {
@@ -543,12 +518,13 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Background updates")
-                    source: "qrc:/assets/icons_material/baseline-android-24px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-android-24px.svg"
+
                     visible: (Qt.platform.os === "android")
 
                     ButtonExperimental {
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         height: 32
 
@@ -564,7 +540,7 @@ Loader {
 
                 Item {
                     id: element_worker
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -574,24 +550,21 @@ Loader {
                     visible: (Qt.platform.os !== "ios")
 
                     IconSvg {
-                        id: image_worker
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                     }
 
                     Text {
-                        id: text_worker
-                        height: 40
-                        anchors.left: image_worker.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: switch_worker.left
-                        anchors.rightMargin: 0
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Enable background updates")
@@ -599,7 +572,6 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SwitchThemed {
@@ -627,9 +599,9 @@ Loader {
                 Text {
                     id: legend_worker_mobile
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
                     topPadding: -12
                     bottomPadding: element_notifications.visible ? 0 : 12
 
@@ -644,9 +616,9 @@ Loader {
                 Text {
                     id: legend_worker_desktop
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
                     topPadding: -12
                     bottomPadding: element_notifications.visible ? 0 : 12
 
@@ -665,7 +637,7 @@ Loader {
 
                 Item {
                     id: element_notifications
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -677,22 +649,19 @@ Loader {
                     opacity: settingsManager.systray ? 1 : 0.4
 
                     IconSvg {
-                        id: image_notifications
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
                     }
 
                     Text {
-                        id: text_notifications
-                        height: 40
-                        anchors.left: image_notifications.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: switch_notifications.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
@@ -702,7 +671,6 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SwitchThemed {
@@ -719,9 +687,9 @@ Loader {
                 Text {
                     id: legend_notifications
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
                     topPadding: -12
                     bottomPadding: settingsManager.notifications ? 0 : 12
 
@@ -766,7 +734,6 @@ Loader {
                             wrapMode: Text.WordWrap
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
-                            verticalAlignment: Text.AlignVCenter
                         }
                         SwitchThemed {
                             id: switch_notif_battery
@@ -789,7 +756,7 @@ Loader {
                             anchors.left: parent.left
                             anchors.leftMargin: 64
                             anchors.right: switch_notif_water.left
-                            anchors.rightMargin: 16
+                            anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: "- " + qsTr("water level")
@@ -797,7 +764,6 @@ Loader {
                             wrapMode: Text.WordWrap
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
-                            verticalAlignment: Text.AlignVCenter
                         }
                         SwitchThemed {
                             id: switch_notif_water
@@ -828,7 +794,6 @@ Loader {
                             wrapMode: Text.WordWrap
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
-                            verticalAlignment: Text.AlignVCenter
                         }
                         SwitchThemed {
                             id: switch_notif_subzero
@@ -858,7 +823,6 @@ Loader {
                             wrapMode: Text.WordWrap
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
-                            verticalAlignment: Text.AlignVCenter
                         }
                         SwitchThemed {
                             id: switch_notif_env
@@ -877,14 +841,14 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Bluetooth")
-                    source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
                 }
 
                 ////////
 
                 Item {
                     id: element_bluetoothControl
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -894,22 +858,19 @@ Loader {
                     visible: (Qt.platform.os === "android")
 
                     IconSvg {
-                        id: image_bluetoothControl
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
                     }
 
                     Text {
-                        id: text_bluetoothControl
-                        height: 40
-                        anchors.left: image_bluetoothControl.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: switch_bluetoothControl.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
@@ -919,7 +880,6 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SwitchThemed {
@@ -936,9 +896,9 @@ Loader {
                 Text {
                     id: legend_bluetoothControl
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
@@ -957,29 +917,26 @@ Loader {
 
                 Item {
                     id: element_bluetoothRange
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_bluetoothRange
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
                     }
 
                     Text {
-                        id: text_bluetoothRange
-                        height: 40
-                        anchors.left: image_bluetoothRange.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: switch_bluetoothRange.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
@@ -989,7 +946,6 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SwitchThemed {
@@ -1006,9 +962,9 @@ Loader {
                 Text {
                     id: legend_bluetoothRange
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
@@ -1027,31 +983,29 @@ Loader {
 
                 Item {
                     id: element_bluetoothSimUpdate
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_bluetoothSimUpdate
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
                     }
 
                     Text {
                         id: text_bluetoothSimUpdate
-                        height: 40
-                        anchors.left: image_bluetoothSimUpdate.right
-                        anchors.leftMargin: 24
-                        anchors.right: isDesktop ? undefined : spinBox_bluetoothSimUpdate.left
-                        anchors.rightMargin: 16
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
+                        anchors.right: spinBox_bluetoothSimUpdate.left
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Simultaneous updates")
@@ -1059,7 +1013,6 @@ Loader {
                         wrapMode: Text.WordWrap
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SliderValueSolid {
@@ -1067,7 +1020,7 @@ Loader {
                         anchors.left: text_bluetoothSimUpdate.right
                         anchors.leftMargin: 16
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: isDesktop
@@ -1086,7 +1039,7 @@ Loader {
                         width: 128
                         height: 36
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: isMobile
@@ -1104,9 +1057,9 @@ Loader {
                 Text {
                     id: legend_bluetoothSimUpdate
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 64
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: Theme.componentMargin
                     topPadding: -12
                     bottomPadding: 12
 
@@ -1124,38 +1077,35 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Plant sensors")
-                    source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                    icon: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
                 }
 
                 ////////////////
 
                 Item {
                     id: element_update
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_update
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
                     }
 
                     Text {
-                        id: text_update
-                        height: 40
-                        anchors.left: image_update.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: spinBox_update.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Update interval")
@@ -1163,7 +1113,6 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SpinBoxThemed {
@@ -1171,7 +1120,7 @@ Loader {
                         width: 128
                         height: 36
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -1191,31 +1140,28 @@ Loader {
 
                 Item {
                     id: element_bigindicators
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_bigindicators
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_custom/indicators-24px.svg"
                     }
 
                     Text {
-                        id: text_bigindicators
-                        height: 40
-                        anchors.left: image_bigindicators.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: row_bigindicators.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Data indicators style")
@@ -1223,14 +1169,13 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     Row {
                         id: row_bigindicators
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
-                        anchors.verticalCenter: text_bigindicators.verticalCenter
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
                         spacing: 12
 
                         RadioButtonThemed {
@@ -1253,31 +1198,28 @@ Loader {
 
                 Item {
                     id: element_dynascale
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_dynascale
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/baseline-straighten-24px.svg"
                     }
 
                     Text {
-                        id: text_dynascale
-                        height: 40
-                        anchors.left: image_dynascale.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: row_dynascale.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Data indicators scale")
@@ -1285,14 +1227,13 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     Row {
                         id: row_dynascale
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
-                        anchors.verticalCenter: text_dynascale.verticalCenter
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
                         spacing: 12
 
                         RadioButtonThemed {
@@ -1403,38 +1344,35 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Thermometers")
-                    source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
+                    icon: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
                 }
 
                 ////////////////
 
                 Item {
                     id: element_thermometer_update
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_thermometer_update
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
                     }
 
                     Text {
-                        id: text_thermometer_update
-                        height: 40
-                        anchors.left: image_thermometer_update.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: spinBox_thermometer_update.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Update interval")
@@ -1442,7 +1380,6 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SpinBoxThemed {
@@ -1450,7 +1387,7 @@ Loader {
                         width: 128
                         height: 36
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -1470,31 +1407,28 @@ Loader {
 
                 Item {
                     id: element_thermometer_unit
-                    height: 48
+                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
 
                     IconSvg {
-                        id: image_thermometer_unit
-                        width: 24
-                        height: 24
                         anchors.left: parent.left
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: contentColumn.padIcon
                         anchors.verticalCenter: parent.verticalCenter
 
+                        width: 24
+                        height: 24
                         color: Theme.colorIcon
                         source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                     }
 
                     Text {
-                        id: text_thermometer_unit
-                        height: 40
-                        anchors.left: image_thermometer_unit.right
-                        anchors.leftMargin: 24
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
                         anchors.right: row_thermometer_unit.left
-                        anchors.rightMargin: 16
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Temperature unit")
@@ -1502,14 +1436,13 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
-                        verticalAlignment: Text.AlignVCenter
                     }
 
                     SelectorMenu {
                         id: row_thermometer_unit
                         height: 32
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         model: ListModel {
@@ -1529,25 +1462,38 @@ Loader {
 /*
                 ListTitle {
                     text: qsTr("External database")
-                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                     visible: isDesktop
                 }
 
                 ////////////////
 
                 Item {
+                    id: element_mysql
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 48
+                    anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight
                     height: UtilsNumber.alignTo(legend_mysql.contentHeight, 16)
 
                     visible: isDesktop
 
-                    Text {
-                        id: legend_mysql
+                    IconSvg {
                         anchors.left: parent.left
-                        anchors.right: switch_mysql.left
-                        anchors.rightMargin: 12
+                        anchors.leftMargin: contentColumn.padIcon
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        width: 24
+                        height: 24
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons_material/duotone-style-24px.svg"
+                    }
+
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
+                        anchors.right: appTheme_selector.left
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Connects to a remote MySQL compatible database, instead of the embedded database. Allows multiple instances of the application to share data. Database setup is at your own charge.")
@@ -1555,13 +1501,12 @@ Loader {
                         wrapMode: Text.WordWrap
                         color: Theme.colorSubText
                         font.pixelSize: Theme.fontSizeContentSmall
-                        verticalAlignment: Text.AlignBottom
                     }
 
                     SwitchThemed {
                         id: switch_mysql
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -1574,9 +1519,9 @@ Loader {
 
                 Loader {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 48
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.right: appTheme_selector.left
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                     active: settingsManager.mysql
                     asynchronous: true
@@ -1587,7 +1532,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Data archiving")
-                    source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-archive-24px.svg"
                     visible: deviceManager.hasDevices
                 }
 
@@ -1595,9 +1540,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 48
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 16
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                     topPadding: 8
                     visible: deviceManager.hasDevices
@@ -1633,12 +1578,12 @@ Loader {
                 Row {
                     id: element_export
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + 16 + 48
+                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 16
-                    height: 48
-                    spacing: 16
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
+                    height: Theme.componentHeightXL
+                    spacing: 16
                     visible: deviceManager.hasDevices
 
                     ButtonWireframe {
@@ -1729,7 +1674,7 @@ Loader {
                     IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
@@ -1751,7 +1696,7 @@ Loader {
                     IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
@@ -1772,7 +1717,7 @@ Loader {
                     IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
@@ -1794,7 +1739,7 @@ Loader {
                     IconSvg {
                         width: 20; height: 20;
                         anchors.right: parent.right
-                        anchors.rightMargin: 12
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText

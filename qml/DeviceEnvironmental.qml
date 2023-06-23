@@ -10,7 +10,7 @@ Loader {
 
     property var currentDevice: null
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     function loadDevice(clickedDevice) {
         // set device
@@ -26,8 +26,6 @@ Loader {
         // change screen
         appContent.state = "DeviceEnvironmental"
     }
-
-    ////////
 
     function backAction() {
         if (deviceEnvironmental.status === Loader.Ready)

@@ -118,7 +118,7 @@ Drawer {
 
                 ////////
 
-                ListItemDrawer {
+                DrawerItem {
                     highlighted: (appContent.state === "DeviceList")
                     text: qsTr("Sensors")
                     iconSource: "qrc:/assets/logos/watchflower_tray_dark.svg"
@@ -129,7 +129,7 @@ Drawer {
                     }
                 }
 
-                ListItemDrawer {
+                DrawerItem {
                     highlighted: (appContent.state === "Settings")
                     text: qsTr("Settings")
                     iconSource: "qrc:/assets/icons_material/outline-settings-24px.svg"
@@ -140,7 +140,7 @@ Drawer {
                     }
                 }
 
-                ListItemDrawer {
+                DrawerItem {
                     highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
                     text: qsTr("About")
                     iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
@@ -157,7 +157,7 @@ Drawer {
 
                 ////////
 
-                ListItemDrawer {
+                DrawerItem {
                     iconSource: "qrc:/assets/icons_material/baseline-sort-24px.svg"
                     text: {
                         var txt = qsTr("Order by:") + " "
@@ -211,7 +211,7 @@ Drawer {
 
                 ////////
 
-                ListItemDrawerButton {
+                DrawerButton {
                     text: qsTr("Refresh sensor data")
 
                     iconSource: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
@@ -232,7 +232,7 @@ Drawer {
                     }
                 }
 
-                ListItemDrawerButton {
+                DrawerButton {
                     text: qsTr("Sync sensors history")
 
                     iconSource: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
@@ -253,7 +253,7 @@ Drawer {
                     }
                 }
 
-                ListItemDrawerButton {
+                DrawerButton {
                     text: qsTr("Search for new sensors")
 
                     iconSource: "qrc:/assets/icons_material/baseline-search-24px.svg"
@@ -287,8 +287,9 @@ Drawer {
             anchors.right: parent.right
             anchors.rightMargin: 1
             anchors.bottom: parent.bottom
+            anchors.bottomMargin: screenPaddingBottom
 
-            ListItemDrawer {
+            DrawerItem {
                 highlighted: (appContent.state === "PlantBrowser")
                 text: qsTr("Plant browser")
                 iconSource: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
@@ -299,7 +300,7 @@ Drawer {
                 }
             }
 
-            ListItemDrawer {
+            DrawerItem {
                 highlighted: (appContent.state === "DeviceBrowser")
                 text: qsTr("Device browser")
                 iconSource: "qrc:/assets/icons_material/baseline-radar-24px.svg"

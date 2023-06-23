@@ -13,9 +13,11 @@ Rectangle {
     clip: false
     z: 10
 
-    property string headerTitle: "WatchFlower"
-
     property int headerHeight: 52
+
+    property int headerPosition: 56
+
+    property string headerTitle: "WatchFlower"
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -72,60 +74,55 @@ Rectangle {
 
         ////////////
 
-        Row { // left area
-            anchors.top: parent.top
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
+        MouseArea { // left button
+            width: headerHeight
+            height: headerHeight
 
-            spacing: 12
+            visible: true
+            onClicked: leftMenuClicked()
 
-            MouseArea { // left button
-                width: headerHeight
-                height: headerHeight
-
-                visible: true
-                onClicked: leftMenuClicked()
-
-                RippleThemed {
-                    anchor: parent
-                    width: parent.width
-                    height: parent.height
-
-                    pressed: parent.pressed
-                    //active: enabled && parent.down
-                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
-                }
-
-                IconSvg {
-                    anchors.centerIn: parent
-                    width: (headerHeight / 2)
-                    height: (headerHeight / 2)
-
-                    source: {
-                        if (leftMenuMode === "drawer") return "qrc:/assets/icons_material/baseline-menu-24px.svg"
-                        if (leftMenuMode === "close") return "qrc:/assets/icons_material/baseline-close-24px.svg"
-                        return "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
-                    }
-                    color: Theme.colorHeaderContent
-                }
-            }
-
-            Text { // header title
+            RippleThemed {
+                anchor: parent
+                width: parent.width
                 height: parent.height
-                anchors.verticalCenter: parent.verticalCenter
 
-                text: headerTitle
-                color: Theme.colorHeaderContent
-                font.bold: true
-                font.pixelSize: Theme.fontSizeHeader
-                //font.capitalization: Font.Capitalize
-                verticalAlignment: Text.AlignVCenter
+                pressed: parent.pressed
+                //active: enabled && parent.down
+                color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
             }
+
+            IconSvg {
+                anchors.centerIn: parent
+                width: (headerHeight / 2)
+                height: (headerHeight / 2)
+
+                source: {
+                    if (leftMenuMode === "drawer") return "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                    if (leftMenuMode === "close") return "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    return "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                }
+                color: Theme.colorHeaderContent
+            }
+        }
+
+        Text { // header title
+            anchors.left: parent.left
+            anchors.leftMargin: headerPosition
+            anchors.right: rightArea.left
+            anchors.rightMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+
+            text: headerTitle
+            font.bold: true
+            font.pixelSize: Theme.fontSizeHeader
+            color: Theme.colorHeaderContent
+            elide: Text.ElideRight
         }
 
         ////////////
 
         Row { // right area
+            id: rightArea
             anchors.top: parent.top
             anchors.right: parent.right
             anchors.bottom: parent.bottom

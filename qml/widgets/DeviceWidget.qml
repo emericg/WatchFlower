@@ -16,9 +16,9 @@ Item {
                             ((boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0) ||
                              (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity")))
 
-    property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
-    property bool bigAssMode: false
-    property bool singleColumn: true
+    property bool wideMode: ((width >= 380) || (isTablet && width >= 480))
+    property bool hugeMode: (!isHdpi || (isTablet && width >= 480))
+    property bool listMode: false
 
     property int margin: Theme.componentMargin
     property int halfmargin: Theme.componentMargin / 2
@@ -148,30 +148,18 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle { // bottom separator
-        height: 1
-        anchors.left: parent.left
-        anchors.leftMargin: -halfmargin
-        anchors.right: parent.right
-        anchors.rightMargin: -halfmargin
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -1
-
-        visible: singleColumn
-        color: Theme.colorSeparator
-    }
-
     Rectangle { // rectangle border
         anchors.fill: deviceWidgetRectangle
-        anchors.topMargin: singleColumn ? -halfmargin : 0
-        anchors.leftMargin: singleColumn ? -margin : 0
-        anchors.rightMargin: singleColumn ? -margin : 0
-        anchors.bottomMargin: singleColumn ? -halfmargin : 0
+
+        anchors.topMargin: listMode ? -halfmargin : 0
+        anchors.leftMargin: listMode ? -margin : 0
+        anchors.rightMargin: listMode ? -margin : 0
+        anchors.bottomMargin: listMode ? -halfmargin : 0
 
         radius: Math.min(Theme.componentRadius, 8)
         border.width: Theme.componentBorderWidth
         border.color: {
-            if (singleColumn) return "transparent"
+            if (listMode) return "transparent"
             if (mousearea.containsPress) return Qt.lighter(Theme.colorSecondary, 1.1)
             return Theme.colorSeparator
         }
@@ -180,14 +168,14 @@ Item {
         color: boxDevice.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
         Behavior on color { ColorAnimation { duration: 133 } }
 
-        opacity: boxDevice.selected ? 0.5 : (singleColumn ? 0 : 1)
+        opacity: boxDevice.selected ? 0.5 : (listMode ? 0 : 1)
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }
 
     Item { // outside indicator
         anchors.fill: parent
-        anchors.topMargin: singleColumn ? 0 : 8
-        anchors.leftMargin: singleColumn ? -margin : 8
+        anchors.topMargin: listMode ? 0 : halfmargin
+        anchors.leftMargin: listMode ? -halfmargin : halfmargin
         clip: true
 
         Loader {
@@ -207,6 +195,19 @@ Item {
                 color: Theme.colorYellow
             }
         }
+    }
+
+    Rectangle { // bottom separator
+        anchors.left: parent.left
+        anchors.leftMargin: -halfmargin
+        anchors.right: parent.right
+        anchors.rightMargin: -halfmargin
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: -1
+
+        height: 1
+        visible: listMode
+        color: Theme.colorSeparator
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -279,24 +280,24 @@ Item {
         Row {
             id: rowLeft
             anchors.top: parent.top
-            anchors.topMargin: bigAssMode ? 16 : 8
+            anchors.topMargin: hugeMode ? 16 : 8
             anchors.left: parent.left
-            anchors.leftMargin: bigAssMode ? (singleColumn ? 4 : 16) : (singleColumn ? 6 : 14)
+            anchors.leftMargin: hugeMode ? (listMode ? 0 : 16) : (listMode ? 2 : 12)
             anchors.right: rowRight.left
-            anchors.rightMargin: singleColumn ? 0 : 8
+            anchors.rightMargin: listMode ? 2 : 8
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: bigAssMode ? 16 : 8
+            anchors.bottomMargin: hugeMode ? 16 : 8
 
-            spacing: bigAssMode ? (singleColumn ? 20 : 12) : (singleColumn ? 24 : 10)
+            spacing: hugeMode ? (listMode ? 14 : 12) : (listMode ? 18 : 10)
 
             IconSvg {
                 id: imageDevice
-                width: bigAssMode ? 32 : 24
-                height: bigAssMode ? 32 : 24
+                width: hugeMode ? 32 : 24
+                height: hugeMode ? 32 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorHighContrast
-                visible: (wideAssMode || bigAssMode)
+                visible: (wideMode || hugeMode)
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
 
@@ -313,9 +314,8 @@ Item {
                             else
                                 return "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
                         }
-                    } else {
-                        return UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
                     }
+                    return UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
                 }
             }
 
@@ -328,7 +328,7 @@ Item {
 
                     textFormat: Text.PlainText
                     color: Theme.colorText
-                    font.pixelSize: bigAssMode ? 22 : 20
+                    font.pixelSize: hugeMode ? 22 : 20
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
@@ -339,20 +339,20 @@ Item {
 
                     textFormat: Text.PlainText
                     color: Theme.colorSubText
-                    font.pixelSize: bigAssMode ? 20 : 18
+                    font.pixelSize: hugeMode ? 20 : 18
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
 
                 Row {
-                    height: bigAssMode ? 26 : 22
+                    height: hugeMode ? 26 : 22
                     anchors.left: parent.left
                     spacing: 8
 
                     IconSvg {
                         id: imageBattery
-                        width: bigAssMode ? 30 : 28
-                        height: bigAssMode ? 32 : 30
+                        width: hugeMode ? 30 : 28
+                        height: hugeMode ? 32 : 30
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
@@ -368,7 +368,7 @@ Item {
 
                         textFormat: Text.PlainText
                         color: Theme.colorGreen
-                        font.pixelSize: bigAssMode ? 16 : 15
+                        font.pixelSize: hugeMode ? 16 : 15
 
                         SequentialAnimation on opacity {
                             id: opa
@@ -488,11 +488,11 @@ Item {
         Row {
             id: rowRight
             anchors.top: parent.top
-            anchors.topMargin: bigAssMode ? 16 : 8
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: bigAssMode ? 16 : 8
+            anchors.topMargin: hugeMode ? 16 : 8
             anchors.right: parent.right
-            anchors.rightMargin: singleColumn ? (wideAssMode ? 0 : -4) : (bigAssMode ? 14 : 10)
+            anchors.rightMargin: listMode ? -4 : (hugeMode ? 14 : 10)
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: hugeMode ? 16 : 8
 
             spacing: 8
 
@@ -561,7 +561,7 @@ Item {
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
-                visible: singleColumn
+                visible: listMode
                 color: boxDevice.hasData ? Theme.colorHighContrast : Theme.colorSubText
                 source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
             }
@@ -581,8 +581,8 @@ Item {
 
             spacing: 8
 
-            property int sensorWidth: isPhone ? 8 : (bigAssMode ? 12 : 10)
-            property int sensorRadius: bigAssMode ? 3 : 2
+            property int sensorWidth: isPhone ? 8 : (hugeMode ? 12 : 10)
+            property int sensorRadius: hugeMode ? 3 : 2
 
             function initData() { }
             function updateData() { }
@@ -758,7 +758,7 @@ Item {
                 textFormat: Text.PlainText
                 color: Theme.colorText
                 font.letterSpacing: -1.4
-                font.pixelSize: bigAssMode ? 28 : 24
+                font.pixelSize: hugeMode ? 28 : 24
             }
             Text {
                 id: unit
@@ -767,7 +767,7 @@ Item {
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.letterSpacing: -1.4
-                font.pixelSize: bigAssMode ? 24 : 20
+                font.pixelSize: hugeMode ? 24 : 20
             }
         }
     }
@@ -795,7 +795,7 @@ Item {
                 textFormat: Text.PlainText
                 color: Theme.colorText
                 font.letterSpacing: -1.4
-                font.pixelSize: bigAssMode ? 32 : 28
+                font.pixelSize: hugeMode ? 32 : 28
             }
 
             Text {
@@ -804,7 +804,7 @@ Item {
 
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
-                font.pixelSize: bigAssMode ? 26 : 22
+                font.pixelSize: hugeMode ? 26 : 22
             }
         }
     }
@@ -922,7 +922,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: isPhone ? 0 : 2
 
-                arcWidth: isPhone ? 8 : (bigAssMode ? 10 : 8)
+                arcWidth: isPhone ? 8 : (hugeMode ? 10 : 8)
                 arcSpan: 270
                 arcCap: "round"
 
@@ -939,8 +939,8 @@ Item {
     ////////////////
 
     component AlarmIndicator: IconSvg {
-        width: bigAssMode ? 28 : 24
-        height: bigAssMode ? 28 : 24
+        width: hugeMode ? 28 : 24
+        height: hugeMode ? 28 : 24
         anchors.verticalCenter: parent.verticalCenter
 
         Rectangle {

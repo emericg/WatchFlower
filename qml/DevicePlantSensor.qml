@@ -8,7 +8,7 @@ Loader {
 
     property var currentDevice: null
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     function loadDevice(clickedDevice) {
         // set device
@@ -24,8 +24,6 @@ Loader {
         // change screen
         appContent.state = "DevicePlantSensor"
     }
-
-    ////////
 
     function backAction() {
         if (devicePlantSensor.status === Loader.Ready)

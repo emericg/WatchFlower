@@ -12,16 +12,20 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
-        // Refresh permissions
+        // refresh permissions
         refreshPermissions()
 
-        // Change screen
+        // change screen
         appContent.state = "AboutPermissions"
     }
 
     function loadScreenFrom(screenname) {
         entryPoint = screenname
         loadScreen()
+    }
+
+    function backAction() {
+        screenAbout.loadScreen()
     }
 
     function refreshPermissions() {
@@ -70,7 +74,7 @@ Item {
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     property bool validperm: true
@@ -85,9 +89,9 @@ Item {
                     id: text_bluetooth
                     height: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 64
+                    anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Bluetooth control")
@@ -101,9 +105,9 @@ Item {
             Text {
                 id: legend_bluetooth
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: Theme.componentMargin
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
                 textFormat: Text.PlainText
@@ -114,21 +118,7 @@ Item {
 
             ////////
 
-            Item { // separator
-                height: 16
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Rectangle {
-                    height: 1
-                    color: Theme.colorSeparator
-                    anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
+            ListSeparatorPadded { height: 16+1 }
 
             ////////
 
@@ -143,7 +133,7 @@ Item {
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     property bool validperm: false
@@ -164,9 +154,9 @@ Item {
                     id: text_location
                     height: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 64
+                    anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Location")
@@ -180,7 +170,7 @@ Item {
             Text {
                 id: legend_location
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
@@ -194,7 +184,7 @@ Item {
             ButtonWireframeIcon {
                 height: 36
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
 
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
@@ -208,21 +198,7 @@ Item {
 
             ////////
 
-            Item { // separator
-                height: 16
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Rectangle {
-                    height: 1
-                    color: Theme.colorSeparator
-                    anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
+            ListSeparatorPadded { height: 16+1 }
 
             ////////
 
@@ -237,7 +213,7 @@ Item {
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     property bool validperm: false
@@ -258,9 +234,9 @@ Item {
                     id: text_location_background
                     height: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 64
+                    anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Background location")
@@ -274,7 +250,7 @@ Item {
             Text {
                 id: legend_location_background
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
                 anchors.rightMargin: 12
 
@@ -287,21 +263,7 @@ Item {
 
             ////////
 
-            Item { // separator
-                height: 16
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Rectangle {
-                    height: 1
-                    color: Theme.colorSeparator
-                    anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
+            ListSeparatorPadded { height: 16+1 }
 
             ////////
 
@@ -316,7 +278,7 @@ Item {
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: 16
+                    anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     property bool validperm: false
@@ -337,9 +299,9 @@ Item {
                     id: text_gps
                     height: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 64
+                    anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("GPS")
@@ -353,9 +315,9 @@ Item {
             Text {
                 id: legend_gps
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: Theme.componentMargin
 
                 text: qsTr("Some Android devices also require the GPS to be turned on for Bluetooth operations.")
                 textFormat: Text.PlainText
@@ -367,7 +329,7 @@ Item {
             ButtonWireframeIcon {
                 height: 36
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
 
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
@@ -381,54 +343,47 @@ Item {
 
             ////////
 
-            Item { // separator
-                height: 16
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                Rectangle {
-                    height: 1
-                    color: Theme.colorSeparator
-                    anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
-                    anchors.verticalCenter: parent.verticalCenter
-                }
-            }
+            ListSeparatorPadded { height: 16+1 }
 
             ////////
 
-            Text {
+            Item {
+                id: element_infos
+                height: 24
                 anchors.left: parent.left
-                anchors.leftMargin: 64
                 anchors.right: parent.right
-                anchors.rightMargin: 12
-
-                text: qsTr("Click on the icons to ask for a permission.")
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
-                color: Theme.colorText
-                font.pixelSize: Theme.fontSizeContent
 
                 IconSvg {
                     width: 32
                     height: 32
                     anchors.left: parent.left
-                    anchors.leftMargin: -48
+                    anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     opacity: 0.66
                     color: Theme.colorSubText
                     source: "qrc:/assets/icons_material/baseline-info-24px.svg"
                 }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: appHeader.headerPosition
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.componentMargin
+
+                    text: qsTr("Click on the icons to request a permission.")
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorText
+                    font.pixelSize: Theme.fontSizeContent
+                }
             }
 
             Text {
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: Theme.componentMargin
 
                 text: qsTr("If it has no effect, you may have previously refused a permission and clicked on \"don't ask again\".") + "<br>" +
                       qsTr("You can go to the Android \"application info\" panel to change a permission manually.")
@@ -441,7 +396,7 @@ Item {
             ButtonWireframeIcon {
                 height: 36
                 anchors.left: parent.left
-                anchors.leftMargin: 64
+                anchors.leftMargin: appHeader.headerPosition
 
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground

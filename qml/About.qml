@@ -7,6 +7,8 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Loader {
     id: aboutScreen
 
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadScreen() {
         // load screen
         aboutScreen.active = true
@@ -232,17 +234,15 @@ Loader {
 
             IconSvg { // image devices
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + Theme.componentMargin + 64
+                anchors.leftMargin: screenPaddingLeft + appHeader.headerPosition
                 anchors.right: parent.right
                 anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                 height: 96
-
                 visible: isPhone
                 source: isPhone ? "qrc:/assets/tutorial/welcome-devices.svg" : ""
-
-                color: Theme.colorPrimary
                 fillMode: Image.PreserveAspectFit
+                color: Theme.colorPrimary
             }
 
             ////////
@@ -304,7 +304,7 @@ Loader {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 6
+                    anchors.leftMargin: 4
                     anchors.verticalCenter: dependenciesText.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
@@ -316,7 +316,7 @@ Loader {
                     anchors.top: parent.top
                     anchors.topMargin: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 48
+                    anchors.leftMargin: appHeader.headerPosition - parent.anchors.leftMargin
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -332,7 +332,7 @@ Loader {
                     anchors.top: dependenciesText.bottom
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 48
+                    anchors.leftMargin: appHeader.headerPosition - parent.anchors.leftMargin
                     anchors.right: parent.right
                     anchors.rightMargin: 8
                     spacing: 4
@@ -375,7 +375,7 @@ Loader {
                     width: 24
                     height: 24
                     anchors.left: parent.left
-                    anchors.leftMargin: 6
+                    anchors.leftMargin: 4
                     anchors.verticalCenter: translatorsText.verticalCenter
 
                     source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
@@ -387,7 +387,7 @@ Loader {
                     anchors.top: parent.top
                     anchors.topMargin: 16
                     anchors.left: parent.left
-                    anchors.leftMargin: 48
+                    anchors.leftMargin: appHeader.headerPosition - parent.anchors.leftMargin
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
@@ -403,7 +403,7 @@ Loader {
                     anchors.top: translatorsText.bottom
                     anchors.topMargin: 8
                     anchors.left: parent.left
-                    anchors.leftMargin: 48
+                    anchors.leftMargin: appHeader.headerPosition - parent.anchors.leftMargin
                     anchors.right: parent.right
                     anchors.rightMargin: 8
                     spacing: 4

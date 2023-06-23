@@ -9,8 +9,8 @@ Item {
     implicitWidth: 480
     implicitHeight: 128
 
-    property bool bigAssMode: false
-    property bool singleColumn: true
+    property bool hugeMode: (!isHdpi || (isTablet && width >= 480))
+    property bool listMode: false
 
     property int margin: Theme.componentMargin
     property int halfmargin: Theme.componentMargin / 2
@@ -20,21 +20,21 @@ Item {
     Item {
         id: widgetExterior
         anchors.fill: parent
-        anchors.margins: singleColumn ? 0 : halfmargin
+        anchors.margins: listMode ? 0 : halfmargin
 
         ////
 
         Rectangle {
             anchors.fill: parent
-            anchors.topMargin: singleColumn ? -halfmargin : 0
-            anchors.leftMargin: singleColumn ? -margin : 0
-            anchors.rightMargin: singleColumn ? -margin : 0
-            anchors.bottomMargin: singleColumn ? -halfmargin : 0
+            anchors.topMargin: listMode ? -halfmargin : 0
+            anchors.leftMargin: listMode ? -margin : 0
+            anchors.rightMargin: listMode ? -margin : 0
+            anchors.bottomMargin: listMode ? -halfmargin : 0
 
             radius: Math.min(Theme.componentRadius, 8)
             border.width: Theme.componentBorderWidth
             border.color: {
-                if (singleColumn) return "transparent"
+                if (listMode) return "transparent"
                 if (mousearea.containsPress) return Qt.lighter(Theme.colorSecondary, 1.1)
                 return Theme.colorSeparator
             }
@@ -42,7 +42,7 @@ Item {
             color: Theme.colorDeviceWidget
             Behavior on color { ColorAnimation { duration: 133 } }
 
-            opacity: (singleColumn ? 0 : 1)
+            opacity: (listMode ? 0 : 1)
             Behavior on opacity { OpacityAnimator { duration: 133 } }
 
             MouseArea {
@@ -61,7 +61,7 @@ Item {
             anchors.top: parent.top
             anchors.topMargin: 2
             anchors.right: parent.right
-            anchors.rightMargin: singleColumn ? -halfmargin : 2
+            anchors.rightMargin: listMode ? -halfmargin : 2
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 2
 
@@ -142,7 +142,7 @@ Item {
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorText
-                font.pixelSize: bigAssMode ? 22 : 20
+                font.pixelSize: hugeMode ? 22 : 20
             }
 
             Text {
@@ -182,7 +182,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -1
 
-        visible: singleColumn
+        visible: listMode
         color: Theme.colorSeparator
     }
 }

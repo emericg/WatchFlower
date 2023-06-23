@@ -9,27 +9,29 @@ Item {
     implicitWidth: 480
     implicitHeight: 128
 
-    property bool wideAssMode: (width >= 380) || (isTablet && width >= 480)
-    property bool bigAssMode: false
-    property bool singleColumn: true
+    property bool hugeMode: false
+    property bool listMode: true
+
+    property int margin: Theme.componentMargin
+    property int halfmargin: Theme.componentMargin / 2
 
     ////////////////
 
     Rectangle { // contentRectangle
         anchors.fill: widgetExterior
-        anchors.leftMargin: singleColumn ? -12 : 0
-        anchors.rightMargin: singleColumn ? -12 : 0
-        anchors.topMargin: singleColumn ? -6 : 0
-        anchors.bottomMargin: singleColumn ? -6 : 0
+        anchors.leftMargin: listMode ? -margin : 0
+        anchors.rightMargin: listMode ? -margin : 0
+        anchors.topMargin: listMode ? -halfmargin : 0
+        anchors.bottomMargin: listMode ? -halfmargin : 0
 
         radius: 4
         border.width: 2
-        border.color: singleColumn ? "transparent" : Theme.colorSeparator
+        border.color: listMode ? "transparent" : Theme.colorSeparator
 
         color: Theme.colorDeviceWidget
         Behavior on color { ColorAnimation { duration: 133 } }
 
-        opacity: (singleColumn ? 0 : 1)
+        opacity: (listMode ? 0 : 1)
         Behavior on opacity { OpacityAnimator { duration: 133 } }
     }
 
@@ -38,12 +40,12 @@ Item {
     Item { // contentItem
         id: widgetExterior
         anchors.fill: parent
-        anchors.margins: 6
+        anchors.margins: halfmargin
 
         Item {
             id: widgetInterior
             anchors.fill: parent
-            anchors.margins: singleColumn ? 6 : 12
+            anchors.margins: listMode ? halfmargin : margin
 
             ////
 
@@ -52,7 +54,7 @@ Item {
                 text: qsTr("Weather")
                 textFormat: Text.PlainText
                 color: Theme.colorText
-                font.pixelSize: bigAssMode ? 22 : 20
+                font.pixelSize: hugeMode ? 22 : 20
             }
 
             Text {
@@ -69,8 +71,8 @@ Item {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 16
-                spacing: 16
+                anchors.verticalCenterOffset: margin
+                spacing: margin
 
                 Repeater {
                     model: 5
@@ -102,13 +104,15 @@ Item {
     Rectangle { // bottom separator
         height: 1
         anchors.left: parent.left
-        anchors.leftMargin: -6
+        anchors.leftMargin: -halfmargin
         anchors.right: parent.right
-        anchors.rightMargin: -6
+        anchors.rightMargin: -halfmargin
         anchors.bottom: parent.bottom
         anchors.bottomMargin: -1
 
-        visible: singleColumn
+        visible: listMode
         color: Theme.colorSeparator
     }
+
+    ////////////////
 }

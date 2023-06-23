@@ -594,9 +594,11 @@ ApplicationWindow {
         id: exitWarning
 
         anchors.left: parent.left
+        anchors.leftMargin: Theme.componentMargin
         anchors.right: parent.right
+        anchors.rightMargin: Theme.componentMargin
         anchors.bottom: parent.bottom
-        anchors.margins: Theme.componentMargin
+        anchors.bottomMargin: Theme.componentMargin + screenPaddingBottom
 
         height: Theme.componentHeight
         radius: Theme.componentRadius

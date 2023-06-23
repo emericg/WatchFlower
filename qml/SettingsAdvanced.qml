@@ -7,6 +7,10 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 Loader {
     id: settingsAdvanced
 
+    property string entryPoint: "About"
+
+    ////////////////////////////////////////////////////////////////////////////
+
     function loadScreen() {
         // load screen
         settingsAdvanced.active = true
@@ -14,6 +18,11 @@ Loader {
 
         // change screen
         appContent.state = "SettingsAdvanced"
+    }
+
+    function loadScreenFrom(screenname) {
+        entryPoint = screenname
+        loadScreen()
     }
 
     function backAction() {
@@ -39,7 +48,7 @@ Loader {
         }
 
         function backAction() {
-            screenDeviceList.loadScreen()
+            screenAbout.loadScreen()
         }
 
         ////////////////
@@ -66,7 +75,7 @@ Loader {
 
                 ListTitle {
                     text: "App info"
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
 
                 ////////////////
@@ -114,7 +123,7 @@ Loader {
 
                 ListTitle {
                     text: "Local settings"
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
 
                 ////////////////
@@ -171,7 +180,7 @@ Loader {
 
                 ListTitle {
                     text: "Local database"
-                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 }
 
                 ////////////////
@@ -226,7 +235,7 @@ Loader {
 
                 ListTitle {
                     text: "Remote database"
-                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    icon: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 }
 
                 ////////////////
@@ -251,7 +260,7 @@ Loader {
 
                 ListTitle {
                     text: "Logs"
-                    source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                    icon: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                 }
 
                 ////////////////

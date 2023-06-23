@@ -10,9 +10,8 @@ T.Control {
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
-    implicitHeight: Math.max(implicitBackgroundHeight /*+ topInset + bottomInset*/,
-                             implicitContentHeight /*+ topPadding + bottomPadding*/,
-                             topPadding + bottomPadding)
+    implicitHeight: Math.max(implicitBackgroundHeight,
+                             implicitContentHeight + topPadding + bottomPadding)
 
     padding: Theme.componentMargin
     spacing: Theme.componentMargin
@@ -40,12 +39,13 @@ T.Control {
         anchors.left: parent.left
         anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
         anchors.right: parent.right
-        anchors.rightMargin: screenPaddingRight + Theme.componentMargin / 2
+        anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
         opacity: control.enabled ? 1 : 0.4
+        spacing: 0
 
         Item {
-            Layout.preferredWidth: 56 - screenPaddingLeft - Theme.componentMargin
+            Layout.preferredWidth: appHeader.headerPosition - parent.anchors.leftMargin
             Layout.preferredHeight: Theme.componentHeightXL
             Layout.alignment: Qt.AlignTop
 
@@ -53,7 +53,7 @@ T.Control {
                 anchors.left: parent.left
                 anchors.leftMargin: (32 - control.iconSize) / 2
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: (control.height !== Theme.componentHeightXL) ? -(Theme.componentMargin / 2) : 0
+                //anchors.verticalCenterOffset: (control.height !== Theme.componentHeightXL) ? -(Theme.componentMargin / 2) : 0
 
                 width: control.iconSize
                 height: control.iconSize
@@ -70,6 +70,7 @@ T.Control {
             color: control.textColor
             wrapMode: Text.WordWrap
             font.pixelSize: control.textSize
+            horizontalAlignment: Text.AlignJustify
         }
     }
 

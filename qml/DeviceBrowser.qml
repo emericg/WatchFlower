@@ -87,8 +87,8 @@ Item {
                 anchors.bottom: devicesView.bottom
                 anchors.margins: Theme.componentMargin
 
-                height: infoText.contentHeight + 16
-                radius: 4
+                height: infoText.contentHeight + Theme.componentMargin
+                radius: Theme.componentRadius
                 z: 2
 
                 color: Theme.colorComponentBackground

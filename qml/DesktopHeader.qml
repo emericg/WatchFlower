@@ -12,9 +12,11 @@ Rectangle {
     color: Theme.colorHeader
     z: 10
 
-    property string headerTitle: "WatchFlower"
-
     property int headerHeight: isHdpi ? 58 : 64
+
+    property int headerPosition:  64
+
+    property string headerTitle: "WatchFlower"
 
     property bool headerCompact: singleColumn
 
@@ -97,7 +99,9 @@ Rectangle {
         target: null
     }
 
-    MouseArea {
+    ////////////////////////////////////////////////////////////////////////////
+
+    MouseArea { // left button
         width: 40
         height: 40
         anchors.left: parent.left
@@ -138,7 +142,7 @@ Rectangle {
 
     Text { // header title
         anchors.left: parent.left
-        anchors.leftMargin: 64
+        anchors.leftMargin: headerPosition
         anchors.right: menus.left
         anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
@@ -651,7 +655,7 @@ Rectangle {
         }
     }
 
-    ////////////
+    ////////////////////////////////////////////////////////////////////////////
 
     Rectangle { // bottom separator
         anchors.left: parent.left

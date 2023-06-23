@@ -53,16 +53,24 @@ Item {
         id: devicesView
         anchors.fill: parent
 
-        anchors.topMargin: singleColumn ? 0 : halfmargin
+        anchors.topMargin: listWidget ? 0 : halfmargin
         anchors.leftMargin: halfmargin
         anchors.rightMargin: halfmargin
-        anchors.bottomMargin: singleColumn ? 0 : halfmargin
-
+        anchors.bottomMargin: listWidget ? 0 : halfmargin
+/*
+        ScrollBar.vertical: ScrollBar {
+            anchors.right: parent.right
+            anchors.rightMargin: -halfmargin
+            policy: ScrollBar.AsNeeded
+            visible: false
+        }
+*/
         ////////
 
-        property int halfmargin: Theme.componentMargin / 2
+        property int halfmargin: (Theme.componentMargin / 2)
 
         property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
+        property bool listWidget: (devicesView.cellColumnsTarget === 1)
 
         property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
         property int cellWidthTarget: {
@@ -78,20 +86,12 @@ Item {
         }
 
         ////////
-/*
-        ScrollBar.vertical: ScrollBar {
-            anchors.right: parent.right
-            anchors.rightMargin: -halfmargin
-            policy: ScrollBar.AsNeeded
-            visible: false
-        }
-*/
+
         model: deviceManager.devicesList
         delegate: DeviceWidget {
             width: devicesView.cellWidth
             height: devicesView.cellHeight
-            bigAssMode: devicesView.bigWidget
-            singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+            listMode: devicesView.listWidget
         }
 
         ////////
@@ -104,16 +104,14 @@ Item {
             DeviceBrowserWidget {
                 width: devicesView.cellWidth
                 height: devicesView.cellWidth * 0.33
-                bigAssMode: devicesView.bigWidget
-                singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                listMode: devicesView.listWidget
                 visible: isDesktop
             }
 
             PlantBrowserWidget {
                 width: devicesView.cellWidth
                 height: devicesView.cellWidth * 0.33
-                bigAssMode: devicesView.bigWidget
-                singleColumn: (appWindow.singleColumn || devicesView.cellColumnsTarget === 1)
+                listMode: devicesView.listWidget
                 visible: isDesktop
             }
         }
