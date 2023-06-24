@@ -294,6 +294,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: screenPaddingBottom
 
         focus: true
         Keys.onBackPressed: {

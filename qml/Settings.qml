@@ -1004,7 +1004,7 @@ Loader {
                         id: text_bluetoothSimUpdate
                         anchors.left: parent.left
                         anchors.leftMargin: contentColumn.padText
-                        anchors.right: spinBox_bluetoothSimUpdate.left
+                        anchors.right: isDesktop ? undefined : spinBox_bluetoothSimUpdate.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -1018,7 +1018,7 @@ Loader {
                     SliderValueSolid {
                         id: slider_bluetoothSimUpdate
                         anchors.left: text_bluetoothSimUpdate.right
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: Theme.componentMargin
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
@@ -1583,7 +1583,7 @@ Loader {
                     anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                     height: Theme.componentHeightXL
-                    spacing: 16
+                    spacing: Theme.componentMargin
                     visible: deviceManager.hasDevices
 
                     ButtonWireframe {

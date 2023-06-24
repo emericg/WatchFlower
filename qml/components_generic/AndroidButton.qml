@@ -39,7 +39,7 @@ T.Button {
     ////////////////////////////////////////////////////////////////////////////
 
     background: Item {
-        implicitWidth: 128
+        implicitWidth: 80
         implicitHeight: 48
 
         Rectangle { // mouseBackground

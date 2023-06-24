@@ -308,7 +308,7 @@ Loader {
                     anchors.verticalCenter: dependenciesText.verticalCenter
 
                     source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-                    color: Theme.colorIcon
+                    color: Theme.colorSubText
                 }
 
                 Text {
@@ -321,8 +321,8 @@ Loader {
                     anchors.rightMargin: 8
 
                     text: qsTr("This application is made possible thanks to a couple of third party open source projects:")
-                    textFormat: Text.PlainText
-                    color: Theme.colorText
+                    textFormat: Text.colorSubText
+                    color: Theme.colorSubText
                     font.pixelSize: Theme.fontSizeContent
                     wrapMode: Text.WordWrap
                 }
@@ -349,7 +349,7 @@ Loader {
                             width: parent.width
                             text: "- " + modelData
                             textFormat: Text.PlainText
-                            color: Theme.colorText
+                            color: Theme.colorSubText
                             font.pixelSize: Theme.fontSizeContent
                             wrapMode: Text.WordWrap
                         }
@@ -379,7 +379,7 @@ Loader {
                     anchors.verticalCenter: translatorsText.verticalCenter
 
                     source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
-                    color: Theme.colorIcon
+                    color: Theme.colorSubText
                 }
 
                 Text {
@@ -393,7 +393,7 @@ Loader {
 
                     text: qsTr("Special thanks to our translators:")
                     textFormat: Text.PlainText
-                    color: Theme.colorText
+                    color: Theme.colorSubText
                     font.pixelSize: Theme.fontSizeContent
                     wrapMode: Text.WordWrap
                 }
@@ -421,7 +421,7 @@ Loader {
                             width: parent.width
                             text: "- " + modelData
                             textFormat: Text.PlainText
-                            color: Theme.colorText
+                            color: Theme.colorSubText
                             font.pixelSize: Theme.fontSizeContent
                             wrapMode: Text.WordWrap
                         }

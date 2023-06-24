@@ -280,7 +280,7 @@ Item {
             id: buttonPanel
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            spacing: 12
+            spacing: Theme.componentMargin
 
             ButtonWireframe {
                 width: 100

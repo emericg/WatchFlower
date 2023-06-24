@@ -155,7 +155,7 @@ Item {
                     ButtonWireframe {
                         height: 36
                         anchors.left: parent.right
-                        anchors.leftMargin: 16
+                        anchors.leftMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         fullColor: true
@@ -260,11 +260,11 @@ Item {
                 Grid {
                     id: rowrowrow
                     anchors.fill: parent
-                    anchors.topMargin: isPhone ? 14 : 16
-                    anchors.leftMargin: isPhone ? 12 : 16
-                    anchors.rightMargin: isPhone ? 12 : 16
-                    anchors.bottomMargin: 80
-                    spacing: 20
+                    anchors.topMargin: Theme.componentMargin
+                    anchors.leftMargin: Theme.componentMargin
+                    anchors.rightMargin: Theme.componentMargin
+                    anchors.bottomMargin: Theme.componentMargin
+                    spacing: Theme.componentMargin
 
                     columns: (uiMode === 3) ? 2 : 1
                     rows: 2
@@ -289,7 +289,7 @@ Item {
 
                     Column {
                         width: (uiMode !== 3) ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
-                        spacing: isPhone ? 12 : 20
+                        spacing: Theme.componentMargin
 
                         ButtonWireframe {
                             anchors.left: parent.left
@@ -319,7 +319,7 @@ Item {
                                 id: colEntryType
                                 anchors.centerIn: parent
 
-                                spacing: (uiMode === 1) ? 16 : 20
+                                spacing: (uiMode === 1) ? Theme.componentMargin : Theme.componentMarginL
                                 columns: (uiMode === 1) ? 3 : 6
                                 rows: (uiMode === 1) ? 2 : 1
 
@@ -328,11 +328,12 @@ Item {
                                             JournalUtils.JOURNAL_ROTATE, JournalUtils.JOURNAL_MOVE, JournalUtils.JOURNAL_REPOT]
 
                                     Column {
+                                        width: btn.width + 20
                                         spacing: 4
-                                        width: btn.width
 
                                         RoundButtonIcon {
                                             id: btn
+                                            anchors.horizontalCenter: parent.horizontalCenter
                                             width: 52
                                             height: 52
 
@@ -348,13 +349,19 @@ Item {
                                             onClicked: entryEditor.entryType = modelData
                                         }
                                         Text {
-                                            anchors.horizontalCenter: parent.horizontalCenter
+                                            width: parent.width
+                                            height: 16
 
                                             text: UtilsPlantJournal.getJournalEntryName(modelData)
                                             textFormat: Text.PlainText
                                             color: btn.selected ? Theme.colorPrimary : Theme.colorText
-                                            //font.bold: btn.selected
+
+                                            fontSizeMode: Text.HorizontalFit
                                             font.pixelSize: Theme.fontSizeContentSmall
+                                            minimumPixelSize: Theme.fontSizeContentVerySmall
+
+                                            horizontalAlignment: Text.AlignHCenter
+                                            verticalAlignment: Text.AlignVCenter
                                         }
                                     }
                                 }
@@ -376,10 +383,10 @@ Item {
 
                 Row {
                     anchors.right: parent.right
-                    anchors.rightMargin: 16
+                    anchors.rightMargin: Theme.componentMargin
                     anchors.bottom: parent.bottom
-                    anchors.bottomMargin: 16
-                    spacing: 16
+                    anchors.bottomMargin: Theme.componentMargin
+                    spacing: Theme.componentMargin
 
                     ButtonWireframe {
                         fullColor: true

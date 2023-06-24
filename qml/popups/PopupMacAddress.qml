@@ -5,28 +5,21 @@ import ThemeEngine 1.0
 
 Popup {
     id: popupMacAddress
-    x: (appWindow.width / 2) - (width / 2)
-    y: singleColumn ? (appWindow.height - height) : ((appWindow.height / 2) - (height / 2) /*- (appHeader.height)*/)
-/*
-    y: {
-        if (singleColumn) {
-            //return appHeader.height
-            if (textInputMacAddr.focus)
-                return appHeader.height
-            else
-                return (appWindow.height - height)
-        } else {
-            return ((appWindow.height / 2) - (height / 2) ) //- (appHeader.height))
-        }
-    }
-*/
+
+    x: singleColumn ? 0 : (appWindow.width / 2) - (width / 2)
+    y: singleColumn ? (appWindow.height - appHeader.height - height)
+                    : ((appWindow.height / 2) - (height / 2))
+
     width: singleColumn ? parent.width : 640
-    height: columnContent.height + padding*2
-    padding: singleColumn ? 20 : 24
+    height: columnContent.height + padding*2 + screenPaddingBottom
+    padding: Theme.componentMarginXL
 
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    //parent: appWindow.contentItem
+
+    ////////////////////////////////////////////////////////////////////////////
 
     signal confirmed()
 
@@ -60,7 +53,9 @@ Popup {
         Column {
             id: columnContent
             width: parent.width
-            spacing: 20
+            spacing: Theme.componentMarginXL
+
+            ////////
 
             Text {
                 width: parent.width
@@ -71,6 +66,8 @@ Popup {
                 color: Theme.colorText
                 wrapMode: Text.WordWrap
             }
+
+            ////////
 
             Column {
                 width: parent.width
@@ -144,13 +141,13 @@ Popup {
 */
             }
 
+            ////////
+
             Flow {
-                id: flowContent
                 width: parent.width
-                height: singleColumn ? 80+16 : 40
+                spacing: Theme.componentMargin
 
                 property var btnSize: singleColumn ? width : ((width-spacing) / 2)
-                spacing: 16
 
                 ButtonWireframe {
                     width: parent.btnSize
@@ -164,6 +161,7 @@ Popup {
                         popupMacAddress.close()
                     }
                 }
+
                 ButtonWireframe {
                     width: parent.btnSize
 
@@ -181,6 +179,8 @@ Popup {
                     }
                 }
             }
+
+            ////////
         }
     }
 

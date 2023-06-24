@@ -7,7 +7,7 @@ Flickable {
     id: plantCareLimits
 
     contentWidth: -1
-    contentHeight: column.height
+    contentHeight: contentColumn.height
 
     function updateLimits() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
@@ -29,13 +29,13 @@ Flickable {
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
-        id: column
+        id: contentColumn
         anchors.left: parent.left
         anchors.right: parent.right
 
-        topPadding: 0 // isPhone ? 12 : 16
-        bottomPadding: 16
-        spacing: 16
+        topPadding: 0
+        bottomPadding: 0
+        spacing: Theme.componentMarginL
 
         ////////////////
 
@@ -49,11 +49,12 @@ Flickable {
             layer.enabled: true
 
             IconSvg {
-                width: 20
-                height: 20
                 anchors.left: parent.left
                 anchors.leftMargin: 10
                 anchors.verticalCenter: parent.verticalCenter
+
+                width: 20
+                height: 20
 
                 color: Theme.colorSubText
                 source: "qrc:/assets/icons_material/baseline-info-24px.svg"
@@ -76,11 +77,10 @@ Flickable {
 
         Item {
             id: itemHygro
-            height: 40
             anchors.left: parent.left
-            anchors.leftMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
+
+            height: 40
 
             IconSvg {
                 id: imageHygro
@@ -109,15 +109,16 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_hygro
-                height: 32
                 anchors.top: imageHygro.bottom
                 anchors.topMargin: -2
                 anchors.left: parent.left
-                anchors.leftMargin: 32
+                anchors.leftMargin: 36
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: Theme.componentMargin
 
+                height: 32
                 hhh: isMobile ? 22 : 20
+
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 unit: "%"
@@ -154,11 +155,10 @@ Flickable {
 
         Item {
             id: itemCondu
-            height: 40
             anchors.left: parent.left
-            anchors.leftMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
+
+            height: 40
 
             IconSvg {
                 id: imageCondu
@@ -188,15 +188,16 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_condu
-                height: 32
                 anchors.top: imageCondu.bottom
                 anchors.topMargin: -2
                 anchors.left: parent.left
-                anchors.leftMargin: 32
+                anchors.leftMargin: 36
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: Theme.componentMargin
 
+                height: 32
                 hhh: isMobile ? 22 : 20
+
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 from: 0
@@ -231,19 +232,19 @@ Flickable {
 
         Item {
             id: itemTemp
-            height: 40
-            anchors.right: parent.right
-            anchors.rightMargin: 0
             anchors.left: parent.left
-            anchors.leftMargin: 0
+            anchors.right: parent.right
+
+            height: 40
 
             IconSvg {
                 id: imageTemp
-                width: 24
-                height: 24
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 8
+
+                width: 24
+                height: 24
 
                 color: Theme.colorText
                 source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
@@ -264,15 +265,16 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_temp
-                height: 32
                 anchors.top: imageTemp.bottom
                 anchors.topMargin: -2
                 anchors.left: parent.left
-                anchors.leftMargin: 32
+                anchors.leftMargin: 36
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: Theme.componentMargin
 
+                height: 32
                 hhh: isMobile ? 22 : 20
+
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 unit: "°"
@@ -325,11 +327,10 @@ Flickable {
 
         Item {
             id: itemLumi
-            height: 64
             anchors.left: parent.left
-            anchors.leftMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
+
+            height: 64
 
             IconSvg {
                 id: imageLumi
@@ -358,15 +359,16 @@ Flickable {
 
             RangeSliderValueSolid {
                 id: rangeSlider_lumi
-                height: 32
                 anchors.top: imageLumi.bottom
                 anchors.topMargin: -2
                 anchors.left: parent.left
-                anchors.leftMargin: 32
+                anchors.leftMargin: 36
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: Theme.componentMargin
 
+                height: 32
                 hhh: isMobile ? 22 : 20
+
                 colorBg: Theme.colorYellow
                 colorFg: Theme.colorGreen
                 unit: "k"
@@ -530,11 +532,10 @@ Flickable {
 
         Item {
             id: itemOther
-            height: 256
             anchors.left: parent.left
-            anchors.leftMargin: 0
             anchors.right: parent.right
-            anchors.rightMargin: 0
+
+            height: 256
 
             IconSvg {
                 id: imageOther
@@ -568,7 +569,7 @@ Flickable {
                 anchors.leftMargin: 40
                 anchors.right: parent.right
                 anchors.rightMargin: 12
-                spacing: isPhone ? 12 : 16
+                spacing: Theme.componentMargin
 
                 ButtonWireframeIcon {
                     anchors.left: parent.left

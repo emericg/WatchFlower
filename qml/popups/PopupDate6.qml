@@ -8,7 +8,7 @@ Popup {
     id: popupDate
     width: appWindow.width * 0.9
     x: (appWindow.width / 2) - (width / 2)
-    y: (appWindow.height / 2) - (height / 2) // - (appHeader.height / 2)
+    y: (appWindow.height / 2) - (height / 2)
 
     padding: 0
     margins: 0
@@ -93,6 +93,7 @@ Popup {
     ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Column {
+        id: columnContent
 
         Rectangle {
             id: titleArea

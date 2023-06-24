@@ -177,7 +177,6 @@ Loader {
                 sensorHygro.visible = false
                 heatIndex.visible = false
                 dewPoint.visible = false
-                imageBattery.visible = false
 
             } else {
                 sensorDisconnected.visible = false
@@ -208,10 +207,6 @@ Loader {
                             dewPoint.visible = true
                         }
                     }
-                }
-
-                if (currentDevice.hasBattery && currentDevice.deviceBattery >= 0) {
-                    imageBattery.visible = true
                 }
             }
         }
@@ -314,8 +309,8 @@ Loader {
                 Column {
                     anchors.horizontalCenter: parent.horizontalCenter
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.verticalCenterOffset: -(appHeader.height / 2) + (imageBattery.visible ? (imageBattery.width / 2) : 0)
-                    spacing: 2
+                    anchors.verticalCenterOffset: -(status.height*0.666)
+                    spacing: 0
 
                     IconSvg {
                         id: sensorDisconnected
@@ -365,11 +360,13 @@ Loader {
 
                     IconSvg {
                         id: imageBattery
+                        anchors.horizontalCenter: parent.horizontalCenter
+
                         width: isPhone ? 20 : 24
                         height: isPhone ? 32 : 36
                         rotation: 90
-                        anchors.horizontalCenter: parent.horizontalCenter
 
+                        visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
                         source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
                         fillMode: Image.PreserveAspectCrop
                         color: cccc

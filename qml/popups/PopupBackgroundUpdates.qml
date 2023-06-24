@@ -5,16 +5,21 @@ import ThemeEngine 1.0
 
 Popup {
     id: popupBackgroundUpdates
-    x: (appWindow.width / 2) - (width / 2)
-    y: singleColumn ? (appWindow.height - height - appHeader.height) : ((appWindow.height / 2) - (height / 2))
+
+    x: singleColumn ? 0 : (appWindow.width / 2) - (width / 2)
+    y: singleColumn ? (appWindow.height - appHeader.height - height)
+                    : ((appWindow.height / 2) - (height / 2))
 
     width: singleColumn ? parent.width : 640
-    height: columnContent.height + padding*2
-    padding: singleColumn ? 20 : 24
+    height: columnContent.height + padding*2 + screenPaddingBottom
+    padding: Theme.componentMarginXL
 
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    //parent: appWindow.contentItem
+
+    ////////////////////////////////////////////////////////////////////////////
 
     property bool locPerm: false
 
@@ -44,7 +49,9 @@ Popup {
         Column {
             id: columnContent
             width: parent.width
-            spacing: 16
+            spacing: Theme.componentMarginXL
+
+            ////////
 
             Text {
                 width: parent.width
@@ -60,7 +67,7 @@ Popup {
 
             Column {
                 width: parent.width
-                spacing: 24
+                spacing: Theme.componentMarginXL
 
                 visible: !popupBackgroundUpdates.locPerm
 
@@ -90,9 +97,9 @@ Popup {
 
                 Flow {
                     width: parent.width
+                    spacing: Theme.componentMargin
 
                     property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
-                    spacing: 16
 
                     ButtonWireframeIconCentered {
                         width: parent.btnSize
@@ -144,7 +151,7 @@ Popup {
 
             Column {
                 width: parent.width
-                spacing: 24
+                spacing: Theme.componentMarginXL
 
                 visible: popupBackgroundUpdates.locPerm
 
@@ -184,9 +191,9 @@ Popup {
 
                 Flow {
                     width: parent.width
+                    spacing: Theme.componentMargin
 
                     property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
-                    spacing: 16
 
                     ButtonWireframeIconCentered {
                         width: parent.btnSize

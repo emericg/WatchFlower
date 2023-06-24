@@ -342,7 +342,7 @@ QString UtilsAndroid::getDeviceSerial()
         QAndroidJniObject contentR = appctx.callObjectMethod("getContentResolver", "()Landroid/content/ContentResolver;");
 
         QAndroidJniObject aidString = QAndroidJniObject::fromString("android_id");
-        QAndroidJniObject aidService = QAndroidJniObject::callStaticObjectMethod("android/provider/Settings$Secure","getString",
+        QAndroidJniObject aidService = QAndroidJniObject::callStaticObjectMethod("android/provider/Settings$Secure", "getString",
                                                                                  "(Landroid/content/ContentResolver;Ljava/lang/String;)Ljava/lang/String;",
                                                                                  contentR.object<jobject>(),
                                                                                  aidString.object<jstring>());
