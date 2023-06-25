@@ -5,8 +5,8 @@ import ThemeEngine 1.0
 
 Popup {
     id: actionMenu
-    width: 200
 
+    width: 200
     padding: 0
     margins: 0
 
@@ -82,9 +82,10 @@ Popup {
 
         ////////
 
-        Rectangle {
-            width: parent.width; height: 1;
-            color: Theme.colorSeparator
+        ListSeparatorPadded {
+            anchors.leftMargin: Theme.componentMargin
+            anchors.rightMargin: Theme.componentMargin
+            height: 9
             visible: (partonevisible && parttwovisible)
         }
 
@@ -122,9 +123,10 @@ Popup {
 
         ////////
 
-        Rectangle {
-            width: parent.width; height: 1;
-            color: Theme.colorSeparator
+        ListSeparatorPadded {
+            anchors.leftMargin: Theme.componentMargin
+            anchors.rightMargin: Theme.componentMargin
+            height: 9
             visible: ((partonevisible || parttwovisible) && partthreevisible)
         }
 
@@ -227,4 +229,6 @@ Popup {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }
