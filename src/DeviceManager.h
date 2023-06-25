@@ -178,6 +178,8 @@ public:
     DeviceManager(bool daemon = false);
     ~DeviceManager();
 
+    bool isDaemon() const { return m_daemonMode; }
+
     // Bluetooth management
     Q_INVOKABLE bool checkBluetooth();
     Q_INVOKABLE bool checkBluetoothPermissions();

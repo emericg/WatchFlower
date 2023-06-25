@@ -92,6 +92,10 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
         // Notifications enabled?
         if (sm->getNotifs())
         {
+#if defined(Q_OS_ANDROID)
+            // Don't show notifications when the Android application is on the foreground
+            if (!dm->isDaemon()) return;
+#endif
             QString title;
             QString message;
             int channel = 0;
