@@ -23,7 +23,7 @@ set(CORE_SOURCES
     SharingUtils.cpp SharingUtils.h)
 
 # OS specific sources & dependencies
-if (ANDROID)
+if(ANDROID)
     if(QT_DEFAULT_MAJOR_VERSION EQUAL 6)
         set(PLATFORM_SOURCES
             SharingUtils_android_qt6.cpp
@@ -39,7 +39,7 @@ if (ANDROID)
         set(PLATFORM_LIBRARIES Qt::AndroidExtras)
     endif()
 
-elseif (IOS)
+elseif(IOS)
     find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS Quick)
     set(PLATFORM_LIBRARIES Qt::Quick)
     set(PLATFORM_SOURCES

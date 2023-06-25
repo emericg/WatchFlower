@@ -23,7 +23,6 @@
 
 #include "MobileUI_private.h"
 
-#include <QCoreApplication>
 #include <QGuiApplication>
 #include <QJniObject>
 
@@ -78,6 +77,19 @@ static QJniObject getAndroidWindow()
     window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
 
     return window;
+}
+
+static QJniObject getDisplayCutout()
+{
+    // DisplayCutout has been added in API level 28
+
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
+    QJniObject decorview = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+    QJniObject insets = decorview.callObjectMethod("getRootWindowInsets", "()Landroid/view/WindowInsets;");
+    QJniObject cutout = insets.callObjectMethod("getDisplayCutout", "()Landroid/view/DisplayCutout;");
+
+    return cutout;
 }
 
 /* ************************************************************************** */
@@ -137,7 +149,8 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
         {
             // Added in API level 30
 
-            QJniObject inset = window.callObjectMethod("getInsetsController", "()Landroid/view/WindowInsetsController;");
+            QJniObject inset = window.callObjectMethod("getInsetsController",
+                                                       "()Landroid/view/WindowInsetsController;");
 
             int visibility = inset.callMethod<int>("getSystemBarsAppearance", "()I");
             if (theme == MobileUI::Theme::Light)
@@ -145,7 +158,8 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
             else
                 visibility &= ~APPEARANCE_LIGHT_STATUS_BARS;
 
-            inset.callMethod<void>("setSystemBarsAppearance", "(II)V", visibility, APPEARANCE_LIGHT_STATUS_BARS);
+            inset.callMethod<void>("setSystemBarsAppearance", "(II)V",
+                                   visibility, APPEARANCE_LIGHT_STATUS_BARS);
         }
     });
 }
@@ -190,31 +204,71 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 
 int MobileUIPrivate::getStatusbarHeight()
 {
-    return 24;
+    return 24; // TODO
 }
 
 int MobileUIPrivate::getNavbarHeight()
 {
-    return 48;
+    return 48; // TODO
 }
 
 int MobileUIPrivate::getSafeAreaTop()
 {
+    // DisplayCutout has been added in API level 28
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 28)
+    {
+        QJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetTop", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
     return 0;
 }
 
 int MobileUIPrivate::getSafeAreaLeft()
 {
+    // DisplayCutout has been added in API level 28
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 28)
+    {
+        QJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetLeft", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
     return 0;
 }
 
 int MobileUIPrivate::getSafeAreaRight()
 {
+    // DisplayCutout has been added in API level 28
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 28)
+    {
+        QJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetRight", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
     return 0;
 }
 
 int MobileUIPrivate::getSafeAreaBottom()
 {
+    // DisplayCutout has been added in API level 28
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 28)
+    {
+        QJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetBottom", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
     return 0;
 }
 

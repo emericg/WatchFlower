@@ -50,7 +50,7 @@ class MobileUI : public QObject
     Q_PROPERTY(int safeAreaRight READ getSafeAreaRight NOTIFY safeAreaUpdated)
     Q_PROPERTY(int safeAreaBottom READ getSafeAreaBottom NOTIFY safeAreaUpdated)
 
-    Q_PROPERTY(bool screenAlwaysOn READ isScreenkeepOn WRITE keepScreenOn CONSTANT)
+    Q_PROPERTY(bool screenAlwaysOn READ isScreenkeepOn WRITE keepScreenOn)
 
 Q_SIGNALS:
     void devicethemeUpdated();

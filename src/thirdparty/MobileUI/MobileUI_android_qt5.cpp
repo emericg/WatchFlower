@@ -45,6 +45,15 @@
 #define UI_MODE_NIGHT_YES                       0x00000020
 #define UI_MODE_NIGHT_MASK                      0x00000030
 
+// WindowInsetsController
+#define APPEARANCE_OPAQUE_STATUS_BARS           0x00000001
+#define APPEARANCE_OPAQUE_NAVIGATION_BARS       0x00000002
+#define APPEARANCE_LOW_PROFILE_BARS             0x00000004
+#define APPEARANCE_LIGHT_STATUS_BARS            0x00000008
+#define APPEARANCE_LIGHT_NAVIGATION_BARS        0x00000010
+#define APPEARANCE_SEMI_TRANSPARENT_STATUS_BARS 0x00000020
+#define APPEARANCE_SEMI_TRANSPARENT_NAVIGATION_BARS 0x0030
+
 /* ************************************************************************** */
 
 bool MobileUIPrivate::isAvailable_sys()
@@ -66,6 +75,18 @@ static QAndroidJniObject getAndroidWindow()
     window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
 
     return window;
+}
+
+static QAndroidJniObject getDisplayCutout()
+{
+    // DisplayCutout has been added in API level 28
+
+    QAndroidJniObject window = QtAndroid::androidActivity().callObjectMethod("getWindow", "()Landroid/view/Window;");
+    QAndroidJniObject decorview = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+    QAndroidJniObject insets = decorview.callObjectMethod("getRootWindowInsets", "()Landroid/view/WindowInsets;");
+    QAndroidJniObject cutout = insets.callObjectMethod("getDisplayCutout", "()Landroid/view/DisplayCutout;");
+
+    return cutout;
 }
 
 /* ************************************************************************** */
@@ -114,15 +135,37 @@ void MobileUIPrivate::setTheme_statusbar(MobileUI::Theme theme)
 
     QtAndroid::runOnAndroidThread([=]() {
         QAndroidJniObject window = getAndroidWindow();
-        QAndroidJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
+        if (QtAndroid::androidSdkVersion() < 30)
+        {
+            // Added in API level 23
+            // Deprecated in API level 30
 
-        int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
-        if (theme == MobileUI::Theme::Light)
-            visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-        else
-            visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            QAndroidJniObject view = window.callObjectMethod("getDecorView", "()Landroid/view/View;");
 
-        view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
+            int visibility = view.callMethod<int>("getSystemUiVisibility", "()I");
+            if (theme == MobileUI::Theme::Light)
+                visibility |= SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+            else
+                visibility &= ~SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+
+            view.callMethod<void>("setSystemUiVisibility", "(I)V", visibility);
+        }
+        else if (QtAndroid::androidSdkVersion() >= 30)
+        {
+            // Added in API level 30
+
+            QAndroidJniObject inset = window.callObjectMethod("getInsetsController",
+                                                              "()Landroid/view/WindowInsetsController;");
+
+            int visibility = inset.callMethod<int>("getSystemBarsAppearance", "()I");
+            if (theme == MobileUI::Theme::Light)
+                visibility |= APPEARANCE_LIGHT_STATUS_BARS;
+            else
+                visibility &= ~APPEARANCE_LIGHT_STATUS_BARS;
+
+            inset.callMethod<void>("setSystemBarsAppearance", "(II)V",
+                                   visibility, APPEARANCE_LIGHT_STATUS_BARS);
+        }
     });
 }
 
@@ -170,6 +213,79 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 }
 
 /* ************************************************************************** */
+
+int MobileUIPrivate::getStatusbarHeight()
+{
+    return 24;
+}
+
+int MobileUIPrivate::getNavbarHeight()
+{
+    return 48;
+}
+
+int MobileUIPrivate::getSafeAreaTop()
+{
+    if (QtAndroid::androidSdkVersion() >= 28)
+    {
+        QAndroidJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetTop", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaLeft()
+{
+    if (QtAndroid::androidSdkVersion() >= 28)
+    {
+        QAndroidJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetLeft", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaRight()
+{
+    if (QtAndroid::androidSdkVersion() >= 28)
+    {
+        QAndroidJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetRight", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaBottom()
+{
+    if (QtAndroid::androidSdkVersion() >= 28)
+    {
+        QAndroidJniObject cutout = getDisplayCutout();
+        if (cutout.isValid())
+        {
+            return cutout.callMethod<int>("getSafeInsetBottom", "()I") / qApp->devicePixelRatio();
+        }
+    }
+
+    return 0;
+}
+
+/* ************************************************************************** */
+
+bool MobileUIPrivate::isScreenkeepOn()
+{
+    return false; // TODO
+}
 
 void MobileUIPrivate::keepScreenOn(bool on)
 {

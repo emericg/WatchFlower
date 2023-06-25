@@ -45,22 +45,25 @@ ApplicationWindow {
     }
 
     function handleSafeAreas() {
-        screenPaddingStatusbar = mobileUI.statusbarHeight
-        screenPaddingNotch = 0
-        screenPaddingNavbar = mobileUI.navbarHeight
+        // safe areas are only taken into account if using full screen mode
+        if (flags & Qt.MaximizeUsingFullscreenGeometryHint) {
+            screenPaddingStatusbar = mobileUI.statusbarHeight
+            screenPaddingNotch = 0
+            screenPaddingNavbar = mobileUI.navbarHeight
 
-        screenPaddingTop = mobileUI.safeAreaTop
-        screenPaddingLeft = mobileUI.safeAreaLeft
-        screenPaddingRight = mobileUI.safeAreaRight
-        screenPaddingBottom = mobileUI.safeAreaBottom
+            screenPaddingTop = mobileUI.safeAreaTop
+            screenPaddingLeft = mobileUI.safeAreaLeft
+            screenPaddingRight = mobileUI.safeAreaRight
+            screenPaddingBottom = mobileUI.safeAreaBottom
 
-        if (Qt.platform.os === "android") {
-            screenPaddingStatusbar = screenPaddingTop // hack
-            screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
-            screenPaddingBottom = screenPaddingNavbar
-        }
-        if (Qt.platform.os === "ios") {
-            screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
+            if (Qt.platform.os === "android") {
+                screenPaddingStatusbar = screenPaddingTop // hack
+                screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
+                screenPaddingBottom = screenPaddingNavbar
+            }
+            if (Qt.platform.os === "ios") {
+                screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
+            }
         }
 /*
         console.log("> handleSafeAreas()")
