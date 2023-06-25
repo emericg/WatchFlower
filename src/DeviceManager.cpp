@@ -500,7 +500,9 @@ void DeviceManager::checkBluetoothIos()
 
     //qDebug() << "DeviceManager::checkBluetoothIos()";
 
-    m_btA = true;
+    m_btA = true; // there is no iOS device without a BLE adapter
+    m_btP = true; // always on
+    m_btG = true; // not necessary on iOS
 
     if (m_discoveryAgent)
     {

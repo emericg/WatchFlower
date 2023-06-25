@@ -33,39 +33,14 @@ Drawer {
             anchors.rightMargin: 1
             z: 5
 
-            Connections {
-                target: appWindow
-                function onScreenPaddingStatusbarChanged() { rectangleHeader.updateIOSHeader() }
-            }
-            Connections {
-                target: ThemeEngine
-                function onCurrentThemeChanged() { rectangleHeader.updateIOSHeader() }
-            }
-
-            function updateIOSHeader() {
-                if (Qt.platform.os === "ios") {
-                    if (screenPaddingStatusbar !== 0 && Theme.currentTheme === ThemeEngine.THEME_NIGHT)
-                        rectangleStatusbar.height = screenPaddingStatusbar
-                    else
-                        rectangleStatusbar.height = 0
-                }
-            }
-
             ////////
 
             Rectangle {
                 id: rectangleStatusbar
-                height: screenPaddingStatusbar
+                height: Math.max(screenPaddingTop, screenPaddingStatusbar + screenPaddingNotch)
                 anchors.left: parent.left
                 anchors.right: parent.right
                 color: Theme.colorBackground // "red" // to hide flickable content
-            }
-            Rectangle {
-                id: rectangleNotch
-                height: screenPaddingNotch
-                anchors.left: parent.left
-                anchors.right: parent.right
-                color: Theme.colorBackground // "yellow" // to hide flickable content
             }
             Rectangle {
                 id: rectangleLogo
@@ -97,6 +72,7 @@ Drawer {
                 }
             }
         }
+        
         MouseArea { anchors.fill: rectangleHeader; acceptedButtons: Qt.AllButtons; }
 
         ////////////////////////////////////////////////////////////////////////////

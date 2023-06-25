@@ -39,14 +39,24 @@ class MobileUI : public QObject
 
     Q_PROPERTY(QColor statusbarColor READ getStatusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
     Q_PROPERTY(Theme statusbarTheme READ getStatusbarTheme WRITE setStatusbarTheme NOTIFY statusbarUpdated)
+    Q_PROPERTY(int statusbarHeight READ getStatusbarHeight NOTIFY safeAreaUpdated)
 
     Q_PROPERTY(QColor navbarColor READ getNavbarColor WRITE setNavbarColor NOTIFY navbarUpdated)
     Q_PROPERTY(Theme navbarTheme READ getNavbarTheme WRITE setNavbarTheme NOTIFY navbarUpdated)
+    Q_PROPERTY(int navbarHeight READ getNavbarHeight NOTIFY navbarUpdated)
+
+    Q_PROPERTY(int safeAreaTop READ getSafeAreaTop NOTIFY safeAreaUpdated)
+    Q_PROPERTY(int safeAreaLeft READ getSafeAreaLeft NOTIFY safeAreaUpdated)
+    Q_PROPERTY(int safeAreaRight READ getSafeAreaRight NOTIFY safeAreaUpdated)
+    Q_PROPERTY(int safeAreaBottom READ getSafeAreaBottom NOTIFY safeAreaUpdated)
+
+    Q_PROPERTY(bool screenAlwaysOn READ isScreenkeepOn WRITE keepScreenOn CONSTANT)
 
 Q_SIGNALS:
     void devicethemeUpdated();
     void statusbarUpdated();
     void navbarUpdated();
+    void safeAreaUpdated();
 
 public:
     explicit MobileUI(QObject *parent = nullptr) : QObject(parent) {}
@@ -77,7 +87,17 @@ public:
     static Theme getNavbarTheme();
     static void setNavbarTheme(Theme theme);
 
+    // Screen safe areas
+    static int getStatusbarHeight();
+    static int getNavbarHeight();
+
+    static int getSafeAreaTop();
+    static int getSafeAreaLeft();
+    static int getSafeAreaRight();
+    static int getSafeAreaBottom();
+
     // Screen helpers
+    Q_INVOKABLE static bool isScreenkeepOn();
     Q_INVOKABLE static void keepScreenOn(bool on);
 };
 

@@ -55,6 +55,41 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
     Q_UNUSED(theme)
 }
 
+int MobileUIPrivate::getStatusbarHeight()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getNavbarHeight()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaTop()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaLeft()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaRight()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaBottom()
+{
+    return 0;
+}
+
+bool MobileUIPrivate::isScreenkeepOn()
+{
+    return false;
+}
+
 void MobileUIPrivate::keepScreenOn(bool on)
 {
     Q_UNUSED(on)

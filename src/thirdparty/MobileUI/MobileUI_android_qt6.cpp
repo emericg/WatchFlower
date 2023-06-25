@@ -24,6 +24,7 @@
 #include "MobileUI_private.h"
 
 #include <QCoreApplication>
+#include <QGuiApplication>
 #include <QJniObject>
 
 /* ************************************************************************** */
@@ -186,6 +187,43 @@ void MobileUIPrivate::setTheme_navbar(MobileUI::Theme theme)
 }
 
 /* ************************************************************************** */
+
+int MobileUIPrivate::getStatusbarHeight()
+{
+    return 24;
+}
+
+int MobileUIPrivate::getNavbarHeight()
+{
+    return 48;
+}
+
+int MobileUIPrivate::getSafeAreaTop()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaLeft()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaRight()
+{
+    return 0;
+}
+
+int MobileUIPrivate::getSafeAreaBottom()
+{
+    return 0;
+}
+
+/* ************************************************************************** */
+
+bool MobileUIPrivate::isScreenkeepOn()
+{
+    return false; // TODO
+}
 
 void MobileUIPrivate::keepScreenOn(bool on)
 {

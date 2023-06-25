@@ -52,6 +52,15 @@ public:
     static QColor navbarColor;
     static MobileUI::Theme navbarTheme;
 
+    static int getStatusbarHeight();
+    static int getNavbarHeight();
+
+    static int getSafeAreaTop();
+    static int getSafeAreaLeft();
+    static int getSafeAreaRight();
+    static int getSafeAreaBottom();
+
+    static bool isScreenkeepOn();
     static void keepScreenOn(bool on);
 };
 

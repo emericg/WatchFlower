@@ -26,96 +26,57 @@ ApplicationWindow {
     // 4 = Qt.InvertedPortraitOrientation, 8 = Qt.InvertedLandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
-    onScreenOrientationChanged: handleNotchesTimer.restart()
+    onScreenOrientationChanged: handleSafeAreasTimer.restart()
 
     property int screenPaddingStatusbar: 0
     property int screenPaddingNotch: 0
+    property int screenPaddingNavbar: 0
+
+    property int screenPaddingTop: 0
     property int screenPaddingLeft: 0
     property int screenPaddingRight: 0
     property int screenPaddingBottom: 0
 
     Timer {
-        id: handleNotchesTimer
-        interval: 33
+        id: handleSafeAreasTimer
+        interval: 0
         repeat: false
-        onTriggered: handleNotches()
+        onTriggered: handleSafeAreas()
     }
 
-    function handleNotches() {
-/*
-        console.log("handleNotches()")
-        console.log("screen width : " + Screen.width)
-        console.log("screen width avail : " + Screen.desktopAvailableWidth)
-        console.log("screen height: " + Screen.height)
-        console.log("screen height avail: " + Screen.desktopAvailableHeight)
-        console.log("screen orientation: " + Screen.orientation)
-        console.log("screen orientation (primary): " + Screen.primaryOrientation)
-*/
-        if (Qt.platform.os !== "ios") return
-        if (typeof quickWindow === "undefined" || !quickWindow) {
-            handleNotchesTimer.restart()
-            return
-        }
+    function handleSafeAreas() {
+        screenPaddingStatusbar = mobileUI.statusbarHeight
+        screenPaddingNotch = 0
+        screenPaddingNavbar = mobileUI.navbarHeight
 
-        // Margins
-        var safeMargins = utilsScreen.getSafeAreaMargins(quickWindow)
-        if (safeMargins["total"] === safeMargins["top"]) {
-            screenPaddingStatusbar = safeMargins["top"]
-            screenPaddingNotch = 0
-            screenPaddingLeft = 0
-            screenPaddingRight = 0
-            screenPaddingBottom = 0
-        } else if (safeMargins["total"] > 0) {
-            if (Screen.orientation === Qt.PortraitOrientation) {
-                screenPaddingStatusbar = 20
-                screenPaddingNotch = 12
-                screenPaddingLeft = 0
-                screenPaddingRight = 0
-                screenPaddingBottom = 6
-            } else if (Screen.orientation === Qt.InvertedPortraitOrientation) {
-                screenPaddingStatusbar = 12
-                screenPaddingNotch = 20
-                screenPaddingLeft = 0
-                screenPaddingRight = 0
-                screenPaddingBottom = 6
-            } else if (Screen.orientation === Qt.LandscapeOrientation) {
-                screenPaddingStatusbar = 0
-                screenPaddingNotch = 0
-                screenPaddingLeft = 32
-                screenPaddingRight = 0
-                screenPaddingBottom = 0
-            } else if (Screen.orientation === Qt.InvertedLandscapeOrientation) {
-                screenPaddingStatusbar = 0
-                screenPaddingNotch = 0
-                screenPaddingLeft = 0
-                screenPaddingRight = 32
-                screenPaddingBottom = 0
-            } else {
-                screenPaddingStatusbar = 0
-                screenPaddingNotch = 0
-                screenPaddingLeft = 0
-                screenPaddingRight = 0
-                screenPaddingBottom = 0
-            }
-        } else {
-            screenPaddingStatusbar = 0
-            screenPaddingNotch = 0
-            screenPaddingLeft = 0
-            screenPaddingRight = 0
-            screenPaddingBottom = 0
+        screenPaddingTop = mobileUI.safeAreaTop
+        screenPaddingLeft = mobileUI.safeAreaLeft
+        screenPaddingRight = mobileUI.safeAreaRight
+        screenPaddingBottom = mobileUI.safeAreaBottom
+
+        if (Qt.platform.os === "android") {
+            screenPaddingStatusbar = screenPaddingTop // hack
+            screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
+            screenPaddingBottom = screenPaddingNavbar
+        }
+        if (Qt.platform.os === "ios") {
+            screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
         }
 /*
-        console.log("total:" + safeMargins["total"])
-        console.log("top:" + safeMargins["top"])
-        console.log("left:" + safeMargins["left"])
-        console.log("right:" + safeMargins["right"])
-        console.log("bottom:" + safeMargins["bottom"])
-
-        console.log("RECAP screenPaddingStatusbar:" + screenPaddingStatusbar)
-        console.log("RECAP screenPaddingNotch:" + screenPaddingNotch)
-        console.log("RECAP screenPaddingLeft:" + screenPaddingLeft)
-        console.log("RECAP screenPaddingRight:" + screenPaddingRight)
-        console.log("RECAP screenPaddingBottom:" + screenPaddingBottom)
+        console.log("> handleSafeAreas()")
+        console.log("- screen width:        " + Screen.width)
+        console.log("- screen width avail:  " + Screen.desktopAvailableWidth)
+        console.log("- screen height:       " + Screen.height)
+        console.log("- screen height avail: " + Screen.desktopAvailableHeight)
+        console.log("- screen orientation:  " + Screen.orientation)
+        console.log("- screen orientation (primary): " + Screen.primaryOrientation)
+        console.log("- screenSizeStatusbar: " + screenPaddingStatusbar)
+        console.log("- screenSizeNotch:     " + screenPaddingNotch)
+        console.log("- screenSizeNavbar:    " + screenPaddingNavbar)
+        console.log("- screenPaddingTop:    " + screenPaddingTop)
+        console.log("- screenPaddingLeft:   " + screenPaddingLeft)
+        console.log("- screenPaddingRight:  " + screenPaddingRight)
+        console.log("- screenPaddingBottom: " + screenPaddingBottom)
 */
     }
 
@@ -144,7 +105,7 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        handleNotchesTimer.restart()
+        handleSafeAreasTimer.restart()
         mobileUI.isLoading = false
     }
 
@@ -581,6 +542,18 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: true; enabled: true; }
             }
         ]
+    }
+
+    Rectangle { // navbar area
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        height: screenPaddingBottom
+        visible: (mobileMenu.visible || appContent.state === "Tutorial")
+        color: {
+            if (appContent.state === "Tutorial") return Theme.colorHeader
+            return Theme.colorBackground
+        }
     }
 
     ////////////////

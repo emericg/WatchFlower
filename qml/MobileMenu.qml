@@ -9,12 +9,12 @@ Rectangle {
     anchors.bottom: parent.bottom
     anchors.bottomMargin: screenPaddingBottom
 
-    property int hhh: (appWindow.isPhone ? 36 : 48)
-    property int hhi: (hhh * 0.666)
+    property int hhh: (isTablet ? 48 : 36)
+    property int hhi: (hhh * 0.5)
     property int hhv: visible ? hhh : 0
 
     height: hhh
-    color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
+    color: isTablet ? Theme.colorTabletmenu : Theme.colorBackground
 
     visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceList" ||
@@ -31,9 +31,9 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 1
-        opacity: 0.5
-        visible: !appWindow.isPhone
+        height: 2
+        opacity: 0.16
+        visible: isTablet
         color: Theme.colorTabletmenuContent
     }
 
@@ -77,7 +77,7 @@ Rectangle {
     Row { // main menu
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
-        spacing: (!appWindow.wideMode || (appWindow.isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
+        spacing: (!appWindow.wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
 
         visible: (appContent.state === "DeviceList" ||
                   appContent.state === "DeviceBrowser" ||

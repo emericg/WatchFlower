@@ -76,7 +76,7 @@ Item {
         Column { // mobile only
             anchors.left: parent.left
             anchors.right: parent.right
-            spacing: 24
+            spacing: Theme.componentMarginXL
 
             visible: isMobile
 
@@ -124,11 +124,34 @@ Item {
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
                 }
-
                 Text {
                     anchors.left: parent.left
                     anchors.right: parent.right
-                    visible: (Qt.platform.os === "ios")
+                    visible: !deviceManager.btE
+
+                    IconSvg {
+                        width: 20; height: 20;
+                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        color: Theme.colorWarning
+                    }
+
+                    text: qsTr("Please enable Bluetooth on your device in order to use the application.")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                }
+                Text {
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    visible: !deviceManager.btP
+
+                    IconSvg {
+                        width: 20; height: 20;
+                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        color: Theme.colorWarning
+                    }
 
                     text: qsTr("Authorization to use Bluetooth is required to connect to the sensors.")
                     textFormat: Text.PlainText
@@ -143,14 +166,14 @@ Item {
 
             Grid {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: 16
+                spacing: Theme.componentMargin
 
                 rows: 2
                 columns: singleColumn ? 1 : 2
 
                 Item {
                     width: singleColumn ? contentColumn.width : btn1.width
-                    height: 40
+                    height: Theme.componentHeight
 
                     visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
@@ -158,7 +181,7 @@ Item {
                         id: btn1
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        //width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+                        width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? undefined : (parent.width*0.666)
 
                         text: qsTr("Official information")
                         primaryColor: Theme.colorSubText
@@ -177,18 +200,19 @@ Item {
 
                 Item {
                     width: singleColumn ? contentColumn.width : btn2.width
-                    height: 40
+                    height: Theme.componentHeight
 
                     ButtonWireframe {
                         id: btn2
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        //width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+                        width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? undefined : (parent.width*0.666)
 
                         text: qsTr("Launch detection")
                         fullColor: true
                         primaryColor: Theme.colorPrimary
 
+                        //enabled: deviceManager.bluetooth
                         onClicked: {
                             if (utilsApp.checkMobileBleLocationPermission()) {
                                 scan()

@@ -290,8 +290,7 @@ Loader {
 
             ////////
 
-            Item {
-                id: dependencies
+            Item { // list dependencies
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
                 anchors.right: parent.right
@@ -300,7 +299,6 @@ Loader {
                 height: 40 + dependenciesText.height + dependenciesColumn.height
 
                 IconSvg {
-                    id: dependenciesImg
                     width: 24
                     height: 24
                     anchors.left: parent.left
@@ -321,7 +319,7 @@ Loader {
                     anchors.rightMargin: 8
 
                     text: qsTr("This application is made possible thanks to a couple of third party open source projects:")
-                    textFormat: Text.colorSubText
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.pixelSize: Theme.fontSizeContent
                     wrapMode: Text.WordWrap
@@ -361,8 +359,7 @@ Loader {
 
             ListSeparator { }
 
-            Item {
-                id: translators
+            Item { // list translators
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
                 anchors.right: parent.right
@@ -371,7 +368,6 @@ Loader {
                 height: 40 + translatorsText.height + translatorsColumn.height
 
                 IconSvg {
-                    id: translatorsImg
                     width: 24
                     height: 24
                     anchors.left: parent.left
