@@ -95,4 +95,9 @@ void MobileUIPrivate::keepScreenOn(bool on)
     Q_UNUSED(on)
 }
 
+void MobileUIPrivate::refresh()
+{
+    return;
+}
+
 /* ************************************************************************** */

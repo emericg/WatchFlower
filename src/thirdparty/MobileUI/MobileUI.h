@@ -99,6 +99,9 @@ public:
     // Screen helpers
     Q_INVOKABLE static bool isScreenkeepOn();
     Q_INVOKABLE static void keepScreenOn(bool on);
+
+    // HACK for Android 11+ // Refresh Status bar theme
+    Q_INVOKABLE static void refresh();
 };
 
 /* ************************************************************************** */

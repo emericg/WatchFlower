@@ -150,6 +150,8 @@ void UtilsApp::vibrate(int ms)
 {
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::vibrate(ms);
+#elif defined(Q_OS_IOS)
+    return UtilsIOS::vibrate(ms);
 #else
     Q_UNUSED(ms)
 #endif
@@ -447,6 +449,8 @@ bool UtilsApp::isMobileGpsEnabled()
 {
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::gpsutils_isGpsEnabled();
+#elif defined(Q_OS_IOS)
+    return false; // TODO
 #else
     return false;
 #endif

@@ -62,6 +62,8 @@ public:
 
     static bool isScreenkeepOn();
     static void keepScreenOn(bool on);
+
+    static void refresh();
 };
 
 /* ************************************************************************** */

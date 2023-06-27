@@ -74,4 +74,11 @@ void UtilsIOS::screenLockOrientation(int orientation, bool autoRotate)
 }
 
 /* ************************************************************************** */
+
+void UtilsIOS::vibrate(int ms)
+{
+    // TODO
+}
+
+/* ************************************************************************** */
 #endif // Q_OS_IOS

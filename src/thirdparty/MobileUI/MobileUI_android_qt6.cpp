@@ -292,3 +292,13 @@ void MobileUIPrivate::keepScreenOn(bool on)
 }
 
 /* ************************************************************************** */
+
+void MobileUIPrivate::refresh()
+{
+    if (QNativeInterface::QAndroidApplication::sdkVersion() >= 30)
+    {
+        setTheme_statusbar(MobileUIPrivate::statusbarTheme);
+    }
+}
+
+/* ************************************************************************** */

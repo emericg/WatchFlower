@@ -26,7 +26,10 @@ ApplicationWindow {
     // 4 = Qt.InvertedPortraitOrientation, 8 = Qt.InvertedLandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
-    onScreenOrientationChanged: handleSafeAreasTimer.restart()
+    onScreenOrientationChanged: {
+        handleSafeAreas()
+        mobileUI.refresh()
+    }
 
     property int screenPaddingStatusbar: 0
     property int screenPaddingNotch: 0
@@ -36,13 +39,6 @@ ApplicationWindow {
     property int screenPaddingLeft: 0
     property int screenPaddingRight: 0
     property int screenPaddingBottom: 0
-
-    Timer {
-        id: handleSafeAreasTimer
-        interval: 0
-        repeat: false
-        onTriggered: handleSafeAreas()
-    }
 
     function handleSafeAreas() {
         // safe areas are only taken into account if using full screen mode
@@ -108,7 +104,7 @@ ApplicationWindow {
     // Events handling /////////////////////////////////////////////////////////
 
     Component.onCompleted: {
-        handleSafeAreasTimer.restart()
+        handleSafeAreas()
         mobileUI.isLoading = false
     }
 
