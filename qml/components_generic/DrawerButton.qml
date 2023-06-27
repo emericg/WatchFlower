@@ -5,6 +5,9 @@ import QtQuick.Controls.impl
 import QtQuick.Controls.Material
 import QtQuick.Controls.Material.impl
 
+//import QtGraphicalEffects 1.15 // Qt5
+import Qt5Compat.GraphicalEffects // Qt6
+
 import ThemeEngine
 
 T.ItemDelegate {
@@ -32,17 +35,33 @@ T.ItemDelegate {
     background: Item {
         implicitHeight: Theme.componentHeightL
 
-        Rectangle {
+        Item {
             anchors.fill: parent
             anchors.margins: 4
             anchors.leftMargin: 8
             anchors.rightMargin: 8
 
-            radius: Theme.componentRadius
-            color: control.down ? Theme.colorForeground : "transparent"
-            opacity: control.down
-            Behavior on opacity { OpacityAnimator { duration: 133 } }
+            RippleThemed {
+                width: parent.width
+                height: parent.height
+
+                pressed: control.pressed
+                active: enabled && (control.down || control.visualFocus || control.hovered)
+                color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.5)
+            }
+
+            layer.enabled: true
+            layer.effect: OpacityMask {
+                maskSource: Rectangle {
+                    x: background.x
+                    y: background.y
+                    width: background.width
+                    height: background.height
+                    radius: Theme.componentRadius
+                }
+            }
         }
+
     }
 
     ////////////////

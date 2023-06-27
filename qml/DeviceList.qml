@@ -132,7 +132,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     ItemNoDevice {
-        id: itemNoDevice
         anchors.fill: parent
         visible: !deviceManager.hasDevices
     }
@@ -143,6 +142,7 @@ Item {
         id: loaderDeviceList
         anchors.fill: parent
         anchors.topMargin: rowbar.height
+
         asynchronous: false
     }
 

@@ -146,6 +146,9 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             visible: !control.compact
 
+            opacity: enabled ? 1.0 : 0.4
+            Behavior on opacity { NumberAnimation { duration: 333 } }
+
             text: control.text
             textFormat: Text.PlainText
             color: control.iconColor

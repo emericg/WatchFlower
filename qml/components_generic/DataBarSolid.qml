@@ -39,6 +39,8 @@ Item {
         anchors.fill: parent
         spacing: 12
 
+        ////////////////
+
         Text {
             id: item_legend
             width: legendWidth
@@ -55,7 +57,7 @@ Item {
             horizontalAlignment: Text.AlignRight
         }
 
-        ////////
+        ////////////////
 
         Item {
             id: item_bg
@@ -294,6 +296,10 @@ Item {
                     }
                 }
             }
+
+            ////////
         }
+
+        ////////////////
     }
 }

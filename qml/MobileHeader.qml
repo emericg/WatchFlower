@@ -87,7 +87,7 @@ Rectangle {
                 height: parent.height
 
                 pressed: parent.pressed
-                //active: enabled && parent.down
+                //active: enabled && parent.containsPress
                 color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
             }
 
@@ -193,12 +193,11 @@ Rectangle {
                 }
 
                 RippleThemed {
-                    anchor: parent
                     width: parent.width
                     height: parent.height
 
                     pressed: parent.pressed
-                    //active: enabled && parent.down
+                    //active: enabled && parent.containsPress
                     color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
                 }
 
@@ -211,9 +210,9 @@ Rectangle {
                     color: Theme.colorHeaderContent
                 }
             }
-
-            ////////////
         }
+
+        ////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////

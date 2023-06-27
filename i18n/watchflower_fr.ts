@@ -2647,7 +2647,7 @@
     <message>
         <location filename="../qml/Settings.qml" line="830"/>
         <source>freeze warnings</source>
-        <translation type="unfinished">alertes de température négatives</translation>
+        <translation type="unfinished">alertes de températures négatives</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="860"/>

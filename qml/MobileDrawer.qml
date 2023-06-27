@@ -51,11 +51,12 @@ Drawer {
 
                 Image {
                     id: imageHeader
-                    width: 40
-                    height: 40
                     anchors.left: parent.left
                     anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
+
+                    width: 40
+                    height: 40
                     source: "qrc:/assets/logos/logo.svg"
                 }
                 Text {
@@ -72,7 +73,7 @@ Drawer {
                 }
             }
         }
-        
+
         MouseArea { anchors.fill: rectangleHeader; acceptedButtons: Qt.AllButtons; }
 
         ////////////////////////////////////////////////////////////////////////////
