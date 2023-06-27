@@ -84,9 +84,7 @@ void AndroidService::gotowork()
             m_deviceManager = new DeviceManager(true);
 
             // Device manager is operational?
-            if (m_deviceManager &&
-                m_deviceManager->checkBluetooth() &&
-                m_deviceManager->areDevicesAvailable())
+            if (m_deviceManager)
             {
                 // Start background refresh process
                 m_deviceManager->refreshDevices_background();

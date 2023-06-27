@@ -10,7 +10,10 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
+        // start nearby scanning
         deviceManager.scanNearby_start()
+
+        // change screen
         appContent.state = "DeviceBrowser"
     }
 

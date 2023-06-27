@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 import ThemeEngine
 
@@ -32,15 +33,13 @@ Item {
         id: contentColumn
 
         anchors.left: parent.left
-        anchors.leftMargin: 32
         anchors.right: parent.right
-        anchors.rightMargin: 32
         anchors.verticalCenter: parent.verticalCenter
-        anchors.verticalCenterOffset: -48
+        anchors.verticalCenterOffset: -Theme.componentMarginXL
 
-        IconSvg { // imageSearch
+        IconSvg { // magnifying glass icon
             anchors.horizontalCenter: parent.horizontalCenter
-            width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 256 : (parent.width*0.666)
+            width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.66)
             height: width
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"
@@ -58,63 +57,98 @@ Item {
             }
         }
 
-        ButtonWireframe { // desktop only
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 256
-            visible: isDesktop
-
-            text: qsTr("Launch detection")
-            fullColor: true
-            primaryColor: Theme.colorPrimary
-
-            onClicked: {
-                checkBluetoothPermissions()
-                retryScan.start()
-            }
-        }
-
-        Column { // mobile only
+        Column {
             anchors.left: parent.left
             anchors.right: parent.right
             spacing: Theme.componentMarginXL
 
-            visible: isMobile
-
             ////////
 
-            Column {
+            ColumnLayout {
                 anchors.left: parent.left
+                anchors.leftMargin: Theme.componentMargin*2.5 + 20
                 anchors.right: parent.right
-                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-                spacing: 4
+                anchors.rightMargin: Theme.componentMargin*2.5
+                spacing: Theme.componentMargin/2
+
+                ////
 
                 Text {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
+                    Layout.maximumWidth: parent.width
+                    Layout.alignment: Qt.AlignHCenter
+
+                    visible: !deviceManager.bluetoothEnabled
+
+                    IconSvg {
+                        anchors.right: parent.left
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 20; height: 20;
+                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        color: Theme.colorWarning
+                    }
+
+                    text: qsTr("Please <b>enable Bluetooth</b> on your device in order to use the application.")
+                    textFormat: Text.StyledText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                }
+
+                ////
+
+                Text {
+                    Layout.maximumWidth: parent.width
+                    Layout.alignment: Qt.AlignHCenter
+
+                    visible: (Qt.platform.os === "osx" || Qt.platform.os === "ios")
+
+                    IconSvg {
+                        anchors.right: parent.left
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 20; height: 20;
+                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        color: Theme.colorWarning
+                    }
+
+                    text: qsTr("Authorization to use Bluetooth is <b>required</b> to connect to the sensors.")
+                    textFormat: Text.StyledText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                    color: Theme.colorSubText
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                }
+
+                ////
+
+                Text {
+                    Layout.maximumWidth: parent.width
+                    Layout.alignment: Qt.AlignHCenter
+
                     visible: (Qt.platform.os === "android")
+
+                    IconSvg {
+                        anchors.right: parent.left
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 20; height: 20;
+                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        color: Theme.colorWarning
+                    }
 
                     text: qsTr("On Android 6+, scanning for Bluetooth Low Energy devices requires <b>location permission</b>.")
                     textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeContentSmall
                     color: Theme.colorSubText
                     wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
+                    horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
                 }
                 Text {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: (Qt.platform.os === "android" && !utilsApp.isMobileGpsEnabled())
+                    Layout.maximumWidth: parent.width
+                    Layout.alignment: Qt.AlignHCenter
 
-                    text: qsTr("Some Android devices also require the actual <b>GPS to be turned on</b>.")
-                    textFormat: Text.StyledText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                    color: Theme.colorSubText
-                    wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Text {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
                     visible: (Qt.platform.os === "android")
 
                     text: qsTr("The application is neither using nor storing your location. Sorry for the inconvenience.")
@@ -122,51 +156,69 @@ Item {
                     font.pixelSize: Theme.fontSizeContentSmall
                     color: Theme.colorSubText
                     wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
+                    horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
                 }
+
+                ////
+
                 Text {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: !deviceManager.btE
+                    Layout.maximumWidth: parent.width
+                    Layout.alignment: Qt.AlignHCenter
+
+                    visible: (Qt.platform.os === "android" && !deviceManager.permissionLocationGPS)
 
                     IconSvg {
+                        anchors.right: parent.left
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
                         width: 20; height: 20;
                         source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
-                        color: Theme.colorWarning
+                        color: Theme.colorSubText
                     }
 
-                    text: qsTr("Please enable Bluetooth on your device in order to use the application.")
-                    textFormat: Text.PlainText
+                    text: qsTr("Some Android devices also require the actual <b>GPS to be turned on</b>.")
+                    textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeContentSmall
                     color: Theme.colorSubText
                     wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
+                    horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
                 }
+
+                ////
+
                 Text {
-                    anchors.left: parent.left
-                    anchors.right: parent.right
-                    visible: !deviceManager.btP
+                    Layout.maximumWidth: parent.width
+                    Layout.alignment: Qt.AlignHCenter
+
+                    visible: settingsManager.bluetoothLimitScanningRange
 
                     IconSvg {
+                        anchors.right: parent.left
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
                         width: 20; height: 20;
-                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
-                        color: Theme.colorWarning
+                        source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                        color: Theme.colorSubText
                     }
 
-                    text: qsTr("Authorization to use Bluetooth is required to connect to the sensors.")
-                    textFormat: Text.PlainText
+                    text: qsTr("Please keep your device <b>close</b> to the sensors you want to scan.")
+                    textFormat: Text.StyledText
                     font.pixelSize: Theme.fontSizeContentSmall
                     color: Theme.colorSubText
                     wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
+                    horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
                 }
+
+                ////
             }
 
             ////////
 
             Grid {
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: Theme.componentMargin
+
+                visible: isMobile
+                spacing: Theme.componentMarginXL
 
                 rows: 2
                 columns: singleColumn ? 1 : 2
@@ -175,13 +227,11 @@ Item {
                     width: singleColumn ? contentColumn.width : btn1.width
                     height: Theme.componentHeight
 
-                    visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-
                     ButtonWireframeIcon {
                         id: btn1
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? undefined : (parent.width*0.666)
+                        //width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? undefined : (parent.width*0.75)
 
                         text: qsTr("Official information")
                         primaryColor: Theme.colorSubText
@@ -206,18 +256,25 @@ Item {
                         id: btn2
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? undefined : (parent.width*0.666)
+                        //width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? undefined : (parent.width*0.75)
 
-                        text: qsTr("Launch detection")
+                        text: deviceManager.scanning ? qsTr("Scanning...") : qsTr("Launch detection")
                         fullColor: true
                         primaryColor: Theme.colorPrimary
 
-                        //enabled: deviceManager.bluetooth
                         onClicked: {
-                            if (utilsApp.checkMobileBleLocationPermission()) {
+                            // Just to be sure...
+                            deviceManager.enableBluetooth(true)
+
+                            // Do we have permissions?
+                            if (deviceManager.bluetoothPermissions) {
+                                // Now we scan...
                                 scan()
                             } else {
+                                // Ask permission
                                 utilsApp.getMobileBleLocationPermission()
+
+                                // Now we scan...
                                 retryScan.start()
                             }
                         }
@@ -227,18 +284,23 @@ Item {
 
             ////////
 
-            Text {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                visible: settingsManager.bluetoothLimitScanningRange
+            ButtonWireframe { // desktop only launch button
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 320
 
-                text: qsTr("Please keep your device close to the sensors you want to scan.")
-                textFormat: Text.PlainText
-                font.pixelSize: Theme.fontSizeContentSmall
-                color: Theme.colorSubText
-                wrapMode: Text.WordWrap
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignBottom
+                visible: isDesktop
+                fullColor: true
+                primaryColor: Theme.colorPrimary
+
+                text: deviceManager.scanning ? qsTr("Scanning...") : qsTr("Launch detection")
+
+                onClicked: {
+                    // Just to be sure...
+                    deviceManager.enableBluetooth()
+
+                    // Now we scan...
+                    retryScan.start()
+                }
             }
 
             ////////

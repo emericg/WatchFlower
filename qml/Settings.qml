@@ -904,9 +904,8 @@ Loader {
                     bottomPadding: 0
                     visible: element_bluetoothControl.visible
 
-                    text: settingsManager.bluetoothControl ?
-                              qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.") :
-                              qsTr("WatchFlower will enable your device's Bluetooth in order to operate.")
+                    text: settingsManager.bluetoothControl ? qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
+                                                             qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText

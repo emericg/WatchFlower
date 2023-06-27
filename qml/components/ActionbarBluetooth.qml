@@ -66,10 +66,7 @@ Rectangle {
         }
         onClicked: {
             if (Qt.platform.os === "android" && !deviceManager.bluetoothPermissions) {
-                //utilsApp.getMobileBleLocationPermission()
-                //deviceManager.checkBluetoothPermissions()
-
-                // someone clicked 'never ask again'?
+                // someone clicked 'never ask again' on the Bluetooth permission?
                 screenAboutPermissions.loadScreenFrom("DeviceList")
             } else {
                 deviceManager.enableBluetooth(settingsManager.bluetoothControl)

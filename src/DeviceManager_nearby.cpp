@@ -49,7 +49,6 @@ void DeviceManager::scanNearby_start()
         {
             startBleAgent();
         }
-
         if (m_discoveryAgent)
         {
             if (m_discoveryAgent->isActive() && m_scanning)
@@ -73,23 +72,23 @@ void DeviceManager::scanNearby_start()
                     this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
 
             m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_listening_duration_nearby*1000);
+            m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
-            if (hasBluetoothPermissions())
+            if (m_discoveryAgent->isActive())
             {
-                m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
-
-                if (m_discoveryAgent->isActive())
-                {
-                    m_listening = true;
-                    Q_EMIT listeningChanged();
-                    qDebug() << "Listening (Bluetooth) for devices...";
-                }
+                m_listening = true;
+                Q_EMIT listeningChanged();
+                //qDebug() << "Listening for nearby devices...";
             }
             else
             {
-                qWarning() << "Cannot scan or listen without related Android permissions";
+                qWarning() << "DeviceManager::listenDevices_start() DID NOT START";
             }
         }
+    }
+    else
+    {
+        qWarning() << "Cannot scan or listen without BLE or BLE permissions";
     }
 }
 

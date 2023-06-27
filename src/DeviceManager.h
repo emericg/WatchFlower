@@ -61,17 +61,22 @@ class DeviceManager: public QObject
 
     ////////
 
-    Q_PROPERTY(bool listening READ isListening NOTIFY listeningChanged)
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
+    Q_PROPERTY(bool listening READ isListening NOTIFY listeningChanged)
+    Q_PROPERTY(bool advertising READ isAdvertising NOTIFY advertisingChanged)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
     Q_PROPERTY(bool syncing READ isSyncing NOTIFY syncingChanged)
-    Q_PROPERTY(bool advertising READ isAdvertising NOTIFY advertisingChanged)
 
     Q_PROPERTY(bool bluetooth READ hasBluetooth NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothAdapter READ hasBluetoothAdapter NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothEnabled READ hasBluetoothEnabled NOTIFY bluetoothChanged)
     Q_PROPERTY(bool bluetoothPermissions READ hasBluetoothPermissions NOTIFY bluetoothChanged)
-    Q_PROPERTY(bool bluetoothGPS READ hasBluetoothGPS NOTIFY bluetoothChanged)
+
+    Q_PROPERTY(bool permissionOS READ hasPermissionOS NOTIFY permissionsChanged)
+    Q_PROPERTY(bool permissionLocationBLE READ hasPermissionLocationBLE NOTIFY permissionsChanged)
+    Q_PROPERTY(bool permissionLocationBackground READ hasPermissionLocationBackground NOTIFY permissionsChanged)
+    Q_PROPERTY(bool permissionLocationGPS READ hasPermissionGPS NOTIFY permissionsChanged)
+
     Q_PROPERTY(int bluetoothHostMode READ getBluetoothHostMode NOTIFY hostModeChanged)
 
     static const int ble_scanning_duration = 30;
@@ -79,15 +84,19 @@ class DeviceManager: public QObject
     static const int ble_listening_duration_nearby = 60;
     static const int ble_listening_duration_background = 45;
 
-    bool m_dbInternal = false;
-    bool m_dbExternal = false;
+    bool m_dbInternal = false;  //!< do we have an internal SQLite database?
+    bool m_dbExternal = false;  //!< do we have a remote MySQL database?
 
-    bool m_daemonMode = false;
+    bool m_daemonMode = false;  //!< did we start without UI?
 
-    bool m_btA = false; //!< do we have a BLE adapter?
-    bool m_btE = false; //!< is the BLE adapter enabled?
-    bool m_btP = false; //!< do we have BLE permissions? (Android and macOS)
-    bool m_btG = false; //!< do we have GPS enabled? (Android)
+    bool m_bleAdapter = false;      //!< do we have a BLE adapter?
+    bool m_bleEnabled = false;      //!< is the BLE adapter enabled?
+    bool m_blePermissions = false;  //!< do we have necessary BLE permissions? (OS independent)
+
+    bool m_permOS = false;          //!< do we have OS permissions for BLE? (macOS, iOS)
+    bool m_permLocationBLE = false; //!< do we location permission? (Android)
+    bool m_permLocationBKG = false; //!< do we background location permission? (Android)
+    bool m_permGPS = false;         //!< is the GPS enabled? (Android)
 
     QBluetoothLocalDevice *m_bluetoothAdapter = nullptr;
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
@@ -114,11 +123,14 @@ class DeviceManager: public QObject
     QList <QObject *> m_devices_syncing_queue;
     QList <QObject *> m_devices_syncing;
 
-    bool m_listening = false;
-    bool isListening() const;
-
     bool m_scanning = false;
-    bool isScanning() const;
+    bool isScanning() const { return m_scanning; }
+
+    bool m_listening = false;
+    bool isListening() const { return m_listening; }
+
+    bool m_advertising = false;
+    bool isAdvertising() const { return m_advertising; }
 
     bool m_updating = false;
     bool isUpdating() const;
@@ -126,19 +138,20 @@ class DeviceManager: public QObject
     bool m_syncing = false;
     bool isSyncing() const;
 
-    bool m_advertising = false;
-    bool isAdvertising() const;
+    bool hasBluetooth() const { return (m_bleAdapter && m_bleEnabled && m_blePermissions); }
+    bool hasBluetoothAdapter() const { return m_bleAdapter; }
+    bool hasBluetoothEnabled() const { return m_bleEnabled; }
+    bool hasBluetoothPermissions() const { return m_blePermissions; }
+
+    bool hasPermissionOS() const { return m_permOS; }
+    bool hasPermissionLocationBLE() const { return m_permLocationBLE; }
+    bool hasPermissionLocationBackground() const { return m_permLocationBKG; }
+    bool hasPermissionGPS() const { return m_permGPS; }
 
     int getBluetoothHostMode() const { return m_ble_hostmode; }
 
-    bool hasBluetooth() const;
-    bool hasBluetoothAdapter() const;
-    bool hasBluetoothEnabled() const;
-    bool hasBluetoothPermissions() const;
-    bool hasBluetoothGPS() const;
-
-    void checkBluetoothIos();
     void startBleAgent();
+    void checkBluetoothIOS();
 
     void setLastRun();
 
@@ -147,16 +160,17 @@ class DeviceManager: public QObject
 
 Q_SIGNALS:
     void bluetoothChanged();
+    void permissionsChanged();
 
     void devicesListUpdated();
     void devicesNearbyUpdated();
     void devicesBlacklistUpdated();
 
-    void listeningChanged();
     void scanningChanged();
+    void listeningChanged();
+    void advertisingChanged();
     void updatingChanged();
     void syncingChanged();
-    void advertisingChanged();
     void hostModeChanged();
 
 private slots:
@@ -188,20 +202,29 @@ public:
     // Scanning management
     static int getLastRun();
 
-    Q_INVOKABLE void scanDevices_start();
-    Q_INVOKABLE void scanDevices_stop();
-
-    Q_INVOKABLE void listenDevices_start();
-    Q_INVOKABLE void listenDevices_stop();
-
     Q_INVOKABLE void scanNearby_start();
     Q_INVOKABLE void scanNearby_stop();
 
-    Q_INVOKABLE void blacklistBleDevice(const QString &addr);
-    Q_INVOKABLE void whitelistBleDevice(const QString &addr);
-    Q_INVOKABLE bool isBleDeviceBlacklisted(const QString &addr);
+    Q_INVOKABLE void scanDevices_start();
+    Q_INVOKABLE void scanDevices_stop();
 
-    Q_INVOKABLE void disconnectDevices();
+    Q_INVOKABLE void refreshDevices_background();   //!< Refresh devices on the Android background service
+
+    Q_INVOKABLE void refreshDevices_listen();       //!< Refresh devices with data >xh old (as they appear nearby)
+    Q_INVOKABLE void listenDevices_start();
+    Q_INVOKABLE void listenDevices_stop();
+
+    Q_INVOKABLE void refreshDevices_check();        //!< Refresh devices with data >xh old (if necessary)
+    Q_INVOKABLE void refreshDevices_start();        //!< Refresh every device
+    void refreshDevices_continue();
+    void refreshDevices_finished(Device *dev);
+    Q_INVOKABLE void refreshDevices_stop();
+
+    Q_INVOKABLE void syncDevices_check();           //!< Sync history for devices (if necessary)
+    Q_INVOKABLE void syncDevices_start();           //!< Sync history for every device
+    void syncDevices_continue();
+    void syncDevices_finished(Device *dev);
+    Q_INVOKABLE void syncDevices_stop();
 
     // Device management
     Q_INVOKABLE void updateDevice(const QString &address);
@@ -209,22 +232,14 @@ public:
     Q_INVOKABLE void removeDevice(const QString &address);
     Q_INVOKABLE void removeDeviceData(const QString &address);
 
-    Q_INVOKABLE void refreshDevices_background(); //!< Refresh devices on the background
-    Q_INVOKABLE void refreshDevices_listen();   //!< Refresh devices with data >xh old (as they appear nearby)
-    Q_INVOKABLE void refreshDevices_check();    //!< Refresh devices with data >xh old (if necessary)
-    Q_INVOKABLE void refreshDevices_start();    //!< Refresh every device
-    void refreshDevices_continue();
-    void refreshDevices_finished(Device *dev);
-    Q_INVOKABLE void refreshDevices_stop();
-
-    Q_INVOKABLE void syncDevices_check();       //!< Sync history for devices (if necessary)
-    Q_INVOKABLE void syncDevices_start();       //!< Sync history for every device
-    void syncDevices_continue();
-    void syncDevices_finished(Device *dev);
-    Q_INVOKABLE void syncDevices_stop();
+    Q_INVOKABLE void blacklistBleDevice(const QString &addr);
+    Q_INVOKABLE void whitelistBleDevice(const QString &addr);
+    Q_INVOKABLE bool isBleDeviceBlacklisted(const QString &addr);
 
     // Devices list management
     Q_INVOKABLE bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
+    Q_INVOKABLE void disconnectDevices();
+
     DeviceFilter *getDevicesNearby() const { return m_devices_nearby_filter; }
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
     int getDeviceCount() const { return m_devices_model->getDeviceCount(); }

@@ -13,7 +13,7 @@ Item {
 
     function loadScreen() {
         // refresh permissions
-        refreshPermissions()
+        deviceManager.checkBluetoothPermissions()
 
         // change screen
         appContent.state = "AboutPermissions"
@@ -28,18 +28,11 @@ Item {
         screenAbout.loadScreen()
     }
 
-    function refreshPermissions() {
-        // Refresh permissions
-        button_location_test.validperm = utilsApp.checkMobileBleLocationPermission()
-        button_location_background_test.validperm = utilsApp.checkMobileBackgroundLocationPermission()
-        button_gps_test.validperm = utilsApp.isMobileGpsEnabled()
-    }
-
     Timer {
-        id: retryPermissions
-        interval: 1000
+        id: refreshPermissions
+        interval: 333
         repeat: false
-        onTriggered: refreshPermissions()
+        onTriggered: deviceManager.checkBluetoothPermissions()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -136,7 +129,7 @@ Item {
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
-                    property bool validperm: false
+                    property bool validperm: deviceManager.permissionLocationBLE
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
@@ -145,8 +138,8 @@ Item {
 
                     onClicked: {
                         utilsApp.vibrate(25)
-                        validperm = utilsApp.getMobileBleLocationPermission()
-                        retryPermissions.start()
+                        utilsApp.getMobileBleLocationPermission()
+                        refreshPermissions.start()
                     }
                 }
 
@@ -216,7 +209,7 @@ Item {
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
-                    property bool validperm: false
+                    property bool validperm: deviceManager.permissionLocationBackground
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
@@ -225,8 +218,8 @@ Item {
 
                     onClicked: {
                         utilsApp.vibrate(25)
-                        validperm = utilsApp.getMobileBackgroundLocationPermission()
-                        retryPermissions.start()
+                        utilsApp.getMobileBackgroundLocationPermission()
+                        refreshPermissions.start()
                     }
                 }
 
@@ -281,7 +274,7 @@ Item {
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
-                    property bool validperm: false
+                    property bool validperm: deviceManager.permissionLocationGPS
 
                     source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
                     iconColor: (validperm) ? "white" : "white"
@@ -290,8 +283,7 @@ Item {
 
                     onClicked: {
                         utilsApp.vibrate(25)
-                        validperm = utilsApp.isMobileGpsEnabled()
-                        retryPermissions.start()
+                        refreshPermissions.start()
                     }
                 }
 
