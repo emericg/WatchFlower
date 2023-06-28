@@ -408,9 +408,11 @@ ApplicationWindow {
             id: screenDeviceBrowser
         }
 
-        // Start on the tutorial?
+        // Start on the device list or tutorial?
         Component.onCompleted: {
-            if (!deviceManager.areDevicesAvailable()) {
+            if (deviceManager.areDevicesAvailable()) {
+                screenDeviceList.loadScreen()
+            } else {
                 screenTutorial.loadScreen()
             }
         }

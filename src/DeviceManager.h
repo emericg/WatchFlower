@@ -151,7 +151,10 @@ class DeviceManager: public QObject
     int getBluetoothHostMode() const { return m_ble_hostmode; }
 
     void startBleAgent();
+
     void checkBluetoothIOS();
+    bool m_checking_ios_ble = false;
+    QTimer m_checking_ios_timer;
 
     void setLastRun();
 
@@ -185,6 +188,7 @@ private slots:
     void updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void updateBleDevice_simple(const QBluetoothDeviceInfo &info);
     void deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error);
+    void deviceDiscoveryErrorIOS();
     void deviceDiscoveryFinished();
     void deviceDiscoveryStopped();
 

@@ -259,8 +259,7 @@ ApplicationWindow {
         focus: true
         Keys.onBackPressed: {
             if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") {
-                // do nothing
-                return
+                return // do nothing
             }
 
             if (appHeader.rightMenuIsOpen()) {
@@ -352,9 +351,11 @@ ApplicationWindow {
             anchors.bottomMargin: mobileMenu.hhv
         }
 
-        // Start on the tutorial?
+        // Start on the device list or tutorial?
         Component.onCompleted: {
-            if (!deviceManager.areDevicesAvailable()) {
+            if (deviceManager.areDevicesAvailable()) {
+                screenDeviceList.loadScreen()
+            } else {
                 screenTutorial.loadScreen()
             }
         }

@@ -112,9 +112,9 @@ Item {
     property color colorComponentDown
     property color colorComponentBackground
 
-    property int componentMargin: isHdpi ? 12 : 16
-    property int componentMarginL: isHdpi ? 16 : 20
-    property int componentMarginXL: isHdpi ? 20 : 24
+    property int componentMargin: isPhone ? 12 : 16
+    property int componentMarginL: isPhone ? 16 : 20
+    property int componentMarginXL: isPhone ? 20 : 24
 
     property int componentHeight: (isDesktop && isHdpi) ? 36 : 40
     property int componentHeightL: (isDesktop && isHdpi) ? 44 : 48
@@ -128,8 +128,8 @@ Item {
     ////////////////
 
     // Fonts (sizes in pixel)
-    readonly property int fontSizeHeader: isMobile ? 22 : 26
-    readonly property int fontSizeTitle: isMobile ? 24 : 28
+    readonly property int fontSizeHeader: isPhone ? 22 : 26
+    readonly property int fontSizeTitle: isPhone ? 24 : 28
     readonly property int fontSizeContentVeryVerySmall: 10
     readonly property int fontSizeContentVerySmall: 12
     readonly property int fontSizeContentSmall: 14

@@ -10,6 +10,9 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
+        // check BLE status
+        checkBluetoothStatus()
+
         // change screen
         appContent.state = "DeviceList"
     }
@@ -40,19 +43,21 @@ Item {
 
     Connections {
         target: deviceManager
-        function onBluetoothChanged() {
-            if (deviceManager.hasDevices) {
-                if (!deviceManager.bluetooth) {
-                    rectangleBluetoothStatus.setBluetoothWarning()
-                } else if (!deviceManager.bluetoothPermissions) {
-                    rectangleBluetoothStatus.setPermissionWarning()
-                } else {
-                    rectangleBluetoothStatus.hide()
-                }
+        function onBluetoothChanged() { checkBluetoothStatus() }
+    }
+
+    function checkBluetoothStatus() {
+        if (deviceManager.hasDevices) {
+            if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
+                rectangleBluetoothStatus.setBluetoothWarning()
+            } else if (!deviceManager.bluetoothPermissions) {
+                rectangleBluetoothStatus.setPermissionWarning()
             } else {
-                // The sensor list is not populated
                 rectangleBluetoothStatus.hide()
             }
+        } else {
+            // The sensor list is not populated
+            rectangleBluetoothStatus.hide()
         }
     }
 

@@ -263,20 +263,18 @@ Item {
                         primaryColor: Theme.colorPrimary
 
                         onClicked: {
-                            // Just to be sure...
-                            deviceManager.enableBluetooth(true)
+                            if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
+                                // Just to be sure...
+                                deviceManager.enableBluetooth(true)
+                            }
 
-                            // Do we have permissions?
-                            if (deviceManager.bluetoothPermissions) {
-                                // Now we scan...
-                                scan()
-                            } else {
+                            if (!deviceManager.bluetoothPermissions) {
                                 // Ask permission
                                 utilsApp.getMobileBleLocationPermission()
-
-                                // Now we scan...
-                                retryScan.start()
                             }
+
+                            // Now we scan...
+                            retryScan.start()
                         }
                     }
                 }
