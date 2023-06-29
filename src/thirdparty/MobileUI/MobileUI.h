@@ -50,7 +50,7 @@ class MobileUI : public QObject
     Q_PROPERTY(int safeAreaRight READ getSafeAreaRight NOTIFY safeAreaUpdated)
     Q_PROPERTY(int safeAreaBottom READ getSafeAreaBottom NOTIFY safeAreaUpdated)
 
-    Q_PROPERTY(bool screenAlwaysOn READ isScreenkeepOn WRITE keepScreenOn)
+    Q_PROPERTY(bool screenAlwaysOn READ getScreenKeepOn WRITE setScreenKeepOn)
 
 Q_SIGNALS:
     void devicethemeUpdated();
@@ -97,11 +97,11 @@ public:
     static int getSafeAreaBottom();
 
     // Screen helpers
-    Q_INVOKABLE static bool isScreenkeepOn();
-    Q_INVOKABLE static void keepScreenOn(bool on);
+    static bool getScreenKeepOn();
+    Q_INVOKABLE static void setScreenKeepOn(bool on);
 
-    // HACK for Android 11+ // Refresh Status bar theme
-    Q_INVOKABLE static void refresh();
+    // Refresh UI themes/colors depending on needs // HACK for Android 11+
+    Q_INVOKABLE static void refreshUI();
 };
 
 /* ************************************************************************** */

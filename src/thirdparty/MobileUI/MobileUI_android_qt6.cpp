@@ -274,12 +274,7 @@ int MobileUIPrivate::getSafeAreaBottom()
 
 /* ************************************************************************** */
 
-bool MobileUIPrivate::isScreenkeepOn()
-{
-    return false; // TODO
-}
-
-void MobileUIPrivate::keepScreenOn(bool on)
+void MobileUIPrivate::setScreenKeepOn(bool on)
 {
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
@@ -293,7 +288,7 @@ void MobileUIPrivate::keepScreenOn(bool on)
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::refresh()
+void MobileUIPrivate::refreshUI()
 {
     if (QNativeInterface::QAndroidApplication::sdkVersion() >= 30)
     {

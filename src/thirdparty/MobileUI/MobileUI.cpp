@@ -38,6 +38,8 @@ MobileUI::Theme MobileUIPrivate::statusbarTheme = MobileUI::Light;
 QColor MobileUIPrivate::navbarColor;
 MobileUI::Theme MobileUIPrivate::navbarTheme = MobileUI::Light;
 
+bool MobileUIPrivate::isScreenKeepOn = false;
+
 /* ************************************************************************** */
 
 void MobileUI::registerQML()
@@ -141,21 +143,22 @@ int MobileUI::getSafeAreaBottom()
 
 /* ************************************************************************** */
 
-bool MobileUI::isScreenkeepOn()
+bool MobileUI::getScreenKeepOn()
 {
-    return MobileUIPrivate::isScreenkeepOn();
+    return MobileUIPrivate::isScreenKeepOn;
 }
 
-void MobileUI::keepScreenOn(bool on)
+void MobileUI::setScreenKeepOn(bool on)
 {
-    MobileUIPrivate::keepScreenOn(on);
+    MobileUIPrivate::isScreenKeepOn = on;
+    MobileUIPrivate::setScreenKeepOn(on);
 }
 
 /* ************************************************************************** */
 
-void MobileUI::refresh()
+void MobileUI::refreshUI()
 {
-    MobileUIPrivate::refresh();
+    MobileUIPrivate::refreshUI();
 }
 
 /* ************************************************************************** */

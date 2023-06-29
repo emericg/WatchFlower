@@ -85,17 +85,12 @@ int MobileUIPrivate::getSafeAreaBottom()
     return 0;
 }
 
-bool MobileUIPrivate::isScreenkeepOn()
-{
-    return false;
-}
-
-void MobileUIPrivate::keepScreenOn(bool on)
+void MobileUIPrivate::setScreenKeepOn(bool on)
 {
     Q_UNUSED(on)
 }
 
-void MobileUIPrivate::refresh()
+void MobileUIPrivate::refreshUI()
 {
     return;
 }

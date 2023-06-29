@@ -180,12 +180,7 @@ int MobileUIPrivate::getSafeAreaBottom()
 
 /* ************************************************************************** */
 
-bool MobileUIPrivate::isScreenkeepOn()
-{
-    return false; // TODO
-}
-
-void MobileUIPrivate::keepScreenOn(bool on)
+void MobileUIPrivate::setScreenKeepOn(bool on)
 {
     if (on)
     {
@@ -199,7 +194,7 @@ void MobileUIPrivate::keepScreenOn(bool on)
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::refresh()
+void MobileUIPrivate::refreshUI()
 {
     return;
 }

@@ -28,7 +28,7 @@ ApplicationWindow {
     property int screenOrientationFull: Screen.orientation
     onScreenOrientationChanged: {
         handleSafeAreas()
-        mobileUI.refresh()
+        mobileUI.refreshUI()
     }
 
     property int screenPaddingStatusbar: 0
