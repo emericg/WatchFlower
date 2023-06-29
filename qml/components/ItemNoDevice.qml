@@ -240,7 +240,10 @@ Item {
 
                         onClicked: {
                             if (Qt.platform.os === "android") {
-                                Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
+                                if (utilsApp.getAndroidSdkVersion() >= 12)
+                                    Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android12-or-higher")
+                                else
+                                    Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
                             } else if (Qt.platform.os === "ios") {
                                 Qt.openUrlExternally("https://support.apple.com/HT210578")
                             }
