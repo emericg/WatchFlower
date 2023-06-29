@@ -64,7 +64,7 @@ Loader {
             }
             function onHistoryUpdated() {
                 plantSensorData.updateGraph()
-                plantSensorHistory.updateData()
+                plantSensorHistory.loadData()
             }
             function onPlantUpdated() {
                 plantSensorCare.updateLimits()

@@ -78,11 +78,11 @@ Loader {
 
                 Item {
                     id: element_appTheme
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -250,11 +250,11 @@ Loader {
 
                 Item {
                     id: element_appThemeAuto
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -284,7 +284,6 @@ Loader {
                     SwitchThemed {
                         id: switch_appThemeAuto
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -319,11 +318,11 @@ Loader {
 
                 Item {
                     id: element_splitView
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -348,12 +347,12 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
+                        lineHeight: 0.8
                     }
 
                     SwitchThemed {
                         id: switch_splitView
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -389,11 +388,11 @@ Loader {
 
                 Item {
                     id: element_language
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -422,11 +421,10 @@ Loader {
 
                     ComboBoxThemed {
                         id: combobox_language
-                        //width: wideMode ? 256 : 160
-                        height: 36
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
+                        height: 36
 
                         z: 1
                         wheelEnabled: false
@@ -469,11 +467,11 @@ Loader {
 
                 Item {
                     id: element_minimized
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     visible: isDesktop
 
@@ -500,12 +498,12 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
+                        lineHeight: 0.8
                     }
 
                     SwitchThemed {
                         id: switch_minimized
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -540,11 +538,11 @@ Loader {
 
                 Item {
                     id: element_worker
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     // every platforms except iOS
                     visible: (Qt.platform.os !== "ios")
@@ -572,12 +570,12 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
+                        lineHeight: 0.8
                     }
 
                     SwitchThemed {
                         id: switch_worker
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -637,11 +635,11 @@ Loader {
 
                 Item {
                     id: element_notifications
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     // every platforms except iOS // also, need the systray
                     visible: (Qt.platform.os !== "ios")
@@ -671,6 +669,7 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
+                        lineHeight: 0.8
                     }
 
                     SwitchThemed {
@@ -717,14 +716,13 @@ Loader {
                     visible: settingsManager.systray && settingsManager.notifications
 
                     Item {
-                        height: 32
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        height: 32
 
                         Text {
-                            height: 32
                             anchors.left: parent.left
-                            anchors.leftMargin: 64
+                            anchors.leftMargin: contentColumn.padText
                             anchors.right: switch_notif_battery.left
                             anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
@@ -747,14 +745,13 @@ Loader {
                         }
                     }
                     Item {
-                        height: 32
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        height: 32
 
                         Text {
-                            height: 32
                             anchors.left: parent.left
-                            anchors.leftMargin: 64
+                            anchors.leftMargin: contentColumn.padText
                             anchors.right: switch_notif_water.left
                             anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
@@ -777,14 +774,13 @@ Loader {
                         }
                     }
                     Item {
-                        height: 32
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        height: 32
 
                         Text {
-                            height: 32
                             anchors.left: parent.left
-                            anchors.leftMargin: 64
+                            anchors.leftMargin: contentColumn.padText
                             anchors.right: switch_notif_subzero.left
                             anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
@@ -794,6 +790,7 @@ Loader {
                             wrapMode: Text.WordWrap
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
+                            lineHeight: 0.8
                         }
                         SwitchThemed {
                             id: switch_notif_subzero
@@ -807,28 +804,29 @@ Loader {
                         }
                     }
                     Item {
-                        height: settingsManager.notifications ? 44 : 32
                         anchors.left: parent.left
                         anchors.right: parent.right
+                        height: 32
 
                         Text {
-                            height: 32
                             anchors.left: parent.left
-                            anchors.leftMargin: 64
+                            anchors.leftMargin: contentColumn.padText
                             anchors.right: switch_notif_env.left
                             anchors.rightMargin: Theme.componentMargin
+                            anchors.verticalCenter: parent.verticalCenter
 
                             text: "- " + qsTr("environmental warnings")
                             textFormat: Text.PlainText
                             wrapMode: Text.WordWrap
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
+                            lineHeight: 0.8
                         }
                         SwitchThemed {
                             id: switch_notif_env
-                            height: 32
                             anchors.right: parent.right
                             anchors.rightMargin: screenPaddingRight
+                            anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
                             checked: settingsManager.notif_env
@@ -848,11 +846,11 @@ Loader {
 
                 Item {
                     id: element_bluetoothControl
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     // Android only
                     visible: (Qt.platform.os === "android")
@@ -880,12 +878,12 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
+                        lineHeight: 0.8
                     }
 
                     SwitchThemed {
                         id: switch_bluetoothControl
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -916,11 +914,11 @@ Loader {
 
                 Item {
                     id: element_bluetoothRange
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -945,12 +943,12 @@ Loader {
                         wrapMode: Text.WordWrap
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
+                        lineHeight: 0.8
                     }
 
                     SwitchThemed {
                         id: switch_bluetoothRange
                         anchors.right: parent.right
-                        anchors.rightMargin: 0
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -982,11 +980,11 @@ Loader {
 
                 Item {
                     id: element_bluetoothSimUpdate
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightXL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -1012,6 +1010,7 @@ Loader {
                         wrapMode: Text.WordWrap
                         color: Theme.colorText
                         font.pixelSize: Theme.fontSizeContent
+                        lineHeight: 0.8
                     }
 
                     SliderValueSolid {
@@ -1035,13 +1034,13 @@ Loader {
                     }
                     SpinBoxThemed {
                         id: spinBox_bluetoothSimUpdate
-                        width: 128
-                        height: 36
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: isMobile
+                        width: 128
+                        height: 36
                         z: 1
 
                         from: 1
@@ -1082,12 +1081,12 @@ Loader {
                 ////////////////
 
                 Item {
-                    id: element_update
-                    height: Theme.componentHeightXL
+                    id: element_plant_update
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -1103,7 +1102,7 @@ Loader {
                     Text {
                         anchors.left: parent.left
                         anchors.leftMargin: contentColumn.padText
-                        anchors.right: spinBox_update.left
+                        anchors.right: spinBox_plant_update.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -1112,15 +1111,17 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
+                        lineHeight: 0.8
                     }
 
                     SpinBoxThemed {
-                        id: spinBox_update
-                        width: 128
-                        height: 36
+                        id: spinBox_plant_update
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
+
+                        width: 128
+                        height: 36
                         z: 1
 
                         legend: " " + qsTr("h.", "short for hours")
@@ -1137,204 +1138,133 @@ Loader {
 
                 ////////
 
-                Item {
-                    id: element_bigindicators
-                    height: Theme.componentHeightXL
+                Column {
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    spacing: 0
 
-                    IconSvg {
+                    Item {
+                        id: element_plant_indicators
                         anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: parent.right
+                        height: Theme.componentHeightL
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/assets/icons_custom/indicators-24px.svg"
-                    }
+                        IconSvg {
+                            anchors.left: parent.left
+                            anchors.leftMargin: contentColumn.padIcon
+                            anchors.verticalCenter: parent.verticalCenter
 
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: row_bigindicators.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
+                            width: 24
+                            height: 24
+                            color: Theme.colorIcon
+                            source: "qrc:/assets/icons_material/baseline-straighten-24px.svg"
+                        }
 
-                        text: qsTr("Data indicators style")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
+                        Text {
+                            anchors.left: parent.left
+                            anchors.leftMargin: contentColumn.padText
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            text: qsTr("Data indicators")
+                            textFormat: Text.PlainText
+                            font.pixelSize: Theme.fontSizeContent
+                            color: Theme.colorText
+                            wrapMode: Text.WordWrap
+                            lineHeight: 0.8
+                        }
                     }
 
                     Row {
-                        id: row_bigindicators
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 12
-
-                        RadioButtonThemed {
-                            text: qsTr("thin")
-
-                            checked: !settingsManager.bigIndicator
-                            onClicked: settingsManager.bigIndicator = false
-                        }
-
-                        RadioButtonThemed {
-                            text: qsTr("solid")
-
-                            checked: settingsManager.bigIndicator
-                            onClicked: settingsManager.bigIndicator = true
-                        }
-                    }
-                }
-
-                ////////
-
-                Item {
-                    id: element_dynascale
-                    height: Theme.componentHeightXL
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
-
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/baseline-straighten-24px.svg"
-                    }
-
-                    Text {
+                        id: element_plant_indicators_selector
                         anchors.left: parent.left
                         anchors.leftMargin: contentColumn.padText
-                        anchors.right: row_dynascale.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Data indicators scale")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                    }
+                        height: Theme.componentHeightL
+                        spacing: Theme.componentMargin
 
-                    Row {
-                        id: row_dynascale
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        spacing: 12
+                        SelectorMenu {
+                            id: row_plant_bigindicators2
+                            height: 32
 
-                        RadioButtonThemed {
-                            text: qsTr("static")
+                            model: ListModel {
+                                ListElement { idx: 1; txt: qsTr("thin"); src: ""; sz: 16; }
+                                ListElement { idx: 2; txt: qsTr("solid"); src: ""; sz: 16; }
+                            }
 
-                            checked: !settingsManager.dynaScale
-                            onClicked: settingsManager.dynaScale = false
+                            currentSelection: (settingsManager.bigIndicator) ? 2 : 1
+                            onMenuSelected: (index) => {
+                                currentSelection = index
+                                settingsManager.bigIndicator = (index === 2)
+                            }
                         }
 
-                        RadioButtonThemed {
-                            text: qsTr("dynamic")
+                        SelectorMenu {
+                            id: row_plant_dynascale2
+                            height: 32
 
-                            checked: settingsManager.dynaScale
-                            onClicked: settingsManager.dynaScale = true
-                        }
-                    }
-                }
+                            model: ListModel {
+                                ListElement { idx: 1; txt: qsTr("static"); src: ""; sz: 16; }
+                                ListElement { idx: 2; txt: qsTr("dynamic"); src: ""; sz: 16; }
+                            }
 
-                ////////
-
-                Row { // indicators preview
-                    height: 56
-                    anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + (isDesktop ? 72 : 24)
-                    anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + 12
-
-                    spacing: isDesktop ? 32 : 16
-
-                    DataBarCompact {
-                        width: ((parent.width - parent.spacing) / 2)
-                        height: 32
-                        anchors.top: parent.top
-                        anchors.topMargin: 8
-
-                        animated: false
-                        legend: isDesktop ? qsTr("thin") : ""
-                        legendWidth: 48
-                        suffix: "°" + settingsManager.tempUnit
-                        colorForeground: Theme.colorYellow
-
-                        value: 24
-                        valueMin: settingsManager.dynaScale ? 16 : 0
-                        valueMax: settingsManager.dynaScale ? 32 : 40
-                        limitMin: 20
-                        limitMax: 28
-
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.margins: -8
-                            z: -1
-
-                            radius: 6
-                            color: Theme.colorComponentBackground
-                            border.width: (!settingsManager.bigIndicator) ? 2 : 0
-                            border.color: Theme.colorSeparator
-
-                            opacity: (!settingsManager.bigIndicator) ? 0.66 : 0.2
-                            Behavior on opacity { OpacityAnimator { duration: 133 } }
-
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: settingsManager.bigIndicator = false
+                            currentSelection: (settingsManager.dynaScale) ? 2 : 1
+                            onMenuSelected: (index) => {
+                                currentSelection = index
+                                settingsManager.dynaScale = (index === 2)
                             }
                         }
                     }
 
-                    DataBarSolid {
-                        width: ((parent.width - parent.spacing) / 2)
-                        height: 32
-                        anchors.top: parent.top
-                        anchors.topMargin: 8
+                    Item {
+                        id: element_plant_indicators_preview
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.componentMargin
+                        height: Theme.componentHeight
 
-                        animated: false
-                        legend: isDesktop ? qsTr("solid") : ""
-                        legendWidth: 64
-                        suffix: "°" + settingsManager.tempUnit
-                        colorForeground: Theme.colorYellow
+                        DataBarCompact {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 4
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenterOffset: -8
 
-                        value: 24
-                        valueMin: settingsManager.dynaScale ? 16 : 0
-                        valueMax: settingsManager.dynaScale ? 32 : 40
-                        limitMin: 20
-                        limitMax: 28
+                            visible: !settingsManager.bigIndicator
+                            width: singleColumn ? parent.width : element_plant_indicators_selector.width
 
-                        Rectangle {
-                            anchors.fill: parent
-                            anchors.margins: -8
-                            z: -1
+                            animated: false
+                            legend: qsTr("preview")
+                            suffix: "°" + settingsManager.tempUnit
+                            colorForeground: Theme.colorLightGrey
 
-                            radius: 6
-                            color: Theme.colorComponentBackground
-                            border.width: (settingsManager.bigIndicator) ? 2 : 0
-                            border.color: Theme.colorSeparator
+                            value: 24
+                            valueMin: settingsManager.dynaScale ? 16 : 0
+                            valueMax: settingsManager.dynaScale ? 32 : 40
+                            limitMin: 20
+                            limitMax: 28
+                        }
 
-                            opacity: (settingsManager.bigIndicator) ? 0.66 : 0.2
-                            Behavior on opacity { OpacityAnimator { duration: 133 } }
+                        DataBarSolid {
+                            anchors.left: parent.left
+                            anchors.leftMargin: 4
+                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.verticalCenterOffset: -8
 
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: settingsManager.bigIndicator = true
-                            }
+                            visible: settingsManager.bigIndicator
+                            width: singleColumn ? parent.width : element_plant_indicators_selector.width
+
+                            animated: false
+                            legend: qsTr("preview")
+                            suffix: "°" + settingsManager.tempUnit
+                            colorForeground: Theme.colorLightGrey
+
+                            value: 24
+                            valueMin: settingsManager.dynaScale ? 16 : 0
+                            valueMax: settingsManager.dynaScale ? 32 : 40
+                            limitMin: 20
+                            limitMax: 28
                         }
                     }
                 }
@@ -1350,11 +1280,11 @@ Loader {
 
                 Item {
                     id: element_thermometer_update
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -1379,6 +1309,7 @@ Loader {
                         font.pixelSize: Theme.fontSizeContent
                         color: Theme.colorText
                         wrapMode: Text.WordWrap
+                        lineHeight: 0.8
                     }
 
                     SpinBoxThemed {
@@ -1406,11 +1337,11 @@ Loader {
 
                 Item {
                     id: element_thermometer_unit
-                    height: Theme.componentHeightXL
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
+                    height: Theme.componentHeightL
 
                     IconSvg {
                         anchors.left: parent.left
@@ -1473,9 +1404,9 @@ Loader {
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
-                    height: UtilsNumber.alignTo(legend_mysql.contentHeight, 16)
 
                     visible: isDesktop
+                    height: UtilsNumber.alignTo(legend_mysql.contentHeight, 16)
 
                     IconSvg {
                         anchors.left: parent.left

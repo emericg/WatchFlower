@@ -135,6 +135,11 @@ bool DatabaseManager::openDatabase_sqlite()
                 {
                     if (dbFile.open())
                     {
+                        if (dbFile.isOpenError())
+                        {
+                            qWarning() << "Error while opening database:" << dbFile.lastError();
+                        }
+
                         m_dbInternalOpen = true;
 
                         // Migrations //////////////////////////////////////////
@@ -224,6 +229,11 @@ bool DatabaseManager::openDatabase_mysql()
             {
                 if (db.open())
                 {
+                    if (db.isOpenError())
+                    {
+                        qWarning() << "Error while opening database:" << db.lastError();
+                    }
+
                     m_dbExternalOpen = true;
 
                     // Migrations ///////////////////////////////////////////////////

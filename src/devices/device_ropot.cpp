@@ -520,7 +520,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
         m_device_time = static_cast<int32_t>(data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
-        qDebug() << "* DeviceRopot clock:" << m_device_time;
+        //qDebug() << "* DeviceRopot clock:" << m_device_time;
         return;
     }
 

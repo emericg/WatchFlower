@@ -148,19 +148,9 @@ Item {
             Text {
                 anchors.left: parent.left
                 anchors.right: parent.right
+                anchors.rightMargin: parent.height
 
                 text: qsTr("See Bluetooth sensors and devices around you.")
-                textFormat: Text.PlainText
-                wrapMode: Text.WordWrap
-                font.pixelSize: Theme.fontSizeContent
-                color: Theme.colorSubText
-            }
-
-            Text {
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                text: qsTr("Use it to do stuff. And stuff.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 font.pixelSize: Theme.fontSizeContent

@@ -352,7 +352,7 @@ Item {
         }
     }
 
-    Rectangle {
+    Item {
         id: subsubHeader
         anchors.top: subHeader.bottom
         anchors.left: parent.left
@@ -360,11 +360,14 @@ Item {
 
         z: 4
         clip: true
-        opacity: 0.66
         height: (singleColumn && selectors.visible) ? 40 : 0
         Behavior on height { NumberAnimation { duration: 133 } }
-        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
+        Rectangle {
+            anchors.fill: parent
+            opacity: 0.66
+            color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+        }
         Item {
             id: selectorsContainerTwo
             anchors.left: parent.left

@@ -89,32 +89,32 @@ Loader {
 
                     Text {
                         color: Theme.colorSubText
-                        text: qsTr("app name: %1").arg(utilsApp.appName())
+                        text: ("app name: %1").arg(utilsApp.appName())
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: qsTr("app version: %1").arg(utilsApp.appVersion())
+                        text: ("app version: %1").arg(utilsApp.appVersion())
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: qsTr("build mode: %1").arg(utilsApp.appBuildModeFull())
+                        text: ("build mode: %1").arg(utilsApp.appBuildModeFull())
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: qsTr("build date: %1").arg(utilsApp.appBuildDateTime())
+                        text: ("build date: %1").arg(utilsApp.appBuildDateTime())
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: qsTr("Qt version: %1").arg(utilsApp.qtVersion())
+                        text: ("Qt version: %1").arg(utilsApp.qtVersion())
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: qsTr("Qt Connectivity patched? %1").arg(qtConnectivityPatched ? "TRUE" : "FALSE")
+                        text: ("Qt Connectivity patched? %1").arg(qtConnectivityPatched ? "TRUE" : "FALSE")
                         font.pixelSize: Theme.fontSizeContent
                     }
                 }

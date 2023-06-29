@@ -578,10 +578,9 @@ Item {
         Row {
             id: rectangleSensors
             height: rowRight.height
+            spacing: 7
 
-            spacing: 8
-
-            property int sensorWidth: isPhone ? 8 : (hugeMode ? 12 : 10)
+            property int sensorWidth: isPhone ? 9 : (hugeMode ? 12 : 10)
             property int sensorRadius: hugeMode ? 3 : 2
 
             function initData() { }

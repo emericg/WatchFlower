@@ -98,16 +98,15 @@ T.ItemDelegate {
                     running: (control.iconAnimated && control.iconAnimation === "rotate")
                     alwaysRunToEnd: true
                 }
+                SequentialAnimation on opacity { // fade animation // icon only
+                    loops: Animation.Infinite
+                    running: (control.iconAnimated && control.iconAnimation === "fade")
+                    alwaysRunToEnd: true
+
+                    PropertyAnimation { to: 0.33; duration: 750; }
+                    PropertyAnimation { to: 1; duration: 750; }
+                }
             }
-        }
-
-        SequentialAnimation on opacity { // fade animation // icon + text
-            loops: Animation.Infinite
-            running: (control.iconAnimated && control.iconAnimation === "fade")
-            alwaysRunToEnd: true
-
-            PropertyAnimation { to: 0.33; duration: 750; }
-            PropertyAnimation { to: 1; duration: 750; }
         }
 
         Text {

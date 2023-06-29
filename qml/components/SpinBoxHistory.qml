@@ -94,11 +94,12 @@ T.SpinBox {
         implicitWidth: Theme.componentHeight
         implicitHeight: Theme.componentHeight
 
+        x: control.mirrored ? 0 : control.width - width
+        anchors.verticalCenter: control.verticalCenter
+
         width: control.height + 12
         height: control.height
         radius: control.height
-        x: control.mirrored ? 0 : control.width - width
-        anchors.verticalCenter: control.verticalCenter
 
         color: enabled ? Theme.colorPrimary : Theme.colorComponentBorder
         border.width: Theme.componentBorderWidth
@@ -119,11 +120,12 @@ T.SpinBox {
         implicitWidth: Theme.componentHeight
         implicitHeight: Theme.componentHeight
 
+        x: control.mirrored ? control.width - width : 0
+        anchors.verticalCenter: control.verticalCenter
+
         width: control.height + 12
         height: control.height
         radius: control.height
-        x: control.mirrored ? control.width - width : 0
-        anchors.verticalCenter: control.verticalCenter
 
         color: enabled ? Theme.colorPrimary : Theme.colorComponentBorder
         border.width: Theme.componentBorderWidth
