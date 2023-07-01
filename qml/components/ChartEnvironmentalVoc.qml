@@ -2,12 +2,14 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Item {
     id: chartEnvironmentalVoc
-    width: 640
-    height: 400
+    anchors.fill: parent
+
+    property int daysTarget: 14
+    property int daysVisible: 0
 
     property int scaleMin: 0
     property int scaleMax: 1500
@@ -15,16 +17,13 @@ Item {
     property int limitMin: -1
     property int limitMax: -1
 
-    property int daysTarget: 14
-    property int daysVisible: 0
-
     ////////////////////////////////////////////////////////////////////////////
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartEnvironmentalVoc // loadGraph() >> " + currentDevice)
 
-        daysVisible = 0
+        daysVisible = daysTarget
     }
 
     function updateGraph() {

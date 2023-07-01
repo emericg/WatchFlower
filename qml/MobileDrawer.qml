@@ -1,11 +1,11 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Drawer {
-    width: (appWindow.screenOrientation === Qt.PortraitOrientation ||
-            appWindow.width < 480) ? 0.8 * appWindow.width : 0.5 * appWindow.width
+    width: (appWindow.screenOrientation === Qt.PortraitOrientation || appWindow.width < 480)
+            ? 0.8 * appWindow.width : 0.5 * appWindow.width
     height: appWindow.height
 
     ////////////////////////////////////////////////////////////////////////////
@@ -13,7 +13,7 @@ Drawer {
     background: Rectangle {
         color: Theme.colorBackground
 
-        Rectangle {
+        Rectangle { // left border
             x: parent.width - 1
             width: 1
             height: parent.height
@@ -37,16 +37,21 @@ Drawer {
 
             Rectangle {
                 id: rectangleStatusbar
-                height: Math.max(screenPaddingTop, screenPaddingStatusbar + screenPaddingNotch)
                 anchors.left: parent.left
                 anchors.right: parent.right
+
+                height: Math.max(screenPaddingTop, screenPaddingStatusbar + screenPaddingNotch)
                 color: Theme.colorBackground // "red" // to hide flickable content
             }
+
+            ////////
+
             Rectangle {
                 id: rectangleLogo
-                height: 80
                 anchors.left: parent.left
                 anchors.right: parent.right
+
+                height: 80
                 color: Theme.colorBackground
 
                 Image {
@@ -62,21 +67,21 @@ Drawer {
                 Text {
                     id: textHeader
                     anchors.left: imageHeader.right
-                    anchors.leftMargin: 10
+                    anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.verticalCenterOffset: 2
 
                     text: "WatchFlower"
                     color: Theme.colorText
                     font.bold: true
-                    font.pixelSize: 22
+                    font.pixelSize: Theme.fontSizeTitle
                 }
             }
+
+            ////////
         }
 
-        MouseArea { anchors.fill: rectangleHeader; acceptedButtons: Qt.AllButtons; }
-
-        ////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
 
         Flickable {
             anchors.top: rectangleHeader.bottom

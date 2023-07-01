@@ -1,11 +1,14 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Item {
     id: chartThermometerMinMax
     anchors.fill: parent
+
+    property int daysTarget: 14
+    property int daysVisible: 0
 
     property int widgetWidthTarget: (isPhone ? 48 : 64)
     property int widgetWidth: 48
@@ -13,23 +16,28 @@ Item {
     property int graphMin: currentDevice.tempMin
     property int graphMax: currentDevice.tempMax
 
-    property int daysTarget: 14
-    property int daysVisible: 0
-
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartThermometerMinMax // loadGraph() >> " + currentDevice)
 
-        daysVisible = 0
+        daysVisible = Math.floor(width / widgetWidthTarget)
+        widgetWidth = Math.floor(width / daysVisible)
     }
 
     function updateGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
         //console.log("chartThermometerMinMax // updateGraph() >> " + currentDevice)
 
+        currentDevice.updateChartData_thermometerMinMax(daysVisible)
+        mmGraph.visible = currentDevice.countDataNamed("temperature", daysVisible)
+    }
+
+    function updateGraph_resize() {
+        if (typeof currentDevice === "undefined" || !currentDevice) return
+        //console.log("chartThermometerMinMax // updateGraph_resize() >> " + currentDevice)
+
         var daysVisibleNew = Math.floor(width / widgetWidthTarget)
         var daysMax = daysVisibleNew
-
         widgetWidth = Math.floor(width / daysVisibleNew)
 
         if (daysVisible != daysVisibleNew) {
@@ -42,7 +50,7 @@ Item {
         }
     }
 
-    onWidthChanged: updateGraph()
+    onWidthChanged: updateGraph_resize()
 
     function isIndicator() { return false }
     function resetHistoryMode() { }
@@ -59,8 +67,8 @@ Item {
 */
         Row {
             id: mmGraph
-            height: parent.height
             anchors.right: parent.right
+            height: parent.height
 
             spacing: 0
             layoutDirection: Qt.LeftToRight

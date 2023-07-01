@@ -942,7 +942,7 @@ void DevicePlantSensor::updateChartData_history_thismonth(const int maxDays)
         if (m_chartData_history_month.size() > 1)
         {
             while (!m_chartData_history_month.isEmpty() &&
-                   static_cast<ChartDataHistory *>(m_chartData_history_month.first())->getDay() <=
+                   static_cast<ChartDataHistory *>(m_chartData_history_month.first())->getDay() ==
                    static_cast<ChartDataHistory *>(m_chartData_history_month.last())->getDay())
             {
                 m_chartData_history_month.pop_front();
@@ -1266,7 +1266,6 @@ void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const 
         {
             // after // FIXME
             QDateTime today = f;
-
             int missing = maxDays;
             if (previousdata) missing = static_cast<ChartDataHistory *>(m_chartData_history_month.last())->getDateTime().daysTo(today);
             for (int i = missing - 1; i >= 0; i--)

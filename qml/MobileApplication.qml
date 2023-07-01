@@ -544,6 +544,8 @@ ApplicationWindow {
         ]
     }
 
+    ////////////////
+
     Rectangle { // navbar area
         anchors.left: parent.left
         anchors.right: parent.right
