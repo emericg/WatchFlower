@@ -92,10 +92,10 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 ## Screenshots
 
-![GUI_MOBILE2](https://i.imgur.com/e1bXFXM.png)
-![GUI_MOBILE3](https://i.imgur.com/UiirNMw.png)
-![GUI_DESKTOP1](https://i.imgur.com/1F666UF.png)
-![GUI_DESKTOP2](https://i.imgur.com/XBoM36H.png)
+![GUI_MOBILE1](https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/mobile1.png)
+![GUI_DESKTOP1](https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/devicelist.png)
+![GUI_DESKTOP2](https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/plantdata1.png)
+![GUI_DESKTOP3](https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/airsensor1.png)
 
 
 ## Documentation
