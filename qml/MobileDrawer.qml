@@ -40,7 +40,7 @@ Drawer {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                height: Math.max(screenPaddingTop, screenPaddingStatusbar + screenPaddingNotch)
+                height: Math.max(screenPaddingTop, screenPaddingStatusbar)
                 color: Theme.colorBackground // "red" // to hide flickable content
             }
 
@@ -269,7 +269,7 @@ Drawer {
             anchors.right: parent.right
             anchors.rightMargin: 1
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: screenPaddingBottom
+            anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
 
             DrawerItem {
                 highlighted: (appContent.state === "PlantBrowser")

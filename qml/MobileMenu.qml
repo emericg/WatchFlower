@@ -7,7 +7,7 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
-    anchors.bottomMargin: screenPaddingBottom
+    anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
 
     property int hhh: (isTablet ? 48 : 36)
     property int hhi: (hhh * 0.5)

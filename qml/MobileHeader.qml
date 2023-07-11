@@ -8,7 +8,7 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: screenPaddingStatusbar + screenPaddingNotch + headerHeight
+    height: screenPaddingStatusbar + headerHeight
     color: Theme.colorHeader
     clip: false
     z: 10
@@ -59,7 +59,7 @@ Rectangle {
         id: actionMenu
 
         x: parent.width - actionMenu.width - 12
-        y: screenPaddingStatusbar + screenPaddingNotch + 16
+        y: screenPaddingStatusbar + 16
 
         onMenuSelected: (index) => {
             //console.log("ActionMenu clicked #" + index)
@@ -68,9 +68,18 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    Rectangle { // OS statusbar area
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+
+        height: screenPaddingStatusbar
+        color: Theme.colorStatusbar
+    }
+
     Item {
         anchors.fill: parent
-        anchors.topMargin: screenPaddingStatusbar + screenPaddingNotch
+        anchors.topMargin: screenPaddingStatusbar
 
         ////////////
 

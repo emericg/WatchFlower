@@ -24,13 +24,12 @@ set(CORE_SOURCES
 
 # OS specific sources & dependencies
 if(ANDROID)
-    if(QT_DEFAULT_MAJOR_VERSION EQUAL 5)
-        set(PLATFORM_SOURCES MobileUI_android_qt5.cpp)
-
+    if(QT_DEFAULT_MAJOR_VERSION EQUAL 6)
+        set(PLATFORM_SOURCES MobileUI_android_qt6.cpp)
+    elseif(QT_DEFAULT_MAJOR_VERSION EQUAL 5)
         find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS AndroidExtras)
         set(PLATFORM_LIBRARIES Qt::AndroidExtras)
-    elseif(QT_DEFAULT_MAJOR_VERSION EQUAL 6)
-        set(PLATFORM_SOURCES MobileUI_android_qt6.cpp)
+        set(PLATFORM_SOURCES MobileUI_android_qt5.cpp)
     endif()
 elseif(IOS)
     set(PLATFORM_SOURCES MobileUI_ios.mm)

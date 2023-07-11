@@ -59,7 +59,8 @@ ApplicationWindow {
     property int screenOrientationFull: Screen.orientation
 
     property int screenPaddingStatusbar: 0
-    property int screenPaddingNotch: 0
+    property int screenPaddingNavbar: 0
+    property int screenPaddingTop: 0
     property int screenPaddingLeft: 0
     property int screenPaddingRight: 0
     property int screenPaddingBottom: 0

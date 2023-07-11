@@ -26,13 +26,11 @@ ApplicationWindow {
     // 4 = Qt.InvertedPortraitOrientation, 8 = Qt.InvertedLandscapeOrientation
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
-    onScreenOrientationChanged: {
-        handleSafeAreas()
-        mobileUI.refreshUI()
-    }
+
+    onScreenOrientationChanged: handleSafeAreas()
+    onVisibilityChanged: handleSafeAreas()
 
     property int screenPaddingStatusbar: 0
-    property int screenPaddingNotch: 0
     property int screenPaddingNavbar: 0
 
     property int screenPaddingTop: 0
@@ -41,10 +39,14 @@ ApplicationWindow {
     property int screenPaddingBottom: 0
 
     function handleSafeAreas() {
-        // safe areas are only taken into account if using full screen mode
-        if (flags & Qt.MaximizeUsingFullscreenGeometryHint) {
+        // safe areas handling is a work in progress /!\
+
+        // safe areas are only taken into account when using maximized geometry / full screen mode
+
+        if (appWindow.visibility === Window.FullScreen ||
+            appWindow.flags & Qt.MaximizeUsingFullscreenGeometryHint) {
+
             screenPaddingStatusbar = mobileUI.statusbarHeight
-            screenPaddingNotch = 0
             screenPaddingNavbar = mobileUI.navbarHeight
 
             screenPaddingTop = mobileUI.safeAreaTop
@@ -52,25 +54,47 @@ ApplicationWindow {
             screenPaddingRight = mobileUI.safeAreaRight
             screenPaddingBottom = mobileUI.safeAreaBottom
 
+            // hacks
             if (Qt.platform.os === "android") {
-                screenPaddingStatusbar = screenPaddingTop // hack
-                screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
-                screenPaddingBottom = screenPaddingNavbar
+                if (Screen.primaryOrientation === Qt.PortraitOrientation) {
+                    if (appWindow.visibility === Window.FullScreen) {
+                        screenPaddingStatusbar = 0
+                        screenPaddingNavbar = 0
+                    } else {
+                        screenPaddingStatusbar = mobileUI.safeAreaTop
+                        screenPaddingTop = 0
+                    }
+                } else {
+                    screenPaddingNavbar = 0
+                }
             }
+            // hacks
             if (Qt.platform.os === "ios") {
-                screenPaddingNotch = screenPaddingTop - screenPaddingStatusbar
+                if (appWindow.visibility === Window.FullScreen) {
+                    screenPaddingStatusbar = 0
+                } else {
+                    screenPaddingStatusbar = mobileUI.safeAreaTop
+                    screenPaddingTop = 0
+                }
             }
+        } else {
+            screenPaddingStatusbar = 0
+            screenPaddingNavbar = 0
+            screenPaddingTop = 0
+            screenPaddingLeft = 0
+            screenPaddingRight = 0
+            screenPaddingBottom = 0
         }
 /*
         console.log("> handleSafeAreas()")
+        console.log("- window mode:         " + appWindow.visibility)
         console.log("- screen width:        " + Screen.width)
         console.log("- screen width avail:  " + Screen.desktopAvailableWidth)
         console.log("- screen height:       " + Screen.height)
         console.log("- screen height avail: " + Screen.desktopAvailableHeight)
-        console.log("- screen orientation:  " + Screen.orientation)
+        console.log("- screen orientation (full): " + Screen.orientation)
         console.log("- screen orientation (primary): " + Screen.primaryOrientation)
         console.log("- screenSizeStatusbar: " + screenPaddingStatusbar)
-        console.log("- screenSizeNotch:     " + screenPaddingNotch)
         console.log("- screenSizeNavbar:    " + screenPaddingNavbar)
         console.log("- screenPaddingTop:    " + screenPaddingTop)
         console.log("- screenPaddingLeft:   " + screenPaddingLeft)
@@ -81,12 +105,9 @@ ApplicationWindow {
 
     MobileUI {
         id: mobileUI
-        property bool isLoading: true
 
         statusbarTheme: Theme.themeStatusbar
-        statusbarColor: isLoading ? "white" : Theme.colorStatusbar
         navbarColor: {
-            if (isLoading) return "white"
             if (appContent.state === "Tutorial") return Theme.colorHeader
             return Theme.colorBackground
         }
@@ -102,11 +123,6 @@ ApplicationWindow {
     }
 
     // Events handling /////////////////////////////////////////////////////////
-
-    Component.onCompleted: {
-        handleSafeAreas()
-        mobileUI.isLoading = false
-    }
 
     Connections {
         target: appHeader
@@ -254,7 +270,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: screenPaddingBottom
+        anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
 
         focus: true
         Keys.onBackPressed: {
@@ -550,7 +566,7 @@ ApplicationWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: screenPaddingBottom
+        height: screenPaddingNavbar
         visible: (mobileMenu.visible || appContent.state === "Tutorial")
         color: {
             if (appContent.state === "Tutorial") return Theme.colorHeader
@@ -574,7 +590,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.rightMargin: Theme.componentMargin
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.componentMargin + screenPaddingBottom
+        anchors.bottomMargin: Theme.componentMargin + screenPaddingNavbar + screenPaddingBottom
 
         height: Theme.componentHeight
         radius: Theme.componentRadius

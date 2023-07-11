@@ -7,17 +7,17 @@ Popup {
     id: popupBackgroundUpdates
 
     x: singleColumn ? 0 : (appWindow.width / 2) - (width / 2)
-    y: singleColumn ? (appWindow.height - appHeader.height - height)
+    y: singleColumn ? (appWindow.height - height)
                     : ((appWindow.height / 2) - (height / 2))
 
     width: singleColumn ? parent.width : 640
-    height: columnContent.height + padding*2 + screenPaddingBottom
+    height: columnContent.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
     padding: Theme.componentMarginXL
 
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-    //parent: appWindow.contentItem
+    parent: Overlay.overlay
 
     ////////////////////////////////////////////////////////////////////////////
 
