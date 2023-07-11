@@ -48,28 +48,28 @@ Rectangle {
     signal deviceSettingsButtonClicked()
 
     function setActiveDeviceData() {
-        menuDeviceData.selected = true
-        menuDeviceHistory.selected = false
-        menuDevicePlant.selected = false
-        menuDeviceSettings.selected = false
+        menuDeviceData.highlighted = true
+        menuDeviceHistory.highlighted = false
+        menuDevicePlant.highlighted = false
+        menuDeviceSettings.highlighted = false
     }
     function setActiveDeviceHistory() {
-        menuDeviceData.selected = false
-        menuDeviceHistory.selected = true
-        menuDevicePlant.selected = false
-        menuDeviceSettings.selected = false
+        menuDeviceData.highlighted = false
+        menuDeviceHistory.highlighted = true
+        menuDevicePlant.highlighted = false
+        menuDeviceSettings.highlighted = false
     }
     function setActiveDevicePlant() {
-        menuDeviceData.selected = false
-        menuDeviceHistory.selected = false
-        menuDevicePlant.selected = true
-        menuDeviceSettings.selected = false
+        menuDeviceData.highlighted = false
+        menuDeviceHistory.highlighted = false
+        menuDevicePlant.highlighted = true
+        menuDeviceSettings.highlighted = false
     }
     function setActiveDeviceSettings() {
-        menuDeviceData.selected = false
-        menuDeviceHistory.selected = false
-        menuDevicePlant.selected = false
-        menuDeviceSettings.selected = true
+        menuDeviceData.highlighted = false
+        menuDeviceHistory.highlighted = false
+        menuDevicePlant.highlighted = false
+        menuDeviceSettings.highlighted = true
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -95,7 +95,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            selected: (appContent.state === "DeviceList")
+            highlighted: (appContent.state === "DeviceList")
             onClicked: screenDeviceList.loadScreen()
         }
         MobileMenuItem_horizontal {
@@ -109,7 +109,7 @@ Rectangle {
             colorHighlight: Theme.colorTabletmenuHighlight
 
             visible: (screenOrientation === Qt.LandscapeOrientation)
-            selected: (appContent.state === "PlantBrowser")
+            highlighted: (appContent.state === "PlantBrowser")
             onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
         }
         MobileMenuItem_horizontal {
@@ -123,7 +123,7 @@ Rectangle {
             colorHighlight: Theme.colorTabletmenuHighlight
 
             visible: (screenOrientation === Qt.LandscapeOrientation)
-            selected: (appContent.state === "DeviceBrowser")
+            highlighted: (appContent.state === "DeviceBrowser")
             onClicked: screenDeviceBrowser.loadScreen()
         }
         MobileMenuItem_horizontal {
@@ -136,7 +136,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            selected: (appContent.state === "Settings")
+            highlighted: (appContent.state === "Settings")
             onClicked: screenSettings.loadScreen()
         }
         MobileMenuItem_horizontal {
@@ -149,7 +149,7 @@ Rectangle {
             colorContent: Theme.colorTabletmenuContent
             colorHighlight: Theme.colorTabletmenuHighlight
 
-            selected: (appContent.state === "About" || appContent.state === "AboutPermissions")
+            highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
             onClicked: screenAbout.loadScreen()
         }
     }

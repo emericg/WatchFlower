@@ -16,9 +16,6 @@ Popup {
     focus: isMobile
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
-    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; } }
-    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 133; } }
-
     property int layoutDirection: Qt.RightToLeft
 
     signal menuSelected(var index)
@@ -26,6 +23,11 @@ Popup {
     property bool partonevisible: (actionUpdate.visible || actionRealtime.visible)
     property bool parttwovisible: (actionHistoryRefresh.visible || actionHistoryClear.visible)
     property bool partthreevisible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible || actionShowSettings.visible)
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; } }
+    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 133; } }
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -50,6 +52,7 @@ Popup {
 
         ActionMenuItem {
             id: actionUpdate
+            width: parent.width
 
             index: 0
             text: qsTr("Update data")
@@ -66,6 +69,7 @@ Popup {
 
         ActionMenuItem {
             id: actionRealtime
+            width: parent.width
 
             index: 1
             text: qsTr("Real time data")
@@ -91,6 +95,7 @@ Popup {
 
         ActionMenuItem {
             id: actionHistoryRefresh
+            width: parent.width
 
             index: 2
             text: qsTr("Update history")
@@ -107,6 +112,7 @@ Popup {
 
         ActionMenuItem {
             id: actionHistoryClear
+            width: parent.width
 
             index: 3
             text: qsTr("Clear history")
@@ -132,6 +138,7 @@ Popup {
 
         ActionMenuItem {
             id: actionLed
+            width: parent.width
 
             index: 8
             text: qsTr("Blink LED")
@@ -148,6 +155,7 @@ Popup {
 
         ActionMenuItem {
             id: actionWatering
+            width: parent.width
 
             index: 9
             text: qsTr("Watering")
@@ -164,6 +172,7 @@ Popup {
 
         ActionMenuItem {
             id: actionCalibrate
+            width: parent.width
 
             index: 10
             text: qsTr("Calibrate sensor")
@@ -180,6 +189,7 @@ Popup {
 
         ActionMenuItem {
             id: actionGraphMode
+            width: parent.width
 
             index: 16
             text: qsTr("Switch graph")
@@ -199,6 +209,7 @@ Popup {
 
         ActionMenuItem {
             id: actionShowSettings
+            width: parent.width
 
             index: 17
             text: qsTr("Sensor infos")
@@ -215,6 +226,7 @@ Popup {
 
         ActionMenuItem {
             id: actionReboot
+            width: parent.width
 
             index: 32
             text: qsTr("Reboot sensor")

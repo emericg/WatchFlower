@@ -35,7 +35,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
-            rotation: 180
+            sourceRotation: 180
             iconColor: Theme.colorActionbarContent
             backgroundColor: Theme.colorActionbarHighlight
             onClicked: screenDeviceList.exitSelectionMode()

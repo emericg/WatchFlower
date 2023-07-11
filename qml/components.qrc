@@ -12,9 +12,9 @@
         <file alias="DesktopHeaderItem.qml">components_generic/DesktopHeaderItem.qml</file>
         <file alias="IconSvg.qml">components_generic/IconSvg.qml</file>
         <file alias="ItemTag.qml">components_generic/ItemTag.qml</file>
-        <file alias="ListTitle.qml">components_generic/ListTitle.qml</file>
         <file alias="DrawerItem.qml">components_generic/DrawerItem.qml</file>
         <file alias="DrawerButton.qml">components_generic/DrawerButton.qml</file>
+        <file alias="ListTitle.qml">components_generic/ListTitle.qml</file>
         <file alias="ListItem.qml">components_generic/ListItem.qml</file>
         <file alias="ListItemClickable.qml">components_generic/ListItemClickable.qml</file>
         <file alias="ListSeparator.qml">components_generic/ListSeparator.qml</file>

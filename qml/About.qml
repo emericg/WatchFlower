@@ -1,25 +1,26 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Loader {
-    id: aboutScreen
+    id: screenAbout
+    anchors.fill: parent
 
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
         // load screen
-        aboutScreen.active = true
+        screenAbout.active = true
 
         // change screen
         appContent.state = "About"
     }
 
     function backAction() {
-        if (aboutScreen.status === Loader.Ready)
-            aboutScreen.item.backAction()
+        if (screenAbout.status === Loader.Ready)
+            screenAbout.item.backAction()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -30,7 +31,7 @@ Loader {
     sourceComponent: Flickable {
         anchors.fill: parent
         contentWidth: -1
-        contentHeight: columnContent.height
+        contentHeight: contentColumn.height
 
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
         ScrollBar.vertical: ScrollBar { visible: false }
@@ -40,7 +41,7 @@ Loader {
         }
 
         Column {
-            id: columnContent
+            id: contentColumn
             anchors.left: parent.left
             anchors.right: parent.right
 

@@ -5,7 +5,7 @@ import ThemeEngine 1.0
 Rectangle {
     id: itemWeatherBox
     width: (duo) ? sz*2 : sz
-    height: columnContent.height + (isDesktop ? 24 : 22)
+    height: contentColumn.height + (isDesktop ? 24 : 22)
     radius: 4
 
     property string title: ""
@@ -49,7 +49,7 @@ Rectangle {
     }
 
     Column {
-        id: columnContent
+        id: contentColumn
         anchors.left: parent.left
         anchors.leftMargin: isDesktop ? 12 : 10
         anchors.right: parent.right

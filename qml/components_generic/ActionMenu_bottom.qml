@@ -26,7 +26,7 @@ Popup {
     ////////////////////////////////////////////////////////////////////////////
 
     property real realHeight: 0
-    Component.onCompleted: realHeight = height
+    Component.onCompleted: realHeight = height + screenPaddingNavbar + screenPaddingBottom
 
     enter: Transition {
         NumberAnimation { duration: 233; property: "height"; from: 0; to: realHeight }
@@ -40,15 +40,17 @@ Popup {
     background: Rectangle {
         color: Theme.colorForeground
         radius: Theme.componentRadius
-        border.color: Theme.colorSeparator
-        border.width: Theme.componentBorderWidth
+
+        Rectangle {
+            width: parent.width
+            height: Theme.componentBorderWidth
+            color: Theme.colorSeparator
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Column {
-        padding: Theme.componentBorderWidth
-
         topPadding: 8
         bottomPadding: 8
         spacing: 4
@@ -68,6 +70,7 @@ Popup {
             DelegateChoice {
                 roleValue: "itm"
                 ActionMenuItem {
+                    width: parent.width
                     index: idx
                     text: txt
                     source: src

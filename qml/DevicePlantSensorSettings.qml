@@ -500,8 +500,8 @@ Flickable {
 
                         RoundButtonIcon {
                             width: 40; height: 40;
-                            border: true
-                            background: true
+                            borderVisible: true
+                            backgroundVisible: true
                             backgroundColor: Theme.colorBackground
                             iconColor: Theme.colorIcon
                             source: UtilsDeviceSensors.getDeviceSensorIcon(modelData.sensorId)
@@ -546,8 +546,8 @@ Flickable {
 
                         RoundButtonIcon {
                             width: 40; height: 40;
-                            border: true
-                            background: true
+                            borderVisible: true
+                            backgroundVisible: true
                             backgroundColor: Theme.colorBackground
                             iconColor: Theme.colorIcon
                             source: UtilsDeviceSensors.getDeviceCapabilityIcon(modelData.capabilityId)

@@ -31,7 +31,7 @@ T.Button {
     // colors
     property string primaryColor: Theme.colorPrimary
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 
     MouseArea {
         id: mouseArea
@@ -43,7 +43,7 @@ T.Button {
         onClicked: control.clicked()
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 
     background: Item {
         implicitWidth: 80
@@ -98,7 +98,7 @@ T.Button {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 
     contentItem: RowLayout {
         spacing: control.spacing
@@ -132,4 +132,6 @@ T.Button {
             opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
         }
     }
+
+    ////////////////
 }

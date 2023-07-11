@@ -91,7 +91,7 @@ Item {
 
                     source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
                     iconColor: "white"
-                    background: true
+                    backgroundVisible: true
                     backgroundColor: Theme.colorGreen
 
                     Rectangle {
@@ -144,7 +144,7 @@ Item {
 
                     source: "qrc:/assets/icons_material/baseline-add-24px.svg"
                     iconColor: "white"
-                    background: true
+                    backgroundVisible: true
                     backgroundColor: Theme.colorPrimary
 
                     onClicked: {
@@ -339,13 +339,13 @@ Item {
 
                                             source: UtilsPlantJournal.getJournalEntryIcon(modelData)
                                             iconColor: Theme.colorSubText
-                                            background: true
+                                            backgroundVisible: true
                                             backgroundColor: Theme.colorBackground
-                                            border: true
+                                            borderVisible: true
                                             borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
                                             highlightMode: "border"
 
-                                            selected: (entryEditor.entryType === modelData)
+                                            highlighted: (entryEditor.entryType === modelData)
                                             onClicked: entryEditor.entryType = modelData
                                         }
                                         Text {

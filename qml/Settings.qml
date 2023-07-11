@@ -5,21 +5,22 @@ import ThemeEngine 1.0
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Loader {
-    id: settingsScreen
+    id: screenSettings
+    anchors.fill: parent
 
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
         // load screen
-        settingsScreen.active = true
+        screenSettings.active = true
 
         // change screen
         appContent.state = "Settings"
     }
 
     function backAction() {
-        if (settingsScreen.status === Loader.Ready)
-            settingsScreen.item.backAction()
+        if (screenSettings.status === Loader.Ready)
+            screenSettings.item.backAction()
     }
 
     ////////////////////////////////////////////////////////////////////////////

@@ -93,7 +93,7 @@ Popup {
     ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Column {
-        id: columnContent
+        id: contentColumn
 
         Rectangle {
             id: titleArea

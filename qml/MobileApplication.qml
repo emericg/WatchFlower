@@ -229,7 +229,6 @@ ApplicationWindow {
         interval: 3333
         running: false
         repeat: false
-        onRunningChanged: exitWarning.opacity = running
     }
 
     // UI sizes ////////////////////////////////////////////////////////////////
@@ -287,10 +286,11 @@ ApplicationWindow {
                 if (screenDeviceList.isSelected()) {
                     screenDeviceList.exitSelectionMode()
                 } else {
-                    if (exitTimer.running)
+                    if (exitTimer.running) {
                         Qt.quit()
-                    else
+                    } else {
                         exitTimer.start()
+                    }
                 }
             } else if (appContent.state === "DevicePlantSensor") {
                 screenDevicePlantSensor.backAction()
@@ -599,9 +599,9 @@ ApplicationWindow {
         border.color: Theme.colorSeparator
         border.width: Theme.componentBorderWidth
 
-        opacity: 0
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
         visible: opacity
+        opacity: exitTimer.running ? 1 : 0
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
 
         Text {
             anchors.centerIn: parent
