@@ -415,15 +415,17 @@ Item {
                 }
             }
 
-            Loader { // alarmFreeze
+            Loader { // alarmFreeze // alarmHeat
                 asynchronous: true
-                active: ((boxDevice.temperatureC > 40) ||
+                active: ((boxDevice.temperatureC > 38) ||
                          (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80))
 
                 sourceComponent: AlarmIndicator {
-                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                    source: (boxDevice.temperatureC > 38) ?
+                             "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg" :
+                             "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
                     color: {
-                        if (boxDevice.temperatureC <= -4)
+                        if (boxDevice.temperatureC <= -4 || boxDevice.temperatureC >= 44)
                             return Theme.colorRed
                         else
                             return Theme.colorYellow
@@ -578,8 +580,8 @@ Item {
         Row {
             id: rectangleSensors
             height: rowRight.height
-            spacing: 7
 
+            spacing: isPhone ? 7 : 8
             property int sensorWidth: isPhone ? 9 : (hugeMode ? 12 : 10)
             property int sensorRadius: hugeMode ? 3 : 2
 

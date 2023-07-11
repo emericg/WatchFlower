@@ -165,7 +165,7 @@ Item {
                         sweepAngle: 160
                     }
                 }
-                ShapePath { // moon
+                ShapePath { // moon path
                     fillColor: Theme.colorDeviceWidget
                     strokeColor: Theme.colorBlue
                     strokeWidth: 4
@@ -180,7 +180,7 @@ Item {
                         sweepAngle: shapes.moonmoonmoon
                     }
                 }
-                ShapePath { // sun
+                ShapePath { // sun path
                     fillColor: Theme.colorDeviceWidget
                     strokeColor: Theme.colorYellow
                     strokeWidth: 4
@@ -197,7 +197,7 @@ Item {
                 }
             }
 
-            Rectangle {
+            Rectangle { // sun background and rotating icon
                 width: 32
                 height: 32
                 radius: 32
@@ -225,7 +225,7 @@ Item {
                     }
                 }
             }
-            Rectangle {
+            Rectangle { // moon background and icon
                 width: 32
                 height: 32
                 radius: 32
