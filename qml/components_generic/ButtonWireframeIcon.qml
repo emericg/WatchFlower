@@ -131,7 +131,7 @@ T.Button {
             Layout.maximumHeight: control.sourceSize
             Layout.alignment: Qt.AlignVCenter
 
-            opacity: enabled ? 1.0 : 0.66
+            opacity: enabled ? (control.down && !control.hoverAnimation ? 0.8 : 1.0) : 0.66
             color: control.fullColor ? control.fulltextColor : control.primaryColor
         }
         Text {

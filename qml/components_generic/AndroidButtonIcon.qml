@@ -113,7 +113,7 @@ T.Button {
 
             source: control.source
             color: control.primaryColor
-            opacity: enabled ? 1.0 : 0.33
+            opacity: enabled ? (control.down ? 0.8 : 1.0) : 0.33
         }
         Text { // contentText
             Layout.fillWidth: true

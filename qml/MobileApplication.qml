@@ -226,7 +226,7 @@ ApplicationWindow {
 
     Timer {
         id: exitTimer
-        interval: 3333
+        interval: 2222
         running: false
         repeat: false
     }
@@ -599,9 +599,10 @@ ApplicationWindow {
         border.color: Theme.colorSeparator
         border.width: Theme.componentBorderWidth
 
-        visible: opacity
+        visible: (appContent.state === "DeviceList" && opacity)
+
         opacity: exitTimer.running ? 1 : 0
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
+        Behavior on opacity { OpacityAnimator { duration: 222 } }
 
         Text {
             anchors.centerIn: parent

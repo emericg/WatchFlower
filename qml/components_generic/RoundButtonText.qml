@@ -11,6 +11,8 @@ T.Button {
     implicitWidth: Theme.componentHeight
     implicitHeight: Theme.componentHeight
 
+    focusPolicy: Qt.NoFocus
+
     //property string text
     property int textSize: Math.round(width * 0.333)
 

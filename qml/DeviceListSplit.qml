@@ -18,7 +18,7 @@ Item {
     property int selectionCount: 0
 
     function isSelected() {
-        return (selectionList.length !== 0)
+        return (selectionList.length > 0)
     }
     function selectDevice(index, type) {
         // make sure it's not already selected

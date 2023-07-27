@@ -16,6 +16,8 @@ T.Button {
     leftPadding: 12
     rightPadding: 12
 
+    focusPolicy: Qt.NoFocus
+
     // icon
     property url source
     property int sourceSize: 26

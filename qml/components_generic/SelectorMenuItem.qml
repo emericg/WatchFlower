@@ -15,6 +15,8 @@ T.Button {
     leftPadding: 16
     rightPadding: 16
 
+    focusPolicy: Qt.NoFocus
+
     // settings
     property int index
     //property string text

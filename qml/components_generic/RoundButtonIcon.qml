@@ -11,6 +11,8 @@ T.Button {
     implicitWidth: Theme.componentHeight
     implicitHeight: Theme.componentHeight
 
+    focusPolicy: Qt.NoFocus
+
     property url source
     property int sourceSize: UtilsNumber.alignTo(height * 0.666, 2)
     property int sourceRotation: 0

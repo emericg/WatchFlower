@@ -9,8 +9,11 @@ import ThemeEngine 1.0
 
 T.Button {
     id: control
+
     implicitWidth: Theme.componentHeight
     implicitHeight: Theme.componentHeight
+
+    focusPolicy: Qt.NoFocus
 
     // image
     property url source
