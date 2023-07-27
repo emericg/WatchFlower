@@ -11,20 +11,23 @@ import ThemeEngine 1.0
 T.Button {
     id: control
 
-    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
-                            implicitContentWidth + leftPadding + rightPadding)
-    //implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
-    //                         implicitContentHeight + topPadding + bottomPadding)
-
-    implicitHeight: 36
+    anchors.left: parent.left
+    anchors.leftMargin: Theme.componentBorderWidth
+    anchors.right: parent.right
+    anchors.rightMargin: Theme.componentBorderWidth
 
     leftInset: Theme.componentMargin/2
     rightInset: Theme.componentMargin/2
     rightPadding: Theme.componentMargin
     leftPadding: Theme.componentMargin
 
+    height: 36
+
+    focusPolicy: Qt.NoFocus
+
     // settings
     property int index
+    //property string text
     property url source
     property int sourceSize: 20
     property int layoutDirection: Qt.RightToLeft
@@ -44,12 +47,13 @@ T.Button {
             opacity: control.hovered ? 1 : 0
             Behavior on opacity { OpacityAnimator { duration: 233 } }
         }
+
         RippleThemed {
             anchors.fill: parent
             clip: visible
             pressed: control.down
             active: enabled && control.down
-            color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.5)
+            color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.66)
         }
 
         layer.enabled: true

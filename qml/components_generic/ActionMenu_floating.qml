@@ -11,11 +11,11 @@ Popup {
     padding: 0
     margins: 0
 
-    parent: Overlay.overlay
     modal: true
     dim: false
     focus: isMobile
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    //parent: Overlay.overlay
 
     property var model: null
 
@@ -58,7 +58,7 @@ Popup {
             DelegateChoice {
                 roleValue: "itm"
                 ActionMenuItem {
-                    width: parent.width
+                    width: actionMenu.width
                     index: idx
                     text: txt
                     source: src

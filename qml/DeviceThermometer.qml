@@ -357,6 +357,7 @@ Loader {
                         font.bold: false
                         font.pixelSize: isPhone ? 18 : 19
                         color: cccc
+                        opacity: 0.8
                     }
 
                     IconSvg {

@@ -40,7 +40,6 @@ ApplicationWindow {
 
     function handleSafeAreas() {
         // safe areas handling is a work in progress /!\
-
         // safe areas are only taken into account when using maximized geometry / full screen mode
 
         if (appWindow.visibility === Window.FullScreen ||
