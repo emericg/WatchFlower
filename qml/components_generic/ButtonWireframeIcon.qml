@@ -39,7 +39,7 @@ T.Button {
     // animation
     property bool hoverAnimation: isDesktop
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 
     MouseArea {
         id: mousearea
@@ -73,7 +73,7 @@ T.Button {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 
     background: Rectangle {
         implicitWidth: 80
@@ -115,7 +115,7 @@ T.Button {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 
     contentItem: RowLayout {
         spacing: control.spacing
@@ -144,7 +144,6 @@ T.Button {
 
             font: control.font
             elide: Text.ElideMiddle
-            //wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
 
@@ -153,5 +152,5 @@ T.Button {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////////
 }

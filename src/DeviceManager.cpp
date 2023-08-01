@@ -571,7 +571,7 @@ void DeviceManager::deviceDiscoveryErrorIOS()
 {
     //qDebug() << "DeviceManager::deviceDiscoveryErrorIOS()";
 
-    m_discoveryAgent->stop();
+    if (m_discoveryAgent) m_discoveryAgent->stop();
     m_checking_ios_ble = false;
 
     if (m_bleEnabled)
@@ -1167,7 +1167,7 @@ void DeviceManager::refreshDevices_stop()
 {
     //qDebug() << "DeviceManager::refreshDevices_stop()";
 
-    if (m_discoveryAgent->isActive())
+    if (m_discoveryAgent && m_discoveryAgent->isActive())
     {
         m_discoveryAgent->stop();
 

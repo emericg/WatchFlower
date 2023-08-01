@@ -142,6 +142,8 @@ void DeviceManager::addNearbyBleDevice(const QBluetoothDeviceInfo &info)
             if (edd && edd->getAddress() == info.address().toString())
 #endif
             {
+                edd->setName(info.name());
+                edd->setRssi(info.rssi());
                 return;
             }
         }
@@ -166,23 +168,6 @@ void DeviceManager::updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBlu
 {
     //qDebug() << "DeviceManager::updateNearbyBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
     Q_UNUSED(updatedFields)
-
-    // Check if it's not already in the UI
-    for (auto d: qAsConst(m_devices_nearby_model->m_devices))
-    {
-        Device *dd = qobject_cast<Device*>(d);
-
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
-        if (dd && dd->getAddress() == info.deviceUuid().toString())
-#else
-        if (dd && dd->getAddress() == info.address().toString())
-#endif
-        {
-            dd->setName(info.name());
-            dd->setRssi(info.rssi());
-            return;
-        }
-    }
 
     addNearbyBleDevice(info);
 }
