@@ -44,26 +44,29 @@ class UtilsAndroid
 {
 public:
     /*!
-     * \brief getSdkVersion
-     * \return
+     * \brief Get Android SDK / API level
+     * \return See https://apilevels.com/
      */
     static int getSdkVersion();
 
-    /*!
-     * \note DEPRECATED in Android 12
-     * \return True if R/W permissions on main storage have been previously obtained.
-     */
+    static bool getPermissions_storage();
     static bool checkPermissions_storage();
-    static bool checkPermission_storage_read();
-    static bool checkPermission_storage_write();
 
     /*!
      * \note DEPRECATED in Android 12
-     * \return True if R/W permissions on main storage have been explicitly obtained.
+     * \return True if R/W permissions on main storage have been previously or explicitly obtained.
      */
-    static bool getPermissions_storage();
+    static bool checkPermission_storage_read();
     static bool getPermission_storage_read();
+    static bool checkPermission_storage_write();
     static bool getPermission_storage_write();
+
+    /*!
+     * \param packageName: the application package, for instance 'com.application.identifier'.
+     * \return True if filesystem access have been previously or explicitly obtained.
+     */
+    static bool checkPermission_storage_filesystem();
+    static bool getPermission_storage_filesystem(const QString &packageName);
 
     /*!
      * \return True if CAMERA permission has been previously obtained.

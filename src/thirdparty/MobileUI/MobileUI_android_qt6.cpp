@@ -399,7 +399,9 @@ void MobileUIPrivate::vibrate()
                 {
                     // vibrate(VibrationEffect vibe) // Added in API level 26
 
+                    // effects available: EFFECT_TICK, EFFECT_CLICK, EFFECT_HEAVY_CLICK, EFFECT_DOUBLE_CLICK
                     jint effect = EFFECT_TICK;
+
                     QJniObject vibrationEffect = QJniObject::callStaticObjectMethod("android/os/VibrationEffect",
                                                                                     "createPredefined",
                                                                                     "(I)Landroid/os/VibrationEffect;",

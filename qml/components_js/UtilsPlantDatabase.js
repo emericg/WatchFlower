@@ -2,8 +2,8 @@
 // Version 2
 .pragma library
 
-.import PlantUtils 1.0 as PlantUtils
-.import ThemeEngine 1.0 as ThemeEngine
+.import PlantUtils as PlantUtils
+.import ThemeEngine as ThemeEngine
 
 /* ************************************************************************** */
 

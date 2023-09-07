@@ -260,18 +260,17 @@ int UtilsApp::getAndroidSdkVersion()
 
 void UtilsApp::openAndroidAppInfo(const QString &packageName)
 {
+    Q_UNUSED(packageName)
+
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::openApplicationInfo(packageName);
 #endif
-
-    Q_UNUSED(packageName)
 }
 
 void UtilsApp::openAndroidLocationSettings()
 {
 #if defined(Q_OS_ANDROID)
-    //UtilsAndroid::openLocationSettings();
-    UtilsAndroid::gpsutils_openLocationSettings();
+    UtilsAndroid::openLocationSettings();
 #endif
 }
 
@@ -390,6 +389,30 @@ bool UtilsApp::getMobileStorageWritePermission()
 {
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::getPermission_storage_write();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::checkMobileStorageFileSystemPermission()
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::checkPermission_storage_filesystem();
+#elif defined(Q_OS_IOS)
+    return false;
+#else
+    return true;
+#endif
+}
+
+bool UtilsApp::getMobileStorageFileSystemPermission(const QString &packageName)
+{
+    Q_UNUSED(packageName)
+
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::getPermission_storage_filesystem(packageName);
 #elif defined(Q_OS_IOS)
     return false;
 #else

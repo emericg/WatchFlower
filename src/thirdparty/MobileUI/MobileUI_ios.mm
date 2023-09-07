@@ -208,33 +208,70 @@ void MobileUIPrivate::setScreenAlwaysOn(const bool on)
 
 void MobileUIPrivate::setScreenOrientation(const MobileUI::ScreenOrientation orientation)
 {
-    // For reference, the enum values from iOS:
-    // UIInterfaceOrientationUnknown = 0,          // The orientation of the device is unknown.
-    // UIInterfaceOrientationPortrait,             // The device is in portrait mode, with the device upright and the Home button on the bottom.
-    // UIInterfaceOrientationPortraitUpsideDown,   // The device is in portrait mode but is upside down, with the device upright and the Home button at the top.
-    // UIInterfaceOrientationLandscapeLeft,        // The device is in landscape mode, with the device upright and the Home button on the left.
-    // UIInterfaceOrientationLandscapeRight,       // The device is in landscape mode, with the device upright and the Home button on the right.
+    if (@available(iOS 16.0, *))
+    {
+        // For reference, the values from iOS:
+        // UIInterfaceOrientationMaskAll,               // The view controller supports all interface orientations.
+        // UIInterfaceOrientationMaskAllButUpsideDown,  // The view controller supports all but the upside-down portrait interface orientation.
+        // UIInterfaceOrientationMaskPortrait,          // The view controller supports a portrait interface orientation.
+        // UIInterfaceOrientationMaskPortraitUpsideDown,// The view controller supports an upside-down portrait interface orientation.
+        // UIInterfaceOrientationMaskLandscape,         // The view controller supports both landscape-left and landscape-right interface orientation.
+        // UIInterfaceOrientationMaskLandscapeLeft,     // The view controller supports a landscape-left interface orientation.
+        // UIInterfaceOrientationMaskLandscapeRight,    // The view controller supports a landscape-right interface orientation.
 
-    NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        if (!keyWindow) return;
+        UIWindowScene *windowScene = keyWindow.windowScene;
+        if (!windowScene) return;
 
-    if (orientation == MobileUI::Portrait) value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-    else if (orientation == MobileUI::Portrait_upsidedown) value = [NSNumber numberWithInt:UIInterfaceOrientationPortraitUpsideDown];
-    else if (orientation == MobileUI::Landscape_left) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
-    else if (orientation == MobileUI::Landscape_right) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
-    // these aren't supported, so we default to regular mode
-    else if (orientation == MobileUI::Portrait_sensor) value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
-    else if (orientation == MobileUI::Landscape_sensor) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+        UIWindowSceneGeometryPreferences *value = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:UIInterfaceOrientationMaskAll];
 
-    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+        if (orientation == MobileUI::Portrait) value = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:UIInterfaceOrientationMaskPortrait];
+        else if (orientation == MobileUI::Portrait_upsidedown) value = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:UIInterfaceOrientationMaskPortraitUpsideDown];
+        else if (orientation == MobileUI::Landscape_left) value = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:UIInterfaceOrientationMaskLandscapeLeft];
+        else if (orientation == MobileUI::Landscape_right) value = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:UIInterfaceOrientationMaskLandscapeRight];
+        else if (orientation == MobileUI::Landscape_sensor) value = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:UIInterfaceOrientationMaskLandscape];
+        // these aren't supported, so we default to regular mode
+        else if (orientation == MobileUI::Portrait_sensor) value = [[UIWindowSceneGeometryPreferencesIOS alloc] initWithInterfaceOrientations:UIInterfaceOrientationMaskPortrait];
+
+        [windowScene requestGeometryUpdateWithPreferences:value errorHandler:^(NSError * _Nonnull error) {
+            qDebug() << "Cannot requestGeometryUpdate: unsupported?";
+        }];
+    }
+    else
+    {
+        // For reference, the enum values from iOS:
+        // UIInterfaceOrientationUnknown = 0,          // The orientation of the device is unknown.
+        // UIInterfaceOrientationPortrait,             // The device is in portrait mode, with the device upright and the Home button on the bottom.
+        // UIInterfaceOrientationPortraitUpsideDown,   // The device is in portrait mode but is upside down, with the device upright and the Home button at the top.
+        // UIInterfaceOrientationLandscapeLeft,        // The device is in landscape mode, with the device upright and the Home button on the left.
+        // UIInterfaceOrientationLandscapeRight,       // The device is in landscape mode, with the device upright and the Home button on the right.
+
+        NSNumber *value = [NSNumber numberWithInt:UIInterfaceOrientationUnknown];
+
+        if (orientation == MobileUI::Portrait) value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+        else if (orientation == MobileUI::Portrait_upsidedown) value = [NSNumber numberWithInt:UIInterfaceOrientationPortraitUpsideDown];
+        else if (orientation == MobileUI::Landscape_left) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+        else if (orientation == MobileUI::Landscape_right) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeRight];
+        // these aren't supported, so we default to regular mode
+        else if (orientation == MobileUI::Portrait_sensor) value = [NSNumber numberWithInt:UIInterfaceOrientationPortrait];
+        else if (orientation == MobileUI::Landscape_sensor) value = [NSNumber numberWithInt:UIInterfaceOrientationLandscapeLeft];
+
+        [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+    }
 }
 
 /* ************************************************************************** */
 
 void MobileUIPrivate::vibrate()
 {
-    UISelectionFeedbackGenerator *generator = [[UISelectionFeedbackGenerator alloc] init];
-    [generator prepare];
-    [generator selectionChanged];
+    // available impacts: light, medium, heavy, soft, rigid
+    // available notifications: error, success, warning
+
+    // "impact" feedback
+    UIImpactFeedbackGenerator *generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:(UIImpactFeedbackStyleMedium)];
+    //[generator prepare];
+    [generator impactOccurred];
     generator = nil;
 }
 

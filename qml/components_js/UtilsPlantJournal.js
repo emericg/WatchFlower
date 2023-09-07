@@ -2,8 +2,8 @@
 // Version 1
 .pragma library
 
-.import JournalUtils 1.0 as JournalUtils
-.import ThemeEngine 1.0 as ThemeEngine
+.import JournalUtils as JournalUtils
+.import ThemeEngine as ThemeEngine
 
 /* ************************************************************************** */
 

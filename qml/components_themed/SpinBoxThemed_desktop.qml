@@ -116,7 +116,7 @@ T.SpinBox {
 
                 visible: control.legend
                 color: Theme.colorComponentText
-                opacity: 0.8
+                opacity: 0.66
 
                 text: control.legend
                 textFormat: Text.PlainText
