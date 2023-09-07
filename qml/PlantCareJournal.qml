@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 
-import JournalUtils 1.0
+import JournalUtils
 import "qrc:/js/UtilsPlantJournal.js" as UtilsPlantJournal
 
 Item {

@@ -1,6 +1,6 @@
 import QtQuick
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {

@@ -2,8 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import ThemeEngine 1.0
-import PlantUtils 1.0
+import ThemeEngine
+import PlantUtils
 import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
 
 Grid {
@@ -106,7 +106,7 @@ Grid {
             //}
         }
 
-        var colorDisabled = Theme.colorLowContrast // Theme.colorMaterialGrey
+        var colorDisabled = Theme.colorLowContrast
 
         // sunlight
         rectangleSunlight.visible = currentPlant.sunlight

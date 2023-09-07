@@ -4,7 +4,7 @@ import QtQuick.Templates as T
 
 import Qt5Compat.GraphicalEffects
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 T.SpinBox {

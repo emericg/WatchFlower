@@ -1,10 +1,10 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine 1.0
+import ThemeEngine
 
 Item {
-    id: permissionsScreen
+    id: screenAboutPermissions
     anchors.fill: parent
 
     property string entryPoint: "About"
@@ -408,4 +408,6 @@ Item {
             ////////
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

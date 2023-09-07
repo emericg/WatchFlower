@@ -1,7 +1,7 @@
 import QtQuick
 
-import ThemeEngine 1.0
-import JournalUtils 1.0
+import ThemeEngine
+import JournalUtils
 import "qrc:/js/UtilsPlantJournal.js" as UtilsPlantJournal
 
 Item {

@@ -1,7 +1,7 @@
 import QtQuick
 
-import ThemeEngine 1.0
-import PlantUtils 1.0
+import ThemeEngine
+import PlantUtils
 import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
 
 Column {
