@@ -13,7 +13,7 @@ on:
 
 env:
   APPLICATION: "WatchFlower"
-  APPLICATION_VERSION: "5.2"
+  APPLICATION_VERSION: "5.3"
   QT_VERSION: "6.5.2"
 
 #-------------------------------------------------------------------------------

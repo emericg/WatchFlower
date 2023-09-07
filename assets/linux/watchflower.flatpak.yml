@@ -253,5 +253,5 @@ modules:
     buildsystem: qmake
     sources:
       - type: archive
-        url: https://github.com/emericg/WatchFlower/archive/refs/tags/v5.2.tar.gz
+        url: https://github.com/emericg/WatchFlower/archive/refs/tags/v5.3.tar.gz
         sha256: 
