@@ -91,7 +91,7 @@ Loader {
 
                 ////////
 
-                Row {
+                Row { // desktop buttons row
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
@@ -137,6 +137,8 @@ Loader {
                     }
                 }
 
+                ////////
+
                 Rectangle { // bottom separator
                     anchors.left: parent.left
                     anchors.right: parent.right
@@ -149,7 +151,7 @@ Loader {
 
             ////////////////
 
-            Row { // buttons row
+            Row { // mobile buttons row
                 height: 72
 
                 anchors.left: parent.left
@@ -194,6 +196,19 @@ Loader {
                 iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
             }
 
+            IconSvg { // image devices
+                anchors.left: parent.left
+                anchors.leftMargin: screenPaddingLeft + appHeader.headerPosition
+                anchors.right: parent.right
+                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+
+                height: 96
+                visible: isPhone
+                source: isPhone ? "qrc:/assets/tutorial/welcome-devices.svg" : ""
+                fillMode: Image.PreserveAspectFit
+                color: Theme.colorPrimary
+            }
+
             ListItemClickable { // authors
                 width: parent.width
 
@@ -233,19 +248,6 @@ Loader {
                 onClicked: screenTutorial.loadScreenFrom("About")
             }
 
-            IconSvg { // image devices
-                anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
-
-                height: 96
-                visible: isPhone
-                source: isPhone ? "qrc:/assets/tutorial/welcome-devices.svg" : ""
-                fillMode: Image.PreserveAspectFit
-                color: Theme.colorPrimary
-            }
-
             ////////
 
             ListSeparator { visible: (Qt.platform.os === "android") }
@@ -256,6 +258,7 @@ Loader {
 
                 text: qsTr("About app permissions")
                 iconSource: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
+                iconSize: 24
                 indicatorSource: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
 
                 onClicked: screenAboutPermissions.loadScreenFrom("About")

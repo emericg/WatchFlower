@@ -10,7 +10,7 @@ Rectangle {
 
     height: screenPaddingStatusbar + headerHeight
     color: Theme.colorHeader
-    clip: false
+    clip: true
     z: 10
 
     property int headerHeight: 52

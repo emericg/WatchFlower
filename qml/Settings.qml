@@ -61,8 +61,8 @@ Loader {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                topPadding: Theme.componentMargin
-                bottomPadding: Theme.componentMargin
+                topPadding: 16
+                bottomPadding: 16
                 spacing: 8
 
                 property int padIcon: singleColumn ? Theme.componentMarginL : Theme.componentMarginL
@@ -527,7 +527,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         height: 32
 
-                        text: qsTr("experimental")
+                        text: qsTr("about")
                         primaryColor: Theme.colorRed
                         borderColor: Theme.colorRed
 

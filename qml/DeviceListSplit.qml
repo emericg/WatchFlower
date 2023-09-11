@@ -70,8 +70,8 @@ Item {
             anchors.right: parent.right
             anchors.rightMargin: halfmargin
 
-            topPadding: Theme.componentMargin
-            bottomPadding: Theme.componentMargin - halfmargin
+            topPadding: listWidget ? 16 : 16
+            bottomPadding: listWidget ? 0 : halfmargin
             spacing: listWidget ? 0 : halfmargin
 
             ////////

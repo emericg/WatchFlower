@@ -368,7 +368,7 @@ Item {
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin
 
-                    text: qsTr("Click on the icons to request a permission.")
+                    text: qsTr("Click on the checkmarks to request missing permissions.")
                     textFormat: Text.StyledText
                     wrapMode: Text.WordWrap
                     color: Theme.colorText

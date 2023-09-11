@@ -27,9 +27,6 @@ ApplicationWindow {
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
 
-    onScreenOrientationChanged: handleSafeAreas()
-    onVisibilityChanged: handleSafeAreas()
-
     property int screenPaddingStatusbar: 0
     property int screenPaddingNavbar: 0
 
@@ -38,10 +35,11 @@ ApplicationWindow {
     property int screenPaddingRight: 0
     property int screenPaddingBottom: 0
 
-    function handleSafeAreas() {
-        // safe areas handling is a work in progress /!\
-        // safe areas are only taken into account when using maximized geometry / full screen mode
+    onScreenOrientationChanged: handleSafeAreas()
+    onVisibilityChanged: handleSafeAreas()
 
+    function handleSafeAreas() {
+        // safe areas are only taken into account when using maximized geometry / full screen mode
         if (appWindow.visibility === Window.FullScreen ||
             appWindow.flags & Qt.MaximizeUsingFullscreenGeometryHint) {
 
@@ -221,13 +219,6 @@ ApplicationWindow {
                     break
             }
         }
-    }
-
-    Timer {
-        id: exitTimer
-        interval: 2222
-        running: false
-        repeat: false
     }
 
     // UI sizes ////////////////////////////////////////////////////////////////
@@ -559,28 +550,35 @@ ApplicationWindow {
         ]
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
+
+    MobileMenu {
+        id: mobileMenu
+    }
 
     Rectangle { // navbar area
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         height: screenPaddingNavbar
+
         visible: (mobileMenu.visible || appContent.state === "Tutorial")
+        opacity: appWindow.isTablet ? 0.5 : 1
+
         color: {
             if (appContent.state === "Tutorial") return Theme.colorHeader
             return Theme.colorBackground
         }
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 
-    MobileMenu {
-        id: mobileMenu
+    Timer {
+        id: exitTimer
+        interval: 2222
+        running: false
+        repeat: false
     }
-
-    ////////////////
-
     Rectangle {
         id: exitWarning
 
@@ -591,7 +589,7 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: Theme.componentMargin + screenPaddingNavbar + screenPaddingBottom
 
-        height: Theme.componentHeight
+        height: Theme.componentHeightL
         radius: Theme.componentRadius
 
         color: Theme.colorComponentBackground
@@ -601,7 +599,7 @@ ApplicationWindow {
         visible: (appContent.state === "DeviceList" && opacity)
 
         opacity: exitTimer.running ? 1 : 0
-        Behavior on opacity { OpacityAnimator { duration: 222 } }
+        Behavior on opacity { OpacityAnimator { duration: 333 } }
 
         Text {
             anchors.centerIn: parent

@@ -2,19 +2,17 @@ import QtQuick
 
 import ThemeEngine
 
-Rectangle {
+Item {
     id: mobileMenu
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
-    anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
 
-    property int hhh: (isTablet ? 48 : 36)
+    property int hhh: (appWindow.isPhone ? 36 : 48)
     property int hhi: (hhh * 0.5)
     property int hhv: visible ? hhh : 0
 
-    height: hhh
-    color: isTablet ? Theme.colorTabletmenu : Theme.colorBackground
+    height: hhh + screenPaddingNavbar + screenPaddingBottom
 
     visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceList" ||
@@ -27,14 +25,21 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 2
-        opacity: 0.16
-        visible: isTablet
-        color: Theme.colorTabletmenuContent
+    Rectangle { // background
+        anchors.fill: parent
+
+        opacity: appWindow.isTablet ? 0.5 : 1
+        color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
+
+        Rectangle {
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 1
+            opacity: 0.8
+            visible: !appWindow.isPhone
+            color: Theme.colorTabletmenuContent
+        }
     }
 
     // prevent clicks below this area
@@ -74,167 +79,175 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Row { // main menu
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: (!appWindow.wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
+    Item { // menu area
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
 
-        visible: (appContent.state === "DeviceList" ||
-                  appContent.state === "DeviceBrowser" ||
-                  appContent.state === "PlantBrowser" ||
-                  appContent.state === "Settings" ||
-                  appContent.state === "About")
+        height: mobileMenu.hhh
 
-        MobileMenuItem_horizontal {
-            id: menuMainView
-            height: mobileMenu.hhh
+        ////////////////////////
 
-            text: qsTr("Sensors")
-            source: "qrc:/assets/logos/watchflower_tray_dark.svg"
-            sourceSize: mobileMenu.hhi
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
+        Row { // main menu
+            anchors.centerIn: parent
+            spacing: (!appWindow.wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
 
-            highlighted: (appContent.state === "DeviceList")
-            onClicked: screenDeviceList.loadScreen()
+            visible: (appContent.state === "DeviceList" ||
+                      appContent.state === "DeviceBrowser" ||
+                      appContent.state === "PlantBrowser" ||
+                      appContent.state === "Settings" ||
+                      appContent.state === "About")
+
+            MobileMenuItem_horizontal {
+                id: menuMainView
+                height: mobileMenu.hhh
+
+                text: qsTr("Sensors")
+                source: "qrc:/assets/logos/watchflower_tray_dark.svg"
+                sourceSize: mobileMenu.hhi
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                highlighted: (appContent.state === "DeviceList")
+                onClicked: screenDeviceList.loadScreen()
+            }
+            MobileMenuItem_horizontal {
+                id: menuPlantBrowser
+                height: mobileMenu.hhh
+
+                text: qsTr("Plant browser")
+                source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                sourceSize: mobileMenu.hhi
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                visible: (screenOrientation === Qt.LandscapeOrientation)
+                highlighted: (appContent.state === "PlantBrowser")
+                onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
+            }
+            MobileMenuItem_horizontal {
+                id: menuDeviceBrowseer
+                height: mobileMenu.hhh
+
+                text: qsTr("Device browser")
+                source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
+                sourceSize: mobileMenu.hhi
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                visible: (screenOrientation === Qt.LandscapeOrientation)
+                highlighted: (appContent.state === "DeviceBrowser")
+                onClicked: screenDeviceBrowser.loadScreen()
+            }
+            MobileMenuItem_horizontal {
+                id: menuSettings
+                height: mobileMenu.hhh
+
+                text: qsTr("Settings")
+                source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                sourceSize: mobileMenu.hhi
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                highlighted: (appContent.state === "Settings")
+                onClicked: screenSettings.loadScreen()
+            }
+            MobileMenuItem_horizontal {
+                id: menuAbout
+                height: mobileMenu.hhh
+
+                text: qsTr("About")
+                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                sourceSize: mobileMenu.hhi
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
+                onClicked: screenAbout.loadScreen()
+            }
         }
-        MobileMenuItem_horizontal {
-            id: menuPlantBrowser
-            height: mobileMenu.hhh
 
-            text: qsTr("Plant browser")
-            source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
-            sourceSize: mobileMenu.hhi
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
+        ////////////////////////
 
-            visible: (screenOrientation === Qt.LandscapeOrientation)
-            highlighted: (appContent.state === "PlantBrowser")
-            onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
+        Row { // plant care submenu
+            anchors.centerIn: parent
+            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
+
+            visible: (appContent.state === "DevicePlantSensor")
+
+            MobileMenuItem_horizontal {
+                id: menuDeviceData
+                height: mobileMenu.hhh
+
+                text: qsTr("Data")
+                source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
+                sourceSize: mobileMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                onClicked: mobileMenu.deviceDataButtonClicked()
+            }
+            MobileMenuItem_horizontal {
+                id: menuDeviceHistory
+                height: mobileMenu.hhh
+
+                text: qsTr("History")
+                source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+                sourceSize: mobileMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                onClicked: mobileMenu.deviceHistoryButtonClicked()
+            }
+            MobileMenuItem_horizontal {
+                id: menuDevicePlant
+                height: mobileMenu.hhh
+
+                text: qsTr("Plant")
+                source: "qrc:/assets/icons_custom/duotone-plant_care-24px.svg"
+                sourceSize: mobileMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                onClicked: mobileMenu.devicePlantButtonClicked()
+            }
+            MobileMenuItem_horizontal {
+                id: menuDeviceSettings
+                height: mobileMenu.hhh
+
+                text: qsTr("Sensor")
+                source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
+                sourceSize: mobileMenu.hhi
+
+                colorContent: Theme.colorTabletmenuContent
+                colorHighlight: Theme.colorTabletmenuHighlight
+
+                onClicked: mobileMenu.deviceSettingsButtonClicked()
+            }
         }
-        MobileMenuItem_horizontal {
-            id: menuDeviceBrowseer
-            height: mobileMenu.hhh
 
-            text: qsTr("Device browser")
-            source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
-            sourceSize: mobileMenu.hhi
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
+        ////////////////////////
 
-            visible: (screenOrientation === Qt.LandscapeOrientation)
-            highlighted: (appContent.state === "DeviceBrowser")
-            onClicked: screenDeviceBrowser.loadScreen()
+        Row { // thermometer submenu
+            anchors.centerIn: parent
+            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
+
+            visible: (appContent.state === "DeviceThermometer")
         }
-        MobileMenuItem_horizontal {
-            id: menuSettings
-            height: mobileMenu.hhh
 
-            text: qsTr("Settings")
-            source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
-            sourceSize: mobileMenu.hhi
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
+        ////////////////////////
 
-            highlighted: (appContent.state === "Settings")
-            onClicked: screenSettings.loadScreen()
+        Row { // environmental submenu
+            anchors.centerIn: parent
+            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
+
+            visible: (appContent.state === "DeviceEnvironmental")
         }
-        MobileMenuItem_horizontal {
-            id: menuAbout
-            height: mobileMenu.hhh
 
-            text: qsTr("About")
-            source: "qrc:/assets/icons_material/outline-info-24px.svg"
-            sourceSize: mobileMenu.hhi
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
-
-            highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
-            onClicked: screenAbout.loadScreen()
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Row { // plant care
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
-
-        visible: (appContent.state === "DevicePlantSensor")
-
-        MobileMenuItem_horizontal {
-            id: menuDeviceData
-            height: mobileMenu.hhh
-
-            text: qsTr("Data")
-            source: "qrc:/assets/icons_material/duotone-insert_chart-24px.svg"
-            sourceSize: mobileMenu.hhi
-
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
-
-            onClicked: mobileMenu.deviceDataButtonClicked()
-        }
-        MobileMenuItem_horizontal {
-            id: menuDeviceHistory
-            height: mobileMenu.hhh
-
-            text: qsTr("History")
-            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
-            sourceSize: mobileMenu.hhi
-
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
-
-            onClicked: mobileMenu.deviceHistoryButtonClicked()
-        }
-        MobileMenuItem_horizontal {
-            id: menuDevicePlant
-            height: mobileMenu.hhh
-
-            text: qsTr("Plant")
-            source: "qrc:/assets/icons_custom/duotone-plant_care-24px.svg"
-            sourceSize: mobileMenu.hhi
-
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
-
-            onClicked: mobileMenu.devicePlantButtonClicked()
-        }
-        MobileMenuItem_horizontal {
-            id: menuDeviceSettings
-            height: mobileMenu.hhh
-
-            text: qsTr("Sensor")
-            source: "qrc:/assets/icons_material/duotone-memory-24px.svg"
-            sourceSize: mobileMenu.hhi
-
-            colorContent: Theme.colorTabletmenuContent
-            colorHighlight: Theme.colorTabletmenuHighlight
-
-            onClicked: mobileMenu.deviceSettingsButtonClicked()
-        }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Row { // thermometer
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
-
-        visible: (appContent.state === "DeviceThermometer")
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Row { // environmental
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
-
-        visible: (appContent.state === "DeviceEnvironmental")
+        ////////////////////////
     }
 
     ////////////////////////////////////////////////////////////////////////////
