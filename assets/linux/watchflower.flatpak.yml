@@ -19,6 +19,7 @@ finish-args:
   # We need Bluetooth support
   - --allow=bluetooth
   - --system-talk-name=org.bluez
+  # We can use network to connect to remote database
   - --share=network
 
 cleanup:
@@ -73,8 +74,8 @@ modules:
       - --sysconfdir=/app/etc
     sources:
       - type: archive
-        url: https://www.kernel.org/pub/linux/bluetooth/bluez-5.68.tar.xz
-        sha256: fc505e6445cb579a55cacee6821fe70d633921522043d322b696de0a175ff933
+        url: https://www.kernel.org/pub/linux/bluetooth/bluez-5.69.tar.xz
+        sha256: bc5a35ddc7c72d0d3999a0d7b2175c8b7d57ab670774f8b5b4900ff38a2627fc
         x-checker-data:
           type: anitya
           project-id: 10029
