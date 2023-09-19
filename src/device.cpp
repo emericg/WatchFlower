@@ -927,10 +927,7 @@ bool Device::hasAddressMAC() const
     return true;
 #endif
 
-    if (m_deviceAddressMAC.isEmpty())
-        return false;
-
-    return true;
+    return !m_deviceAddressMAC.isEmpty();
 }
 
 QString Device::getAddressMAC() const
@@ -1307,7 +1304,8 @@ void Device::deviceConnected()
         m_ble_status = DeviceUtils::DEVICE_UPDATING_HISTORY;
     }
     else if (m_ble_action == DeviceUtils::ACTION_SCAN ||
-             m_ble_action == DeviceUtils::ACTION_SCAN_WITH_VALUES)
+             m_ble_action == DeviceUtils::ACTION_SCAN_WITH_VALUES ||
+             m_ble_action == DeviceUtils::ACTION_SCAN_WITHOUT_VALUES)
     {
         m_ble_status = DeviceUtils::DEVICE_WORKING;
     }
@@ -1369,7 +1367,9 @@ void Device::deviceErrored(QLowEnergyController::Error error)
     QLowEnergyController::UnknownError	1	An unknown error has occurred.
     QLowEnergyController::UnknownRemoteDeviceError	2	The remote Bluetooth Low Energy device with the address passed to the constructor of this class cannot be found.
     QLowEnergyController::NetworkError	3	The attempt to read from or write to the remote device failed.
-    QLowEnergyController::InvalidBluetoothAdapterError	4	The local Bluetooth device with the add…  QLowEnergyController::AdvertisingError (since Qt 5.7)	6	The attempt to start advertising failed.
+    QLowEnergyController::InvalidBluetoothAdapterError	4	The local Bluetooth device with the address passed to the constructor of this class cannot be found or there is no local Bluetooth device.
+    QLowEnergyController::ConnectionError (since Qt 5.5)	5	The attempt to connect to the remote device failed.
+    QLowEnergyController::AdvertisingError (since Qt 5.7)	6	The attempt to start advertising failed.
     QLowEnergyController::RemoteHostClosedError (since Qt 5.10)	7	The remote device closed the connection.
     QLowEnergyController::AuthorizationError (since Qt 5.14)	8	The local Bluetooth device closed the connection due to insufficient authorization.
     QLowEnergyController::MissingPermissionsError (since Qt 6.4)	9	The operating system requests permissions which were not granted by the user.

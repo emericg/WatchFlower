@@ -98,11 +98,11 @@ class Device: public QObject
     Q_PROPERTY(int serviceClass READ getServiceClass NOTIFY advertisementUpdated)
     Q_PROPERTY(int bluetoothConfiguration READ getBluetoothConfiguration NOTIFY advertisementUpdated)
 
-    Q_PROPERTY(bool enabled READ isEnabled NOTIFY statusUpdated)
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
     Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
-    Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
+    Q_PROPERTY(bool enabled READ isEnabled NOTIFY statusUpdated)
     Q_PROPERTY(bool connected READ isConnected NOTIFY statusUpdated)
+    Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
     Q_PROPERTY(bool working READ isWorking NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
@@ -245,7 +245,7 @@ public:
     virtual ~Device();
 
     void setName(const QString &name);
-    void setDeviceClass(const int major, const int minor, const int service);
+    virtual void setDeviceClass(const int major, const int minor, const int service);
     virtual void setCoreConfiguration(const int bleconf);
 
     // Device infos

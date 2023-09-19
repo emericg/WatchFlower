@@ -111,7 +111,7 @@ DeviceManager::DeviceManager(bool daemon)
 
     if (m_dbInternal || m_dbExternal)
     {
-        // Load blacklist
+        // Load device blacklist
         if (!m_daemonMode)
         {
             QSqlQuery queryBlacklist;
@@ -213,6 +213,9 @@ DeviceManager::DeviceManager(bool daemon)
 
 DeviceManager::~DeviceManager()
 {
+    qDeleteAll(m_bluetoothAdapters);
+    m_bluetoothAdapters.clear();
+
     delete m_bluetoothAdapter;
     delete m_discoveryAgent;
 
@@ -415,7 +418,7 @@ bool DeviceManager::checkBluetoothPermissions()
     if (os_was != m_permOS || gps_was != m_permGPS ||
         loc_was != m_permLocationBLE || loc_bg_was != m_permLocationBKG)
     {
-        // this function did changed the Bluetooth permission
+        // this function did change the Bluetooth permission
         Q_EMIT permissionsChanged();
     }
     if (btP_was != m_blePermissions)
@@ -706,6 +709,8 @@ void DeviceManager::deviceDiscoveryStopped()
 {
     qDebug() << "DeviceManager::deviceDiscoveryStopped()";
 }
+
+/* ************************************************************************** */
 
 void DeviceManager::setLastRun()
 {
@@ -1701,6 +1706,16 @@ void DeviceManager::removeDeviceData(const QString &address)
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+void DeviceManager::invalidate()
+{
+    m_devices_filter->invalidate();
+}
+
+void DeviceManager::invalidateFilter()
+{
+    m_devices_filter->invalidatefilter();
+}
+
 QVariant DeviceManager::getDeviceByProxyIndex(const int index, const DeviceUtils::DeviceType deviceType) const
 {
     DeviceFilter *filter = m_devices_filter;
@@ -1713,11 +1728,6 @@ QVariant DeviceManager::getDeviceByProxyIndex(const int index, const DeviceUtils
 
     QModelIndex proxyIndex = filter->index(index, 0);
     return QVariant::fromValue(filter->data(proxyIndex, DeviceModel::PointerRole));
-}
-
-void DeviceManager::invalidate()
-{
-    m_devices_filter->invalidate();
 }
 
 void DeviceManager::orderby(int role, Qt::SortOrder order)

@@ -420,6 +420,9 @@ void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
              << "[mode: " << adv_mode << " /  id: 0x" << QString::number(adv_id, 16) << "]";
     qDebug() << "DATA (" << ba.size() << "bytes)   >  0x" << ba.toHex();
 */
+    Q_UNUSED(adv_mode)
+    Q_UNUSED(adv_id)
+
     // 20 bytes message
     if (ba.size() == 20) return;
 

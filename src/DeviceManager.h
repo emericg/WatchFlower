@@ -46,9 +46,8 @@ class DeviceManager: public QObject
     Q_OBJECT
 
     Q_PROPERTY(bool hasDevices READ areDevicesAvailable NOTIFY devicesListUpdated)
-
-    Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
     Q_PROPERTY(int deviceCount READ getDeviceCount NOTIFY devicesListUpdated)
+    Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
 
     Q_PROPERTY(DeviceFilter *devicesPlantList READ getDevicesPlantFiltered NOTIFY devicesListUpdated)
     Q_PROPERTY(int devicePlantCount READ getDevicePlantCount NOTIFY devicesListUpdated)
@@ -61,9 +60,9 @@ class DeviceManager: public QObject
 
     ////////
 
-    Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
-    Q_PROPERTY(bool listening READ isListening NOTIFY listeningChanged)
     Q_PROPERTY(bool advertising READ isAdvertising NOTIFY advertisingChanged)
+    Q_PROPERTY(bool listening READ isListening NOTIFY listeningChanged)
+    Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
     Q_PROPERTY(bool syncing READ isSyncing NOTIFY syncingChanged)
 
@@ -102,6 +101,8 @@ class DeviceManager: public QObject
     QBluetoothDeviceDiscoveryAgent *m_discoveryAgent = nullptr;
     QBluetoothLocalDevice::HostMode m_ble_hostmode = QBluetoothLocalDevice::HostPoweredOff;
 
+    QList <QObject *> m_bluetoothAdapters;
+
     QList <QString> m_devices_blacklist;
 
     DeviceModel *m_devices_nearby_model = nullptr;
@@ -123,14 +124,14 @@ class DeviceManager: public QObject
     QList <QObject *> m_devices_syncing_queue;
     QList <QObject *> m_devices_syncing;
 
-    bool m_scanning = false;
-    bool isScanning() const { return m_scanning; }
+    bool m_advertising = false;
+    bool isAdvertising() const { return m_advertising; }
 
     bool m_listening = false;
     bool isListening() const { return m_listening; }
 
-    bool m_advertising = false;
-    bool isAdvertising() const { return m_advertising; }
+    bool m_scanning = false;
+    bool isScanning() const { return m_scanning; }
 
     bool m_updating = false;
     bool isUpdating() const;
@@ -165,13 +166,15 @@ Q_SIGNALS:
     void bluetoothChanged();
     void permissionsChanged();
 
+    void adaptersListUpdated();
+
     void devicesListUpdated();
     void devicesNearbyUpdated();
     void devicesBlacklistUpdated();
 
-    void scanningChanged();
-    void listeningChanged();
     void advertisingChanged();
+    void listeningChanged();
+    void scanningChanged();
     void updatingChanged();
     void syncingChanged();
     void hostModeChanged();
@@ -198,6 +201,11 @@ public:
 
     bool isDaemon() const { return m_daemonMode; }
 
+    // Adapters management
+    Q_INVOKABLE bool areAdaptersAvailable() const { return m_bluetoothAdapters.size(); }
+    QVariant getAdapters() const { return QVariant::fromValue(m_bluetoothAdapters); }
+    int getAdaptersCount() const { return m_bluetoothAdapters.size(); }
+
     // Bluetooth management
     Q_INVOKABLE bool checkBluetooth();
     Q_INVOKABLE bool checkBluetoothPermissions();
@@ -213,8 +221,8 @@ public:
     Q_INVOKABLE void scanDevices_stop();
 
     Q_INVOKABLE void refreshDevices_background();   //!< Refresh devices on the Android background service
-
     Q_INVOKABLE void refreshDevices_listen();       //!< Refresh devices with data >xh old (as they appear nearby)
+
     Q_INVOKABLE void listenDevices_start();
     Q_INVOKABLE void listenDevices_stop();
 
@@ -244,9 +252,9 @@ public:
     Q_INVOKABLE bool areDevicesAvailable() const { return m_devices_model->hasDevices(); }
     Q_INVOKABLE void disconnectDevices();
 
-    DeviceFilter *getDevicesNearby() const { return m_devices_nearby_filter; }
-    DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
     int getDeviceCount() const { return m_devices_model->getDeviceCount(); }
+    DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
+    DeviceFilter *getDevicesNearby() const { return m_devices_nearby_filter; }
 
     DeviceFilter *getDevicesPlantFiltered() const { return m_devicesPlant_filter; }
     int getDevicePlantCount() const { return m_devicesPlant_model->getDeviceCount(); }
@@ -255,9 +263,7 @@ public:
     DeviceFilter *getDevicesEnvFiltered() const { return m_devicesEnv_filter; }
     int getDeviceEnvCount() const { return m_devicesEnv_model->getDeviceCount(); }
 
-    Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index,
-                                               const DeviceUtils::DeviceType deviceType = DeviceUtils::DEVICE_UNKNOWN) const;
-
+    // Sorting and filtering
     Q_INVOKABLE void orderby_manual();
     Q_INVOKABLE void orderby_model();
     Q_INVOKABLE void orderby_name();
@@ -267,7 +273,11 @@ public:
     Q_INVOKABLE void orderby_insideoutside();
     void orderby(int role, Qt::SortOrder order);
 
+    Q_INVOKABLE QVariant getDeviceByProxyIndex(const int index,
+                                               const DeviceUtils::DeviceType deviceType = DeviceUtils::DEVICE_UNKNOWN) const;
+
     void invalidate();
+    void invalidateFilter();
 
     // Device data export
     Q_INVOKABLE bool exportDataSave();

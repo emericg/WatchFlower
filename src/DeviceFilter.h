@@ -26,7 +26,6 @@
 #include "device.h"
 
 #include <QObject>
-#include <QByteArray>
 #include <QMetaType>
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>
@@ -43,6 +42,8 @@ protected:
 public:
     DeviceFilter(QObject *parent = nullptr);
     ~DeviceFilter();
+
+    void invalidatefilter();
 };
 
 /* ************************************************************************** */
@@ -52,21 +53,21 @@ class DeviceModel : public QAbstractListModel
     Q_OBJECT
 
 protected:
-    QHash<int, QByteArray> roleNames() const;
+    QHash <int, QByteArray> roleNames() const override;
 
 public:
     DeviceModel(QObject *parent = nullptr);
     DeviceModel(const DeviceModel &other, QObject *parent = nullptr);
     ~DeviceModel();
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-    bool hasDevices() const { return !m_devices.empty(); }
-    void getDevices(QList<Device *> &device);
+    bool hasDevices() const { return !m_devices.isEmpty(); }
+    void getDevices(QList <Device *> &device);
     int getDeviceCount() const { return m_devices.size(); }
 
-    QList<Device *> m_devices;
+    QList <Device *> m_devices;
 
     enum DeviceRoles {
         // hw device
@@ -89,6 +90,7 @@ public:
 public slots:
     void addDevice(Device *d);
     void removeDevice(Device *d, bool del);
+    void clearDevices();
     void sanetize();
 };
 
