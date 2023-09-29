@@ -1,18 +1,19 @@
-import QtQuick 2.15
-import QtQuick.Controls.impl 2.15
-import QtQuick.Templates 2.15 as T
+import QtQuick
+import QtQuick.Controls.impl
+import QtQuick.Templates as T
 
-//import QtQuick.Dialogs 1.3 // Qt5
-import QtQuick.Dialogs // Qt6
+import QtQuick.Dialogs
+import QtCore
 
-import ThemeEngine 1.0
+import ThemeEngine
 import "qrc:/js/UtilsPath.js" as UtilsPath
 
 T.TextField {
     id: control
 
-    implicitWidth: implicitBackgroundWidth + leftInset + rightInset
-                   || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            contentWidth + leftPadding + rightPadding,
+                            placeholder.implicitWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
@@ -36,16 +37,18 @@ T.TextField {
     selectedTextColor: colorSelectedText
 
     onEditingFinished: focus = false
+    Keys.onBackPressed: focus = false
 
     // settings
-    property string buttonText: qsTr("change")
-    property int buttonWidth: (buttonChange.visible ? buttonChange.width + 2 : 2)
-
     property string dialogTitle: qsTr("Please choose a file!")
     property var dialogFilter: ["All files (*)"]
+    property int dialogFileMode: FileDialog.SaveFile
 
-    property string statusSource: ""
-    property string statuscolor: Theme.colorPrimary
+    property var currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+
+    // button
+    property string buttonText: qsTr("change")
+    property int buttonWidth: (buttonChange.visible ? buttonChange.width + 2 : 2)
 
     // colors
     property string colorText: Theme.colorComponentText
@@ -66,15 +69,16 @@ T.TextField {
             title: control.dialogTitle
             nameFilters: control.dialogFilter
 
-            //currentFolder: UtilsPath.makeUrl(control.text)
+            fileMode: control.dialogFileMode
+            currentFolder: UtilsPath.makeUrl(control.currentFolder)
             currentFile: UtilsPath.makeUrl(control.text)
 
             onAccepted: {
-                //console.log("fileDialog URL: " + selectedFolder)
+                //console.log("fileDialog currentFolder: " + currentFolder)
+                //console.log("fileDialog currentFile: " + currentFile)
+                //console.log("fileDialog selectedFile: " + selectedFile)
 
-                //var f = UtilsPath.cleanUrl(selectedFolder)
                 var f = UtilsPath.cleanUrl(selectedFile)
-                if (f.slice(0, -1) !== "/") f += "/"
 
                 control.text = f
             }

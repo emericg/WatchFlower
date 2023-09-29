@@ -77,6 +77,7 @@ public:
     static Q_INVOKABLE int getAndroidSdkVersion();
 
     static Q_INVOKABLE void openAndroidAppInfo(const QString &packageName);
+    static Q_INVOKABLE void openAndroidStorageSettings(const QString &packageName);
     static Q_INVOKABLE void openAndroidLocationSettings();
 
     static Q_INVOKABLE void vibrate(int ms);

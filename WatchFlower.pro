@@ -11,7 +11,7 @@ QT     += qml quick quickcontrols2 svg widgets charts
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 6.3) : error("You need at least Qt version 6.3 for $${TARGET}")
 
-# Project features #############################################################
+# Project modules ##############################################################
 
 # MobileUI and MobileSharing for mobile OS
 include(src/thirdparty/MobileUI/MobileUI.pri)
@@ -23,9 +23,6 @@ DEFINES += QAPPLICATION_CLASS=QApplication
 
 # Various utils
 include(src/thirdparty/AppUtils/AppUtils.pri)
-
-# Better handling of Bluetooth in the background
-#android { DEFINES += QT_CONNECTIVITY_PATCHED }
 
 # Project files ################################################################
 
@@ -159,7 +156,11 @@ lupdate_only {
 
 # Build settings ###############################################################
 
+# Use QtQuick compiler
 ios | android { CONFIG += qtquickcompiler }
+
+# Better handling of Bluetooth in the background
+#android { DEFINES += QT_CONNECTIVITY_PATCHED }
 
 win32 { DEFINES += _USE_MATH_DEFINES }
 
@@ -170,7 +171,6 @@ CONFIG(release, debug|release) : DEFINES += NDEBUG QT_NO_DEBUG QT_NO_DEBUG_OUTPU
 unix {
     # Enables AddressSanitizer
     #QMAKE_CXXFLAGS += -fsanitize=address,undefined
-    #QMAKE_CXXFLAGS += -Wno-nullability-completeness
     #QMAKE_LFLAGS += -fsanitize=address,undefined
 }
 
@@ -183,8 +183,7 @@ UI_DIR      = build/$${QT_ARCH}/
 
 DESTDIR     = bin/
 
-################################################################################
-# Application deployment and installation steps
+# Application deployment steps #################################################
 
 linux:!android {
     TARGET = $$lower($${TARGET})

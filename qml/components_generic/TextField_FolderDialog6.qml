@@ -1,14 +1,19 @@
-import QtQuick 2.15
-import QtQuick.Controls.impl 2.15
-import QtQuick.Templates 2.15 as T
+import QtQuick
+import QtQuick.Controls.impl
+import QtQuick.Templates as T
 
-import ThemeEngine 1.0
+import QtQuick.Dialogs
+import QtCore
+
+import ThemeEngine
+import "qrc:/js/UtilsPath.js" as UtilsPath
 
 T.TextField {
     id: control
 
-    implicitWidth: implicitBackgroundWidth + leftInset + rightInset
-                   || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding
+    implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
+                            contentWidth + leftPadding + rightPadding,
+                            placeholder.implicitWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
@@ -16,6 +21,7 @@ T.TextField {
     leftPadding: 12
     rightPadding: 12
 
+    clip: false
     color: colorText
     opacity: control.enabled ? 1 : 0.66
 
@@ -33,6 +39,15 @@ T.TextField {
     onEditingFinished: focus = false
     Keys.onBackPressed: focus = false
 
+    // settings
+    property string dialogTitle: qsTr("Please choose a folder!")
+
+    property var currentFolder: StandardPaths.writableLocation(StandardPaths.HomeLocation)
+
+    // button
+    property string buttonText: qsTr("change")
+    property int buttonWidth: (buttonChange.visible ? buttonChange.width + 2 : 2)
+
     // colors
     property string colorText: Theme.colorComponentText
     property string colorPlaceholderText: Theme.colorSubText
@@ -43,15 +58,36 @@ T.TextField {
 
     ////////////////
 
+    Loader {
+        id: pathDialogLoader
+
+        active: false
+        asynchronous: false
+        sourceComponent: FolderDialog {
+            title: control.dialogTitle
+
+            currentFolder: UtilsPath.makeUrl(control.currentFolder)
+
+            onAccepted: {
+                //console.log("fileDialog currentFolder: " + currentFolder)
+                //console.log("fileDialog selectedFolder: " + selectedFolder)
+
+                var f = UtilsPath.cleanUrl(selectedFolder)
+                if (f.slice(0, -1) !== "/") f += "/"
+
+                control.text = f
+            }
+        }
+    }
+
+    ////////////////
+
     background: Rectangle {
         implicitWidth: 256
         implicitHeight: Theme.componentHeight
 
         radius: Theme.componentRadius
         color: control.colorBackground
-
-        border.width: 2
-        border.color: control.activeFocus ? control.colorSelection : control.colorBorder
     }
 
     PlaceholderText {
@@ -68,6 +104,30 @@ T.TextField {
         visible: !control.length && !control.preeditText && (!control.activeFocus || control.horizontalAlignment !== Qt.AlignHCenter)
         elide: Text.ElideRight
         renderType: control.renderType
+    }
+
+    ButtonThemed {
+        id: buttonChange
+        anchors.top: parent.top
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.margins: 0
+
+        text: control.buttonText
+
+        onClicked: {
+            pathDialogLoader.active = true
+            pathDialogLoader.item.open()
+        }
+    }
+
+    Rectangle {
+        anchors.fill: background
+        radius: Theme.componentRadius
+        color: "transparent"
+
+        border.width: 2
+        border.color: control.activeFocus ? control.colorSelection : control.colorBorder
     }
 
     ////////////////

@@ -122,34 +122,10 @@ bool UtilsAndroid::getPermission_storage_filesystem(const QString &packageName)
     {
         if (!checkPermission_storage_filesystem())
         {
-            QAndroidJniObject jpackageName = QAndroidJniObject::fromString("package:" + packageName);
-            QAndroidJniObject jintentObject = QAndroidJniObject::getStaticObjectField("android/provider/Settings",
-                                                                                      "ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION",
-                                                                                      "Ljava/lang/String;");
-
-            QAndroidJniObject juri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse",
-                                                                               "(Ljava/lang/String;)Landroid/net/Uri;",
-                                                                               jpackageName.object<jstring>());
-            if (!juri.isValid())
-            {
-                qWarning("Unable to create Uri object for ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
-                return false;
-            }
-
-            QAndroidJniObject intent("android/content/Intent", "(Ljava/lang/String;)V", jintentObject.object());
-            if (!intent.isValid())
-            {
-                qWarning("Unable to create Intent object for ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
-                return false;
-            }
-
-            intent.callObjectMethod("setData", "(Landroid/net/Uri;)Landroid/content/Intent;",
-                                    juri.object<jobject>());
-
-            QtAndroid::startActivity(intent, 0);
-
-            status = checkPermission_storage_filesystem();
+            openStorageSettings(packageName);
         }
+
+        status = checkPermission_storage_filesystem();
     }
     else
     {
@@ -661,6 +637,42 @@ void UtilsAndroid::openApplicationInfo(const QString &packageName)
                             juri.object<jobject>());
 
     QtAndroid::startActivity(intent, 0);
+}
+
+/* ************************************************************************** */
+
+void UtilsAndroid::openStorageSettings(const QString &packageName)
+{
+    //qDebug() << "> openStorageSettings(" << packageName << ")";
+
+    if (QtAndroid::androidSdkVersion() >= 30)
+    {
+        QAndroidJniObject jpackageName = QAndroidJniObject::fromString("package:" + packageName);
+        QAndroidJniObject jintentObject = QAndroidJniObject::getStaticObjectField("android/provider/Settings",
+                                                                                  "ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION",
+                                                                                  "Ljava/lang/String;");
+
+        QAndroidJniObject juri = QAndroidJniObject::callStaticObjectMethod("android/net/Uri", "parse",
+                                                                           "(Ljava/lang/String;)Landroid/net/Uri;",
+                                                                           jpackageName.object<jstring>());
+        if (!juri.isValid())
+        {
+            qWarning("Unable to create Uri object for ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
+            return;
+        }
+
+        QAndroidJniObject intent("android/content/Intent", "(Ljava/lang/String;)V", jintentObject.object());
+        if (!intent.isValid())
+        {
+            qWarning("Unable to create Intent object for ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION");
+            return;
+        }
+
+        intent.callObjectMethod("setData", "(Landroid/net/Uri;)Landroid/content/Intent;",
+                                juri.object<jobject>());
+
+        QtAndroid::startActivity(intent, 0);
+    }
 }
 
 /* ************************************************************************** */

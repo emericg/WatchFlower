@@ -260,11 +260,20 @@ int UtilsApp::getAndroidSdkVersion()
 
 void UtilsApp::openAndroidAppInfo(const QString &packageName)
 {
-    Q_UNUSED(packageName)
-
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::openApplicationInfo(packageName);
 #endif
+
+    Q_UNUSED(packageName)
+}
+
+void UtilsApp::openAndroidStorageSettings(const QString &packageName)
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::openStorageSettings(packageName);
+#endif
+
+    Q_UNUSED(packageName)
 }
 
 void UtilsApp::openAndroidLocationSettings()

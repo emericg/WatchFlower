@@ -44,7 +44,6 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     // On Android and iOS since the library is not supported fallback to
     // standard QApplication behaviour by simply returning at this point.
-    //qWarning() << "SingleApplication is not supported on Android and iOS systems.";
     return;
 #endif
 
@@ -66,12 +65,20 @@ SingleApplication::SingleApplication( int &argc, char *argv[], bool allowSeconda
 #ifdef Q_OS_UNIX
     // By explicitly attaching it and then deleting it we make sure that the
     // memory is deleted even after the process has crashed on Unix.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
+    d->memory = new QSharedMemory( QNativeIpcKey( d->blockServerName ) );
+#else
     d->memory = new QSharedMemory( d->blockServerName );
+#endif
     d->memory->attach();
     delete d->memory;
 #endif
     // Guarantee thread safe behaviour with a shared memory block.
+#if QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
+    d->memory = new QSharedMemory( QNativeIpcKey( d->blockServerName ) );
+#else
     d->memory = new QSharedMemory( d->blockServerName );
+#endif
 
     // Create a shared memory block
     if( d->memory->create( sizeof( InstancesInfo ) )){

@@ -97,6 +97,8 @@ void MobileUIPrivate::setColor_statusbar(const QColor &color)
 
 void MobileUIPrivate::setTheme_statusbar(const MobileUI::Theme theme)
 {
+    Q_UNUSED(theme)
+
     updatePreferredStatusBarStyle();
 
     if (!MobileUIPrivate::areRefreshSlotsConnected)

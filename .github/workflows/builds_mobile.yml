@@ -6,14 +6,15 @@ name: "Mobile CI builds"
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 #-------------------------------------------------------------------------------
 # Define application name & version
 #-------------------------------------------------------------------------------
 
 env:
-  APPLICATION: "WatchFlower"
-  APPLICATION_VERSION: "5.3"
+  APP_NAME: "WatchFlower"
+  APP_VERSION: "5.3"
   QT_VERSION: "6.5.2"
 
 #-------------------------------------------------------------------------------
@@ -45,8 +46,8 @@ jobs:
       #- name: Install Android SDK / NDK / tools
       #  run: |
       #       sdkmanager "platforms;android-32"
-      #       sdkmanager "ndk;23.1.7779620"
-      #       sdkmanager "build-tools;30.0.3"
+      #       sdkmanager "ndk;25.2.9519653"
+      #       sdkmanager "build-tools;33.0.2"
 
       # Install Qt (Android & desktop)
       - name: Install Qt (Android & desktop)
@@ -61,12 +62,15 @@ jobs:
           py7zrversion: '==0.20.*'
           extra: '--autodesktop'
 
+      # Setup env
+      - name: Setup env
+        run: |
+             qmake --version
+
       # Build application
       - name: Build application
         run: |
-             export PATH=$Qt6_DIR/bin:$PATH
-             qmake --version
-             qmake ${{env.APPLICATION}}.pro CONFIG+=release
+             qmake ${{env.APP_NAME}}.pro CONFIG+=release
              make -j$(nproc)
 
   ## iOS build #################################################################
@@ -95,11 +99,12 @@ jobs:
       # Setup env
       - name: Setup env
         run: |
-             ln -s /Users/runner/work/${{env.APPLICATION}}/Qt/${{env.QT_VERSION}}/macos /Users/runner/work/${{env.APPLICATION}}/Qt/${{env.QT_VERSION}}/clang_64
+             ln -s /Users/runner/work/${{env.APP_NAME}}/Qt/${{env.QT_VERSION}}/macos /Users/runner/work/${{env.APP_NAME}}/Qt/${{env.QT_VERSION}}/clang_64
              qmake --version
+             alias nproc="sysctl -n hw.logicalcpu"
 
       # Build application
       - name: Build application
         run: |
-             qmake ${{env.APPLICATION}}.pro CONFIG+=release
+             qmake ${{env.APP_NAME}}.pro CONFIG+=release
              make -j$(nproc)

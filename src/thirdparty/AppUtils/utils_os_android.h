@@ -178,6 +178,7 @@ public:
     /*!
      * \return The device manufacturer + model.
      *
+     * Documentation:
      * - https://developer.android.com/reference/android/os/Build.html
      */
     static QString getDeviceModel();
@@ -188,6 +189,7 @@ public:
      * Need READ_PHONE_STATE permission.
      * Only work before Android 10 (API < 29).
      *
+     * Documentation:
      * - https://developer.android.com/reference/android/os/Build#getSerial()
      */
     static QString getDeviceSerial();
@@ -237,8 +239,16 @@ public:
     static void openApplicationInfo(const QString &packageName);
 
     /*!
+     * \brief Open the Android "manage all files" intent for the given package name.
+     * \param packageName: the application package, for instance 'com.application.identifier'.
+     *
+     * Documentation:
+     * - https://developer.android.com/training/data-storage/manage-all-files
+     */
+    static void openStorageSettings(const QString &packageName);
+
+    /*!
      * \brief Open the Android location settings intent.
-     * \note WIP doesn't actually work...
      */
     static void openLocationSettings();
 };
