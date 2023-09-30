@@ -257,6 +257,13 @@ public:
     QString getFirmware() const { return m_deviceFirmware; }
     int getBatteryLevel() const { return m_deviceBattery; }
 
+    bool hasAddressMAC() const;
+    QString getAddressMAC() const;
+    void setAddressMAC(const QString &mac);
+    bool hasAddressUUID() const;
+    QString getAddressUUID() const;
+    void setAddressUUID(const QString &uuid);
+
     // Device type, capabilities and sensors
     int getDeviceType() const { return m_deviceType; }
     int getDeviceCapabilities() const { return m_deviceCapabilities; }
@@ -332,9 +339,6 @@ public:
     void setLocationName(const QString &name);
     QString getAssociatedName() const { return m_associatedName; }
     void setAssociatedName(const QString &name);
-    bool hasAddressMAC() const;
-    QString getAddressMAC() const;
-    void setAddressMAC(const QString &mac);
     int getManualIndex() const { return m_manualOrderIndex; }
     bool isEnabled() const { return m_isEnabled; }
     void setEnabled(const bool enabled);

@@ -209,7 +209,7 @@ public:
     // Bluetooth management
     Q_INVOKABLE bool checkBluetooth();
     Q_INVOKABLE bool checkBluetoothPermissions();
-    Q_INVOKABLE void enableBluetooth(bool enforceUserPermissionCheck = false);
+    Q_INVOKABLE bool enableBluetooth(bool enforceUserPermissionCheck = false);
 
     // Scanning management
     static int getLastRun();

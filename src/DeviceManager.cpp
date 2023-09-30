@@ -62,6 +62,13 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+#if QT_CONFIG(permissions)
+#include <QGuiApplication>
+#include <QPermissions>
+#endif
+#endif
+
 /* ************************************************************************** */
 
 DeviceManager::DeviceManager(bool daemon)
@@ -289,13 +296,13 @@ bool DeviceManager::checkBluetooth()
     return (m_bleAdapter && m_bleEnabled && m_blePermissions);
 }
 
-void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
+bool DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
 {
     //qDebug() << "DeviceManager::enableBluetooth() enforce:" << enforceUserPermissionCheck;
 
 #if defined(Q_OS_IOS)
     checkBluetoothIOS();
-    return;
+    return false;
 #endif
 
     bool btA_was = m_bleAdapter;
@@ -371,6 +378,8 @@ void DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
         // this function did changed the Bluetooth adapter status
         Q_EMIT bluetoothChanged();
     }
+
+    return (m_bleAdapter && m_bleEnabled && m_blePermissions);
 }
 
 bool DeviceManager::checkBluetoothPermissions()
@@ -404,10 +413,28 @@ bool DeviceManager::checkBluetoothPermissions()
     m_blePermissions = m_permLocationBLE;
 
 #elif defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+#if QT_CONFIG(permissions)
 
-    m_permOS = true; // TODO
-    m_blePermissions = m_permOS;
+    if (qApp)
+    {
+        QBluetoothPermission blePermission;
+        switch (qApp->checkPermission(blePermission))
+        {
+        case Qt::PermissionStatus::Undetermined:
+            qApp->requestPermission(blePermission, this, &DeviceManager::checkBluetoothPermissions);
+            return false;
+        case Qt::PermissionStatus::Denied:
+            m_permOS = false;
+            m_blePermissions = m_permOS;
+            break;
+        case Qt::PermissionStatus::Granted:
+            m_permOS = true;
+            m_blePermissions = m_permOS;
+            break;
+        }
+    }
 
+#endif // QT_CONFIG(permissions)
 #else
 
     // Linux and Windows don't have required BLE permissions
