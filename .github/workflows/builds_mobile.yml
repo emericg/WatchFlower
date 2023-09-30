@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "5.3"
-  QT_VERSION: "6.5.2"
+  QT_VERSION: "6.5.3"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -27,9 +27,9 @@ jobs:
     name: "Android CI build"
     runs-on: ubuntu-20.04
     steps:
-      # Checkout the repository
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
+      # Checkout the repository (and submodules)
+      - name: Checkout repository (and submodules)
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -45,7 +45,7 @@ jobs:
       #  uses: android-actions/setup-android@v2
       #- name: Install Android SDK / NDK / tools
       #  run: |
-      #       sdkmanager "platforms;android-32"
+      #       sdkmanager "platforms;android-33"
       #       sdkmanager "ndk;25.2.9519653"
       #       sdkmanager "build-tools;33.0.2"
 
@@ -76,11 +76,11 @@ jobs:
   ## iOS build #################################################################
   build-ios:
     name: "iOS CI build"
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
-      # Checkout the repository
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
+      # Checkout the repository (and submodules)
+      - name: Checkout repository (and submodules)
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 

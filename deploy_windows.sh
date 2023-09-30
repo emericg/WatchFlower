@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-echo "> WatchFlower packager (Windows x86_64)"
+export APP_NAME="WatchFlower"
+export APP_VERSION=5.3
+export GIT_VERSION=$(git rev-parse --short HEAD)
 
-export APP_NAME="WatchFlower";
-export APP_VERSION=5.3;
-export GIT_VERSION=$(git rev-parse --short HEAD);
+echo "> $APP_NAME packager (Windows x86_64) [v$APP_VERSION]"
 
 ## CHECKS ######################################################################
 
-if [ ${PWD##*/} != "WatchFlower" ]; then
-  echo "This script MUST be run from the WatchFlower/ directory"
+if [ ${PWD##*/} != $APP_NAME ]; then
+  echo "This script MUST be run from the $APP_NAME/ directory"
   exit 1
 fi
 
@@ -46,10 +46,10 @@ done
 
 if [[ $make_install = true ]] ; then
   echo '---- Running make install'
-  make INSTALL_ROOT=bin/ install;
+  make INSTALL_ROOT=bin/ install
 
-  #echo '---- Installation directory content recap:'
-  #find bin/;
+  #echo '---- Installation directory content recap (after make install):'
+  #find bin/
 fi
 
 ## DEPLOY ######################################################################
@@ -57,25 +57,23 @@ fi
 echo '---- Running windeployqt'
 windeployqt bin/ --qmldir qml/
 
-#echo '---- Installation directory content recap:'
-#find bin/;
+#echo '---- Installation directory content recap (after windeployqt):'
+#find bin/
 
-## PACKAGE #####################################################################
-
-mv bin $APP_NAME-$APP_VERSION-win64;
+mv bin $APP_NAME
 
 ## PACKAGE (zip) ###############################################################
 
 if [[ $create_package = true ]] ; then
   echo '---- Compressing package'
-  7z a $APP_NAME-$APP_VERSION-win64.zip $APP_NAME-$APP_VERSION-win64
+  7z a $APP_NAME-$APP_VERSION-win64.zip $APP_NAME
 fi
 
 ## PACKAGE (NSIS) ##############################################################
 
 if [[ $create_package = true ]] ; then
   echo '---- Creating installer'
-  mv $APP_NAME-$APP_VERSION-win64 assets/windows/$APP_NAME
+  mv $APP_NAME assets/windows/$APP_NAME
   makensis assets/windows/setup.nsi
   mv assets/windows/*.exe $APP_NAME-$APP_VERSION-win64.exe
 fi
@@ -84,8 +82,8 @@ fi
 
 if [[ $upload_package = true ]] ; then
   printf "---- Uploading to transfer.sh"
-  curl --upload-file $APP_NAME*.zip https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-win64.zip;
+  curl --upload-file $APP_NAME*.zip https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-win64.zip
   printf "\n"
-  curl --upload-file $APP_NAME*.exe https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-win64.exe;
+  curl --upload-file $APP_NAME*.exe https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-win64.exe
   printf "\n"
 fi

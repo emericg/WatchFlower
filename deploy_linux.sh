@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-echo "> WatchFlower packager (Linux x86_64)"
+export APP_NAME="WatchFlower"
+export APP_VERSION=5.3
+export GIT_VERSION=$(git rev-parse --short HEAD)
 
-export APP_NAME="WatchFlower";
-export APP_VERSION=5.3;
-export GIT_VERSION=$(git rev-parse --short HEAD);
+echo "> $APP_NAME packager (Linux x86_64) [v$APP_VERSION]"
 
 ## CHECKS ######################################################################
 
@@ -13,8 +13,8 @@ if [ "$(id -u)" == "0" ]; then
   exit 1
 fi
 
-if [ ${PWD##*/} != "WatchFlower" ]; then
-  echo "This script MUST be run from the WatchFlower/ directory"
+if [ ${PWD##*/} != $APP_NAME ]; then
+  echo "This script MUST be run from the $APP_NAME/ directory"
   exit 1
 fi
 
@@ -51,62 +51,84 @@ done
 
 if [[ $make_install = true ]] ; then
   echo '---- Running make install'
-  make INSTALL_ROOT=appdir/ install;
+  make INSTALL_ROOT=bin/ install
 
-  #echo '---- Installation directory content recap:'
-  #find appdir/;
+  #echo '---- Installation directory content recap (after make install):'
+  #find bin/
 fi
 
 ## DEPLOY ######################################################################
 
+if [[ $use_contribs = true ]] ; then
+  export LD_LIBRARY_PATH=$(pwd)/contribs/src/env/linux_x86_64/usr/lib/:/usr/lib
+else
+  export LD_LIBRARY_PATH=/usr/lib/
+fi
+
+echo '---- Prepare linuxdeploy + plugins'
+
 unset LD_LIBRARY_PATH; #unset QT_PLUGIN_PATH; #unset QTDIR;
 
-if [[ $use_contribs = true ]] ; then
-  export LD_LIBRARY_PATH=$(pwd)/contribs/src/env/linux_x86_64/usr/lib/:/usr/lib;
-else
-  export LD_LIBRARY_PATH=/usr/lib/;
-fi
 USRDIR=/usr;
-if [ -d appdir/usr/local ]; then
-  USRDIR=/usr/local;
+if [ -d bin/usr/local ]; then
+  USRDIR=/usr/local
 fi
 if [ -z "$QTDIR" ]; then
-  QTDIR=/usr/lib/qt;
+  QTDIR=/usr/lib/qt
 fi
 
-echo '---- Downloading linuxdeploy + plugins'
-if [ ! -x contribs/deploy/linuxdeploy-x86_64.AppImage.AppImage ]; then
-  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" -P contribs/deploy/;
-  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage" -P contribs/deploy/;
-  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" -P contribs/deploy/;
+if [ ! -x contribs/deploy/linuxdeploy-x86_64.AppImage ]; then
+  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" -P contribs/deploy/
+  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage" -P contribs/deploy/
+  wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage" -P contribs/deploy/
 fi
-chmod a+x contribs/deploy/linuxdeploy-x86_64.AppImage;
-chmod a+x contribs/deploy/linuxdeploy-plugin-appimage-x86_64.AppImage;
-chmod a+x contribs/deploy/linuxdeploy-plugin-qt-x86_64.AppImage;
+chmod a+x contribs/deploy/linuxdeploy-x86_64.AppImage
+chmod a+x contribs/deploy/linuxdeploy-plugin-appimage-x86_64.AppImage
+chmod a+x contribs/deploy/linuxdeploy-plugin-qt-x86_64.AppImage
 
 # linuxdeploy settings
 export QML_SOURCES_PATHS="$(pwd)/qml/"
 export EXTRA_QT_PLUGINS="svg;"
 
-#echo '---- Installation directory content recap:'
-#find appdir/;
-
 ## PACKAGE (AppImage) ##########################################################
 
 if [[ $create_package = true ]] ; then
   echo '---- Running AppImage packager'
-  ./contribs/deploy/linuxdeploy-x86_64.AppImage --appdir appdir --plugin qt --output appimage
+  ./contribs/deploy/linuxdeploy-x86_64.AppImage --appdir bin --plugin qt --output appimage
+  mv $APP_NAME-x86_64.AppImage $APP_NAME-$APP_VERSION-linux64.AppImage
+
+  #echo '---- Installation directory content recap (after linuxdeploy):'
+  #find bin/
 fi
 
-## PACKAGE (ZIP) ###############################################################
+## PACKAGE (archive) ###########################################################
 
-# TODO
+if [[ $create_package = true ]] ; then
+  export APP_NAME_LOWERCASE=${APP_NAME,,}
+
+  echo '---- Reorganize appdir into a regular directory'
+  mkdir $APP_NAME/
+  mv bin/usr/bin/* $APP_NAME/
+  mv bin/usr/lib/* $APP_NAME/
+  mv bin/usr/plugins $APP_NAME/
+  mv bin/usr/qml $APP_NAME/
+  mv bin/usr/share/appdata/$APP_NAME_LOWERCASE.appdata.xml $APP_NAME/
+  mv bin/usr/share/applications/$APP_NAME_LOWERCASE.desktop $APP_NAME/
+  mv bin/usr/share/pixmaps/$APP_NAME_LOWERCASE.svg $APP_NAME/
+  printf '[Paths]\nPrefix = .\nPlugins = plugins\nImports = qml\n' > $APP_NAME/qt.conf
+  printf '#!/bin/sh\nappname=`basename $0 | sed s,\.sh$,,`\ndirname=`dirname $0`\nexport LD_LIBRARY_PATH=$dirname\n$dirname/$appname' > $APP_NAME/$APP_NAME_LOWERCASE.sh
+  chmod +x $APP_NAME/$APP_NAME_LOWERCASE.sh
+
+  echo '---- Compressing package'
+  tar zcvf $APP_NAME-$APP_VERSION-linux64.tar.gz $APP_NAME/
+fi
 
 ## UPLOAD ######################################################################
 
 if [[ $upload_package = true ]] ; then
   printf "---- Uploading to transfer.sh"
-  find appdir -executable -type f -exec ldd {} \; | grep " => $USRDIR" | cut -d " " -f 2-3 | sort | uniq;
-  curl --upload-file $APP_NAME*.AppImage https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-linux64.AppImage;
+  curl --upload-file $APP_NAME*.tar.gz https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-linux64.tar.gz
+  printf "\n"
+  curl --upload-file $APP_NAME*.AppImage https://transfer.sh/$APP_NAME-$APP_VERSION-git$GIT_VERSION-linux64.AppImage
   printf "\n"
 fi

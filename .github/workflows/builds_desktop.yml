@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "5.3"
-  QT_VERSION: "6.5.2"
+  QT_VERSION: "6.5.3"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -27,9 +27,9 @@ jobs:
     name: "Linux CI build"
     runs-on: ubuntu-20.04
     steps:
-      # Checkout the repository
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
+      # Checkout the repository (and submodules)
+      - name: Checkout repository (and submodules)
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -61,28 +61,35 @@ jobs:
       - name: Deploy application
         run: ./deploy_linux.sh -c -i -p
 
+      # Upload archive
+      - name: Upload archive
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-linux64.tar.gz
+          path: ${{env.APP_NAME}}-${{env.APP_VERSION}}-linux64.tar.gz
+
       # Upload AppImage
       - name: Upload AppImage
         uses: actions/upload-artifact@v3
         with:
           name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-linux64.AppImage
-          path: ${{env.APP_NAME}}*.AppImage
+          path: ${{env.APP_NAME}}-${{env.APP_VERSION}}-linux64.AppImage
 
   ## macOS build ###############################################################
   build-mac:
     name: "macOS CI build"
     runs-on: macos-12
     steps:
-      # Checkout the repository
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
+      # Checkout the repository (and submodules)
+      - name: Checkout repository (and submodules)
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      # Install dependencies
-      #- name: Install dependencies
+      # Install dependencies (from package manager)
+      #- name: Install dependencies (from package manager)
       #  run: |
-      #       brew install qt6
+      #       brew install qt6 cmake
 
       # Install Qt
       - name: Install Qt
@@ -107,21 +114,21 @@ jobs:
       - name: Deploy application
         run: ./deploy_macos.sh -c -p
 
-      # Upload app zip
-      - name: Upload app zip
+      # Upload app ZIP
+      - name: Upload app ZIP
         uses: actions/upload-artifact@v3
         with:
-          name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-macOS
-          path: bin/${{env.APP_NAME}}-${{env.APP_VERSION}}-macOS.zip
+          name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-macOS.zip
+          path: ${{env.APP_NAME}}-${{env.APP_VERSION}}-macOS.zip
 
   ## Windows build #############################################################
   build-windows:
     name: "Windows CI build"
     runs-on: windows-2022
     steps:
-      # Checkout the repository
-      - name: Checkout repository and submodules
-        uses: actions/checkout@v3
+      # Checkout the repository (and submodules)
+      - name: Checkout repository (and submodules)
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -161,16 +168,16 @@ jobs:
       - name: Deploy application
         run: sh deploy_windows.sh -c -p
 
-      # Upload ZIP
-      - name: Upload ZIP
+      # Upload app ZIP
+      - name: Upload app ZIP
         uses: actions/upload-artifact@v3
         with:
-          name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-win64
+          name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-win64.zip
           path: ${{env.APP_NAME}}-${{env.APP_VERSION}}-win64.zip
 
       # Upload NSIS installer
       - name: Upload NSIS installer
         uses: actions/upload-artifact@v3
         with:
-          name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-win64
+          name: ${{env.APP_NAME}}-${{env.APP_VERSION}}-win64.exe
           path: ${{env.APP_NAME}}-${{env.APP_VERSION}}-win64.exe
