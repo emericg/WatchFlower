@@ -8,7 +8,7 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: screenPaddingStatusbar + headerHeight
+    height: headerHeight + Math.max(screenPaddingStatusbar, screenPaddingTop)
     color: Theme.colorHeader
     clip: true
     z: 10
@@ -59,7 +59,7 @@ Rectangle {
         id: actionMenu
 
         x: parent.width - actionMenu.width - 12
-        y: screenPaddingStatusbar + 16
+        y: Math.max(screenPaddingStatusbar, screenPaddingTop) + 16
 
         onMenuSelected: (index) => {
             //console.log("ActionMenu clicked #" + index)
@@ -73,13 +73,13 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: screenPaddingStatusbar
+        height: Math.max(screenPaddingStatusbar, screenPaddingTop)
         color: Theme.colorStatusbar
     }
 
     Item {
         anchors.fill: parent
-        anchors.topMargin: screenPaddingStatusbar
+        anchors.topMargin: Math.max(screenPaddingStatusbar, screenPaddingTop)
 
         ////////////
 

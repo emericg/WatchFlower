@@ -57,9 +57,6 @@ ApplicationWindow {
                     if (appWindow.visibility === Window.FullScreen) {
                         screenPaddingStatusbar = 0
                         screenPaddingNavbar = 0
-                    } else {
-                        screenPaddingStatusbar = mobileUI.safeAreaTop
-                        screenPaddingTop = 0
                     }
                 } else {
                     screenPaddingNavbar = 0
@@ -69,9 +66,6 @@ ApplicationWindow {
             if (Qt.platform.os === "ios") {
                 if (appWindow.visibility === Window.FullScreen) {
                     screenPaddingStatusbar = 0
-                } else {
-                    screenPaddingStatusbar = mobileUI.safeAreaTop
-                    screenPaddingTop = 0
                 }
             }
         } else {

@@ -358,7 +358,7 @@ ApplicationWindow {
         id: appHeader
     }
 
-    Item {
+    FocusScope {
         id: appContent
 
         anchors.top: appHeader.bottom
