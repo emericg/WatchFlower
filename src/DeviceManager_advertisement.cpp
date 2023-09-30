@@ -47,7 +47,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
 
     // Supported devices ///////////////////////////////////////////////////////
 
-    for (auto d: qAsConst(m_devices_model->m_devices))
+    for (auto d: std::as_const(m_devices_model->m_devices))
     {
         Device *dd = qobject_cast<Device*>(d);
 

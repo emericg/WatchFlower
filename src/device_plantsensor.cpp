@@ -359,7 +359,7 @@ bool DevicePlantSensor::removeJournalEntry(const int id)
     //qDebug() << "DevicePlantSensor::removeJournalEntry() id #" << id;
     bool status = false;
 
-    for (auto jj: qAsConst(m_journal_entries))
+    for (auto jj: std::as_const(m_journal_entries))
     {
         JournalEntry *j = qobject_cast<JournalEntry*>(jj);
         if (j && j->getEntryId() == id)

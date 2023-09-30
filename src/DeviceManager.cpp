@@ -896,7 +896,7 @@ void DeviceManager::listenDevices_start()
             if (m_daemonMode)
             {
                 QStringList filteredAddr;
-                for (auto d: qAsConst(m_devices_model->m_devices))
+                for (auto d: std::as_const(m_devices_model->m_devices))
                 {
                     Device *dd = qobject_cast<Device*>(d);
                     if (dd) filteredAddr += dd->getAddress();
@@ -943,7 +943,7 @@ void DeviceManager::updateDevice(const QString &address)
 
     if (hasBluetooth())
     {
-        for (auto d: qAsConst(m_devices_model->m_devices))
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && dd->getAddress() == address &&
@@ -1088,7 +1088,7 @@ void DeviceManager::refreshDevices_start()
         listenDevices_start();
 
         // Start active refresh (if last device update > 1 min)
-        for (auto d: qAsConst(m_devices_model->m_devices))
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
 
@@ -1192,7 +1192,7 @@ void DeviceManager::refreshDevices_stop()
 
     if (!m_devices_updating_queue.empty())
     {
-        for (auto d: qAsConst(m_devices_updating))
+        for (auto d: std::as_const(m_devices_updating))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd) dd->refreshStop();
@@ -1211,7 +1211,7 @@ void DeviceManager::syncDevice(const QString &address)
 
     if (hasBluetooth())
     {
-        for (auto d: qAsConst(m_devices_model->m_devices))
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd && dd->getAddress() == address)
@@ -1287,7 +1287,7 @@ void DeviceManager::syncDevices_start()
         m_devices_syncing.clear();
 
         // Start sync (if necessary)
-        for (auto d: qAsConst(m_devices_model->m_devices))
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd)
@@ -1368,7 +1368,7 @@ void DeviceManager::syncDevices_stop()
 
     if (!m_devices_syncing_queue.empty())
     {
-        for (auto d: qAsConst(m_devices_syncing))
+        for (auto d: std::as_const(m_devices_syncing))
         {
             Device *dd = qobject_cast<Device*>(d);
             if (dd) dd->refreshStop();
@@ -1467,7 +1467,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
         if ((info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration) == false) return; // not a BLE device
 
-        for (auto ed: qAsConst(m_devices_model->m_devices)) // device is already in the UI
+        for (auto ed: std::as_const(m_devices_model->m_devices)) // device is already in the UI
         {
             Device *edd = qobject_cast<Device*>(ed);
             if (edd && (edd->getAddress() == info.address().toString() ||
@@ -1633,7 +1633,7 @@ void DeviceManager::disconnectDevices()
 {
     //qDebug() << "DeviceManager::disconnectDevices()";
 
-    for (auto d: qAsConst(m_devices_model->m_devices))
+    for (auto d: std::as_const(m_devices_model->m_devices))
     {
         Device *dd = qobject_cast<Device*>(d);
         dd->deviceDisconnect();
@@ -1642,7 +1642,7 @@ void DeviceManager::disconnectDevices()
 
 void DeviceManager::removeDevice(const QString &address)
 {
-    for (auto d: qAsConst(m_devices_model->m_devices))
+    for (auto d: std::as_const(m_devices_model->m_devices))
     {
         Device *dd = qobject_cast<Device*>(d);
 
@@ -1684,7 +1684,7 @@ void DeviceManager::removeDevice(const QString &address)
 
 void DeviceManager::removeDeviceData(const QString &address)
 {
-    for (auto d: qAsConst(m_devices_model->m_devices))
+    for (auto d: std::as_const(m_devices_model->m_devices))
     {
         Device *dd = qobject_cast<Device*>(d);
 

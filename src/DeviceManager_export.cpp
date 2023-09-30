@@ -157,7 +157,7 @@ bool DeviceManager::exportData(const QString &exportFilePath)
         legend += "), Humidity (%RH), Luminosity (lux)";
         eout << legend << Qt::endl;
 
-        for (auto d: qAsConst(m_devices_model->m_devices))
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
             DeviceSensor *dd = qobject_cast<DeviceSensor *>(d);
             if (dd)

@@ -30,6 +30,7 @@
 
         <file alias="CheckBoxThemed.qml">components_themed/CheckBoxThemed.qml</file>
         <file alias="ComboBoxThemed.qml">components_themed/ComboBoxThemed.qml</file>
+        <file alias="DrawerThemed.qml">components_themed/DrawerThemed.qml</file>
         <file alias="FrameThemed.qml">components_themed/FrameThemed.qml</file>
         <file alias="PageIndicatorThemed.qml">components_themed/PageIndicatorThemed.qml</file>
         <file alias="RadioButtonThemed.qml">components_themed/RadioButtonThemed.qml</file>

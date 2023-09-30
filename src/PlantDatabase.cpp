@@ -81,7 +81,7 @@ void PlantDatabase::filter(const QString &filter)
 
     m_plantsFiltered.clear();
 
-    for (auto pp: qAsConst(m_plants))
+    for (auto pp: std::as_const(m_plants))
     {
         Plant *p = qobject_cast<Plant*>(pp);
 
@@ -100,7 +100,7 @@ Plant *PlantDatabase::getPlant_p(const QString &name)
 {
     load();
 
-    for (auto pp: qAsConst(m_plants))
+    for (auto pp: std::as_const(m_plants))
     {
         Plant *p = qobject_cast<Plant *>(pp);
         if (p->getName() == name)

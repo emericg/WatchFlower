@@ -274,7 +274,7 @@ DeviceInfos *DeviceInfosLoader::getDeviceInfos(const QString &name, const QStrin
         }
     }
 
-    for (const auto &value: qAsConst(deviceJsonArray))
+    for (const auto &value: std::as_const(deviceJsonArray))
     {
         QJsonObject obj = value.toObject();
         if (name == obj["name_ble"].toString() ||

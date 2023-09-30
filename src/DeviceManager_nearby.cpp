@@ -133,7 +133,7 @@ void DeviceManager::addNearbyBleDevice(const QBluetoothDeviceInfo &info)
     if (info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration)
     {
         // Check if it's not already in the UI
-        for (auto ed: qAsConst(m_devices_nearby_model->m_devices))
+        for (auto ed: std::as_const(m_devices_nearby_model->m_devices))
         {
             Device *edd = qobject_cast<Device*>(ed);
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
