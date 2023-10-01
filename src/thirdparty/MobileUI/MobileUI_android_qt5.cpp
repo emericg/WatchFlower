@@ -120,8 +120,8 @@ static QAndroidJniObject getDisplayCutout()
 int MobileUIPrivate::getDeviceTheme()
 {
     QAndroidJniObject activity = QtAndroid::androidActivity();
-    QAndroidJniObject rsc = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
-    QAndroidJniObject conf = rsc.callObjectMethod("getConfiguration", "()Landroid/content/res/Configuration;");
+    QAndroidJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+    QAndroidJniObject conf = resources.callObjectMethod("getConfiguration", "()Landroid/content/res/Configuration;");
 
     int uiMode = (conf.getField<int>("uiMode") & UI_MODE_NIGHT_MASK);
 
@@ -307,12 +307,50 @@ void MobileUIPrivate::setTheme_navbar(const MobileUI::Theme theme)
 
 int MobileUIPrivate::getStatusbarHeight()
 {
-    return 24; // TODO
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    QAndroidJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+
+    QAndroidJniObject jName = QAndroidJniObject::fromString("status_bar_height");
+    QAndroidJniObject jDefType = QAndroidJniObject::fromString("dimen");
+    QAndroidJniObject jDefPackage = QAndroidJniObject::fromString("android");
+
+    jint identifier = resources.callMethod<jint>("getIdentifier",
+                                                 "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
+                                                 jName.object<jstring>(),
+                                                 jDefType.object<jstring>(),
+                                                 jDefPackage.object<jstring>());
+
+    if (identifier > 0)
+    {
+        return resources.callMethod<jint>("getDimensionPixelSize", "(I)I",
+                                          identifier) / qApp->devicePixelRatio();
+    }
+
+    return 24; // default
 }
 
 int MobileUIPrivate::getNavbarHeight()
 {
-    return 48; // TODO
+    QAndroidJniObject activity = QtAndroid::androidActivity();
+    QAndroidJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+
+    QAndroidJniObject name = QAndroidJniObject::fromString("navigation_bar_height");
+    QAndroidJniObject jDefType = QAndroidJniObject::fromString("dimen");
+    QAndroidJniObject jDefPackage = QAndroidJniObject::fromString("android");
+
+    int identifier = resources.callMethod<int>("getIdentifier",
+                                               "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
+                                               name.object<jstring>(),
+                                               defType.object<jstring>(),
+                                               defPackage.object<jstring>());
+
+    if (identifier > 0)
+    {
+        return resources.callMethod<int>("getDimensionPixelSize",
+                                         "(I)I", identifier) / qApp->devicePixelRatio();
+    }
+
+    return 48; // default
 }
 
 int MobileUIPrivate::getSafeAreaTop()

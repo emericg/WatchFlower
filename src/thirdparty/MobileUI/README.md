@@ -6,19 +6,23 @@ You can see it in action in the [MobileUI demo](https://github.com/emericg/Mobil
 
 > Supports Qt6 and Qt5. QMake and CMake.
 
-> Supports iOS 11 and up (tested with iOS 16 devices).
+> Supports iOS 11+ (tested up to iOS 17 devices).
 
-> Supports Android API 21 and up (tested with API 31 devices).
+> Supports Android API 21+ (tested up to API 33 devices).
 
 ## Features
 
-- Get Android OS theme
 - Set Android `status bar` and `navigation bar` color and theme
-- Set iOS `status bar` theme (iOS has no notion of status bar color, and has no navigation bar) 
+- Set iOS `status bar` theme (iOS has no notion of status bar color, and has no navigation bar)
+- Get device theme (light or dark mode)
 - Get device `safe areas` (WIP)
 - Lock screensaver
-- Set screen orientation
+- Force screen orientation
 - Trigger haptic feedback (vibration)
+
+## Screenshots
+
+![MobileUIs](https://raw.githubusercontent.com/emericg/screenshots_flathub/master/MobileUI/MobileUI.png)
 
 ## Quick start
 
@@ -69,6 +73,8 @@ import MobileUI
 
 ApplicationWindow {
     MobileUI {
+        id: mobileUI
+
         statusbarColor: "white"
         statusbarTheme: MobileUI.Light
         navbarColor: "white"
@@ -90,7 +96,7 @@ Now there are three modes you can use on Android and iOS applications:
 > ApplicationWindow flags: Qt.Window
 
 - Black status bar on iOS (you can't change that).
-- User set colors for both status and navigation bars on Android.
+- User can set colors for both status and navigation bars on Android.
 - Available geometry is fullscreen - system bars height.
 
 That is the default mode on Android, but the infamous "white bar" bug make it pretty much useless.
@@ -108,7 +114,7 @@ That is the default mode on Android, but the infamous "white bar" bug make it pr
 
 That is the default mode on iOS.
 
-#### Full screen / immersive modes
+#### Full screen / "immersive" modes
 
 > ApplicationWindow visibility: Window.FullScreen
 
@@ -119,9 +125,9 @@ That is the default mode on iOS.
 
 > statusbarColor
 
-Set the status bar color (if available).
-This is a QColor, so you can use an hexadecimal value ("#fff") or even a named color ("red"). And you can use "transparent" too.
-Settings a color will also set a theme, by automatically evaluating if the bar color is more light or dark. You can force a theme if you are not satisfied by the result.
+Set the status bar color (if available).  
+This is a QColor, so you can use an hexadecimal value ("#fff") or even a named color ("red"). And you can use "transparent" too.  
+Settings a color will also set a theme, by automatically evaluating if the bar color is more light or dark. You can force a theme if you are not satisfied by the result.  
 
 > statusbarTheme
 
@@ -131,9 +137,9 @@ On iOS and Android API 28+, the theme must be set each time the window visibilit
 
 > navbarColor
 
-Set the navigation bar color (if available).
-This is a QColor, so you can use an hexadecimal value ("#fff") or even a named color ("red"). And you can use "transparent" too.
-Settings a color will also set a theme, by automatically evaluating if the bar color is more light or dark. You can force a theme if you are not satisfied by the result.
+Set the navigation bar color (if available).  
+This is a QColor, so you can use an hexadecimal value ("#fff") or even a named color ("red"). And you can use "transparent" too.  
+Settings a color will also set a theme, by automatically evaluating if the bar color is more light or dark. You can force a theme if you are not satisfied by the result.  
 
 > navbarTheme
 
@@ -145,13 +151,10 @@ On Android API 28+, the theme must be set each time the window visibility or ori
 
 > deviceTheme
 
-You can get the device OS theme by reading the deviceTheme property.
-MobileUI doesn't listen to the change affecting this value and won't signal you 
-when it's changed. You should probably not switch your app theme while it's being 
-used anyway, so it may be wise to only check this value when the application is 
-loading or reloading.
+You can get the device OS theme by reading the deviceTheme property.  
+MobileUI doesn't listen to the change affecting this value and won't signal you when it's changed. 
 
-Not supported on iOS yet.
+You should probably not switch your app theme while it's being used anyway, so it may be wise to only check this value when the application is loading or brought back to the foreground.  
 
 ```qml
 Connections {
@@ -166,15 +169,50 @@ Connections {
 
 ### Safe areas
 
-> TODO
+> statusbarHeight
+
+> navbarHeight
+
+
+> safeAreaTop
+
+> safeAreaLeft
+
+> safeAreaRight
+
+> safeAreaBottom
 
 ### Lock screensaver
 
-> TODO
+Either call ```setScreenAlwaysOn(true/false)``` or set ```screenAlwaysOn: true/false``` in QML.
 
-### Lock screen orientation
+This will disable/enable the device screensaver.
 
-> TODO
+```qml
+mobileUI.setScreenAlwaysOn(true)
+mobileUI.screenAlwaysOn: true
+```
+
+### Force screen orientation
+
+This will force the device screen orientation into one of the available values. This canot be used to read the actual device orientation.
+
+Either call ```setScreenOrientation(MobileUI.ScreenOrientation)``` or set ```screenOrientation: MobileUI.ScreenOrientation``` in QML.
+
+```qml
+mobileUI.setScreenOrientation(MobileUI.Landscape_left)
+mobileUI.screenOrientation: MobileUI.Landscape_right
+```
+
+Available orientations:
+
+- Unlocked
+- Portrait
+- Portrait_upsidedown
+- Portrait_sensor // only available on Android
+- Landscape_left
+- Landscape_right
+- Landscape_sensor // only available on Android
 
 ### Haptic feedback
 

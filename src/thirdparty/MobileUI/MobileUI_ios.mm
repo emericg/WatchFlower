@@ -73,7 +73,15 @@ int MobileUIPrivate::getDeviceTheme()
 {
     if (@available(iOS 13.0, *))
     {
-        // TODO
+
+        if ([[[[[UIApplication sharedApplication] keyWindow] rootViewController] traitCollection] userInterfaceStyle] == UIUserInterfaceStyleDark)
+        {
+            return MobileUI::Theme::Dark;
+        }
+        else
+        {
+            return MobileUI::Theme::Light;
+        }
     }
 
     return 0;
@@ -154,8 +162,8 @@ int MobileUIPrivate::getSafeAreaTop()
 {
     if (@available(iOS 11.0, *))
     {
-        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-        return window.safeAreaInsets.top;
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        if (keyWindow) return keyWindow.safeAreaInsets.top;
     }
 
     return 0;
@@ -165,8 +173,8 @@ int MobileUIPrivate::getSafeAreaLeft()
 {
     if (@available(iOS 11.0, *))
     {
-        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-        return window.safeAreaInsets.left;
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        if (keyWindow) return keyWindow.safeAreaInsets.left;
     }
 
     return 0;
@@ -176,8 +184,8 @@ int MobileUIPrivate::getSafeAreaRight()
 {
     if (@available(iOS 11.0, *))
     {
-        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-        return window.safeAreaInsets.right;
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        if (keyWindow) return keyWindow.safeAreaInsets.right;
     }
 
     return 0;
@@ -187,8 +195,8 @@ int MobileUIPrivate::getSafeAreaBottom()
 {
     if (@available(iOS 11.0, *))
     {
-        UIWindow *window = UIApplication.sharedApplication.windows.firstObject;
-        return window.safeAreaInsets.bottom;
+        UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+        if (keyWindow) return keyWindow.safeAreaInsets.bottom;
     }
 
     return 0;

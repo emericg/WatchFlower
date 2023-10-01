@@ -119,8 +119,8 @@ static QJniObject getDisplayCutout()
 int MobileUIPrivate::getDeviceTheme()
 {
     QJniObject activity = QNativeInterface::QAndroidApplication::context();
-    QJniObject rsc = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
-    QJniObject conf = rsc.callObjectMethod("getConfiguration", "()Landroid/content/res/Configuration;");
+    QJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+    QJniObject conf = resources.callObjectMethod("getConfiguration", "()Landroid/content/res/Configuration;");
 
     int uiMode = (conf.getField<int>("uiMode") & UI_MODE_NIGHT_MASK);
 
@@ -297,12 +297,48 @@ void MobileUIPrivate::setTheme_navbar(const MobileUI::Theme theme)
 
 int MobileUIPrivate::getStatusbarHeight()
 {
-    return 24; // TODO
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+
+    QJniObject name = QJniObject::fromString("status_bar_height");
+    QJniObject defType = QJniObject::fromString("dimen");
+    QJniObject defPackage = QJniObject::fromString("android");
+
+    int identifier = resources.callMethod<int>("getIdentifier",
+                                               "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
+                                               name.object<jstring>(),
+                                               defType.object<jstring>(),
+                                               defPackage.object<jstring>());
+
+    if (identifier > 0)
+    {
+        return resources.callMethod<int>("getDimensionPixelSize", "(I)I", identifier) / qApp->devicePixelRatio();
+    }
+
+    return 24; // default
 }
 
 int MobileUIPrivate::getNavbarHeight()
 {
-    return 48; // TODO
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+
+    QJniObject name = QJniObject::fromString("navigation_bar_height");
+    QJniObject defType = QJniObject::fromString("dimen");
+    QJniObject defPackage = QJniObject::fromString("android");
+
+    int identifier = resources.callMethod<int>("getIdentifier",
+                                               "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)I",
+                                               name.object<jstring>(),
+                                               defType.object<jstring>(),
+                                               defPackage.object<jstring>());
+
+    if (identifier > 0)
+    {
+        return resources.callMethod<int>("getDimensionPixelSize", "(I)I", identifier) / qApp->devicePixelRatio();
+    }
+
+    return 48; // default
 }
 
 int MobileUIPrivate::getSafeAreaTop()

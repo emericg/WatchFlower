@@ -53,12 +53,8 @@ ApplicationWindow {
 
             // hacks
             if (Qt.platform.os === "android") {
-                if (Screen.primaryOrientation === Qt.PortraitOrientation) {
-                    if (appWindow.visibility === Window.FullScreen) {
-                        screenPaddingStatusbar = 0
-                        screenPaddingNavbar = 0
-                    }
-                } else {
+                if (appWindow.visibility === Window.FullScreen) {
+                    screenPaddingStatusbar = 0
                     screenPaddingNavbar = 0
                 }
             }
