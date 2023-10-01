@@ -70,6 +70,11 @@ Loader {
 
                         source: "qrc:/assets/logos/logo.svg"
                         sourceSize: Qt.size(width, height)
+
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: screenSettingsAdvanced.loadScreen()
+                        }
                     }
 
                     Column { // title

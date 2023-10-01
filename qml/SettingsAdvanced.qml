@@ -44,7 +44,7 @@ Loader {
 
         function loadScreen() {
             //console.log("SettingsAdvanced // loadScreen()")
-            logArea.text = utilsLog.getLog()
+            //logArea.text = utilsLog.getLog()
         }
 
         function backAction() {
@@ -69,7 +69,7 @@ Loader {
 
                 topPadding: Theme.componentMargin
                 bottomPadding: Theme.componentMargin
-                spacing: Theme.componentMargin
+                spacing: Theme.componentMarginL
 
                 ////////////////
 
@@ -82,9 +82,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin + 4
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin + 4
                     spacing: Theme.componentMargin / 2
 
                     Text {
@@ -114,7 +114,7 @@ Loader {
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: "Qt Connectivity patched? %1".arg(qtConnectivityPatched ? "TRUE" : "FALSE")
+                        text: "Qt Connectivity patched: %1".arg(qtConnectivityPatched ? "TRUE" : "FALSE")
                         font.pixelSize: Theme.fontSizeContent
                     }
                 }
@@ -122,8 +122,10 @@ Loader {
                 ////////////////
 
                 ListTitle {
-                    text: "Local settings"
-                    icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    text: "Remote database"
+                    icon: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+
+                    visible: isDesktop
                 }
 
                 ////////////////
@@ -135,45 +137,41 @@ Loader {
                     anchors.rightMargin: screenPaddingRight + Theme.componentMargin
                     spacing: Theme.componentMargin / 2
 
-                    TextFieldThemed {
-                        anchors.left: parent.left
-                        anchors.right: parent.right
+                    visible: isDesktop
 
-                        text: settingsManager.getSettingsDirectory()
-                        readOnly: true
+                    SwitchThemed {
+                        id: switch_mysql
 
-                        ButtonWireframe {
-                            anchors.right: parent.right
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            visible: isDesktop
-                            text: "open"
-                            onClicked: utilsApp.openWith(parent.text)
-                        }
+                        text: "Enable MySQL database support"
+                        checked: settingsManager.mysql
+                        onClicked: settingsManager.mysql = checked
                     }
 
-                    Row {
+                    Text {
                         anchors.left: parent.left
+                        anchors.leftMargin: 4
                         anchors.right: parent.right
-                        spacing: Theme.componentMargin / 2
+                        anchors.rightMargin: 4
 
-                        ButtonWireframe {
-                            anchors.verticalCenter: parent.verticalCenter
-                            fullColor: true
-
-                            text: "save"
-                            onClicked: settingsManager.saveSettings()
-                        }
-
-                        ButtonWireframe {
-                            anchors.verticalCenter: parent.verticalCenter
-                            fullColor: true
-                            primaryColor: Theme.colorWarning
-
-                            text: "restore"
-                            //onPressAndHold: settingsManager.restoreSettings()
-                        }
+                        text: qsTr("Connects to a remote MySQL compatible database, instead of the embedded database. Allows multiple instances of the application to share data. Database setup is at your own charge.")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        color: Theme.colorSubText
+                        font.pixelSize: Theme.fontSizeContentSmall
                     }
+                }
+
+                ////////
+
+                Loader {
+                    anchors.left: parent.left
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.right: parent.right
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+
+                    active: isDesktop && settingsManager.mysql
+                    asynchronous: true
+                    sourceComponent: dbSettingsScalable
                 }
 
                 ////////////////
@@ -214,6 +212,8 @@ Loader {
                         anchors.right: parent.right
                         spacing: Theme.componentMargin / 2
 
+                        enabled: false // isDesktop
+
                         ButtonWireframe {
                             fullColor: true
 
@@ -234,8 +234,8 @@ Loader {
                 ////////////////
 
                 ListTitle {
-                    text: "Remote database"
-                    icon: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    text: "Local settings"
+                    icon: "qrc:/assets/icons_material/duotone-tune-24px.svg"
                 }
 
                 ////////////////
@@ -247,17 +247,51 @@ Loader {
                     anchors.rightMargin: screenPaddingRight + Theme.componentMargin
                     spacing: Theme.componentMargin / 2
 
-                    SwitchThemed {
-                        id: switch_worker
+                    TextFieldThemed {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
-                        text: "Enable MySQL database support"
-                        //checked: settingsManager.mysql
-                        //onClicked: settingsManager.mysql = checked
+                        text: settingsManager.getSettingsDirectory()
+                        readOnly: true
+
+                        ButtonWireframe {
+                            anchors.right: parent.right
+                            anchors.verticalCenter: parent.verticalCenter
+
+                            visible: isDesktop
+                            text: "open"
+                            onClicked: utilsApp.openWith(parent.text)
+                        }
+                    }
+
+                    Row {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        spacing: Theme.componentMargin / 2
+
+                        enabled: false // isDesktop
+
+                        ButtonWireframe {
+                            anchors.verticalCenter: parent.verticalCenter
+                            fullColor: true
+
+                            text: "save"
+                            onClicked: settingsManager.saveSettings()
+                        }
+
+                        ButtonWireframe {
+                            anchors.verticalCenter: parent.verticalCenter
+                            fullColor: true
+                            primaryColor: Theme.colorWarning
+
+                            text: "restore"
+                            //onPressAndHold: settingsManager.restoreSettings()
+                        }
                     }
                 }
 
                 ////////////////
-
+/*
                 ListTitle {
                     text: "Logs"
                     icon: "qrc:/assets/icons_material/duotone-edit-24px.svg"
@@ -337,8 +371,111 @@ Loader {
                         }
                     }
                 }
-
+*/
                 ////////////////
+            }
+        }
+
+        ////////////////
+
+        Component {
+            id: dbSettingsScalable
+
+            Grid {
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                rows: 4
+                columns: singleColumn ? 1 : 2
+                spacing: 12
+
+                property int sz: singleColumn ? width : Math.min((width / 2), 512) - 4
+
+                TextFieldThemed {
+                    id: tf_database_host
+                    width: parent.sz
+                    height: 36
+
+                    placeholderText: qsTr("Host")
+                    text: settingsManager.mysqlHost
+                    onEditingFinished: settingsManager.mysqlHost = text
+                    selectByMouse: true
+
+                    IconSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    }
+                }
+
+                TextFieldThemed {
+                    id: tf_database_port
+                    width: parent.sz
+                    height: 36
+
+                    placeholderText: qsTr("Port")
+                    text: settingsManager.mysqlPort
+                    onEditingFinished: settingsManager.mysqlPort = parseInt(text, 10)
+                    validator: IntValidator { bottom: 1; top: 65535; }
+                    selectByMouse: true
+
+                    IconSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/baseline-pin-24px.svg"
+                    }
+                }
+
+                TextFieldThemed {
+                    id: tf_database_user
+                    width: parent.sz
+                    height: 36
+
+                    placeholderText: qsTr("User")
+                    text: settingsManager.mysqlUser
+                    onEditingFinished: settingsManager.mysqlUser = text
+                    selectByMouse: true
+
+                    IconSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/duotone-manage_accounts-24px.svg"
+                    }
+                }
+
+                TextFieldThemed {
+                    id: tf_database_pwd
+                    width: parent.sz
+                    height: 36
+
+                    placeholderText: qsTr("Password")
+                    text: settingsManager.mysqlPassword
+                    onEditingFinished: settingsManager.mysqlPassword = text
+                    selectByMouse: true
+                    echoMode: TextInput.PasswordEchoOnEdit
+
+                    IconSvg {
+                        width: 20; height: 20;
+                        anchors.right: parent.right
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        color: Theme.colorSubText
+                        source: "qrc:/assets/icons_material/baseline-password-24px.svg"
+                    }
+                }
             }
         }
 
