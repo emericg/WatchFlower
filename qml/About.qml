@@ -105,6 +105,7 @@ Loader {
                         text: qsTr("WEBSITE")
                         source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                         sourceSize: 28
+                        font.bold: true
                         fullColor: true
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -117,6 +118,7 @@ Loader {
                         text: qsTr("SUPPORT")
                         source: "qrc:/assets/icons_material/baseline-support-24px.svg"
                         sourceSize: 22
+                        font.bold: true
                         fullColor: true
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -130,6 +132,7 @@ Loader {
                         text: qsTr("GitHub")
                         source: "qrc:/assets/logos/github.svg"
                         sourceSize: 22
+                        font.bold: true
                         fullColor: true
                         primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -169,6 +172,7 @@ Loader {
                     text: qsTr("WEBSITE")
                     source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
                     sourceSize: 28
+                    font.bold: true
                     fullColor: true
                     primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
@@ -181,6 +185,7 @@ Loader {
                     text: qsTr("SUPPORT")
                     source: "qrc:/assets/icons_material/baseline-support-24px.svg"
                     sourceSize: 22
+                    font.bold: true
                     fullColor: true
                     primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 

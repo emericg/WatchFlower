@@ -98,24 +98,24 @@ T.SpinBox {
                 selectedTextColor: "white"
                 selectByMouse: control.editable
 
-                text: control.displayText
+                text: control.value
                 font: control.font
                 horizontalAlignment: Qt.AlignHCenter
                 verticalAlignment: Qt.AlignVCenter
 
                 readOnly: !control.editable
                 validator: control.validator
-                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                inputMethodHints: Qt.ImhDigitsOnly
 
                 onEditingFinished: {
-                    var v = parseInt(text)
-                    if (text.length <= 0) v = control.from
-                    if (isNaN(v)) v = control.from
-                    if (v < control.from) v = control.from
-                    if (v > control.to) v = control.to
+                    //var v = parseInt(text)
+                    //if (text.length <= 0) v = control.from
+                    //if (isNaN(v)) v = control.from
+                    //if (v < control.from) v = control.from
+                    //if (v > control.to) v = control.to
 
-                    control.value = v
-                    control.valueModified()
+                    //control.value = v
+                    //control.valueModified()
 
                     control.focus = false
                     focus = false
