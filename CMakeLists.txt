@@ -75,14 +75,14 @@ target_include_directories(WatchFlower PRIVATE src/thirdparty/)
 
 ## Android
 if(ANDROID)
-    #set(QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64")
-    #set(QT_ANDROID_BUILD_ALL_ABIS "ON")
+    set(QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64")
+    set(QT_ANDROID_BUILD_ALL_ABIS "ON")
 
     set_target_properties(WatchFlower PROPERTIES
         QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android"
     )
 
-    #target_compile_definitions(WatchFlower PRIVATE QT_CONNECTIVITY_PATCHED)
+    target_compile_definitions(WatchFlower PRIVATE QT_CONNECTIVITY_PATCHED)
 
     target_link_libraries(WatchFlower PRIVATE Qt::CorePrivate)
 endif()
