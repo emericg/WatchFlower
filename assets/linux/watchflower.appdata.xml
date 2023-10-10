@@ -83,13 +83,13 @@
   </screenshots>
 
   <requires>
-    <display_length compare="ge">480</display_length>
+    <display_length>360</display_length>
   </requires>
-  <recommends>
+  <supports>
     <control>keyboard</control>
     <control>pointing</control>
     <control>touch</control>
-  </recommends>
+  </supports>
 
   <categories>
     <category>Utility</category>
