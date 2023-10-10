@@ -28,15 +28,15 @@ Item {
     Rectangle { // background
         anchors.fill: parent
 
-        opacity: appWindow.isTablet ? 0.5 : 1
+        opacity: appWindow.isTablet ? 0.95 : 1
         color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
 
         Rectangle {
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            height: 1
-            opacity: 0.8
+            height: 2
+            opacity: 0.33
             visible: !appWindow.isPhone
             color: Theme.colorTabletmenuContent
         }
