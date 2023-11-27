@@ -7,6 +7,7 @@
     <file>watchflower_es.qm</file>
     <file>watchflower_fr.qm</file>
     <file>watchflower_fy.qm</file>
+    <file>watchflower_hu.qm</file>
     <file>watchflower_nb.qm</file>
     <file>watchflower_nl.qm</file>
     <file>watchflower_nn.qm</file>
@@ -36,6 +37,9 @@
   </qresource>
   <qresource prefix="/i18n" lang="fy">
     <file alias="watchflower.qm">watchflower_fy.qm</file>
+  </qresource>
+  <qresource prefix="/i18n" lang="hu">
+    <file alias="watchflower.qm">watchflower_hu.qm</file>
   </qresource>
   <qresource prefix="/i18n" lang="nb">
     <file alias="watchflower.qm">watchflower_nb.qm</file>

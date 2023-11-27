@@ -12,7 +12,7 @@ It works with international and Chinese Xiaomi devices, doesn't require an accou
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones and laptops have Bluetooth "Low Energy", but you will need to make sure your desktop computer has a Bluetooth card or dongle (and for Windows, a working driver too).  
 
-> Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!
+> Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, Hungarian, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!
 
 > Application developed by [Emeric Grange](https://emeric.io/). Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 

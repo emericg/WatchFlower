@@ -443,6 +443,7 @@ Loader {
                             ListElement { text: "Español"; }
                             ListElement { text: "Français"; }
                             ListElement { text: "Frysk"; }
+                            ListElement { text: "Hungarian"; }
                             ListElement { text: "Nederlands"; }
                             ListElement { text: "Norsk (Bokmål)"; }
                             ListElement { text: "Norsk (Nynorsk)"; }

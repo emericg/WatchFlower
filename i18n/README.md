@@ -70,6 +70,9 @@ Special thanks
 **Frisian**
 - FYr76 https://github.com/FYr76
 
+**Hungarian**
+- Anonymous user
+
 **German**
 - Megachip https://github.com/Megachip
 
