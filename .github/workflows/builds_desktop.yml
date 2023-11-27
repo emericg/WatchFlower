@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "5.4"
-  QT_VERSION: "6.6.0"
+  QT_VERSION: "6.6.1"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs

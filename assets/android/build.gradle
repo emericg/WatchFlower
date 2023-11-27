@@ -5,7 +5,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.1.2' // works with Qt 6.5+
+        classpath 'com.android.tools.build:gradle:8.1.4' // works with Qt 6.5+ // Java 17
         //classpath 'com.android.tools.build:gradle:7.4.2' // works with Qt 6.5
         //classpath 'com.android.tools.build:gradle:7.2.1' // works with Qt 6.4
     }
@@ -24,6 +24,9 @@ dependencies {
     implementation 'androidx.core:core:1.6.1'
 }
 
+def getTimestampStr() { return new Date().format('yyyyMMddHHmmss') }
+def timestampInt = (int)(new Date().getTime() / 1000 / 1)
+
 android {
     /*******************************************************
      * The following variables:
@@ -38,9 +41,7 @@ android {
      * Changing them manually might break the compilation!
      *******************************************************/
 
-    namespace 'com.emeric.watchflower'
-
-    compileSdkVersion androidCompileSdkVersion.toInteger()
+    compileSdkVersion androidCompileSdkVersion
     buildToolsVersion androidBuildToolsVersion
     ndkVersion androidNdkVersion
 
@@ -86,5 +87,30 @@ android {
         minSdkVersion qtMinSdkVersion
         targetSdkVersion qtTargetSdkVersion
         ndk.abiFilters = qtTargetAbiList.split(",")
+
+        namespace 'com.emeric.watchflower'
+        versionName "5.4"
+        versionCode timestampInt
+        //manifestPlaceholders = [versionName: versionName, versionCode: versionCode]
+    }
+
+    packagingOptions {
+        // generic
+        exclude 'lib/*/*_qmltooling_*'
+        exclude 'lib/*/*_Controls_Fusion_*'
+        exclude 'lib/*/*_Controls_Imagine_*'
+        exclude 'lib/*/*_Controls_Universal_*'
+        // image formats
+        exclude 'lib/*/*_imageformats_qgif_*'
+        exclude 'lib/*/*_imageformats_qico_*'
+        exclude 'lib/*/*_imageformats_qicns_*'
+        exclude 'lib/*/*_imageformats_qjpeg_*'
+        exclude 'lib/*/*_imageformats_qtga_*'
+        exclude 'lib/*/*_imageformats_qtiff_*'
+        exclude 'lib/*/*_imageformats_qwbmp_*'
+        exclude 'lib/*/*_imageformats_qwebp_*'
+        // multimedia backend
+        exclude 'lib/*/*_multimedia_androidmediaplugin_*'
+        exclude 'lib/*/*_multimedia_ffmpegmediaplugin_*'
     }
 }

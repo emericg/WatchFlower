@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "5.4"
-  QT_VERSION: "6.6.0"
+  QT_VERSION: "6.6.1"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -45,9 +45,9 @@ jobs:
       #  uses: android-actions/setup-android@v2
       #- name: Install Android SDK / NDK / tools
       #  run: |
-      #       sdkmanager "platforms;android-33"
-      #       sdkmanager "ndk;25.2.9519653"
-      #       sdkmanager "build-tools;33.0.2"
+      #       sdkmanager "platforms;android-34"
+      #       sdkmanager "ndk;26.1.10909125"
+      #       sdkmanager "build-tools;34.0.0"
 
       # Install Qt (Android & desktop)
       - name: Install Qt (Android & desktop)
