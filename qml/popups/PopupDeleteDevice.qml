@@ -67,7 +67,7 @@ Popup {
 
             Flow {
                 width: parent.width
-                spacing: Theme.componentMarginXL
+                spacing: Theme.componentMargin
 
                 property var btnSize: singleColumn ? width : ((width-spacing) / 2)
 

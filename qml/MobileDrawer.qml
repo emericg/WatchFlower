@@ -80,6 +80,10 @@ DrawerThemed {
 
                 ////////
 
+                ListSeparatorPadded { }
+
+                ////////
+
                 DrawerItem {
                     highlighted: (appContent.state === "DeviceList")
                     text: qsTr("Sensors")
@@ -178,9 +182,9 @@ DrawerThemed {
 
                     iconSource: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                     iconAnimation: deviceManager.updating ? "rotate" : "fade"
-                    iconAnimated: deviceManager.updating || deviceManager.listening
+                    iconAnimated: (deviceManager.updating || deviceManager.listening)
 
-                    enabled: (deviceManager.bluetooth && !deviceManager.scanning)
+                    enabled: (deviceManager.bluetooth && !deviceManager.scanning && deviceManager.hasDevices)
 
                     onClicked: {
                         if (!deviceManager.scanning) {
@@ -201,7 +205,7 @@ DrawerThemed {
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.syncing
 
-                    enabled: (deviceManager.bluetooth && !deviceManager.scanning)
+                    enabled: (deviceManager.bluetooth && !deviceManager.scanning && deviceManager.hasDevices)
 
                     onClicked: {
                         if (!deviceManager.scanning) {

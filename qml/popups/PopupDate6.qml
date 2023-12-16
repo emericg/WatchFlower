@@ -310,8 +310,8 @@ Popup {
 
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: 16
-                spacing: 16
+                anchors.rightMargin: Theme.componentMargin
+                spacing: Theme.componentMargin
 
                 ButtonWireframe {
                     height: 36

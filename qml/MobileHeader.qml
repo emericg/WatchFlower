@@ -122,6 +122,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             text: headerTitle
+            textFormat: Text.PlainText
             font.bold: true
             font.pixelSize: Theme.fontSizeHeader
             color: Theme.colorHeaderContent

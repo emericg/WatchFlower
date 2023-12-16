@@ -591,7 +591,7 @@ ApplicationWindow {
         visible: (appContent.state === "DeviceList" && opacity)
 
         opacity: exitTimer.running ? 1 : 0
-        Behavior on opacity { OpacityAnimator { duration: 333 } }
+        Behavior on opacity { OpacityAnimator { duration: 233 } }
 
         Text {
             anchors.centerIn: parent

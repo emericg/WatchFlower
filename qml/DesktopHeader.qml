@@ -10,6 +10,7 @@ Rectangle {
 
     height: headerHeight
     color: Theme.colorHeader
+    clip: false
     z: 10
 
     property int headerHeight: isHdpi ? 58 : 64

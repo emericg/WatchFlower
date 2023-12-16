@@ -26,6 +26,7 @@
 #include "device.h"
 
 #include <QObject>
+#include <QByteArray>
 #include <QMetaType>
 #include <QAbstractListModel>
 #include <QSortFilterProxyModel>

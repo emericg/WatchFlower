@@ -30,8 +30,6 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     Column {
-        id: contentColumn
-
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
@@ -39,7 +37,7 @@ Item {
 
         IconSvg { // magnifying glass icon
             anchors.horizontalCenter: parent.horizontalCenter
-            width: (isDesktop || isTablet || (isPhone && appWindow.screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.66)
+            width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.66)
             height: width
 
             source: "qrc:/assets/icons_material/baseline-search-24px.svg"

@@ -2955,7 +2955,7 @@
         <location filename="../qml/Settings.qml" line="1239"/>
         <location filename="../qml/Settings.qml" line="1260"/>
         <source>preview</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">aperçu</translation>
     </message>
     <message>
         <location filename="../qml/Settings.qml" line="1428"/>

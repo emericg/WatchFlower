@@ -63,7 +63,6 @@ Item {
                 anchors.right: parent.right
 
                 RoundButtonIcon {
-                    id: button_bluetooth_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -79,7 +78,6 @@ Item {
                 }
 
                 Text {
-                    id: text_bluetooth
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
@@ -95,8 +93,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
-            Text {
-                id: legend_bluetooth
+            Text { // Bluetooth control legend
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
@@ -115,14 +112,12 @@ Item {
 
             ////////
 
-            Item {
-                id: element_location
+            Item { // Location
                 height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 RoundButtonIcon {
-                    id: button_location_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -144,7 +139,6 @@ Item {
                 }
 
                 Text {
-                    id: text_location
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
@@ -160,8 +154,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
-            Text {
-                id: legend_location
+            Text { // Location legend
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
@@ -200,14 +193,12 @@ Item {
 
             ////////
 
-            Item {
-                id: element_location_background
+            Item { // Background location
                 height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 RoundButtonIcon {
-                    id: button_location_background_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -229,7 +220,6 @@ Item {
                 }
 
                 Text {
-                    id: text_location_background
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
@@ -245,8 +235,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
-            Text {
-                id: legend_location_background
+            Text { // Background location legend
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
@@ -265,14 +254,12 @@ Item {
 
             ////////
 
-            Item {
-                id: element_gps
+            Item { // GPS 
                 height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
 
                 RoundButtonIcon {
-                    id: button_gps_test
                     width: 32
                     height: 32
                     anchors.left: parent.left
@@ -293,7 +280,6 @@ Item {
                 }
 
                 Text {
-                    id: text_gps
                     height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
@@ -309,8 +295,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                 }
             }
-            Text {
-                id: legend_gps
+            Text { // GPS legend
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
