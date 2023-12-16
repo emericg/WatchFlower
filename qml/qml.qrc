@@ -61,9 +61,11 @@
         <file alias="ItemEnvBox.qml">components/ItemEnvBox.qml</file>
         <file alias="ItemWeatherBox.qml">components/ItemWeatherBox.qml</file>
         <file alias="ItemLoadData.qml">components/ItemLoadData.qml</file>
-        <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
+        <file alias="ItemNoBluetooth.qml">components/ItemNoBluetooth.qml</file>
+        <file alias="ItemNoPermissions.qml">components/ItemNoPermissions.qml</file>
         <file alias="ItemNoDevice.qml">components/ItemNoDevice.qml</file>
         <file alias="ItemNoDeviceNearby.qml">components/ItemNoDeviceNearby.qml</file>
+        <file alias="ItemNoData.qml">components/ItemNoData.qml</file>
         <file alias="ItemNoPlant.qml">components/ItemNoPlant.qml</file>
         <file alias="ItemNoPlants.qml">components/ItemNoPlants.qml</file>
         <file alias="ItemNoJournal.qml">components/ItemNoJournal.qml</file>

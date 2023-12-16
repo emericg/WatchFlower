@@ -62,7 +62,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 
-#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
 #if QT_CONFIG(permissions)
 #include <QGuiApplication>
 #include <QPermissions>
@@ -313,6 +313,10 @@ bool DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     if (m_bluetoothAdapter && !m_bluetoothAdapter->isValid())
     {
         qDebug() << "DeviceManager::enableBluetooth() deleting current adapter";
+
+        disconnect(m_bluetoothAdapter, &QBluetoothLocalDevice::hostModeStateChanged,
+                   this, &DeviceManager::bluetoothHostModeStateChanged);
+
         delete m_bluetoothAdapter;
         m_bluetoothAdapter = nullptr;
     }
@@ -366,6 +370,7 @@ bool DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     }
     else
     {
+        qWarning() << "DeviceManager::enableBluetooth() we have an invalid adapter";
         m_bleAdapter = false;
         m_bleEnabled = false;
     }
@@ -386,11 +391,16 @@ bool DeviceManager::checkBluetoothPermissions()
 {
     //qDebug() << "DeviceManager::checkBluetoothPermissions()";
 
-#if !defined(Q_OS_MACOS) && !defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID)
+    //
+#elif defined(Q_OS_LINUX) || defined(Q_OS_WINDOWS)
+    // These OS don't ask for any particular permissions
     m_permOS = true;
+    m_blePermissions = true;
 #endif
 
 #if !defined(Q_OS_ANDROID)
+    // The location permission(s) debacle is Android only
     m_permLocationBLE = true;
     m_permLocationBKG = true;
     m_permGPS = true;
@@ -403,44 +413,33 @@ bool DeviceManager::checkBluetoothPermissions()
     bool btP_was = m_blePermissions;
 
 #if defined(Q_OS_ANDROID)
-
+    m_permOS = UtilsApp::checkMobileBluetoothPermission();
     m_permLocationBLE = UtilsApp::checkMobileBleLocationPermission();
     m_permLocationBKG = UtilsApp::checkMobileBackgroundLocationPermission();
     m_permGPS = UtilsApp::isMobileGpsEnabled();
 
-    // set m_permLocationBLE as primary
-    // we will check for GPS or background location permissions explicitely if we need them
-    m_blePermissions = m_permLocationBLE;
+    m_blePermissions = m_permOS && m_permLocationBLE;
+#endif
 
-#elif defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
 #if QT_CONFIG(permissions)
-
     if (qApp)
     {
-        QBluetoothPermission blePermission;
-        switch (qApp->checkPermission(blePermission))
+        switch (qApp->checkPermission(QBluetoothPermission{}))
         {
         case Qt::PermissionStatus::Undetermined:
-            qApp->requestPermission(blePermission, this, &DeviceManager::checkBluetoothPermissions);
-            return false;
         case Qt::PermissionStatus::Denied:
             m_permOS = false;
-            m_blePermissions = m_permOS;
+            m_blePermissions = false;
             break;
         case Qt::PermissionStatus::Granted:
             m_permOS = true;
-            m_blePermissions = m_permOS;
+            m_blePermissions = true;
             break;
         }
     }
-
 #endif // QT_CONFIG(permissions)
-#else
-
-    // Linux and Windows don't have required BLE permissions
-    m_blePermissions = true;
-
-#endif
+#endif // defined(Q_OS_MACOS) || defined(Q_OS_IOS)
 
     if (os_was != m_permOS || gps_was != m_permGPS ||
         loc_was != m_permLocationBLE || loc_bg_was != m_permLocationBKG)
@@ -457,11 +456,91 @@ bool DeviceManager::checkBluetoothPermissions()
     return m_blePermissions;
 }
 
+bool DeviceManager::requestBluetoothPermissions()
+{
+    //qDebug() << "DeviceManager::requestBluetoothPermissions()";
+
+#if defined(Q_OS_ANDROID)
+#if QT_CONFIG(permissions)
+
+    // qApp->checkPermission(QBluetoothPermission{}) doesn't work on Android
+    // so we do it ourselves, the old fashioned way...
+
+    bool permLocationBLE = UtilsApp::checkMobileBleLocationPermission();
+    bool permOS = UtilsApp::checkMobileBluetoothPermission();
+
+    if (!permLocationBLE || !permOS)
+    {
+        if (qApp)
+        {
+            qApp->requestPermission(QBluetoothPermission{}, this, &DeviceManager::requestBluetoothPermissions_results);
+        }
+    }
+
+#else // QT_CONFIG(permissions)
+
+    m_permOS = UtilsApp::getMobileBluetoothPermission();
+    m_permLocationBLE = UtilsApp::getMobileBleLocationPermission();
+    m_blePermissions = m_permOS && m_permLocationBLE;
+
+#endif // QT_CONFIG(permissions)
+#endif // defined(Q_OS_ANDROID)
+
+#if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+#if QT_CONFIG(permissions)
+
+    if (qApp)
+    {
+        switch (qApp->checkPermission(QBluetoothPermission{}))
+        {
+        case Qt::PermissionStatus::Undetermined:
+            qDebug() << "Qt::PermissionStatus::Undetermined";
+            qApp->requestPermission(QBluetoothPermission{}, this, &DeviceManager::requestBluetoothPermissions_results);
+            break;
+        case Qt::PermissionStatus::Granted:
+            qDebug() << "Qt::PermissionStatus::Granted";
+            m_permOS = true;
+            m_blePermissions = true;
+            break;
+        case Qt::PermissionStatus::Denied:
+            qDebug() << "Qt::PermissionStatus::Denied";
+            m_permOS = false;
+            m_blePermissions = false;
+            break;
+        }
+    }
+
+#endif // QT_CONFIG(permissions)
+#endif // defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+
+    return m_blePermissions;
+}
+
+void DeviceManager::requestBluetoothPermissions_results()
+{
+    // evaluate the results
+    checkBluetooth();
+
+    if (m_blePermissions)
+    {
+        // try enabling the adapter
+        if (!m_bleAdapter || !m_bleEnabled)
+        {
+            enableBluetooth();
+        }
+    }
+    else
+    {
+        // try again?
+        //requestBluetoothPermissions();
+    }
+}
+
 /* ************************************************************************** */
 
 void DeviceManager::bluetoothHostModeStateChanged(QBluetoothLocalDevice::HostMode state)
 {
-    qDebug() << "DeviceManager::bluetoothHostModeStateChanged() host mode now:" << state;
+    //qDebug() << "DeviceManager::bluetoothHostModeStateChanged() host mode now:" << state;
 
     if (state != m_ble_hostmode)
     {
@@ -502,6 +581,20 @@ void DeviceManager::bluetoothStatusChanged()
     {
         // Bluetooth disabled, force disconnection
         refreshDevices_stop();
+    }
+}
+
+void DeviceManager::bluetoothPermissionsChanged()
+{
+    //qDebug() << "DeviceManager::bluetoothPermissionsChanged()";
+
+    if (m_bleAdapter && m_bleEnabled)
+    {
+        checkBluetooth();
+    }
+    else
+    {
+        enableBluetooth();
     }
 }
 
@@ -1486,8 +1579,9 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     // Various sanity checks
     {
         if (info.rssi() >= 0) return; // we probably just hit the device cache
-
+        //if ((info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration) == false) return; // not a BLE device
         if (m_devices_blacklist.contains(info.address().toString())) return; // device is blacklisted
+        if (m_devices_blacklist.contains(info.deviceUuid().toString())) return; // device is blacklisted
 
         SettingsManager *sm = SettingsManager::getInstance();
         if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device is too far away
@@ -1610,7 +1704,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             }
         }
 
-        //
+        // Connect and handle update
         connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
         connect(d, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
 

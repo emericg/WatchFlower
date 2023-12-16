@@ -56,18 +56,78 @@ Item {
 
             ////////
 
-            Item {
-                id: element_bluetooth
-                height: 24
+            Item { // Bluetooth
                 anchors.left: parent.left
                 anchors.right: parent.right
+                height: 24
 
                 RoundButtonIcon {
-                    width: 32
-                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 32
+                    height: 32
+
+                    property bool validperm: deviceManager.permissionOS
+
+                    source: (validperm) ? "qrc:/assets/icons_material/baseline-check-24px.svg" : "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    iconColor: (validperm) ? "white" : "white"
+                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
+                    backgroundVisible: true
+
+                    onClicked: {
+                        utilsApp.vibrate(25)
+                        utilsApp.getMobileBluetoothPermission()
+                        refreshPermissions.start()
+                    }
+                }
+
+                Text {
+                    anchors.left: parent.left
+                    anchors.leftMargin: appHeader.headerPosition
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.componentMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: 16
+
+                    text: qsTr("Bluetooth")
+                    textFormat: Text.PlainText
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 17
+                    color: Theme.colorText
+                    verticalAlignment: Text.AlignVCenter
+                }
+            }
+            Text { // Bluetooth legend
+                anchors.left: parent.left
+                anchors.leftMargin: appHeader.headerPosition
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.componentMargin
+
+                text: qsTr("The Android operating system requires permission to scan for nearby Bluetooth Low Energy sensors.")
+                textFormat: Text.StyledText
+                wrapMode: Text.WordWrap
+                color: Theme.colorSubText
+                font.pixelSize: Theme.fontSizeContentSmall
+            }
+
+            ////////
+
+            ListSeparatorPadded { height: 16+1 }
+
+            ////////
+
+            Item { // Bluetooth control
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 24
+
+                RoundButtonIcon {
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.componentMargin
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 32
+                    height: 32
 
                     property bool validperm: true
 
@@ -78,12 +138,12 @@ Item {
                 }
 
                 Text {
-                    height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 16
 
                     text: qsTr("Bluetooth control")
                     textFormat: Text.PlainText
@@ -113,16 +173,16 @@ Item {
             ////////
 
             Item { // Location
-                height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
+                height: 24
 
                 RoundButtonIcon {
-                    width: 32
-                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 32
+                    height: 32
 
                     property bool validperm: deviceManager.permissionLocationBLE
 
@@ -139,12 +199,12 @@ Item {
                 }
 
                 Text {
-                    height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 16
 
                     text: qsTr("Location")
                     textFormat: Text.PlainText
@@ -168,9 +228,9 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
             }
             ButtonWireframeIcon {
-                height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
+                height: 36
 
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
@@ -199,11 +259,11 @@ Item {
                 anchors.right: parent.right
 
                 RoundButtonIcon {
-                    width: 32
-                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 32
+                    height: 32
 
                     property bool validperm: deviceManager.permissionLocationBackground
 
@@ -220,12 +280,12 @@ Item {
                 }
 
                 Text {
-                    height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 16
 
                     text: qsTr("Background location")
                     textFormat: Text.PlainText
@@ -254,17 +314,17 @@ Item {
 
             ////////
 
-            Item { // GPS 
-                height: 24
+            Item { // GPS
                 anchors.left: parent.left
                 anchors.right: parent.right
+                height: 24
 
                 RoundButtonIcon {
-                    width: 32
-                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 32
+                    height: 32
 
                     property bool validperm: deviceManager.permissionLocationGPS
 
@@ -280,12 +340,12 @@ Item {
                 }
 
                 Text {
-                    height: 16
                     anchors.left: parent.left
                     anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    height: 16
 
                     text: qsTr("GPS")
                     textFormat: Text.PlainText
@@ -309,9 +369,9 @@ Item {
             }
 
             ButtonWireframeIcon {
-                height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
+                height: 36
 
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
@@ -331,16 +391,16 @@ Item {
 
             Item {
                 id: element_infos
-                height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
+                height: 32
 
                 IconSvg {
-                    width: 32
-                    height: 32
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 32
+                    height: 32
 
                     opacity: 0.66
                     color: Theme.colorSubText
@@ -352,9 +412,11 @@ Item {
                     anchors.leftMargin: appHeader.headerPosition
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin
+                    anchors.verticalCenter: parent.verticalCenter
 
                     text: qsTr("Click on the checkmarks to request missing permissions.")
                     textFormat: Text.StyledText
+                    lineHeight : 0.8
                     wrapMode: Text.WordWrap
                     color: Theme.colorText
                     font.pixelSize: Theme.fontSizeContent
@@ -376,9 +438,9 @@ Item {
             }
 
             ButtonWireframeIcon {
-                height: 36
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
+                height: 36
 
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground

@@ -48,16 +48,29 @@ Item {
 
     function checkBluetoothStatus() {
         if (deviceManager.hasDevices) {
-            if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
-                rectangleBluetoothStatus.setBluetoothWarning()
-            } else if (!deviceManager.bluetoothPermissions) {
-                rectangleBluetoothStatus.setPermissionWarning()
+            // The device list is shown
+            loaderItemStatus.source = ""
+
+            if (!deviceManager.bluetoothPermissions) {
+                actionbarBluetoothStatus.setPermissionWarning()
+            } else if (!deviceManager.bluetoothAdapter) {
+                actionbarBluetoothStatus.setAdapterWarning()
+            } else if (!deviceManager.bluetoothEnabled) {
+                actionbarBluetoothStatus.setBluetoothWarning()
             } else {
-                rectangleBluetoothStatus.hide()
+                actionbarBluetoothStatus.hide()
             }
         } else {
             // The sensor list is not populated
-            rectangleBluetoothStatus.hide()
+            actionbarBluetoothStatus.hide()
+
+            if (!deviceManager.bluetoothPermissions) {
+                loaderItemStatus.source = "ItemNoPermissions.qml"
+            } else if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
+                loaderItemStatus.source = "ItemNoBluetooth.qml"
+            } else {
+                loaderItemStatus.source = "ItemNoDevice.qml"
+            }
         }
     }
 
@@ -120,7 +133,7 @@ Item {
         ////////////////
 
         ActionbarBluetooth {
-            id: rectangleBluetoothStatus
+            id: actionbarBluetoothStatus
             anchors.left: parent.left
             anchors.right: parent.right
         }
@@ -128,17 +141,10 @@ Item {
         ////////////////
 
         ActionbarSelection {
-            id: rectangleSelections
+            id: actionbarSelection
             anchors.left: parent.left
             anchors.right: parent.right
         }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    ItemNoDevice {
-        anchors.fill: parent
-        visible: !deviceManager.hasDevices
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -148,7 +154,18 @@ Item {
         anchors.fill: parent
         anchors.topMargin: rowbar.height
 
+        visible: deviceManager.hasDevices
         asynchronous: false
+    }
+
+    ////////
+
+    Loader {
+        id: loaderItemStatus
+        anchors.fill: parent
+
+        visible: !deviceManager.hasDevices
+        asynchronous: true
     }
 
     ////////////////////////////////////////////////////////////////////////////

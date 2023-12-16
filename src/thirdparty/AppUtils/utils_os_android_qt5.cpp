@@ -164,6 +164,30 @@ bool UtilsAndroid::getPermission_camera()
 
 /* ************************************************************************** */
 
+bool UtilsAndroid::checkPermission_notification()
+{
+    return false; // TODO
+}
+
+bool UtilsAndroid::getPermission_notification()
+{
+    return false; // TODO
+}
+
+/* ************************************************************************** */
+
+bool UtilsAndroid::checkPermission_bluetooth()
+{
+    return false; // TODO
+}
+
+bool UtilsAndroid::getPermission_bluetooth()
+{
+    return false; // TODO
+}
+
+/* ************************************************************************** */
+
 bool UtilsAndroid::checkPermission_location()
 {
     QtAndroid::PermissionResult loc = QtAndroid::checkPermission("android.permission.ACCESS_FINE_LOCATION");

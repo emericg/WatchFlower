@@ -18,12 +18,17 @@ Rectangle {
     function hide() {
         actionbarBluetoothStatus.height = 0
     }
-    function setBluetoothWarning() {
-        textBluetoothStatus.text = qsTr("Bluetooth is disabled...")
-        actionbarBluetoothStatus.height = 52
-    }
+
     function setPermissionWarning() {
         textBluetoothStatus.text = qsTr("Bluetooth permission is missing...")
+        actionbarBluetoothStatus.height = 52
+    }
+    function setAdapterWarning() {
+        textBluetoothStatus.text = qsTr("Bluetooth adapter not found...")
+        actionbarBluetoothStatus.height = 52
+    }
+    function setBluetoothWarning() {
+        textBluetoothStatus.text = qsTr("Bluetooth is disabled...")
         actionbarBluetoothStatus.height = 52
     }
 
@@ -58,19 +63,20 @@ Rectangle {
         primaryColor: Theme.colorActionbarHighlight
 
         text: {
+            if (!deviceManager.bluetoothPermissions) return qsTr("Request")
             if (Qt.platform.os === "android") {
                 if (!deviceManager.bluetoothEnabled) return qsTr("Enable")
-                else if (!deviceManager.bluetoothPermissions) return qsTr("About")
             }
             return qsTr("Retry")
         }
         onClicked: {
-            if (Qt.platform.os === "android" && !deviceManager.bluetoothPermissions) {
-                // someone clicked 'never ask again' on the Bluetooth permission?
-                screenAboutPermissions.loadScreenFrom("DeviceList")
-            } else {
+            if (!deviceManager.bluetoothPermissions) {
+                deviceManager.requestBluetoothPermissions()
+            }
+            if (!deviceManager.bluetoothEnabled) {
                 deviceManager.enableBluetooth(settingsManager.bluetoothControl)
             }
+            deviceManager.checkBluetooth()
         }
     }
 
