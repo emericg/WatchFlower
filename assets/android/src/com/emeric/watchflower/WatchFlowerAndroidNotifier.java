@@ -73,7 +73,14 @@ public class WatchFlowerAndroidNotifier {
         }
 
         try {
+            String packageName = context.getApplicationContext().getPackageName();
             //Context context = getApplicationContext();
+
+            Intent resultIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+            resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+
             NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
             Notification.Builder builder;
 
@@ -91,20 +98,15 @@ public class WatchFlowerAndroidNotifier {
                 builder = new Notification.Builder(context);
             }
 
-            String packageName = context.getApplicationContext().getPackageName();
-            Intent resultIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
-            resultIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
             builder.setSmallIcon(R.drawable.ic_stat_logo);
             //Bitmap icon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_stat_logo);
             //builder.setLargeIcon(icon);
             //builder.setColor(Color.WHITE);
             builder.setContentTitle(title);
             builder.setContentText(message);
+            builder.setContentIntent(resultPendingIntent);
             builder.setWhen(System.currentTimeMillis());
             builder.setShowWhen(true);
-            builder.setContentIntent(resultPendingIntent);
             builder.setDefaults(Notification.DEFAULT_SOUND);
             builder.setOnlyAlertOnce(true);
             builder.setAutoCancel(true);
