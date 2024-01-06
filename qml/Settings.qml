@@ -682,7 +682,12 @@ Loader {
                         z: 1
 
                         checked: settingsManager.notifications
-                        onClicked: settingsManager.notifications = checked
+                        onClicked: {
+                            settingsManager.notifications = checked
+                            if (settingsManager.notifications) {
+                                utilsApp.getMobileNotificationPermission()
+                            }
+                        }
                     }
                 }
                 Text {
