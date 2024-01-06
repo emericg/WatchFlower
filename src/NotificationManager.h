@@ -26,6 +26,10 @@
 #include <QObject>
 #include <QString>
 
+#if defined(Q_OS_IOS)
+#include "utils_os_ios_notif.h"
+#endif
+
 /* ************************************************************************** */
 
 /*!
@@ -42,26 +46,28 @@ class NotificationManager : public QObject
     NotificationManager();
     ~NotificationManager();
 
-public:
-    static NotificationManager *getInstance();
+    QString m_title;
+    QString m_message;
+    int m_channel = 0;
 
-    void setNotification(const QString &title, const QString &message, int channel = 0);
-
-    void setNotificationShort(const QString &message);
-    QString getNotificationShort() const { return m_message; }
+#if defined(Q_OS_IOS)
+    UtilsIOSNotifications m_iosnotifier;
+#endif
 
 signals:
     void notificationChanged();
 
 private slots:
     void updateNotificationAndroid();
-    void updateNotificationIos();
+    void updateNotificationIOS();
     void updateNotificationDesktop();
 
-private:
-    QString m_title;
-    QString m_message;
-    int m_channel = 0;
+public:
+    static NotificationManager *getInstance();
+
+    void setNotification(const QString &title, const QString &message, int channel = 0);
+    void setNotificationShort(const QString &message);
+    QString getNotificationShort() const { return m_message; }
 };
 
 /* ************************************************************************** */

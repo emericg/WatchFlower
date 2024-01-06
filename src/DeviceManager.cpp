@@ -23,6 +23,8 @@
 #include "DatabaseManager.h"
 #include "SettingsManager.h"
 
+#include "utils_app.h"
+
 #include "device.h"
 #include "devices/device_flowercare.h"
 #include "devices/device_flowercare_tuya.h"
@@ -45,8 +47,6 @@
 #include "devices/device_esp32_airqualitymonitor.h"
 #include "devices/device_esp32_higrow.h"
 #include "devices/device_esp32_geigercounter.h"
-
-#include "utils_app.h"
 
 #include <QList>
 #include <QDateTime>
@@ -519,7 +519,11 @@ bool DeviceManager::requestBluetoothPermissions()
 void DeviceManager::requestBluetoothPermissions_results()
 {
     // evaluate the results
+#if defined(Q_OS_IOS)
+    checkBluetoothPermissions();
+#else
     checkBluetooth();
+#endif
 
     if (m_blePermissions)
     {
