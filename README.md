@@ -16,7 +16,7 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 
 > Application developed by [Emeric Grange](https://emeric.io/). Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
-### Features
+#### Features
 
 * Support many different plant sensors and thermometers
 * Support a couple of environmental and air quality sensors
@@ -30,6 +30,13 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 * 90 days CSV data export
 * Scalable UI: 4.6" to 34" screens, landscape or portrait
 
+#### Download
+
+<p>
+<a href='https://flathub.org/apps/io.emeric.watchflower'><img height='66' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png'/></a>
+<a href="https://apps.apple.com/us/app/watchflower/id1476046123"><img height='66' src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store"></a>
+<a href='https://play.google.com/store/apps/details?id=com.emeric.watchflower'><img height='66' alt='Get it on Google Play' src='https://i.imgur.com/nc9szYp.png'/></a>
+</p>
 
 ![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
 
