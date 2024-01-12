@@ -33,7 +33,10 @@ Item {
         id: refreshPermissions
         interval: 333
         repeat: false
-        onTriggered: deviceManager.checkBluetoothPermissions()
+        onTriggered: {
+            deviceManager.checkBluetoothPermissions()
+            notifButton.validperm = utilsApp.checkMobileNotificationPermission()
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

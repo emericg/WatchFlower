@@ -41,7 +41,7 @@
 
 @implementation NotificationDelegate
 
-- (id) initWithObject:(UtilsIOSNotifications *)localNotification
+-(id)initWithObject:(UtilsIOSNotifications *)localNotification
 {
     self = [super init];
     if (self)
@@ -58,11 +58,11 @@
     Q_UNUSED(center)
     long var = [[notification.request.content.userInfo objectForKey:@"ID"] longValue];
 
-    completionHandler(UNNotificationPresentationOptionAlert);
+    completionHandler(UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner | UNNotificationPresentationOptionSound);
 }
 
 -(void)userNotificationCenter:(UNUserNotificationCenter *)center
-         didReceiveNotificationResponse:(UNNotificationResponse *)response
+        didReceiveNotificationResponse:(UNNotificationResponse *)response
             withCompletionHandler:(void(^)())completionHandler
 {
     Q_UNUSED(center)
@@ -77,10 +77,19 @@ UtilsIOSNotifications::UtilsIOSNotifications()
 {
     m_notifdelegate = [[NotificationDelegate alloc] initWithObject:this];
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error)
+    [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound)
+        completionHandler:^(BOOL granted, NSError *_Nullable error)
     {
-        Q_UNUSED(granted);
-        if (!error)
+        if (granted)
+        {
+            NSLog(@"Notification permission granted");
+        }
+
+        if (error)
+        {
+            NSLog(@"Local Notification setup failed");
+        }
+        else
         {
             [[UIApplication sharedApplication] registerForRemoteNotifications];
         }
@@ -89,28 +98,29 @@ UtilsIOSNotifications::UtilsIOSNotifications()
 
 bool UtilsIOSNotifications::notify(const QString &title, const QString &message, const int channel)
 {
-    // create content
+    // Create content
     UNMutableNotificationContent *content = [[UNMutableNotificationContent alloc] init];
     content.title = title.toNSString();
     content.body = message.toNSString();
-    content.sound = [UNNotificationSound defaultSound];
-    //content.badge = @([[UIApplication sharedApplication] applicationIconBadgeNumber] + 1);
+    content.sound = [UNNotificationSound defaultSound]; // withAudioVolume:1.0
 
-    // create trigger time
-    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:1 repeats:NO];
+    // Create trigger time
+    UNTimeIntervalNotificationTrigger *trigger = [UNTimeIntervalNotificationTrigger triggerWithTimeInterval:0.33 repeats:NO];
 
-    // unique identifier
-    NSString* identifierNSString = QString::number(channel).toNSString();
+    // Unique identifier
+    NSString *identifierNSString = QString::number(channel).toNSString();
 
-    // create notification request
+    // Create notification request
     UNNotificationRequest *request = [UNNotificationRequest requestWithIdentifier:identifierNSString content:content trigger:trigger];
 
-    // add request
+    // Add request
     UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
     center.delegate = id(m_notifdelegate);
 
-    [center addNotificationRequest:request withCompletionHandler:^(NSError * _Nullable error) {
-        if (error) {
+    [center addNotificationRequest:request withCompletionHandler:^(NSError *_Nullable error)
+    {
+        if (error)
+        {
             NSLog(@"Local Notification failed");
         }
     }];

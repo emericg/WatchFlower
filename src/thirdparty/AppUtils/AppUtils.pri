@@ -65,13 +65,13 @@ android {
 # iOS utils
 ios {
     QT      += quick
-    LIBS    += -framework UIKit
-    LIBS    += -framework UserNotifications
 
+    LIBS    += -framework UIKit
     SOURCES += $${PWD}/utils_os_ios.mm
     HEADERS += $${PWD}/utils_os_ios.h
 
     # iOS notifications
+    LIBS    += -framework UserNotifications
     SOURCES += $${PWD}/utils_os_ios_notif.mm
     HEADERS += $${PWD}/utils_os_ios_notif.h
 }

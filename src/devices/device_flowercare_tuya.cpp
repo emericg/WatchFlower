@@ -22,7 +22,6 @@
 #include "device_flowercare_tuya.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
