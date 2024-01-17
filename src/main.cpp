@@ -195,6 +195,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("systrayManager", st);
     engine_context->setContextProperty("menubarManager", mb);
+    engine_context->setContextProperty("notificationManager", nm);
     engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);

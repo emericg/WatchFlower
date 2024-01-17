@@ -19,7 +19,8 @@ Item {
                            appContent.state === "DeviceBrowser" ||
                            appContent.state === "PlantBrowser" ||
                            appContent.state === "Settings" ||
-                           appContent.state === "About")) ||
+                           appContent.state === "About" ||
+                           appContent.state === "AboutPermissions")) ||
              (isPhone && screenOrientation === Qt.PortraitOrientation &&
                           (appContent.state === "DevicePlantSensor"))
 
@@ -126,7 +127,7 @@ Item {
                 onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
             }
             MobileMenuItem_horizontal {
-                id: menuDeviceBrowseer
+                id: menuDeviceBrowser
                 height: mobileMenu.hhh
 
                 text: qsTr("Device browser")
@@ -136,6 +137,7 @@ Item {
                 colorHighlight: Theme.colorTabletmenuHighlight
 
                 visible: (screenOrientation === Qt.LandscapeOrientation)
+                enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
                 highlighted: (appContent.state === "DeviceBrowser")
                 onClicked: screenDeviceBrowser.loadScreen()
             }

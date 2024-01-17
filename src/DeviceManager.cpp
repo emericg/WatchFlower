@@ -375,6 +375,12 @@ bool DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
         m_bleEnabled = false;
     }
 
+    //qDebug() << "DeviceManager::enableBluetooth() recap";
+    //qDebug() << " - bluetooth" << hasBluetooth();
+    //qDebug() << " - bleAdapter" << m_bleAdapter;
+    //qDebug() << " - bleEnabled" << m_bleEnabled;
+    //qDebug() << " - blePermissions" << m_blePermissions;
+
     // Check OS permissions
     checkBluetoothPermissions();
 
@@ -453,6 +459,16 @@ bool DeviceManager::checkBluetoothPermissions()
         Q_EMIT bluetoothChanged();
     }
 
+    //qDebug() << "DeviceManager::checkBluetoothPermissions() recap";
+    //qDebug() << " - bluetooth" << hasBluetooth();
+    //qDebug() << " - bleAdapter" << m_bleAdapter;
+    //qDebug() << " - bleEnabled" << m_bleEnabled;
+    //qDebug() << " - blePermissions" << m_blePermissions;
+    //qDebug() << " - permOS" << m_permOS;
+    //qDebug() << " - permLocationBLE" << m_permLocationBLE;
+    //qDebug() << " - permLocationBKG" << m_permLocationBKG;
+    //qDebug() << " - permGPS" << m_permGPS;
+
     return m_blePermissions;
 }
 
@@ -461,7 +477,7 @@ bool DeviceManager::requestBluetoothPermissions()
     //qDebug() << "DeviceManager::requestBluetoothPermissions()";
 
 #if defined(Q_OS_ANDROID)
-#if QT_CONFIG(permissions)
+#if QT_CONFIG(permissions) && QT_VERSION >= QT_VERSION_CHECK(6, 6, 0)
 
     // qApp->checkPermission(QBluetoothPermission{}) doesn't work on Android
     // so we do it ourselves, the old fashioned way...
@@ -512,6 +528,16 @@ bool DeviceManager::requestBluetoothPermissions()
 
 #endif // QT_CONFIG(permissions)
 #endif // defined(Q_OS_MACOS) || defined(Q_OS_IOS)
+
+    //qDebug() << "DeviceManager::requestBluetoothPermissions() recap";
+    //qDebug() << " - bluetooth" << hasBluetooth();
+    //qDebug() << " - bleAdapter" << m_bleAdapter;
+    //qDebug() << " - bleEnabled" << m_bleEnabled;
+    //qDebug() << " - blePermissions" << m_blePermissions;
+    //qDebug() << " - permOS" << m_permOS;
+    //qDebug() << " - permLocationBLE" << m_permLocationBLE;
+    //qDebug() << " - permLocationBKG" << m_permLocationBKG;
+    //qDebug() << " - permGPS" << m_permGPS;
 
     return m_blePermissions;
 }

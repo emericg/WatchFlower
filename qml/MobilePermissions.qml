@@ -121,6 +121,8 @@ Item {
                 anchors.right: parent.right
                 height: 24
 
+                visible: (Qt.platform.os === "android")
+
                 RoundButtonIcon {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.componentMargin
@@ -157,6 +159,8 @@ Item {
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
+
+                visible: (Qt.platform.os === "android")
 
                 text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
                 textFormat: Text.PlainText
@@ -228,7 +232,7 @@ Item {
 
             ////////
 
-            ListSeparatorPadded { height: 16+1 }
+            ListSeparatorPadded { height: 16+1; visible: (Qt.platform.os === "android"); }
 
             ////////
 
@@ -236,6 +240,8 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: 24
+
+                visible: (Qt.platform.os === "android")
 
                 RoundButtonIcon {
                     anchors.left: parent.left
@@ -278,7 +284,7 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: Theme.componentMargin
 
                 text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.") + "<br>" +
                       qsTr("WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
@@ -309,7 +315,7 @@ Item {
 
             ////////
 
-            ListSeparatorPadded { height: 16+1 }
+            ListSeparatorPadded { height: 16+1; visible: (Qt.platform.os === "android"); }
 
             ////////
 
@@ -317,6 +323,8 @@ Item {
                 height: 24
                 anchors.left: parent.left
                 anchors.right: parent.right
+
+                visible: (Qt.platform.os === "android")
 
                 RoundButtonIcon {
                     anchors.left: parent.left
@@ -359,7 +367,9 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: Theme.componentMargin
+
+                visible: (Qt.platform.os === "android")
 
                 text: qsTr("Similarly, background location permission is needed if you want to automatically get data from the sensors, while the application is not explicitly opened.")
                 textFormat: Text.StyledText
@@ -370,7 +380,7 @@ Item {
 
             ////////
 
-            ListSeparatorPadded { height: 16+1 }
+            ListSeparatorPadded { height: 16+1; visible: (Qt.platform.os === "android"); }
 
             ////////
 
@@ -378,6 +388,8 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: 24
+
+                visible: (Qt.platform.os === "android")
 
                 RoundButtonIcon {
                     anchors.left: parent.left
@@ -421,6 +433,8 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
+                visible: (Qt.platform.os === "android")
+
                 text: qsTr("Some Android devices also require the GPS to be turned on for Bluetooth operations.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
@@ -433,6 +447,7 @@ Item {
                 anchors.leftMargin: appHeader.headerPosition
                 height: 36
 
+                visible: (Qt.platform.os === "android")
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 
@@ -454,7 +469,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                visible: (utilsApp.getAndroidSdkVersion() >= 13)
+                visible: (Qt.platform.os === "ios" || utilsApp.getAndroidSdkVersion() >= 13)
 
                 RoundButtonIcon {
                     id: notifButton
@@ -498,9 +513,9 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: Theme.componentMargin
 
-                visible: (utilsApp.getAndroidSdkVersion() >= 13)
+                visible: (Qt.platform.os === "ios" || utilsApp.getAndroidSdkVersion() >= 13)
 
                 text: qsTr("The Android operating system requires permission to send notifications.")
                 textFormat: Text.StyledText
@@ -555,6 +570,8 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
+                visible: (Qt.platform.os === "android")
+
                 text: qsTr("If it has no effect, you may have previously refused a permission and clicked on \"don't ask again\".") + "<br>" +
                       qsTr("You can go to the Android \"application info\" panel to change a permission manually.")
                 textFormat: Text.StyledText
@@ -568,6 +585,7 @@ Item {
                 anchors.leftMargin: appHeader.headerPosition
                 height: 36
 
+                visible: (Qt.platform.os === "android")
                 primaryColor: Theme.colorPrimary
                 secondaryColor: Theme.colorBackground
 

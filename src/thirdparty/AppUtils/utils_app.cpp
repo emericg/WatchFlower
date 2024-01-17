@@ -504,9 +504,9 @@ bool UtilsApp::getMobileCameraPermission()
 bool UtilsApp::checkMobileNotificationPermission()
 {
 #if defined(Q_OS_ANDROID)
-    return UtilsAndroid::getPermission_notification();
+    return UtilsAndroid::checkPermission_notification();
 #elif defined(Q_OS_IOS)
-    return false;
+    return UtilsIOS::checkPermission_notification();
 #endif
 
     return true;
@@ -517,7 +517,7 @@ bool UtilsApp::getMobileNotificationPermission()
 #if defined(Q_OS_ANDROID)
     return UtilsAndroid::getPermission_notification();
 #elif defined(Q_OS_IOS)
-    return false;
+    return UtilsIOS::getPermission_notification();
 #endif
 
     return true;

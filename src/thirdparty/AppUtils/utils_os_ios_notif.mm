@@ -21,6 +21,7 @@
  */
 
 #include "utils_os_ios_notif.h"
+#include "utils_os_ios.h"
 
 #if defined(Q_OS_IOS)
 
@@ -41,7 +42,7 @@
 
 @implementation NotificationDelegate
 
--(id)initWithObject:(UtilsIOSNotifications *)localNotification
+- (id)initWithObject:(UtilsIOSNotifications *)localNotification
 {
     self = [super init];
     if (self)
@@ -51,7 +52,7 @@
     return self;
 }
 
--(void)userNotificationCenter:(UNUserNotificationCenter *)center
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
         willPresentNotification:(UNNotification *)notification
             withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler
 {
@@ -61,7 +62,7 @@
     completionHandler(UNNotificationPresentationOptionList | UNNotificationPresentationOptionBanner | UNNotificationPresentationOptionSound);
 }
 
--(void)userNotificationCenter:(UNUserNotificationCenter *)center
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center
         didReceiveNotificationResponse:(UNNotificationResponse *)response
             withCompletionHandler:(void(^)())completionHandler
 {
@@ -76,24 +77,16 @@
 UtilsIOSNotifications::UtilsIOSNotifications()
 {
     m_notifdelegate = [[NotificationDelegate alloc] initWithObject:this];
-    UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
-    [center requestAuthorizationWithOptions:(UNAuthorizationOptionAlert | UNAuthorizationOptionBadge | UNAuthorizationOptionSound)
-        completionHandler:^(BOOL granted, NSError *_Nullable error)
-    {
-        if (granted)
-        {
-            NSLog(@"Notification permission granted");
-        }
+}
 
-        if (error)
-        {
-            NSLog(@"Local Notification setup failed");
-        }
-        else
-        {
-            [[UIApplication sharedApplication] registerForRemoteNotifications];
-        }
-    }];
+bool UtilsIOSNotifications::checkPermission_notification()
+{
+    return UtilsIOS::checkPermission_notification();
+}
+
+bool UtilsIOSNotifications::getPermission_notification()
+{
+    return UtilsIOS::getPermission_notification();
 }
 
 bool UtilsIOSNotifications::notify(const QString &title, const QString &message, const int channel)
