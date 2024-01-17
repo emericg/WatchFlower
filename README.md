@@ -109,7 +109,7 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 #### Dependencies
 
-You will need a C++17 compiler and Qt 6.3+ with the following 'additional librairies':  
+You will need a C++17 compiler and Qt 6.5+ with the following 'additional librairies':  
 - Qt 5 Compatibility Module
 - Qt Connectivity
 - Qt Charts

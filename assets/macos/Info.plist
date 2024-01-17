@@ -13,11 +13,11 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>5.4</string>
+	<string>5.5</string>
 	<key>CFBundleSignature</key>
 	<string>${QMAKE_PKGINFO_TYPEINFO}</string>
 	<key>CFBundleVersion</key>
-	<string>0504001</string>
+	<string>0505001</string>
 	<key>LSApplicationCategoryType</key>
 	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
@@ -32,9 +32,5 @@
 	<string>WatchFlower connects to Bluetooth Low Energy sensors.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>WatchFlower connects to Bluetooth Low Energy sensors.</string>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>bluetooth-central</string>
-	</array>
 </dict>
 </plist>
