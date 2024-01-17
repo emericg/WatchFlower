@@ -9,7 +9,7 @@ QT     += core bluetooth sql
 QT     += qml quick quickcontrols2 svg widgets charts
 
 # Validate Qt version
-!versionAtLeast(QT_VERSION, 6.3) : error("You need at least Qt version 6.3 for $${TARGET}")
+!versionAtLeast(QT_VERSION, 6.5) : error("You need at least Qt version 6.5 for $${TARGET}")
 
 # Project modules ##############################################################
 
@@ -264,56 +264,6 @@ macx {
         # QMAKE_PROVISIONING_PROFILE
         # QMAKE_XCODE_CODE_SIGN_IDENTITY (optional)
         include($${PWD}/assets/macos/macos_signature.pri)
-    }
-
-    # Paths and folders
-    QT_BIN_PATH = $$dirname(QMAKE_QMAKE)
-    QT_PLUGINS_FOLDER = $$dirname(QT_BIN_PATH)/plugins
-    QT_PATH = $$dirname(QT_BIN_PATH)
-
-    # 'xcodeproj' rule / Generate xcode project file
-    xcodeproj.commands = export CUSTOM_ENV_VAR=34
-    xcodeproj.commands += && $$QMAKE_QMAKE -spec macx-xcode $$PWD/$${TARGET}.pro \
-        -o $$OUT_PWD/ CONFIG+=$$BUILD_TYPE CONFIG+=release QMAKE_INCDIR_QT=$$QT_PATH/include \
-        QMAKE_LIBDIR=$$QT_PATH/lib QMAKE_MOC=$$QT_PATH/bin/moc QMAKE_QMAKE=$$QT_PATH/bin/qmake
-    QMAKE_EXTRA_TARGETS += xcodeproj
-
-    # 'xcodedeploy' rule / Bundle packaging from XCode archive
-    CONFIG(release, debug|release): {
-        # Get the absolute directory path for XCode archives folder
-        XCODE_ARCHIVES_DIRECTORY = $$system(echo ~/Library/Developer/Xcode/Archives)/$$system(date +%Y-%m-%d)
-        # Get the newest file that starts with the target name
-        XCODE_ARCHIVE_NAME = $$system(cd $$XCODE_ARCHIVES_DIRECTORY && ls | grep -e $${TARGET}* | sort -n -t _ -k 2 | tail -1)
-        # This will be the absolute path to the app bundle
-        DEPLOYED_APP_PATH = ""
-        # If the variable is set to something, it means that we found our archive file
-        !isEmpty(XCODE_ARCHIVE_NAME) {
-            DEPLOYED_APP_PATH = $$XCODE_ARCHIVES_DIRECTORY/$$XCODE_ARCHIVE_NAME/Products/Applications/$${TARGET}.app
-            EXISTS_RESULT = $$system([ ! -e $$quote(\"$$DEPLOYED_APP_PATH\") ] && echo "false" || echo "true")
-            # If the archive file doesn't exist, we are going to use the app bunlde in the build directory
-            equals(EXISTS_RESULT, false) {
-                xcodedeploy.depends += all
-                DEPLOYED_APP_PATH = $${OUT_PWD}/$${TARGET}.app
-            } else {
-                DEPLOYED_APP_PATH = $$quote(\"$$DEPLOYED_APP_PATH\")
-            }
-        } else {
-            warning("Cannot find xcode archive")
-            ## Since we cannot find the file, we need to make sure that the project is built so that the app bundle is created
-            #xcodedeploy.depends += all
-            #DEPLOYED_APP_PATH = $$OUT_PWD/$${TARGET}.app
-        }
-
-        BUNDLE_PLUGINS_FOLDER = $$DEPLOYED_APP_PATH/Contents/Plugins
-
-        # The xcodedeploy target runs macdeployqt and removes the unsed files from the bundle
-        # Signing is handled by XCode when uploading to the App Store
-        xcodedeploy.commands = $$QT_BIN_PATH/macdeployqt $$DEPLOYED_APP_PATH -qmldir=$${PWD}/qml -appstore-compliant
-
-        # dSYM files are bundled with a different bundle ID than the app id and they are rejected by the App Store
-        xcodedeploy.commands += && find $$DEPLOYED_APP_PATH/ -name $$quote(\"*.dSYM\") -exec rm -rf -d -f {} +
-
-        QMAKE_EXTRA_TARGETS += xcodedeploy
     }
 }
 
