@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2018-2023 Emeric Grange <emeric.grange@gmail.com> -->
+<!-- Copyright 2018-2024 Emeric Grange <emeric.grange@gmail.com> -->
 
 <component type="desktop-application">
   <id>io.emeric.watchflower</id>
@@ -28,7 +28,7 @@
   </description>
 
   <releases>
-    <release version="5.4" date="2023-11-11" />
+    <release version="5.4" date="2024-01-17" />
     <release version="5.3" date="2023-10-03" />
     <release version="5.2" date="2023-06-30" />
     <release version="5.1" date="2023-05-24" />
