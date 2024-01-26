@@ -8,6 +8,7 @@ import ThemeEngine
 
 Loader {
     id: plantBrowser
+    anchors.fill: parent
 
     property string entryPoint: "DeviceList"
 

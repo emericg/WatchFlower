@@ -626,7 +626,7 @@ Rectangle {
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
-                selected: (appContent.state === "DeviceList")
+                highlighted: (appContent.state === "DeviceList")
                 onClicked: plantsButtonClicked()
             }
             DesktopHeaderItem {
@@ -638,7 +638,7 @@ Rectangle {
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
-                selected: (appContent.state === "Settings")
+                highlighted: (appContent.state === "Settings")
                 onClicked: settingsButtonClicked()
             }
             DesktopHeaderItem {
@@ -650,7 +650,7 @@ Rectangle {
                 colorHighlight: Theme.colorHeaderHighlight
 
                 text: headerCompact ? "" : qsTr("About")
-                selected: (appContent.state === "About")
+                highlighted: (appContent.state === "About")
                 onClicked: aboutButtonClicked()
             }
         }

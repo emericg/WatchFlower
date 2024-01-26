@@ -6,6 +6,7 @@ import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Loader {
     id: settingsAdvanced
+    anchors.fill: parent
 
     property string entryPoint: "About"
 
@@ -75,7 +76,7 @@ Loader {
 
                 ListTitle {
                     text: "App info"
-                    icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
 
                 ////////////////
@@ -123,7 +124,7 @@ Loader {
 
                 ListTitle {
                     text: "Remote database"
-                    icon: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
 
                     visible: isDesktop
                 }
@@ -178,7 +179,7 @@ Loader {
 
                 ListTitle {
                     text: "Local database"
-                    icon: "qrc:/assets/icons_material/baseline-storage-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-storage-24px.svg"
                 }
 
                 ////////////////
@@ -235,7 +236,7 @@ Loader {
 
                 ListTitle {
                     text: "Local settings"
-                    icon: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
                 }
 
                 ////////////////
@@ -294,7 +295,7 @@ Loader {
 /*
                 ListTitle {
                     text: "Logs"
-                    icon: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
                 }
 
                 ////////////////

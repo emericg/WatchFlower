@@ -87,7 +87,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "DeviceList")
                     text: qsTr("Sensors")
-                    iconSource: "qrc:/assets/logos/watchflower_tray_dark.svg"
+                    source: "qrc:/assets/logos/watchflower_tray_dark.svg"
 
                     onClicked: {
                         screenDeviceList.loadScreen()
@@ -96,9 +96,9 @@ DrawerThemed {
                 }
 
                 DrawerItem {
-                    highlighted: (appContent.state === "Settings")
+                    highlighted: (appContent.state === "Settings" || appContent.state === "SettingsAdvanced")
                     text: qsTr("Settings")
-                    iconSource: "qrc:/assets/icons_material/outline-settings-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-settings-24px.svg"
 
                     onClicked: {
                         screenSettings.loadScreen()
@@ -109,7 +109,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
                     text: qsTr("About")
-                    iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
 
                     onClicked: {
                         screenAbout.loadScreen()
@@ -124,7 +124,7 @@ DrawerThemed {
                 ////////
 
                 DrawerItem {
-                    iconSource: "qrc:/assets/icons_material/baseline-sort-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-sort-24px.svg"
                     text: {
                         var txt = qsTr("Order by:") + " "
                         if (settingsManager.orderBy === "waterlevel") {
@@ -180,7 +180,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Refresh sensor data")
 
-                    iconSource: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
                     iconAnimation: deviceManager.updating ? "rotate" : "fade"
                     iconAnimated: (deviceManager.updating || deviceManager.listening)
 
@@ -201,7 +201,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Sync sensors history")
 
-                    iconSource: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
+                    source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.syncing
 
@@ -222,7 +222,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Search for new sensors")
 
-                    iconSource: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-search-24px.svg"
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.scanning
 
@@ -257,7 +257,7 @@ DrawerThemed {
             DrawerItem {
                 highlighted: (appContent.state === "PlantBrowser")
                 text: qsTr("Plant browser")
-                iconSource: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
 
                 onClicked: {
                     screenPlantBrowser.loadScreenFrom("DeviceList")
@@ -268,7 +268,7 @@ DrawerThemed {
             DrawerItem {
                 highlighted: (appContent.state === "DeviceBrowser")
                 text: qsTr("Device browser")
-                iconSource: "qrc:/assets/icons_material/baseline-radar-24px.svg"
+                source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
 
                 enabled: deviceManager.bluetooth
 

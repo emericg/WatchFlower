@@ -203,7 +203,7 @@ Loader {
             ListItem { // description
                 width: parent.width
                 text: qsTr("A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'.")
-                iconSource: "qrc:/assets/icons_material/outline-info-24px.svg"
+                source: "qrc:/assets/icons_material/outline-info-24px.svg"
             }
 
             IconSvg { // image devices
@@ -223,7 +223,7 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
-                iconSource: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
+                source: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
                 indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
 
                 onClicked: Qt.openUrlExternally("https://emeric.io")
@@ -234,7 +234,7 @@ Loader {
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("Rate the application")
-                iconSource: "qrc:/assets/icons_material/baseline-stars-24px.svg"
+                source: "qrc:/assets/icons_material/baseline-stars-24px.svg"
                 indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
 
                 onClicked: {
@@ -251,8 +251,8 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Open the tutorial")
-                iconSource: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
-                iconSize: 28
+                source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+                sourceSize: 28
                 indicatorSource: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
 
                 onClicked: screenTutorial.loadScreenFrom("About")
@@ -260,15 +260,15 @@ Loader {
 
             ////////
 
-            ListSeparator { visible: (Qt.platform.os === "android") }
+            ListSeparator { visible: (Qt.platform.os === "android" || Qt.platform.os === "ios") }
 
             ListItemClickable { // permissions
                 width: parent.width
-                visible: (Qt.platform.os === "android")
+                visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("About app permissions")
-                iconSource: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
-                iconSize: 24
+                source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
+                sourceSize: 24
                 indicatorSource: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
 
                 onClicked: screenAboutPermissions.loadScreenFrom("About")
@@ -280,8 +280,8 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Release notes")
-                iconSource: "qrc:/assets/icons_material/outline-new_releases-24px.svg"
-                iconSize: 24
+                source: "qrc:/assets/icons_material/outline-new_releases-24px.svg"
+                sourceSize: 24
                 indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
 
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
@@ -293,8 +293,8 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Supported sensors")
-                iconSource: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
-                iconSize: 24
+                source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                sourceSize: 24
                 indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
 
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")

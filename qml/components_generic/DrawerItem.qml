@@ -17,9 +17,9 @@ T.ItemDelegate {
     spacing: Theme.componentMargin
     verticalPadding: 0
 
-    property string iconSource
-    property string iconColor: Theme.colorIcon
-    property int iconSize: 24
+    property string source
+    property string sourceColor: Theme.colorIcon
+    property int sourceSize: 24
 
     property string textColor: Theme.colorText
     property int textSize: 13
@@ -60,14 +60,14 @@ T.ItemDelegate {
 
             IconSvg {
                 anchors.left: parent.left
-                anchors.leftMargin: (32 - control.iconSize) / 2
+                anchors.leftMargin: (32 - control.sourceSize) / 2
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: (control.height !== Theme.componentHeightL) ? -(Theme.componentMargin / 2) : 0
 
-                width: control.iconSize
-                height: control.iconSize
-                color: control.iconColor
-                source: control.iconSource
+                width: control.sourceSize
+                height: control.sourceSize
+                color: control.sourceColor
+                source: control.source
             }
         }
 

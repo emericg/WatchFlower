@@ -14,11 +14,12 @@ Item {
 
     height: hhh + screenPaddingNavbar + screenPaddingBottom
 
-    visible: (isTablet && (appContent.state === "DevicePlantSensor" ||
-                           appContent.state === "DeviceList" ||
+    visible: (isTablet && (appContent.state === "DeviceList" ||
+                           appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceBrowser" ||
                            appContent.state === "PlantBrowser" ||
                            appContent.state === "Settings" ||
+                           appContent.state === "SettingsAdvanced" ||
                            appContent.state === "About" ||
                            appContent.state === "AboutPermissions")) ||
              (isPhone && screenOrientation === Qt.PortraitOrientation &&
@@ -97,7 +98,9 @@ Item {
                       appContent.state === "DeviceBrowser" ||
                       appContent.state === "PlantBrowser" ||
                       appContent.state === "Settings" ||
-                      appContent.state === "About")
+                      appContent.state === "SettingsAdvanced" ||
+                      appContent.state === "About" ||
+                      appContent.state === "AboutPermissions")
 
             MobileMenuItem_horizontal {
                 id: menuMainView
@@ -151,7 +154,7 @@ Item {
                 colorContent: Theme.colorTabletmenuContent
                 colorHighlight: Theme.colorTabletmenuHighlight
 
-                highlighted: (appContent.state === "Settings")
+                highlighted: (appContent.state === "Settings" || appContent.state === "SettingsAdvanced")
                 onClicked: screenSettings.loadScreen()
             }
             MobileMenuItem_horizontal {

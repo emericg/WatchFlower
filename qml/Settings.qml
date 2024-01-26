@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
 
 Loader {
     id: screenSettings
@@ -50,6 +49,7 @@ Loader {
 
         Flickable {
             anchors.fill: parent
+
             contentWidth: -1
             contentHeight: contentColumn.height
 
@@ -72,13 +72,12 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Application")
-                    icon: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
                 }
 
                 ////////////////
 
-                Item {
-                    id: element_appTheme
+                Item { // element_appTheme
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -249,8 +248,7 @@ Loader {
 
                 ////////
 
-                Item {
-                    id: element_appThemeAuto
+                Item { // element_appThemeAuto
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -285,6 +283,7 @@ Loader {
                     SwitchThemed {
                         id: switch_appThemeAuto
                         anchors.right: parent.right
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -295,16 +294,14 @@ Loader {
                         }
                     }
                 }
-                Text {
-                    id: legend_appThemeAuto
+                Text { // legend_appThemeAuto
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
-                    visible: element_appThemeAuto.visible
 
                     text: settingsManager.appThemeAuto ?
                               qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.") :
@@ -317,8 +314,7 @@ Loader {
 
                 ////////
 
-                Item {
-                    id: element_splitView
+                Item { // element_splitView
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -354,6 +350,7 @@ Loader {
                     SwitchThemed {
                         id: switch_splitView
                         anchors.right: parent.right
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -361,16 +358,14 @@ Loader {
                         onClicked: settingsManager.splitView = checked
                     }
                 }
-                Text {
-                    id: legend_splitView
+                Text { // legend_splitView
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: isDesktop ? 12 : 0
-                    visible: element_splitView.visible
 
                     text: settingsManager.splitView ?
                               qsTr("Devices will be split into categories (plant sensors, thermometers, air quality monitors)") :
@@ -467,8 +462,7 @@ Loader {
 
                 ////////
 
-                Item {
-                    id: element_minimized
+                Item { // element_minimized
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -506,6 +500,7 @@ Loader {
                     SwitchThemed {
                         id: switch_minimized
                         anchors.right: parent.right
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -518,7 +513,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Background updates")
-                    icon: "qrc:/assets/icons_material/baseline-android-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-android-24px.svg"
 
                     visible: (Qt.platform.os === "android")
 
@@ -578,6 +573,7 @@ Loader {
                     SwitchThemed {
                         id: switch_worker
                         anchors.right: parent.right
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -596,15 +592,14 @@ Loader {
                         }
                     }
                 }
-                Text {
-                    id: legend_worker_mobile
+                Text { // legend_worker_mobile
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+
                     topPadding: -12
                     bottomPadding: element_notifications.visible ? 0 : 12
-
                     visible: (element_worker.visible && Qt.platform.os === "android")
 
                     text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
@@ -613,15 +608,14 @@ Loader {
                     color: Theme.colorSubText
                     font.pixelSize: Theme.fontSizeContentSmall
                 }
-                Text {
-                    id: legend_worker_desktop
+                Text { // legend_worker_desktop
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+
                     topPadding: -12
                     bottomPadding: element_notifications.visible ? 0 : 12
-
                     visible: (element_worker.visible && isDesktop)
 
                     text: settingsManager.systray ?
@@ -677,7 +671,7 @@ Loader {
                     SwitchThemed {
                         id: switch_notifications
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -690,15 +684,14 @@ Loader {
                         }
                     }
                 }
-                Text {
-                    id: legend_notifications
+                Text { // legend_notifications
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+
                     topPadding: -12
                     bottomPadding: settingsManager.notifications ? 0 : 12
-
                     visible: (element_notifications.visible && !settingsManager.notifications)
                     opacity: settingsManager.systray ? 1 : 0.4
 
@@ -743,7 +736,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_battery
                             anchors.right: parent.right
-                            anchors.rightMargin: screenPaddingRight
+                            anchors.rightMargin: 4
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -772,7 +765,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_water
                             anchors.right: parent.right
-                            anchors.rightMargin: screenPaddingRight
+                            anchors.rightMargin: 4
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -802,7 +795,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_subzero
                             anchors.right: parent.right
-                            anchors.rightMargin: screenPaddingRight
+                            anchors.rightMargin: 4
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -832,7 +825,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_env
                             anchors.right: parent.right
-                            anchors.rightMargin: screenPaddingRight
+                            anchors.rightMargin: 4
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -846,20 +839,18 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Bluetooth")
-                    icon: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
                 }
 
                 ////////
 
-                Item {
-                    id: element_bluetoothControl
+                Item { // element_bluetoothControl
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: screenPaddingRight
                     height: Theme.componentHeightXL
 
-                    // Android only
                     visible: (Qt.platform.os === "android")
 
                     IconSvg {
@@ -891,6 +882,7 @@ Loader {
                     SwitchThemed {
                         id: switch_bluetoothControl
                         anchors.right: parent.right
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -898,16 +890,15 @@ Loader {
                         onClicked: settingsManager.bluetoothControl = checked
                     }
                 }
-                Text {
-                    id: legend_bluetoothControl
+                Text { // legend_bluetoothControl
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
-                    visible: element_bluetoothControl.visible
+                    visible: (Qt.platform.os === "android")
 
                     text: settingsManager.bluetoothControl ? qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
                                                              qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.")
@@ -919,8 +910,7 @@ Loader {
 
                 ////////
 
-                Item {
-                    id: element_bluetoothRange
+                Item { // element_bluetoothRange
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -956,6 +946,7 @@ Loader {
                     SwitchThemed {
                         id: switch_bluetoothRange
                         anchors.right: parent.right
+                        anchors.rightMargin: 4
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -963,16 +954,14 @@ Loader {
                         onClicked: settingsManager.bluetoothLimitScanningRange = checked
                     }
                 }
-                Text {
-                    id: legend_bluetoothRange
+                Text { // legend_bluetoothRange
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
-                    visible: element_bluetoothRange.visible
 
                     text: settingsManager.bluetoothLimitScanningRange ?
                               qsTr("Will only scan for sensors approximately 2 meters around you.") :
@@ -985,8 +974,7 @@ Loader {
 
                 ////////
 
-                Item {
-                    id: element_bluetoothSimUpdate
+                Item { // element_bluetoothSimUpdate
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -1059,16 +1047,14 @@ Loader {
                         onValueModified: settingsManager.bluetoothSimUpdates = value
                     }
                 }
-                Text {
-                    id: legend_bluetoothSimUpdate
+                Text { // legend_bluetoothSimUpdate
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+
                     topPadding: -12
                     bottomPadding: 12
-
-                    visible: element_bluetoothSimUpdate.visible
 
                     text: qsTr("How many sensors should be updated at once.") + "<br>" +
                           qsTr("A lower number improves Bluetooth synchronization reliability, at the expense of speed.")
@@ -1082,13 +1068,12 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Plant sensors")
-                    icon: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                    source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
                 }
 
                 ////////////////
 
-                Item {
-                    id: element_plant_update
+                Item { // element_plant_update
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -1152,8 +1137,7 @@ Loader {
                     anchors.rightMargin: screenPaddingRight
                     spacing: 0
 
-                    Item {
-                        id: element_plant_indicators
+                    Item { // element_plant_indicators
                         anchors.left: parent.left
                         anchors.right: parent.right
                         height: Theme.componentHeightL
@@ -1224,8 +1208,7 @@ Loader {
                         }
                     }
 
-                    Item {
-                        id: element_plant_indicators_preview
+                    Item { // element_plant_indicators_preview
                         anchors.left: parent.left
                         anchors.leftMargin: contentColumn.padText
                         anchors.right: parent.right
@@ -1280,13 +1263,12 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Thermometers")
-                    icon: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
+                    source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
                 }
 
                 ////////////////
 
-                Item {
-                    id: element_thermometer_update
+                Item { // element_thermometer_update
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -1342,8 +1324,7 @@ Loader {
 
                 ////////
 
-                Item {
-                    id: element_thermometer_unit
+                Item { // element_thermometer_unit
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft
                     anchors.right: parent.right
@@ -1399,7 +1380,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Data archiving")
-                    icon: "qrc:/assets/icons_material/baseline-archive-24px.svg"
+                    source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
                     visible: deviceManager.hasDevices
                 }
 
@@ -1442,8 +1423,7 @@ Loader {
 
                 ////////
 
-                Row {
-                    id: element_export
+                Row { // element_export
                     anchors.left: parent.left
                     anchors.leftMargin: screenPaddingLeft + contentColumn.padText
                     anchors.right: parent.right

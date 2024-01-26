@@ -55,7 +55,7 @@ Item {
             anchors.rightMargin: screenPaddingRight
 
             topPadding: 20
-            bottomPadding: 16
+            bottomPadding: 20
             spacing: 8
 
             ////////
@@ -530,8 +530,7 @@ Item {
 
             ////////
 
-            Item {
-                id: element_infos
+            Item { // element_infos
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: 32
@@ -545,7 +544,7 @@ Item {
 
                     opacity: 0.66
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    source: "qrc:/assets/icons_material/duotone-info-24px.svg"
                 }
 
                 Text {

@@ -18,14 +18,13 @@ Rectangle {
     border.width: singleColumn ? 0 : Theme.componentBorderWidth
     border.color: borderColor
 
-    property string icon
-    property string iconColor: Theme.colorIcon
-    property int iconSize: 24
+    property string source
+    property string sourceColor: Theme.colorIcon
+    property int sourceSize: 24
 
     property string text: "title"
     property string textColor: Theme.colorText
-    property int textSize: source ? Theme.fontSizeContentBig :
-                                    Theme.fontSizeContentVeryBig
+    property int textSize: source ? Theme.fontSizeContentBig : Theme.fontSizeContentVeryBig
 
     property string backgroundColor: Theme.colorForeground
     property string borderColor: Theme.colorSeparator
@@ -37,18 +36,18 @@ Rectangle {
         anchors.leftMargin: Theme.componentMarginL
         anchors.verticalCenter: control.verticalCenter
 
-        width: control.iconSize
-        height: control.iconSize
+        width: control.sourceSize
+        height: control.sourceSize
 
-        source: control.icon
-        visible: control.icon
-        color: control.iconColor
+        source: control.source
+        visible: control.source
+        color: control.sourceColor
     }
 
     Text {
         anchors.left: control.left
-        anchors.leftMargin: control.icon ? (singleColumn ? appHeader.headerPosition : Theme.componentMarginL*2 + iconSize)
-                                         : Theme.componentMarginL
+        anchors.leftMargin: control.source ? (singleColumn ? appHeader.headerPosition : Theme.componentMarginL*2 + sourceSize)
+                                           : Theme.componentMarginL
         anchors.right: control.right
         anchors.rightMargin: Theme.componentMarginL
         anchors.verticalCenter: control.verticalCenter

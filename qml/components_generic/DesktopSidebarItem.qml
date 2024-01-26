@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.15
+import QtQuick.Layouts 2.15
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 
@@ -12,14 +12,14 @@ T.Button {
     implicitWidth: 64
     implicitHeight: 64
 
-    focusPolicy: Qt.NoFocus
-
     width: parent.width // width drive the size of this element
     height: Math.max(parent.width, content.height + 24)
 
+    focusPolicy: Qt.NoFocus
+
+    // settings
     property url source
     property int sourceSize: 40
-
     property string highlightMode: "background" // available: background, indicator, circle, content
 
     // colors
@@ -53,8 +53,7 @@ T.Button {
         }
         Behavior on opacity { OpacityAnimator { duration: 233 } }
 
-        Rectangle {
-            id: backgroundIndicator
+        Rectangle { // backgroundIndicator
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.bottom: parent.bottom
