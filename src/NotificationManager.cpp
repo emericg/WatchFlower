@@ -90,11 +90,13 @@ void NotificationManager::setNotificationShort(const QString &message)
 
 void NotificationManager::updateNotificationDesktop()
 {
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     SystrayManager *st = SystrayManager::getInstance();
     if (st)
     {
         st->sendNotification(m_message);
     }
+#endif
 }
 
 void NotificationManager::updateNotificationIOS()

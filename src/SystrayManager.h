@@ -23,6 +23,9 @@
 #define SYSTRAY_MANAGER_H
 /* ************************************************************************** */
 
+#include <QtGlobal>
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+
 #include <QObject>
 #include <QSystemTrayIcon>
 #include <QTimer>
@@ -90,4 +93,5 @@ private slots:
 };
 
 /* ************************************************************************** */
+#endif // !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
 #endif // SYSTRAY_MANAGER_H

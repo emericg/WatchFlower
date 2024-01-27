@@ -6,7 +6,11 @@ DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++17
 QT     += core bluetooth sql
-QT     += qml quick quickcontrols2 svg widgets charts
+QT     += qml quick quickcontrols2 svg charts
+
+!android:!ios {
+    QT += widgets # for proper systray and menubar support
+}
 
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 6.5) : error("You need at least Qt version 6.5 for $${TARGET}")
@@ -29,8 +33,6 @@ include(src/thirdparty/AppUtils/AppUtils.pri)
 SOURCES  += src/main.cpp \
             src/SettingsManager.cpp \
             src/DatabaseManager.cpp \
-            src/SystrayManager.cpp \
-            src/MenubarManager.cpp \
             src/NotificationManager.cpp \
             src/Plant.cpp \
             src/PlantDatabase.cpp \
@@ -73,8 +75,6 @@ SOURCES  += src/main.cpp \
 
 HEADERS  += src/SettingsManager.h \
             src/DatabaseManager.h \
-            src/MenubarManager.h \
-            src/SystrayManager.h \
             src/NotificationManager.h \
             src/Plant.h \
             src/PlantUtils.h \
@@ -114,6 +114,13 @@ HEADERS  += src/SettingsManager.h \
             src/devices/device_ess_generic.h \
             src/thirdparty/RC4/rc4.h
 
+!android:!ios {
+SOURCES  += src/MenubarManager.cpp \
+            src/SystrayManager.cpp
+
+HEADERS  += src/MenubarManager.h \
+            src/SystrayManager.h
+}
 INCLUDEPATH += src/ src/thirdparty/
 
 RESOURCES   += qml/qml.qrc \

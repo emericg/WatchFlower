@@ -21,10 +21,11 @@
 
 #include "SystrayManager.h"
 
+#include <QMenu>
+#include <QAction>
 #include <QApplication>
 #include <QQuickWindow>
 #include <QSystemTrayIcon>
-#include <QMenu>
 
 /* ************************************************************************** */
 

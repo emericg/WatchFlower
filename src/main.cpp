@@ -141,22 +141,26 @@ int main(int argc, char *argv[])
     app.setOrganizationName("WatchFlower");
     app.setOrganizationDomain("WatchFlower");
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    QIcon appIcon(":/assets/logos/watchflower.svg");
-    app.setWindowIcon(appIcon);
-#endif
-
     // Init components
     SettingsManager *sm = SettingsManager::getInstance();
-    SystrayManager *st = SystrayManager::getInstance();
-    MenubarManager *mb = MenubarManager::getInstance();
+    DatabaseManager *db = DatabaseManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
-    if (!sm || !st || !mb || !nm || !dm)
+    if (!sm || !db || !nm || !dm)
     {
         qWarning() << "Cannot init WatchFlower components!";
         return EXIT_FAILURE;
     }
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    ShareUtils *utilsShare = new ShareUtils();
+#else
+    QIcon appIcon(":/assets/logos/watchflower.svg");
+    app.setWindowIcon(appIcon);
+
+    SystrayManager *st = SystrayManager::getInstance();
+    MenubarManager *mb = MenubarManager::getInstance();
+#endif
 
     // Plant database
     PlantDatabase *pdb = PlantDatabase::getInstance();
@@ -193,8 +197,6 @@ int main(int argc, char *argv[])
 
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
-    engine_context->setContextProperty("systrayManager", st);
-    engine_context->setContextProperty("menubarManager", mb);
     engine_context->setContextProperty("notificationManager", nm);
     engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("utilsApp", utilsApp);
@@ -205,11 +207,12 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("qtConnectivityPatched", qtConnectivityPatched);
 
     // Load the main view
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
-    ShareUtils *utilsShare = new ShareUtils();
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     engine_context->setContextProperty("utilsShare", utilsShare);
     engine.load(QUrl(QStringLiteral("qrc:/qml/MobileApplication.qml")));
 #else
+    engine_context->setContextProperty("systrayManager", st);
+    engine_context->setContextProperty("menubarManager", mb);
     engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopApplication.qml")));
 #endif
 
