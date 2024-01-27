@@ -43,8 +43,8 @@ android {
 ios {
     LIBS += -framework UIKit
 
-    OBJECTIVE_SOURCES += $${PWD}/SharingUtils_ios.mm \
-                         $${PWD}/docviewcontroller_ios.mm
+    SOURCES += $${PWD}/SharingUtils_ios.mm \
+               $${PWD}/docviewcontroller_ios.mm
 
     HEADERS += $${PWD}/SharingUtils_ios.h \
                $${PWD}/docviewcontroller_ios.h

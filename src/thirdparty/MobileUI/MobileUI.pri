@@ -16,7 +16,7 @@ android {
     }
 } else: ios {
     LIBS += -framework UIKit
-    OBJECTIVE_SOURCES += $${PWD}/MobileUI_ios.mm
+    SOURCES += $${PWD}/MobileUI_ios.mm
 } else {
     SOURCES += $${PWD}/MobileUI_dummy.cpp
 }

@@ -67,6 +67,7 @@ class Device: public QObject
     Q_PROPERTY(bool isLight READ isLight NOTIFY sensorUpdated)
     Q_PROPERTY(bool isBeacon READ isBeacon NOTIFY sensorUpdated)
     Q_PROPERTY(bool isRemote READ isRemote NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isPBP READ isPBP NOTIFY sensorUpdated)
     Q_PROPERTY(bool isPGP READ isPGP NOTIFY sensorUpdated)
 
     Q_PROPERTY(bool hasBluetoothConnection READ hasBluetoothConnection CONSTANT)
@@ -280,6 +281,7 @@ public:
     bool isLight() const { return (m_deviceType == DeviceUtils::DEVICE_LIGHT); }
     bool isBeacon() const { return (m_deviceType == DeviceUtils::DEVICE_BEACON); }
     bool isRemote() const { return (m_deviceType == DeviceUtils::DEVICE_REMOTE); }
+    bool isPBP() const { return (m_deviceType == DeviceUtils::DEVICE_PBP); }
     bool isPGP() const { return (m_deviceType == DeviceUtils::DEVICE_PGP); }
 
     virtual bool hasRealTime() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_REALTIME); }
