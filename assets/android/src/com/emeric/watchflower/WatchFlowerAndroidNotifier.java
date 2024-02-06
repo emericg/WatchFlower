@@ -39,7 +39,7 @@ public class WatchFlowerAndroidNotifier {
     private static int channelColor = Color.WHITE;
     private static int channelImportance = NotificationManager.IMPORTANCE_DEFAULT;
 
-    public static void notify(Context context, String title, String message, int channel) {
+    public static void notify(final Context context, final String title, final String message, final int channel) {
 
         if (channel == 0) {
             channelId = "watchflower_app";

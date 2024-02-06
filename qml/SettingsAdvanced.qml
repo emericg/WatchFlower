@@ -105,6 +105,11 @@ Loader {
                     }
                     Text {
                         color: Theme.colorSubText
+                        text: "build architecture: %1".arg(utilsApp.qtArchitecture())
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
                         text: "build date: %1".arg(utilsApp.appBuildDateTime())
                         font.pixelSize: Theme.fontSizeContent
                     }

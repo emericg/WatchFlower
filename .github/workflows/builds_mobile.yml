@@ -34,15 +34,15 @@ jobs:
           submodules: recursive
 
       # Java environment (already installed in 'ubuntu-20.04')
-      #- name: Install JDK environment
-      #  uses: actions/setup-java@v2
+      #- name: Setup Java environment
+      #  uses: actions/setup-java@v4
       #  with:
       #    distribution: 'zulu'
-      #    java-version: '11'
+      #    java-version: '17'
 
       # Android environment (already installed in 'ubuntu-20.04')
-      #- name: Setup Android SDK
-      #  uses: android-actions/setup-android@v2
+      #- name: Setup Android environment
+      #  uses: android-actions/setup-android@v3
       #- name: Install Android SDK / NDK / tools
       #  run: |
       #       sdkmanager "platforms;android-34"
@@ -54,12 +54,11 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}
+          aqtversion: '==3.1.*'
           host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'
           modules: qtconnectivity qtcharts qtshadertools qt5compat
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
           extra: '--autodesktop'
 
       # Setup env
@@ -89,11 +88,10 @@ jobs:
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{env.QT_VERSION}}
+          aqtversion: '==3.1.*'
           host: 'mac'
           target: 'ios'
           modules: qtconnectivity qtcharts qtshadertools qt5compat
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
           extra: '--autodesktop'
 
       # Setup env
