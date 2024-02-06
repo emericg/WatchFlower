@@ -21,6 +21,11 @@ HEADERS += $${PWD}/utils_app.h \
 
 INCLUDEPATH += $${PWD}
 
+versionAtLeast(QT_VERSION, 6.6) {
+    # RHI info
+    QT += gui-private
+}
+
 # Linux OS utils
 linux:!android {
     QT += dbus
@@ -31,14 +36,14 @@ linux:!android {
 
 # macOS utils
 macx {
+    LIBS    += -framework IOKit
     SOURCES += $${PWD}/utils_os_macos.mm
     HEADERS += $${PWD}/utils_os_macos.h
-    LIBS    += -framework IOKit
 
     # macOS dock click handler
+    LIBS    += -framework AppKit
     SOURCES += $${PWD}/utils_os_macos_dock.mm
     HEADERS += $${PWD}/utils_os_macos_dock.h
-    LIBS    += -framework AppKit
 }
 
 # Windows OS utils

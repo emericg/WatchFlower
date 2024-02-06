@@ -28,8 +28,6 @@
 #include "utils_os_ios.h"
 #endif
 
-#include <cmath>
-
 #include <QDir>
 #include <QSize>
 #include <QColor>
@@ -37,6 +35,13 @@
 #include <QCoreApplication>
 #include <QStandardPaths>
 #include <QDesktopServices>
+#include <QLibraryInfo>
+#include <QSysInfo>
+
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0))
+#include <QQuickWindow>
+#include <rhi/qrhi.h> // <QRhi> // ?
+#endif
 
 /* ************************************************************************** */
 
@@ -116,9 +121,69 @@ bool UtilsApp::isDebugBuild()
     return true;
 }
 
+/* ************************************************************************** */
+/* ************************************************************************** */
+
 QString UtilsApp::qtVersion()
 {
     return QString(qVersion());
+}
+
+QString UtilsApp::qtBuildMode()
+{
+    if (QLibraryInfo::isDebugBuild())
+    {
+        return "DEBUG";
+    }
+
+    return "RELEASE";
+}
+
+QString UtilsApp::qtArchitecture()
+{
+    return QSysInfo::buildCpuArchitecture();
+}
+
+bool UtilsApp::qtIsDebug()
+{
+    return QLibraryInfo::isDebugBuild();
+}
+
+bool UtilsApp::qtIsRelease()
+{
+    return !QLibraryInfo::isDebugBuild();
+}
+
+bool UtilsApp::qtIsStatic()
+{
+    return !QLibraryInfo::isSharedBuild();
+}
+
+bool UtilsApp::qtIsShared()
+{
+    return QLibraryInfo::isSharedBuild();
+}
+
+QString UtilsApp::qtRhiBackend()
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0))
+    if (m_quickwindow && m_quickwindow->rhi())
+    {
+        return m_quickwindow->rhi()->backendName();
+    }
+#endif
+
+    return QString();
+}
+
+void UtilsApp::setQuickWindow(QQuickWindow *window)
+{
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0))
+    if (window)
+    {
+        m_quickwindow = window;
+    }
+#endif
 }
 
 /* ************************************************************************** */
@@ -142,19 +207,6 @@ void UtilsApp::setAppPath(const QString &value)
         // Make sure the path is terminated with a separator.
         if (!m_appPath.endsWith('/')) m_appPath += '/';
     }
-}
-
-/* ************************************************************************** */
-
-void UtilsApp::vibrate(int ms)
-{
-#if defined(Q_OS_ANDROID)
-    return UtilsAndroid::vibrate(ms);
-#elif defined(Q_OS_IOS)
-    return UtilsIOS::vibrate(ms);
-#else
-    Q_UNUSED(ms)
-#endif
 }
 
 /* ************************************************************************** */
@@ -247,6 +299,19 @@ QString UtilsApp::getStandardPath_string(const QString &type)
 }
 
 /* ************************************************************************** */
+/* ************************************************************************** */
+
+void UtilsApp::vibrate(int ms)
+{
+#if defined(Q_OS_ANDROID)
+    return UtilsAndroid::vibrate(ms);
+#elif defined(Q_OS_IOS)
+    return UtilsIOS::vibrate(ms);
+#else
+    Q_UNUSED(ms)
+#endif
+}
+
 /* ************************************************************************** */
 
 int UtilsApp::getAndroidSdkVersion()
