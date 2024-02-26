@@ -77,7 +77,7 @@ void AndroidService::gotowork()
     if (m_settingsManager->getSysTray())
     {
         // Check when was the last run, to be sure we need an update
-        if (DeviceManager::getLastRun() > 60)
+        if (DeviceManager::getLastRun_s() > 60)
         {
             // Reload the device manager, a new scan might have occured
             if (m_deviceManager) delete m_deviceManager;

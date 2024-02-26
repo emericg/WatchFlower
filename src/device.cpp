@@ -23,7 +23,10 @@
 #include "DeviceManager.h"
 #include "SettingsManager.h"
 #include "DatabaseManager.h"
+
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 #include "utils_screen.h"
+#endif
 
 #include <cstdlib>
 #include <cmath>
@@ -1292,7 +1295,11 @@ void Device::setRssi(const int rssi)
         m_rssi = rssi;
         Q_EMIT rssiUpdated();
     }
-    m_rssiTimer.start();
+
+    if (m_rssiTimeoutInterval > 0)
+    {
+        m_rssiTimer.start();
+    }
 }
 
 void Device::cleanRssi()

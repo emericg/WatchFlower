@@ -15,6 +15,10 @@ QT     += qml quick quickcontrols2 svg charts
 # Validate Qt version
 !versionAtLeast(QT_VERSION, 6.5) : error("You need at least Qt version 6.5 for $${TARGET}")
 
+# Bundle name
+QMAKE_TARGET_BUNDLE_PREFIX = io.emeric
+QMAKE_BUNDLE = watchflower
+
 # Project modules ##############################################################
 
 # MobileUI and MobileSharing for mobile OS
@@ -223,10 +227,6 @@ linux:!android {
 }
 
 macx {
-    # Bundle name
-    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
-    QMAKE_BUNDLE = watchflower
-
     # OS icons
     ICON = $${PWD}/assets/macos/$${TARGET}.icns
     #QMAKE_ASSET_CATALOGS_APP_ICON = "AppIcon"
@@ -294,10 +294,6 @@ android {
     # ANDROID_TARGET_ARCH: [x86_64, armeabi-v7a, arm64-v8a]
     #message("ANDROID_TARGET_ARCH: $$ANDROID_TARGET_ARCH")
 
-    # Bundle name
-    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric
-    QMAKE_BUNDLE = watchflower
-
     SOURCES  += $${PWD}/src/AndroidService.cpp
     HEADERS  += $${PWD}/src/AndroidService.h
 
@@ -320,10 +316,6 @@ ios {
     #message("QMAKE_IOS_DEPLOYMENT_TARGET: $$QMAKE_IOS_DEPLOYMENT_TARGET")
 
     CONFIG += no_autoqmake
-
-    # Bundle name
-    QMAKE_TARGET_BUNDLE_PREFIX = com.emeric.ios
-    QMAKE_BUNDLE = watchflower
 
     # OS infos
     QMAKE_INFO_PLIST = $${PWD}/assets/ios/Info.plist

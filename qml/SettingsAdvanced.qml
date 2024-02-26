@@ -115,7 +115,17 @@ Loader {
                     }
                     Text {
                         color: Theme.colorSubText
+                        text: "OS theme: %1".arg(utilsApp.isOsThemeDark() ? "dark" : "light")
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
                         text: "Qt version: %1".arg(utilsApp.qtVersion())
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
+                        text: "Qt arch: %1".arg(utilsApp.qtArchitecture())
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
@@ -123,6 +133,18 @@ Loader {
                         text: "Qt Connectivity patched: %1".arg(qtConnectivityPatched ? "TRUE" : "FALSE")
                         font.pixelSize: Theme.fontSizeContent
                     }
+/*
+                    Text {
+                        color: Theme.colorSubText
+                        text: "OS name: %1".arg(utilsSysInfo.os_name)
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+                    Text {
+                        color: Theme.colorSubText
+                        text: "OS version: %1".arg(utilsSysInfo.os_version)
+                        font.pixelSize: Theme.fontSizeContent
+                    }
+*/
                 }
 
                 ////////////////

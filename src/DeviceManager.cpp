@@ -864,25 +864,28 @@ void DeviceManager::deviceDiscoveryStopped()
 
 void DeviceManager::setLastRun()
 {
-    QSqlQuery setLastRun;
-    setLastRun.prepare("UPDATE lastRun SET lastRun = :run");
-    setLastRun.bindValue(":run", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+    if (m_dbInternal || m_dbExternal)
+    {
+        QSqlQuery setLastRun;
+        setLastRun.prepare("UPDATE lastRun SET lastRun = :run");
+        setLastRun.bindValue(":run", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
 
-    if (setLastRun.exec())
-    {
-        if (setLastRun.numRowsAffected() == 0)
+        if (setLastRun.exec())
         {
-            // addLastRun?
+            if (setLastRun.numRowsAffected() == 0)
+            {
+                // addLastRun?
+            }
         }
-    }
-    else
-    {
-        qWarning() << "> setLastRun.exec() ERROR"
-                   << setLastRun.lastError().type() << ":" << setLastRun.lastError().text();
+        else
+        {
+            qWarning() << "> setLastRun.exec() ERROR"
+                       << setLastRun.lastError().type() << ":" << setLastRun.lastError().text();
+        }
     }
 }
 
-int DeviceManager::getLastRun()
+int DeviceManager::getLastRun_s()
 {
     int mins = -1;
 
@@ -907,6 +910,16 @@ int DeviceManager::getLastRun()
     }
 
     return mins;
+}
+
+int DeviceManager::getLastRun()
+{
+    if (m_dbInternal || m_dbExternal)
+    {
+        return getLastRun_s();
+    }
+
+    return -1;
 }
 
 /* ************************************************************************** */

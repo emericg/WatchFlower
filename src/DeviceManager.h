@@ -215,7 +215,8 @@ public:
     void requestBluetoothPermissions_results();
 
     // Scanning management
-    static int getLastRun();
+    static int getLastRun_s();
+    Q_INVOKABLE int getLastRun();
 
     Q_INVOKABLE void scanNearby_start();
     Q_INVOKABLE void scanNearby_stop();

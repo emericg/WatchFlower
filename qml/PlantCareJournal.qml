@@ -354,7 +354,7 @@ Item {
 
                                             text: UtilsPlantJournal.getJournalEntryName(modelData)
                                             textFormat: Text.PlainText
-                                            color: btn.selected ? Theme.colorPrimary : Theme.colorText
+                                            color: btn.highlighted ? Theme.colorPrimary : Theme.colorText
 
                                             fontSizeMode: Text.HorizontalFit
                                             font.pixelSize: Theme.fontSizeContentSmall
