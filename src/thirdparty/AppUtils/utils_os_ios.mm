@@ -24,6 +24,7 @@
 
 #if defined(Q_OS_IOS)
 
+#import <SystemConfiguration/CaptiveNetwork.h>
 #import <UserNotifications/UserNotifications.h>
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -149,6 +150,27 @@ void UtilsIOS::vibrate(int ms)
     [generator prepare];
     [generator selectionChanged];
     generator = nil;
+}
+
+/* ************************************************************************** */
+
+QString UtilsIOS::getWifiSSID()
+{
+/*
+    NSString *ssid = nil;
+    NSArray *interfaces = (__bridge_transfer id)CNCopySupportedInterfaces();
+
+    for (NSString *interfaceName in interfaces) {
+        NSDictionary *networkInfo = (__bridge_transfer id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)interfaceName);
+        if (networkInfo[@"SSID"]) {
+            return ssid = networkInfo[@"SSID"];
+            break;
+        }
+    }
+
+    return QString::fromNSString(ssid);
+*/
+    return QString();
 }
 
 /* ************************************************************************** */

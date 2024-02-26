@@ -88,6 +88,8 @@ public:
     static Q_INVOKABLE bool isColorLight(const int color);
     static Q_INVOKABLE bool isQColorLight(const QColor &color);
 
+    static Q_INVOKABLE bool isOsThemeDark();
+
     // mobile related
 
     static Q_INVOKABLE int getAndroidSdkVersion();
@@ -97,6 +99,8 @@ public:
     static Q_INVOKABLE void openAndroidLocationSettings();
 
     static Q_INVOKABLE void vibrate(int ms);
+
+    static Q_INVOKABLE QString getMobileWifiSSID();
 
     static Q_INVOKABLE bool checkMobileStoragePermissions();
     static Q_INVOKABLE bool getMobileStoragePermissions();

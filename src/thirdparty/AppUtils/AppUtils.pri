@@ -79,4 +79,7 @@ ios {
     LIBS    += -framework UserNotifications
     SOURCES += $${PWD}/utils_os_ios_notif.mm
     HEADERS += $${PWD}/utils_os_ios_notif.h
+
+    # iOS WiFi SSID
+    #LIBS    += -framework SystemConfiguration
 }

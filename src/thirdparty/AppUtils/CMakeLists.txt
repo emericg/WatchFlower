@@ -100,7 +100,8 @@ if(IOS)
     set(PLATFORM_LIBRARIES Qt::Quick)
     set(PLATFORM_LIBRARIES Qt::GuiPrivate)
     set(PLATFORM_LIBRARIES "-framework UIKit" m)
-    set(PLATFORM_LIBRARIES "-framework UserNotifications" m)
+    set(PLATFORM_LIBRARIES "-framework UserNotifications" m)                    # show notifications
+    #set(PLATFORM_LIBRARIES "-framework SystemConfiguration" m)                 # get WiFi SSID
 endif()
 
 ################################################################################
