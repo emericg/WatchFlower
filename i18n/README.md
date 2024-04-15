@@ -30,7 +30,7 @@ Translate by editing the .ts file using Qt Linguist.
 - You don't have to translate everything, missing words or sentences will fall back to English.
 - If you're not sure about a word or sentence, leave the "unfinished" tag, so other people can have a second look at it.
 
-> Qt Linguist manual: https://doc.qt.io/qt-5/linguist-translators.html
+> Qt Linguist manual: https://doc.qt.io/qt-6/linguist-translators.html
 
 > Qt Linguist standalone downloads: https://github.com/lelegard/qtlinguist-installers/releases
 

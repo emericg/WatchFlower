@@ -95,7 +95,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         spacing: 12
 
-        ButtonWireframeIcon {
+        ButtonFlat {
             id: buttonSort
             anchors.verticalCenter: parent.verticalCenter
 
@@ -103,8 +103,7 @@ Rectangle {
             layoutDirection: Qt.RightToLeft
 
             source: "qrc:/assets/icons/material-symbols/filter_list.svg"
-            primaryColor: Qt.darker(Theme.colorSeparator, 1.1)
-            fullColor: true
+            color: Qt.darker(Theme.colorSeparator, 1.1)
 
             text: {
                 var txt = qsTr("Order by:") + " "

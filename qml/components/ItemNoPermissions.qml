@@ -59,12 +59,10 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: Theme.componentMargin
 
-                ButtonWireframeIcon {
+                ButtonFlat {
                     //width: ((isDesktop || isTablet) && !singleColumn) ? 256 : undefined
 
                     text: qsTr("Request permission(s)")
-                    primaryColor: Theme.colorPrimary
-                    fullColor: true
                     sourceSize: 24
                     source: "qrc:/assets/icons/material-icons/duotone/touch_app.svg"
 
@@ -204,11 +202,11 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: Theme.componentMargin
 
-            ButtonWireframeIcon {
+            ButtonFlat {
                 //width: ((isDesktop || isTablet) && !singleColumn) ? 256 : undefined
 
                 text: qsTr("Official information")
-                primaryColor: Theme.colorSubText
+                color: Theme.colorSubText
                 sourceSize: 20
                 source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 

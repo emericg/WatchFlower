@@ -145,22 +145,20 @@ Popup {
 
                 property var btnSize: singleColumn ? width : ((width-spacing) / 2)
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
+                    color: Theme.colorSubText
 
                     onClicked: popupBlacklistDevice.close()
                 }
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: !deviceIsBlacklisted ? qsTr("Blacklist") : qsTr("Whitelist")
-                    primaryColor: !deviceIsBlacklisted ? Theme.colorRed : Theme.colorGreen
-                    fullColor: true
+                    color: !deviceIsBlacklisted ? Theme.colorRed : Theme.colorGreen
 
                     onClicked: {
                         if (deviceIsBlacklisted)

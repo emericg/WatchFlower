@@ -116,15 +116,14 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                         }
-                        ButtonWireframeIcon {
+                        ButtonFlat {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             text: qsTr("Supported sensors")
                             source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
                             sourceSize: 20
                             layoutDirection: Qt.RightToLeft
-                            fullColor: true
-                            primaryColor: Theme.colorHeaderHighlight
+                            color: Theme.colorHeaderHighlight
 
                             onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
                         }
@@ -318,11 +317,10 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
-                        ButtonWireframe {
+                        ButtonFlat {
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            fullColor: true
-                            primaryColor: Theme.colorHeaderHighlight
+                            color: Theme.colorHeaderHighlight
                             text: qsTr("Start")
 
                             onClicked: tutorialPages.currentIndex++

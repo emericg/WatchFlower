@@ -149,12 +149,11 @@ Popup {
 
                 property var btnSize: singleColumn ? width : ((width-spacing) / 2)
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
+                    color: Theme.colorSubText
 
                     onClicked: {
                         textInputMacAddr.focus = false
@@ -162,12 +161,11 @@ Popup {
                     }
                 }
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Set MAC")
-                    primaryColor: Theme.colorPrimary
-                    fullColor: true
+                    color: Theme.colorPrimary
 
                     onClicked: {
                         if (selectedDevice) {

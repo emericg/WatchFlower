@@ -28,8 +28,6 @@
         <file>DevicePlantSensorSettings.qml</file>
         <file>DeviceThermometer.qml</file>
         <file>DeviceEnvironmental.qml</file>
-        <file>ThemeEngine.qml</file>
-        <file>WindowGeometrySaver.qml</file>
 
         <file alias="DeviceWidget.qml">widgets/DeviceWidget.qml</file>
         <file alias="DeviceNearbyWidget.qml">widgets/DeviceNearbyWidget.qml</file>
@@ -73,5 +71,11 @@
         <file alias="PlantHardinessWidget.qml">components/PlantHardinessWidget.qml</file>
         <file alias="PlantSizeWidget.qml">components/PlantSizeWidget.qml</file>
         <file alias="SpinBoxHistory.qml">components/SpinBoxHistory.qml</file>
+    </qresource>
+
+    <qresource prefix="/js">
+        <file alias="UtilsDeviceSensors.js">components_js/UtilsDeviceSensors.js</file>
+        <file alias="UtilsPlantDatabase.js">components_js/UtilsPlantDatabase.js</file>
+        <file alias="UtilsPlantJournal.js">components_js/UtilsPlantJournal.js</file>
     </qresource>
 </RCC>

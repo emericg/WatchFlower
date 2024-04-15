@@ -99,10 +99,10 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
+                visible: deviceManager.devicePlantCount
 
                 text: qsTr("Plant sensor(s)", "", deviceManager.devicePlantCount)
                 textSize: Theme.fontSizeContentVeryBig
-                visible: deviceManager.devicePlantCount
             }
 
             Flow {
@@ -125,10 +125,10 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
+                visible: deviceManager.deviceThermoCount
 
                 text: qsTr("Thermometer(s)", "", deviceManager.deviceThermoCount)
                 textSize: Theme.fontSizeContentVeryBig
-                visible: deviceManager.deviceThermoCount
             }
 
             Flow {
@@ -151,10 +151,10 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
+                visible: deviceManager.deviceEnvCount
 
                 text: qsTr("Environmental sensor(s)", "", deviceManager.deviceEnvCount)
                 textSize: Theme.fontSizeContentVeryBig
-                visible: deviceManager.deviceEnvCount
             }
 
             Flow {

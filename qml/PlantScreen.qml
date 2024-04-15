@@ -468,8 +468,7 @@ Grid {
 
                 visible: (appContent.state === "DevicePlantSensor")
 
-                ButtonWireframeIcon {
-                    fullColor: true
+                ButtonFlat {
                     Layout.fillWidth: true
                     Layout.fillHeight: false
                     Layout.minimumWidth: 128
@@ -481,10 +480,8 @@ Grid {
 
                     onClicked: screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
                 }
-                ButtonWireframeIcon {
-                    fullColor: true
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
+                ButtonFlat {
+                    color: Theme.colorSubText
                     Layout.fillWidth: false
                     Layout.fillHeight: false
                     Layout.maximumHeight: 36
@@ -506,11 +503,10 @@ Grid {
                 Repeater {
                     id: plantTags
 
-                    ItemTag {
+                    TagFlat {
                         text: UtilsPlantDatabase.getPlantTagsText(modelData)
-                        textBold: true
-                        textColor: "white"
-                        textSize: Theme.fontSizeContentSmall
+                        font.bold: true
+                        font.pixelSize: Theme.fontSizeContentSmall
                         color: UtilsPlantDatabase.getPlantTagsColor(modelData)
                     }
                 }
@@ -888,10 +884,8 @@ Grid {
                 Row {
                     spacing: 12
 
-                    ButtonWireframeIcon {
+                    ButtonFlat {
                         layoutDirection: Qt.RightToLeft
-                        primaryColor: Theme.colorPrimary
-                        secondaryColor: Theme.colorBackground
 
                         text: "Wikipedia"
                         source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
@@ -900,10 +894,8 @@ Grid {
                         onClicked: Qt.openUrlExternally("https://wikipedia.org/wiki/" + currentPlant.nameBotanical_url)
                     }
 
-                    ButtonWireframeIcon {
+                    ButtonFlat {
                         layoutDirection: Qt.RightToLeft
-                        primaryColor: Theme.colorPrimary
-                        secondaryColor: Theme.colorBackground
 
                         text: "Hortipedia"
                         source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
@@ -912,10 +904,8 @@ Grid {
                         onClicked: Qt.openUrlExternally("https://hortipedia.com/" + currentPlant.nameBotanical_url)
                     }
 
-                    ButtonWireframeIcon {
+                    ButtonFlat {
                         layoutDirection: Qt.RightToLeft
-                        primaryColor: Theme.colorPrimary
-                        secondaryColor: Theme.colorBackground
 
                         text: "RHS"
                         source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
@@ -1368,8 +1358,8 @@ Grid {
                     hhh: 22
 
                     enabled: false
-                    colorBg: Theme.colorYellow
-                    colorFg: Theme.colorGreen
+                    colorBackground: Theme.colorYellow
+                    colorForeground: Theme.colorGreen
                     unit: "%"
                     from: 0
                     to: 100
@@ -1423,8 +1413,8 @@ Grid {
                     hhh: 22
 
                     enabled: false
-                    colorBg: Theme.colorYellow
-                    colorFg: Theme.colorGreen
+                    colorBackground: Theme.colorYellow
+                    colorForeground: Theme.colorGreen
                     from: 0
                     to: 5000
                     stepSize: 50
@@ -1477,12 +1467,12 @@ Grid {
                     hhh: 22
 
                     enabled: false
-                    colorBg: Theme.colorYellow
-                    colorFg: Theme.colorGreen
+                    colorBackground: Theme.colorYellow
+                    colorForeground: Theme.colorGreen
                     from: 4
                     to: 10
                     stepSize: 0.1
-                    tofixed: 1
+                    floatprecision: 1
 
                     Row {
                         id: phScale // 4 to 10
@@ -1627,8 +1617,8 @@ Grid {
                     hhh: 22
 
                     enabled: false
-                    colorBg: Theme.colorYellow
-                    colorFg: Theme.colorGreen
+                    colorBackground: Theme.colorYellow
+                    colorForeground: Theme.colorGreen
                     unit: "°"
                     from: 0
                     to: 40
@@ -1681,8 +1671,8 @@ Grid {
                     hhh: 22
 
                     enabled: false
-                    colorBg: Theme.colorYellow
-                    colorFg: Theme.colorGreen
+                    colorBackground: Theme.colorYellow
+                    colorForeground: Theme.colorGreen
                     unit: "%"
                     from: 0
                     to: 100
@@ -1736,8 +1726,8 @@ Grid {
                     hhh: 22
 
                     enabled: false
-                    colorBg: Theme.colorYellow
-                    colorFg: Theme.colorGreen
+                    colorBackground: Theme.colorYellow
+                    colorForeground: Theme.colorGreen
                     unit: "k"
                     kshort: true
                     from: 0
@@ -1912,8 +1902,8 @@ Grid {
                     hhh: 22
 
                     enabled: false
-                    colorBg: Theme.colorYellow
-                    colorFg: Theme.colorGreen
+                    colorBackground: Theme.colorYellow
+                    colorForeground: Theme.colorGreen
                     unit: "k"
                     kshort: true
                     from: 0

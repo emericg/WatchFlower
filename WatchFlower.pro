@@ -21,6 +21,10 @@ QMAKE_BUNDLE = watchflower
 
 # Project modules ##############################################################
 
+# App utils
+CONFIG += UTILS_DOCK_ENABLED
+include(src/thirdparty/AppUtils/AppUtils.pri)
+
 # MobileUI and MobileSharing for mobile OS
 include(src/thirdparty/MobileUI/MobileUI.pri)
 include(src/thirdparty/MobileSharing/MobileSharing.pri)
@@ -28,9 +32,6 @@ include(src/thirdparty/MobileSharing/MobileSharing.pri)
 # SingleApplication for desktop OS
 include(src/thirdparty/SingleApplication/SingleApplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
-
-# Various utils
-include(src/thirdparty/AppUtils/AppUtils.pri)
 
 # Project files ################################################################
 
@@ -127,11 +128,12 @@ HEADERS  += src/MenubarManager.h \
 }
 INCLUDEPATH += src/ src/thirdparty/
 
+RESOURCES   += qml/ComponentLibrary/ComponentLibrary.qrc
+RESOURCES   += assets/icons.qrc
+
 RESOURCES   += qml/qml.qrc \
-               qml/components.qrc \
                i18n/i18n.qrc \
                assets/assets.qrc \
-               assets/icons.qrc \
                assets/devices.qrc \
                assets/plants.qrc
 
@@ -161,9 +163,8 @@ TRANSLATIONS = i18n/watchflower_ca.ts \
                i18n/watchflower_zh_TW.ts
 
 lupdate_only {
-    SOURCES += qml/*.qml qml/*.js \
-               qml/popups/*.qml \
-               qml/components/*.qml qml/components_generic/*.qml qml/components_js/*.js
+    SOURCES += qml/*.qml qml/*.js \ qml/popups/*.qml \
+               qml/components/*.qml qml/components_js/*.js
 }
 
 # Build settings ###############################################################

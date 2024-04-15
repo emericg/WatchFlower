@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Loader {
     id: settingsAdvanced
@@ -167,7 +167,7 @@ Loader {
 
                     visible: isDesktop
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_mysql
 
                         text: "Enable MySQL database support"
@@ -225,7 +225,7 @@ Loader {
                         text: mainDatabase.getDatabaseDirectory()
                         readOnly: true
 
-                        ButtonWireframe {
+                        ButtonFlat {
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -242,16 +242,13 @@ Loader {
 
                         enabled: false // isDesktop
 
-                        ButtonWireframe {
-                            fullColor: true
-
+                        ButtonFlat {
                             text: "save"
                             onClicked: mainDatabase.saveDatabase()
                         }
 
-                        ButtonWireframe {
-                            fullColor: true
-                            primaryColor: Theme.colorWarning
+                        ButtonFlat {
+                            color: Theme.colorWarning
 
                             text: "restore"
                             //onPressAndHold: mainDatabase.restoreDatabase()
@@ -282,7 +279,7 @@ Loader {
                         text: settingsManager.getSettingsDirectory()
                         readOnly: true
 
-                        ButtonWireframe {
+                        ButtonFlat {
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -299,18 +296,16 @@ Loader {
 
                         enabled: false // isDesktop
 
-                        ButtonWireframe {
+                        ButtonFlat {
                             anchors.verticalCenter: parent.verticalCenter
-                            fullColor: true
 
                             text: "save"
                             onClicked: settingsManager.saveSettings()
                         }
 
-                        ButtonWireframe {
+                        ButtonFlat {
                             anchors.verticalCenter: parent.verticalCenter
-                            fullColor: true
-                            primaryColor: Theme.colorWarning
+                            color: Theme.colorWarning
 
                             text: "restore"
                             //onPressAndHold: settingsManager.restoreSettings()
@@ -334,7 +329,7 @@ Loader {
                     anchors.rightMargin: screenPaddingRight + Theme.componentMargin
                     spacing: Theme.componentMargin
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_logs
 
                         text: "Enable logging"
@@ -347,8 +342,7 @@ Loader {
                         anchors.right: parent.right
                         spacing: Theme.componentMargin / 2
 
-                        ButtonWireframe {
-                            fullColor: true
+                        ButtonFlat {
                             text: "show logs"
 
                             onPressed: {
@@ -356,9 +350,8 @@ Loader {
                             }
                         }
 
-                        ButtonWireframe {
-                            fullColor: true
-                            primaryColor: Theme.colorWarning
+                        ButtonFlat {
+                            color: Theme.colorWarning
 
                             text: "reset log"
                             onPressAndHold: {

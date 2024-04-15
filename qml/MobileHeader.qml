@@ -98,7 +98,7 @@ Rectangle {
 
                 pressed: parent.pressed
                 //active: enabled && parent.containsPress
-                color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
+                color: Qt.rgba(Theme.colorHeaderHighlight.r, Theme.colorHeaderHighlight.g, Theme.colorHeaderHighlight.b, 0.33)
             }
 
             IconSvg {
@@ -124,7 +124,7 @@ Rectangle {
 
             text: headerTitle
             textFormat: Text.PlainText
-            font.bold: true
+            font.bold: false
             font.pixelSize: Theme.fontSizeHeader
             color: Theme.colorHeaderContent
             elide: Text.ElideRight
@@ -209,7 +209,7 @@ Rectangle {
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress
-                    color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.33)
+                    color: Qt.rgba(Theme.colorHeaderHighlight.r, Theme.colorHeaderHighlight.g, Theme.colorHeaderHighlight.b, 0.33)
                 }
 
                 IconSvg {

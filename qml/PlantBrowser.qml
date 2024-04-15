@@ -327,11 +327,9 @@ Loader {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 12
 
-                ButtonWireframeIcon {
+                ButtonFlat {
                     height: 36
 
-                    fullColor: true
-                    primaryColor: Theme.colorPrimary
                     Layout.fillWidth: true
                     Layout.minimumWidth: 128
                     Layout.maximumWidth: 320
@@ -344,11 +342,9 @@ Loader {
                          appContent.state = "DevicePlantSensor"
                     }
                 }
-                ButtonWireframe {
+                ButtonFlat {
                     height: 36
 
-                    fullColor: true
-                    primaryColor: Theme.colorSubText
                     Layout.fillWidth: false
 
                     text: qsTr("Cancel")
@@ -395,11 +391,9 @@ Loader {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 8
 
-                ButtonWireframeIcon {
+                ButtonFlat {
                     height: 36
 
-                    fullColor: true
-                    primaryColor: Theme.colorPrimary
                     Layout.fillWidth: true
                     Layout.minimumWidth: 128
                     Layout.maximumWidth: 999
@@ -412,11 +406,10 @@ Loader {
                          appContent.state = "DevicePlantSensor"
                     }
                 }
-                ButtonWireframe {
+                ButtonFlat {
                     height: 36
 
-                    fullColor: true
-                    primaryColor: Theme.colorSubText
+                    color: Theme.colorSubText
                     Layout.fillWidth: false
 
                     text: qsTr("Cancel")

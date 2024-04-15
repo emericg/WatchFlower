@@ -101,11 +101,10 @@ Popup {
 
                     property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
 
-                    ButtonWireframeIconCentered {
+                    ButtonFlat {
                         width: parent.btnSize
 
-                        fullColor: true
-                        primaryColor: Theme.colorSecondary
+                        color: Theme.colorSecondary
 
                         text: qsTr("About Bluetooth permissions")
                         source: "qrc:/assets/icons/material-symbols/info-fill.svg"
@@ -119,11 +118,10 @@ Popup {
                         }
                     }
 
-                    ButtonWireframeIconCentered {
+                    ButtonFlat {
                         width: (parent.btnSize / 2 - 8)
 
-                        fullColor: true
-                        primaryColor: Theme.colorSubText
+                        color: Theme.colorSubText
 
                         text: qsTr("Cancel")
                         source: "qrc:/assets/icons/material-symbols/close.svg"
@@ -133,11 +131,10 @@ Popup {
                         }
                     }
 
-                    ButtonWireframeIconCentered {
+                    ButtonFlat {
                         width: (parent.btnSize / 2 - 8)
 
-                        fullColor: true
-                        primaryColor: Theme.colorGreen
+                        color: Theme.colorGreen
 
                         text: qsTr("Enable")
                         source: "qrc:/assets/icons/material-symbols/check.svg"
@@ -198,11 +195,10 @@ Popup {
 
                     property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
 
-                    ButtonWireframeIconCentered {
+                    ButtonFlat {
                         width: parent.btnSize
 
-                        fullColor: true
-                        primaryColor: Theme.colorSecondary
+                        color: Theme.colorSecondary
 
                         text: qsTr("About battery savers")
                         source: "qrc:/assets/icons/material-symbols/info-fill.svg"
@@ -213,11 +209,10 @@ Popup {
                         }
                     }
 
-                    ButtonWireframeIconCentered {
+                    ButtonFlat {
                         width: parent.btnSize
 
-                        fullColor: true
-                        primaryColor: Theme.colorPrimary
+                        color: Theme.colorPrimary
 
                         text: qsTr("Application info panel")
                         source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
@@ -228,11 +223,10 @@ Popup {
                         }
                     }
 
-                    ButtonWireframeIconCentered {
+                    ButtonFlat {
                         width: parent.btnSize
 
-                        fullColor: true
-                        primaryColor: Theme.colorGreen
+                        color: Theme.colorGreen
                         layoutDirection: Qt.RightToLeft
 
                         text: qsTr("I understand")

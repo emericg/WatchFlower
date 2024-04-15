@@ -124,9 +124,9 @@ Item {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                fullColor: (plantInfos.visible)
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
+                //fullColor: (plantInfos.visible)
+                //primaryColor: Theme.colorPrimary
+                //secondaryColor: Theme.colorBackground
 
                 text: qsTr("Plant")
                 onClicked: {
@@ -141,9 +141,9 @@ Item {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                fullColor: (plantLimits.visible)
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
+                //fullColor: (plantLimits.visible)
+                //primaryColor: Theme.colorPrimary
+                //secondaryColor: Theme.colorBackground
 
                 text: qsTr("Limits")
                 onClicked: {
@@ -157,9 +157,9 @@ Item {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                fullColor: (plantJournal.visible)
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
+                //fullColor: (plantJournal.visible)
+                //primaryColor: Theme.colorPrimary
+                //secondaryColor: Theme.colorBackground
 
                 text: qsTr("Journal")
                 onClicked: {

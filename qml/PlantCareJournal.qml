@@ -152,14 +152,13 @@ Item {
                         journalEditorLoader.item.openEditor()
                     }
 
-                    ButtonWireframe {
+                    ButtonFlat {
                         height: 36
                         anchors.left: parent.right
                         anchors.leftMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
-                        fullColor: true
-                        primaryColor: Theme.colorSecondary
+                        color: Theme.colorSecondary
                         text: qsTr("Add a new entry")
 
                         onClicked: {
@@ -291,14 +290,13 @@ Item {
                         width: (uiMode !== 3) ? parent.width : (rowrowrow.width * 0.6) - (rowrowrow.spacing / 2)
                         spacing: Theme.componentMargin
 
-                        ButtonWireframe {
+                        ButtonFlat {
                             anchors.left: parent.left
                             anchors.right: parent.right
                             height: (uiMode === 1) ? 40 : 44
 
-                            fullColor: true
                             text: entryEditor.currentDateTime.toLocaleDateString(Qt.locale())
-                            primaryColor: Theme.colorSecondary
+                            color: Theme.colorSecondary
                             onClicked: {
                                 if (uiMode === 1)
                                     popupDate.openDate(entryEditor.currentDateTime)
@@ -388,22 +386,19 @@ Item {
                     anchors.bottomMargin: Theme.componentMargin
                     spacing: Theme.componentMargin
 
-                    ButtonWireframe {
-                        fullColor: true
-                        primaryColor: "grey"
+                    ButtonFlat {
+                        color: Theme.colorSubText
 
                         text: qsTr("Cancel")
                         onClicked: entryEditor.close()
                     }
 
-                    ButtonWireframeIcon {
+                    ButtonFlat {
                         id: buttonEdit
 
                         visible: entryEditor.entry
 
                         text: qsTr("Edit entry")
-                        fullColor: true
-                        primaryColor: Theme.colorPrimary
                         source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
 
                         onClicked: {
@@ -413,14 +408,12 @@ Item {
                         }
                     }
 
-                    ButtonWireframeIcon {
+                    ButtonFlat {
                         id: buttonAdd
 
                         visible: !entryEditor.entry
 
                         text: qsTr("Add entry")
-                        fullColor: true
-                        primaryColor: Theme.colorPrimary
                         source: "qrc:/assets/icons/material-symbols/add.svg"
 
                         onClicked: {

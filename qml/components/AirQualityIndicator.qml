@@ -1,7 +1,7 @@
 import QtQuick
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: indicatorAirQuality
@@ -88,8 +88,8 @@ Item {
         backgroundOpacity: 0.5
         backgroundColor: indicatorAirQuality.color
 
-        from: indicatorAirQuality.valueMin
-        to: indicatorAirQuality.valueMax
+        valueMin: indicatorAirQuality.valueMin
+        valueMax: indicatorAirQuality.valueMax
         value: indicatorAirQuality.value
     }
 

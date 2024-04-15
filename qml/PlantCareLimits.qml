@@ -119,8 +119,8 @@ Flickable {
                 height: 32
                 hhh: isMobile ? 22 : 20
 
-                colorBg: Theme.colorYellow
-                colorFg: Theme.colorGreen
+                colorBackground: Theme.colorYellow
+                colorForeground: Theme.colorGreen
                 unit: "%"
                 from: 0
                 to: 66
@@ -198,8 +198,8 @@ Flickable {
                 height: 32
                 hhh: isMobile ? 22 : 20
 
-                colorBg: Theme.colorYellow
-                colorFg: Theme.colorGreen
+                colorBackground: Theme.colorYellow
+                colorForeground: Theme.colorGreen
                 from: 0
                 to: 2000
                 stepSize: 50
@@ -275,8 +275,8 @@ Flickable {
                 height: 32
                 hhh: isMobile ? 22 : 20
 
-                colorBg: Theme.colorYellow
-                colorFg: Theme.colorGreen
+                colorBackground: Theme.colorYellow
+                colorForeground: Theme.colorGreen
                 unit: "°"
                 from: currentDevice.deviceIsOutside ? 0 : 12
                 to: currentDevice.deviceIsOutside ? 50 : 32
@@ -369,8 +369,8 @@ Flickable {
                 height: 32
                 hhh: isMobile ? 22 : 20
 
-                colorBg: Theme.colorYellow
-                colorFg: Theme.colorGreen
+                colorBackground: Theme.colorYellow
+                colorForeground: Theme.colorGreen
                 unit: "k"
                 kshort: true
                 from: 0
@@ -571,13 +571,11 @@ Flickable {
                 anchors.rightMargin: 12
                 spacing: Theme.componentMargin
 
-                ButtonWireframeIcon {
+                ButtonFlat {
                     anchors.left: parent.left
                     width: singleColumn ? parent.width : rowButtons.width
 
                     visible: currentDevice.hasPlant
-                    primaryColor: Theme.colorPrimary
-                    secondaryColor: Theme.colorBackground
 
                     text: qsTr("Reset limits from the associated plant")
                     source: "qrc:/assets/icons/material-symbols/flaky.svg"

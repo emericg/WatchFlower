@@ -60,10 +60,9 @@ Item {
 
             Item { width: 8; height: 8; }
 
-            ButtonWireframe {
+            ButtonFlat {
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                fullColor: true
                 text: {
                     if (deviceManager.bluetoothAdapter &&!deviceManager.bluetoothEnabled) {
                         if (Qt.platform.os === "android") return qsTr("Enable")

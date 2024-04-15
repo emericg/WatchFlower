@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Loader {
     id: screenAbout
@@ -104,33 +104,31 @@ Loader {
                     visible: wideWideMode
                     spacing: Theme.componentMargin
 
-                    ButtonWireframeIconCentered {
+                    ButtonSolid {
                         width: 160
 
                         text: qsTr("WEBSITE")
                         source: "qrc:/assets/icons/material-symbols/link.svg"
                         sourceSize: 28
                         font.bold: true
-                        fullColor: true
-                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
 
-                    ButtonWireframeIconCentered {
+                    ButtonSolid {
                         width: 160
 
                         text: qsTr("SUPPORT")
                         source: "qrc:/assets/icons/material-symbols/support.svg"
                         sourceSize: 22
                         font.bold: true
-                        fullColor: true
-                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                     }
 
-                    ButtonWireframeIconCentered {
+                    ButtonSolid {
                         width: 160
                         visible: (appWindow.width > 800)
 
@@ -138,8 +136,7 @@ Loader {
                         source: "qrc:/assets/gfx/logos/github.svg"
                         sourceSize: 22
                         font.bold: true
-                        fullColor: true
-                        primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                     }
@@ -170,7 +167,7 @@ Loader {
                 visible: !wideWideMode
                 spacing: Theme.componentMargin
 
-                ButtonWireframeIconCentered {
+                ButtonFlat {
                     anchors.verticalCenter: parent.verticalCenter
                     width: ((parent.width - parent.spacing) / 2)
 
@@ -178,12 +175,11 @@ Loader {
                     source: "qrc:/assets/icons/material-symbols/link.svg"
                     sourceSize: 28
                     font.bold: true
-                    fullColor: true
-                    primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
-                ButtonWireframeIconCentered {
+                ButtonFlat {
                     anchors.verticalCenter: parent.verticalCenter
                     width: ((parent.width - parent.spacing) / 2)
 
@@ -191,8 +187,7 @@ Loader {
                     source: "qrc:/assets/icons/material-symbols/support.svg"
                     sourceSize: 22
                     font.bold: true
-                    fullColor: true
-                    primaryColor: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }

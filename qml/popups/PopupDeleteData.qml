@@ -77,22 +77,20 @@ Popup {
 
                 property var btnSize: singleColumn ? width : ((width-spacing*2) / 3)
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
+                    color: Theme.colorSubText
 
                     onClicked: popupDeleteData.close()
                 }
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Delete local data")
-                    primaryColor: Theme.colorOrange
-                    fullColor: true
+                    color: Theme.colorOrange
 
                     onClicked: {
                         if (selectedDevice) {
@@ -103,12 +101,11 @@ Popup {
                     }
                 }
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Delete sensor data")
-                    primaryColor: Theme.colorRed
-                    fullColor: true
+                    color: Theme.colorRed
 
                     onClicked: {
                         if (selectedDevice) {

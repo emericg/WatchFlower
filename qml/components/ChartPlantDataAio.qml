@@ -2,7 +2,7 @@ import QtQuick
 import QtCharts
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: chartPlantDataAio
@@ -553,7 +553,7 @@ Item {
                 onClicked: historyIndicator.showHide()
             }
 
-            SelectorMenu {
+            SelectorMenuColorful {
                 id: historyIndicator
                 height: 32
 

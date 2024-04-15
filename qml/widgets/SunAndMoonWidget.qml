@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Shapes
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: sunAndMoonWidget

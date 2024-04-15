@@ -1,7 +1,7 @@
 import QtQuick
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: chartThermometerMinMaxBar

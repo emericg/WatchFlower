@@ -40,14 +40,13 @@ Item {
 
             ////
 
-            ButtonWireframe {
+            ButtonFlat {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.5)
 
                 text: deviceManager.scanning ? qsTr("Scanning...") : qsTr("Launch detection")
-                fullColor: true
-                primaryColor: Theme.colorPrimary
+                color: Theme.colorPrimary
 
                 onClicked: {
                     // Just to be sure...

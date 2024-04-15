@@ -313,22 +313,18 @@ Popup {
                 anchors.rightMargin: Theme.componentMargin
                 spacing: Theme.componentMargin
 
-                ButtonWireframe {
+                ButtonFlat {
                     height: 36
                     text: qsTr("Cancel")
 
-                    primaryColor: Theme.colorSecondary
-                    fullColor: true
+                    color: Theme.colorSecondary
 
                     onClicked: popupDate.close()
                 }
 
-                ButtonWireframe {
+                ButtonFlat {
                     height: 36
                     text: qsTr("Validate")
-
-                    primaryColor: Theme.colorPrimary
-                    fullColor: true
 
                     onClicked: {
                         updateDate(selectedDate)

@@ -280,7 +280,7 @@ Loader {
                         wrapMode: Text.WordWrap
                     }
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_appThemeAuto
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -347,7 +347,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_splitView
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -497,7 +497,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_minimized
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -570,7 +570,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_worker
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -668,7 +668,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_notifications
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -733,7 +733,7 @@ Loader {
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
                         }
-                        SwitchThemed {
+                        SwitchThemedDesktop {
                             id: switch_notif_battery
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -762,7 +762,7 @@ Loader {
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
                         }
-                        SwitchThemed {
+                        SwitchThemedDesktop {
                             id: switch_notif_water
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -792,7 +792,7 @@ Loader {
                             color: Theme.colorSubText
                             lineHeight: 0.8
                         }
-                        SwitchThemed {
+                        SwitchThemedDesktop {
                             id: switch_notif_subzero
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -822,7 +822,7 @@ Loader {
                             color: Theme.colorSubText
                             lineHeight: 0.8
                         }
-                        SwitchThemed {
+                        SwitchThemedDesktop {
                             id: switch_notif_env
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -879,7 +879,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_bluetoothControl
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -943,7 +943,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemed {
+                    SwitchThemedDesktop {
                         id: switch_bluetoothRange
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -1027,7 +1027,7 @@ Loader {
                         value: settingsManager.bluetoothSimUpdates
                         onMoved: settingsManager.bluetoothSimUpdates = value
                     }
-                    SpinBoxThemed {
+                    SpinBoxThemedMobile {
                         id: spinBox_bluetoothSimUpdate
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
@@ -1106,7 +1106,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SpinBoxThemed {
+                    SpinBoxThemedMobile {
                         id: spinBox_plant_update
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
@@ -1175,7 +1175,7 @@ Loader {
                         height: Theme.componentHeightL
                         spacing: Theme.componentMargin
 
-                        SelectorMenu {
+                        SelectorMenuColorful {
                             id: row_plant_bigindicators2
                             height: 32
 
@@ -1191,7 +1191,7 @@ Loader {
                             }
                         }
 
-                        SelectorMenu {
+                        SelectorMenuColorful {
                             id: row_plant_dynascale2
                             height: 32
 
@@ -1301,7 +1301,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SpinBoxThemed {
+                    SpinBoxThemedMobile {
                         id: spinBox_thermometer_update
                         width: 128
                         height: 36
@@ -1356,7 +1356,7 @@ Loader {
                         color: Theme.colorText
                     }
 
-                    SelectorMenu {
+                    SelectorMenuColorful {
                         id: row_thermometer_unit
                         height: 32
                         anchors.right: parent.right
@@ -1433,14 +1433,11 @@ Loader {
                     spacing: Theme.componentMargin
                     visible: deviceManager.hasDevices
 
-                    ButtonWireframe {
+                    ButtonFlat {
                         height: 36
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: isDesktop
-                        fullColor: false
-                        primaryColor: Theme.colorPrimary
-                        secondaryColor: Theme.colorBackground
 
                         text: qsTr("Export data")
                         onClicked: {
@@ -1457,15 +1454,12 @@ Loader {
                         }
                     }
 
-                    ButtonWireframe {
+                    ButtonFlat {
                         id: openFolderButton
                         height: 36
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: false
-                        fullColor: false
-                        primaryColor: Theme.colorPrimary
-                        secondaryColor: Theme.colorBackground
 
                         text: qsTr("Open folder")
                         onClicked: {
@@ -1473,14 +1467,11 @@ Loader {
                         }
                     }
 
-                    ButtonWireframe {
+                    ButtonFlat {
                         height: 36
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: isMobile
-                        fullColor: false
-                        primaryColor: Theme.colorPrimary
-                        secondaryColor: Theme.colorBackground
 
                         text: qsTr("Export file")
                         onClicked: {

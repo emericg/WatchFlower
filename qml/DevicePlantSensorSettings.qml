@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Flickable {
@@ -591,7 +591,7 @@ Flickable {
                     font.capitalization: Font.AllUppercase
                 }
 
-                SwitchThemed {
+                SwitchThemedDesktop {
                     text: checked ? qsTr("Device is enabled") : qsTr("Device is disabled")
                     checked: currentDevice.deviceEnabled
                     onClicked: currentDevice.deviceEnabled = checked

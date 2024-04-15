@@ -5,7 +5,7 @@ import QtQuick.Templates as T
 import Qt5Compat.GraphicalEffects
 
 import ThemeEngine
-import "qrc:/js/UtilsNumber.js" as UtilsNumber
+import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 T.SpinBox {
     id: control

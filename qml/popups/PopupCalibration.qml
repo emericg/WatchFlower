@@ -102,22 +102,19 @@ Popup {
 
                 property var btnSize: singleColumn ? width : ((width-spacing) / 2)
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Cancel")
-                    primaryColor: Theme.colorSubText
-                    secondaryColor: Theme.colorForeground
+                    color: Theme.colorSubText
 
                     onClicked: popupCalibration.close()
                 }
 
-                ButtonWireframe {
+                ButtonFlat {
                     width: parent.btnSize
 
                     text: qsTr("Start calibration")
-                    primaryColor: Theme.colorPrimary
-                    fullColor: true
 
                     onClicked: {
                         if (selectedDevice) {

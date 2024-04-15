@@ -286,9 +286,9 @@ Item {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                fullColor: (settingsManager.graphHistory === "monthly")
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
+                //fullColor: (settingsManager.graphHistory === "monthly")
+                //primaryColor: Theme.colorPrimary
+                //secondaryColor: Theme.colorBackground
 
                 text: qsTr("Month")
                 onClicked: {
@@ -305,9 +305,9 @@ Item {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                fullColor: (settingsManager.graphHistory === "weekly")
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
+                //fullColor: (settingsManager.graphHistory === "weekly")
+                //primaryColor: Theme.colorPrimary
+                //secondaryColor: Theme.colorBackground
 
                 text: qsTr("Week")
                 onClicked: {
@@ -324,9 +324,9 @@ Item {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                fullColor: (settingsManager.graphHistory === "daily")
-                primaryColor: Theme.colorPrimary
-                secondaryColor: Theme.colorBackground
+                //fullColor: (settingsManager.graphHistory === "daily")
+                //primaryColor: Theme.colorPrimary
+                //secondaryColor: Theme.colorBackground
 
                 text: qsTr("Day")
                 onClicked: {

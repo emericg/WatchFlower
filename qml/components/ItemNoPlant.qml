@@ -35,12 +35,11 @@ Rectangle {
         font.pixelSize: Theme.fontSizeContentBig
         color: Theme.colorText
 
-        ButtonWireframe {
+        ButtonFlat {
             anchors.top: parent.bottom
             anchors.topMargin: 16
             anchors.horizontalCenter: parent.horizontalCenter
 
-            fullColor: true
             text: qsTr("Let's find one!")
             onClicked: itemNoPlant.clicked()
         }
