@@ -30,7 +30,7 @@ Item {
     Rectangle { // background
         anchors.fill: parent
 
-        opacity: appWindow.isTablet ? 0.95 : 1
+        opacity: 0.95
         color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
 
         Rectangle {

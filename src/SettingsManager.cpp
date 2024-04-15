@@ -407,7 +407,10 @@ void SettingsManager::setSysTray(const bool value)
 {
     if (m_systrayEnabled != value)
     {
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
         bool trayEnable_saved = m_systrayEnabled;
+#endif
+
         m_systrayEnabled = value;
         writeSettings();
 
