@@ -152,7 +152,7 @@ Flickable {
                                 anchors.leftMargin: 6
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                                source: "qrc:/assets/icons/material-symbols/check_circle.svg"
                                 color: Theme.colorGreen
                                 visible: currentDevice.deviceFirmwareUpToDate
                             }
@@ -440,7 +440,7 @@ Flickable {
                         width: 20; height: 20;
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/warning.svg"
                         color: Theme.colorWarning
                     }
 
@@ -623,7 +623,7 @@ Flickable {
                                 width: 40; height: 40;
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 color: Theme.colorIcon
-                                source: "qrc:/assets/icons_custom/inside-24px.svg"
+                                source: "qrc:/assets/gfx/icons/inside-24px.svg"
                             }
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -657,7 +657,7 @@ Flickable {
                             IconSvg {
                                 width: 40; height: 40;
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                source: "qrc:/assets/icons_custom/outside-24px.svg"
+                                source: "qrc:/assets/gfx/icons/outside-24px.svg"
                                 color: Theme.colorIcon
                             }
                             Text {
@@ -719,7 +719,7 @@ Flickable {
                             height: 24
 
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/date_range.svg"
                         }
 
                         TextInput {
@@ -766,7 +766,7 @@ Flickable {
                                 anchors.leftMargin: 8
                                 anchors.verticalCenter: parent.verticalCenter
 
-                                source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                                source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
                                 color: Theme.colorSubText
 
                                 opacity: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputMacAddrArea.containsMouse) ? 0.9 : 0

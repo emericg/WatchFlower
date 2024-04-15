@@ -57,7 +57,7 @@ Flickable {
                 height: 20
 
                 color: Theme.colorSubText
-                source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/info-fill.svg"
             }
 
             Text {
@@ -91,7 +91,7 @@ Flickable {
                 anchors.leftMargin: 8
 
                 color: Theme.colorText
-                source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/water_mid.svg"
             }
             Text {
                 anchors.left: imageHygro.right
@@ -170,7 +170,7 @@ Flickable {
 
                 rotation: 90
                 color: Theme.colorText
-                source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/sensors/tonality.svg"
             }
             Text {
                 anchors.left: imageCondu.right
@@ -247,7 +247,7 @@ Flickable {
                 height: 24
 
                 color: Theme.colorText
-                source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/sensors/airware.svg"
             }
             Text {
                 anchors.left: imageTemp.right
@@ -341,7 +341,7 @@ Flickable {
                 anchors.leftMargin: 8
 
                 color: Theme.colorText
-                source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
             }
             Text {
                 anchors.left: imageLumi.right
@@ -546,7 +546,7 @@ Flickable {
                 anchors.leftMargin: 8
 
                 color: Theme.colorText
-                source: "qrc:/assets/icons_material/duotone-tune-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
             }
             Text {
                 anchors.left: imageOther.right
@@ -580,7 +580,7 @@ Flickable {
                     secondaryColor: Theme.colorBackground
 
                     text: qsTr("Reset limits from the associated plant")
-                    source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/flaky.svg"
 
                     onClicked: currentDevice.resetLimits()
                 }
@@ -622,7 +622,7 @@ Flickable {
                                 width: 72; height: 72;
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 color: Theme.colorText
-                                source: "qrc:/assets/icons_custom/inside-24px.svg"
+                                source: "qrc:/assets/gfx/icons/inside-24px.svg"
                             }
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
@@ -665,7 +665,7 @@ Flickable {
                                 id: outsideImage
                                 width: 72; height: 72;
                                 anchors.horizontalCenter: parent.horizontalCenter
-                                source: "qrc:/assets/icons_custom/outside-24px.svg"
+                                source: "qrc:/assets/gfx/icons/outside-24px.svg"
                                 color: Theme.colorText
                             }
                             Text {

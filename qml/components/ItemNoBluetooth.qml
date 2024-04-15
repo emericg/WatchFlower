@@ -34,7 +34,7 @@ Item {
                     width: parent.width*0.8
                     height: width
 
-                    source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
                     fillMode: Image.PreserveAspectFit
                     color: Theme.colorSubText
                     opacity: 0.9
@@ -98,7 +98,7 @@ Item {
                 Layout.preferredHeight: 20
                 Layout.alignment: Qt.AlignVCenter
 
-                source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/warning.svg"
                 color: Theme.colorWarning
             }
             Text {

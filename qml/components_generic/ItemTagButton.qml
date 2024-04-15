@@ -15,7 +15,7 @@ Rectangle {
     property string textColor: "white"
     property int textSize: Theme.componentFontSize
 
-    property url source: "qrc:/assets/icons_material/baseline-add-24px.svg"
+    property url source: "qrc:/assets/icons/material-symbols/add.svg"
     property string sourceColor: "white"
     property int sourceSize: 20
 

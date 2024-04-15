@@ -89,7 +89,7 @@ Item {
                     anchors.left: parent.left
                     anchors.leftMargin: singleColumn ? 0 : 112
 
-                    source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
+                    source: "qrc:/assets/gfx/icons/pot_flower-24px.svg"
                     iconColor: "white"
                     backgroundVisible: true
                     backgroundColor: Theme.colorGreen
@@ -142,7 +142,7 @@ Item {
                     anchors.leftMargin: singleColumn ? 0 : 112
                     anchors.bottom: parent.bottom
 
-                    source: "qrc:/assets/icons_material/baseline-add-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/add.svg"
                     iconColor: "white"
                     backgroundVisible: true
                     backgroundColor: Theme.colorPrimary
@@ -404,7 +404,7 @@ Item {
                         text: qsTr("Edit entry")
                         fullColor: true
                         primaryColor: Theme.colorPrimary
-                        source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
 
                         onClicked: {
                             //console.log("Edit entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
@@ -421,7 +421,7 @@ Item {
                         text: qsTr("Add entry")
                         fullColor: true
                         primaryColor: Theme.colorPrimary
-                        source: "qrc:/assets/icons_material/baseline-add-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/add.svg"
 
                         onClicked: {
                             //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)

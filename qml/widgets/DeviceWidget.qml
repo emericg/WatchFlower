@@ -191,8 +191,10 @@ Item {
                 height: 96
                 opacity: 0.2
 
-                source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
                 color: Theme.colorYellow
+                //source: "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
+                //color: Theme.colorBlue
             }
         }
     }
@@ -305,14 +307,14 @@ Item {
                     if (boxDevice.isPlantSensor) {
                         if (hasHygro) {
                             if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
-                                return "qrc:/assets/icons_custom/pot_flower-24px.svg"
+                                return "qrc:/assets/gfx/icons/pot_flower-24px.svg"
                             else
-                                return "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                                return "qrc:/assets/icons/material-symbols/sensors/local_florist.svg"
                         } else {
                             if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
-                                return "qrc:/assets/icons_custom/pot_empty-24px.svg"
+                                return "qrc:/assets/gfx/icons/pot_empty-24px.svg"
                             else
-                                return "qrc:/assets/icons_material/outline-settings_remote-24px.svg"
+                                return "qrc:/assets/icons/material-symbols/sensors/settings_remote.svg"
                         }
                     }
                     return UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
@@ -407,8 +409,8 @@ Item {
 
                 sourceComponent: AlarmIndicator {
                     source: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
-                                "qrc:/assets/icons_material/duotone-water_full-24px.svg" :
-                                "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                                "qrc:/assets/icons/material-icons/duotone/water_full.svg" :
+                                "qrc:/assets/icons/material-icons/duotone/water_mid.svg"
                     color: (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin - 5 ||
                             boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax + 5) ?
                                 Theme.colorBlue : Theme.colorBlue
@@ -422,8 +424,8 @@ Item {
 
                 sourceComponent: AlarmIndicator {
                     source: (boxDevice.temperatureC > 38) ?
-                             "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg" :
-                             "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                             "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg" :
+                             "qrc:/assets/icons/material-symbols/sensors/airware.svg"
                     color: {
                         if (boxDevice.temperatureC <= -4 || boxDevice.temperatureC >= 44)
                             return Theme.colorRed
@@ -442,7 +444,7 @@ Item {
                          (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350))
 
                 sourceComponent: AlarmIndicator {
-                    source: "qrc:/assets/icons_material/baseline-air-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/sensors/air.svg"
                     color: {
                         if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
                             (boxDevice.hasHchoSensor && boxDevice.hcho > 1000) ||
@@ -464,7 +466,7 @@ Item {
                 active: (boxDevice.hasGeigerCounter && boxDevice.radioactivityM > 1)
 
                 sourceComponent: AlarmIndicator {
-                    source: "qrc:/assets/icons_custom/nuclear_icon.svg"
+                    source: "qrc:/assets/gfx/icons/nuclear_icon.svg"
                     color: {
                         if (boxDevice.radioactivityM > 10)
                             return Theme.colorRed
@@ -479,7 +481,7 @@ Item {
                 active: false
 
                 sourceComponent: AlarmIndicator {
-                    source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/warning.svg"
                     color: Theme.colorYellow
                 }
             }
@@ -530,15 +532,15 @@ Item {
 
                     source: {
                         if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
-                            return "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
+                            return "qrc:/assets/icons/material-icons/duotone/settings_bluetooth.svg"
                         } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
-                            return "qrc:/assets/icons_material/duotone-bluetooth_searching-24px.svg"
+                            return "qrc:/assets/icons/material-icons/duotone/bluetooth_searching.svg"
                         } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
-                            return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+                            return "qrc:/assets/icons/material-icons/duotone/bluetooth_connected.svg"
                         } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
-                            return "qrc:/assets/icons_material/duotone-bluetooth_connected-24px.svg"
+                            return "qrc:/assets/icons/material-icons/duotone/bluetooth_connected.svg"
                         }
-                        return "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                        return "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
                     }
 
                     SequentialAnimation on opacity {
@@ -565,7 +567,7 @@ Item {
 
                 visible: listMode
                 color: boxDevice.hasData ? Theme.colorHighContrast : Theme.colorSubText
-                source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
             }
         }
 

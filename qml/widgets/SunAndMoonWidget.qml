@@ -103,14 +103,14 @@ Item {
                     }
 */
                     source: {
-                        if (sunAndMoon.moonphaseName === "New") return "qrc:/assets/icons_custom/moon_1.svg"
-                        if (sunAndMoon.moonphaseName === "Evening Crescent") return "qrc:/assets/icons_custom/moon_2.svg"
-                        if (sunAndMoon.moonphaseName === "First Quarter") return "qrc:/assets/icons_custom/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Waxing Gibbous") return "qrc:/assets/icons_custom/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Full") return "qrc:/assets/icons_custom/moon_4.svg"
-                        if (sunAndMoon.moonphaseName === "Waning Gibbous") return "qrc:/assets/icons_custom/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Last Quarter") return "qrc:/assets/icons_custom/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Morning Crescent") return "qrc:/assets/icons_custom/moon_2.svg"
+                        if (sunAndMoon.moonphaseName === "New") return "qrc:/assets/gfx/icons/moon_1.svg"
+                        if (sunAndMoon.moonphaseName === "Evening Crescent") return "qrc:/assets/gfx/icons/moon_2.svg"
+                        if (sunAndMoon.moonphaseName === "First Quarter") return "qrc:/assets/gfx/icons/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Waxing Gibbous") return "qrc:/assets/gfx/icons/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Full") return "qrc:/assets/gfx/icons/moon_4.svg"
+                        if (sunAndMoon.moonphaseName === "Waning Gibbous") return "qrc:/assets/gfx/icons/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Last Quarter") return "qrc:/assets/gfx/icons/moon_3.svg"
+                        if (sunAndMoon.moonphaseName === "Morning Crescent") return "qrc:/assets/gfx/icons/moon_2.svg"
                     }
                     color: Theme.colorIcon
                 }
@@ -214,7 +214,7 @@ Item {
                     anchors.centerIn: parent
                     width: 24
                     height: 24
-                    source: "qrc:/assets/icons_material/baseline-brightness_5-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/weather/brightness_5.svg"
                     color: Theme.colorOrange
 
                     NumberAnimation on rotation {
@@ -242,7 +242,7 @@ Item {
                     anchors.centerIn: parent
                     width: 24
                     height: 24
-                    source: "qrc:/assets/icons_material/baseline-brightness_2-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
                     color: Theme.colorBlue
                 }
             }
@@ -258,7 +258,7 @@ Item {
                 IconSvg {
                     width: 40
                     height: 40
-                    source: "qrc:/assets/icons_material/baseline-brightness_5-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/weather/brightness_5.svg"
                     color: Theme.colorIcon
                 }
                 Column {
@@ -269,7 +269,7 @@ Item {
                             width: 16
                             height: 16
                             rotation: 90
-                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            source: "qrc:/assets/icons/material-symbols/arrow_back.svg"
                             color: Theme.colorSubText
                         }
                         Text {
@@ -287,7 +287,7 @@ Item {
                             width: 16
                             height: 16
                             rotation: -90
-                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            source: "qrc:/assets/icons/material-symbols/arrow_back.svg"
                             color: Theme.colorSubText
                         }
                         Text {
@@ -322,7 +322,7 @@ Item {
                             width: 16
                             height: 16
                             rotation: 90
-                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            source: "qrc:/assets/icons/material-symbols/arrow_back.svg"
                             color: Theme.colorSubText
                         }
                     }
@@ -338,7 +338,7 @@ Item {
                             width: 16
                             height: 16
                             rotation: -90
-                            source: "qrc:/assets/icons_material/baseline-arrow_back-24px.svg"
+                            source: "qrc:/assets/icons/material-symbols/arrow_back.svg"
                             color: Theme.colorSubText
                         }
                     }
@@ -347,7 +347,7 @@ Item {
                 IconSvg {
                     width: 36
                     height: 36
-                    source: "qrc:/assets/icons_material/baseline-brightness_2-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
                     color: Theme.colorIcon
                 }
             }

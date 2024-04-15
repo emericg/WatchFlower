@@ -17,7 +17,7 @@ Rectangle {
         width: parent.width*0.66
         height: width
 
-        source: "qrc:/assets/logos/watchflower_monochrome.svg"
+        source: "qrc:/assets/gfx/logos/watchflower_monochrome.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorIcon
         opacity: 0.8

@@ -68,7 +68,7 @@ Loader {
                         width: 96
                         height: 96
 
-                        source: "qrc:/assets/logos/logo.svg"
+                        source: "qrc:/assets/gfx/logos/logo.svg"
                         sourceSize: Qt.size(width, height)
 
                         MouseArea {
@@ -108,7 +108,7 @@ Loader {
                         width: 160
 
                         text: qsTr("WEBSITE")
-                        source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/link.svg"
                         sourceSize: 28
                         font.bold: true
                         fullColor: true
@@ -121,7 +121,7 @@ Loader {
                         width: 160
 
                         text: qsTr("SUPPORT")
-                        source: "qrc:/assets/icons_material/baseline-support-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/support.svg"
                         sourceSize: 22
                         font.bold: true
                         fullColor: true
@@ -135,7 +135,7 @@ Loader {
                         visible: (appWindow.width > 800)
 
                         text: qsTr("GitHub")
-                        source: "qrc:/assets/logos/github.svg"
+                        source: "qrc:/assets/gfx/logos/github.svg"
                         sourceSize: 22
                         font.bold: true
                         fullColor: true
@@ -175,7 +175,7 @@ Loader {
                     width: ((parent.width - parent.spacing) / 2)
 
                     text: qsTr("WEBSITE")
-                    source: "qrc:/assets/icons_material/baseline-insert_link-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/link.svg"
                     sourceSize: 28
                     font.bold: true
                     fullColor: true
@@ -188,7 +188,7 @@ Loader {
                     width: ((parent.width - parent.spacing) / 2)
 
                     text: qsTr("SUPPORT")
-                    source: "qrc:/assets/icons_material/baseline-support-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/support.svg"
                     sourceSize: 22
                     font.bold: true
                     fullColor: true
@@ -203,7 +203,7 @@ Loader {
             ListItem { // description
                 width: parent.width
                 text: qsTr("A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'.")
-                source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/info-fill.svg"
             }
 
             IconSvg { // image devices
@@ -214,7 +214,7 @@ Loader {
 
                 height: 96
                 visible: isPhone
-                source: isPhone ? "qrc:/assets/tutorial/welcome-devices.svg" : ""
+                source: isPhone ? "qrc:/assets/gfx/tutorial/welcome-devices.svg" : ""
                 fillMode: Image.PreserveAspectFit
                 color: Theme.colorPrimary
             }
@@ -223,8 +223,8 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
-                source: "qrc:/assets/icons_material/baseline-supervised_user_circle-24px.svg"
-                indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/supervised_user_circle.svg"
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://emeric.io")
             }
@@ -234,8 +234,8 @@ Loader {
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("Rate the application")
-                source: "qrc:/assets/icons_material/baseline-stars-24px.svg"
-                indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/stars-fill.svg"
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 
                 onClicked: {
                     if (Qt.platform.os === "android")
@@ -251,9 +251,9 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Open the tutorial")
-                source: "qrc:/assets/icons_material/baseline-import_contacts-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/import_contacts-fill.svg"
                 sourceSize: 28
-                indicatorSource: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                 onClicked: screenTutorial.loadScreenFrom("About")
             }
@@ -267,9 +267,9 @@ Loader {
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("About app permissions")
-                source: "qrc:/assets/icons_material/baseline-flaky-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/flaky.svg"
                 sourceSize: 24
-                indicatorSource: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                 onClicked: screenAboutPermissions.loadScreenFrom("About")
             }
@@ -280,9 +280,9 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Release notes")
-                source: "qrc:/assets/icons_material/outline-new_releases-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/new_releases.svg"
                 sourceSize: 24
-                indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
             }
@@ -293,9 +293,9 @@ Loader {
                 width: parent.width
 
                 text: qsTr("Supported sensors")
-                source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/check_circle.svg"
                 sourceSize: 24
-                indicatorSource: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
             }
@@ -319,7 +319,7 @@ Loader {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: dependenciesText.verticalCenter
 
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    source: "qrc:/assets/icons/material-symbols/settings.svg"
                     color: Theme.colorSubText
                 }
 
@@ -388,7 +388,7 @@ Loader {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: translatorsText.verticalCenter
 
-                    source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/translate.svg"
                     color: Theme.colorSubText
                 }
 

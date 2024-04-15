@@ -472,7 +472,7 @@ Loader {
                         anchors.centerIn: parent
 
                         visible: (currentDevice && !currentDevice.hasDataToday)
-                        source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
                         color: cccc
                     }
 
@@ -553,7 +553,7 @@ Loader {
 
                         visible: (currentDevice && currentDevice.hasDataToday && primary === "radioactivity")
                         color: cccc
-                        source: "qrc:/assets/icons_custom/nuclear_icon_big.svg"
+                        source: "qrc:/assets/gfx/icons/nuclear_icon_big.svg"
 
                         property real minOpacity: 0.5
                         property real maxOpacity: 1
@@ -614,7 +614,7 @@ Loader {
                         height: 24
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons_material/duotone-schedule-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/schedule.svg"
                         color: cccc
                     }
                     Text {
@@ -648,7 +648,7 @@ Loader {
                         height: 20
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
                         color: cccc
 
                         opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
@@ -692,7 +692,7 @@ Loader {
                         height: 24
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons_material/duotone-pin_drop-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
                         color: cccc
                     }
                 }
@@ -1100,7 +1100,7 @@ Loader {
 
                                         title: qsTr("Temperature")
                                         legend: "°" + settingsManager.tempUnit
-                                        icon: "qrc:/assets/icons_custom/thermometer-24px.svg"
+                                        icon: "qrc:/assets/gfx/icons/thermometer.svg"
                                         value: currentDevice.temperature
                                         precision: 1
                                         onSensorSelection: primary = "hygrometer"
@@ -1113,7 +1113,7 @@ Loader {
 
                                         title: qsTr("Humidity")
                                         legend: qsTr("%RH")
-                                        icon: "qrc:/assets/icons_material/duotone-water_full-24px.svg"
+                                        icon: "qrc:/assets/icons/material-icons/duotone/water_full.svg"
                                         value: currentDevice.humidity
                                         precision: 0
                                         onSensorSelection: primary = "hygrometer"
@@ -1126,7 +1126,7 @@ Loader {
 
                                         title: qsTr("Pressure")
                                         legend: qsTr("hPa")
-                                        icon: "qrc:/assets/icons_material/duotone-speed-24px.svg"
+                                        icon: "qrc:/assets/icons/material-icons/duotone/speed.svg"
                                         value: currentDevice.pressure
                                         precision: 0
                                     }
@@ -1138,7 +1138,7 @@ Loader {
 
                                         title: qsTr("Luminosity")
                                         legend: qsTr("lux")
-                                        icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                                        icon: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
                                         value: currentDevice.luminosityLux
                                         precision: 0
                                     }
@@ -1149,7 +1149,7 @@ Loader {
 
                                         title: qsTr("UV index")
                                         legend: ""
-                                        icon: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                                        icon: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
                                         value: currentDevice.uv
                                         precision: 0
                                     }
@@ -1161,7 +1161,7 @@ Loader {
 
                                         title: qsTr("Sound level")
                                         legend: qsTr("db")
-                                        icon: "qrc:/assets/icons_material/duotone-mic-24px.svg"
+                                        icon: "qrc:/assets/icons/material-icons/duotone/mic.svg"
                                         value: 47
                                         precision: 0
                                     }
@@ -1173,7 +1173,7 @@ Loader {
 
                                         title: qsTr("Wind direction")
                                         legend: "north"
-                                        icon: "qrc:/assets/icons_material/baseline-near_me-24px.svg"
+                                        icon: "qrc:/assets/icons/material-symbols/near_me.svg"
                                         value: 0
                                         precision: 0
                                     }
@@ -1184,7 +1184,7 @@ Loader {
 
                                         title: qsTr("Wind speed")
                                         legend: qsTr("km/h")
-                                        icon: "qrc:/assets/icons_material/baseline-air-24px.svg"
+                                        icon: "qrc:/assets/icons/material-symbols/sensors/air.svg"
                                         value: 16
                                         precision: 0
                                     }
@@ -1196,7 +1196,7 @@ Loader {
 
                                         title: qsTr("Rain")
                                         legend: qsTr("mm")
-                                        icon: "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+                                        icon: "qrc:/assets/icons/material-icons/duotone/local_drink.svg"
                                         value: 7
                                         precision: 0
                                     }

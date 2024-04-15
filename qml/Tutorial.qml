@@ -99,7 +99,7 @@ Rectangle {
                             height: width*0.229
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/tutorial/welcome-devices.svg"
+                            source: "qrc:/assets/gfx/tutorial/welcome-devices.svg"
                             color: Theme.colorHeaderContent
                             fillMode: Image.PreserveAspectFit
                         }
@@ -120,7 +120,7 @@ Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             text: qsTr("Supported sensors")
-                            source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
                             sourceSize: 20
                             layoutDirection: Qt.RightToLeft
                             fullColor: true
@@ -162,7 +162,7 @@ Rectangle {
                             height: width*0.777
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/tutorial/welcome-bluetooth-searching.svg"
+                            source: "qrc:/assets/gfx/tutorial/welcome-bluetooth-searching.svg"
                             color: Theme.colorHeaderContent
                             fillMode: Image.PreserveAspectFit
                         }
@@ -227,7 +227,7 @@ Rectangle {
                             height: width*0.229
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/tutorial/welcome-app-connected.svg"
+                            source: "qrc:/assets/gfx/tutorial/welcome-app-connected.svg"
                             color: Theme.colorHeaderContent
                             fillMode: Image.PreserveAspectFit
                         }
@@ -279,7 +279,7 @@ Rectangle {
                             height: width*0.2
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/tutorial/welcome-plants.svg"
+                            source: "qrc:/assets/gfx/tutorial/welcome-plants.svg"
                             color: Theme.colorHeaderContent
                             fillMode: Image.PreserveAspectFit
                         }
@@ -301,7 +301,7 @@ Rectangle {
                             height: width*0.1797
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            source: "qrc:/assets/tutorial/welcome-limits.svg"
+                            source: "qrc:/assets/gfx/tutorial/welcome-limits.svg"
                             color: Theme.colorHeaderContent
                             fillMode: Image.PreserveAspectFit
                         }

@@ -43,7 +43,7 @@ DrawerThemed {
 
                     width: 40
                     height: 40
-                    source: "qrc:/assets/logos/logo.svg"
+                    source: "qrc:/assets/gfx/logos/logo.svg"
                 }
                 Text {
                     id: textHeader
@@ -87,7 +87,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "DeviceList")
                     text: qsTr("Sensors")
-                    source: "qrc:/assets/logos/watchflower_tray_dark.svg"
+                    source: "qrc:/assets/gfx/logos/watchflower_tray_dark.svg"
 
                     onClicked: {
                         screenDeviceList.loadScreen()
@@ -98,7 +98,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "Settings" || appContent.state === "SettingsAdvanced")
                     text: qsTr("Settings")
-                    source: "qrc:/assets/icons_material/outline-settings-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/settings.svg"
 
                     onClicked: {
                         screenSettings.loadScreen()
@@ -109,7 +109,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
                     text: qsTr("About")
-                    source: "qrc:/assets/icons_material/outline-info-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/info-fill.svg"
 
                     onClicked: {
                         screenAbout.loadScreen()
@@ -124,7 +124,7 @@ DrawerThemed {
                 ////////
 
                 DrawerItem {
-                    source: "qrc:/assets/icons_material/baseline-sort-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/sort.svg"
                     text: {
                         var txt = qsTr("Order by:") + " "
                         if (settingsManager.orderBy === "waterlevel") {
@@ -180,7 +180,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Refresh sensor data")
 
-                    source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/autorenew.svg"
                     iconAnimation: deviceManager.updating ? "rotate" : "fade"
                     iconAnimated: (deviceManager.updating || deviceManager.listening)
 
@@ -201,7 +201,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Sync sensors history")
 
-                    source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
+                    source: "qrc:/assets/gfx/icons/duotone-date_all-24px.svg"
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.syncing
 
@@ -222,7 +222,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Search for new sensors")
 
-                    source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/search.svg"
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.scanning
 
@@ -257,7 +257,7 @@ DrawerThemed {
             DrawerItem {
                 highlighted: (appContent.state === "PlantBrowser")
                 text: qsTr("Plant browser")
-                source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/sensors/local_florist.svg"
 
                 onClicked: {
                     screenPlantBrowser.loadScreenFrom("DeviceList")
@@ -268,7 +268,7 @@ DrawerThemed {
             DrawerItem {
                 highlighted: (appContent.state === "DeviceBrowser")
                 text: qsTr("Device browser")
-                source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/sensors/radar.svg"
 
                 enabled: deviceManager.bluetooth
 

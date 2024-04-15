@@ -172,7 +172,7 @@ Loader {
 
                             visible: plantSearchBox.text.length
                             highlightMode: "color"
-                            source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
+                            source: "qrc:/assets/icons/material-symbols/backspace-fill.svg"
 
                             onClicked: plantSearchBox.text = ""
                         }
@@ -182,7 +182,7 @@ Loader {
                             height: 24
                             anchors.verticalCenter: parent.verticalCenter
 
-                            source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+                            source: "qrc:/assets/icons/material-symbols/search.svg"
                             color: Theme.colorText
                         }
                     }
@@ -337,7 +337,7 @@ Loader {
                     Layout.maximumWidth: 320
 
                     text: qsTr("Choose this plant")
-                    source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/check_circle.svg"
 
                     onClicked: {
                          selectedDevice.setPlantName(plantScreen.currentPlant.name)
@@ -405,7 +405,7 @@ Loader {
                     Layout.maximumWidth: 999
 
                     text: qsTr("Choose this plant")
-                    source: "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/check_circle.svg"
 
                     onClicked: {
                          selectedDevice.setPlantName(plantScreen.currentPlant.name)

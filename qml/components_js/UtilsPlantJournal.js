@@ -63,23 +63,23 @@ function getJournalEntryIcon(entryType) {
     var src = ""
 
     if (entryType === JournalUtils.JournalUtils.JOURNAL_UNKNOWN) {
-        src = "qrc:/assets/icons_material/duotone-edit-24px.svg"
+        src = "qrc:/assets/icons/material-icons/duotone/edit.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_COMMENT) {
-        src = "qrc:/assets/icons_material/duotone-edit-24px.svg"
+        src = "qrc:/assets/icons/material-icons/duotone/edit.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_PHOTO) {
-        src = "qrc:/assets/icons_material/duotone-edit-24px.svg"
+        src = "qrc:/assets/icons/material-icons/duotone/edit.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_WATER) {
-        src = "qrc:/assets/icons_material/duotone-local_drink-24px.svg"
+        src = "qrc:/assets/icons/material-icons/duotone/local_drink.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_FERTILIZE) {
-        src = "qrc:/assets/icons_material/baseline-tonality-24px.svg"
+        src = "qrc:/assets/icons/material-symbols/sensors/tonality.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_PRUNE) {
-        src = "qrc:/assets/icons_material/baseline-content_cut-24px.svg"
+        src = "qrc:/assets/icons/material-symbols/content_cut.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_ROTATE) {
-        src = "qrc:/assets/icons_material/duotone-rotate_90_degrees_ccw-24px.svg"
+        src = "qrc:/assets/icons/material-icons/duotone/rotate_90_degrees_ccw.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_MOVE) {
-        src = "qrc:/assets/icons_material/baseline-open_with-24px.svg"
+        src = "qrc:/assets/icons/material-symbols/open_with.svg"
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_REPOT) {
-        src = "qrc:/assets/icons_custom/pot_flower-24px.svg"
+        src = "qrc:/assets/gfx/icons/pot_flower-24px.svg"
     }
 
     return src

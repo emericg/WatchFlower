@@ -34,7 +34,7 @@ Rectangle {
 
             text: qsTr("Refresh sensor data")
             tooltipText: text
-            source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/autorenew.svg"
             iconColor: Theme.colorHeaderContent
             textColor: Theme.colorHeaderContent
             backgroundColor: Qt.darker(Theme.colorSeparator, 1.1)
@@ -58,7 +58,7 @@ Rectangle {
 
             text: qsTr("Sync sensors history")
             tooltipText: text
-            source: "qrc:/assets/icons_custom/duotone-date_all-24px.svg"
+            source: "qrc:/assets/gfx/icons/duotone-date_all-24px.svg"
             iconColor: Theme.colorHeaderContent
             textColor: Theme.colorHeaderContent
             backgroundColor: Qt.darker(Theme.colorSeparator, 1.1)
@@ -77,7 +77,7 @@ Rectangle {
 
             text: qsTr("Search for new sensors")
             tooltipText: text
-            source: "qrc:/assets/icons_material/baseline-search-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/search.svg"
             iconColor: Theme.colorHeaderContent
             textColor: Theme.colorHeaderContent
             backgroundColor: Qt.darker(Theme.colorSeparator, 1.1)
@@ -102,7 +102,7 @@ Rectangle {
             height: 36
             layoutDirection: Qt.RightToLeft
 
-            source: "qrc:/assets/icons_material/baseline-filter_list-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/filter_list.svg"
             primaryColor: Qt.darker(Theme.colorSeparator, 1.1)
             fullColor: true
 

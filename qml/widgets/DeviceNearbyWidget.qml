@@ -78,8 +78,8 @@ Item {
             visible: deviceSupported
             enabled: true
 
-            source: deviceBlacklisted ? "qrc:/assets/icons_material/outline-add_circle-24px.svg"
-                                      : "qrc:/assets/icons_material/outline-remove_circle-24px.svg"
+            source: deviceBlacklisted ? "qrc:/assets/icons/material-symbols/add_circle.svg"
+                                      : "qrc:/assets/icons/material-symbols/remove_circle.svg"
             color: {
                 if (ma.hovered) return Theme.colorPrimary
                 if (deviceBlacklisted) return Theme.colorRed
@@ -113,8 +113,8 @@ Item {
             width: 20
             height: 20
             color: deviceSupported ? Theme.colorGreen : Theme.colorSubText
-            source: deviceSupported ? "qrc:/assets/icons_material/baseline-check_circle-24px.svg"
-                                    : "qrc:/assets/icons_material/baseline-help-24px.svg"
+            source: deviceSupported ? "qrc:/assets/icons/material-symbols/check_circle.svg"
+                                    : "qrc:/assets/icons/material-symbols/help.svg"
         }
 
         ////////

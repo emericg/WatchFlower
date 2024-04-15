@@ -92,7 +92,7 @@ Item {
                 width: 48; height: 48;
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/icons_material/baseline-chevron_left-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/chevron_left.svg"
 
                 onClicked: {
                     if (grid.month > 0) {
@@ -117,7 +117,7 @@ Item {
                 anchors.right: parent.right
                 width: 48; height: 48;
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                 onClicked: {
                     if (grid.month < 11) {

@@ -40,7 +40,7 @@ Loader {
                 IconSvg {
                     width: 10; height: 10;
                     anchors.centerIn: parent
-                    source: "qrc:/assets/icons_material/baseline-close-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/close.svg"
                     opacity: mouseArea.containsMouse ? 0.6 : 0
                     //Behavior on opacity { OpacityAnimator { duration: 133 } }
                 }

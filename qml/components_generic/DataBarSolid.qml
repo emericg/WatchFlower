@@ -284,7 +284,7 @@ Item {
                     color: Theme.colorRed
                     opacity: (warning && value > -20 && value < limitMin) ? 1 : 0
                     Behavior on opacity { OpacityAnimator { duration: animated ? 333 : 0 } }
-                    source: "qrc:/assets/icons_material/baseline-warning-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/warning.svg"
 
                     Rectangle {
                         width: hhh

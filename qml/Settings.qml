@@ -72,7 +72,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Application")
-                    source: "qrc:/assets/icons_material/baseline-settings-20px.svg"
+                    source: "qrc:/assets/icons/material-symbols/settings.svg"
                 }
 
                 ////////////////
@@ -92,7 +92,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-style-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/style.svg"
                     }
 
                     Text {
@@ -263,7 +263,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-brightness_4-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/brightness_4.svg"
                     }
 
                     Text {
@@ -329,7 +329,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/baseline-menu-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/menu.svg"
                     }
 
                     Text {
@@ -398,7 +398,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-translate-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/translate.svg"
                     }
 
                     Text {
@@ -479,7 +479,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-minimize-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/minimize.svg"
                     }
 
                     Text {
@@ -513,7 +513,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Background updates")
-                    source: "qrc:/assets/icons_material/baseline-android-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/android.svg"
 
                     visible: (Qt.platform.os === "android")
 
@@ -552,7 +552,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/baseline-autorenew-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/autorenew.svg"
                     }
 
                     Text {
@@ -650,7 +650,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/baseline-notifications_none-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/notifications.svg"
                     }
 
                     Text {
@@ -839,7 +839,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Bluetooth")
-                    source: "qrc:/assets/icons_material/baseline-bluetooth-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/sensors/bluetooth.svg"
                 }
 
                 ////////
@@ -861,7 +861,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/baseline-bluetooth_disabled-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
                     }
 
                     Text {
@@ -925,7 +925,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/baseline-radar-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/sensors/radar.svg"
                     }
 
                     Text {
@@ -989,7 +989,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-settings_bluetooth-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/settings_bluetooth.svg"
                     }
 
                     Text {
@@ -1068,7 +1068,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Plant sensors")
-                    source: "qrc:/assets/icons_material/outline-local_florist-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/sensors/local_florist.svg"
                 }
 
                 ////////////////
@@ -1088,7 +1088,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/timer.svg"
                     }
 
                     Text {
@@ -1150,7 +1150,7 @@ Loader {
                             width: 24
                             height: 24
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons_material/baseline-straighten-24px.svg"
+                            source: "qrc:/assets/icons/material-symbols/sliders.svg"
                         }
 
                         Text {
@@ -1263,7 +1263,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Thermometers")
-                    source: "qrc:/assets/icons_custom/thermometer_big-24px.svg"
+                    source: "qrc:/assets/gfx/icons/thermometer_big-24px.svg"
                 }
 
                 ////////////////
@@ -1283,7 +1283,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/duotone-timer-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/timer.svg"
                     }
 
                     Text {
@@ -1339,7 +1339,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/sensors/airware.svg"
                     }
 
                     Text {
@@ -1380,7 +1380,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Data archiving")
-                    source: "qrc:/assets/icons_material/baseline-archive-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/archive.svg"
                     visible: deviceManager.hasDevices
                 }
 

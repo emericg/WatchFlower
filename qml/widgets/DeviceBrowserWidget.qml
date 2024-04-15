@@ -123,7 +123,7 @@ Item {
 
                 IconSvg {
                     anchors.centerIn: parent
-                    source: "qrc:/assets/icons_material/duotone-devices-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/devices.svg"
                     color: Theme.colorIcon
                 }
             }

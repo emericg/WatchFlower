@@ -66,7 +66,7 @@ Item {
             visible: false
             asynchronous: true
             smooth: true
-            source: "qrc:/assets/tutorial/welcome-plants.svg"
+            source: "qrc:/assets/gfx/tutorial/welcome-plants.svg"
             fillMode: Image.TileHorizontally
         }
         ColorOverlay {

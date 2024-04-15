@@ -288,7 +288,7 @@ Item {
                             anchors.leftMargin: 8
                             anchors.verticalCenter: textInputPlant.verticalCenter
 
-                            source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
                             color: Theme.colorSubText
 
                             opacity: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 0.9 : 0
@@ -358,7 +358,7 @@ Item {
                             anchors.leftMargin: 8
                             anchors.verticalCenter: textInputLocation.verticalCenter
 
-                            source: "qrc:/assets/icons_material/duotone-edit-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
                             color: Theme.colorSubText
 
                             opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0

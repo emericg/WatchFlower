@@ -19,7 +19,7 @@ Rectangle {
         width: parent.width*0.66
         height: width
 
-        source: "qrc:/assets/icons_custom/pot_flower-24px.svg"
+        source: "qrc:/assets/gfx/icons/pot_flower-24px.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorIcon
         opacity: 0.9

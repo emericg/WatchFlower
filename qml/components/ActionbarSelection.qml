@@ -34,7 +34,7 @@ Rectangle {
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            source: "qrc:/assets/icons_material/baseline-backspace-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/backspace-fill.svg"
             sourceRotation: 180
             iconColor: Theme.colorActionbarContent
             backgroundColor: Theme.colorActionbarHighlight
@@ -69,7 +69,7 @@ Rectangle {
             onClicked: confirmDeleteDevice.open()
 
             text: qsTr("Delete")
-            source: "qrc:/assets/icons_material/baseline-delete-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/delete.svg"
         }
 
         ButtonCompactable {
@@ -84,7 +84,7 @@ Rectangle {
             onClicked: screenDeviceList.syncSelectedDevice()
 
             text: qsTr("Synchronize history")
-            source: "qrc:/assets/icons_material/duotone-date_range-24px.svg"
+            source: "qrc:/assets/icons/material-icons/duotone/date_range.svg"
         }
 
         ButtonCompactable {
@@ -99,7 +99,7 @@ Rectangle {
             onClicked: screenDeviceList.updateSelectedDevice()
 
             text: qsTr("Refresh")
-            source: "qrc:/assets/icons_material/baseline-refresh-24px.svg"
+            source: "qrc:/assets/icons/material-symbols/refresh.svg"
         }
     }
 

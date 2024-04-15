@@ -137,7 +137,7 @@ Popup {
                 anchors.right: parent.right
                 anchors.rightMargin: 24
                 anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/icons_material/duotone-restart_alt-24px.svg"
+                source: "qrc:/assets/icons/material-icons/duotone/restart_alt.svg"
                 iconColor: "white"
                 backgroundColor: Qt.lighter(Theme.colorPrimary, 0.9)
 
@@ -170,7 +170,7 @@ Popup {
                     width: 48; height: 48;
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-chevron_left-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/chevron_left.svg"
 
                     onClicked: {
                         if (grid.month > 0) {
@@ -195,7 +195,7 @@ Popup {
                     anchors.right: parent.right
                     width: 48; height: 48;
                     anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:/assets/icons_material/baseline-chevron_right-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                     onClicked: {
                         if (grid.month < 11) {

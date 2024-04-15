@@ -81,7 +81,7 @@ Item {
                         IconSvg {
                             width: widgetInterior.width / 7
                             height: width
-                            source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                            source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
                             color: Theme.colorIcon
                         }
                         Text {

@@ -477,7 +477,7 @@ Grid {
                     Layout.maximumHeight: 36
 
                     text: qsTr("Swap plant")
-                    source: "qrc:/assets/icons_material/baseline-swap_horiz-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/swap_horiz.svg"
 
                     onClicked: screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
                 }
@@ -763,7 +763,7 @@ Grid {
                         width: 24
                         height: 24
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons_material/outline-diameter-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/diameter.svg"
                     }
                     Text {
                         id: plantDiameterTxt
@@ -795,7 +795,7 @@ Grid {
                         width: 24
                         height: 24
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons_material/baseline-height-24px.svg"
+                        source: "qrc:/assets/icons/material-symbols/height.svg"
                     }
                     Text {
                         id: plantHeightTxt
@@ -894,7 +894,7 @@ Grid {
                         secondaryColor: Theme.colorBackground
 
                         text: "Wikipedia"
-                        source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
                         sourceSize: 16
 
                         onClicked: Qt.openUrlExternally("https://wikipedia.org/wiki/" + currentPlant.nameBotanical_url)
@@ -906,7 +906,7 @@ Grid {
                         secondaryColor: Theme.colorBackground
 
                         text: "Hortipedia"
-                        source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
                         sourceSize: 16
 
                         onClicked: Qt.openUrlExternally("https://hortipedia.com/" + currentPlant.nameBotanical_url)
@@ -918,7 +918,7 @@ Grid {
                         secondaryColor: Theme.colorBackground
 
                         text: "RHS"
-                        source: "qrc:/assets/icons_material/duotone-launch-24px.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
                         sourceSize: 16
 
                         onClicked: Qt.openUrlExternally("https://www.rhs.org.uk/plants/search-results?query=" + currentPlant.nameBotanical)
@@ -975,35 +975,35 @@ Grid {
                             anchors.fill: parent
                             opacity: 0.16
                             color: Theme.colorYellow
-                            source: "qrc:/assets/icons_custom/sunlight4-24px.svg"
+                            source: "qrc:/assets/gfx/icons/sunlight4.svg"
                         }
                         IconSvg {
                             id: sunlight2
                             anchors.fill: parent
                             opacity: 0.4
                             color: Theme.colorYellow
-                            source: "qrc:/assets/icons_custom/sunlight3-24px.svg"
+                            source: "qrc:/assets/gfx/icons/sunlight3.svg"
                         }
                         IconSvg {
                             id: sunlight3
                             anchors.fill: parent
                             opacity: 0.6
                             color: Theme.colorYellow
-                            source: "qrc:/assets/icons_custom/sunlight2-24px.svg"
+                            source: "qrc:/assets/gfx/icons/sunlight2.svg"
                         }
                         IconSvg {
                             id: sunlight4
                             anchors.fill: parent
                             opacity: 1
                             color: Theme.colorYellow
-                            source: "qrc:/assets/icons_custom/sunlight1-24px.svg"
+                            source: "qrc:/assets/gfx/icons/sunlight1.svg"
                         }
                         IconSvg {
                             id: sunlight_borders
                             anchors.fill: parent
                             opacity: 1
                             color: Theme.colorLowContrast
-                            source: "qrc:/assets/icons_custom/sunlight_borders-24px.svg"
+                            source: "qrc:/assets/gfx/icons/sunlight_borders.svg"
                         }
                     }
 
@@ -1061,35 +1061,35 @@ Grid {
                             anchors.fill: parent
                             opacity: 0.2
                             color: Theme.colorBlue
-                            source: "qrc:/assets/icons_custom/droplet4-24px.svg"
+                            source: "qrc:/assets/gfx/icons/droplet4.svg"
                         }
                         IconSvg {
                             id: water3
                             anchors.fill: parent
                             opacity: 0.5
                             color: Theme.colorBlue
-                            source: "qrc:/assets/icons_custom/droplet3-24px.svg"
+                            source: "qrc:/assets/gfx/icons/droplet3.svg"
                         }
                         IconSvg {
                             id: water2
                             anchors.fill: parent
                             opacity: 0.66
                             color: Theme.colorBlue
-                            source: "qrc:/assets/icons_custom/droplet2-24px.svg"
+                            source: "qrc:/assets/gfx/icons/droplet2.svg"
                         }
                         IconSvg {
                             id: water1
                             anchors.fill: parent
                             opacity: 1
                             color: Theme.colorBlue
-                            source: "qrc:/assets/icons_custom/droplet1-24px.svg"
+                            source: "qrc:/assets/gfx/icons/droplet1.svg"
                         }
                         IconSvg {
                             id: water_borders
                             anchors.fill: parent
                             opacity: 1
                             color: Theme.colorLowContrast
-                            source: "qrc:/assets/icons_custom/droplet_borders-24px.svg"
+                            source: "qrc:/assets/gfx/icons/droplet_borders.svg"
                         }
                     }
 
@@ -1280,7 +1280,7 @@ Grid {
 
                     opacity: 0.66
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/baseline-info-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/info-fill.svg"
                 }
 
                 Text {
@@ -1340,7 +1340,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/water_mid.svg"
                 }
                 Text {
                     anchors.left: imageHygro.right
@@ -1395,7 +1395,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/sensors/tonality.svg"
                 }
                 Text {
                     anchors.left: imageCondu.right
@@ -1449,7 +1449,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/baseline-tonality-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/sensors/tonality.svg"
                 }
                 Text {
                     anchors.left: imageSoilPH.right
@@ -1599,7 +1599,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/baseline-ac_unit-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/sensors/airware.svg"
                 }
                 Text {
                     anchors.left: imageTemp.right
@@ -1653,7 +1653,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons_material/duotone-water_mid-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/water_mid.svg"
                 }
                 Text {
                     anchors.left: imageHygro2.right
@@ -1708,7 +1708,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
                 }
                 Text {
                     anchors.left: imageLumi.right
@@ -1884,7 +1884,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons_material/duotone-wb_sunny-24px.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
                 }
                 Text {
                     anchors.left: imageLumiMmol.right
