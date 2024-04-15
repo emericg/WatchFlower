@@ -152,11 +152,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 
 Device::~Device()
 {
-    if (m_bleController)
-    {
-        m_bleController->disconnectFromDevice();
-        delete m_bleController;
-    }
+    deviceDisconnect();
 }
 
 /* ************************************************************************** */
@@ -203,8 +199,11 @@ void Device::deviceConnect()
     // Start the actual connection process
     if (m_bleController)
     {
-        setTimeoutTimer();
+        m_ble_status = DeviceUtils::DEVICE_CONNECTING;
+        Q_EMIT statusUpdated();
+
         m_bleController->connectToDevice();
+        setTimeoutTimer();
     }
 }
 
@@ -214,6 +213,9 @@ void Device::deviceDisconnect()
 
     if (m_bleController && m_bleController->state() != QLowEnergyController::UnconnectedState)
     {
+        m_ble_status = DeviceUtils::DEVICE_DISCONNECTING;
+        Q_EMIT statusUpdated();
+
         m_bleController->disconnectFromDevice();
     }
 }
@@ -440,26 +442,14 @@ void Device::refreshStop()
 {
     //qDebug() << "Device::refreshStop()" << getAddress() << getName();
 
-    if (m_bleController && m_bleController->state() != QLowEnergyController::UnconnectedState)
-    {
-        m_bleController->disconnectFromDevice();
-    }
-
-    if (m_ble_status != DeviceUtils::DEVICE_OFFLINE)
-    {
-        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-        Q_EMIT statusUpdated();
-    }
+    deviceDisconnect();
 }
 
 void Device::actionCanceled()
 {
     //qDebug() << "Device::actionCanceled()" << getAddress() << getName();
 
-    if (m_bleController)
-    {
-        m_bleController->disconnectFromDevice();
-    }
+    deviceDisconnect();
 
     refreshDataFinished(false);
 }
@@ -468,10 +458,7 @@ void Device::actionTimedout()
 {
     //qDebug() << "Device::actionTimedout()" << getAddress() << getName();
 
-    if (m_bleController)
-    {
-        m_bleController->disconnectFromDevice();
-    }
+    deviceDisconnect();
 
     refreshDataFinished(false);
 }
@@ -486,9 +473,6 @@ void Device::refreshRetry()
 void Device::actionStarted()
 {
     //qDebug() << "Device::actionStarted()" << getAddress() << getName();
-
-    m_ble_status = DeviceUtils::DEVICE_CONNECTING;
-    Q_EMIT statusUpdated();
 }
 
 void Device::refreshDataFinished(bool status, bool cached)
