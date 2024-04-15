@@ -461,7 +461,7 @@ bool UtilsAndroid::gpsutils_isGpsEnabled()
     bool status = false;
 
     jboolean verified = QJniObject::callStaticMethod<jboolean>(
-        "com/emeric/utils/QGpsUtils",
+        "io/emeric/utils/QGpsUtils",
         "checkGpsEnabled",
         "(Landroid/content/Context;)Z",
         QNativeInterface::QAndroidApplication::context());
@@ -479,7 +479,7 @@ bool UtilsAndroid::gpsutils_forceGpsEnabled()
     bool status = false;
 
     jboolean verified = QJniObject::callStaticMethod<jboolean>(
-        "com/emeric/utils/QGpsUtils",
+        "io/emeric/utils/QGpsUtils",
         "forceGpsEnabled",
         "(Landroid/content/Context;)Z",
         QNativeInterface::QAndroidApplication::context());
@@ -498,7 +498,7 @@ void UtilsAndroid::gpsutils_openLocationSettings()
     if (activity.isValid())
     {
         QJniObject intent = QJniObject::callStaticObjectMethod(
-            "com/emeric/utils/QGpsUtils",
+            "io/emeric/utils/QGpsUtils",
             "openLocationSettings",
             "()Landroid/content/Intent;",
             activity.object<jobject>());

@@ -40,13 +40,7 @@ class NotificationManager : public QObject
     Q_OBJECT
 
     Q_PROPERTY(QString notification READ getNotification WRITE setNotificationShort NOTIFY notificationChanged)
-
     Q_PROPERTY(bool permissionOS READ hasPermissionOS NOTIFY permissionsChanged)
-
-    static NotificationManager *instance;
-
-    NotificationManager();
-    ~NotificationManager();
 
     QString m_title;
     QString m_message;
@@ -59,12 +53,17 @@ class NotificationManager : public QObject
     UtilsIOSNotifications m_iosnotifier;
 #endif
 
+    // Singleton
+    static NotificationManager *instance;
+    NotificationManager();
+    ~NotificationManager();
+
 private slots:
     void updateNotificationAndroid();
     void updateNotificationIOS();
     void updateNotificationDesktop();
 
-signals:
+Q_SIGNALS:
     void notificationChanged();
     void permissionsChanged();
 
