@@ -187,6 +187,18 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
+                WeatherWidget {
+                    width: devicesView.cellWidth
+                    height: devicesView.cellWidth * (devicesView.listWidget ? 0.4 : 0.5)
+                    listMode: devicesView.listWidget
+                }
+
+                SunAndMoonWidget {
+                    width: devicesView.cellWidth
+                    height: devicesView.cellWidth * (devicesView.listWidget ? 0.6 : 0.5)
+                    listMode: devicesView.listWidget
+                }
+
                 DeviceBrowserWidget {
                     width: devicesView.cellWidth
                     height: devicesView.cellWidth * 0.33

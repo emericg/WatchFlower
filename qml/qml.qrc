@@ -31,6 +31,8 @@
 
         <file alias="DeviceWidget.qml">widgets/DeviceWidget.qml</file>
         <file alias="DeviceNearbyWidget.qml">widgets/DeviceNearbyWidget.qml</file>
+        <file alias="SunAndMoonWidget.qml">widgets/SunAndMoonWidget.qml</file>
+        <file alias="WeatherWidget.qml">widgets/WeatherWidget.qml</file>
         <file alias="DeviceBrowserWidget.qml">widgets/DeviceBrowserWidget.qml</file>
         <file alias="PlantBrowserWidget.qml">widgets/PlantBrowserWidget.qml</file>
 

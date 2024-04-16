@@ -190,6 +190,9 @@ ApplicationWindow {
                 case Qt.ApplicationActive:
                     //console.log("Qt.ApplicationActive")
 
+                    // Update sun position
+                    sunAndMoon.update()
+
                     // Check if we need an 'automatic' theme change
                     Theme.loadTheme(settingsManager.appTheme)
 
