@@ -55,6 +55,29 @@ T.Popup {
             ////////
 
             ActionMenuItem {
+                id: actionClose
+                width: parent.width
+
+                index: -1
+                text: qsTr("Close")
+                source: "qrc:/assets/icons/material-symbols/close.svg"
+                layoutDirection: actionMenu.layoutDirection
+                opacity: 0.8
+
+                onClicked: {
+                    close()
+                }
+            }
+
+            ListSeparatorPadded {
+                anchors.leftMargin: Theme.componentMargin
+                anchors.rightMargin: Theme.componentMargin
+                height: 9
+            }
+
+            ////////
+
+            ActionMenuItem {
                 id: actionUpdate
                 width: parent.width
 

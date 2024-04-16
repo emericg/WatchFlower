@@ -98,7 +98,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "Settings" || appContent.state === "SettingsAdvanced")
                     text: qsTr("Settings")
-                    source: "qrc:/assets/icons/material-symbols/settings.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
 
                     onClicked: {
                         screenSettings.loadScreen()
@@ -109,7 +109,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
                     text: qsTr("About")
-                    source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                    source: "qrc:/assets/icons/material-icons/duotone/info.svg"
 
                     onClicked: {
                         screenAbout.loadScreen()
@@ -201,7 +201,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Sync sensors history")
 
-                    source: "qrc:/assets/gfx/icons/duotone-date_all-24px.svg"
+                    source: "qrc:/assets/icons/material-symbols/merge_type.svg"
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.syncing
 

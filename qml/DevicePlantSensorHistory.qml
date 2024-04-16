@@ -282,13 +282,13 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.componentMargin
 
-            ButtonWireframe {
+            ButtonClear {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                //fullColor: (settingsManager.graphHistory === "monthly")
-                //primaryColor: Theme.colorPrimary
-                //secondaryColor: Theme.colorBackground
+                color: Theme.colorPrimary
+                colorBackground: (settingsManager.graphHistory === "monthly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: (settingsManager.graphHistory === "monthly") ? "white" : color
 
                 text: qsTr("Month")
                 onClicked: {
@@ -301,13 +301,13 @@ Item {
                 }
             }
 
-            ButtonWireframe {
+            ButtonClear {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                //fullColor: (settingsManager.graphHistory === "weekly")
-                //primaryColor: Theme.colorPrimary
-                //secondaryColor: Theme.colorBackground
+                color: Theme.colorPrimary
+                colorBackground: (settingsManager.graphHistory === "weekly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: (settingsManager.graphHistory === "weekly") ? "white" : color
 
                 text: qsTr("Week")
                 onClicked: {
@@ -320,13 +320,13 @@ Item {
                 }
             }
 
-            ButtonWireframe {
+            ButtonClear {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                //fullColor: (settingsManager.graphHistory === "daily")
-                //primaryColor: Theme.colorPrimary
-                //secondaryColor: Theme.colorBackground
+                color: Theme.colorPrimary
+                colorBackground: (settingsManager.graphHistory === "daily") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: (settingsManager.graphHistory === "daily") ? "white" : color
 
                 text: qsTr("Day")
                 onClicked: {

@@ -198,7 +198,7 @@ Loader {
             ListItem { // description
                 width: parent.width
                 text: qsTr("A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'.")
-                source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                source: "qrc:/assets/icons/material-symbols/info.svg"
             }
 
             IconSvg { // image devices
@@ -242,12 +242,39 @@ Loader {
                 }
             }
 
+            ListItemClickable { // release notes
+                width: parent.width
+
+                text: qsTr("Release notes")
+                source: "qrc:/assets/icons/material-symbols/new_releases.svg"
+                sourceSize: 28
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+
+                onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
+            }
+
+
+            ListItemClickable { // supported sensors
+                width: parent.width
+
+                text: qsTr("Supported sensors")
+                source: "qrc:/assets/icons/material-symbols/check_circle.svg"
+                sourceSize: 28
+                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+
+                onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
+            }
+
+            ////////
+
+            ListSeparator { }
+
             ListItemClickable { // tutorial
                 width: parent.width
 
                 text: qsTr("Open the tutorial")
                 source: "qrc:/assets/icons/material-symbols/import_contacts-fill.svg"
-                sourceSize: 28
+                sourceSize: 24
                 indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                 onClicked: screenTutorial.loadScreenFrom("About")
@@ -267,32 +294,6 @@ Loader {
                 indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
 
                 onClicked: screenAboutPermissions.loadScreenFrom("About")
-            }
-
-            ListSeparator { }
-
-            ListItemClickable { // release notes
-                width: parent.width
-
-                text: qsTr("Release notes")
-                source: "qrc:/assets/icons/material-symbols/new_releases.svg"
-                sourceSize: 24
-                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
-
-                onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
-            }
-
-            ListSeparator { }
-
-            ListItemClickable { // supported sensors
-                width: parent.width
-
-                text: qsTr("Supported sensors")
-                source: "qrc:/assets/icons/material-symbols/check_circle.svg"
-                sourceSize: 24
-                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
-
-                onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
             }
 
             ListSeparator { }
@@ -433,6 +434,8 @@ Loader {
                     }
                 }
             }
+
+            ListSeparator { }
 
             ////////
         }

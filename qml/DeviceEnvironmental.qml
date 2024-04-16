@@ -1100,7 +1100,7 @@ Loader {
 
                                         title: qsTr("Temperature")
                                         legend: "°" + settingsManager.tempUnit
-                                        icon: "qrc:/assets/gfx/icons/thermometer.svg"
+                                        icon: "qrc:/assets/gfx/icons/thermometer-24px.svg"
                                         value: currentDevice.temperature
                                         precision: 1
                                         onSensorSelection: primary = "hygrometer"

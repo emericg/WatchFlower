@@ -120,13 +120,13 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             spacing: Theme.componentMargin
 
-            ButtonWireframe {
+            ButtonClear {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                //fullColor: (plantInfos.visible)
-                //primaryColor: Theme.colorPrimary
-                //secondaryColor: Theme.colorBackground
+                color: Theme.colorPrimary
+                colorBackground: plantInfos.visible ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: plantInfos.visible ? "white" : color
 
                 text: qsTr("Plant")
                 onClicked: {
@@ -137,13 +137,13 @@ Item {
                 }
             }
 
-            ButtonWireframe {
+            ButtonClear {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                //fullColor: (plantLimits.visible)
-                //primaryColor: Theme.colorPrimary
-                //secondaryColor: Theme.colorBackground
+                color: Theme.colorPrimary
+                colorBackground: plantLimits.visible ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: plantLimits.visible ? "white" : color
 
                 text: qsTr("Limits")
                 onClicked: {
@@ -153,13 +153,13 @@ Item {
                 }
             }
 
-            ButtonWireframe {
+            ButtonClear {
                 width: 100
                 height: isPhone ? 32 : 36
 
-                //fullColor: (plantJournal.visible)
-                //primaryColor: Theme.colorPrimary
-                //secondaryColor: Theme.colorBackground
+                color: Theme.colorPrimary
+                colorBackground: plantJournal.visible ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: plantJournal.visible ? "white" : color
 
                 text: qsTr("Journal")
                 onClicked: {

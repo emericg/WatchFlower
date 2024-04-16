@@ -164,7 +164,7 @@ Popup {
                         height: 64
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        source: "qrc:/assets/icons/material-symbols/battery_alert.svg"
+                        source: "qrc:/assets/icons/material-icons/duotone/battery_alert.svg"
                         color: Theme.colorText
                     }
 

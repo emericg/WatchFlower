@@ -103,14 +103,14 @@ Item {
                     }
 */
                     source: {
-                        if (sunAndMoon.moonphaseName === "New") return "qrc:/assets/gfx/icons/moon_1.svg"
-                        if (sunAndMoon.moonphaseName === "Evening Crescent") return "qrc:/assets/gfx/icons/moon_2.svg"
-                        if (sunAndMoon.moonphaseName === "First Quarter") return "qrc:/assets/gfx/icons/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Waxing Gibbous") return "qrc:/assets/gfx/icons/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Full") return "qrc:/assets/gfx/icons/moon_4.svg"
-                        if (sunAndMoon.moonphaseName === "Waning Gibbous") return "qrc:/assets/gfx/icons/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Last Quarter") return "qrc:/assets/gfx/icons/moon_3.svg"
-                        if (sunAndMoon.moonphaseName === "Morning Crescent") return "qrc:/assets/gfx/icons/moon_2.svg"
+                        if (sunAndMoon.moonphaseName === "New") return "qrc:/assets/icons/material-symbols/weather/brightness_1-fill.svg"
+                        if (sunAndMoon.moonphaseName === "Evening Crescent") return "qrc:/assets/icons/material-symbols/weather/brightness_3.svg"
+                        if (sunAndMoon.moonphaseName === "First Quarter") return "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
+                        if (sunAndMoon.moonphaseName === "Waxing Gibbous") return "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
+                        if (sunAndMoon.moonphaseName === "Full") return "qrc:/assets/icons/material-symbols/weather/brightness_1.svg"
+                        if (sunAndMoon.moonphaseName === "Waning Gibbous") return "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
+                        if (sunAndMoon.moonphaseName === "Last Quarter") return "qrc:/assets/icons/material-symbols/weather/brightness_3.svg"
+                        if (sunAndMoon.moonphaseName === "Morning Crescent") return "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
                     }
                     color: Theme.colorIcon
                 }
@@ -258,7 +258,7 @@ Item {
                 IconSvg {
                     width: 40
                     height: 40
-                    source: "qrc:/assets/icons/material-symbols/weather/brightness_5.svg"
+                    source: "qrc:/assets/icons/material-symbols/weather/sunny.svg"
                     color: Theme.colorIcon
                 }
                 Column {

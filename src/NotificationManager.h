@@ -50,7 +50,7 @@ class NotificationManager : public QObject
     bool hasPermissionOS() const { return m_permOS; }
 
 #if defined(Q_OS_IOS)
-    UtilsIOSNotifications m_iosnotifier;
+    //UtilsIOSNotifications m_iosnotifier;
 #endif
 
     // Singleton
