@@ -106,6 +106,7 @@ Loader {
 
                     ButtonSolid {
                         width: 160
+                        height: 40
 
                         text: qsTr("WEBSITE")
                         source: "qrc:/assets/icons/material-symbols/link.svg"
@@ -118,6 +119,7 @@ Loader {
 
                     ButtonSolid {
                         width: 160
+                        height: 40
 
                         text: qsTr("SUPPORT")
                         source: "qrc:/assets/icons/material-symbols/support.svg"
@@ -130,6 +132,8 @@ Loader {
 
                     ButtonSolid {
                         width: 160
+                        height: 40
+
                         visible: (appWindow.width > 800)
 
                         text: qsTr("GitHub")
@@ -170,6 +174,7 @@ Loader {
                 ButtonFlat {
                     anchors.verticalCenter: parent.verticalCenter
                     width: ((parent.width - parent.spacing) / 2)
+                    height: 40
 
                     text: qsTr("WEBSITE")
                     source: "qrc:/assets/icons/material-symbols/link.svg"
@@ -182,6 +187,7 @@ Loader {
                 ButtonFlat {
                     anchors.verticalCenter: parent.verticalCenter
                     width: ((parent.width - parent.spacing) / 2)
+                    height: 40
 
                     text: qsTr("SUPPORT")
                     source: "qrc:/assets/icons/material-symbols/support.svg"

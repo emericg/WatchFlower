@@ -336,6 +336,7 @@ Flickable {
                 }
 
                 Row {
+                    visible: currentDevice.deviceInfos.deviceYear || currentDevice.deviceInfos.deviceIPrating
                     spacing: 32
 
                     Column {
@@ -378,6 +379,7 @@ Flickable {
                 }
 
                 Row {
+                    visible: currentDevice.deviceInfos.deviceBattery || currentDevice.deviceInfos.deviceScreen
                     spacing: 32
 
                     Column {
