@@ -63,7 +63,7 @@ bool AndroidShareUtils::checkMimeTypeView(const QString &mimeType)
 {
     QJniObject jsMime = QJniObject::fromString(mimeType);
     jboolean verified = QJniObject::callStaticMethod<jboolean>(
-                            "com/emeric/utils/QShareUtils",
+                            "io/emeric/utils/QShareUtils",
                             "checkMimeTypeView",
                             "(Ljava/lang/String;)Z",
                             jsMime.object<jstring>());
@@ -76,7 +76,7 @@ bool AndroidShareUtils::checkMimeTypeEdit(const QString &mimeType)
 {
     QJniObject jsMime = QJniObject::fromString(mimeType);
     jboolean verified = QJniObject::callStaticMethod<jboolean>(
-                            "com/emeric/utils/QShareUtils",
+                            "io/emeric/utils/QShareUtils",
                             "checkMimeTypeEdit",
                             "(Ljava/lang/String;)Z",
                             jsMime.object<jstring>());
@@ -90,7 +90,7 @@ void AndroidShareUtils::share(const QString &text, const QUrl &url)
     QJniObject jsText = QJniObject::fromString(text);
     QJniObject jsUrl = QJniObject::fromString(url.toString());
     jboolean ok = QJniObject::callStaticMethod<jboolean>(
-                      "com/emeric/utils/QShareUtils",
+                      "io/emeric/utils/QShareUtils",
                       "share",
                       "(Ljava/lang/String;Ljava/lang/String;)Z",
                       jsText.object<jstring>(), jsUrl.object<jstring>());
@@ -122,7 +122,7 @@ void AndroidShareUtils::sendFile(const QString &filePath, const QString &title,
         QJniObject jsTitle = QJniObject::fromString(title);
         QJniObject jsMimeType = QJniObject::fromString(mimeType);
         jboolean ok = QJniObject::callStaticMethod<jboolean>(
-                                            "com/emeric/utils/QShareUtils",
+                                            "io/emeric/utils/QShareUtils",
                                             "sendFile",
                                             "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
                                             jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
@@ -262,7 +262,7 @@ void AndroidShareUtils::viewFile(const QString &filePath, const QString &title,
         QJniObject jsPath = QJniObject::fromString(filePath);
         QJniObject jsTitle = QJniObject::fromString(title);
         QJniObject jsMimeType = QJniObject::fromString(mimeType);
-        jboolean ok = QJniObject::callStaticMethod<jboolean>("com/emeric/utils/QShareUtils",
+        jboolean ok = QJniObject::callStaticMethod<jboolean>("io/emeric/utils/QShareUtils",
                           "viewFile",
                           "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
                           jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);
@@ -391,7 +391,7 @@ void AndroidShareUtils::editFile(const QString &filePath, const QString &title,
         QJniObject jsTitle = QJniObject::fromString(title);
         QJniObject jsMimeType = QJniObject::fromString(mimeType);
 
-        jboolean ok = QJniObject::callStaticMethod<jboolean>("com/emeric/utils/QShareUtils",
+        jboolean ok = QJniObject::callStaticMethod<jboolean>("io/emeric/utils/QShareUtils",
                                                              "editFile",
                                                              "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)Z",
                                                              jsPath.object<jstring>(), jsTitle.object<jstring>(), jsMimeType.object<jstring>(), requestId);

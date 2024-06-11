@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-package com.emeric.utils;
+package io.emeric.utils;
 
 import android.content.Context;
 import android.database.Cursor;

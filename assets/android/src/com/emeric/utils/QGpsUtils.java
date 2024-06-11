@@ -20,7 +20,7 @@
  * SOFTWARE.
  */
 
-package com.emeric.utils;
+package io.emeric.utils;
 
 import java.lang.String;
 
