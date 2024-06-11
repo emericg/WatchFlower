@@ -14,7 +14,7 @@ on:
 
 env:
   APP_NAME: "WatchFlower"
-  APP_VERSION: "5.5"
+  APP_VERSION: "6.0"
   QT_VERSION: "6.6.3"
 
 #-------------------------------------------------------------------------------
@@ -51,14 +51,13 @@ jobs:
 
       # Install Qt (Android & desktop)
       - name: Install Qt (Android & desktop)
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: ${{env.QT_VERSION}}
-          aqtversion: '==3.1.*'
           host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'
-          modules: qtconnectivity qtcharts qtshadertools qt5compat
+          modules: qtconnectivity qtcharts
           extra: '--autodesktop'
 
       # Setup env
@@ -85,13 +84,12 @@ jobs:
 
       # Install Qt (iOS & desktop)
       - name: Install Qt (iOS & desktop)
-        uses: jurplel/install-qt-action@v3
+        uses: jurplel/install-qt-action@v4
         with:
           version: ${{env.QT_VERSION}}
-          aqtversion: '==3.1.*'
           host: 'mac'
           target: 'ios'
-          modules: qtconnectivity qtcharts qtshadertools qt5compat
+          modules: qtconnectivity qtcharts
           extra: '--autodesktop'
 
       # Setup env

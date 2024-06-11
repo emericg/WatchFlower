@@ -88,7 +88,7 @@ android {
         ndk.abiFilters = qtTargetAbiList.split(",")
 
         namespace 'com.emeric.watchflower'
-        versionName "5.5"
+        versionName "6.0"
         versionCode timestampInt
         manifestPlaceholders = [versionName: versionName, versionCode: versionCode]
     }
