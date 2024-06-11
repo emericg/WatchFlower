@@ -388,11 +388,11 @@ function getDeviceSensorIcon(sensorId) {
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_WIND_SPEED) {
         src = "qrc:/assets/icons/material-symbols/sensors/air.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PM1) {
-        src = "qrc:/assets/icons/material-symbols/air_filter.svg"
+        src = "qrc:/assets/icons/material-symbols/sensors/bubble_chart.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PM25) {
-        src = "qrc:/assets/icons/material-symbols/air_filter.svg"
+        src = "qrc:/assets/icons/material-symbols/sensors/bubble_chart.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PM10) {
-        src = "qrc:/assets/icons/material-symbols/air_filter.svg"
+        src = "qrc:/assets/icons/material-symbols/sensors/bubble_chart.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_O2) {
         src = "qrc:/assets/icons/material-symbols/sensors/air.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_O3) {

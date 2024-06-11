@@ -517,15 +517,16 @@ Loader {
 
                     visible: (Qt.platform.os === "android")
 
-                    ButtonExperimental {
+                    ButtonWireframe {
                         anchors.right: parent.right
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         height: 32
 
                         text: qsTr("about")
-                        primaryColor: Theme.colorRed
-                        borderColor: Theme.colorRed
+                        colorBackground: Theme.colorForeground
+                        colorText: Theme.colorRed
+                        colorBorder: Theme.colorRed
 
                         onClicked: popupBackgroundUpdates.open()
                     }

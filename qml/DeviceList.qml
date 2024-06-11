@@ -130,7 +130,7 @@ Item {
         anchors.right: parent.right
         z: 2
 
-        ////////////////
+        ////////
 
         ActionbarBluetooth {
             id: actionbarBluetoothStatus
@@ -138,13 +138,15 @@ Item {
             anchors.right: parent.right
         }
 
-        ////////////////
+        ////////
 
         ActionbarSelection {
             id: actionbarSelection
             anchors.left: parent.left
             anchors.right: parent.right
         }
+
+        ////////
     }
 
     ////////////////////////////////////////////////////////////////////////////

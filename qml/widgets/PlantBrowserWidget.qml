@@ -1,7 +1,5 @@
 import QtQuick
-import QtQuick.Controls
-
-import Qt5Compat.GraphicalEffects
+import QtQuick.Effects
 
 import ThemeEngine
 
@@ -69,12 +67,14 @@ Item {
             source: "qrc:/assets/gfx/tutorial/welcome-plants.svg"
             fillMode: Image.TileHorizontally
         }
-        ColorOverlay {
-            anchors.fill: sourceImg
+        MultiEffect {
+            id: overlayImg
             source: sourceImg
-            cached: true
+            anchors.fill: sourceImg
+            brightness: 1.0
+            colorization: 1.0
+            colorizationColor: Theme.colorIcon
             opacity: 0.2
-            color: Theme.colorIcon
         }
 
         ////

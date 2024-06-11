@@ -53,7 +53,6 @@
 
         <file alias="ActionMenuFixed.qml">components/ActionMenuFixed.qml</file>
         <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>
-        <file alias="ButtonExperimental.qml">components/ButtonExperimental.qml</file>
         <file alias="IndicatorsCompact.qml">components/IndicatorsCompact.qml</file>
         <file alias="IndicatorsSolid.qml">components/IndicatorsSolid.qml</file>
         <file alias="ItemEnvBox.qml">components/ItemEnvBox.qml</file>

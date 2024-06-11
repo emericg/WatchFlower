@@ -202,6 +202,7 @@ DrawerThemed {
                     text: qsTr("Sync sensors history")
 
                     source: "qrc:/assets/icons/material-symbols/merge_type.svg"
+                    sourceRotation: 180
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.syncing
 

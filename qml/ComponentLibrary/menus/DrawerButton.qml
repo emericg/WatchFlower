@@ -20,6 +20,7 @@ T.ItemDelegate {
 
     property string source
     property int sourceSize: 24
+    property int sourceRotation: 0
     property color sourceColor: Theme.colorIcon
 
     //property string text
@@ -94,6 +95,7 @@ T.ItemDelegate {
                 height: control.sourceSize
                 color: control.sourceColor
                 source: control.source
+                rotation: control.sourceRotation
 
                 NumberAnimation on rotation { // rotate animation // icon only
                     duration: 2000
