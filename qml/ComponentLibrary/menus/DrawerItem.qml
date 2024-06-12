@@ -19,6 +19,7 @@ T.ItemDelegate {
 
     property string source
     property int sourceSize: 24
+    property int sourceRotation: 0
     property color sourceColor: Theme.colorIcon
 
     //property string text
@@ -67,8 +68,10 @@ T.ItemDelegate {
 
                 width: control.sourceSize
                 height: control.sourceSize
-                color: control.sourceColor
+                rotation: control.sourceRotation
+
                 source: control.source
+                color: control.sourceColor
             }
         }
 

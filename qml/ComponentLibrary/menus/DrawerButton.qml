@@ -93,9 +93,10 @@ T.ItemDelegate {
 
                 width: control.sourceSize
                 height: control.sourceSize
-                color: control.sourceColor
-                source: control.source
                 rotation: control.sourceRotation
+
+                source: control.source
+                color: control.sourceColor
 
                 NumberAnimation on rotation { // rotate animation // icon only
                     duration: 2000

@@ -42,7 +42,13 @@ function makeUrl(pathInput) {
     var urlOut = '';
 
     if (typeof pathInput === 'string' || pathInput instanceof String) {
-        urlOut = "file://" + pathInput;
+        if (pathInput.slice(0, 7) != "file://") {
+            urlOut = "file://" + pathInput;
+        } else {
+            urlOut = pathInput;
+        }
+    } else {
+        urlOut = pathInput;
     }
 
     //console.log("makeUrl() in: " + pathInput + " / out: " + urlOut)
@@ -108,10 +114,12 @@ function isPictureFile(filePath) {
     var valid = false;
 
     if (extension.length !== 0) {
-        if (extension === "jpg" || extension === "jpeg" || extension === "webp" ||
+        if (extension === "jpg" || extension === "jpeg" ||
+            extension === "jp2" || extension === "j2k" || extension === "jxl" ||
+            extension === "webp" ||
             extension === "png" || extension === "gpr" ||
             extension === "gif" ||
-            extension === "heif" || extension === "heic" || extension === "avif" ||
+            extension === "avif" || extension === "heif" || extension === "heic" ||
             extension === "tga" || extension === "bmp" ||
             extension === "tif" || extension === "tiff" ||
             extension === "svg" ||
