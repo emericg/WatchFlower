@@ -15,7 +15,7 @@ Rectangle {
 
     property int headerHeight: isHdpi ? 58 : 64
 
-    property int headerPosition:  64
+    property int headerPosition: 64
 
     property string headerTitle: "WatchFlower"
 
@@ -53,15 +53,15 @@ Rectangle {
             headerTitle = qsTr("Welcome")
             menus.visible = false
 
-            buttonBack.source = "qrc:/assets/gfx/menus/menu_close.svg"
+            buttonBack.source = "qrc:/assets/icons/material-symbols/close.svg"
         } else {
             headerTitle = "WatchFlower"
             menus.visible = true
 
             if (appContent.state === "DeviceList") {
-                buttonBack.source = "qrc:/assets/gfx/menus/menu_logo_large.svg"
+                buttonBack.source = "qrc:/assets/gfx/logos/watchflower_monochrome.svg"
             } else {
-                buttonBack.source = "qrc:/assets/gfx/menus/menu_back.svg"
+                buttonBack.source = "qrc:/assets/gfx/icons/arrow_back.svg"
             }
         }
     }
@@ -103,21 +103,21 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     MouseArea { // left button
-        width: 40
-        height: 40
+        width: 44
+        height: 44
         anchors.left: parent.left
         anchors.leftMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
-        hoverEnabled: (buttonBack.source !== "qrc:/assets/gfx/menus/menu_logo_large.svg")
+        hoverEnabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.svg")
         onEntered: { buttonBackBg.opacity = 0.5; }
-        onExited: { buttonBackBg.opacity = 0; buttonBack.width = 24; }
+        onExited: { buttonBackBg.opacity = 0; buttonBack.width = 32; }
 
-        onPressed: buttonBack.width = 20
-        onReleased: buttonBack.width = 24
+        onPressed: buttonBack.width = 24
+        onReleased: buttonBack.width = 32
         onClicked: backButtonClicked()
 
-        enabled: (buttonBack.source !== "qrc:/assets/gfx/menus/menu_logo_large.svg" || wideMode)
+        enabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.svg" || wideMode)
         visible: enabled
 
         Rectangle {
@@ -132,11 +132,11 @@ Rectangle {
 
         IconSvg {
             id: buttonBack
-            width: 24
+            width: 32
             height: width
             anchors.centerIn: parent
 
-            source: "qrc:/assets/gfx/menus/menu_logo_large.svg"
+            source: "qrc:/assets/gfx/logos/watchflower_monochrome.svg"
             color: Theme.colorHeaderContent
         }
     }
@@ -488,7 +488,7 @@ Rectangle {
                 function onAppLanguageChanged() { buttonSort.setText() }
             }
 
-            property var sortmode: {
+            property int sortmode: {
                 if (settingsManager.orderBy === "waterlevel") {
                     return 3
                 } else if (settingsManager.orderBy === "plant") {
@@ -622,7 +622,7 @@ Rectangle {
                 height: headerHeight
 
                 text: headerCompact ? "" : qsTr("Sensor list")
-                source: "qrc:/assets/gfx/logos/watchflower_tray_dark.svg"
+                source: "qrc:/assets/gfx/logos/watchflower_tray_monochrome.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 

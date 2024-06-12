@@ -107,7 +107,7 @@ Item {
                 height: mobileMenu.hhh
 
                 text: qsTr("Sensors")
-                source: "qrc:/assets/gfx/logos/watchflower_tray_dark.svg"
+                source: "qrc:/assets/gfx/logos/watchflower_tray_monochrome.svg"
                 sourceSize: mobileMenu.hhi
                 colorContent: Theme.colorTabletmenuContent
                 colorHighlight: Theme.colorTabletmenuHighlight

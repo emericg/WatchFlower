@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Controls
 
 import ThemeEngine
@@ -10,16 +11,16 @@ Popup {
     y: singleColumn ? (appWindow.height - height)
                     : ((appWindow.height / 2) - (height / 2))
 
-    width: singleColumn ? parent.width : 640
-    height: contentColumn.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
+    width: singleColumn ? appWindow.width : 720
+    height: columnContent.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
     padding: Theme.componentMarginXL
+    margins: 0
 
+    dim: true
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     parent: Overlay.overlay
-
-    signal confirmed()
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -35,13 +36,20 @@ Popup {
             visible: singleColumn
             color: Theme.colorSeparator
         }
+
+        layer.enabled: !singleColumn
+        layer.effect: MultiEffect {
+            autoPaddingEnabled: true
+            shadowEnabled: true
+            shadowColor: ThemeEngine.isLight ? "#88000000" : "#aaffffff"
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Item {
         Column {
-            id: contentColumn
+            id: columnContent
             width: parent.width
             spacing: Theme.componentMarginXL
 
@@ -100,14 +108,13 @@ Popup {
                 width: parent.width
                 spacing: Theme.componentMargin
 
-                property var btnSize: singleColumn ? width : ((width-spacing) / 2)
+                property int btnSize: singleColumn ? width : ((width-spacing) / 2)
 
-                ButtonFlat {
+                ButtonClear {
                     width: parent.btnSize
+                    color: Theme.colorGrey
 
                     text: qsTr("Cancel")
-                    color: Theme.colorSubText
-
                     onClicked: popupCalibration.close()
                 }
 
@@ -118,9 +125,8 @@ Popup {
 
                     onClicked: {
                         if (selectedDevice) {
-                             selectedDevice.actionCalibrate()
+                            selectedDevice.actionCalibrate()
                         }
-                        popupCalibration.confirmed()
                         popupCalibration.close()
                     }
                 }

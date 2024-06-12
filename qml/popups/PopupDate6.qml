@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls
 
@@ -6,13 +7,16 @@ import ThemeEngine
 
 Popup {
     id: popupDate
-    width: appWindow.width * 0.9
-    x: (appWindow.width / 2) - (width / 2)
-    y: (appWindow.height / 2) - (height / 2)
 
+    x: singleColumn ? 0 : (appWindow.width / 2) - (width / 2)
+    y: singleColumn ? (appWindow.height - height)
+                    : ((appWindow.height / 2) - (height / 2))
+
+    width: singleColumn ? appWindow.width : 640
     padding: 0
     margins: 0
 
+    dim: true
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -31,7 +35,7 @@ Popup {
     property var minDate: null
     property var maxDate: null
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////
 
     signal updateDate(var newdate)
 
@@ -39,19 +43,19 @@ Popup {
         //console.log("openDate(" + date + ")")
 
         today = new Date()
+        minDate = null
+        maxDate = null
+
         initialDate = date
         selectedDate = date
         grid.year = date.getFullYear()
         grid.month = date.getMonth()
 
-        minDate = null
-        maxDate = null
-
-        printDate()
-
         // visual hacks
         //dow.width = dow.width - 8
         grid.width = dow.width - 8
+
+        printDate()
 
         popupDate.open()
     }
@@ -76,41 +80,86 @@ Popup {
         isSelectedDateToday = (today.toLocaleString(locale, "dd MMMM yyyy") === selectedDate.toLocaleString(locale, "dd MMMM yyyy"))
     }
 
+    function resetView() {
+        grid.month = today.getMonth()
+        grid.year = today.getFullYear()
+        printDate()
+    }
+    function resetDate() {
+        selectedDate = initialDate
+    }
+
     ////////////////////////////////////////////////////////////////////////////
 
-    enter: Transition { NumberAnimation { property: "opacity"; from: 0.5; to: 1.0; duration: 133; } }
-    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 233; } }
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.333; to: 1.0; duration: 133; } }
+    //exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 200; } }
 
-    ////////////////////////////////////////////////////////////////////////////
+    Overlay.modal: Rectangle {
+        color: "#000"
+        opacity: ThemeEngine.isLight ? 0.24 : 0.666
+    }
 
     background: Rectangle {
-        radius: Theme.componentRadius*2
+        radius: singleColumn ? 0 : Theme.componentRadius
         color: Theme.colorBackground
-        border.width: Theme.componentBorderWidth
-        border.color: Theme.colorSeparator
+
+        Item {
+            anchors.fill: parent
+
+            Rectangle { // title area
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: 80
+                color: Theme.colorPrimary
+            }
+
+            Rectangle { // border
+                anchors.fill: parent
+                radius: Theme.componentRadius
+                color: "transparent"
+                border.color: Theme.colorSeparator
+                border.width: singleColumn ? 0 : Theme.componentBorderWidth
+                opacity: 0.4
+            }
+
+            layer.enabled: !singleColumn
+            layer.effect: MultiEffect { // clip
+                maskEnabled: true
+                maskInverted: false
+                maskThresholdMin: 0.5
+                maskSpreadAtMin: 1.0
+                maskSpreadAtMax: 0.0
+                maskSource: ShaderEffectSource {
+                    sourceItem: Rectangle {
+                        x: background.x
+                        y: background.y
+                        width: background.width
+                        height: background.height
+                        radius: background.radius
+                    }
+                }
+            }
+        }
+
+        layer.enabled: !singleColumn
+        layer.effect: MultiEffect { // shadow
+            autoPaddingEnabled: true
+            shadowEnabled: true
+            shadowColor: ThemeEngine.isLight ? "#aa000000" : "#aaffffff"
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Column {
-        id: contentColumn
+        bottomPadding: screenPaddingNavbar + screenPaddingBottom
 
-        Rectangle {
-            id: titleArea
+        Item { // titleArea
             anchors.left: parent.left
             anchors.right: parent.right
 
+            clip: true
             height: 80
-            radius: Theme.componentRadius*2
-            color: Theme.colorPrimary
-
-            Rectangle {
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                height: parent.radius
-                color: parent.color
-            }
 
             Column {
                 anchors.left: parent.left
@@ -133,21 +182,23 @@ Popup {
                 }
             }
 
-            RoundButtonIcon {
+            RoundButtonSunken { // reset view
+                anchors.top: parent.top
+                anchors.topMargin: 12
                 anchors.right: parent.right
-                anchors.rightMargin: 24
-                anchors.verticalCenter: parent.verticalCenter
-                source: "qrc:/assets/icons/material-icons/duotone/restart_alt.svg"
-                iconColor: "white"
-                backgroundColor: Qt.lighter(Theme.colorPrimary, 0.9)
+                anchors.rightMargin: 12
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 12
+                width: height
 
                 visible: !(grid.year === today.getFullYear() && grid.month === today.getMonth())
+                source: "qrc:/assets/icons/material-icons/duotone/restart_alt.svg"
 
-                onClicked: {
-                    grid.month = today.getMonth()
-                    grid.year = today.getFullYear()
-                    printDate()
-                }
+                colorBackground: Theme.colorPrimary
+                colorHighlight: Qt.lighter(Theme.colorPrimary, 0.95)
+                colorIcon: "white"
+
+                onClicked: resetView()
             }
         }
 
@@ -157,20 +208,26 @@ Popup {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            spacing: 24
-            bottomPadding: 16
+            spacing: Theme.componentMarginXL
+            bottomPadding: Theme.componentMarginXL
 
-            Rectangle {
+            ////////
+
+            Rectangle { // month selector
                 height: 48
                 anchors.left: parent.left
                 anchors.right: parent.right
-                color: "#66dddddd"
+                anchors.margins: singleColumn ? 0 : Theme.componentBorderWidth
 
-                RoundButtonIcon {
-                    width: 48; height: 48;
+                color: "#eee"
+
+                RoundButtonSunken { // previous month
                     anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 48; height: 48;
+
                     source: "qrc:/assets/icons/material-symbols/chevron_left.svg"
+                    colorBackground: parent.color
 
                     onClicked: {
                         if (grid.month > 0) {
@@ -182,6 +239,7 @@ Popup {
                         printDate()
                     }
                 }
+
                 Text {
                     id: bigMonth
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -191,11 +249,14 @@ Popup {
                     font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                 }
-                RoundButtonIcon {
+
+                RoundButtonSunken { // next month
                     anchors.right: parent.right
-                    width: 48; height: 48;
                     anchors.verticalCenter: parent.verticalCenter
+                    width: 48; height: 48;
+
                     source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
+                    colorBackground: parent.color
 
                     onClicked: {
                         if (grid.month < 11) {
@@ -310,22 +371,18 @@ Popup {
 
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
+                anchors.rightMargin: Theme.componentMarginXL
                 spacing: Theme.componentMargin
 
-                ButtonFlat {
-                    height: 36
+                ButtonClear {
+                    color: Theme.colorGrey
+
                     text: qsTr("Cancel")
-
-                    color: Theme.colorSecondary
-
                     onClicked: popupDate.close()
                 }
 
                 ButtonFlat {
-                    height: 36
-                    text: qsTr("Validate")
-
+                    text: qsTr("Select")
                     onClicked: {
                         updateDate(selectedDate)
                         popupDate.close()

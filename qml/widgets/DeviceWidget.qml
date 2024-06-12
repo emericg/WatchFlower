@@ -85,6 +85,7 @@ Item {
             }
         }
 
+        // Various init
         updateSensorTitle()
         updateSensorStatus()
         updateSensorData()
@@ -93,7 +94,7 @@ Item {
     function updateSensorStatus() {
         // Status
         if (!boxDevice.deviceEnabled) {
-            textStatus.color = Theme.colorYellow
+            textStatus.color = Theme.colorGrey
             textStatus.text = qsTr("Disabled")
             return
         }
@@ -958,8 +959,8 @@ Item {
 
             SequentialAnimation on opacity {
                 loops: Animation.Infinite
-                PropertyAnimation { to: 0.16; duration: 1500; }
-                PropertyAnimation { to: 0.08; duration: 1500; }
+                PropertyAnimation { to: 0.24; duration: 1333; }
+                PropertyAnimation { to: 0.08; duration: 1333; }
             }
         }
     }

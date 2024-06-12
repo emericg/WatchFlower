@@ -126,7 +126,7 @@ Rectangle {
                 function onAppLanguageChanged() { buttonSort.setText() }
             }
 
-            property var sortmode: {
+            property int sortmode: {
                 if (settingsManager.orderBy === "waterlevel") {
                     return 3
                 } else if (settingsManager.orderBy === "plant") {

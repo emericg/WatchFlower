@@ -10,10 +10,12 @@ Popup {
     y: singleColumn ? (appWindow.height - height)
                     : ((appWindow.height / 2) - (height / 2))
 
-    width: singleColumn ? parent.width : 640
-    height: contentColumn.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
+    width: singleColumn ? appWindow.width : 720
+    height: columnContent.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
     padding: Theme.componentMarginXL
+    margins: 0
 
+    dim: true
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
@@ -28,6 +30,14 @@ Popup {
     }
 
     ////////////////////////////////////////////////////////////////////////////
+
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.5; to: 1.0; duration: 133; } }
+    //exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 200; } }
+
+    Overlay.modal: Rectangle {
+        color: "#000"
+        opacity: ThemeEngine.isLight ? 0.24 : 0.666
+    }
 
     background: Rectangle {
         color: Theme.colorBackground
@@ -47,7 +57,7 @@ Popup {
 
     contentItem: Item {
         Column {
-            id: contentColumn
+            id: columnContent
             width: parent.width
             spacing: Theme.componentMarginXL
 
@@ -99,11 +109,10 @@ Popup {
                     width: parent.width
                     spacing: Theme.componentMargin
 
-                    property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
+                    property int btnSize: singleColumn ? width : ((width-spacing*2) / 2)
 
                     ButtonFlat {
                         width: parent.btnSize
-
                         color: Theme.colorSecondary
 
                         text: qsTr("About Bluetooth permissions")
@@ -120,8 +129,7 @@ Popup {
 
                     ButtonFlat {
                         width: (parent.btnSize / 2 - 8)
-
-                        color: Theme.colorSubText
+                        color: Theme.colorGrey
 
                         text: qsTr("Cancel")
                         source: "qrc:/assets/icons/material-symbols/close.svg"
@@ -133,8 +141,7 @@ Popup {
 
                     ButtonFlat {
                         width: (parent.btnSize / 2 - 8)
-
-                        color: Theme.colorGreen
+                        color: Theme.colorSuccess
 
                         text: qsTr("Enable")
                         source: "qrc:/assets/icons/material-symbols/check.svg"
@@ -193,11 +200,10 @@ Popup {
                     width: parent.width
                     spacing: Theme.componentMargin
 
-                    property var btnSize: singleColumn ? width : ((width-spacing*2) / 2)
+                    property int btnSize: singleColumn ? width : ((width-spacing*2) / 2)
 
                     ButtonFlat {
                         width: parent.btnSize
-
                         color: Theme.colorSecondary
 
                         text: qsTr("About battery savers")
@@ -211,7 +217,6 @@ Popup {
 
                     ButtonFlat {
                         width: parent.btnSize
-
                         color: Theme.colorPrimary
 
                         text: qsTr("Application info panel")
@@ -225,7 +230,6 @@ Popup {
 
                     ButtonFlat {
                         width: parent.btnSize
-
                         color: Theme.colorGreen
                         layoutDirection: Qt.RightToLeft
 

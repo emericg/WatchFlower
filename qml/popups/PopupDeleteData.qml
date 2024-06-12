@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import QtQuick.Controls
 
 import ThemeEngine
@@ -10,18 +11,26 @@ Popup {
     y: singleColumn ? (appWindow.height - height)
                     : ((appWindow.height / 2) - (height / 2))
 
-    width: singleColumn ? parent.width : 640
-    height: contentColumn.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
+    width: singleColumn ? appWindow.width : 720
+    height: columnContent.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
     padding: Theme.componentMarginXL
+    margins: 0
 
+    dim: true
     modal: true
     focus: true
     closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
     parent: Overlay.overlay
 
-    signal confirmed()
-
     ////////////////////////////////////////////////////////////////////////////
+
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.5; to: 1.0; duration: 133; } }
+    //exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 200; } }
+
+    Overlay.modal: Rectangle {
+        color: "#000"
+        opacity: ThemeEngine.isLight ? 0.24 : 0.666
+    }
 
     background: Rectangle {
         color: Theme.colorBackground
@@ -35,13 +44,20 @@ Popup {
             visible: singleColumn
             color: Theme.colorSeparator
         }
+
+        layer.enabled: !singleColumn
+        layer.effect: MultiEffect {
+            autoPaddingEnabled: true
+            shadowEnabled: true
+            shadowColor: ThemeEngine.isLight ? "#88000000" : "#aaffffff"
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
     contentItem: Item {
         Column {
-            id: contentColumn
+            id: columnContent
             width: parent.width
             spacing: Theme.componentMarginXL
 
@@ -75,43 +91,38 @@ Popup {
                 width: parent.width
                 spacing: Theme.componentMargin
 
-                property var btnSize: singleColumn ? width : ((width-spacing*2) / 3)
+                property int btnSize: singleColumn ? width : ((width-spacing*2) / 3)
 
-                ButtonFlat {
+                ButtonClear {
                     width: parent.btnSize
+                    color: Theme.colorGrey
 
                     text: qsTr("Cancel")
-                    color: Theme.colorSubText
-
                     onClicked: popupDeleteData.close()
                 }
 
                 ButtonFlat {
                     width: parent.btnSize
+                    color: Theme.colorWarning
 
                     text: qsTr("Delete local data")
-                    color: Theme.colorOrange
-
                     onClicked: {
                         if (selectedDevice) {
                             selectedDevice.actionClearData()
                         }
-                        popupDeleteData.confirmed()
                         popupDeleteData.close()
                     }
                 }
 
                 ButtonFlat {
                     width: parent.btnSize
+                    color: Theme.colorError
 
                     text: qsTr("Delete sensor data")
-                    color: Theme.colorRed
-
                     onClicked: {
                         if (selectedDevice) {
-                             selectedDevice.actionClearDeviceData()
+                            selectedDevice.actionClearDeviceData()
                         }
-                        popupDeleteData.confirmed()
                         popupDeleteData.close()
                     }
                 }
