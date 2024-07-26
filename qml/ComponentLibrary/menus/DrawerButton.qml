@@ -42,8 +42,8 @@ T.ItemDelegate {
             anchors.rightMargin: 8
 
             RippleThemed {
-                width: parent.width
-                height: parent.height
+                anchors.fill: parent
+                anchor: control
 
                 pressed: control.pressed
                 active: enabled && (control.down || control.visualFocus || control.hovered)
