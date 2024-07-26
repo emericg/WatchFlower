@@ -46,8 +46,10 @@ Popup {
         radius: singleColumn ? 0 : Theme.componentRadius
 
         Rectangle {
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             height: Theme.componentBorderWidth
+
             visible: singleColumn
             color: Theme.colorSeparator
         }
@@ -58,13 +60,16 @@ Popup {
     contentItem: Item {
         Column {
             id: columnContent
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
+
             spacing: Theme.componentMarginXL
 
             ////////
 
             Text {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("About background updates")
                 textFormat: Text.PlainText
@@ -76,13 +81,15 @@ Popup {
             ////////
 
             Column {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
                 spacing: Theme.componentMarginXL
 
                 visible: !popupBackgroundUpdates.locPerm
 
                 Column {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     spacing: 8
 
                     IconSvg {
@@ -95,7 +102,8 @@ Popup {
                     }
 
                     Text {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
                         text: qsTr("To use the background update feature, the <b>background location permission</b> is required, otherwise WatchFlower can't scan for Bluetooth Low Energy sensors and can't update data when the app is closed.")
                         textFormat: Text.StyledText
@@ -106,7 +114,8 @@ Popup {
                 }
 
                 Flow {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     spacing: Theme.componentMargin
 
                     property int btnSize: singleColumn ? width : ((width-spacing*2) / 2)
@@ -157,13 +166,15 @@ Popup {
             ////////
 
             Column {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
                 spacing: Theme.componentMarginXL
 
                 visible: popupBackgroundUpdates.locPerm
 
                 Column {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     spacing: 8
 
                     IconSvg {
@@ -176,7 +187,9 @@ Popup {
                     }
 
                     Text {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
                         text: qsTr("Your phone will do its best to prevent this application from running in the background.") + "<br>" +
                               qsTr("Some settings need to be switched <b>manually</b> from the Android <b>application info panel</b>:")
                         textFormat: Text.StyledText
@@ -186,7 +199,9 @@ Popup {
                     }
 
                     Text {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
                         text: qsTr("- autolaunch will need to be <b>enabled</b>") + "<br>" +
                               qsTr("- battery saving feature(s) will need to be <b>disabled</b>")
                         textFormat: Text.StyledText
@@ -197,7 +212,8 @@ Popup {
                 }
 
                 Flow {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     spacing: Theme.componentMargin
 
                     property int btnSize: singleColumn ? width : ((width-spacing*2) / 2)

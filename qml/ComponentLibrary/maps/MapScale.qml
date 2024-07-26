@@ -67,6 +67,7 @@ Item {
         id: mapScaleText
         anchors.centerIn: parent
         text: "100m"
+        textFormat: Text.PlainText
         color: "#555"
         font.pixelSize: Theme.fontSizeContentVerySmall
     }

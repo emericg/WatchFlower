@@ -67,7 +67,8 @@ Flickable {
                         font.capitalization: Font.AllUppercase
                     }
                     Text {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
                         text: currentDevice.deviceName
                         textFormat: Text.PlainText
@@ -90,7 +91,8 @@ Flickable {
                         font.capitalization: Font.AllUppercase
                     }
                     Text {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
                         text: (Qt.platform.os === "osx" || Qt.platform.os === "ios") ?
                                   currentDevice.deviceAddress :
@@ -690,25 +692,28 @@ Flickable {
                     }
 
                     Text {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
-                        text: "The MAC address of the sensor must be set in order for some features (like history synchronization) to work."
+                        text: qsTr("The MAC address of the sensor must be set in order for some features (like history synchronization) to work.")
                         textFormat: Text.PlainText
                         color: Theme.colorSubText
                         wrapMode: Text.WordWrap
                     }
 
                     Text {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
-                        text: "Sorry for the inconvenience."
+                        text: qsTr("Sorry for the inconvenience.")
                         textFormat: Text.PlainText
                         color: Theme.colorSubText
                         wrapMode: Text.WordWrap
                     }
 
                     Rectangle {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
 
                         height: 36
                         radius: Theme.componentRadius

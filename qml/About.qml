@@ -83,11 +83,13 @@ Loader {
 
                         Text {
                             text: "WatchFlower"
+                            textFormat: Text.PlainText
                             color: Theme.colorText
                             font.pixelSize: Theme.fontSizeTitle
                         }
                         Text {
                             text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.pixelSize: Theme.fontSizeContentBig
                         }
@@ -202,7 +204,9 @@ Loader {
             ////////////////
 
             ListItem { // description
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
+
                 text: qsTr("A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'.")
                 source: "qrc:/assets/icons/material-symbols/info.svg"
             }
@@ -221,7 +225,8 @@ Loader {
             }
 
             ListItemClickable { // authors
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
                 source: "qrc:/assets/icons/material-symbols/supervised_user_circle.svg"
@@ -231,7 +236,9 @@ Loader {
             }
 
             ListItemClickable { // rate
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
+
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("Rate the application")
@@ -249,7 +256,8 @@ Loader {
             }
 
             ListItemClickable { // release notes
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("Release notes")
                 source: "qrc:/assets/icons/material-symbols/new_releases.svg"
@@ -261,7 +269,8 @@ Loader {
 
 
             ListItemClickable { // supported sensors
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("Supported sensors")
                 source: "qrc:/assets/icons/material-symbols/check_circle.svg"
@@ -276,7 +285,8 @@ Loader {
             ListSeparator { }
 
             ListItemClickable { // tutorial
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("Open the tutorial")
                 source: "qrc:/assets/icons/material-symbols/import_contacts-fill.svg"
@@ -291,7 +301,9 @@ Loader {
             ListSeparator { visible: (Qt.platform.os === "android" || Qt.platform.os === "ios") }
 
             ListItemClickable { // permissions
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
+
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("About app permissions")
@@ -360,7 +372,9 @@ Loader {
                             "Google Material Icons (MIT)",
                         ]
                         delegate: Text {
-                            width: parent.width
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
                             text: "- " + modelData
                             textFormat: Text.PlainText
                             color: Theme.colorSubText
@@ -430,7 +444,9 @@ Loader {
                             "Vic L. (Chinese)",
                         ]
                         delegate: Text {
-                            width: parent.width
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+
                             text: "- " + modelData
                             textFormat: Text.PlainText
                             color: Theme.colorSubText

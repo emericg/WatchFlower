@@ -53,6 +53,7 @@ DrawerThemed {
                     anchors.verticalCenterOffset: 2
 
                     text: "WatchFlower"
+                    textFormat: Text.PlainText
                     color: Theme.colorText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeTitle

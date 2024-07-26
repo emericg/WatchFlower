@@ -1008,6 +1008,7 @@ Grid {
 
                         Text {
                             text: qsTr("sunlight")
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1094,6 +1095,7 @@ Grid {
 
                         Text {
                             text: qsTr("watering")
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1136,6 +1138,7 @@ Grid {
 
                     Text {
                         text: qsTr("fertilization")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1186,6 +1189,7 @@ Grid {
 
                     Text {
                         text: qsTr("pruning")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1224,6 +1228,7 @@ Grid {
 
                     Text {
                         text: qsTr("soil")
+                        textFormat: Text.PlainText
                         color: Theme.colorSubText
                         font.bold: true
                         font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1240,7 +1245,8 @@ Grid {
                         wrapMode: Text.WordWrap
                     }/*
                     Image {
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         fillMode: Image.PreserveAspectFit
                         source: "qrc:/assets/plants/soil_triangle.png"
                     }*/
@@ -1283,7 +1289,7 @@ Grid {
                     anchors.rightMargin: 8
 
                     text: qsTr("Please note that WatchFlower should not be your definitive source of information about plant care.")
-                    textFormat: Text.StyledText
+                    textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
                     font.pixelSize: Theme.fontSizeContent
@@ -1339,6 +1345,7 @@ Grid {
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                     text: qsTr("Soil moisture")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1394,6 +1401,7 @@ Grid {
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                     text: qsTr("Soil conductivity")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1448,6 +1456,7 @@ Grid {
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                     text: qsTr("Soil PH")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1492,6 +1501,7 @@ Grid {
                             Text {
                                 anchors.centerIn: parent
                                 text: "4"
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1506,6 +1516,7 @@ Grid {
                             Text {
                                 anchors.centerIn: parent
                                 text: "5"
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1520,6 +1531,7 @@ Grid {
                             Text {
                                 anchors.centerIn: parent
                                 text: "6"
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1534,6 +1546,7 @@ Grid {
                             Text {
                                 anchors.centerIn: parent
                                 text: "7"
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1548,6 +1561,7 @@ Grid {
                             Text {
                                 anchors.centerIn: parent
                                 text: "8"
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1562,6 +1576,7 @@ Grid {
                             Text {
                                 anchors.centerIn: parent
                                 text: "9"
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -1598,6 +1613,7 @@ Grid {
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                     text: qsTr("Temperature")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1652,6 +1668,7 @@ Grid {
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                     text: qsTr("Humidity")
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1707,6 +1724,7 @@ Grid {
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                     text: qsTr("Luminosity") +  " (lux)"
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall
@@ -1754,6 +1772,7 @@ Grid {
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("low")
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.pixelSize: Theme.fontSizeContentVerySmall
                                 verticalAlignment: Text.AlignVCenter
@@ -1772,6 +1791,7 @@ Grid {
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("indirect")
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.pixelSize: Theme.fontSizeContentVerySmall
                                 verticalAlignment: Text.AlignVCenter
@@ -1790,6 +1810,7 @@ Grid {
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("direct light (indoor)")
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.pixelSize: Theme.fontSizeContentVerySmall
                                 verticalAlignment: Text.AlignVCenter
@@ -1808,6 +1829,7 @@ Grid {
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("sunlight")
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.pixelSize: Theme.fontSizeContentVerySmall
                                 verticalAlignment: Text.AlignVCenter
@@ -1827,6 +1849,7 @@ Grid {
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("indirect")
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.pixelSize: Theme.fontSizeContentVerySmall
                                 verticalAlignment: Text.AlignVCenter
@@ -1845,6 +1868,7 @@ Grid {
                             Text {
                                 anchors.fill: parent
                                 text: qsTr("sunlight")
+                                textFormat: Text.PlainText
                                 color: "white"
                                 font.pixelSize: Theme.fontSizeContentVerySmall
                                 verticalAlignment: Text.AlignVCenter
@@ -1883,6 +1907,7 @@ Grid {
                     anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                     text: qsTr("Luminosity")+ " (mmol)"
+                    textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: true
                     font.pixelSize: Theme.fontSizeContentSmall

@@ -159,13 +159,14 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("%1 plants").arg(((plantSearchBox.displayText) ? plantDatabase.plantCountFiltered : plantDatabase.plantCount))
+                            textFormat: Text.PlainText
                             font.pixelSize: Theme.fontSizeContentSmall
                             color: Theme.colorSubText
                         }
 
                         RoundButtonIcon {
-                            width: 24
-                            height: 24
+                            width: 28
+                            height: 28
                             anchors.verticalCenter: parent.verticalCenter
 
                             visible: plantSearchBox.text.length
@@ -228,6 +229,7 @@ Loader {
                         Text {
                             visible: modelData.nameCommon
                             text: "« " + modelData.nameCommon + " »"
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                             fontSizeMode: Text.Fit
                             font.pixelSize: Theme.fontSizeContent
@@ -313,7 +315,7 @@ Loader {
                 anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: "You are previewing a plant."
+                text: qsTr("You are previewing a plant.")
                 textFormat: Text.PlainText
                 color: Theme.colorText
                 font.pixelSize: 22
@@ -400,8 +402,8 @@ Loader {
                     source: "qrc:/assets/icons/material-symbols/check_circle.svg"
 
                     onClicked: {
-                         selectedDevice.setPlantName(plantScreen.currentPlant.name)
-                         appContent.state = "DevicePlantSensor"
+                        selectedDevice.setPlantName(plantScreen.currentPlant.name)
+                        appContent.state = "DevicePlantSensor"
                     }
                 }
                 ButtonFlat {

@@ -146,7 +146,8 @@ Item {
 
     Rectangle {
         id: subHeaderBackground
-        width: parent.width
+        anchors.left: parent.left
+        anchors.right: parent.right
         height: (uiMode === 1) ? itemHeader.height : contentGrid_lvl2.height
         //Behavior on height { NumberAnimation { duration: 133 } }
 
@@ -226,10 +227,10 @@ Item {
                         }
                     }
 
-                    Item {
-                        id: itemPlant
+                    Item { // itemPlant
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         height: 28
-                        width: parent.width
 
                         Text {
                             id: labelPlant
@@ -238,6 +239,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Plant")
+                            textFormat: Text.PlainText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
@@ -280,8 +282,7 @@ Item {
                             }
                         }
 
-                        IconSvg {
-                            id: imageEditPlant
+                        IconSvg { // imageEditPlant
                             width: 20
                             height: 20
                             anchors.left: textInputPlant.right
@@ -296,10 +297,10 @@ Item {
                         }
                     }
 
-                    Item {
-                        id: itemLocation
+                    Item { // itemLocation
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         height: 28
-                        width: parent.width
 
                         Text {
                             id: labelLocation
@@ -308,6 +309,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Location")
+                            textFormat: Text.PlainText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
@@ -366,10 +368,10 @@ Item {
                         }
                     }
 
-                    Item {
-                        id: status
+                    Item { // status
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         height: 28
-                        width: parent.width
 
                         Text {
                             id: labelStatus
@@ -378,6 +380,7 @@ Item {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: qsTr("Status")
+                            textFormat: Text.PlainText
                             font.bold: true
                             font.pixelSize: Theme.fontSizeContentVerySmall
                             font.capitalization: Font.AllUppercase
@@ -395,6 +398,7 @@ Item {
                             padding: 4
 
                             text: qsTr("Loading...")
+                            textFormat: Text.PlainText
                             color: Theme.colorHighContrast
                             font.pixelSize: Theme.fontSizeContentBig
                             font.bold: false
@@ -413,8 +417,9 @@ Item {
 
                 Loader {
                     id: indicatorsLoader
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    width: parent.width
 
                     asynchronous: false
                     onLoaded: {

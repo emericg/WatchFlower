@@ -151,6 +151,7 @@ Column {
             height: hhh
             visible: (plant && plant.calendarPlanting.length > 0)
             text: qsTr("planting")
+            textFormat: Text.PlainText
             color: Theme.colorRed
             font.pixelSize: Theme.fontSizeContent
             verticalAlignment: Text.AlignVCenter
@@ -159,6 +160,7 @@ Column {
             height: hhh
             visible: (plant && plant.calendarFertilizing.length > 0)
             text: qsTr("fertilizing")
+            textFormat: Text.PlainText
             color: Theme.colorOrange
             font.pixelSize: Theme.fontSizeContent
             verticalAlignment: Text.AlignVCenter
@@ -167,6 +169,7 @@ Column {
             height: hhh
             visible: (plant && plant.calendarGrowing.length > 0)
             text: qsTr("growing")
+            textFormat: Text.PlainText
             color: Theme.colorGreen
             font.pixelSize: Theme.fontSizeContent
             verticalAlignment: Text.AlignVCenter
@@ -175,6 +178,7 @@ Column {
             height: hhh
             visible: (plant && plant.calendarBlooming.length > 0)
             text: qsTr("blooming")
+            textFormat: Text.PlainText
             color: Theme.colorYellow
             font.pixelSize: Theme.fontSizeContent
             verticalAlignment: Text.AlignVCenter
@@ -183,6 +187,7 @@ Column {
             height: hhh
             visible: (plant && plant.calendarFruiting.length > 0)
             text: qsTr("fruiting")
+            textFormat: Text.PlainText
             color: Theme.colorRed
             font.pixelSize: Theme.fontSizeContent
             verticalAlignment: Text.AlignVCenter

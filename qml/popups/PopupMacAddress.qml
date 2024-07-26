@@ -49,8 +49,10 @@ Popup {
         radius: singleColumn ? 0 : Theme.componentRadius
 
         Rectangle {
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             height: Theme.componentBorderWidth
+
             visible: singleColumn
             color: Theme.colorSeparator
         }
@@ -68,13 +70,15 @@ Popup {
     contentItem: Item {
         Column {
             id: columnContent
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             spacing: Theme.componentMarginXL
 
             ////////
 
             Text {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("Set sensor MAC address.")
                 textFormat: Text.PlainText
@@ -86,11 +90,13 @@ Popup {
             ////////
 
             Column {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
                 spacing: 8
 
                 Text {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
 
                     text: qsTr("The MAC address of the sensor must be set in order for the history synchronization to work.")
                     textFormat: Text.StyledText
@@ -100,7 +106,8 @@ Popup {
                 }
 
                 Text {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
 
                     text: qsTr("Sorry for the inconvenience.")
                     textFormat: Text.StyledText
@@ -111,7 +118,8 @@ Popup {
 
                 TextFieldThemed {
                     id: textInputMacAddr
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
 
                     font.pixelSize: 18
                     font.bold: false
@@ -127,7 +135,8 @@ Popup {
                 }
 /*
                 Rectangle {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     height: Theme.componentHeight
 
                     radius: Theme.componentRadius
@@ -138,7 +147,8 @@ Popup {
 
                     TextInput {
                         id: textInputMacAddr
-                        width: parent.width
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         padding: 4
 
@@ -160,7 +170,8 @@ Popup {
             ////////
 
             Flow {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
                 spacing: Theme.componentMargin
 
                 property int btnSize: singleColumn ? width : ((width-spacing) / 2)

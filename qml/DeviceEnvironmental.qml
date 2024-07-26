@@ -623,6 +623,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Loading...")
+                        textFormat: Text.PlainText
                         color: cccc
                         font.bold: false
                         font.pixelSize: 17
@@ -784,7 +785,8 @@ Loader {
 
                             Rectangle {
                                 id: airBoxes
-                                width: parent.width
+                                anchors.left: parent.left
+                                anchors.right: parent.right
                                 height: airFlow.height + (Theme.componentMargin * 2)
 
                                 visible: isAirMonitor
@@ -978,7 +980,8 @@ Loader {
 
                             Rectangle {
                                 id: radBoxes
-                                width: parent.width
+                                anchors.left: parent.left
+                                anchors.right: parent.right
                                 height: radFlow.height + (radFlow.anchors.topMargin*2)
 
                                 visible: isGeigerCounter
@@ -1056,11 +1059,11 @@ Loader {
 
                             Rectangle {
                                 id: weatherBoxes
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                height: weatherFlow.height + (weatherFlow.anchors.topMargin*2)
 
                                 visible: isWeatherStation
-
-                                width: parent.width
-                                height: weatherFlow.height + (weatherFlow.anchors.topMargin*2)
                                 color: Theme.colorBackground
                                 z: 3
 
@@ -1207,7 +1210,8 @@ Loader {
                             ////////////////////////////////////////////////////
 
                             Item {
-                                width: parent.width
+                                anchors.left: parent.left
+                                anchors.right: parent.right
                                 height: (sensorFlick.height - airBoxes.height - weatherBoxes.height)
 
                                 ItemNoData {

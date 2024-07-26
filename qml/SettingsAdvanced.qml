@@ -91,57 +91,68 @@ Loader {
                     Text {
                         color: Theme.colorSubText
                         text: "app name: %1".arg(utilsApp.appName())
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "app version: %1".arg(utilsApp.appVersion())
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "build mode: %1".arg(utilsApp.appBuildModeFull())
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "build architecture: %1".arg(utilsApp.qtArchitecture())
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "build date: %1".arg(utilsApp.appBuildDateTime())
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "OS theme: %1".arg(utilsApp.isOsThemeDark() ? "dark" : "light")
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "Qt version: %1".arg(utilsApp.qtVersion())
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "Qt arch: %1".arg(utilsApp.qtArchitecture())
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "Qt Connectivity patched: %1".arg(qtConnectivityPatched ? "TRUE" : "FALSE")
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
 /*
                     Text {
                         color: Theme.colorSubText
                         text: "OS name: %1".arg(utilsSysInfo.os_name)
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
                         text: "OS version: %1".arg(utilsSysInfo.os_version)
+                        textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
 */

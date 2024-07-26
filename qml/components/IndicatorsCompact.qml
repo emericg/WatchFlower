@@ -6,7 +6,8 @@ import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: indicatorsCompact
-    width: parent.width
+    anchors.left: parent.left
+    anchors.right: parent.right
     height: columnData.height + 20
     z: 5
 
@@ -135,7 +136,8 @@ Item {
 
         DataBarCompact {
             id: soil_moisture
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Moisture")
             legendWidth: indicatorsCompact.legendWidth
@@ -155,7 +157,8 @@ Item {
 
         DataBarCompact {
             id: soil_conductivity
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Fertility")
             legendWidth: indicatorsCompact.legendWidth
@@ -174,7 +177,8 @@ Item {
 
         DataBarCompact {
             id: soil_temperature
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Soil temp.")
             legendWidth: indicatorsCompact.legendWidth
@@ -194,7 +198,8 @@ Item {
 
         DataBarCompact {
             id: water_tank
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Water tank")
             legendWidth: indicatorsCompact.legendWidth
@@ -214,7 +219,8 @@ Item {
 
         DataBarCompact {
             id: temp
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Temperature")
             legendWidth: indicatorsCompact.legendWidth
@@ -235,7 +241,8 @@ Item {
 
         DataBarCompact {
             id: humi
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Humidity")
             legendWidth: indicatorsCompact.legendWidth
@@ -254,7 +261,8 @@ Item {
 
         DataBarCompact {
             id: lumi
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Luminosity")
             legendWidth: indicatorsCompact.legendWidth

@@ -6,7 +6,8 @@ import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
     id: indicatorsSolid
-    width: parent.width
+    anchors.left: parent.left
+    anchors.right: parent.right
     height: columnData.height + 24
     z: 5
 
@@ -135,7 +136,8 @@ Item {
 
         DataBarSolid {
             id: soil_moisture
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Moisture")
             legendWidth: indicatorsSolid.legendWidth
@@ -155,7 +157,8 @@ Item {
 
         DataBarSolid {
             id: soil_conductivity
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Fertility")
             legendWidth: indicatorsSolid.legendWidth
@@ -174,7 +177,8 @@ Item {
 
         DataBarSolid {
             id: soil_temperature
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Soil temp.")
             legendWidth: indicatorsSolid.legendWidth
@@ -194,7 +198,8 @@ Item {
 
         DataBarSolid {
             id: water_tank
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Water tank")
             legendWidth: indicatorsSolid.legendWidth
@@ -214,7 +219,8 @@ Item {
 
         DataBarSolid {
             id: temp
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Temperature")
             legendWidth: indicatorsSolid.legendWidth
@@ -235,7 +241,8 @@ Item {
 
         DataBarSolid {
             id: humi
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Humidity")
             legendWidth: indicatorsSolid.legendWidth
@@ -254,7 +261,8 @@ Item {
 
         DataBarSolid {
             id: lumi
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             legend: qsTr("Luminosity")
             legendWidth: indicatorsSolid.legendWidth

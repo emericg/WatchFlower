@@ -39,8 +39,10 @@ Popup {
         radius: singleColumn ? 0 : Theme.componentRadius
 
         Rectangle {
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             height: Theme.componentBorderWidth
+
             visible: singleColumn
             color: Theme.colorSeparator
         }
@@ -58,13 +60,16 @@ Popup {
     contentItem: Item {
         Column {
             id: columnContent
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
+
             spacing: Theme.componentMarginXL
 
             ////////
 
             Text {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("Are you sure you want to delete data for this sensor?")
                 textFormat: Text.PlainText
@@ -76,7 +81,8 @@ Popup {
             ////////
 
             Text {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: qsTr("You can either delete data from the application, or from both the sensor and application.")
                 textFormat: Text.PlainText
@@ -88,7 +94,9 @@ Popup {
             ////////
 
             Flow {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
+
                 spacing: Theme.componentMargin
 
                 property int btnSize: singleColumn ? width : ((width-spacing*2) / 3)

@@ -347,7 +347,8 @@ Item {
                                             onClicked: entryEditor.entryType = modelData
                                         }
                                         Text {
-                                            width: parent.width
+                                            anchors.left: parent.left
+                                            anchors.right: parent.right
                                             height: 16
 
                                             text: UtilsPlantJournal.getJournalEntryName(modelData)
@@ -368,7 +369,8 @@ Item {
 
                         TextAreaThemed {
                             id: entryComment
-                            width: parent.width
+                            anchors.left: parent.left
+                            anchors.right: parent.right
                             height: isPhone ? 128 : 160
 
                             colorBackground: Theme.colorBackground

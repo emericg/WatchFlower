@@ -59,7 +59,9 @@ Rectangle {
         spacing: isDesktop ? 4 : 0
 
         Text {
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
+
             text: itemWeatherBox.title
             wrapMode: Text.WordWrap
             color: Theme.colorSubText

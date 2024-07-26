@@ -118,6 +118,7 @@ Item {
                 anchors.verticalCenterOffset: singleColumn ? +6 : 0
 
                 text: qsTr("max")
+                textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: 11
                 rotation: singleColumn ? 0 : -90
@@ -146,6 +147,7 @@ Item {
                 anchors.verticalCenterOffset: singleColumn ? -6 : 0
 
                 text: qsTr("min")
+                textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: 11
                 rotation: singleColumn ? 0 : -90
@@ -250,10 +252,9 @@ Item {
 
                     Rectangle {
                         id: graphBarFg2
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        width: parent.width
                         height: UtilsNumber.normalize(value_max, valueMin, valueMax) * parent.height
 
                         border.width: (graphRow.barSpacing / 2)
@@ -268,10 +269,9 @@ Item {
 
                     Rectangle {
                         id: graphBarFg
+                        anchors.left: parent.left
+                        anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        anchors.horizontalCenter: parent.horizontalCenter
-
-                        width: parent.width
                         height: UtilsNumber.normalize(value, valueMin, valueMax) * parent.height
 
                         border.width: (graphRow.barSpacing / 2)

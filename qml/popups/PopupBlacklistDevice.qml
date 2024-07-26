@@ -50,8 +50,10 @@ Popup {
         radius: singleColumn ? 0 : Theme.componentRadius
 
         Rectangle {
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             height: Theme.componentBorderWidth
+
             visible: singleColumn
             color: Theme.colorSeparator
         }
@@ -69,13 +71,15 @@ Popup {
     contentItem: Item {
         Column {
             id: columnContent
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
             spacing: Theme.componentMarginXL
 
             ////////
 
             Text {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 text: !deviceIsBlacklisted ?
                           qsTr("Are you sure you want to blacklist the selected sensor?") :
@@ -89,11 +93,13 @@ Popup {
             ////////
 
             Column {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
                 spacing: 12
 
                 RowLayout {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
                     height: 36
                     spacing: 12
 
@@ -134,7 +140,8 @@ Popup {
                     }
                 }
                 Text {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
 
                     text: qsTr("Blacklisting a sensor will prevent it from being scanned by the application. You can un-blacklist the sensor at any time.")
                     textFormat: Text.PlainText
@@ -143,7 +150,8 @@ Popup {
                     wrapMode: Text.WordWrap
                 }
                 Text {
-                    width: parent.width
+                    anchors.left: parent.left
+                    anchors.right: parent.right
 
                     text: qsTr("If the sensor is already handled by the application, nothing will happen unless you delete it from the sensor list.")
                     textFormat: Text.PlainText
@@ -156,7 +164,8 @@ Popup {
             ////////
 
             Flow {
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
                 spacing: Theme.componentMargin
 
                 property int btnSize: singleColumn ? width : ((width-spacing) / 2)

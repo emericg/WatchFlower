@@ -46,7 +46,8 @@ T.Popup {
     contentItem: Item {
         Column {
             id: contentColumn
-            width: parent.width
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             topPadding: 8
             bottomPadding: 8
@@ -56,7 +57,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionClose
-                width: parent.width
 
                 index: -1
                 text: qsTr("Close")
@@ -79,7 +79,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionUpdate
-                width: parent.width
+                anchors.left: parent.left
+                anchors.right: parent.right
 
                 index: 0
                 text: qsTr("Update data")
@@ -96,7 +97,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionRealtime
-                width: parent.width
 
                 index: 1
                 text: qsTr("Real time data")
@@ -122,7 +122,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionHistoryRefresh
-                width: parent.width
 
                 index: 2
                 text: qsTr("Update history")
@@ -139,7 +138,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionHistoryClear
-                width: parent.width
 
                 index: 3
                 text: qsTr("Clear history")
@@ -165,7 +163,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionLed
-                width: parent.width
 
                 index: 8
                 text: qsTr("Blink LED")
@@ -182,7 +179,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionWatering
-                width: parent.width
 
                 index: 9
                 text: qsTr("Watering")
@@ -199,7 +195,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionCalibrate
-                width: parent.width
 
                 index: 10
                 text: qsTr("Calibrate sensor")
@@ -216,7 +211,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionGraphMode
-                width: parent.width
 
                 index: 16
                 text: qsTr("Switch graph")
@@ -236,7 +230,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionShowSettings
-                width: parent.width
 
                 index: 17
                 text: qsTr("Sensor infos")
@@ -253,7 +246,6 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionReboot
-                width: parent.width
 
                 index: 32
                 text: qsTr("Reboot sensor")

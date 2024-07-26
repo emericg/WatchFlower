@@ -116,9 +116,10 @@ Item {
 
     Item {
         id: containerbar
-        width: parent.width
         anchors.top: parent.top
         anchors.topMargin: 24
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 56
 
@@ -200,6 +201,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     color: "white"
                     text: "%"
+                    textFormat: Text.PlainText
                     font.pixelSize: 8
                 }
             }
@@ -234,6 +236,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     color: "white"
                     text: "%"
+                    textFormat: Text.PlainText
                     font.pixelSize: 8
                 }
             }

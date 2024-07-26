@@ -68,6 +68,7 @@ Flickable {
                 anchors.verticalCenter: parent.verticalCenter
 
                 text: qsTr("Drag sliders to change values")
+                textFormat: Text.PlainText
                 color: Theme.colorText
                 font.pixelSize: Theme.fontSizeContentSmall
             }

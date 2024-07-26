@@ -83,6 +83,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "1"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -100,6 +101,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "2"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -117,6 +119,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "3"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -134,6 +137,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "4"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -151,6 +155,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "5"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -168,6 +173,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "6"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -185,6 +191,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "7"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -202,6 +209,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "8"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -219,6 +227,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "9"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -236,6 +245,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "10"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -253,6 +263,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "11"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -270,6 +281,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "12"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -287,6 +299,7 @@ Column {
             Text {
                 anchors.centerIn: parent
                 text: "13"
+                textFormat: Text.PlainText
                 color: "white"
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContentVerySmall

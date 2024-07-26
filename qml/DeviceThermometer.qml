@@ -404,6 +404,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         text: qsTr("Loading...")
+                        textFormat: Text.PlainText
                         color: cccc
                         font.bold: false
                         font.pixelSize: 17

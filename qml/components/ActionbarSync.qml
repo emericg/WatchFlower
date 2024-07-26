@@ -69,6 +69,7 @@ Rectangle {
             visible: (currentDevice && currentDevice.status === DeviceUtils.DEVICE_UPDATING_HISTORY)
 
             text: " (" + currentDevice.historyUpdatePercent + "%)"
+            textFormat: Text.PlainText
             color: Theme.colorActionbarContent
             font.pixelSize: Theme.fontSizeContent
         }

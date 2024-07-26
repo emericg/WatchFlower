@@ -46,6 +46,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             text: qsTr("%n device(s) selected", "", screenDeviceList.selectionCount)
+            textFormat: Text.PlainText
             color: Theme.colorActionbarContent
             font.bold: true
             font.pixelSize: Theme.componentFontSize
