@@ -75,10 +75,11 @@ set(SOURCES
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
     src/thirdparty/RC4/rc4.cpp src/thirdparty/RC4/rc4.h
     src/main.cpp
-    qml/qml.qrc
-    qml/components.qrc
     i18n/i18n.qrc
+    qml/qml.qrc
+    qml/ComponentLibrary/ComponentLibrary.qrc
     assets/assets.qrc
+    assets/icons.qrc
     assets/devices.qrc
     assets/plants.qrc
 )
