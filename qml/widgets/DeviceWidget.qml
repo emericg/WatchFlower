@@ -393,20 +393,21 @@ Item {
         ////////////////
 
         Row { // alarms icons
-            height: 24
-            spacing: 8
             anchors.right: rowRight.left
             anchors.rightMargin: 12
             anchors.verticalCenter: rowRight.verticalCenter
-            layoutDirection: Qt.RightToLeft
 
+            spacing: 8
             visible: boxDevice.hasDataToday
+            layoutDirection: Qt.RightToLeft
 
             Loader { // alarmWater
                 asynchronous: true
-                active: (hasHygro &&
+                active: (hasHygro && boxDevice.hasDataToday &&
                          (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) ||
                          (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax))
+
+                visible: active
 
                 sourceComponent: AlarmIndicator {
                     source: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
@@ -422,6 +423,8 @@ Item {
                 asynchronous: true
                 active: ((boxDevice.temperatureC > 38) ||
                          (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80))
+
+                visible: active
 
                 sourceComponent: AlarmIndicator {
                     source: (boxDevice.temperatureC > 38) ?
@@ -443,6 +446,8 @@ Item {
                          (boxDevice.hasCo2Sensor && boxDevice.co2 > 1000) ||
                          (boxDevice.hasPM25Sensor && boxDevice.pm25 > 120) ||
                          (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350))
+
+                visible: active
 
                 sourceComponent: AlarmIndicator {
                     source: "qrc:/assets/icons/material-symbols/sensors/air.svg"
@@ -466,6 +471,8 @@ Item {
                 asynchronous: true
                 active: (boxDevice.hasGeigerCounter && boxDevice.radioactivityM > 1)
 
+                visible: active
+
                 sourceComponent: AlarmIndicator {
                     source: "qrc:/assets/gfx/icons/nuclear_icon.svg"
                     color: {
@@ -480,6 +487,8 @@ Item {
             Loader { // alarmWarning
                 asynchronous: true
                 active: false
+
+                visible: active
 
                 sourceComponent: AlarmIndicator {
                     source: "qrc:/assets/icons/material-symbols/warning.svg"
