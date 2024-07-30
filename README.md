@@ -33,9 +33,9 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 #### Download
 
 <p>
-<a href='https://flathub.org/apps/io.emeric.watchflower'><img height='66' alt='Download on Flathub' src='https://dl.flathub.org/assets/badges/flathub-badge-en.png'/></a>
-<a href="https://apps.apple.com/us/app/watchflower/id1476046123"><img height='66' src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us" alt="Download on the App Store"></a>
-<a href='https://play.google.com/store/apps/details?id=com.emeric.watchflower'><img height='66' alt='Get it on Google Play' src='https://i.imgur.com/nc9szYp.png'/></a>
+<a href='https://flathub.org/apps/io.emeric.watchflower'><img height='66' alt='Download on Flathub' src='https://i.imgur.com/MRwDkAl.png'/></a>
+<a href="https://apps.apple.com/us/app/watchflower/id1476046123"><img height='66' src="https://i.imgur.com/Pbhu6zv.png" alt="Download on the App Store"></a>
+<a href='https://play.google.com/store/apps/details?id=com.emeric.watchflower'><img height='66' alt='Get it on Google Play' src='https://i.imgur.com/VyahdKR.png'/></a>
 </p>
 
 ![GUI_MOBILE1](https://i.imgur.com/VdzHdqH.png)
