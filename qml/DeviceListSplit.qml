@@ -71,7 +71,7 @@ Item {
             anchors.rightMargin: halfmargin
 
             topPadding: listWidget ? 16 : 16
-            bottomPadding: listWidget ? 0 : halfmargin
+            bottomPadding: listWidget ? 1 : halfmargin
             spacing: listWidget ? 0 : halfmargin
 
             ////////

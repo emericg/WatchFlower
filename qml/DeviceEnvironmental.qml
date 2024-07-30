@@ -785,8 +785,7 @@ Loader {
 
                             Rectangle {
                                 id: airBoxes
-                                anchors.left: parent.left
-                                anchors.right: parent.right
+                                width: parent.width
                                 height: airFlow.height + (Theme.componentMargin * 2)
 
                                 visible: isAirMonitor
@@ -980,8 +979,7 @@ Loader {
 
                             Rectangle {
                                 id: radBoxes
-                                anchors.left: parent.left
-                                anchors.right: parent.right
+                                width: parent.width
                                 height: radFlow.height + (radFlow.anchors.topMargin*2)
 
                                 visible: isGeigerCounter
@@ -1059,8 +1057,7 @@ Loader {
 
                             Rectangle {
                                 id: weatherBoxes
-                                anchors.left: parent.left
-                                anchors.right: parent.right
+                                width: parent.width
                                 height: weatherFlow.height + (weatherFlow.anchors.topMargin*2)
 
                                 visible: isWeatherStation
@@ -1210,8 +1207,7 @@ Loader {
                             ////////////////////////////////////////////////////
 
                             Item {
-                                anchors.left: parent.left
-                                anchors.right: parent.right
+                                width: parent.width
                                 height: (sensorFlick.height - airBoxes.height - weatherBoxes.height)
 
                                 ItemNoData {

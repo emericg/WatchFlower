@@ -56,7 +56,7 @@ Item {
         anchors.topMargin: listWidget ? 0 : halfmargin
         anchors.leftMargin: halfmargin
         anchors.rightMargin: halfmargin
-        anchors.bottomMargin: listWidget ? 0 : halfmargin
+        anchors.bottomMargin: listWidget ? 1 : halfmargin
 /*
         ScrollBar.vertical: ScrollBar {
             anchors.right: parent.right
