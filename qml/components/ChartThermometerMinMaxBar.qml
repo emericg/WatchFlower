@@ -4,11 +4,14 @@ import ThemeEngine
 import "qrc:/utils/UtilsNumber.js" as UtilsNumber
 
 Item {
-    id: chartThermometerMinMaxBar
+    id: minMaxBar
+
     implicitWidth: 32
     implicitHeight: 128
 
     property int www: 20
+
+    ///////////////
 
     Component.onCompleted: {
         setTemp()
@@ -76,7 +79,7 @@ Item {
         text_temp_low.text = tl.toFixed(1) + "°"
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ///////////////
 
     Rectangle {
         id: background
@@ -112,7 +115,7 @@ Item {
         color: Theme.colorText
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ///////////////
 
     Item {
         id: containerbar
@@ -242,4 +245,6 @@ Item {
             }
         }
     }
+
+    ///////////////
 }

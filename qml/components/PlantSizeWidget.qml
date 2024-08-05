@@ -21,9 +21,10 @@ RangeSlider {
         color: "#e1e4e9" // Theme.colorForeground
 
         Rectangle {
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
             x: (control.first.visualPosition * parent.width)
             width: (control.second.visualPosition * parent.width) - x
-            height: parent.height
             radius: 2
             color: "#ed5565" // Theme.colorPrimary
         }

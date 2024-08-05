@@ -96,7 +96,7 @@ QString DeviceManager::exportDataOpen()
     if (!m_devices_model->hasDevices()) return exportFilePath;
 
     // Get temp directory path
-    QString exportDirectoryPath = QStandardPaths::standardLocations(QStandardPaths::AppDataLocation).value(0);
+    QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 
     QDir exportDirectory(exportDirectoryPath + "/export");
     if (!exportDirectory.exists()) exportDirectory.mkpath(exportDirectoryPath + "/export");

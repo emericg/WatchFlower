@@ -525,9 +525,9 @@ Item {
             ////
 
             Item {
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 width: parent.height * 0.5
-                height: parent.height
 
                 visible: !boxDevice.hasDataToday
 

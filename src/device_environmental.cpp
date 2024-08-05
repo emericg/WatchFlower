@@ -128,7 +128,7 @@ void DeviceEnvironmental::updateChartData_environmentalVoc(int maxDays)
                           "FROM sensorData " \
                           "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_months + " " \
                           "GROUP BY " + strftime_mid + " " \
-                          "ORDER BY timestamp DESC "
+                          "ORDER BY timestamp DESC " \
                           "LIMIT :maxDays;");
         graphData.bindValue(":deviceAddr", getAddress());
         graphData.bindValue(":maxDays", maxDays);

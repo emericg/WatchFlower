@@ -980,8 +980,8 @@ void DeviceSensor::checkDataAvailability()
 
             if (hasData.exec() == false)
             {
-                qWarning() << "> hasData.exec(1) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
-                qWarning() << "> hasData.exec(1) >" << hasData.lastQuery();
+                qWarning() << "> hasData.exec(1) ERROR"
+                           << hasData.lastError().type() << ":" << hasData.lastError().text();
             }
 
             while (hasData.next())
@@ -1060,13 +1060,15 @@ bool DeviceSensor::hasDataNamed(const QString &dataName) const
     if (m_dbInternal || m_dbExternal)
     {
         QSqlQuery hasData;
-        hasData.prepare("SELECT COUNT(" + dataName + ") FROM " + tableName + " WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
+        hasData.prepare("SELECT COUNT(" + dataName + ") " \
+                        "FROM " + tableName + " " \
+                        "WHERE deviceAddr = :deviceAddr AND " + dataName + " > 0;");
         hasData.bindValue(":deviceAddr", getAddress());
 
         if (hasData.exec() == false)
         {
-            qWarning() << "> hasData.exec(2) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
-            qWarning() << "> hasData.exec(2) >" << hasData.lastQuery();
+            qWarning() << "> hasData.exec(2) ERROR"
+                       << hasData.lastError().type() << ":" << hasData.lastError().text();
         }
 
         while (hasData.next())
@@ -1173,8 +1175,8 @@ bool DeviceSensor::hasData() const
 
         if (hasData.exec() == false)
         {
-            qWarning() << "> hasData.exec(3) ERROR" << hasData.lastError().type() << ":" << hasData.lastError().text();
-            qWarning() << "> hasData.exec(3) >" << hasData.lastQuery();
+            qWarning() << "> hasData.exec(3) ERROR"
+                       << hasData.lastError().type() << ":" << hasData.lastError().text();
         }
 
         while (hasData.next())
