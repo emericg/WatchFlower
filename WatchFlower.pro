@@ -33,6 +33,9 @@ include(src/thirdparty/MobileSharing/MobileSharing.pri)
 include(src/thirdparty/SingleApplication/SingleApplication.pri)
 DEFINES += QAPPLICATION_CLASS=QApplication
 
+# Sun and moon utils
+include(src/thirdparty/SunAndMoon/SunAndMoon.pri)
+
 # Project files ################################################################
 
 SOURCES  += src/main.cpp \

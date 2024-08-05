@@ -123,7 +123,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: 0
 
-                // multisample
+                // multisampling
                 layer.enabled: true
                 layer.samples: 4
 
@@ -148,6 +148,10 @@ Item {
                     x: shapes.centerX - width/2
                     y: shapes.centerY - height/2
                 }
+                Component.onCompleted:{
+                    console.log("sunAndMoon.sunpath: " + sunAndMoon.sunpath)
+                    console.log("sunAndMoon.moonpath: " + sunAndMoon.moonpath)
+                }
 */
                 ShapePath { // background
                     id: shape_bg
@@ -155,6 +159,9 @@ Item {
                     strokeColor: Theme.colorSeparator
                     strokeWidth: 4
                     capStyle: ShapePath.RoundCap
+
+                    property color colorDay: Qt.rgba(Theme.colorYellow.r, Theme.colorYellow.g, Theme.colorYellow.b, 0.16)
+                    property color colorNight: Qt.rgba(Theme.colorBlue.r, Theme.colorBlue.g, Theme.colorBlue.b, 0.16)
 
                     PathAngleArc {
                         centerX: shapes.centerX
@@ -164,10 +171,18 @@ Item {
                         startAngle: -170
                         sweepAngle: 160
                     }
+                    fillGradient: LinearGradient {
+                        x1: 0; y1: 0;
+                        x2: 0; y2: widgetInterior.height;
+
+                        GradientStop { position: 0.0; color: (sunAndMoon.sunpath >= 0 && sunAndMoon.sunpath <= 100)
+                                                              ? shape_bg.colorDay : shape_bg.colorNight }
+                        GradientStop { position: 1.0; color: Theme.colorDeviceWidget }
+                    }
                 }
                 ShapePath { // moon path
-                    fillColor: Theme.colorDeviceWidget
-                    strokeColor: Theme.colorBlue
+                    fillColor: "transparent" // Theme.colorDeviceWidget
+                    strokeColor: sunAndMoon.moonIsVisible ? Theme.colorBlue : Theme.colorSeparator
                     strokeWidth: 4
                     capStyle: ShapePath.RoundCap
 
@@ -181,8 +196,8 @@ Item {
                     }
                 }
                 ShapePath { // sun path
-                    fillColor: Theme.colorDeviceWidget
-                    strokeColor: Theme.colorYellow
+                    fillColor: "transparent" // Theme.colorDeviceWidget
+                    strokeColor: sunAndMoon.sunIsVisible ? Theme.colorYellow : Theme.colorSeparator
                     strokeWidth: 4
                     capStyle: ShapePath.RoundCap
 
@@ -194,6 +209,30 @@ Item {
                         startAngle: -170
                         sweepAngle: shapes.sunsunsun
                     }
+                }
+            }
+
+            ////
+
+            Rectangle { // moon background and icon
+                width: 32
+                height: 32
+                radius: 32
+                //opacity: 0.66
+                color: Theme.colorBackground
+                border.width: 2
+                border.color: Theme.colorSeparator
+
+                visible: (sunAndMoon.moonpath > 0 && sunAndMoon.moonpath < 100)
+                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+
+                IconSvg {
+                    anchors.centerIn: parent
+                    width: 24
+                    height: 24
+                    source: "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
+                    color: Theme.colorBlue
                 }
             }
 
@@ -223,27 +262,6 @@ Item {
                         loops: Animation.Infinite
                         running: (appContent.state === "DeviceList")
                     }
-                }
-            }
-            Rectangle { // moon background and icon
-                width: 32
-                height: 32
-                radius: 32
-                //opacity: 0.66
-                color: Theme.colorBackground
-                border.width: 2
-                border.color: Theme.colorSeparator
-
-                visible: (sunAndMoon.moonpath > 0 && sunAndMoon.moonpath < 100)
-                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
-                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
-
-                IconSvg {
-                    anchors.centerIn: parent
-                    width: 24
-                    height: 24
-                    source: "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
-                    color: Theme.colorBlue
                 }
             }
 

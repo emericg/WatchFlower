@@ -73,6 +73,12 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
 
+    Q_PROPERTY(bool location READ getLocation WRITE setLocation NOTIFY locationChanged)
+    Q_PROPERTY(bool locationSet READ getLocationSet NOTIFY positionChanged)
+    Q_PROPERTY(float latitude READ getLatitude WRITE setLatitude NOTIFY positionChanged)
+    Q_PROPERTY(float longitude READ getLongitude WRITE setLongitude NOTIFY positionChanged)
+    Q_PROPERTY(bool sunandmoon READ getSunAndMoon WRITE setSunAndMoon NOTIFY sunandmoonChanged)
+
     Q_PROPERTY(bool mysql READ getMySQL WRITE setMySQL NOTIFY mysqlChanged)
     Q_PROPERTY(QString mysqlHost READ getMysqlHost WRITE setMysqlHost NOTIFY mysqlChanged)
     Q_PROPERTY(uint mysqlPort READ getMysqlPort WRITE setMysqlPort NOTIFY mysqlChanged)
@@ -131,6 +137,11 @@ class SettingsManager: public QObject
     bool m_splitView = false;
     QString m_orderBy = "model";
 
+    bool m_location = false;
+    float m_location_latitude = 0.f;
+    float m_location_longitude = 0.f;
+    bool m_sunandmoon = false;
+
     bool m_mysql = false;
     QString m_mysqlHost;
     int m_mysqlPort = 3306;
@@ -180,6 +191,9 @@ Q_SIGNALS:
     void dynaScaleChanged();
     void splitViewChanged();
     void orderByChanged();
+    void locationChanged();
+    void positionChanged();
+    void sunandmoonChanged();
     void mysqlChanged();
     void mqttChanged();
 
@@ -282,6 +296,19 @@ public:
     void setOrderBy(const QString &value);
 
     unsigned getDataRetentionDays() const { return m_dataRetentionDays; }
+
+    bool getLocation() const { return m_location; }
+    void setLocation(const bool value);
+
+    bool getLocationSet() const { return m_location_latitude != 0.f &&m_location_longitude != 0.f ; }
+
+    bool getSunAndMoon() const { return m_sunandmoon; }
+    void setSunAndMoon(const bool value);
+
+    float getLatitude() const { return m_location_latitude; }
+    void setLatitude(const float value);
+    float getLongitude() const { return m_location_longitude; }
+    void setLongitude(const float value);
 
     bool getMySQL() const { return m_mysql; }
     void setMySQL(const bool value);

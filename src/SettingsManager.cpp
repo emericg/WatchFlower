@@ -212,6 +212,15 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/orderBy"))
             m_orderBy = settings.value("settings/orderBy").toString();
 
+        if (settings.contains("settings/location"))
+            m_location = settings.value("settings/location").toBool();
+        if (settings.contains("settings/locationLatitude"))
+            m_location_latitude = settings.value("settings/locationLatitude").toFloat();
+        if (settings.contains("settings/locationLongitude"))
+            m_location_longitude = settings.value("settings/locationLongitude").toFloat();
+        if (settings.contains("settings/sunandmoon"))
+            m_sunandmoon = settings.value("settings/sunandmoon").toBool();
+
         if (settings.contains("database/enabled"))
             m_mysql = settings.value("database/enabled").toBool();
         if (settings.contains("database/host"))
@@ -261,6 +270,7 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/appTheme", m_appTheme);
         settings.setValue("settings/appThemeAuto", m_appThemeAuto);
         settings.setValue("settings/appLanguage", m_appLanguage);
+
         settings.setValue("settings/bluetoothControl", m_bluetoothControl);
         settings.setValue("settings/bluetoothLimitScanningRange", m_bluetoothLimitScanningRange);
         settings.setValue("settings/bluetoothSimUpdates", m_bluetoothSimUpdates);
@@ -284,6 +294,11 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/dynaScale", m_dynaScale);
         settings.setValue("settings/splitView", m_splitView);
         settings.setValue("settings/orderBy", m_orderBy);
+
+        settings.setValue("settings/location", m_location_latitude);
+        settings.setValue("settings/locationLatitude", m_location_latitude);
+        settings.setValue("settings/locationLongitude", m_location_longitude);
+        settings.setValue("settings/sunandmoon", m_sunandmoon);
 
         settings.setValue("database/enabled", m_mysql);
         settings.setValue("database/host", m_mysqlHost);
@@ -381,6 +396,11 @@ void SettingsManager::resetSettings()
     Q_EMIT bigIndicatorChanged();
     m_dynaScale = false;
     Q_EMIT dynaScaleChanged();
+
+    m_location = false;
+    m_location_latitude = 0.f;
+    m_location_longitude = 0.f;
+    m_sunandmoon = false;
 
     m_mysql = false;
     m_mysqlHost = "";
@@ -699,6 +719,48 @@ void SettingsManager::setOrderBy(const QString &value)
         m_orderBy = value;
         writeSettings();
         Q_EMIT orderByChanged();
+    }
+}
+
+/* ************************************************************************** */
+
+void SettingsManager::setLocation(const bool value)
+{
+    if (m_location != value)
+    {
+        m_location = value;
+        writeSettings();
+        Q_EMIT locationChanged();
+    }
+}
+
+void SettingsManager::setSunAndMoon(const bool value)
+{
+    if (m_sunandmoon != value)
+    {
+        m_sunandmoon = value;
+        writeSettings();
+        Q_EMIT sunandmoonChanged();
+    }
+}
+
+void SettingsManager::setLatitude(const float value)
+{
+    if (m_location_latitude != value)
+    {
+        m_location_latitude = value;
+        writeSettings();
+        Q_EMIT positionChanged();
+    }
+}
+
+void SettingsManager::setLongitude(const float value)
+{
+    if (m_location_longitude != value)
+    {
+        m_location_longitude = value;
+        writeSettings();
+        Q_EMIT positionChanged();
     }
 }
 

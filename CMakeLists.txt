@@ -173,6 +173,10 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileUI)
 add_subdirectory(src/thirdparty/MobileSharing)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileSharing)
 
+# SunAndMoon
+add_subdirectory(src/thirdparty/SunAndMoon)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
+
 # Qt
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Qt6::Core

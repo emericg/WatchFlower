@@ -39,6 +39,7 @@
 #include <MobileUI>
 #include <MobileSharing>
 #include <SingleApplication>
+#include <SunAndMoon>
 
 #include <QtGlobal>
 #include <QLibraryInfo>
