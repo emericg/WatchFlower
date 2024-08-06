@@ -260,50 +260,50 @@ protected:
     float m_pressure_bias = 0.f;
 
     // min/max data (last 30 days period)
-    int m_soilMoistureMin = 999999;
-    int m_soilMoistureMax = -99;
+    int m_soilMoistureMin = 999;
+    int m_soilMoistureMax = -999;
     int m_soilConduMin = 999999;
-    int m_soilConduMax = -99;
-    float m_soilTempMin = 99.f;
-    float m_soilTempMax = -99.f;
+    int m_soilConduMax = -999;
+    float m_soilTempMin = 999.f;
+    float m_soilTempMax = -999.f;
     float m_soilPhMin = 999.f;
-    float m_soilPhMax = -99.f;
-    float m_tempMin = 999999.f;
-    float m_tempMax = -99.f;
-    float m_humiMin = 999999.f;
-    float m_humiMax = -99.f;
+    float m_soilPhMax = -999.f;
+    float m_tempMin = 999.f;
+    float m_tempMax = -999.f;
+    float m_humiMin = 999.f;
+    float m_humiMax = -999.f;
     int m_luxMin = 999999;
-    int m_luxMax = -99;
+    int m_luxMax = -999;
     int m_mmolMin = 999999;
-    int m_mmolMax = -99;
+    int m_mmolMax = -999;
 
-    // min/max data (for history graph)
-    int m_soilMoistureMin_history = 999999;
-    int m_soilMoistureMax_history = -99;
+    // min/max data (for history graph, as many as 6 months)
+    int m_soilMoistureMin_history = 999;
+    int m_soilMoistureMax_history = -999;
     int m_soilConduMin_history = 999999;
-    int m_soilConduMax_history = -99;
-    float m_soilTempMin_history = 99.f;
-    float m_soilTempMax_history = -99.f;
+    int m_soilConduMax_history = -999;
+    float m_soilTempMin_history = 999.f;
+    float m_soilTempMax_history = -999.f;
     float m_tempMin_history = 999999.f;
-    float m_tempMax_history = -99.f;
+    float m_tempMax_history = -999.f;
     float m_humiMin_history = 999999.f;
-    float m_humiMax_history = -99.f;
+    float m_humiMax_history = -999.f;
     int m_luxMin_history = 999999;
-    int m_luxMax_history = -99;
+    int m_luxMax_history = -999;
 
     void resetMinMax_history() {
-        m_soilMoistureMin_history = 999999;
-        m_soilMoistureMax_history = -99;
+        m_soilMoistureMin_history = 999;
+        m_soilMoistureMax_history = -999;
         m_soilConduMin_history = 999999;
-        m_soilConduMax_history = -99;
-        m_soilTempMin_history = 99.f;
-        m_soilTempMax_history = -99.f;
+        m_soilConduMax_history = -999;
+        m_soilTempMin_history = 999.f;
+        m_soilTempMax_history = -999.f;
         m_tempMin_history = 999999.f;
-        m_tempMax_history = -99.f;
+        m_tempMax_history = -999.f;
         m_humiMin_history = 999999.f;
-        m_humiMax_history = -99.f;
+        m_humiMax_history = -999.f;
         m_luxMin_history = 999999;
-        m_luxMax_history = -99;
+        m_luxMax_history = -999;
     }
 
     // device history control
@@ -362,8 +362,9 @@ public:
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceSensor();
 
-    Q_INVOKABLE bool hasDataNamed(const QString &dataName) const;
+    Q_INVOKABLE bool hasDataNamed(const QString &dataName, int days = 31) const;
     Q_INVOKABLE int countDataNamed(const QString &dataName, int days = 31) const;
+    Q_INVOKABLE int historydaysDataNamed(const QString &dataName, int days = 31) const;
 
     bool hasSoilMoistureSensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_MOISTURE); }
     bool hasSoilConductivitySensor() const { return (m_deviceSensors & DeviceUtils::SENSOR_SOIL_CONDUCTIVITY); }

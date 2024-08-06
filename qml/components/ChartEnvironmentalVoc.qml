@@ -8,11 +8,16 @@ Item {
     id: chartEnvironmentalVoc
     anchors.fill: parent
 
-    property int daysTarget: 14
+    property int daysTarget: 30
     property int daysVisible: 0
+    property int daysAvailable: 0
+    property int daysMax: (isPhone ? 30 : 90)
 
-    property int scaleMin: 0
-    property int scaleMax: 1500
+    property int widgetWidthTarget: 20
+    property int widgetWidth: 20
+
+    property int graphMin: 0
+    property int graphMax: 1500
 
     property int limitMin: -1
     property int limitMax: -1
@@ -21,32 +26,40 @@ Item {
 
     function loadGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("chartEnvironmentalVoc // loadGraph() >> " + currentDevice)
+        //console.log("chartEnvironmentalVoc // loadGraph() >> " + currentDevice + " > " + currentDevice.primary)
 
-        daysVisible = daysTarget
+        daysVisible = Math.floor(width / widgetWidthTarget)
+        widgetWidth = Math.floor(width / daysVisible)
+        daysAvailable = currentDevice.historydaysDataNamed(currentDevice.primary, daysMax)
     }
 
     function updateGraph() {
         if (typeof currentDevice === "undefined" || !currentDevice) return
-        //console.log("chartEnvironmentalVoc // updateGraph() >> " + currentDevice)
+        //console.log("chartEnvironmentalVoc // updateGraph() >> " + currentDevice + " > " + currentDevice.primary)
 
-        if (itemDeviceEnvironmental.primary === "voc" || itemDeviceEnvironmental.primary === "hcho") {
+        if (currentDevice.primary === "voc" ||
+            currentDevice.primary === "hcho") {
             limitMin = 500
             limitMax = 1000
-            scaleMax = 1500
-        } else if (itemDeviceEnvironmental.primary === "co2") {
+            graphMax = 1500
+        } else if (currentDevice.primary === "co2") {
             limitMin = 1000
             limitMax = 2000
-            scaleMax = 2000
-        } else if (itemDeviceEnvironmental.primary === "pm1" ||
-                   itemDeviceEnvironmental.primary === "pm25" ||
-                   itemDeviceEnvironmental.primary === "pm10") {
+            graphMax = 2000
+        } else if (currentDevice.primary === "pm1" ||
+                   currentDevice.primary === "pm25" ||
+                   currentDevice.primary === "pm10") {
             limitMin = 250
             limitMax = 750
-            scaleMax = 1000
+            graphMax = 1000
         }
 
-        chartEnvironmentalVoc.visible = currentDevice.countDataNamed("temperature", daysTarget)
+        if (currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor) {
+            currentDevice.updateChartData_environmentalEnv(daysAvailable)
+        } else if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
+            currentDevice.updateChartData_environmentalVoc(daysAvailable)
+        }
+        chartEnvironmentalVoc.visible = currentDevice.countDataNamed(currentDevice.primary, daysTarget)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -58,12 +71,32 @@ Item {
         anchors.rightMargin: 16
         anchors.bottomMargin: 24
 
+        Rectangle { // vocLegendVert left/right borders
+            anchors.top: parent.top
+            anchors.right: parent.left
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -24
+            width: 20
+            z: 5
+            color: Theme.colorBackground
+        }
+        Rectangle {
+            anchors.top: parent.top
+            anchors.left: parent.right
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -24
+            width: 16
+            z: 5
+            color: Theme.colorBackground
+        }
+
         Rectangle {
             id: vocLegendVert
-            width: 2
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.bottom: parent.bottom
+            width: 2
+            z: 5
 
             color: Theme.colorSeparator
 
@@ -78,7 +111,7 @@ Item {
                 color: Theme.colorSeparator
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: (parent.height * (limitMin / scaleMax))
+                anchors.bottomMargin: (parent.height * (limitMin / graphMax))
 
                 Shape {
                     anchors.verticalCenter: parent.verticalCenter
@@ -90,7 +123,7 @@ Item {
                         dashPattern: [ 1, 4 ]
                         startX: 0
                         startY: 0
-                        PathLine { x: vocFlickable.width; y: 0; }
+                        PathLine { x: vocGraph.width; y: 0; }
                     }
                 }
             }
@@ -99,7 +132,7 @@ Item {
                 color: Theme.colorSeparator
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: (parent.height * (limitMax / scaleMax))
+                anchors.bottomMargin: (parent.height * (limitMax / graphMax))
 
                 Shape {
                     anchors.verticalCenter: parent.verticalCenter
@@ -111,7 +144,7 @@ Item {
                         dashPattern: [ 1, 4 ]
                         startX: 0
                         startY: 0
-                        PathLine { x: vocFlickable.width; y: 0; }
+                        PathLine { x: vocGraph.width; y: 0; }
                     }
                 }
             }
@@ -127,152 +160,48 @@ Item {
 
         Rectangle {
             id: vocLegendHor
-            height: 2
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
+            height: 2
+            z: 5
 
             color: Theme.colorSeparator
         }
 
         ////////////////
 
-        Item {
+        ListView {
+            id: vocGraph
             anchors.fill: parent
-            anchors.bottomMargin: -24
-            clip: true
 
-            Item { // Flickable
-                id: vocFlickable
-                anchors.fill: parent
-                anchors.bottomMargin: 26
-/*
-                contentWidth: vocRow.width
-                flickableDirection: Flickable.HorizontalFlick
-                boundsBehavior: Flickable.StopAtBounds
-*/
-                Row {
-                    id: vocRow
-                    height: parent.height
-                    anchors.right: parent.right
+            orientation: Qt.Horizontal
+            layoutDirection: Qt.RightToLeft
+            snapMode: ListView.SnapToItem
 
-                    spacing: 16
+            ScrollBar.horizontal: ScrollBarThemed {
+                anchors.top: parent.bottom
+                height: 4
+                radius: 2
 
-                    Repeater {
-                        model: currentDevice.aioEnvData
+                colorMoving: Theme.colorSecondary
+                policy: ScrollBar.AsNeeded
+            }
 
-                        Item {
-                            id: barItem
-                            height: parent.height
-                            width: 16
+            model: currentDevice.aioEnvData
+            delegate: ChartEnvironmentalVocBar {
+                width: widgetWidth
+                height: ListView.view.height
 
-                            property int valueMin
-                            property int valueMean
-                            property int valueMax
-
-                            Component.onCompleted: loadValues()
-                            function loadValues() {
-                                if (itemDeviceEnvironmental.primary === "voc" ||
-                                    itemDeviceEnvironmental.primary === "hcho") {
-                                    valueMin = modelData.vocMin
-                                    valueMean = modelData.vocMean
-                                    valueMax = modelData.vocMax
-                                } else if (itemDeviceEnvironmental.primary === "co2") {
-                                    valueMin = modelData.co2Min
-                                    valueMean = modelData.co2Mean
-                                    valueMax = modelData.co2Max
-                                } else if (itemDeviceEnvironmental.primary === "pm25") {
-                                    valueMin = modelData.pm25Min
-                                    valueMean = modelData.pm25Mean
-                                    valueMax = modelData.pm25Max
-                                } else if (itemDeviceEnvironmental.primary === "pm10") {
-                                    valueMin = modelData.pm10Min
-                                    valueMean = modelData.pm10Mean
-                                    valueMax = modelData.pm10Max
-                                }
-
-                                if (valueMax > scaleMax) valueMax = scaleMax
-                                if (valueMean > scaleMax) valueMean = scaleMax
-                            }
-
-                            Connections {
-                                target: itemDeviceEnvironmental
-                                function onPrimaryChanged() { loadValues() }
-                            }
-
-                            Rectangle {
-                                height: barItem.height
-                                width: 2
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                color: Theme.colorSeparator
-                                opacity: 0.25
-                            }
-
-                            Rectangle {
-                                anchors.horizontalCenter: parent.horizontalCenter
-                                anchors.bottom: parent.bottom
-
-                                radius: 13
-                                width: 13
-                                height: (valueMax / scaleMax) * barItem.height
-                                Behavior on height { NumberAnimation { duration: 333 } }
-
-                                color: {
-                                    if (valueMax > limitMax)
-                                        return Theme.colorOrange
-                                    else if (valueMax > limitMin)
-                                        return Theme.colorYellow
-                                    else
-                                        return Theme.colorGreen
-                                }
-                                Behavior on color { ColorAnimation { duration: 333 } }
-
-                                Rectangle {
-                                    anchors.horizontalCenter: parent.horizontalCenter
-
-                                    y: {
-                                        if (valueMean >= scaleMax) return 1
-                                        return (parent.height - ((valueMean / scaleMax) * parent.height))
-                                    }
-                                    visible: (valueMean > 0)
-                                    width: parent.width - 2
-                                    height: width
-                                    radius: width
-                                    color: "white"
-                                    opacity: 0.8
-                                }
-/*
-                                Rectangle {
-                                    anchors.top: parent.top
-                                    anchors.topMargin: 1
-                                    anchors.horizontalCenter: parent.horizontalCenter
-
-                                    height: (modelData.hchoMax / scaleMax) * barItem.height
-                                    width: 9
-                                    radius: 9
-                                    color: "white"
-                                    opacity: 0.8
-                                }
-*/
-                            }
-
-                            Text {
-                                anchors.top: parent.bottom
-                                anchors.topMargin: 6
-                                anchors.horizontalCenter: parent.horizontalCenter
-
-                                rotation: -45
-                                text: modelData.day
-                                color: Theme.colorSubText
-                                font.bold: modelData.today
-                                font.pixelSize: (Theme.fontSizeContentSmall - 2)
-                            }
-                        }
-                    }
-                }
+                graphMin: chartEnvironmentalVoc.graphMin
+                graphMax: chartEnvironmentalVoc.graphMax
+                limitMin: chartEnvironmentalVoc.limitMin
+                limitMax: chartEnvironmentalVoc.limitMax
             }
         }
 
         ///////////////
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

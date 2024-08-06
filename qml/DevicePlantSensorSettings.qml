@@ -435,7 +435,7 @@ Flickable {
 
             ColumnLayout {
                 anchors.fill: parent
-                spacing: 12
+                spacing: 8
 
                 Row {
                     spacing: 8

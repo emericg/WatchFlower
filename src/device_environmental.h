@@ -52,6 +52,9 @@ public:
     // Chart environmental histogram
     Q_INVOKABLE void updateChartData_environmentalVoc(int maxDays);
     Q_INVOKABLE void updateChartData_environmentalEnv(int maxDays);
+
+    // Chart thermometer "min/max"
+    Q_INVOKABLE void updateChartData_thermometerMinMax(int maxDays);
 };
 
 /* ************************************************************************** */

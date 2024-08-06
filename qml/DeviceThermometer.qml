@@ -230,6 +230,8 @@ Loader {
         }
 
         function loadGraph() {
+            //console.log("DeviceThermometer // loadGraph() >> " + currentDevice)
+
             var reload = !(settingsManager.graphThermometer === "lines" && graphLoader.source === "ChartPlantDataAio.qml") ||
                          !(settingsManager.graphThermometer === "minmax" && graphLoader.source === "ChartThermometerMinMax.qml")
 
@@ -253,6 +255,8 @@ Loader {
         }
 
         function updateGraph() {
+            //console.log("DeviceThermometer // updateGraph() >> " + currentDevice)
+
             if (graphLoader.status === Loader.Ready) thermoChart.updateGraph()
         }
 

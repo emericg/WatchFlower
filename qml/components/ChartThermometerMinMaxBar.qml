@@ -11,6 +11,9 @@ Item {
 
     property int www: 20
 
+    property int graphMin: currentDevice.tempMin
+    property int graphMax: currentDevice.tempMax
+
     ///////////////
 
     Component.onCompleted: {
@@ -53,7 +56,7 @@ Item {
             rectangle_temp_mean.visible = ((modelData.tempMax - modelData.tempMin) > 0.5)
             rectangle_temp_mean.y = base2 - ((base2) * m) - rectangle_temp.y
 
-            if ((modelData.tempMax === modelData.tempMin && modelData.hygroMax === modelData.hygroMin)) {
+            if (modelData.tempMax === modelData.tempMin && modelData.hygroMax === modelData.hygroMin) {
                 text_temp_low.visible = false
                 rectangle_water_low.visible = false
             } else {

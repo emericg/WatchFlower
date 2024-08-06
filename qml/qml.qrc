@@ -46,11 +46,12 @@
         <file alias="ActionbarSelection.qml">components/ActionbarSelection.qml</file>
         <file alias="ActionbarSync.qml">components/ActionbarSync.qml</file>
 
-        <file alias="ChartEnvironmentalVoc.qml">components/ChartEnvironmentalVoc.qml</file>
         <file alias="ChartHistory.qml">components/ChartHistory.qml</file>
         <file alias="ChartPlantDataAio.qml">components/ChartPlantDataAio.qml</file>
         <file alias="ChartThermometerMinMax.qml">components/ChartThermometerMinMax.qml</file>
         <file alias="ChartThermometerMinMaxBar.qml">components/ChartThermometerMinMaxBar.qml</file>
+        <file alias="ChartEnvironmentalVoc.qml">components/ChartEnvironmentalVoc.qml</file>
+        <file alias="ChartEnvironmentalVocBar.qml">components/ChartEnvironmentalVocBar.qml</file>
 
         <file alias="ActionMenuFixed.qml">components/ActionMenuFixed.qml</file>
         <file alias="AirQualityIndicator.qml">components/AirQualityIndicator.qml</file>

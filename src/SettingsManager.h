@@ -124,7 +124,7 @@ class SettingsManager: public QObject
     unsigned m_updateIntervalThermometer = s_intervalThermometerUpdate;
     unsigned m_updateIntervalEnvironmental = s_intervalEnvironmentalUpdate;
 
-    unsigned m_dataRetentionDays = 90;
+    unsigned m_dataRetentionDays = 180;
 
     QString m_tempUnit = "C";
     QString m_graphHistogram = "weekly";

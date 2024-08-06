@@ -321,7 +321,9 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
     qDeleteAll(m_chartData_minmax);
     m_chartData_minmax.clear();
     m_tempMin = 999.f;
-    m_tempMax = -99.f;
+    m_tempMax = -999.f;
+    m_humiMin = 999.f;
+    m_humiMax = -999.f;
     ChartDataMinMax *previousdata = nullptr;
 
     if (m_dbInternal || m_dbExternal)
@@ -337,7 +339,8 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
                           "FROM thermoData " \
                           "WHERE deviceAddr = :deviceAddr AND timestamp >= " + datetime_months + " " \
                           "GROUP BY " + strftime_d + " " \
-                          "ORDER BY " + strftime_d + " DESC;");
+                          "ORDER BY " + strftime_d + " DESC " \
+                          "LIMIT :maxDays;");
         graphData.bindValue(":deviceAddr", getAddress());
         graphData.bindValue(":maxDays", maxDays);
 
@@ -364,7 +367,7 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
                         if (m_chartData_minmax.size() < (maxDays-1))
                         {
                             QDateTime fakedate(datefromsql.addDays(i-1));
-                            m_chartData_minmax.push_front(new ChartDataMinMax(fakedate, -99, -99, -99, -99, -99, this));
+                            m_chartData_minmax.push_back(new ChartDataMinMax(fakedate, -99, -99, -99, -99, -99, this));
                         }
                     }
                 }
@@ -372,14 +375,14 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
                 // min/max
                 if (graphData.value(1).toFloat() < m_tempMin) { m_tempMin = graphData.value(1).toFloat(); minmaxChanged = true; }
                 if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
-                if (graphData.value(4).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(4).toInt(); minmaxChanged = true; }
-                if (graphData.value(5).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (graphData.value(4).toInt() < m_humiMin) { m_humiMin = graphData.value(4).toInt(); minmaxChanged = true; }
+                if (graphData.value(5).toInt() > m_humiMax) { m_humiMax = graphData.value(5).toInt(); minmaxChanged = true; }
 
                 // data
                 ChartDataMinMax *d = new ChartDataMinMax(graphData.value(0).toDateTime(),
                                                          graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
                                                          graphData.value(4).toInt(), graphData.value(5).toInt(), this);
-                m_chartData_minmax.push_front(d);
+                m_chartData_minmax.push_back(d);
                 previousdata = d;
             }
         }
@@ -391,11 +394,11 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
             // after
             QDateTime today = QDateTime::currentDateTime();
             int missing = maxDays;
-            if (previousdata) missing = static_cast<ChartDataMinMax *>(m_chartData_minmax.last())->getDateTime().daysTo(today);
+            if (previousdata) missing = static_cast<ChartDataMinMax *>(m_chartData_minmax.first())->getDateTime().daysTo(today);
             for (int i = missing - 1; i >= 0; i--)
             {
                 QDateTime fakedate(today.addDays(-i));
-                m_chartData_minmax.push_back(new ChartDataMinMax(fakedate, -99, -99, -99, -99, -99, this));
+                m_chartData_minmax.push_front(new ChartDataMinMax(fakedate, -99, -99, -99, -99, -99, this));
             }
 
             // before
@@ -403,7 +406,7 @@ void DeviceThermometer::updateChartData_thermometerMinMax(int maxDays)
             for (int i = m_chartData_minmax.size(); i < maxDays; i++)
             {
                 QDateTime fakedate(today.addDays(-i));
-                m_chartData_minmax.push_front(new ChartDataMinMax(fakedate, -99, -99, -99, -99, -99, this));
+                m_chartData_minmax.push_back(new ChartDataMinMax(fakedate, -99, -99, -99, -99, -99, this));
             }
         }
 /*

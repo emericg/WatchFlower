@@ -1001,7 +1001,7 @@ void DeviceSensor::checkDataAvailability()
     if (somethingchanged) Q_EMIT dataAvailableUpdated();
 }
 
-bool DeviceSensor::hasDataNamed(const QString &dataName) const
+bool DeviceSensor::hasDataNamed(const QString &dataName, int days) const
 {
     if (dataName.isEmpty()) return false;
 
@@ -1122,10 +1122,58 @@ int DeviceSensor::countDataNamed(const QString &dataName, int days) const
     }
     else
     {
-        // No database
+        // No database, but maybe today?
         if (m_soilMoisture > 0 || m_soilConductivity > 0 || m_soilTemperature > 0 ||
             m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0)
         return 1;
+    }
+
+    return 0;
+}
+
+int DeviceSensor::historydaysDataNamed(const QString &dataName, int days) const
+{
+    if (dataName.isEmpty()) return false;
+
+    // Count stored data
+    if (m_dbInternal || m_dbExternal)
+    {
+        QString tableName = "plantData";
+        if (isThermometer()) tableName = "thermoData";
+        if (isEnvironmentalSensor()) tableName = "sensorData";
+
+        QSqlQuery spanDate;
+        if (m_dbInternal) // sqlite
+        {
+            spanDate.prepare("SELECT timestamp " \
+                             "FROM " + tableName + " " \
+                             "WHERE deviceAddr = :deviceAddr " \
+                             "ORDER BY timestamp ASC LIMIT 1;");
+        }
+        else if (m_dbExternal) // mysql
+        {
+            // TODO
+        }
+        spanDate.bindValue(":deviceAddr", getAddress());
+
+        if (spanDate.exec() == false)
+        {
+            qWarning() << "> spanDate.exec() ERROR"
+                       << spanDate.lastError().type() << ":" << spanDate.lastError().text();
+        }
+
+        while (spanDate.next())
+        {
+            int historydays = spanDate.value(0).toDateTime().daysTo(QDateTime::currentDateTime());
+            return std::min(historydays, days);
+        }
+    }
+    else
+    {
+        // No database, but maybe today?
+        if (m_soilMoisture > 0 || m_soilConductivity > 0 || m_soilTemperature > 0 ||
+            m_temperature > -20.f || m_humidity > 0 || m_luminosityLux > 0)
+            return 1;
     }
 
     return 0;

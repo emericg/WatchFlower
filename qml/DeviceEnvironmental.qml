@@ -143,6 +143,7 @@ Loader {
             loadIndicator()
             updateHeader()
             loadGraph()
+            updateGraph()
         }
 
         ////////
@@ -393,15 +394,23 @@ Loader {
         }
 
         function loadGraph() {
+            //console.log("DeviceEnvironmental // loadGraph() >> " + currentDevice)
+
             if (isAirMonitor) {
                 if (currentDevice.hasPM1Sensor || currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor ||
                     currentDevice.hasVocSensor || currentDevice.hasHchoSensor ||
                     currentDevice.hasCoSensor || currentDevice.hasCo2Sensor) {
                     if (primary === "hygrometer") {
-                        graphLoader.source = ""
-                        graphLoader.opacity = 0
+                        if (graphLoader.status !== Loader.Ready ||
+                            graphLoader.source !== "ChartThermometerMinMax.qml") {
+                            graphLoader.source = "ChartThermometerMinMax.qml"
+                        } else {
+                            envChart.loadGraph()
+                            envChart.updateGraph()
+                        }
                     } else {
-                        if (graphLoader.status !== Loader.Ready) {
+                        if (graphLoader.status !== Loader.Ready ||
+                            graphLoader.source !== "ChartEnvironmentalVoc.qml") {
                             graphLoader.source = "ChartEnvironmentalVoc.qml"
                         } else {
                             envChart.loadGraph()
@@ -417,13 +426,8 @@ Loader {
             if (!currentDevice.isEnvironmentalSensor) return
             //console.log("DeviceEnvironmental // updateGraph() >> " + currentDevice)
 
-            // GRAPH
-            if (isAirMonitor) {
-                if (currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor) {
-                    currentDevice.updateChartData_environmentalEnv(90)
-                } else if (currentDevice.hasVocSensor || currentDevice.hasHchoSensor || currentDevice.hasCo2Sensor) {
-                    currentDevice.updateChartData_environmentalVoc(90)
-                }
+            if (graphLoader.status === Loader.Ready && isAirMonitor) {
+                envChart.updateGraph()
             }
         }
 
@@ -1228,7 +1232,7 @@ Loader {
                                         envChart.updateGraph()
 
                                         graphLoader.opacity = 1
-                                        noDataIndicator.visible = (currentDevice.countDataNamed("temperature", envChart.daysVisible) < 1)
+                                        noDataIndicator.visible = (currentDevice.countDataNamed(primary, envChart.daysVisible) < 1)
                                     }
                                 }
                             }
