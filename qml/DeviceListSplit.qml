@@ -63,6 +63,12 @@ Item {
             visible: false
         }
 */
+        Component.onCompleted: {
+            if (isMobile) {
+                maximumFlickVelocity *= 1.5
+            }
+        }
+
         Column {
             id: devicesView
             anchors.left: parent.left

@@ -65,6 +65,12 @@ Item {
             visible: false
         }
 */
+        Component.onCompleted: {
+            if (isMobile) {
+                maximumFlickVelocity *= 1.5
+            }
+        }
+
         ////////
 
         property int halfmargin: (Theme.componentMargin / 2)

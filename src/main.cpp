@@ -134,6 +134,10 @@ int main(int argc, char *argv[])
     QSurfaceFormat::setDefaultFormat(format);
 #endif
 
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    qputenv("QT_QUICK_FLICKABLE_WHEEL_DECELERATION", "2500");
+#endif
+
     SingleApplication app(argc, argv, true);
 
     // Application name

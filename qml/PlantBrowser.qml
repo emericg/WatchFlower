@@ -206,6 +206,12 @@ Loader {
                     policy: ScrollBar.AsNeeded
                 }
 
+                Component.onCompleted: {
+                    if (isMobile) {
+                        maximumFlickVelocity *= 1.5
+                    }
+                }
+
                 model: plantDatabase.plantsFiltered
                 delegate: Rectangle {
                     width: ListView.view.width
