@@ -81,6 +81,8 @@ DrawerThemed {
 
                 ////////
 
+                topPadding: -Theme.componentMargin/2
+
                 ListSeparatorPadded { }
 
                 ////////

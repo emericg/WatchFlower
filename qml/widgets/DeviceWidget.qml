@@ -23,6 +23,10 @@ Item {
     property int margin: Theme.componentMargin
     property int halfmargin: Theme.componentMargin / 2
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    Component.onCompleted: initBoxData()
+
     Connections {
         target: boxDevice
         function onSensorUpdated() { initBoxData() }
@@ -53,8 +57,6 @@ Item {
             updateSensorData()
         }
     }
-
-    Component.onCompleted: initBoxData()
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -223,14 +225,22 @@ Item {
 
         opacity: boxDevice.deviceEnabled ? 1 : 0.66
 
+        RippleThemed {
+            anchors.fill: parent
+            anchor: control
+            clip: true
+
+            pressed: mousearea.pressed
+            active: mousearea.enabled && mousearea.down
+            color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.8)
+        }
+
         MouseArea {
             id: mousearea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.MiddleButton
 
             onClicked: (mouse) => {
-                if (typeof boxDevice === "undefined" || !boxDevice) return
-
                 if (mouse.button === Qt.LeftButton) {
                     // multi selection
                     if ((mouse.modifiers & Qt.ControlModifier) ||
