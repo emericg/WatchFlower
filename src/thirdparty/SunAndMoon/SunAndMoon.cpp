@@ -41,7 +41,7 @@ bool SunAndMoon::isValid() const
     if (m_latitude_saved > -90.0 && m_latitude_saved < 90.0 &&
         m_longitude_saved > -180.0 && m_longitude_saved < 180.0)
     {
-        if (m_latitude_saved != 0.0 && m_longitude_saved != 0.0)
+        if (m_latitude_saved != 0.0 || m_longitude_saved != 0.0)
         {
             return m_lastupdate.isValid();
         }
@@ -57,7 +57,7 @@ void SunAndMoon::update()
 {
     if (m_latitude_saved > -720.0 && m_longitude_saved > -720.0)
     {
-        if (m_latitude_saved != 0.0 && m_longitude_saved != 0.0)
+        if (m_latitude_saved != 0.0 || m_longitude_saved != 0.0)
         {
             set(m_latitude_saved, m_longitude_saved, QDateTime::currentDateTimeUtc());
         }

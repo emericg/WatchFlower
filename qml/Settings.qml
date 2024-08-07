@@ -1,6 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
+import QtPositioning
+
 import ThemeEngine
 
 Loader {
@@ -65,6 +67,9 @@ Loader {
                 bottomPadding: 16
                 spacing: 8
 
+                property int paddingLeft: screenPaddingLeft + (singleColumn ? 0 : 16)
+                property int paddingRight: screenPaddingRight + (singleColumn ? 0 : 16)
+
                 property int padIcon: singleColumn ? Theme.componentMarginL : Theme.componentMarginL
                 property int padText: appHeader.headerPosition
 
@@ -79,9 +84,9 @@ Loader {
 
                 Item { // element_appTheme
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     IconSvg {
@@ -250,9 +255,9 @@ Loader {
 
                 Item { // element_appThemeAuto
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     IconSvg {
@@ -296,12 +301,12 @@ Loader {
                 }
                 Text { // legend_appThemeAuto
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
-                    bottomPadding: 0
+                    bottomPadding: isDesktop ? 6 : 6
 
                     text: settingsManager.appThemeAuto ?
                               qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.") :
@@ -316,9 +321,9 @@ Loader {
 
                 Item { // element_splitView
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     IconSvg {
@@ -360,12 +365,12 @@ Loader {
                 }
                 Text { // legend_splitView
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
-                    bottomPadding: isDesktop ? 12 : 0
+                    bottomPadding: isDesktop ? 12 : 6
 
                     text: settingsManager.splitView ?
                               qsTr("Devices will be split into categories (plant sensors, thermometers, air quality monitors)") :
@@ -378,16 +383,16 @@ Loader {
 
                 ////////
 
-                ListSeparator { }
+                ListSeparator { visible: isDesktop }
 
                 ////////
 
                 Item {
                     id: element_language
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     IconSvg {
@@ -458,15 +463,17 @@ Loader {
                     }
                 }
 
+                ////////
+
                 ListSeparator { visible: isDesktop }
 
                 ////////
 
                 Item { // element_minimized
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     visible: isDesktop
@@ -525,8 +532,8 @@ Loader {
 
                         text: qsTr("about")
                         colorBackground: Theme.colorForeground
-                        colorText: Theme.colorRed
-                        colorBorder: Theme.colorRed
+                        colorText: Theme.colorOrange
+                        colorBorder: Theme.colorOrange
 
                         onClicked: popupBackgroundUpdates.open()
                     }
@@ -537,13 +544,10 @@ Loader {
                 Item {
                     id: element_worker
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
-
-                    // every platforms except iOS
-                    visible: (Qt.platform.os !== "ios")
 
                     IconSvg {
                         anchors.left: parent.left
@@ -595,15 +599,15 @@ Loader {
                 }
                 Text { // legend_worker_mobile
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: element_notifications.visible ? 0 : 12
                     visible: (element_worker.visible && Qt.platform.os === "android")
 
-                    text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth (or Bluetooth control) is enabled.")
+                    text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth is enabled.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -611,9 +615,9 @@ Loader {
                 }
                 Text { // legend_worker_desktop
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: element_notifications.visible ? 0 : 12
@@ -633,9 +637,9 @@ Loader {
                 Item {
                     id: element_notifications
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     // every platforms except iOS // also, need the systray
@@ -687,9 +691,9 @@ Loader {
                 }
                 Text { // legend_notifications
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: settingsManager.notifications ? 0 : 12
@@ -709,9 +713,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
 
                     topPadding: -12
                     visible: settingsManager.systray && settingsManager.notifications
@@ -847,9 +851,9 @@ Loader {
 
                 Item { // element_bluetoothControl
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     visible: (Qt.platform.os === "android")
@@ -893,9 +897,9 @@ Loader {
                 }
                 Text { // legend_bluetoothControl
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
@@ -913,9 +917,9 @@ Loader {
 
                 Item { // element_bluetoothRange
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     IconSvg {
@@ -957,9 +961,9 @@ Loader {
                 }
                 Text { // legend_bluetoothRange
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 0
@@ -977,9 +981,9 @@ Loader {
 
                 Item { // element_bluetoothSimUpdate
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
                     IconSvg {
@@ -1023,6 +1027,7 @@ Loader {
                         from: 1
                         to: 6
                         stepSize: 1
+                        snapMode: Slider.SnapOnRelease
                         wheelEnabled: false
 
                         value: settingsManager.bluetoothSimUpdates
@@ -1050,9 +1055,9 @@ Loader {
                 }
                 Text { // legend_bluetoothSimUpdate
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
                     bottomPadding: 12
@@ -1076,9 +1081,9 @@ Loader {
 
                 Item { // element_plant_update
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightL
 
                     IconSvg {
@@ -1133,9 +1138,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     spacing: 0
 
                     Item { // element_plant_indicators
@@ -1271,9 +1276,9 @@ Loader {
 
                 Item { // element_thermometer_update
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightL
 
                     IconSvg {
@@ -1327,9 +1332,9 @@ Loader {
 
                 Item { // element_thermometer_unit
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft
+                    anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight
+                    anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightL
 
                     IconSvg {
@@ -1380,6 +1385,233 @@ Loader {
                 ////////////////
 
                 ListTitle {
+                    text: qsTr("My location")
+                    source: "qrc:/assets/icons/material-symbols/language.svg"
+                }
+
+                ////////////////
+
+                Item {
+                    id: element_sunandmoon
+                    anchors.left: parent.left
+                    anchors.leftMargin: contentColumn.paddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: contentColumn.paddingRight
+                    height: Theme.componentHeightXL
+
+                    IconSvg {
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padIcon
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        width: 24
+                        height: 24
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons/material-symbols/routine-fill.svg"
+                    }
+
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
+                        anchors.right: switch_sunandmoon.left
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("Enable Sun and Moon widget")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeContent
+                        color: Theme.colorText
+                        lineHeight: 0.8
+                    }
+
+                    SwitchThemedDesktop {
+                        id: switch_sunandmoon
+                        anchors.right: parent.right
+                        anchors.rightMargin: 4
+                        anchors.verticalCenter: parent.verticalCenter
+                        z: 1
+
+                        checked: settingsManager.sunandmoon
+                        onClicked: {
+                            var currentDate = new Date()
+                            sunAndMoon.set(settingsManager.latitude, settingsManager.longitude, currentDate)
+                            settingsManager.sunandmoon = checked
+                        }
+                    }
+                }
+
+                ////////
+
+                Item {
+                    id: element_location
+                    anchors.left: parent.left
+                    anchors.leftMargin: contentColumn.paddingLeft
+                    anchors.right: parent.right
+                    anchors.rightMargin: contentColumn.paddingRight
+                    height: Theme.componentHeightXL
+
+                    visible: settingsManager.sunandmoon
+
+                    IconSvg {
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padIcon
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        width: 24
+                        height: 24
+                        color: Theme.colorIcon
+                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                    }
+
+                    Text {
+                        anchors.left: parent.left
+                        anchors.leftMargin: contentColumn.padText
+                        anchors.right: rowPosition.left
+                        anchors.rightMargin: Theme.componentMargin
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("GPS position")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        font.pixelSize: Theme.fontSizeContent
+                        color: Theme.colorText
+                        lineHeight: 0.8
+                    }
+
+                    Row {
+                        id: rowPosition
+                        anchors.right: parent.right
+                        anchors.rightMargin: 8
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: 12
+
+                        TextFieldThemed {
+                            width: contentWidth + leftPadding*2
+                            readOnly: true
+                            visible: settingsManager.locationSet
+                            text: {
+                                settingsManager.latitude.toFixed(5) + ", " + settingsManager.longitude.toFixed(5)
+                            }
+                        }
+
+                        SquareButtonOutline {
+                            source: "qrc:/assets/icons/material-symbols/location/my_location-fill.svg"
+                            onClicked: gpsLoader.start()
+                        }
+                    }
+
+                    Loader {
+                        id: gpsLoader
+                        active: false
+                        asynchronous: true
+
+                        function start() {
+                            gpsLoader.active = true
+                            gpsTimer.start()
+                        }
+                        function stop() {
+                            gpsLoader.active = false
+                            gpsTimer.stop()
+                        }
+
+                        Timer {
+                            id: gpsTimer
+                            interval: 10000
+                            running: false
+                            repeat: false
+                            onTriggered: {
+                                if (gpsLoader.status === Loader.Ready) {
+                                    gpsLoader.item.wrapUp()
+                                }
+                                gpsLoader.stop()
+                            }
+                        }
+
+                        sourceComponent: PositionSource {
+                            active: true
+                            updateInterval: 2000
+
+                            onSupportedPositioningMethodsChanged: {
+                                //console.log("Positioning method: " + supportedPositioningMethods)
+                            }
+                            onPositionChanged: {
+                                if (position.horizontalAccuracy < 3333) {
+                                    settingsManager.latitude = position.coordinate.latitude
+                                    settingsManager.longitude = position.coordinate.longitude
+                                }
+                                if (position.horizontalAccuracy < 100) {
+                                    gpsLoader.stop()
+                                }
+                            }
+                            function wrapUp() {
+                                //console.log("Coordinate: ", position.coordinate.longitude, position.coordinate.latitude)
+                                //console.log("Accuracy  : ", position.horizontalAccuracy)
+
+                                if (position.latitudeValid && position.longitudeValid) {
+                                    if (position.horizontalAccuracy < 3333) {
+                                        settingsManager.latitude = position.coordinate.latitude
+                                        settingsManager.longitude = position.coordinate.longitude
+                                    }
+                                }
+                            }
+                        }
+                    }
+/*
+                    Timer {
+                        id: gpsTimer
+                        interval: 10000
+                        running: false
+                        repeat: false
+                        onTriggered: {
+                            gps.wrapUp()
+                            gps.stop()
+                        }
+                    }
+                    PositionSource {
+                        id: gps
+
+                        active: false
+                        updateInterval: 2000
+
+                        function start() {
+                            gps.active = true
+                            gpsTimer.running = true
+                        }
+                        function stop() {
+                            gps.active = false
+                            gpsTimer.running = false
+                        }
+
+                        onSupportedPositioningMethodsChanged: {
+                            console.log("Positioning method: " + supportedPositioningMethods)
+                        }
+                        onPositionChanged: {
+                            wrapUp()
+                        }
+                        function wrapUp() {
+                            console.log("Coordinate: ", position.coordinate.longitude, position.coordinate.latitude)
+                            console.log("Accuracy  : ", position.horizontalAccuracy)
+
+                            if (position.latitudeValid && position.longitudeValid) {
+                                settingsManager.latitude = position.coordinate.latitude
+                                settingsManager.longitude = position.coordinate.longitude
+
+                                //geocodeModel.query = position.coordinate
+                                //geocodeModel.update()
+                            }
+                        }
+                    }
+                    //GeocodeModel {
+                    //    id: geocodeModel
+                    //    autoUpdate: false
+                    //}
+*/
+                }
+
+                ////////////////
+
+                ListTitle {
                     text: qsTr("Data archiving")
                     source: "qrc:/assets/icons/material-symbols/archive.svg"
                     visible: deviceManager.hasDevices
@@ -1389,9 +1621,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: 8
                     visible: deviceManager.hasDevices
@@ -1426,9 +1658,9 @@ Loader {
 
                 Row { // element_export
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + contentColumn.padText
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     height: Theme.componentHeightXL
                     spacing: Theme.componentMargin

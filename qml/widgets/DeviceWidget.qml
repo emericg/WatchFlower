@@ -192,10 +192,11 @@ Item {
                 height: 96
                 opacity: 0.2
 
-                source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
-                color: Theme.colorYellow
-                //source: "qrc:/assets/icons/material-symbols/weather/brightness_2.svg"
-                //color: Theme.colorBlue
+                property bool isIsDay: sunAndMoon.isItDay
+
+                source: isIsDay ? "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
+                                : "qrc:/assets/icons/material-symbols/weather/brightness_1-fill.svg"
+                color: isIsDay ? Theme.colorYellow : Theme.colorBlue
             }
         }
     }

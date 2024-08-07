@@ -186,6 +186,12 @@ Item {
                 id: toolsView
                 anchors.left: parent.left
                 anchors.right: parent.right
+                SunAndMoonWidget {
+                    visible: settingsManager.sunandmoon
+                    width: devicesView.cellWidth
+                    height: devicesView.cellWidth * (devicesView.listWidget ? 0.6 : 0.5)
+                    listMode: devicesView.listWidget
+                }
 
                 DeviceBrowserWidget {
                     width: devicesView.cellWidth

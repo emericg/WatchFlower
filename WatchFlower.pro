@@ -5,7 +5,7 @@ DEFINES+= APP_NAME=\\\"$$TARGET\\\"
 DEFINES+= APP_VERSION=\\\"$$VERSION\\\"
 
 CONFIG += c++17
-QT     += core bluetooth sql
+QT     += core bluetooth positioning sql
 QT     += qml quick quickcontrols2 svg charts
 
 !android:!ios {

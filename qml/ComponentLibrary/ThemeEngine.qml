@@ -283,10 +283,18 @@ Item {
 
         // Handle day/night themes
         if (settingsManager.appThemeAuto) {
-            var rightnow = new Date()
-            var hour = Qt.formatDateTime(rightnow, "hh")
-            if (hour >= 21 || hour <= 8) {
-                themeIndex = ThemeEngine.THEME_NIGHT
+            if (settingsManager.sunandmoon) {
+                // With SunAndMoon
+                if (sunAndMoon.isItNight) {
+                    themeIndex = ThemeEngine.THEME_NIGHT
+                }
+            } else {
+                // With default 21/8 night hours
+                var rightnow = new Date()
+                var hour = Qt.formatDateTime(rightnow, "hh")
+                if (hour >= 21 || hour <= 8) {
+                    themeIndex = ThemeEngine.THEME_NIGHT
+                }
             }
         }
 

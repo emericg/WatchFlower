@@ -36,6 +36,9 @@ Loader {
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
         ScrollBar.vertical: ScrollBar { visible: false }
 
+        property int paddingLeft: screenPaddingLeft + Theme.componentMargin
+        property int paddingRight: screenPaddingRight + Theme.componentMargin
+
         function backAction() {
             screenDeviceList.loadScreen()
         }
@@ -166,9 +169,9 @@ Loader {
                 height: 72
 
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                anchors.leftMargin: paddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                anchors.rightMargin: paddingRight
 
                 visible: !wideWideMode
                 spacing: Theme.componentMargin
@@ -215,7 +218,7 @@ Loader {
                 anchors.left: parent.left
                 anchors.leftMargin: screenPaddingLeft + appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                anchors.rightMargin: paddingRight
 
                 height: 96
                 visible: isPhone
@@ -320,9 +323,9 @@ Loader {
 
             Item { // list dependencies
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                anchors.leftMargin: paddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                anchors.rightMargin: paddingRight
 
                 height: 40 + dependenciesText.height + dependenciesColumn.height
 
@@ -391,9 +394,9 @@ Loader {
 
             Item { // list translators
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                anchors.leftMargin: paddingLeft
                 anchors.right: parent.right
-                anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                anchors.rightMargin: paddingRight
 
                 height: 40 + translatorsText.height + translatorsColumn.height
 

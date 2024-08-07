@@ -163,6 +163,13 @@ int main(int argc, char *argv[])
     MenubarManager *mb = MenubarManager::getInstance();
 #endif
 
+    // Sun and Moon
+    SunAndMoon sam;
+    if (sm->getSunAndMoon())
+    {
+        sam.set(sm->getLatitude(), sm->getLongitude(), QDateTime::currentDateTime());
+    }
+
     // Plant database
     PlantDatabase *pdb = PlantDatabase::getInstance();
 
@@ -203,7 +210,8 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
-    //engine_context->setContextProperty("utilsPlant", utilsPlant);
+    engine_context->setContextProperty("sunAndMoon", &sam);
+
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
     engine_context->setContextProperty("qtConnectivityPatched", qtConnectivityPatched);
 
