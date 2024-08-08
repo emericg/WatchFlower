@@ -38,7 +38,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{env.QT_VERSION}}
-          modules: qtconnectivity qtcharts
+          modules: qtconnectivity qtcharts qtpositioning
 
       # Install dependencies (from package manager)
       - name: Install dependencies (from package manager)
@@ -97,7 +97,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{env.QT_VERSION}}
-          modules: qtconnectivity qtcharts
+          modules: qtconnectivity qtcharts qtpositioning
 
       # Setup env
       - name: Setup env
@@ -143,7 +143,7 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{env.QT_VERSION}}
-          modules: qtconnectivity qtcharts
+          modules: qtconnectivity qtcharts qtpositioning
 
       # Install NSIS (already installed in 'windows-2022')
       #- name: Install NSIS

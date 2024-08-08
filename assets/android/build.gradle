@@ -84,7 +84,7 @@ android {
     defaultConfig {
         resConfig "en"
         minSdkVersion 23 // qtMinSdkVersion
-        targetSdkVersion 34 // qtTargetSdkVersion
+        targetSdkVersion 35 // qtTargetSdkVersion
         ndk.abiFilters = qtTargetAbiList.split(",")
 
         namespace 'com.emeric.watchflower'

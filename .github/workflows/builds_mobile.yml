@@ -46,7 +46,7 @@ jobs:
       #- name: Install Android SDK / NDK / tools
       #  run: |
       #       sdkmanager "platforms;android-34"
-      #       sdkmanager "ndk;25.2.9519653"
+      #       sdkmanager "ndk;26.3.11579264"
       #       sdkmanager "build-tools;34.0.0"
 
       # Install Qt (Android & desktop)
@@ -57,7 +57,7 @@ jobs:
           host: 'linux'
           target: 'android'
           arch: 'android_arm64_v8a'
-          modules: qtconnectivity qtcharts
+          modules: qtconnectivity qtcharts qtpositioning
           extra: '--autodesktop'
 
       # Setup env
@@ -89,7 +89,7 @@ jobs:
           version: ${{env.QT_VERSION}}
           host: 'mac'
           target: 'ios'
-          modules: qtconnectivity qtcharts
+          modules: qtconnectivity qtcharts qtpositioning
           extra: '--autodesktop'
 
       # Setup env
