@@ -127,6 +127,9 @@ int main(int argc, char *argv[])
 
     // GUI application /////////////////////////////////////////////////////////
 
+    // Qt 6.7+ debugger hack
+    qputenv("QT_ANDROID_DEBUGGER_MAIN_THREAD_SLEEP_MS", "0");
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     // NVIDIA suspend&resume hack
     auto format = QSurfaceFormat::defaultFormat();
@@ -135,6 +138,7 @@ int main(int argc, char *argv[])
 #endif
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+    // Qt 6.6+ mouse wheel hack
     qputenv("QT_QUICK_FLICKABLE_WHEEL_DECELERATION", "2500");
 #endif
 
