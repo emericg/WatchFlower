@@ -18,7 +18,7 @@ Rectangle {
 
     property int headerPosition: 56
 
-    property string headerTitle: "WatchFlower"
+    property string headerTitle: utilsApp.appName()
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -81,6 +81,8 @@ Rectangle {
     Item {
         anchors.fill: parent
         anchors.topMargin: Math.max(screenPaddingStatusbar, screenPaddingTop)
+        anchors.leftMargin: screenPaddingLeft
+        anchors.rightMargin: screenPaddingRight
 
         ////////////
 

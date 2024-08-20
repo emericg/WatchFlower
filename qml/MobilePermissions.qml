@@ -50,9 +50,7 @@ Item {
         Column {
             id: contentColumn
             anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft
             anchors.right: parent.right
-            anchors.rightMargin: screenPaddingRight
 
             topPadding: 20
             bottomPadding: 20

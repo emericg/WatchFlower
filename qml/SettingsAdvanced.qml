@@ -83,9 +83,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin + 4
+                    anchors.leftMargin: Theme.componentMargin + 8
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin + 4
+                    anchors.rightMargin: Theme.componentMargin + 8
                     spacing: Theme.componentMargin / 2
 
                     Text {
@@ -171,9 +171,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.leftMargin: Theme.componentMargin + 8
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: Theme.componentMargin + 8
                     spacing: Theme.componentMargin / 2
 
                     visible: isDesktop
@@ -204,9 +204,9 @@ Loader {
 
                 Loader {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.leftMargin: Theme.componentMargin + 8
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: Theme.componentMargin + 8
 
                     active: isDesktop && settingsManager.mysql
                     asynchronous: true
@@ -224,9 +224,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.leftMargin: Theme.componentMargin + 8
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: Theme.componentMargin + 8
                     spacing: Theme.componentMargin / 2
 
                     TextFieldThemed {
@@ -278,9 +278,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.leftMargin: Theme.componentMargin + 8
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: Theme.componentMargin + 8
                     spacing: Theme.componentMargin / 2
 
                     TextFieldThemed {
@@ -335,9 +335,9 @@ Loader {
 
                 Column {
                     anchors.left: parent.left
-                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                    anchors.leftMargin: Theme.componentMargin + 8
                     anchors.right: parent.right
-                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+                    anchors.rightMargin: Theme.componentMargin + 8
                     spacing: Theme.componentMargin
 
                     SwitchThemedDesktop {

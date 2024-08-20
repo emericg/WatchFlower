@@ -3,6 +3,7 @@
         <file>MobileApplication.qml</file>
         <file>MobileHeader.qml</file>
         <file>MobileDrawer.qml</file>
+        <file>MobileExit.qml</file>
         <file>MobileMenu.qml</file>
         <file>MobilePermissions.qml</file>
         <file>DesktopApplication.qml</file>

@@ -36,9 +36,6 @@ Loader {
         boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
         ScrollBar.vertical: ScrollBar { visible: false }
 
-        property int paddingLeft: screenPaddingLeft + Theme.componentMargin
-        property int paddingRight: screenPaddingRight + Theme.componentMargin
-
         function backAction() {
             screenDeviceList.loadScreen()
         }
@@ -52,14 +49,16 @@ Loader {
 
             Rectangle { // header area
                 anchors.left: parent.left
+                anchors.leftMargin: -screenPaddingLeft
                 anchors.right: parent.right
+                anchors.rightMargin: -screenPaddingRight
 
                 height: 96
                 color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
                 Row {
                     anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
+                    anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     z: 2
@@ -103,14 +102,14 @@ Loader {
 
                 Row { // desktop buttons row
                     anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
+                    anchors.rightMargin: screenPaddingRight + Theme.componentMargin
                     anchors.verticalCenter: parent.verticalCenter
 
                     visible: wideWideMode
                     spacing: Theme.componentMargin
 
                     ButtonSolid {
-                        width: 160
+                        width: 150
                         height: 40
 
                         text: qsTr("WEBSITE")
@@ -123,7 +122,7 @@ Loader {
                     }
 
                     ButtonSolid {
-                        width: 160
+                        width: 150
                         height: 40
 
                         text: qsTr("SUPPORT")
@@ -136,7 +135,7 @@ Loader {
                     }
 
                     ButtonSolid {
-                        width: 160
+                        width: 150
                         height: 40
 
                         visible: (appWindow.width > 800)
@@ -169,9 +168,9 @@ Loader {
                 height: 72
 
                 anchors.left: parent.left
-                anchors.leftMargin: paddingLeft
+                anchors.leftMargin: Theme.componentMargin
                 anchors.right: parent.right
-                anchors.rightMargin: paddingRight
+                anchors.rightMargin: Theme.componentMargin
 
                 visible: !wideWideMode
                 spacing: Theme.componentMargin
@@ -216,9 +215,9 @@ Loader {
 
             IconSvg { // image devices
                 anchors.left: parent.left
-                anchors.leftMargin: screenPaddingLeft + appHeader.headerPosition
+                anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: paddingRight
+                anchors.rightMargin: Theme.componentMargin
 
                 height: 96
                 visible: isPhone
@@ -323,9 +322,9 @@ Loader {
 
             Item { // list dependencies
                 anchors.left: parent.left
-                anchors.leftMargin: paddingLeft
+                anchors.leftMargin: Theme.componentMargin
                 anchors.right: parent.right
-                anchors.rightMargin: paddingRight
+                anchors.rightMargin: Theme.componentMargin
 
                 height: 40 + dependenciesText.height + dependenciesColumn.height
 
@@ -394,9 +393,9 @@ Loader {
 
             Item { // list translators
                 anchors.left: parent.left
-                anchors.leftMargin: paddingLeft
+                anchors.leftMargin: Theme.componentMargin
                 anchors.right: parent.right
-                anchors.rightMargin: paddingRight
+                anchors.rightMargin: Theme.componentMargin
 
                 height: 40 + translatorsText.height + translatorsColumn.height
 

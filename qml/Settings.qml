@@ -67,8 +67,8 @@ Loader {
                 bottomPadding: 16
                 spacing: 8
 
-                property int paddingLeft: screenPaddingLeft + (singleColumn ? 0 : 16)
-                property int paddingRight: screenPaddingRight + (singleColumn ? 0 : 16)
+                property int paddingLeft: (singleColumn ? 0 : 16)
+                property int paddingRight: (singleColumn ? 0 : 16)
 
                 property int padIcon: singleColumn ? Theme.componentMarginL : Theme.componentMarginL
                 property int padText: appHeader.headerPosition
