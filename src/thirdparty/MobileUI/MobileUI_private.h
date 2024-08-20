@@ -68,7 +68,12 @@ public:
 
     static void setScreenOrientation(const MobileUI::ScreenOrientation orientation);
 
+    static int getScreenBrightness();
+    static void setScreenBrightness(const int value);
+
     static void vibrate();
+
+    static void backToHomeScreen();
 };
 
 /* ************************************************************************** */

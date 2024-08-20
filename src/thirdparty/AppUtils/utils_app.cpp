@@ -165,12 +165,20 @@ bool UtilsApp::qtIsRelease()
 
 bool UtilsApp::qtIsStatic()
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     return !QLibraryInfo::isSharedBuild();
+#endif
+
+    return false;
 }
 
 bool UtilsApp::qtIsShared()
 {
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     return QLibraryInfo::isSharedBuild();
+#endif
+
+    return false;
 }
 
 QString UtilsApp::qtRhiBackend()
@@ -285,7 +293,7 @@ bool UtilsApp::isOsThemeDark()
     const QStyleHints *styleHints = static_cast<QGuiApplication*>qApp->styleHints();
     isDark = (styleHints && styleHints->colorScheme() == Qt::ColorScheme::Dark);
 
-#else
+#elif (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
 
     const QPalette defaultPalette = static_cast<QGuiApplication*>qApp->palette();
     isDark = (defaultPalette.color(QPalette::WindowText).lightness() >

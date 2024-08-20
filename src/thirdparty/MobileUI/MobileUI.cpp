@@ -24,9 +24,14 @@
 #include "MobileUI.h"
 #include "MobileUI_private.h"
 
+#include <QGuiApplication>
 #include <QQmlEngine>
+#include <QScreen>
 
 /* ************************************************************************** */
+
+bool MobileUI::isPhone = false;
+bool MobileUI::isTablet = false;
 
 bool MobileUIPrivate::areRefreshSlotsConnected = false;
 
@@ -54,6 +59,23 @@ void MobileUI::registerQML()
 
 /* ************************************************************************** */
 
+MobileUI::MobileUI(QObject *parent) : QObject(parent)
+{
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    QScreen *screen = qApp->primaryScreen();
+    if (screen)
+    {
+        double screenSizeInch = std::sqrt(std::pow(screen->physicalSize().width(), 2.0) +
+                                          std::pow(screen->physicalSize().height(), 2.0)) / (2.54 * 10.0);
+
+        if (screenSizeInch < 7.0) MobileUI::isPhone = true;
+        else MobileUI::isTablet = true;
+    }
+#endif
+}
+
+/* ************************************************************************** */
+
 MobileUI::Theme MobileUI::getDeviceTheme()
 {
     return static_cast<MobileUI::Theme>(MobileUIPrivate::getDeviceTheme());
@@ -68,8 +90,11 @@ QColor MobileUI::getStatusbarColor()
 
 void MobileUI::setStatusbarColor(const QColor &color)
 {
-    MobileUIPrivate::statusbarColor = color;
-    MobileUIPrivate::setColor_statusbar(color);
+    if (color.isValid())
+    {
+        MobileUIPrivate::statusbarColor = color;
+        MobileUIPrivate::setColor_statusbar(color);
+    }
 }
 
 MobileUI::Theme MobileUI::getStatusbarTheme()
@@ -92,8 +117,11 @@ QColor MobileUI::getNavbarColor()
 
 void MobileUI::setNavbarColor(const QColor &color)
 {
-    MobileUIPrivate::navbarColor = color;
-    MobileUIPrivate::setColor_navbar(color);
+    if (color.isValid())
+    {
+        MobileUIPrivate::navbarColor = color;
+        MobileUIPrivate::setColor_navbar(color);
+    }
 }
 
 MobileUI::Theme MobileUI::getNavbarTheme()
@@ -111,9 +139,13 @@ void MobileUI::setNavbarTheme(const MobileUI::Theme theme)
 
 void MobileUI::refreshUI()
 {
-    MobileUIPrivate::setColor_statusbar(MobileUIPrivate::statusbarColor);
+    if (MobileUIPrivate::statusbarColor.isValid())
+        MobileUIPrivate::setColor_statusbar(MobileUIPrivate::statusbarColor);
+
+    if (MobileUIPrivate::navbarColor.isValid())
+        MobileUIPrivate::setColor_navbar(MobileUIPrivate::navbarColor);
+
     MobileUIPrivate::setTheme_statusbar(MobileUIPrivate::statusbarTheme);
-    MobileUIPrivate::setColor_navbar(MobileUIPrivate::navbarColor);
     MobileUIPrivate::setTheme_navbar(MobileUIPrivate::navbarTheme);
 }
 
@@ -175,9 +207,26 @@ void MobileUI::setScreenAlwaysOn(const bool value)
 
 /* ************************************************************************** */
 
+int MobileUI::getScreenBrightness()
+{
+    return MobileUIPrivate::getScreenBrightness();
+}
+
+void MobileUI::setScreenBrightness(const int value)
+{
+    return MobileUIPrivate::setScreenBrightness(value);
+}
+
+/* ************************************************************************** */
+
 void MobileUI::vibrate()
 {
     MobileUIPrivate::vibrate();
+}
+
+void MobileUI::backToHomeScreen()
+{
+    MobileUIPrivate::backToHomeScreen();
 }
 
 /* ************************************************************************** */

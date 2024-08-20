@@ -90,7 +90,22 @@ void MobileUIPrivate::setScreenOrientation(const MobileUI::ScreenOrientation ori
     Q_UNUSED(orientation)
 }
 
+int MobileUIPrivate::getScreenBrightness()
+{
+    return -1;
+}
+
+void MobileUIPrivate::setScreenBrightness(const int value)
+{
+    Q_UNUSED(value)
+}
+
 void MobileUIPrivate::vibrate()
+{
+    return;
+}
+
+void MobileUIPrivate::backToHomeScreen()
 {
     return;
 }

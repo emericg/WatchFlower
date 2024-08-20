@@ -22,7 +22,7 @@ T.ScrollBar {
     property int radius: isDesktop ? 0 : 8
 
     property color colorBackground: Theme.colorBackground
-    property color colorMoving: Theme.colorForeground
+    property color colorMoving: Theme.colorSecondary
     property color colorPressed: Theme.colorPrimary
 
     ////////////////

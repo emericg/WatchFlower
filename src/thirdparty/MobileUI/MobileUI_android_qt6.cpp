@@ -144,9 +144,12 @@ void MobileUIPrivate::setColor_statusbar(const QColor &color)
         window.callMethod<void>("clearFlags", "(I)V", FLAG_TRANSLUCENT_STATUS);
         window.callMethod<void>("setStatusBarColor", "(I)V", color.rgba());
 
-        // derive the theme from the color
-        MobileUIPrivate::statusbarTheme = static_cast<MobileUI::Theme>(!isQColorLight(color));
-        setTheme_statusbar(MobileUIPrivate::statusbarTheme);
+        if (color != "transparent")
+        {
+            // derive the theme from the color, if possible
+            MobileUIPrivate::statusbarTheme = static_cast<MobileUI::Theme>(!isQColorLight(color));
+            setTheme_statusbar(MobileUIPrivate::statusbarTheme);
+        }
     });
 }
 
@@ -193,7 +196,7 @@ void MobileUIPrivate::setTheme_statusbar(const MobileUI::Theme theme)
                                      qApp, [](Qt::ScreenOrientation) { refreshUI_async(); });
                 }
 
-                QWindowList windows =  qApp->allWindows();
+                QWindowList windows = qApp->allWindows();
                 if (windows.size() && windows.at(0))
                 {
                     QWindow *window_qt = windows.at(0);
@@ -229,9 +232,12 @@ void MobileUIPrivate::setColor_navbar(const QColor &color)
             window_android.callMethod<void>("setNavigationBarColor", "(I)V", color.rgba());
         }
 
-        // derive the theme from the color
-        MobileUIPrivate::navbarTheme = static_cast<MobileUI::Theme>(!isQColorLight(color));
-        setTheme_navbar(MobileUIPrivate::navbarTheme);
+        if (color != "transparent")
+        {
+            // derive the theme from the color, if possible
+            MobileUIPrivate::navbarTheme = static_cast<MobileUI::Theme>(!isQColorLight(color));
+            setTheme_navbar(MobileUIPrivate::navbarTheme);
+        }
     });
 }
 
@@ -279,7 +285,7 @@ void MobileUIPrivate::setTheme_navbar(const MobileUI::Theme theme)
                                      qApp, [](Qt::ScreenOrientation) { refreshUI_async(); });
                 }
 
-                QWindowList windows =  qApp->allWindows();
+                QWindowList windows = qApp->allWindows();
                 if (windows.size() && windows.at(0))
                 {
                     QWindow *window_qt = windows.at(0);
@@ -419,6 +425,44 @@ void MobileUIPrivate::setScreenOrientation(const MobileUI::ScreenOrientation ori
 
 /* ************************************************************************** */
 
+int MobileUIPrivate::getScreenBrightness()
+{
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    QJniObject window = activity.callObjectMethod("getWindow", "()Landroid/view/Window;");
+
+    // If we have set a brightness value for the current application
+    QJniObject layoutParams = window.callObjectMethod("getAttributes", "()Landroid/view/WindowManager$LayoutParams;");
+    float brightnessApp = layoutParams.getField<jfloat>("screenBrightness");
+    if (brightnessApp >= 0.f) return static_cast<int>(brightnessApp * 100.f);
+
+    // Otherwise, we try to read the system wide brightness value
+    QJniObject contentResolver = activity.callObjectMethod("getContentResolver", "()Landroid/content/ContentResolver;");
+    QJniObject SCREEN_BRIGHTNESS = QJniObject::getStaticObjectField("android/provider/Settings$System",
+                                                                    "SCREEN_BRIGHTNESS", "Ljava/lang/String;");
+    jint brightnessOS = QJniObject::callStaticMethod<jint>("android/provider/Settings$System",
+                                                           "getInt", "(Landroid/content/ContentResolver;Ljava/lang/String;)I",
+                                                           contentResolver.object(), SCREEN_BRIGHTNESS.object<jstring>());
+
+    return static_cast<int>((brightnessOS / 255.f) * 100.f);  // SCREEN_BRIGHTNESS is 0 to ???
+}
+
+void MobileUIPrivate::setScreenBrightness(const int value)
+{
+    QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
+        QJniObject window = getAndroidWindow();
+        QJniObject layoutParams = window.callObjectMethod("getAttributes", "()Landroid/view/WindowManager$LayoutParams;");
+
+        float brightness = value / 100.f; // screenBrightness is 0.0 to 1.0
+        if (brightness < 0.0f) brightness = 0.0f;
+        if (brightness > 1.0f) brightness = 1.0f;
+
+        layoutParams.setField("screenBrightness", brightness);
+        window.callMethod<void>("setAttributes", "(Landroid/view/WindowManager$LayoutParams;)V", layoutParams.object());
+    });
+}
+
+/* ************************************************************************** */
+
 void MobileUIPrivate::vibrate()
 {
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
@@ -456,12 +500,19 @@ void MobileUIPrivate::vibrate()
                 }
             }
         }
-        QJniEnvironment env;
-        if (env->ExceptionCheck())
-        {
-            env->ExceptionClear();
-        }
     });
+}
+
+/* ************************************************************************** */
+
+void MobileUIPrivate::backToHomeScreen()
+{
+    QJniObject activity = QNativeInterface::QAndroidApplication::context();
+    if (activity.isValid())
+    {
+        // Sends the application to the background
+        activity.callMethod<jboolean>("moveTaskToBack", "(Z)Z", true);
+    }
 }
 
 /* ************************************************************************** */

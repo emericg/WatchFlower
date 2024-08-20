@@ -36,6 +36,9 @@ class MobileUI : public QObject
 
     Q_PROPERTY(Theme deviceTheme READ getDeviceTheme NOTIFY devicethemeUpdated)
 
+    Q_PROPERTY(bool isPhone READ isDevicePhone CONSTANT)
+    Q_PROPERTY(bool isTablet READ isDeviceTablet CONSTANT)
+
     Q_PROPERTY(QColor statusbarColor READ getStatusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
     Q_PROPERTY(Theme statusbarTheme READ getStatusbarTheme WRITE setStatusbarTheme NOTIFY statusbarUpdated)
     Q_PROPERTY(int statusbarHeight READ getStatusbarHeight NOTIFY statusbarUpdated)
@@ -51,6 +54,7 @@ class MobileUI : public QObject
 
     Q_PROPERTY(bool screenAlwaysOn READ getScreenAlwaysOn WRITE setScreenAlwaysOn NOTIFY screenUpdated)
     Q_PROPERTY(ScreenOrientation screenOrientation READ getScreenOrientation WRITE setScreenOrientation NOTIFY screenUpdated)
+    Q_PROPERTY(int screenBrightness READ getScreenBrightness WRITE setScreenBrightness NOTIFY screenUpdated)
 
 Q_SIGNALS:
     void devicethemeUpdated();
@@ -60,9 +64,15 @@ Q_SIGNALS:
     void screenUpdated();
 
 public:
-    explicit MobileUI(QObject *parent = nullptr) : QObject(parent) {}
+    MobileUI(QObject *parent = nullptr);
 
     static void registerQML();
+
+    static bool isPhone;
+    static bool isTablet;
+
+    static bool isDevicePhone() { return MobileUI::isPhone; }
+    static bool isDeviceTablet() { return MobileUI::isTablet; }
 
     // Device theme ////////////////////////////////////////////////////////////
 
@@ -74,7 +84,6 @@ public:
 
     /*!
      * \brief Get the theme currently in effect on this device.
-     * \note Not available yet on iOS.
      * \return see MobileUI::Theme enum.
      */
     static MobileUI::Theme getDeviceTheme();
@@ -123,6 +132,10 @@ public:
     };
     Q_ENUM(ScreenOrientation)
 
+    /*!
+     * \brief Get orientation lock (if set).
+     * \return See MobileUI::ScreenOrientation enum.
+     */
     MobileUI::ScreenOrientation getScreenOrientation();
 
     /*!
@@ -136,22 +149,50 @@ public:
      */
     Q_INVOKABLE static void setScreenOrientation(const MobileUI::ScreenOrientation orientation);
 
+    /*!
+     * \brief Get screensaver lock (if set).
+     * \return on or off.
+     */
     static bool getScreenAlwaysOn();
 
     /*!
      * \brief Lock screensaver.
-     * \param value: on or off
+     * \param value: on or off.
      */
     Q_INVOKABLE static void setScreenAlwaysOn(const bool value);
+
+    /*!
+     * \brief Get screen brightness set for the current app (on Android) or system wide (on iOS).
+     * \return screen brightness, from 0 to 100.
+     *
+     * If brightness has not been set for the current app, this function will
+     * return the OS wide brightness level.
+     */
+    static int getScreenBrightness();
+
+    /*!
+     * \brief Set screen brightness for the current app (on Android) or system wide (on iOS).
+     * \param value: screen brightness, from 0 to 100.
+     */
+    Q_INVOKABLE static void setScreenBrightness(const int value);
 
     // Other helpers ///////////////////////////////////////////////////////////
 
     /*!
      * \brief Trigger an haptic feedback.
-     *
-     * On Android the "android.permission.VIBRATE" must be added to the manifest.
+     * \note iPads don't support haptic feedbacks.
+     * \note On Android the "android.permission.VIBRATE" must be added to the manifest.
      */
     Q_INVOKABLE static void vibrate();
+
+    /*!
+     * \brief Go back to Android home screen.
+     *
+     * You can use this method to bypass the default behavior for the Android
+     * back button, which is to kill the application instead of doing what every
+     * single Android application does, going back to the home screen...
+     */
+    Q_INVOKABLE static void backToHomeScreen();
 };
 
 /* ************************************************************************** */

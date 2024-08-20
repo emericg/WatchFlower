@@ -37,9 +37,9 @@ T.ItemDelegate {
 
     contentItem: RowLayout {
         anchors.left: parent.left
-        anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+        anchors.leftMargin: Theme.componentMargin
         anchors.right: parent.right
-        anchors.rightMargin: screenPaddingRight + Theme.componentMargin
+        anchors.rightMargin: Theme.componentMargin
 
         opacity: control.enabled ? 1 : 0.4
         spacing: 0

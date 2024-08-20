@@ -24,7 +24,7 @@ T.Button {
     // colors
     property color colorContent: Theme.colorHeaderContent
     property color colorHighlight: Theme.colorHeaderHighlight
-    property color colorRipple: Qt.rgba(colorContent.r, colorContent.g, colorContent.b, 0.12)
+    property color colorRipple: Qt.rgba(colorContent.r, colorContent.g, colorContent.b, 0.08)
 
     ////////////////////////////////////////////////////////////////////////////
 

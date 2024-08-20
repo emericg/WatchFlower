@@ -28,6 +28,8 @@
 #include <QWindow>
 #include <QTimer>
 
+#include <objc/objc.h>
+#include <objc/message.h>
 #include <UIKit/UIKit.h>
 
 /* ************************************************************************** */
@@ -273,6 +275,34 @@ void MobileUIPrivate::setScreenOrientation(const MobileUI::ScreenOrientation ori
 
 /* ************************************************************************** */
 
+int MobileUIPrivate::getScreenBrightness()
+{
+    Class uiScreenClass = (Class)objc_getClass("UIScreen");
+    SEL mainScreenSelector = sel_registerName("mainScreen");
+    id mainScreen = ((id(*)(Class, SEL))objc_msgSend)(uiScreenClass, mainScreenSelector);
+
+    SEL brightnessSelector = sel_registerName("brightness");
+    CGFloat brightness = ((CGFloat(*)(id, SEL))objc_msgSend)(mainScreen, brightnessSelector);
+
+    return brightness * 100;
+}
+
+void MobileUIPrivate::setScreenBrightness(const int value)
+{
+    Class uiScreenClass = (Class)objc_getClass("UIScreen");
+    SEL mainScreenSelector = sel_registerName("mainScreen");
+    id mainScreen = ((id(*)(Class, SEL))objc_msgSend)(uiScreenClass, mainScreenSelector);
+
+    float brightness = value / 100.f; // brightness is 0.0 to 1.0
+    if (brightness < 0.0f) brightness = 0.0f;
+    if (brightness > 1.0f) brightness = 1.0f;
+
+    SEL setBrightnessSelector = sel_registerName("setBrightness:");
+    ((void(*)(id, SEL, CGFloat))objc_msgSend)(mainScreen, setBrightnessSelector, brightness);
+}
+
+/* ************************************************************************** */
+
 void MobileUIPrivate::vibrate()
 {
     // available impacts: light, medium, heavy, soft, rigid
@@ -283,6 +313,13 @@ void MobileUIPrivate::vibrate()
     //[generator prepare];
     [generator impactOccurred];
     generator = nil;
+}
+
+/* ************************************************************************** */
+
+void MobileUIPrivate::backToHomeScreen()
+{
+    return;
 }
 
 /* ************************************************************************** */
