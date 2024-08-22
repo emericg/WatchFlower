@@ -5,6 +5,7 @@ import ThemeEngine
 
 Loader {
     id: devicePlantSensor
+    anchors.fill: parent
 
     property var currentDevice: null
 

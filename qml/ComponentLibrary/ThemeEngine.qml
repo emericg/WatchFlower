@@ -286,7 +286,26 @@ Item {
             var rightnow = new Date()
             var hour = Qt.formatDateTime(rightnow, "hh")
             if (hour >= 21 || hour <= 8) {
-                themeIndex = ThemeEngine.THEME_NIGHT
+                if (themeIndex === ThemeEngine.THEME_MOBILE_LIGHT)
+                    themeIndex = ThemeEngine.THEME_MOBILE_DARK
+
+                if (themeIndex === ThemeEngine.THEME_MATERIAL_LIGHT)
+                    themeIndex = ThemeEngine.THEME_MATERIAL_DARK
+
+                if (themeIndex === ThemeEngine.THEME_DESKTOP_LIGHT)
+                    themeIndex = ThemeEngine.THEME_DESKTOP_DARK
+
+                if (themeIndex === ThemeEngine.THEME_SNOW ||
+                    themeIndex === ThemeEngine.THEME_PLANT ||
+                    themeIndex === ThemeEngine.THEME_RAIN ||
+                    themeIndex === ThemeEngine.THEME_DAY)
+                    themeIndex = ThemeEngine.THEME_NIGHT
+
+                if (themeIndex === ThemeEngine.THEME_LIGHT_AND_WARM ||
+                    themeIndex === ThemeEngine.THEME_PLAIN_AND_BORING)
+                    themeIndex = ThemeEngine.THEME_DARK_AND_SPOOKY
+
+                // theme doesn't have a dark variant set? just don't change the theme...
             }
         }
 

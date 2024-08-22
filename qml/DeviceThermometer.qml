@@ -7,6 +7,7 @@ import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Loader {
     id: deviceThermometer
+    anchors.fill: parent
 
     property var currentDevice: null
 

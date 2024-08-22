@@ -109,7 +109,7 @@ Loader {
                     spacing: Theme.componentMargin
 
                     ButtonSolid {
-                        width: 150
+                        width: isPhone ? 150 : 160
                         height: 40
 
                         text: qsTr("WEBSITE")
@@ -122,7 +122,7 @@ Loader {
                     }
 
                     ButtonSolid {
-                        width: 150
+                        width: isPhone ? 150 : 160
                         height: 40
 
                         text: qsTr("SUPPORT")
@@ -135,7 +135,7 @@ Loader {
                     }
 
                     ButtonSolid {
-                        width: 150
+                        width: isPhone ? 150 : 160
                         height: 40
 
                         visible: (appWindow.width > 800)

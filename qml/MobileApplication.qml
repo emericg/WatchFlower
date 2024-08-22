@@ -278,11 +278,9 @@ ApplicationWindow {
 
         anchors.top: appHeader.bottom
         anchors.left: parent.left
-        anchors.leftMargin: screenPaddingLeft
         anchors.right: parent.right
-        anchors.rightMargin: screenPaddingRight
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: screenPaddingBottom
+        anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
 
         focus: true
         Keys.onBackPressed: {
@@ -327,45 +325,49 @@ ApplicationWindow {
 
         Tutorial {
             id: screenTutorial
-            anchors.fill: parent
         }
 
         DeviceList {
             id: screenDeviceList
-            anchors.fill: parent
+            anchors.leftMargin: screenPaddingLeft
+            anchors.rightMargin: screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         DevicePlantSensor {
             id: screenDevicePlantSensor
-            anchors.fill: parent
             anchors.bottomMargin: mobileMenu.hhv
         }
         DeviceThermometer {
             id: screenDeviceThermometer
-            anchors.fill: parent
             anchors.bottomMargin: mobileMenu.hhv
         }
         DeviceEnvironmental {
             id: screenDeviceEnvironmental
-            anchors.fill: parent
             anchors.bottomMargin: mobileMenu.hhv
         }
 
         Settings {
             id: screenSettings
-            anchors.fill: parent
+            anchors.leftMargin: screenPaddingLeft
+            anchors.rightMargin: screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         SettingsAdvanced {
             id: screenSettingsAdvanced
+            anchors.leftMargin: screenPaddingLeft
+            anchors.rightMargin: screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         About {
             id: screenAbout
+            anchors.leftMargin: screenPaddingLeft
+            anchors.rightMargin: screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         MobilePermissions {
             id: screenAboutPermissions
+            anchors.leftMargin: screenPaddingLeft
+            anchors.rightMargin: screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
 

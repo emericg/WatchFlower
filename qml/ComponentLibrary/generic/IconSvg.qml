@@ -10,7 +10,7 @@ Item {
     property alias source: sourceImg.source
     property alias color: overlayImg.colorizationColor
     property alias fillMode: sourceImg.fillMode
-    property alias smooth: sourceImg.smooth
+    //property alias smooth: sourceImg.smooth // Qt 6.7+ only
     property alias asynchronous: sourceImg.asynchronous
 
     Image {

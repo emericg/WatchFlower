@@ -258,6 +258,8 @@ DrawerThemed {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
 
+            visible: (screenOrientation === Qt.PortraitOrientation)
+
             DrawerItem {
                 highlighted: (appContent.state === "PlantBrowser")
                 text: qsTr("Plant browser")

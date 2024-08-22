@@ -120,19 +120,7 @@ Loader {
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: "OS theme: %1".arg(utilsApp.isOsThemeDark() ? "dark" : "light")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                    }
-                    Text {
-                        color: Theme.colorSubText
                         text: "Qt version: %1".arg(utilsApp.qtVersion())
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                    }
-                    Text {
-                        color: Theme.colorSubText
-                        text: "Qt arch: %1".arg(utilsApp.qtArchitecture())
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
