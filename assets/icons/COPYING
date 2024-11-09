@@ -1,9 +1,9 @@
 
 # Bootstrap icons:
-- assets/icons/material/*                       // Mark Otto        // MIT
+- assets/icons/bootstrap/*                      // Mark Otto        // MIT
 
 # Font Awesome icons:
-- assets/icons_fontawesome/*                    // Font Awesome     // CC BY 4.0
+- assets/icons/fontawesome/*                    // Font Awesome     // CC BY 4.0
 
 # Google Material Design icons:
 - assets/icons/material-icons/*                 // Google           // CC BY-SA 4.0

@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "6.0"
-  QT_VERSION: "6.7.2"
+  QT_VERSION: "6.7.3"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -49,8 +49,8 @@ jobs:
       #       sdkmanager "ndk;26.3.11579264"
       #       sdkmanager "build-tools;34.0.0"
 
-      # Install Qt (Android & desktop)
-      - name: Install Qt (Android & desktop)
+      # Install Qt (desktop & Android)
+      - name: Install Qt (desktop & Android)
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{env.QT_VERSION}}
@@ -74,7 +74,7 @@ jobs:
   ## iOS build #################################################################
   build-ios:
     name: "iOS CI build"
-    runs-on: macos-12
+    runs-on: macos-13
     steps:
       # Checkout repository (and submodules)
       - name: Checkout repository (and submodules)
@@ -82,8 +82,8 @@ jobs:
         with:
           submodules: recursive
 
-      # Install Qt (iOS & desktop)
-      - name: Install Qt (iOS & desktop)
+      # Install Qt (desktop & iOS)
+      - name: Install Qt (desktop & iOS)
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{env.QT_VERSION}}

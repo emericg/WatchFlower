@@ -109,14 +109,14 @@ Please note that most Chinese devices have many names, usually no official manuf
 
 #### Dependencies
 
-You will need a C++17 compiler and Qt 6.5+ with the following 'additional librairies':  
+You will need a C++17 compiler and Qt 6.7+ with the following 'additional librairies':  
 - Qt Connectivity
 - Qt Positioning
 - Qt Charts
 
-For Android builds, you'll need the appropriates JDK (11) SDK (23+) and NDK (23+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
-For Windows builds, you'll need the MSVC 2019+ compiler. Bluetooth won't work with MinGW.  
-For macOS and iOS builds, you'll need Xcode 13+ installed.  
+For macOS and iOS builds, you'll need Xcode (15+) installed.  
+For windows builds, you'll need MSVC 2019 (or 2022) installed.  
+For Android builds, you'll need the appropriates JDK (17) SDK (28+) and NDK (26b+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
 
 #### Building WatchFlower
 

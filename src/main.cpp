@@ -128,7 +128,7 @@ int main(int argc, char *argv[])
     // Hacks ///////////////////////////////////////////////////////////////////
 
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
-    // NVIDIA suspend&resume hack
+    // NVIDIA driver suspend&resume hack
     auto format = QSurfaceFormat::defaultFormat();
     format.setOption(QSurfaceFormat::ResetNotification);
     QSurfaceFormat::setDefaultFormat(format);
@@ -138,9 +138,6 @@ int main(int argc, char *argv[])
     // Qt 6.6+ mouse wheel hack
     qputenv("QT_QUICK_FLICKABLE_WHEEL_DECELERATION", "2500");
 #endif
-
-    // Qt 6.7+ debugger hack
-    qputenv("QT_ANDROID_DEBUGGER_MAIN_THREAD_SLEEP_MS", "0");
 
     // GUI application /////////////////////////////////////////////////////////
 
@@ -152,14 +149,14 @@ int main(int argc, char *argv[])
     app.setOrganizationName("WatchFlower");
     app.setOrganizationDomain("WatchFlower");
 
-    // Init components
+    // Init app components
     SettingsManager *sm = SettingsManager::getInstance();
     DatabaseManager *db = DatabaseManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
     DeviceManager *dm = new DeviceManager;
     if (!sm || !db || !nm || !dm)
     {
-        qWarning() << "Cannot init WatchFlower components!";
+        qWarning() << "Cannot init app components!";
         return EXIT_FAILURE;
     }
 
@@ -187,9 +184,9 @@ int main(int argc, char *argv[])
     UtilsApp *utilsApp = UtilsApp::getInstance();
     UtilsScreen *utilsScreen = UtilsScreen::getInstance();
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
-    if (!utilsScreen || !utilsApp || !utilsLanguage)
+    if (!utilsApp || !utilsScreen || !utilsLanguage)
     {
-        qWarning() << "Cannot init WatchFlower utils!";
+        qWarning() << "Cannot init generic utils!";
         return EXIT_FAILURE;
     }
 
@@ -216,7 +213,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("notificationManager", nm);
-    engine_context->setContextProperty("plantDatabase", pdb);
+
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
@@ -267,7 +264,7 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_MACOS)
-    // dock
+    // macOS dock
     MacOSDockHandler *dockIconHandler = MacOSDockHandler::getInstance();
     dockIconHandler->setupDock(window);
     engine_context->setContextProperty("utilsDock", dockIconHandler);

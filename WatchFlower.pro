@@ -305,9 +305,9 @@ android {
     OTHER_FILES += $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerBootServiceBroadcastReceiver.java \
                    $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerAndroidService.java \
                    $${PWD}/assets/android/src/com/emeric/watchflower/WatchFlowerAndroidNotifier.java \
-                   $${PWD}/assets/android/src/com/emeric/utils/QGpsUtils.java \
-                   $${PWD}/assets/android/src/com/emeric/utils/QShareUtils.java \
-                   $${PWD}/assets/android/src/com/emeric/utils/QSharePathResolver.java
+                   $${PWD}/assets/android/src/io/emeric/utils/QGpsUtils.java \
+                   $${PWD}/assets/android/src/io/emeric/utils/QShareUtils.java \
+                   $${PWD}/assets/android/src/io/emeric/utils/QSharePathResolver.java
 
     DISTFILES += $${PWD}/assets/android/AndroidManifest.xml \
                  $${PWD}/assets/android/gradle.properties \

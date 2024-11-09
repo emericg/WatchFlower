@@ -77,6 +77,7 @@ if [ -z "$QTDIR" ]; then
   QTDIR=/usr/lib/qt
 fi
 
+# linuxdeploy and plugins
 if [ ! -x contribs/deploy/linuxdeploy-x86_64.AppImage ]; then
   wget -c -nv "https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage" -P contribs/deploy/
   wget -c -nv "https://github.com/linuxdeploy/linuxdeploy-plugin-appimage/releases/download/continuous/linuxdeploy-plugin-appimage-x86_64.AppImage" -P contribs/deploy/
@@ -86,9 +87,15 @@ chmod a+x contribs/deploy/linuxdeploy-x86_64.AppImage
 chmod a+x contribs/deploy/linuxdeploy-plugin-appimage-x86_64.AppImage
 chmod a+x contribs/deploy/linuxdeploy-plugin-qt-x86_64.AppImage
 
+# hacks
+#export QMAKE="qmake6" # force Qt6, if you have Qt5 installed
+#export NO_STRIP=true  # workaround, strip not working on modern binutils
+
 # linuxdeploy settings
+export EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so;"
+export EXTRA_QT_PLUGINS="wayland-shell-integration;waylandclient;wayland-graphics-integration-client;"
+export EXTRA_QT_MODULES="svg;"
 export QML_SOURCES_PATHS="$(pwd)/qml/"
-export EXTRA_QT_PLUGINS="svg;"
 
 ## PACKAGE (AppImage) ##########################################################
 
@@ -105,6 +112,7 @@ fi
 
 if [[ $create_package = true ]] ; then
   export APP_NAME_LOWERCASE=${APP_NAME,,}
+  #export APP_NAME_LOWERCASE=$APP_NAME
 
   echo '---- Reorganize appdir into a regular directory'
   mkdir $APP_NAME/

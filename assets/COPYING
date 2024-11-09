@@ -1,11 +1,10 @@
 
 # Application logo and icons:
-- assets/logos/logo.svg                 // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
-- assets/logos/watchflower*.svg         // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
-- assets/menus/menu_logo.svg            // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
+- assets/gfx/logos/logo.svg             // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
+- assets/gfx/logos/watchflower*.svg     // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-ND 4.0
 
 # Welcome screens:
-- assets/devices/welcome-*.svg          // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
+- assets/gfx/tutorial/*.svg             // Christian Díaz <christiandiaz.design@gmail.com> // CC BY-SA 4.0
 
 # Device icons:
 - docs/cgdn1.svg                        // Emeric Grange // CC BY-SA 4.0
@@ -31,11 +30,8 @@
 - docs/thermobeacon_square.svg          // Emeric Grange // CC BY-SA 4.0
 - docs/wp6003.svg                       // Emeric Grange // CC BY-SA 4.0
 
-# Google Material Design icons:
-- assets/icons_material/*               // Google // CC BY-SA 4.0
-
 # Based on Google Material Design icons:
-- assets/icons_custom/*-24px.svg        // Emeric Grange // CC BY-SA 4.0
+- assets/gfx/icons/*-24px.svg           // Emeric Grange // CC BY-SA 4.0
 
 # Font Awesome icons:
 - assets/icons_fontawesome/*            // Font Awesome // CC BY 4.0
@@ -45,9 +41,7 @@
 - docs/radiation-alt-solid.svg          // Font Awesome // CC BY 4.0
 
 # Others:
-- assets/menus/menu_back.svg                // Emeric Grange // CC BY-SA 4.0
-- assets/menus/menu_close.svg               // Emeric Grange // CC BY-SA 4.0
-- assets/icons_custom/nuclear_icon.svg      // CC0
-- assets/icons_custom/nuclear_icon_big.svg  // CC0
-- assets/logos/github.svg                   // https://github.com/logos // proprietary
-- assets/logos/gitlab.png                   // https://about.gitlab.com/press // proprietary
+- assets/gfx/icons/nuclear_icon.svg     // CC0
+- assets/gfx/icons/nuclear_icon_big.svg // CC0
+- assets/gfx/logos/github.svg           // https://github.com/logos // proprietary
+- assets/gfx/logos/gitlab.png           // https://about.gitlab.com/press // proprietary
