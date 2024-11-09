@@ -132,7 +132,7 @@ HEADERS  += src/MenubarManager.h \
 INCLUDEPATH += src/ src/thirdparty/
 
 RESOURCES   += qml/ComponentLibrary/ComponentLibrary.qrc
-RESOURCES   += assets/icons.qrc
+RESOURCES   += assets/icons/IconLibrary.qrc
 
 RESOURCES   += qml/qml.qrc \
                i18n/i18n.qrc \

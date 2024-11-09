@@ -94,8 +94,7 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     DragHandler {
-        // make that surface draggable
-        // also, prevent clicks below this area
+        // make that surface draggable // also, prevent clicks below this area
         onActiveChanged: if (active) appWindow.startSystemMove()
         target: null
     }

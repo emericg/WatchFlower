@@ -762,8 +762,8 @@ Item {
             colorTabletmenuContent      = "#9d9d9d"
             colorTabletmenuHighlight    = "#0079fe"
 
-            colorBackground   (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "white" : colorMaterialLightGrey
-            colorForeground   (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : "#eeeeee"
+            colorBackground             = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "white" : colorMaterialLightGrey
+            colorForeground             = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : "#eeeeee"
 
             colorPrimary                = colorGreen
             colorSecondary              = colorLightGreen
