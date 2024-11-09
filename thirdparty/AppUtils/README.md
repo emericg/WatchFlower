@@ -1,17 +1,13 @@
 # AppUtils
 
-A collection of C++ helpers for (my) QML applications. Works with Qt5 and Qt6.
+A collection of C++ helpers for (my) QML applications.
 
 ## Quick start
 
 ### Build
 
-Copy the AppUtils directory into your project, then include the library files with
-either the `AppUtils.pro` QMake project file or the `CMakeLists.txt` CMake project file.
-
-```qmake
-include(src/thirdparty/AppUtils/AppUtils.pri)
-```
+Copy the AppUtils directory into your project, then include the library files
+using the `CMakeLists.txt` CMake project file.
 
 ```cmake
 add_subdirectory(src/thirdparty/AppUtils)

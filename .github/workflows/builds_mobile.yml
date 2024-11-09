@@ -63,7 +63,8 @@ jobs:
       # Setup env
       - name: Setup env
         run: |
-             qmake --version
+             echo "QT_HOST_PATH=/home/runner/work/${{env.APP_NAME}}/Qt/${{env.QT_VERSION}}/gcc_64" >> $GITHUB_ENV
+             echo "QT_TARGET_PATH=/home/runner/work/${{env.APP_NAME}}/Qt/${{env.QT_VERSION}}/android_arm64_v8a" >> $GITHUB_ENV
 
       # Build application
       - name: Build application
@@ -92,10 +93,16 @@ jobs:
           modules: qtconnectivity qtcharts qtpositioning
           extra: '--autodesktop'
 
+      # Install dependencies (from package manager)
+      #- name: Install dependencies (from package manager)
+      #  run: |
+      #       brew install cmake
+
       # Setup env
       - name: Setup env
         run: |
-             qmake --version
+             echo "QT_HOST_PATH=/Users/runner/work/${{env.APP_NAME}}/Qt/${{env.QT_VERSION}}/macos" >> $GITHUB_ENV
+             echo "QT_TARGET_PATH=/Users/runner/work/${{env.APP_NAME}}/Qt/${{env.QT_VERSION}}/ios" >> $GITHUB_ENV
 
       # Build application
       - name: Build application

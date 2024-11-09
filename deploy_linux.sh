@@ -100,6 +100,18 @@ export QML_SOURCES_PATHS="$(pwd)/qml/"
 ## PACKAGE (AppImage) ##########################################################
 
 if [[ $create_package = true ]] ; then
+  echo '---- Format appdir'
+  mkdir -p bin/usr/bin/
+  mkdir -p bin/usr/share/appdata/
+  mkdir -p bin/usr/share/applications/
+  mkdir -p bin/usr/share/pixmaps/
+  mkdir -p bin/usr/share/icons/hicolor/scalable/apps/
+  mv bin/$APP_NAME bin/usr/bin/$APP_NAME
+  cp assets/linux/$APP_NAME.appdata.xml bin/usr/share/appdata/$APP_NAME.appdata.xml
+  cp assets/linux/$APP_NAME.desktop bin/usr/share/applications/$APP_NAME.desktop
+  cp assets/linux/$APP_NAME.svg bin/usr/share/pixmaps/$APP_NAME.svg
+  cp assets/linux/$APP_NAME.svg  bin/usr/share/icons/hicolor/scalable/apps/$APP_NAME.svg
+
   echo '---- Running AppImage packager'
   ./contribs/deploy/linuxdeploy-x86_64.AppImage --appdir bin --plugin qt --output appimage
   mv $APP_NAME-x86_64.AppImage $APP_NAME-$APP_VERSION-linux64.AppImage
@@ -115,20 +127,21 @@ if [[ $create_package = true ]] ; then
   #export APP_NAME_LOWERCASE=$APP_NAME
 
   echo '---- Reorganize appdir into a regular directory'
-  mkdir $APP_NAME/
-  mv bin/usr/bin/* $APP_NAME/
-  mv bin/usr/lib/* $APP_NAME/
-  mv bin/usr/plugins $APP_NAME/
-  mv bin/usr/qml $APP_NAME/
-  mv bin/usr/share/appdata/$APP_NAME_LOWERCASE.appdata.xml $APP_NAME/
-  mv bin/usr/share/applications/$APP_NAME_LOWERCASE.desktop $APP_NAME/
-  mv bin/usr/share/pixmaps/$APP_NAME_LOWERCASE.svg $APP_NAME/
-  printf '[Paths]\nPrefix = .\nPlugins = plugins\nImports = qml\n' > $APP_NAME/qt.conf
-  printf '#!/bin/sh\nappname=`basename $0 | sed s,\.sh$,,`\ndirname=`dirname $0`\nexport LD_LIBRARY_PATH=$dirname\n$dirname/$appname' > $APP_NAME/$APP_NAME_LOWERCASE.sh
-  chmod +x $APP_NAME/$APP_NAME_LOWERCASE.sh
+  mkdir bin/$APP_NAME/
+  mv bin/usr/bin/* bin/$APP_NAME/
+  mv bin/usr/lib/* bin/$APP_NAME/
+  mv bin/usr/plugins bin/$APP_NAME/
+  mv bin/usr/qml bin/$APP_NAME/
+  mv bin/usr/share/appdata/$APP_NAME_LOWERCASE.appdata.xml bin/$APP_NAME/
+  mv bin/usr/share/applications/$APP_NAME_LOWERCASE.desktop bin/$APP_NAME/
+  mv bin/usr/share/pixmaps/$APP_NAME_LOWERCASE.svg bin/$APP_NAME/
+  printf '[Paths]\nPrefix = .\nPlugins = plugins\nImports = qml\n' > bin/$APP_NAME/qt.conf
+  printf '#!/bin/sh\nappname=`basename $0 | sed s,\.sh$,,`\ndirname=`dirname $0`\nexport LD_LIBRARY_PATH=$dirname\n$dirname/$appname' > bin/$APP_NAME/$APP_NAME_LOWERCASE.sh
+  chmod +x bin/$APP_NAME/$APP_NAME_LOWERCASE.sh
 
   echo '---- Compressing package'
-  tar zcvf $APP_NAME-$APP_VERSION-linux64.tar.gz $APP_NAME/
+  cd bin
+  tar zcvf ../$APP_NAME-$APP_VERSION-linux64.tar.gz $APP_NAME/
 fi
 
 ## UPLOAD ######################################################################

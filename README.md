@@ -123,8 +123,8 @@ For Android builds, you'll need the appropriates JDK (17) SDK (28+) and NDK (26b
 ```bash
 $ git clone https://github.com/emericg/WatchFlower.git
 $ cd WatchFlower/
-$ qmake6
-$ make
+$ cmake -B build/
+$ cmake --build build/
 ```
 
 #### Using WatchFlower

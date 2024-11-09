@@ -41,16 +41,12 @@
 #include <QLibraryInfo>
 #include <QSysInfo>
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0))
 #include <QQuickWindow>
 #include <rhi/qrhi.h> // <QRhi> // ?
-#endif // Qt 6.6
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 5, 0))
 #include <QGuiApplication>
 #include <QStyleHints>
 #include <QPalette>
-#endif // Qt 6.5
 
 /* ************************************************************************** */
 
@@ -165,42 +161,30 @@ bool UtilsApp::qtIsRelease()
 
 bool UtilsApp::qtIsStatic()
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     return !QLibraryInfo::isSharedBuild();
-#endif
-
-    return false;
 }
 
 bool UtilsApp::qtIsShared()
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     return QLibraryInfo::isSharedBuild();
-#endif
-
-    return false;
 }
 
 QString UtilsApp::qtRhiBackend() const
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0))
     if (m_quickwindow && m_quickwindow->rhi())
     {
         return m_quickwindow->rhi()->backendName();
     }
-#endif
 
     return QString();
 }
 
 void UtilsApp::setQuickWindow(QQuickWindow *window)
 {
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 6, 0))
     if (window)
     {
         m_quickwindow = window;
     }
-#endif
 }
 
 /* ************************************************************************** */
@@ -286,22 +270,8 @@ bool UtilsApp::isQColorLight(const QColor &color)
 
 bool UtilsApp::isOsThemeDark()
 {
-    bool isDark = false;
-
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 5, 0))
-
     const QStyleHints *styleHints = static_cast<QGuiApplication*>qApp->styleHints();
-    isDark = (styleHints && styleHints->colorScheme() == Qt::ColorScheme::Dark);
-
-#elif (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-
-    const QPalette defaultPalette = static_cast<QGuiApplication*>qApp->palette();
-    isDark = (defaultPalette.color(QPalette::WindowText).lightness() >
-              defaultPalette.color(QPalette::Window).lightness());
-
-#endif
-
-    return isDark;
+    return (styleHints && styleHints->colorScheme() == Qt::ColorScheme::Dark);
 }
 
 /* ************************************************************************** */

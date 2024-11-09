@@ -1,19 +1,13 @@
-cmake_minimum_required(VERSION 3.12)
-
 project(MobileUI LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 
 ################################################################################
 
-if(NOT QT_DEFAULT_MAJOR_VERSION)
-    set(QT_DEFAULT_MAJOR_VERSION 6 CACHE STRING "Qt version to use (5 or 6), defaults to 6")
-endif()
-
 # Generic dependencies
 set(CORE_COMPONENTS Core Gui Qml)
-find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS ${CORE_COMPONENTS})
+find_package(Qt6 6.7 REQUIRED COMPONENTS ${CORE_COMPONENTS})
 
 set(CORE_LIBRARIES Qt::Core Qt::Gui Qt::Qml)
 
@@ -24,13 +18,7 @@ set(CORE_SOURCES
 
 # OS specific sources & dependencies
 if(ANDROID)
-    if(QT_DEFAULT_MAJOR_VERSION EQUAL 6)
-        set(PLATFORM_SOURCES MobileUI_android_qt6.cpp)
-    elseif(QT_DEFAULT_MAJOR_VERSION EQUAL 5)
-        find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS AndroidExtras)
-        set(PLATFORM_LIBRARIES Qt::AndroidExtras)
-        set(PLATFORM_SOURCES MobileUI_android_qt5.cpp)
-    endif()
+    set(PLATFORM_SOURCES MobileUI_android.cpp)
 elseif(IOS)
     set(PLATFORM_SOURCES MobileUI_ios.mm)
     set(PLATFORM_LIBRARIES "-framework UIKit")

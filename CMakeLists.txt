@@ -27,8 +27,9 @@ message(STATUS "[PROJECT] QT_HOST_PATH              = ${QT_HOST_PATH}")
 
 ################################################################################
 
-find_package(Qt6 REQUIRED COMPONENTS Core Bluetooth Network Sql)
+find_package(Qt6 REQUIRED COMPONENTS Core Bluetooth Positioning Network Sql)
 find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick QuickControls2 Svg Widgets Charts)
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 qt_standard_project_setup(REQUIRES 6.7)
 
@@ -77,13 +78,12 @@ set(SOURCES
     src/devices/device_esp32_geigercounter.cpp src/devices/device_esp32_geigercounter.h
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
-    src/thirdparty/RC4/rc4.cpp src/thirdparty/RC4/rc4.h
+    thirdparty/RC4/rc4.cpp thirdparty/RC4/rc4.h
     src/main.cpp
-    i18n/i18n.qrc
     qml/qml.qrc
     qml/ComponentLibrary/ComponentLibrary.qrc
+    assets/icons/IconLibrary.qrc
     assets/assets.qrc
-    assets/icons.qrc
     assets/devices.qrc
     assets/plants.qrc
 )
@@ -104,18 +104,79 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
 )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src/)
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src/thirdparty/)
+
+################################################################################
+
+qt_standard_project_setup(
+    I18N_SOURCE_LANGUAGE en
+    I18N_TRANSLATED_LANGUAGES ca da de es fr fy hu nb nl nn pt ru zh_CN zh_TW
+)
+qt_add_translations(${CMAKE_PROJECT_NAME}
+    TS_FILE_BASE ${CMAKE_PROJECT_NAME}
+    TS_FILE_DIR ${CMAKE_SOURCE_DIR}/i18n/
+    RESOURCE_PREFIX "/i18n"
+)
+
+################################################################################
+
+# SingleApplication
+set(QAPPLICATION_CLASS QApplication)
+add_subdirectory(thirdparty/SingleApplication)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SingleApplication)
+
+# AppUtils
+add_subdirectory(thirdparty/AppUtils)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE AppUtils)
+
+# MobileUI
+add_subdirectory(thirdparty/MobileUI)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileUI)
+
+# MobileSharing
+add_subdirectory(thirdparty/MobileSharing)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileSharing)
+
+# SunAndMoon
+add_subdirectory(thirdparty/SunAndMoon)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
+
+# ComponentLibrary
+#add_subdirectory(thirdparty/ComponentLibrary)
+#target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ComponentLibraryplugin)
+
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/)
+
+################################################################################
+
+# Qt
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
+    Qt6::Core
+    Qt6::Network
+    Qt6::Bluetooth
+    Qt6::Positioning
+    Qt6::Sql
+    Qt6::Gui
+    Qt6::Svg
+    Qt6::Qml
+    Qt6::Quick
+    Qt6::QuickControls2
+    Qt6::Charts
+)
+
+if(NOT IOS AND NOT ANDROID)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Widgets)
+endif()
 
 ################################################################################
 
 ## Android
-if(ANDROID)
+if (CMAKE_SYSTEM_NAME STREQUAL "Android")
     set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64"
-        QT_ANDROID_BUILD_ALL_ABIS ON
+        #QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64"
+        #QT_ANDROID_BUILD_ALL_ABIS ON
         QT_ANDROID_MIN_SDK_VERSION 23
-        QT_ANDROID_TARGET_SDK_VERSION 34
-        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets/android/"
+        QT_ANDROID_TARGET_SDK_VERSION 35
+        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/assets/android/"
     )
 
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
@@ -135,7 +196,7 @@ if(APPLE)
 endif()
 
 ## macOS
-if(APPLE AND NOT IOS)
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
     set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
     set(CMAKE_XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/macos/Info.plist")
@@ -143,75 +204,49 @@ if(APPLE AND NOT IOS)
 endif()
 
 ## iOS
-if(IOS)
-    set(IPHONEOS_DEPLOYMENT_TARGET "14.0")
+if (CMAKE_SYSTEM_NAME STREQUAL "iOS")
     set(CMAKE_OSX_ARCHITECTURES "arm64")
     set(CMAKE_OSX_SYSROOT "iphoneos")
     set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0")
     set(CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "14.0")
-    set(CMAKE_XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/ios/Info.plist")
     set(CMAKE_XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2") # iPhone,iPad
+    set(CMAKE_XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/ios/Info.plist")
+
+    set(assets_catalog_path "${CMAKE_SOURCE_DIR}/assets/ios/Assets.xcassets")
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${assets_catalog_path})
+    set_source_files_properties(${assets_catalog_path} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+
+    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+        MACOSX_BUNDLE ON
+        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/assets/ios/Info.plist"
+        # Qt
+        QT_IOS_LAUNCH_SCREEN "${CMAKE_SOURCE_DIR}/assets/ios/LaunchScreen.storyboard"
+        # WIP # Old way ???
+        MACOSX_BUNDLE_GUI_IDENTIFIER            "io.emeric.watchflower"
+        MACOSX_BUNDLE_BUNDLE_NAME               ${CMAKE_PROJECT_NAME}
+        MACOSX_BUNDLE_BUNDLE_VERSION            ${CMAKE_PROJECT_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING      ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE_COPYRIGHT                 "Copyright © 2024 Emeric Grange"
+        # WIP # New Xcode attributes ???
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "io.emeric.watchflower"
+        XCODE_ATTRIBUTE_PRODUCT_NAME                        ${CMAKE_PROJECT_NAME}
+        XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${CMAKE_PROJECT_VERSION}
+        XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET          "14.0"
+        XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY              "1,2"   # iPhone,iPad
+        XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME  "AppIcon"
+    )
 endif()
 
 ## Windows
-if(WIN32)
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE _USE_MATH_DEFINES)
-endif()
-
-################################################################################
-
-# SingleApplication
-set(QAPPLICATION_CLASS QApplication)
-add_subdirectory(src/thirdparty/SingleApplication)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SingleApplication)
-
-# AppUtils
-add_subdirectory(src/thirdparty/AppUtils)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE AppUtils)
-
-# MobileUI
-add_subdirectory(src/thirdparty/MobileUI)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileUI)
-
-# MobileSharing
-add_subdirectory(src/thirdparty/MobileSharing)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileSharing)
-
-# SunAndMoon
-add_subdirectory(src/thirdparty/SunAndMoon)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
-
-# Qt
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
-    Qt6::Core
-    Qt6::Bluetooth
-    Qt6::Network
-    Qt6::Sql
-    Qt6::Gui
-    Qt6::Qml
-    Qt6::Quick
-    Qt6::QuickControls2
-    Qt6::Svg
-    Qt6::Charts
-)
-if(NOT IOS AND NOT ANDROID)
-    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
-        Qt6::Widgets
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+        WIN32_EXECUTABLE ON
     )
 endif()
 
-################################################################################
-
-if(lupdate_only)
-    target_sources(${CMAKE_PROJECT_NAME} PUBLIC
-        qml/*.js qml/*.qml
-        qml/components/*.qml
-        qml/components_generic/*.qml
-        qml/components_js/*.js
-    )
-endif()
-
-if(CMAKE_BUILD_TYPE STREQUAL Release)
+## Release build? Set "no debug" macros
+if (CMAKE_BUILD_TYPE STREQUAL Release)
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         NDEBUG
         QT_NO_DEBUG
@@ -219,25 +254,19 @@ if(CMAKE_BUILD_TYPE STREQUAL Release)
     )
 endif()
 
+################################################################################
+
+# Output
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-    MACOSX_BUNDLE ON
-    WIN32_EXECUTABLE ON
+    #ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
 )
 
+# Output
 install(TARGETS ${CMAKE_PROJECT_NAME}
-    BUNDLE DESTINATION .
-    ARCHIVE DESTINATION .
-    LIBRARY DESTINATION .
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    BUNDLE DESTINATION bin/
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
-
-qt_generate_deploy_qml_app_script(
-    TARGET ${CMAKE_PROJECT_NAME}
-    OUTPUT_SCRIPT deploy_script
-    NO_UNSUPPORTED_PLATFORM_ERROR
-    DEPLOY_USER_QML_MODULES_ON_UNSUPPORTED_PLATFORM
-    MACOS_BUNDLE_POST_BUILD
-)
-install(SCRIPT ${deploy_script})
 
 ################################################################################

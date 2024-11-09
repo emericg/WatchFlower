@@ -4,7 +4,7 @@ MobileUI allows QML applications to interact with Mobile specific features, like
 
 You can see it in action in the [MobileUI demo](https://github.com/emericg/MobileUI_demo).
 
-> Supports Qt6 and Qt5. QMake and CMake.
+> Supports Qt6 with CMake.
 
 > Supports iOS 11+ (tested up to iOS 17.5 devices).
 
@@ -30,13 +30,9 @@ You can see it in action in the [MobileUI demo](https://github.com/emericg/Mobil
 
 ### Build
 
-To get started, simply checkout the MobileUI repository as a submodule, or copy the
-MobileUI directory into your project, then include the library files with either
-the `MobileUI.pro` QMake project file or the `CMakeLists.txt` CMake project file.
-
-```qmake
-include(MobileUI/MobileUI.pri)
-```
+To get started, simply checkout the MobileUI repository as a submodule, or copy
+the MobileUI directory into your project, then include the library files using
+the `CMakeLists.txt` CMake project file.
 
 ```cmake
 add_subdirectory(MobileUI/)

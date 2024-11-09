@@ -1,10 +1,9 @@
-cmake_minimum_required(VERSION 3.20)
-
 project(AppUtils LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
+
+################################################################################
 
 #set(UTILS_DOCK_ENABLED true)
 #set(UTILS_WIFI_ENABLED true)
@@ -12,13 +11,8 @@ set(CMAKE_AUTOMOC ON)
 
 ################################################################################
 
-if(NOT QT_DEFAULT_MAJOR_VERSION)
-    set(QT_DEFAULT_MAJOR_VERSION 6 CACHE STRING "Qt version to use (5 or 6), defaults to 6")
-endif()
-
 # Generic dependencies
-set(CORE_COMPONENTS Core Gui Qml Quick)
-find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS ${CORE_COMPONENTS})
+find_package(Qt6 6.6 REQUIRED COMPONENTS Core Gui Qml Quick)
 
 set(CORE_LIBRARIES
     Qt::Core
@@ -57,26 +51,17 @@ if(NOT ANDROID)
         utils_os_linux.cpp
         utils_os_linux.h)
 
-    find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS DBus)
+    find_package(Qt6 REQUIRED COMPONENTS DBus)
     set(PLATFORM_LIBRARIES Qt::DBus m)
 endif()
 endif()
 
 if(ANDROID)
-if(QT_DEFAULT_MAJOR_VERSION EQUAL 6)
     set(PLATFORM_SOURCES
-        utils_os_android_qt6.cpp
+        utils_os_android.cpp
         utils_os_android.h)
 
     set(PLATFORM_LIBRARIES Qt::CorePrivate m)
-elseif(QT_DEFAULT_MAJOR_VERSION EQUAL 5)
-    set(PLATFORM_SOURCES
-        utils_os_android_qt5.cpp
-        utils_os_android.h)
-
-    find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS AndroidExtra)
-    set(PLATFORM_LIBRARIES Qt::AndroidExtra m)
-endif()
 endif()
 
 if(WIN32)
@@ -99,7 +84,7 @@ if(APPLE AND NOT IOS)
 endif()
 
 if(IOS)
-    find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS Quick)
+    find_package(Qt6 REQUIRED COMPONENTS Quick)
     set(PLATFORM_LIBRARIES Qt::Quick)
     set(PLATFORM_LIBRARIES "-framework UIKit" m)
 

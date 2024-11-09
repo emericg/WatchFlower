@@ -49,18 +49,19 @@ jobs:
       # Setup env
       - name: Setup env
         run: |
-             qmake --version
+             cmake --version
              sudo rm /home/runner/work/${{env.APP_NAME}}/Qt/${{env.QT_VERSION}}/gcc_64/plugins/sqldrivers/libqsqlmimer.so
 
       # Build application
       - name: Build application
         run: |
-             qmake ${{env.APP_NAME}}.pro CONFIG+=release PREFIX=/usr
-             make -j$(nproc)
+             cmake -B build/ -DCMAKE_BUILD_TYPE=Release -G Ninja
+             cmake --build build/ --config Release
 
       # Deploy application
       - name: Deploy application
-        run: ./deploy_linux.sh -c -i -p
+        run: |
+             ./deploy_linux.sh -c -i -p
 
       # Upload application ZIP
       - name: Upload application ZIP
@@ -102,13 +103,14 @@ jobs:
       # Setup env
       - name: Setup env
         run: |
-             qmake --version
+             cmake --version
 
       # Build application
       - name: Build application
         run: |
-             qmake ${{env.APP_NAME}}.pro CONFIG+=release
-             make -j`sysctl -n hw.logicalcpu`
+             export CMAKE_BUILD_PARALLEL_LEVEL=`sysctl -n hw.logicalcpu`
+             cmake -B build/ -DCMAKE_BUILD_TYPE=Release
+             cmake --build build/ --config Release
 
       # Deploy application
       - name: Deploy application
@@ -156,12 +158,13 @@ jobs:
       # Setup env
       - name: Setup env
         run: |
-             qmake --version
+             cmake --version
 
       # Build application
       - name: Build application
         run: |
-             qmake ${{env.APP_NAME}}.pro CONFIG+=release
+             cmake -B build/ -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles"
+             cd build/
              nmake
 
       # Deploy application
