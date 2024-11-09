@@ -126,6 +126,7 @@ add_subdirectory(thirdparty/SingleApplication)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SingleApplication)
 
 # AppUtils
+set(UTILS_DOCK_ENABLED true)
 add_subdirectory(thirdparty/AppUtils)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE AppUtils)
 
