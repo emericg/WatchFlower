@@ -131,7 +131,5 @@ jobs:
                -DCMAKE_FIND_ROOT_PATH:PATH=${{env.QT_TARGET_PATH}} \
                -DCMAKE_PREFIX_PATH:PATH=${{env.QT_TARGET_PATH}} \
                -DQT_HOST_PATH:PATH=${{env.QT_HOST_PATH}} \
-               -DENABLE_ARC=FALSE \
-               -DPLATFORM=OS64 \
                -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED="NO"
              cmake --build build/ --config Release -- CODE_SIGNING_ALLOWED=NO

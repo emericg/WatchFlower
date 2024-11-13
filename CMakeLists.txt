@@ -181,7 +181,8 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Android")
         QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/assets/android/"
     )
 
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
+    # Patched QtConnectivity
+    #target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
 
     # Android background service
     target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::CorePrivate)
@@ -214,7 +215,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "iOS")
     set(CMAKE_XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2") # iPhone,iPad
     set(CMAKE_XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/ios/Info.plist")
 
-    set(assets_catalog_path "${CMAKE_SOURCE_DIR}/assets/ios/Assets.xcassets")
+    set(assets_catalog_path "${CMAKE_SOURCE_DIR}/assets/ios/Images.xcassets")
     target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${assets_catalog_path})
     set_source_files_properties(${assets_catalog_path} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
 
