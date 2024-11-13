@@ -45,9 +45,9 @@ jobs:
       #  uses: android-actions/setup-android@v3
       #- name: Install Android SDK / NDK / tools
       #  run: |
-      #       sdkmanager "platforms;android-34"
-      #       sdkmanager "ndk;26.3.11579264"
-      #       sdkmanager "build-tools;34.0.0"
+      #       sdkmanager "platforms;android-35"
+      #       sdkmanager "ndk;26.1.10909125"
+      #       sdkmanager "build-tools;35.0.0"
 
       # Install Qt (desktop & Android)
       - name: Install Qt (desktop & Android)
@@ -59,6 +59,11 @@ jobs:
           arch: 'android_arm64_v8a'
           modules: qtconnectivity qtcharts qtpositioning
           extra: '--autodesktop'
+
+      # Install dependencies (from package manager)
+      - name: Install dependencies (from package manager)
+        run: |
+             sudo apt-get install ninja-build -y;
 
       # Setup env
       - name: Setup env
@@ -108,7 +113,7 @@ jobs:
       # Install dependencies (from package manager)
       #- name: Install dependencies (from package manager)
       #  run: |
-      #       brew install cmake
+      #       brew install cmake ninja
 
       # Setup env
       - name: Setup env
@@ -128,5 +133,5 @@ jobs:
                -DQT_HOST_PATH:PATH=${{env.QT_HOST_PATH}} \
                -DENABLE_ARC=FALSE \
                -DPLATFORM=OS64 \
-               -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED="NO" \
-             cmake --build build/ --config Release
+               -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED="NO"
+             cmake --build build/ --config Release -- CODE_SIGNING_ALLOWED=NO

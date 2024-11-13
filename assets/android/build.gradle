@@ -5,7 +5,6 @@ buildscript {
     }
 
     dependencies {
-        //classpath 'com.android.tools.build:gradle:8.6.1' // works with Qt 6.8+ // Java 17
         classpath 'com.android.tools.build:gradle:8.2.2' // works with Qt 6.7+ // Java 17
     }
 }
