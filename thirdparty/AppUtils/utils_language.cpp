@@ -76,13 +76,10 @@ void UtilsLanguage::setQmlEngine(QQmlApplicationEngine *engine)
 
 void UtilsLanguage::loadLanguage(const QString &lng)
 {
-    if (!m_qt_app || m_appLanguage == lng)
-    {
-        qWarning() << "UtilsLanguage::loadLanguage(" << lng << ") ERROR !";
-        return;
-    }
-
     //qDebug() << "UtilsLanguage::loadLanguage(" << lng << ")";
+
+    if (!m_qt_app) return;
+    if (m_appLanguage == lng) return;
 
     // Remove old language
     if (m_qtTranslator)
@@ -127,8 +124,7 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     QString translationpath = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
 
     m_qtTranslator = new QTranslator;
-    if (m_qtTranslator)
-    {
+    if (m_qtTranslator) {
         if (m_qtTranslator->load("qt_" + m_locale_str_full, translationpath)) {
             m_qt_app->installTranslator(m_qtTranslator);
         } else {
@@ -137,8 +133,7 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     }
 
     m_appTranslator = new QTranslator;
-    if (m_appTranslator)
-    {
+    if (m_appTranslator) {
         if (m_appTranslator->load(":/i18n/" + m_appName + "_" + m_locale_str_short + ".qm")) {
             m_qt_app->installTranslator(m_appTranslator);
         } else {

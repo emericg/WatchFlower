@@ -121,7 +121,6 @@ qt_add_translations(${CMAKE_PROJECT_NAME}
 ################################################################################
 
 # SingleApplication
-set(QAPPLICATION_CLASS QApplication)
 add_subdirectory(thirdparty/SingleApplication)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SingleApplication)
 

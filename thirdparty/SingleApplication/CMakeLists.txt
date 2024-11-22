@@ -1,32 +1,36 @@
-cmake_minimum_required(VERSION 3.20)
-
 project(SingleApplication LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 
 ################################################################################
 
-if(NOT QT_DEFAULT_MAJOR_VERSION)
-    set(QT_DEFAULT_MAJOR_VERSION 6 CACHE STRING "Qt version to use (5 or 6), defaults to 6")
+if(NOT QAPPLICATION_CLASS)
+    message("QAPPLICATION_CLASS is not set, using default")
+    if(IOS OR ANDROID)
+        set(QAPPLICATION_CLASS QGuiApplication)
+    else()
+        set(QAPPLICATION_CLASS QApplication)
+    endif()
 endif()
 
-# Find dependencies
+################################################################################
+
+# Dependencies
 set(CORE_COMPONENTS Core Network)
-set(CORE_LIBRARIES Qt::Core Qt::Network)
+set(CORE_LIBRARIES Qt6::Core Qt6::Network)
 
 if(QAPPLICATION_CLASS STREQUAL QApplication)
+    message("SingleApplication is using QApplication")
     list(APPEND CORE_COMPONENTS Widgets)
-    list(APPEND CORE_LIBRARIES Qt${QT_DEFAULT_MAJOR_VERSION}::Widgets)
+    list(APPEND CORE_LIBRARIES Qt6::Widgets)
 elseif(QAPPLICATION_CLASS STREQUAL QGuiApplication)
+    message("SingleApplication is using QGuiApplication")
     list(APPEND CORE_COMPONENTS Gui)
-    list(APPEND CORE_LIBRARIES Qt${QT_DEFAULT_MAJOR_VERSION}::Gui)
-else()
-    set(QAPPLICATION_CLASS QCoreApplication)
+    list(APPEND CORE_LIBRARIES Qt6::Gui)
 endif()
 
-find_package(Qt${QT_DEFAULT_MAJOR_VERSION} COMPONENTS ${CORE_COMPONENTS} REQUIRED)
+find_package(Qt6 COMPONENTS ${CORE_COMPONENTS} REQUIRED)
 
 if(WIN32)
     if(MSVC)
@@ -39,10 +43,10 @@ endif()
 
 ################################################################################
 
-add_library(SingleApplication STATIC SingleApplication.cpp SingleApplication_private.cpp )
+add_library(SingleApplication STATIC SingleApplication.cpp SingleApplication_private.cpp)
 add_library(SingleApplication::SingleApplication ALIAS SingleApplication)
 
-target_link_libraries(SingleApplication PUBLIC ${CORE_LIBRARIES} ${PLATFORM_LIBRARIES})
+target_link_libraries(SingleApplication PRIVATE ${CORE_LIBRARIES} ${PLATFORM_LIBRARIES})
 target_include_directories(SingleApplication PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
 target_compile_definitions(SingleApplication PUBLIC QAPPLICATION_CLASS=${QAPPLICATION_CLASS})
@@ -56,3 +60,5 @@ target_compile_definitions(SingleApplication PRIVATE
     QT_NO_KEYWORDS
     QT_NO_FOREACH
 )
+
+################################################################################
