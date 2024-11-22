@@ -38,14 +38,16 @@ qt_policy(SET QTP0002 NEW)
 qt_policy(SET QTP0003 NEW)
 
 set(SOURCES
-    src/NotificationManager.cpp src/NotificationManager.h
-    src/DatabaseManager.cpp src/DatabaseManager.h
+    src/main.cpp
     src/SettingsManager.cpp src/SettingsManager.h
+    src/DatabaseManager.cpp src/DatabaseManager.h
+    src/NotificationManager.cpp src/NotificationManager.h
     src/PlantDatabase.cpp src/PlantDatabase.h
     src/Plant.cpp src/Plant.h src/PlantUtils.h
     src/Journal.cpp src/Journal.h
     src/device.cpp src/device.h
     src/device_infos.cpp src/device_infos.h
+    src/device_utils.h src/device_firmwares.h
     src/device_sensor.cpp src/device_sensor_advertisement.cpp src/device_sensor.h
     src/device_plantsensor.cpp src/device_plantsensor.h
     src/device_thermometer.cpp src/device_thermometer.h
@@ -55,7 +57,6 @@ set(SOURCES
     src/DeviceManager_nearby.cpp
     src/DeviceManager_export.cpp
     src/DeviceFilter.cpp src/DeviceFilter.h
-    src/device_utils.h src/device_firmwares.h
     src/devices/device_flowercare.cpp src/devices/device_flowercare.h
     src/devices/device_flowercare_tuya.cpp src/devices/device_flowercare_tuya.h
     src/devices/device_flowerpower.cpp src/devices/device_flowerpower.h
@@ -79,7 +80,6 @@ set(SOURCES
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
     thirdparty/RC4/rc4.cpp thirdparty/RC4/rc4.h
-    src/main.cpp
     qml/qml.qrc
     qml/ComponentLibrary/ComponentLibrary.qrc
     thirdparty/IconLibrary/IconLibrary.qrc
@@ -223,20 +223,15 @@ if (CMAKE_SYSTEM_NAME STREQUAL "iOS")
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/assets/ios/Info.plist"
         # Qt
         QT_IOS_LAUNCH_SCREEN "${CMAKE_SOURCE_DIR}/assets/ios/LaunchScreen.storyboard"
-        # WIP # Old way ???
-        MACOSX_BUNDLE_GUI_IDENTIFIER            "io.emeric.watchflower"
-        MACOSX_BUNDLE_BUNDLE_NAME               ${CMAKE_PROJECT_NAME}
-        MACOSX_BUNDLE_BUNDLE_VERSION            ${CMAKE_PROJECT_VERSION}
-        MACOSX_BUNDLE_SHORT_VERSION_STRING      ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-        MACOSX_BUNDLE_COPYRIGHT                 "Copyright © 2024 Emeric Grange"
-        # WIP # New Xcode attributes ???
-        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER "io.emeric.watchflower"
+        # New Xcode attributes (???)
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "io.emeric.watchflower"
         XCODE_ATTRIBUTE_PRODUCT_NAME                        ${CMAKE_PROJECT_NAME}
         XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${CMAKE_PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET          "14.0"
         XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY              "1,2"   # iPhone,iPad
         XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME  "AppIcon"
+        XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS      "YES"
     )
 endif()
 
@@ -258,17 +253,17 @@ endif()
 
 ################################################################################
 
-# Output
+# Output?
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     #ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
 )
 
-# Output
-install(TARGETS ${CMAKE_PROJECT_NAME}
-    BUNDLE DESTINATION bin/
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-)
+# Output?
+#install(TARGETS ${CMAKE_PROJECT_NAME}
+#    BUNDLE DESTINATION bin/
+#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#)
 
 ################################################################################

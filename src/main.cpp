@@ -217,6 +217,8 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
+
+    engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
