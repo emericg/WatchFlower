@@ -18,7 +18,7 @@ Item {
             width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.66)
             height: width
 
-            source: "qrc:/assets/icons/material-symbols/search.svg"
+            source: "qrc:/IconLibrary/material-symbols/search.svg"
             fillMode: Image.PreserveAspectFit
             color: Theme.colorIcon
 
@@ -94,7 +94,7 @@ Item {
                     Layout.preferredHeight: 20
                     Layout.alignment: Qt.AlignVCenter
 
-                    source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                    source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
                     color: Theme.colorSubText
                 }
                 Text {

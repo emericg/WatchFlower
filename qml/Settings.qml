@@ -77,7 +77,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("User interface")
-                    source: "qrc:/assets/icons/material-symbols/settings.svg"
+                    source: "qrc:/IconLibrary/material-symbols/settings.svg"
                 }
 
                 ////////////////
@@ -97,7 +97,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/style.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/style.svg"
                     }
 
                     Text {
@@ -268,7 +268,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/brightness_4.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
                     }
 
                     Text {
@@ -334,7 +334,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-symbols/menu.svg"
+                        source: "qrc:/IconLibrary/material-symbols/menu.svg"
                     }
 
                     Text {
@@ -403,7 +403,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/translate.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/translate.svg"
                     }
 
                     Text {
@@ -486,7 +486,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/minimize.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/minimize.svg"
                     }
 
                     Text {
@@ -520,7 +520,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Background updates")
-                    source: "qrc:/assets/icons/material-symbols/android.svg"
+                    source: "qrc:/IconLibrary/material-symbols/android.svg"
 
                     visible: (Qt.platform.os === "android")
 
@@ -557,7 +557,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-symbols/autorenew.svg"
+                        source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
                     }
 
                     Text {
@@ -655,7 +655,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-symbols/notifications.svg"
+                        source: "qrc:/IconLibrary/material-symbols/notifications.svg"
                     }
 
                     Text {
@@ -844,7 +844,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Bluetooth")
-                    source: "qrc:/assets/icons/material-symbols/sensors/bluetooth.svg"
+                    source: "qrc:/IconLibrary/material-symbols/sensors/bluetooth.svg"
                 }
 
                 ////////
@@ -866,7 +866,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
+                        source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
                     }
 
                     Text {
@@ -930,7 +930,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-symbols/sensors/radar.svg"
+                        source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
                     }
 
                     Text {
@@ -994,7 +994,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/settings_bluetooth.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/settings_bluetooth.svg"
                     }
 
                     Text {
@@ -1074,7 +1074,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Plant sensors")
-                    source: "qrc:/assets/icons/material-symbols/sensors/local_florist.svg"
+                    source: "qrc:/IconLibrary/material-symbols/sensors/local_florist.svg"
                 }
 
                 ////////////////
@@ -1094,7 +1094,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/timer.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/timer.svg"
                     }
 
                     Text {
@@ -1156,7 +1156,7 @@ Loader {
                             width: 24
                             height: 24
                             color: Theme.colorIcon
-                            source: "qrc:/assets/icons/material-symbols/sliders.svg"
+                            source: "qrc:/IconLibrary/material-symbols/sliders.svg"
                         }
 
                         Text {
@@ -1289,7 +1289,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/timer.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/timer.svg"
                     }
 
                     Text {
@@ -1345,7 +1345,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-symbols/sensors/airware.svg"
+                        source: "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
                     }
 
                     Text {
@@ -1386,7 +1386,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("My location")
-                    source: "qrc:/assets/icons/material-symbols/language.svg"
+                    source: "qrc:/IconLibrary/material-symbols/language.svg"
                 }
 
                 ////////////////
@@ -1407,7 +1407,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-symbols/routine-fill.svg"
+                        source: "qrc:/IconLibrary/material-symbols/routine-fill.svg"
                     }
 
                     Text {
@@ -1461,7 +1461,7 @@ Loader {
                         width: 24
                         height: 24
                         color: Theme.colorIcon
-                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                     }
 
                     Text {
@@ -1496,7 +1496,7 @@ Loader {
                         }
 
                         SquareButtonOutline {
-                            source: "qrc:/assets/icons/material-symbols/location/my_location-fill.svg"
+                            source: "qrc:/IconLibrary/material-symbols/location/my_location-fill.svg"
                             onClicked: gpsLoader.start()
                         }
                     }
@@ -1613,7 +1613,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Data archiving")
-                    source: "qrc:/assets/icons/material-symbols/archive.svg"
+                    source: "qrc:/IconLibrary/material-symbols/archive.svg"
                     visible: deviceManager.hasDevices
                 }
 

@@ -454,7 +454,7 @@ Item {
 
             color: "white"
             opacity: 0.66
-            source: "qrc:/assets/icons/material-symbols/warning.svg"
+            source: "qrc:/IconLibrary/material-symbols/warning.svg"
         }
     }
 }

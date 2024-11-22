@@ -17,7 +17,7 @@ Rectangle {
         width: parent.width*0.8
         height: width
 
-        source: "qrc:/assets/icons/material-symbols/autorenew.svg"
+        source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorSubText
         smooth: true

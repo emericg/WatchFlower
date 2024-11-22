@@ -120,7 +120,7 @@ Rectangle {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             text: qsTr("Supported sensors")
-                            source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                            source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
                             sourceSize: 20
                             layoutDirection: Qt.RightToLeft
                             color: Theme.colorHeaderHighlight

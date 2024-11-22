@@ -196,8 +196,8 @@ Item {
 
                 property bool isIsDay: sunAndMoon.isItDay
 
-                source: isIsDay ? "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
-                                : "qrc:/assets/icons/material-symbols/weather/brightness_1-fill.svg"
+                source: isIsDay ? "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
+                                : "qrc:/IconLibrary/material-symbols/weather/brightness_1-fill.svg"
                 color: isIsDay ? Theme.colorYellow : Theme.colorBlue
             }
         }
@@ -321,12 +321,12 @@ Item {
                             if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                                 return "qrc:/assets/gfx/icons/pot_flower-24px.svg"
                             else
-                                return "qrc:/assets/icons/material-symbols/sensors/local_florist.svg"
+                                return "qrc:/IconLibrary/material-symbols/sensors/local_florist.svg"
                         } else {
                             if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                                 return "qrc:/assets/gfx/icons/pot_empty-24px.svg"
                             else
-                                return "qrc:/assets/icons/material-symbols/sensors/settings_remote.svg"
+                                return "qrc:/IconLibrary/material-symbols/hardware/settings_remote.svg"
                         }
                     }
                     return UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
@@ -422,8 +422,8 @@ Item {
 
                 sourceComponent: AlarmIndicator {
                     source: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
-                                "qrc:/assets/icons/material-icons/duotone/water_full.svg" :
-                                "qrc:/assets/icons/material-icons/duotone/water_mid.svg"
+                                "qrc:/IconLibrary/material-icons/duotone/water_full.svg" :
+                                "qrc:/IconLibrary/material-icons/duotone/water_mid.svg"
                     color: (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin - 5 ||
                             boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax + 5) ?
                                 Theme.colorBlue : Theme.colorBlue
@@ -439,8 +439,8 @@ Item {
 
                 sourceComponent: AlarmIndicator {
                     source: (boxDevice.temperatureC > 38) ?
-                             "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg" :
-                             "qrc:/assets/icons/material-symbols/sensors/airware.svg"
+                             "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg" :
+                             "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
                     color: {
                         if (boxDevice.temperatureC <= -4 || boxDevice.temperatureC >= 44)
                             return Theme.colorRed
@@ -461,7 +461,7 @@ Item {
                 visible: active
 
                 sourceComponent: AlarmIndicator {
-                    source: "qrc:/assets/icons/material-symbols/sensors/air.svg"
+                    source: "qrc:/IconLibrary/material-symbols/sensors/air.svg"
                     color: {
                         if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
                             (boxDevice.hasHchoSensor && boxDevice.hcho > 1000) ||
@@ -502,7 +502,7 @@ Item {
                 visible: active
 
                 sourceComponent: AlarmIndicator {
-                    source: "qrc:/assets/icons/material-symbols/warning.svg"
+                    source: "qrc:/IconLibrary/material-symbols/warning.svg"
                     color: Theme.colorYellow
                 }
             }
@@ -553,15 +553,15 @@ Item {
 
                     source: {
                         if (boxDevice.status === DeviceUtils.DEVICE_QUEUED) {
-                            return "qrc:/assets/icons/material-icons/duotone/settings_bluetooth.svg"
+                            return "qrc:/IconLibrary/material-icons/duotone/settings_bluetooth.svg"
                         } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTING) {
-                            return "qrc:/assets/icons/material-icons/duotone/bluetooth_searching.svg"
+                            return "qrc:/IconLibrary/material-icons/duotone/bluetooth_searching.svg"
                         } else if (boxDevice.status === DeviceUtils.DEVICE_CONNECTED) {
-                            return "qrc:/assets/icons/material-icons/duotone/bluetooth_connected.svg"
+                            return "qrc:/IconLibrary/material-icons/duotone/bluetooth_connected.svg"
                         } else if (boxDevice.status >= DeviceUtils.DEVICE_WORKING) {
-                            return "qrc:/assets/icons/material-icons/duotone/bluetooth_connected.svg"
+                            return "qrc:/IconLibrary/material-icons/duotone/bluetooth_connected.svg"
                         }
-                        return "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
+                        return "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
                     }
 
                     SequentialAnimation on opacity {
@@ -588,7 +588,7 @@ Item {
 
                 visible: listMode
                 color: boxDevice.hasData ? Theme.colorHighContrast : Theme.colorSubText
-                source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
+                source: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
             }
         }
 

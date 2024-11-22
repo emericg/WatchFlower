@@ -129,7 +129,7 @@ T.Button {
                 Behavior on opacity { NumberAnimation { duration: 333 } }
 
                 color: control.iconColor
-                source: "qrc:/assets/icons/material-symbols/add.svg"
+                source: "qrc:/IconLibrary/material-symbols/add.svg"
             }
         }
         MouseArea {
@@ -154,7 +154,7 @@ T.Button {
                 Behavior on opacity { NumberAnimation { duration: 333 } }
 
                 color: control.iconColor
-                source: "qrc:/assets/icons/material-symbols/remove.svg"
+                source: "qrc:/IconLibrary/material-symbols/remove.svg"
             }
         }
     }

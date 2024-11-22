@@ -476,7 +476,7 @@ Grid {
                     Layout.maximumHeight: 36
 
                     text: qsTr("Swap plant")
-                    source: "qrc:/assets/icons/material-symbols/swap_horiz.svg"
+                    source: "qrc:/IconLibrary/material-symbols/swap_horiz.svg"
 
                     onClicked: screenPlantBrowser.loadScreenFrom("DevicePlantSensor")
                 }
@@ -759,7 +759,7 @@ Grid {
                         width: 24
                         height: 24
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons/material-symbols/diameter.svg"
+                        source: "qrc:/IconLibrary/material-symbols/diameter.svg"
                     }
                     Text {
                         id: plantDiameterTxt
@@ -791,7 +791,7 @@ Grid {
                         width: 24
                         height: 24
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons/material-symbols/height.svg"
+                        source: "qrc:/IconLibrary/material-symbols/height.svg"
                     }
                     Text {
                         id: plantHeightTxt
@@ -888,7 +888,7 @@ Grid {
                         layoutDirection: Qt.RightToLeft
 
                         text: "Wikipedia"
-                        source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
                         sourceSize: 16
 
                         onClicked: Qt.openUrlExternally("https://wikipedia.org/wiki/" + currentPlant.nameBotanical_url)
@@ -898,7 +898,7 @@ Grid {
                         layoutDirection: Qt.RightToLeft
 
                         text: "Hortipedia"
-                        source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
                         sourceSize: 16
 
                         onClicked: Qt.openUrlExternally("https://hortipedia.com/" + currentPlant.nameBotanical_url)
@@ -908,7 +908,7 @@ Grid {
                         layoutDirection: Qt.RightToLeft
 
                         text: "RHS"
-                        source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
                         sourceSize: 16
 
                         onClicked: Qt.openUrlExternally("https://www.rhs.org.uk/plants/search-results?query=" + currentPlant.nameBotanical)
@@ -1276,7 +1276,7 @@ Grid {
 
                     opacity: 0.66
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                    source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
                 }
 
                 Text {
@@ -1336,7 +1336,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-icons/duotone/water_mid.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/water_mid.svg"
                 }
                 Text {
                     anchors.left: imageHygro.right
@@ -1392,7 +1392,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-symbols/sensors/tonality.svg"
+                    source: "qrc:/IconLibrary/material-symbols/sensors/tonality.svg"
                 }
                 Text {
                     anchors.left: imageCondu.right
@@ -1447,7 +1447,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-symbols/sensors/tonality.svg"
+                    source: "qrc:/IconLibrary/material-symbols/sensors/tonality.svg"
                 }
                 Text {
                     anchors.left: imageSoilPH.right
@@ -1604,7 +1604,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-symbols/sensors/airware.svg"
+                    source: "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
                 }
                 Text {
                     anchors.left: imageTemp.right
@@ -1659,7 +1659,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-icons/duotone/water_mid.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/water_mid.svg"
                 }
                 Text {
                     anchors.left: imageHygro2.right
@@ -1715,7 +1715,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
                 }
                 Text {
                     anchors.left: imageLumi.right
@@ -1898,7 +1898,7 @@ Grid {
                     anchors.leftMargin: 0
 
                     color: Theme.colorText
-                    source: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
                 }
                 Text {
                     anchors.left: imageLumiMmol.right

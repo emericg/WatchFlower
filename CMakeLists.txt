@@ -28,7 +28,7 @@ message(STATUS "[PROJECT] QT_HOST_PATH              = ${QT_HOST_PATH}")
 ################################################################################
 
 find_package(Qt6 REQUIRED COMPONENTS Core Bluetooth Positioning Network Sql)
-find_package(Qt6 REQUIRED COMPONENTS Gui Qml Quick QuickControls2 Svg Widgets Charts)
+find_package(Qt6 REQUIRED COMPONENTS Gui Svg Qml Quick QuickControls2 Widgets Charts)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 qt_standard_project_setup(REQUIRES 6.7)
@@ -82,7 +82,7 @@ set(SOURCES
     src/main.cpp
     qml/qml.qrc
     qml/ComponentLibrary/ComponentLibrary.qrc
-    assets/icons/IconLibrary.qrc
+    thirdparty/IconLibrary/IconLibrary.qrc
     assets/assets.qrc
     assets/devices.qrc
     assets/plants.qrc

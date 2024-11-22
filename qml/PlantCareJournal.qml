@@ -142,7 +142,7 @@ Item {
                     anchors.leftMargin: singleColumn ? 0 : 112
                     anchors.bottom: parent.bottom
 
-                    source: "qrc:/assets/icons/material-symbols/add.svg"
+                    source: "qrc:/IconLibrary/material-symbols/add.svg"
                     iconColor: "white"
                     backgroundVisible: true
                     backgroundColor: Theme.colorPrimary
@@ -401,7 +401,7 @@ Item {
                         visible: entryEditor.entry
 
                         text: qsTr("Edit entry")
-                        source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
 
                         onClicked: {
                             //console.log("Edit entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)
@@ -416,7 +416,7 @@ Item {
                         visible: !entryEditor.entry
 
                         text: qsTr("Add entry")
-                        source: "qrc:/assets/icons/material-symbols/add.svg"
+                        source: "qrc:/IconLibrary/material-symbols/add.svg"
 
                         onClicked: {
                             //console.log("Add entry: " + newEntry.entryType + " / " + newEntry.currentDateTime + " / " + entryComment.text)

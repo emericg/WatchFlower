@@ -101,7 +101,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "Settings" || appContent.state === "SettingsAdvanced")
                     text: qsTr("Settings")
-                    source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
 
                     onClicked: {
                         screenSettings.loadScreen()
@@ -112,7 +112,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
                     text: qsTr("About")
-                    source: "qrc:/assets/icons/material-icons/duotone/info.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/info.svg"
 
                     onClicked: {
                         screenAbout.loadScreen()
@@ -127,7 +127,7 @@ DrawerThemed {
                 ////////
 
                 DrawerItem {
-                    source: "qrc:/assets/icons/material-symbols/sort.svg"
+                    source: "qrc:/IconLibrary/material-symbols/sort.svg"
                     text: {
                         var txt = qsTr("Order by:") + " "
                         if (settingsManager.orderBy === "waterlevel") {
@@ -183,7 +183,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Refresh sensor data")
 
-                    source: "qrc:/assets/icons/material-symbols/autorenew.svg"
+                    source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
                     iconAnimation: deviceManager.updating ? "rotate" : "fade"
                     iconAnimated: (deviceManager.updating || deviceManager.listening)
 
@@ -204,7 +204,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Sync sensors history")
 
-                    source: "qrc:/assets/icons/material-symbols/merge_type.svg"
+                    source: "qrc:/IconLibrary/material-symbols/merge_type.svg"
                     sourceRotation: 180
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.syncing
@@ -226,7 +226,7 @@ DrawerThemed {
                 DrawerButton {
                     text: qsTr("Search for new sensors")
 
-                    source: "qrc:/assets/icons/material-symbols/search.svg"
+                    source: "qrc:/IconLibrary/material-symbols/search.svg"
                     iconAnimation: "fade"
                     iconAnimated: deviceManager.scanning
 
@@ -263,7 +263,7 @@ DrawerThemed {
             DrawerItem {
                 highlighted: (appContent.state === "PlantBrowser")
                 text: qsTr("Plant browser")
-                source: "qrc:/assets/icons/material-symbols/sensors/local_florist.svg"
+                source: "qrc:/IconLibrary/material-symbols/sensors/local_florist.svg"
 
                 onClicked: {
                     screenPlantBrowser.loadScreenFrom("DeviceList")
@@ -274,7 +274,7 @@ DrawerThemed {
             DrawerItem {
                 highlighted: (appContent.state === "DeviceBrowser")
                 text: qsTr("Device browser")
-                source: "qrc:/assets/icons/material-symbols/sensors/radar.svg"
+                source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
 
                 enabled: deviceManager.bluetooth
 

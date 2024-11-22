@@ -323,7 +323,7 @@ Loader {
                         width: isMobile ? 96 : 128
                         height: isMobile ? 96 : 128
                         anchors.horizontalCenter: parent.horizontalCenter
-                        source: "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
+                        source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
                         color: cccc
                     }
 
@@ -400,7 +400,7 @@ Loader {
                         height: 24
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/schedule.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/schedule.svg"
                         color: cccc
                     }
                     Text {
@@ -435,7 +435,7 @@ Loader {
                         height: 20
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                         color: cccc
 
                         opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
@@ -479,7 +479,7 @@ Loader {
                         height: 24
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                         color: cccc
                     }
                 }

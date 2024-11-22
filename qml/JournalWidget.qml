@@ -130,7 +130,7 @@ Item {
         Behavior on opacity { OpacityAnimator { duration: 200 } }
 
         RoundButtonIcon {
-            source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
+            source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
 
             onClicked: {
                 journalEditorLoader.active = true
@@ -138,7 +138,7 @@ Item {
             }
         }
         RoundButtonIcon {
-            source: "qrc:/assets/icons/material-symbols/delete.svg"
+            source: "qrc:/IconLibrary/material-symbols/delete.svg"
 
             onClicked: {
                 currentDevice.removeJournalEntry(modelData.id)

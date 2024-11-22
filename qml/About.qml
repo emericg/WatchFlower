@@ -113,7 +113,7 @@ Loader {
                         height: 40
 
                         text: qsTr("WEBSITE")
-                        source: "qrc:/assets/icons/material-symbols/link.svg"
+                        source: "qrc:/IconLibrary/material-symbols/link.svg"
                         sourceSize: 28
                         font.bold: true
                         color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
@@ -126,7 +126,7 @@ Loader {
                         height: 40
 
                         text: qsTr("SUPPORT")
-                        source: "qrc:/assets/icons/material-symbols/support.svg"
+                        source: "qrc:/IconLibrary/material-symbols/support.svg"
                         sourceSize: 22
                         font.bold: true
                         color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
@@ -181,7 +181,7 @@ Loader {
                     height: 40
 
                     text: qsTr("WEBSITE")
-                    source: "qrc:/assets/icons/material-symbols/link.svg"
+                    source: "qrc:/IconLibrary/material-symbols/link.svg"
                     sourceSize: 28
                     font.bold: true
                     color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
@@ -194,7 +194,7 @@ Loader {
                     height: 40
 
                     text: qsTr("SUPPORT")
-                    source: "qrc:/assets/icons/material-symbols/support.svg"
+                    source: "qrc:/IconLibrary/material-symbols/support.svg"
                     sourceSize: 22
                     font.bold: true
                     color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
@@ -210,7 +210,7 @@ Loader {
                 anchors.right: parent.right
 
                 text: qsTr("A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'.")
-                source: "qrc:/assets/icons/material-symbols/info.svg"
+                source: "qrc:/IconLibrary/material-symbols/info.svg"
             }
 
             IconSvg { // image devices
@@ -231,8 +231,8 @@ Loader {
                 anchors.right: parent.right
 
                 text: qsTr("Application by <a href=\"https://emeric.io\">Emeric Grange</a><br>Visual design by <a href=\"https://dribbble.com/chrisdiaz\">Chris Díaz</a>")
-                source: "qrc:/assets/icons/material-symbols/supervised_user_circle.svg"
-                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                source: "qrc:/IconLibrary/material-symbols/supervised_user_circle.svg"
+                indicatorSource: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://emeric.io")
             }
@@ -244,8 +244,8 @@ Loader {
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("Rate the application")
-                source: "qrc:/assets/icons/material-symbols/stars-fill.svg"
-                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                source: "qrc:/IconLibrary/material-symbols/stars-fill.svg"
+                indicatorSource: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
 
                 onClicked: {
                     if (Qt.platform.os === "android")
@@ -262,9 +262,9 @@ Loader {
                 anchors.right: parent.right
 
                 text: qsTr("Release notes")
-                source: "qrc:/assets/icons/material-symbols/new_releases.svg"
+                source: "qrc:/IconLibrary/material-symbols/new_releases.svg"
                 sourceSize: 28
-                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                indicatorSource: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/releases")
             }
@@ -275,9 +275,9 @@ Loader {
                 anchors.right: parent.right
 
                 text: qsTr("Supported sensors")
-                source: "qrc:/assets/icons/material-symbols/check_circle.svg"
+                source: "qrc:/IconLibrary/material-symbols/check_circle.svg"
                 sourceSize: 28
-                indicatorSource: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                indicatorSource: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
 
                 onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
             }
@@ -291,9 +291,9 @@ Loader {
                 anchors.right: parent.right
 
                 text: qsTr("Open the tutorial")
-                source: "qrc:/assets/icons/material-symbols/import_contacts-fill.svg"
+                source: "qrc:/IconLibrary/material-symbols/import_contacts-fill.svg"
                 sourceSize: 24
-                indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
+                indicatorSource: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
 
                 onClicked: screenTutorial.loadScreenFrom("About")
             }
@@ -309,9 +309,9 @@ Loader {
                 visible: (Qt.platform.os === "android" || Qt.platform.os === "ios")
 
                 text: qsTr("About app permissions")
-                source: "qrc:/assets/icons/material-symbols/flaky.svg"
+                source: "qrc:/IconLibrary/material-symbols/flaky.svg"
                 sourceSize: 24
-                indicatorSource: "qrc:/assets/icons/material-symbols/chevron_right.svg"
+                indicatorSource: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
 
                 onClicked: screenAboutPermissions.loadScreenFrom("About")
             }
@@ -335,7 +335,7 @@ Loader {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: dependenciesText.verticalCenter
 
-                    source: "qrc:/assets/icons/material-symbols/settings.svg"
+                    source: "qrc:/IconLibrary/material-symbols/settings.svg"
                     color: Theme.colorSubText
                 }
 
@@ -406,7 +406,7 @@ Loader {
                     anchors.leftMargin: 4
                     anchors.verticalCenter: translatorsText.verticalCenter
 
-                    source: "qrc:/assets/icons/material-icons/duotone/translate.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/translate.svg"
                     color: Theme.colorSubText
                 }
 

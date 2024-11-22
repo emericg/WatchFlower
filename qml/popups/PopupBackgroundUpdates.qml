@@ -97,7 +97,7 @@ Popup {
                         height: 64
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                         color: Theme.colorText
                     }
 
@@ -125,7 +125,7 @@ Popup {
                         color: Theme.colorSecondary
 
                         text: qsTr("About Bluetooth permissions")
-                        source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                        source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
                         sourceSize: 20
 
                         onClicked: {
@@ -141,7 +141,7 @@ Popup {
                         color: Theme.colorGrey
 
                         text: qsTr("Cancel")
-                        source: "qrc:/assets/icons/material-symbols/close.svg"
+                        source: "qrc:/IconLibrary/material-symbols/close.svg"
 
                         onClicked: {
                             popupBackgroundUpdates.close()
@@ -153,7 +153,7 @@ Popup {
                         color: Theme.colorSuccess
 
                         text: qsTr("Enable")
-                        source: "qrc:/assets/icons/material-symbols/check.svg"
+                        source: "qrc:/IconLibrary/material-symbols/check.svg"
 
                         onClicked: {
                             utilsApp.getMobileBackgroundLocationPermission()
@@ -182,7 +182,7 @@ Popup {
                         height: 64
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/battery_alert.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/battery_alert.svg"
                         color: Theme.colorText
                     }
 
@@ -223,7 +223,7 @@ Popup {
                         color: Theme.colorSecondary
 
                         text: qsTr("About battery savers")
-                        source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                        source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
                         sourceSize: 20
 
                         onClicked: {
@@ -236,7 +236,7 @@ Popup {
                         color: Theme.colorPrimary
 
                         text: qsTr("Application info panel")
-                        source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                         sourceSize: 20
 
                         onClicked: {
@@ -250,7 +250,7 @@ Popup {
                         layoutDirection: Qt.RightToLeft
 
                         text: qsTr("I understand")
-                        source: "qrc:/assets/icons/material-symbols/check.svg"
+                        source: "qrc:/IconLibrary/material-symbols/check.svg"
 
                         onClicked: {
                             popupBackgroundUpdates.close()

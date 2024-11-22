@@ -73,7 +73,7 @@ Item {
 
                     property bool validperm: true
 
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -130,7 +130,7 @@ Item {
 
                     property bool validperm: true
 
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -187,7 +187,7 @@ Item {
 
                     property bool validperm: deviceManager.permissionOS
 
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -250,7 +250,7 @@ Item {
 
                     property bool validperm: deviceManager.permissionLocationBLE
 
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -299,7 +299,7 @@ Item {
                 colorBackground: Theme.colorForeground
 
                 text: qsTr("Official information")
-                source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
                 sourceSize: 20
 
                 onClicked: {
@@ -332,7 +332,7 @@ Item {
 
                     property bool validperm: deviceManager.permissionLocationBackground
 
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -397,7 +397,7 @@ Item {
 
                     property bool validperm: deviceManager.permissionLocationGPS
 
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorWarning
                     backgroundVisible: true
@@ -448,7 +448,7 @@ Item {
                 colorBackground: Theme.colorForeground
 
                 text: qsTr("Location settings")
-                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 sourceSize: 20
 
                 onClicked: utilsApp.openAndroidLocationSettings()
@@ -477,7 +477,7 @@ Item {
 
                     property bool validperm: false
 
-                    source: (validperm) ? "qrc:/assets/icons/material-symbols/check.svg" : "qrc:/assets/icons/material-symbols/close.svg"
+                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
                     backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
                     backgroundVisible: true
@@ -540,7 +540,7 @@ Item {
 
                     opacity: 0.66
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-icons/duotone/info.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/info.svg"
                 }
 
                 Text {
@@ -584,7 +584,7 @@ Item {
                 colorBackground: Theme.colorForeground
 
                 text: qsTr("Application info")
-                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 sourceSize: 20
 
                 onClicked: utilsApp.openAndroidAppInfo("com.emeric.watchflower")

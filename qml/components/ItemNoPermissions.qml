@@ -34,7 +34,7 @@ Item {
                     width: parent.width*0.8
                     height: width
 
-                    source: "qrc:/assets/icons/material-symbols/lock.svg"
+                    source: "qrc:/IconLibrary/material-symbols/lock.svg"
                     fillMode: Image.PreserveAspectFit
                     color: Theme.colorSubText
                     opacity: 0.9
@@ -64,7 +64,7 @@ Item {
 
                     text: qsTr("Request permission(s)")
                     sourceSize: 24
-                    source: "qrc:/assets/icons/material-icons/duotone/touch_app.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/touch_app.svg"
 
                     onClicked: {
                         deviceManager.requestBluetoothPermissions()
@@ -89,7 +89,7 @@ Item {
                 Layout.preferredHeight: 20
                 Layout.alignment: Qt.AlignVCenter
 
-                source: "qrc:/assets/icons/material-symbols/warning.svg"
+                source: "qrc:/IconLibrary/material-symbols/warning.svg"
                 color: Theme.colorWarning
             }
             Text {
@@ -119,7 +119,7 @@ Item {
                 Layout.preferredHeight: 20
                 Layout.alignment: Qt.AlignVCenter
 
-                source: "qrc:/assets/icons/material-symbols/warning.svg"
+                source: "qrc:/IconLibrary/material-symbols/warning.svg"
                 color: Theme.colorWarning
             }
             Text {
@@ -149,7 +149,7 @@ Item {
                 Layout.preferredHeight: 20
                 Layout.alignment: Qt.AlignVCenter
 
-                source: "qrc:/assets/icons/material-symbols/warning.svg"
+                source: "qrc:/IconLibrary/material-symbols/warning.svg"
                 color: Theme.colorSubText
             }
 
@@ -180,7 +180,7 @@ Item {
                 Layout.preferredHeight: 20
                 Layout.alignment: Qt.AlignVCenter
 
-                source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
                 color: Theme.colorSubText
             }
             Text {
@@ -208,7 +208,7 @@ Item {
                 text: qsTr("Official information")
                 color: Theme.colorSubText
                 sourceSize: 20
-                source: "qrc:/assets/icons/material-icons/duotone/launch.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
 
                 onClicked: {
                     if (Qt.platform.os === "android") {

@@ -96,7 +96,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 width: 48; height: 48;
 
-                source: "qrc:/assets/icons/material-symbols/chevron_left.svg"
+                source: "qrc:/IconLibrary/material-symbols/chevron_left.svg"
                 colorBackground: parent.color
 
                 onClicked: {
@@ -126,7 +126,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 width: 48; height: 48;
 
-                source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
+                source: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
                 colorBackground: parent.color
 
                 onClicked: {

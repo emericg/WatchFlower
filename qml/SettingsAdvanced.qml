@@ -76,7 +76,7 @@ Loader {
 
                 ListTitle {
                     text: "App info"
-                    source: "qrc:/assets/icons/material-symbols/settings.svg"
+                    source: "qrc:/IconLibrary/material-symbols/settings.svg"
                 }
 
                 ////////////////
@@ -150,7 +150,7 @@ Loader {
 
                 ListTitle {
                     text: "Remote database"
-                    source: "qrc:/assets/icons/material-symbols/storage.svg"
+                    source: "qrc:/IconLibrary/material-symbols/storage.svg"
 
                     visible: isDesktop
                 }
@@ -205,7 +205,7 @@ Loader {
 
                 ListTitle {
                     text: "Local database"
-                    source: "qrc:/assets/icons/material-symbols/storage.svg"
+                    source: "qrc:/IconLibrary/material-symbols/storage.svg"
                 }
 
                 ////////////////
@@ -259,7 +259,7 @@ Loader {
 
                 ListTitle {
                     text: "Local settings"
-                    source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 }
 
                 ////////////////
@@ -316,7 +316,7 @@ Loader {
 /*
                 ListTitle {
                     text: "Logs"
-                    source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
+                    source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                 }
 
                 ////////////////
@@ -428,7 +428,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons/material-symbols/storage.svg"
+                        source: "qrc:/IconLibrary/material-symbols/storage.svg"
                     }
                 }
 
@@ -450,7 +450,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons/material-symbols/pin.svg"
+                        source: "qrc:/IconLibrary/material-symbols/pin.svg"
                     }
                 }
 
@@ -471,7 +471,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons/material-icons/duotone/manage_accounts.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/manage_accounts.svg"
                     }
                 }
 
@@ -493,7 +493,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         color: Theme.colorSubText
-                        source: "qrc:/assets/icons/material-symbols/password.svg"
+                        source: "qrc:/IconLibrary/material-symbols/password.svg"
                     }
                 }
             }

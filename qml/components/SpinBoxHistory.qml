@@ -108,7 +108,7 @@ T.SpinBox {
             height: 24
             anchors.centerIn: parent
             color: "white"
-            source: "qrc:/assets/icons/material-symbols/chevron_right.svg"
+            source: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
         }
     }
 
@@ -134,7 +134,7 @@ T.SpinBox {
             height: 24
             anchors.centerIn: parent
             color: "white"
-            source: "qrc:/assets/icons/material-symbols/chevron_left.svg"
+            source: "qrc:/IconLibrary/material-symbols/chevron_left.svg"
         }
     }
 

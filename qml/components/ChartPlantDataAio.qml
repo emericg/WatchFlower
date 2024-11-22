@@ -485,7 +485,7 @@ Item {
 
                 highlightMode: "off"
                 backgroundVisible: true
-                source: "qrc:/assets/icons/material-symbols/settings.svg"
+                source: "qrc:/IconLibrary/material-symbols/settings.svg"
 
                 onClicked: historyIndicator.showHide()
             }
@@ -548,7 +548,7 @@ Item {
                 backgroundVisible: true
                 backgroundColor: Theme.colorComponentBackground
                 iconColor: Theme.colorSubText
-                source: "qrc:/assets/icons/material-icons/duotone/tune.svg"
+                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
 
                 onClicked: historyIndicator.showHide()
             }

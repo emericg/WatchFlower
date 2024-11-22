@@ -19,7 +19,7 @@ Rectangle {
         width: parent.width*0.66
         height: width
 
-        source: "qrc:/assets/icons/material-symbols/import_contacts-fill.svg"
+        source: "qrc:/IconLibrary/material-symbols/import_contacts-fill.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorIcon
         opacity: 0.9

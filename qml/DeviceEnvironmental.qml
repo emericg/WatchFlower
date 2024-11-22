@@ -477,7 +477,7 @@ Loader {
                         anchors.centerIn: parent
 
                         visible: (currentDevice && !currentDevice.hasDataToday)
-                        source: "qrc:/assets/icons/material-icons/outlined/bluetooth_disabled.svg"
+                        source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
                         color: cccc
                     }
 
@@ -619,7 +619,7 @@ Loader {
                         height: 24
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/schedule.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/schedule.svg"
                         color: cccc
                     }
                     Text {
@@ -654,7 +654,7 @@ Loader {
                         height: 20
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/edit.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                         color: cccc
 
                         opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
@@ -698,7 +698,7 @@ Loader {
                         height: 24
                         anchors.verticalCenter: parent.verticalCenter
 
-                        source: "qrc:/assets/icons/material-icons/duotone/pin_drop.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
                         color: cccc
                     }
                 }
@@ -1118,7 +1118,7 @@ Loader {
 
                                         title: qsTr("Humidity")
                                         legend: qsTr("%RH")
-                                        icon: "qrc:/assets/icons/material-icons/duotone/water_full.svg"
+                                        icon: "qrc:/IconLibrary/material-icons/duotone/water_full.svg"
                                         value: currentDevice.humidity
                                         precision: 0
                                         onSensorSelection: primary = "hygrometer"
@@ -1131,7 +1131,7 @@ Loader {
 
                                         title: qsTr("Pressure")
                                         legend: qsTr("hPa")
-                                        icon: "qrc:/assets/icons/material-icons/duotone/speed.svg"
+                                        icon: "qrc:/IconLibrary/material-icons/duotone/speed.svg"
                                         value: currentDevice.pressure
                                         precision: 0
                                     }
@@ -1143,7 +1143,7 @@ Loader {
 
                                         title: qsTr("Luminosity")
                                         legend: qsTr("lux")
-                                        icon: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
+                                        icon: "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
                                         value: currentDevice.luminosityLux
                                         precision: 0
                                     }
@@ -1154,7 +1154,7 @@ Loader {
 
                                         title: qsTr("UV index")
                                         legend: ""
-                                        icon: "qrc:/assets/icons/material-icons/duotone/wb_sunny.svg"
+                                        icon: "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
                                         value: currentDevice.uv
                                         precision: 0
                                     }
@@ -1166,7 +1166,7 @@ Loader {
 
                                         title: qsTr("Sound level")
                                         legend: qsTr("db")
-                                        icon: "qrc:/assets/icons/material-icons/duotone/mic.svg"
+                                        icon: "qrc:/IconLibrary/material-icons/duotone/mic.svg"
                                         value: 47
                                         precision: 0
                                     }
@@ -1178,7 +1178,7 @@ Loader {
 
                                         title: qsTr("Wind direction")
                                         legend: "north"
-                                        icon: "qrc:/assets/icons/material-symbols/near_me.svg"
+                                        icon: "qrc:/IconLibrary/material-symbols/near_me.svg"
                                         value: 0
                                         precision: 0
                                     }
@@ -1189,7 +1189,7 @@ Loader {
 
                                         title: qsTr("Wind speed")
                                         legend: qsTr("km/h")
-                                        icon: "qrc:/assets/icons/material-symbols/sensors/air.svg"
+                                        icon: "qrc:/IconLibrary/material-symbols/sensors/air.svg"
                                         value: 16
                                         precision: 0
                                     }
@@ -1201,7 +1201,7 @@ Loader {
 
                                         title: qsTr("Rain")
                                         legend: qsTr("mm")
-                                        icon: "qrc:/assets/icons/material-icons/duotone/local_drink.svg"
+                                        icon: "qrc:/IconLibrary/material-icons/duotone/local_drink.svg"
                                         value: 7
                                         precision: 0
                                     }

@@ -106,8 +106,8 @@ Item {
         color: indicatorAirQuality.color
         smooth: true
         opacity: 0.6
-        source: "qrc:/assets/icons/fontawesome/lungs-solid.svg"
-        //source: "qrc:/assets/icons/material-symbols/sensors/pulmonology.svg"
+        source: "qrc:/IconLibrary/fontawesome/lungs-solid.svg"
+        //source: "qrc:/IconLibrary/material-symbols/sensors/pulmonology.svg"
 
         property real minOpacity: 0.4
         property real maxOpacity: 0.85

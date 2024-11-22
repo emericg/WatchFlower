@@ -18,7 +18,7 @@ Rectangle {
         width: parent.width*0.8
         height: width
 
-        source: "qrc:/assets/icons/material-symbols/timeline.svg"
+        source: "qrc:/IconLibrary/material-symbols/timeline.svg"
         fillMode: Image.PreserveAspectFit
         color: Theme.colorIcon
         smooth: true

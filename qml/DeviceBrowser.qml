@@ -113,7 +113,7 @@ Item {
 
                     opacity: 0.66
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                    source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
                 }
 
                 Text {
@@ -215,7 +215,7 @@ Item {
 
                     opacity: 0.66
                     color: Theme.colorSubText
-                    source: "qrc:/assets/icons/material-symbols/info-fill.svg"
+                    source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
                 }
 
                 Text {
@@ -327,7 +327,7 @@ Item {
 
                     IconSvg {
                         anchors.centerIn: parent
-                        source: "qrc:/assets/icons/material-icons/duotone/devices.svg"
+                        source: "qrc:/IconLibrary/material-icons/duotone/devices.svg"
                         color: Theme.colorIcon
                     }
                 }

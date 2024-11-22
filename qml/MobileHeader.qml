@@ -108,9 +108,9 @@ Rectangle {
                 height: (headerHeight / 2)
 
                 source: {
-                    if (leftMenuMode === "drawer") return "qrc:/assets/icons/material-symbols/menu.svg"
-                    if (leftMenuMode === "close") return "qrc:/assets/icons/material-symbols/close.svg"
-                    return "qrc:/assets/icons/material-symbols/arrow_back.svg"
+                    if (leftMenuMode === "drawer") return "qrc:/IconLibrary/material-symbols/menu.svg"
+                    if (leftMenuMode === "close") return "qrc:/IconLibrary/material-symbols/close.svg"
+                    return "qrc:/IconLibrary/material-symbols/arrow_back.svg"
                 }
                 color: Theme.colorHeaderContent
             }
@@ -157,13 +157,13 @@ Rectangle {
 
                     source: {
                         if (deviceManager.scanning)
-                            return "qrc:/assets/icons/material-symbols/search.svg"
+                            return "qrc:/IconLibrary/material-symbols/search.svg"
                         else if (deviceManager.syncing)
                             return "qrc:/assets/gfx/icons/duotone-date_all-24px.svg"
                         else if (deviceManager.listening)
-                            return "qrc:/assets/icons/material-symbols/autorenew.svg"
+                            return "qrc:/IconLibrary/material-symbols/autorenew.svg"
                         else
-                            return "qrc:/assets/icons/material-symbols/autorenew.svg"
+                            return "qrc:/IconLibrary/material-symbols/autorenew.svg"
                     }
                     color: Theme.colorHeaderContent
                     opacity: 0
@@ -218,7 +218,7 @@ Rectangle {
                     width: (headerHeight / 2)
                     height: (headerHeight / 2)
 
-                    source: "qrc:/assets/icons/material-symbols/more_vert.svg"
+                    source: "qrc:/IconLibrary/material-symbols/more_vert.svg"
                     color: Theme.colorHeaderContent
                 }
             }

@@ -42,8 +42,8 @@ Rectangle {
             height: 24
             anchors.verticalCenter: parent.verticalCenter
 
-            source: syncing ? "qrc:/assets/icons/material-icons/duotone/bluetooth_connected.svg" :
-                              "qrc:/assets/icons/material-icons/duotone/bluetooth_searching.svg"
+            source: syncing ? "qrc:/IconLibrary/material-icons/duotone/bluetooth_connected.svg" :
+                              "qrc:/IconLibrary/material-icons/duotone/bluetooth_searching.svg"
             color: Theme.colorActionbarContent
 
             SequentialAnimation on opacity {
@@ -86,7 +86,7 @@ Rectangle {
         iconColor: Theme.colorActionbarContent
         backgroundColor: Theme.colorActionbarHighlight
         text: qsTr("Stop")
-        source: "qrc:/assets/icons/material-symbols/close.svg"
+        source: "qrc:/IconLibrary/material-symbols/close.svg"
 
         onClicked: currentDevice.deviceDisconnect()
     }
