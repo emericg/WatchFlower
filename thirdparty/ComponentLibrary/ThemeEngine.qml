@@ -154,7 +154,7 @@ Item {
     property color colorComponentBorder
     property color colorComponentDown
     property color colorComponentBackground
-    property color colorComponentShadow: isLight ? "#44000000" : "#88000000"
+    property color colorComponentShadow: isLight ? "#40000000" : "#88000000"
 
     property int componentRadius: 4
     property int componentBorderWidth: 2
@@ -357,7 +357,7 @@ Item {
             colorIcon                   = "#303030"
             colorSeparator              = "#ececec"
             colorLowContrast            = "white"
-            colorHighContrast           = "black"
+            colorHighContrast           = "#303030"
 
             colorComponent              = "#f0f0f0"
             colorComponentText          = "black"
@@ -469,7 +469,7 @@ Item {
             colorIcon                   = "#303030"
             colorSeparator              = "#ececec"
             colorLowContrast            = "white"
-            colorHighContrast           = "black"
+            colorHighContrast           = "#303030"
 
             colorComponent              = "#f6f6f6"
             colorComponentText          = "black"
@@ -776,7 +776,7 @@ Item {
             colorIcon                   = "#333333"
             colorSeparator              = "#e8e8e8"
             colorLowContrast            = "white"
-            colorHighContrast           = "black"
+            colorHighContrast           = "#303030"
 
             colorComponent              = "#EAEAEA"
             colorComponentText          = "black"
@@ -1006,7 +1006,7 @@ Item {
             colorIcon                   = "#333"
             colorSeparator              = "#E4E4E4"
             colorLowContrast            = "white"
-            colorHighContrast           = "black"
+            colorHighContrast           = "#303030"
 
             colorComponent              = "#EAEAEA"
             colorComponentText          = "black"

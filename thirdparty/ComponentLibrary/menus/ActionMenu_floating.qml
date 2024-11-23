@@ -19,7 +19,7 @@ T.Popup {
     dim: false
     focus: isMobile
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside
-    parent: T.Overlay.overlay
+    //parent: T.Overlay.overlay // let it float
 
     property string titleTxt
     property string titleSrc
@@ -48,7 +48,7 @@ T.Popup {
             autoPaddingEnabled: true
             shadowEnabled: true
             shadowOpacity: 0.24
-            shadowColor: control.border.color
+            shadowColor: background.border.color
         }
     }
 

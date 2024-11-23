@@ -3,7 +3,7 @@ import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
 
 Popup {
     id: popupDate
@@ -51,10 +51,6 @@ Popup {
         grid.year = date.getFullYear()
         grid.month = date.getMonth()
 
-        // visual hacks
-        //dow.width = dow.width - 8
-        grid.width = dow.width - 8
-
         printDate()
 
         popupDate.open()
@@ -96,7 +92,7 @@ Popup {
 
     Overlay.modal: Rectangle {
         color: "#000"
-        opacity: ThemeEngine.isLight ? 0.24 : 0.666
+        opacity: Theme.isLight ? 0.24 : 0.48
     }
 
     background: Rectangle {
@@ -144,8 +140,9 @@ Popup {
         layer.enabled: !singleColumn
         layer.effect: MultiEffect { // shadow
             autoPaddingEnabled: true
+            blurMax: 48
             shadowEnabled: true
-            shadowColor: ThemeEngine.isLight ? "#aa000000" : "#aaffffff"
+            shadowColor: Theme.isLight ? "#aa000000" : "#cc000000"
         }
     }
 
@@ -214,17 +211,20 @@ Popup {
             ////////
 
             Rectangle { // month selector
-                height: 48
                 anchors.left: parent.left
+                anchors.leftMargin: parent.Theme.componentBorderWidth
                 anchors.right: parent.right
-                anchors.margins: singleColumn ? 0 : Theme.componentBorderWidth
+                anchors.rightMargin: parent.Theme.componentBorderWidth
 
-                color: "#eee"
+                height: Theme.componentHeightXL
+                color: Theme.colorForeground
 
-                RoundButtonSunken { // previous month
+                SquareButtonSunken { // previous month
                     anchors.left: parent.left
+                    anchors.leftMargin: 2
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 48; height: 48;
+                    width: Theme.componentHeightL
+                    height: Theme.componentHeightL
 
                     source: "qrc:/IconLibrary/material-symbols/chevron_left.svg"
                     colorBackground: parent.color
@@ -250,10 +250,12 @@ Popup {
                     color: Theme.colorText
                 }
 
-                RoundButtonSunken { // next month
+                SquareButtonSunken { // next month
                     anchors.right: parent.right
+                    anchors.rightMargin: 2
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 48; height: 48;
+                    width: Theme.componentHeightL
+                    height: Theme.componentHeightL
 
                     source: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
                     colorBackground: parent.color
@@ -272,125 +274,145 @@ Popup {
 
             ////////
 
-            DayOfWeekRow {
-                id: dow
+            ColumnLayout { // days
+                id: daysSelector
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: Theme.componentMargin
                 anchors.right: parent.right
-                anchors.rightMargin: 4
+                anchors.rightMargin: Theme.componentMargin
 
-                Layout.fillWidth: true
-                //locale: popupDate.locale
+                DayOfWeekRow {
+                    id: dow
 
-                delegate: Text {
-                    text: model.shortName.substring(0, 1).toUpperCase()
-                    color: Theme.colorText
-                    font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
+                    Layout.fillWidth: true
+                    Layout.fillHeight: Theme.componentHeight
+                    //locale: popupDate.locale
 
-            MonthGrid {
-                id: grid
-                anchors.left: parent.left
-                anchors.leftMargin: 4
-                anchors.right: parent.right
-                anchors.rightMargin: 4
-
-                Layout.fillWidth: true
-                //locale: popupDate.locale
-
-                delegate: Text {
-                    width: (grid.width / 7)
-                    height: width
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-
-                    property bool isSelected: (model.day === selectedDate.getDate() &&
-                                               model.month === selectedDate.getMonth() &&
-                                               model.year === selectedDate.getFullYear())
-
-                    property bool isToday: (model.day === popupDate.today.getDate() &&
-                                            model.month === popupDate.today.getMonth() &&
-                                            model.year === popupDate.today.getFullYear())
-
-                    text: model.day
-                    font: grid.font
-                    //font.bold: model.today
-                    color: isSelected ? "white" : Theme.colorSubText
-                    opacity: (model.month === grid.month ? 1 : 0.2)
-
-                    Rectangle {
-                        z: -1
-                        anchors.fill: parent
-                        radius: width
-                        color: isSelected ? Theme.colorSecondary : "transparent"
-                        border.color: Theme.colorSecondary
-                        border.width: isToday ? Theme.componentBorderWidth : 0
+                    delegate: Text {
+                        text: model.shortName.substring(0, 1).toUpperCase()
+                        color: Theme.colorText
+                        font.bold: true
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
                     }
                 }
 
-                onClicked: (date) => {
-                    if (date.getMonth() === grid.month) {
-                        // validate date (min / max)
-                        if (minDate && maxDate) {
-                            const diffMinTime = (minDate - date)
-                            const diffMinDays = -Math.ceil(diffMinTime / (1000 * 60 * 60 * 24) - 1)
-                            //console.log(diffMinDays + " diffMinDays")
-                            const diffMaxTime = (minDate - date);
-                            const diffMaxDays = -Math.ceil(diffMaxTime / (1000 * 60 * 60 * 24) - 1)
-                            //console.log(diffMaxDays + " diffMaxDays")
+                MonthGrid {
+                    id: grid
 
-                            if (diffMinDays > -1 && diffMaxDays < 1) {
-                                date.setHours(selectedDate.getHours(),
-                                              selectedDate.getMinutes(),
-                                              selectedDate.getSeconds())
-                                selectedDate = date
-                            }
-                        } else {
-                            const diffTime = (today - date)
-                            const diffDays = -Math.ceil(diffTime / (1000 * 60 * 60 * 24) - 1)
-                            //console.log(diffDays + " days")
+                    Layout.fillWidth: true
+                    //locale: popupDate.locale
 
-                            // validate date (-21 / today)
-                            if (diffDays > -21 && diffDays < 1) {
-                                date.setHours(selectedDate.getHours(),
-                                              selectedDate.getMinutes(),
-                                              selectedDate.getSeconds())
-                                selectedDate = date
+                    delegate: Text {
+                        width: (grid.width / 7)
+                        height: width
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+
+                        property bool isSelected: (model.day === selectedDate.getDate() &&
+                                                   model.month === selectedDate.getMonth() &&
+                                                   model.year === selectedDate.getFullYear())
+
+                        property bool isToday: (model.day === popupDate.today.getDate() &&
+                                                model.month === popupDate.today.getMonth() &&
+                                                model.year === popupDate.today.getFullYear())
+
+                        text: model.day
+                        font: grid.font
+                        //font.bold: model.today
+                        color: isSelected ? "white" : Theme.colorSubText
+                        opacity: (model.month === grid.month ? 1 : 0.2)
+
+                        Rectangle {
+                            z: -1
+                            anchors.fill: parent
+                            anchors.margins: 4
+                            radius: 8
+                            color: isSelected ? Theme.colorSecondary : "transparent"
+                            opacity: (isSelected || isToday) ? 1 : 0.66
+                            border.color: Theme.colorSecondary
+                            border.width: {
+                                if (isToday) return Theme.componentBorderWidth
+                                if (mouse.hovered && model.month === grid.month) return Theme.componentBorderWidth
+                                return 0
                             }
                         }
 
-                        printDate()
+                        HoverHandler {
+                            id: mouse
+                            acceptedDevices: PointerDevice.Mouse
+                        }
+                    }
+
+                    onClicked: (date) => {
+                        if (date.getMonth() === grid.month) {
+                            // validate date (min / max)
+                            if (minDate && maxDate) {
+                                const diffMinTime = (minDate - date)
+                                const diffMinDays = -Math.ceil(diffMinTime / (1000 * 60 * 60 * 24) - 1)
+                                //console.log(diffMinDays + " diffMinDays")
+                                const diffMaxTime = (minDate - date);
+                                const diffMaxDays = -Math.ceil(diffMaxTime / (1000 * 60 * 60 * 24) - 1)
+                                //console.log(diffMaxDays + " diffMaxDays")
+
+                                if (diffMinDays > -1 && diffMaxDays < 1) {
+                                    date.setHours(selectedDate.getHours(),
+                                                  selectedDate.getMinutes(),
+                                                  selectedDate.getSeconds())
+                                    selectedDate = date
+                                }
+                            } else {
+                                const diffTime = (today - date)
+                                const diffDays = -Math.ceil(diffTime / (1000 * 60 * 60 * 24) - 1)
+                                //console.log(diffDays + " days")
+
+                                // validate date (-21 / today)
+                                if (diffDays > -21 && diffDays < 1) {
+                                    date.setHours(selectedDate.getHours(),
+                                                  selectedDate.getMinutes(),
+                                                  selectedDate.getSeconds())
+                                    selectedDate = date
+                                }
+                            }
+
+                            printDate()
+                        }
                     }
                 }
             }
 
             ////////
+        }
 
-            Row {
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMarginXL
-                spacing: Theme.componentMargin
+        ////////////////
 
-                ButtonClear {
-                    color: Theme.colorGrey
+        Flow {
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.margins: Theme.componentMarginXL
+            bottomPadding: Theme.componentMarginXL
+            spacing: Theme.componentMargin
 
-                    text: qsTr("Cancel")
-                    onClicked: popupDate.close()
-                }
+            property int btnCount: 2
+            property int btnSize: singleColumn ? width : ((width-(spacing*(btnCount-1))) / btnCount)
 
-                ButtonFlat {
-                    text: qsTr("Select")
-                    onClicked: {
-                        updateDate(selectedDate)
-                        popupDate.close()
-                    }
-                }
+            ButtonClear {
+                width: parent.btnSize
+                color: Theme.colorGrey
+
+                text: qsTr("Cancel")
+                onClicked: popupDate.close()
             }
 
-            ////////
+            ButtonFlat {
+                width: parent.btnSize
+
+                text: qsTr("Select")
+                onClicked: {
+                    updateDate(selectedDate)
+                    popupDate.close()
+                }
+            }
         }
 
         ////////////////

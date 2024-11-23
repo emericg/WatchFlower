@@ -19,7 +19,7 @@ T.Button {
     rightPadding: Theme.componentMargin
     leftPadding: Theme.componentMargin
 
-    height: Theme.componentHeight
+    height: Theme.componentHeightL
 
     focusPolicy: Qt.NoFocus
 
@@ -41,7 +41,7 @@ T.Button {
             anchors.fill: parent
             radius: Theme.componentRadius
 
-            color: Theme.colorComponent
+            color: Theme.colorForeground
             //Behavior on color { ColorAnimation { duration: 133 } }
 
             opacity: control.enabled && control.hovered ? 1 : 0

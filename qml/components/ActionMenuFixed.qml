@@ -7,73 +7,94 @@ import ComponentLibrary
 T.Popup {
     id: actionMenu
 
-    implicitWidth: 200
-    implicitHeight: contentColumn.height
+    width: appWindow.width
+    height: actualHeight
+
+    y: appWindow.height - actualHeight
 
     padding: 0
     margins: 0
 
     modal: true
-    dim: false
-    focus: isMobile
+    dim: true
+    focus: appWindow.isMobile
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside
-    parent: Overlay.overlay
-
-    property bool partonevisible: (actionUpdate.visible || actionRealtime.visible)
-    property bool parttwovisible: (actionHistoryRefresh.visible || actionHistoryClear.visible)
-    property bool partthreevisible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible || actionShowSettings.visible)
-
-    property int layoutDirection: Qt.RightToLeft
+    parent: T.Overlay.overlay
 
     signal menuSelected(var index)
 
     ////////////////////////////////////////////////////////////////////////////
 
-    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 133; } }
-    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 133; } }
+    property int layoutDirection: Qt.RightToLeft
 
-    ////////////////////////////////////////////////////////////////////////////
+    property int actualHeight: {
+        if (typeof mobileMenu !== "undefined" && mobileMenu.height)
+            return contentColumn.height + appWindow.screenPaddingNavbar + appWindow.screenPaddingBottom
+        return contentColumn.height
+    }
 
-    background: Rectangle {
-        color: Theme.colorBackground
-        radius: Theme.componentRadius
-        border.color: Theme.colorSeparator
-        border.width: Theme.componentBorderWidth
+    property bool opening: false
+    property bool closing: false
+
+    onAboutToShow: {
+        opening = true
+        closing = false
+    }
+    onAboutToHide: {
+        opening = false
+        closing = true
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    contentItem: Item {
-        Column {
-            id: contentColumn
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 233; } }
+    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.66; duration: 233; } }
+
+    T.Overlay.modal: Rectangle {
+        color: "#000"
+        opacity: Theme.isLight ? 0.24 : 0.48
+    }
+
+    background: Item { }
+
+    contentItem: Item { }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Rectangle {
+        id: actualPopup
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        height: opening ? actionMenu.actualHeight : 0
+        Behavior on height { NumberAnimation { duration: 233 } }
+
+        color: Theme.colorComponentBackground
+
+        Rectangle { // separator
             anchors.left: parent.left
             anchors.right: parent.right
+            height: Theme.componentBorderWidth
+            color: Theme.colorSeparator
+        }
 
-            topPadding: 8
+        Column { // content
+            id: contentColumn
+            anchors.top: parent.top
+            anchors.topMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: screenPaddingLeft
+            anchors.right: parent.right
+            anchors.rightMargin: screenPaddingRight
+
+            topPadding: Theme.componentMargin
             bottomPadding: 8
             spacing: 4
 
-            ////////
-
-            ActionMenuItem {
-                id: actionClose
-
-                index: -1
-                text: qsTr("Close")
-                source: "qrc:/IconLibrary/material-symbols/close.svg"
-                layoutDirection: actionMenu.layoutDirection
-                opacity: 0.8
-
-                onClicked: {
-                    close()
-                }
-            }
-
-            ListSeparatorPadded {
-                anchors.leftMargin: Theme.componentMargin
-                anchors.rightMargin: Theme.componentMargin
-                height: 9
-            }
+            property bool partonevisible: (actionUpdate.visible || actionRealtime.visible)
+            property bool parttwovisible: (actionHistoryRefresh.visible || actionHistoryClear.visible)
+            property bool partthreevisible: (actionLed.visible || actionWatering.visible || actionGraphMode.visible || actionShowSettings.visible)
 
             ////////
 
@@ -81,8 +102,8 @@ T.Popup {
                 id: actionUpdate
                 anchors.left: parent.left
                 anchors.right: parent.right
+                index: 1
 
-                index: 0
                 text: qsTr("Update data")
                 source: "qrc:/IconLibrary/material-symbols/refresh.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -97,8 +118,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionRealtime
+                index: 2
 
-                index: 1
                 text: qsTr("Real time data")
                 source: "qrc:/IconLibrary/material-icons/duotone/update.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -122,8 +143,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionHistoryRefresh
+                index: 3
 
-                index: 2
                 text: qsTr("Update history")
                 source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -138,8 +159,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionHistoryClear
+                index: 4
 
-                index: 3
                 text: qsTr("Clear history")
                 source: "qrc:/IconLibrary/material-icons/duotone/date_clear.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -163,8 +184,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionLed
-
                 index: 8
+
                 text: qsTr("Blink LED")
                 source: "qrc:/IconLibrary/material-icons/duotone/emoji_objects.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -179,8 +200,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionWatering
-
                 index: 9
+
                 text: qsTr("Watering")
                 source: "qrc:/IconLibrary/material-icons/duotone/local_drink.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -195,8 +216,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionCalibrate
-
                 index: 10
+
                 text: qsTr("Calibrate sensor")
                 source: "qrc:/IconLibrary/material-icons/duotone/model_training.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -211,8 +232,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionGraphMode
-
                 index: 16
+
                 text: qsTr("Switch graph")
                 layoutDirection: actionMenu.layoutDirection
                 visible: (appContent.state === "DeviceThermometer")
@@ -230,8 +251,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionShowSettings
-
                 index: 17
+
                 text: qsTr("Sensor infos")
                 source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -246,8 +267,8 @@ T.Popup {
 
             ActionMenuItem {
                 id: actionReboot
-
                 index: 32
+
                 text: qsTr("Reboot sensor")
                 source: "qrc:/IconLibrary/material-symbols/refresh.svg"
                 layoutDirection: actionMenu.layoutDirection
@@ -259,6 +280,8 @@ T.Popup {
                     close()
                 }
             }
+
+            ////////
         }
     }
 

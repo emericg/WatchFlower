@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Effects
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
 
 Popup {
     id: popupCalibration
@@ -39,10 +39,11 @@ Popup {
         }
 
         layer.enabled: !singleColumn
-        layer.effect: MultiEffect {
+        layer.effect: MultiEffect { // shadow
             autoPaddingEnabled: true
+            blurMax: 48
             shadowEnabled: true
-            shadowColor: ThemeEngine.isLight ? "#88000000" : "#aaffffff"
+            shadowColor: Theme.isLight ? "#aa000000" : "#cc000000"
         }
     }
 

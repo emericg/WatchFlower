@@ -10,7 +10,7 @@ T.Popup {
     id: actionMenu
 
     implicitWidth: parent.width
-    implicitHeight: contentColumn.height
+    implicitHeight: actualHeight
 
     y: appWindow.height
 
@@ -28,7 +28,7 @@ T.Popup {
 
     property var model: null
 
-    property int layoutDirection: Qt.LeftToRight // disabled
+    property int layoutDirection: Qt.LeftToRight
 
     signal menuSelected(var index)
 
@@ -40,8 +40,22 @@ T.Popup {
         return contentColumn.height
     }
 
-    enter: Transition { NumberAnimation { duration: 233; property: "height"; from: 0; to: actionMenu.actualHeight; } }
-    exit: Transition { NumberAnimation { duration: 233; property: "height"; from: actionMenu.actualHeight; to: 0; } }
+    property bool opening: false
+    property bool closing: false
+
+    onAboutToShow: {
+        opening = true
+        closing = false
+    }
+    onAboutToHide: {
+        opening = false
+        closing = true
+    }
+
+    ////////////////
+
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: 233; } }
+    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.66; duration: 233; } }
 
     ////////////////
 
@@ -50,22 +64,34 @@ T.Popup {
         opacity: Theme.isLight ? 0.24 : 0.48
     }
 
-    background: Rectangle {
+    background: Item { }
+
+    contentItem: Item { }
+
+    ////////////////
+
+    Rectangle {
+        id: actualPopup
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        height: opening ? actionMenu.actualHeight : 0
+        Behavior on height { NumberAnimation { duration: 233 } }
+
         color: Theme.colorComponentBackground
 
-        Rectangle {
+        Rectangle { // separator
             anchors.left: parent.left
             anchors.right: parent.right
             height: Theme.componentBorderWidth
             color: Theme.colorSeparator
         }
-    }
 
-    ////////////////
-
-    contentItem: Item {
-        Column {
+        Column { // content
             id: contentColumn
+            anchors.top: parent.top
+            anchors.topMargin: 0
             anchors.left: parent.left
             anchors.leftMargin: screenPaddingLeft
             anchors.right: parent.right

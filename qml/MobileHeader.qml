@@ -57,16 +57,8 @@ Rectangle {
     // prevent clicks below this area
     MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
-    ActionMenuFixed {
-        id: actionMenu
-
-        x: parent.width - actionMenu.width - 12
-        y: Math.max(screenPaddingStatusbar, screenPaddingTop) + 16
-
-        onMenuSelected: (index) => {
-            //console.log("ActionMenu clicked #" + index)
-        }
-    }
+    // Action menu
+    ActionMenuFixed { id: actionMenu }
 
     ////////////////////////////////////////////////////////////////////////////
 
