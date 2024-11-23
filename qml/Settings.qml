@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Controls
-
 import QtPositioning
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 
 Loader {
     id: screenSettings
@@ -285,7 +285,7 @@ Loader {
                         wrapMode: Text.WordWrap
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_appThemeAuto
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -352,7 +352,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_splitView
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -504,7 +504,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_minimized
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -575,7 +575,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_worker
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -673,7 +673,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_notifications
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -738,7 +738,7 @@ Loader {
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_battery
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -767,7 +767,7 @@ Loader {
                             font.pixelSize: Theme.fontSizeContent
                             color: Theme.colorSubText
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_water
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -797,7 +797,7 @@ Loader {
                             color: Theme.colorSubText
                             lineHeight: 0.8
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_subzero
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -827,7 +827,7 @@ Loader {
                             color: Theme.colorSubText
                             lineHeight: 0.8
                         }
-                        SwitchThemedDesktop {
+                        SwitchThemed {
                             id: switch_notif_env
                             anchors.right: parent.right
                             anchors.rightMargin: 4
@@ -884,7 +884,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_bluetoothControl
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -948,7 +948,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_bluetoothRange
                         anchors.right: parent.right
                         anchors.rightMargin: 4
@@ -1425,7 +1425,7 @@ Loader {
                         lineHeight: 0.8
                     }
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_sunandmoon
                         anchors.right: parent.right
                         anchors.rightMargin: 4

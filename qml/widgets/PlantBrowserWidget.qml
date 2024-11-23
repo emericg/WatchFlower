@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Effects
 
-import ThemeEngine
+import ComponentLibrary
 
 Item {
     id: toolsPlantBrowser

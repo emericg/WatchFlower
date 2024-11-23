@@ -1,8 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
 
 Loader {
     id: settingsAdvanced
@@ -166,7 +165,7 @@ Loader {
 
                     visible: isDesktop
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_mysql
 
                         text: "Enable MySQL database support"
@@ -328,7 +327,7 @@ Loader {
                     anchors.rightMargin: Theme.componentMargin + 8
                     spacing: Theme.componentMargin
 
-                    SwitchThemedDesktop {
+                    SwitchThemed {
                         id: switch_logs
 
                         text: "Enable logging"

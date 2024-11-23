@@ -198,26 +198,22 @@ int main(int argc, char *argv[])
     // Translate the application
     utilsLanguage->loadLanguage(sm->getAppLanguage());
 
-    // ThemeEngine
-    qmlRegisterSingletonType(QUrl("qrc:/qml/ThemeEngine.qml"), "ThemeEngine", 1, 0, "Theme");
-
     MobileUI::registerQML();
     DeviceUtils::registerQML();
     JournalUtils::registerQML();
     PlantUtils::registerQML();
 
-    // Then we start the UI
     QQmlApplicationEngine engine;
-    QQmlContext *engine_context = engine.rootContext();
+    engine.addImportPath(":/qt/qml/WatchFlower");
+    engine.addImportPath(":/qt/qml/ComponentLibrary");
 
+    QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("notificationManager", nm);
-
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
-
     engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
@@ -227,11 +223,11 @@ int main(int argc, char *argv[])
     // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     engine_context->setContextProperty("utilsShare", utilsShare);
-    engine.load(QUrl(QStringLiteral("qrc:/qml/MobileApplication.qml")));
+    engine.loadFromModule("WatchFlower", "MobileApplication");
 #else
     engine_context->setContextProperty("systrayManager", st);
     engine_context->setContextProperty("menubarManager", mb);
-    engine.load(QUrl(QStringLiteral("qrc:/qml/DesktopApplication.qml")));
+    engine.loadFromModule("WatchFlower", "DesktopApplication");
 #endif
 
     if (engine.rootObjects().isEmpty())

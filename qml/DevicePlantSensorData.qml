@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 import DeviceUtils
-import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: devicePlantSensorData
@@ -36,7 +36,7 @@ Item {
 
     function loadGraph() {
         if (graphLoader.status !== Loader.Ready) {
-            graphLoader.source = "ChartPlantDataAio.qml"
+            graphLoader.source = "charts/ChartPlantDataAio.qml"
         } else {
             dataChart.loadGraph()
             dataChart.updateGraph()
@@ -46,18 +46,18 @@ Item {
     function loadIndicators() {
         if (indicatorsLoader.status !== Loader.Ready) {
             if (settingsManager.bigIndicator)
-                indicatorsLoader.source = "IndicatorsSolid.qml"
+                indicatorsLoader.source = "components/IndicatorsSolid.qml"
             else
-                indicatorsLoader.source = "IndicatorsCompact.qml"
+                indicatorsLoader.source = "components/IndicatorsCompact.qml"
         } else {
             dataIndicators.loadIndicators()
         }
     }
     function reloadIndicators() {
         if (settingsManager.bigIndicator)
-            indicatorsLoader.source = "IndicatorsSolid.qml"
+            indicatorsLoader.source = "components/IndicatorsSolid.qml"
         else
-            indicatorsLoader.source = "IndicatorsCompact.qml"
+            indicatorsLoader.source = "components/IndicatorsCompact.qml"
 
         if (indicatorsLoader.status === Loader.Ready) {
             dataIndicators.loadIndicators()

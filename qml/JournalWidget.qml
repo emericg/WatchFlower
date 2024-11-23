@@ -1,8 +1,8 @@
 import QtQuick
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 import JournalUtils
-import "qrc:/js/UtilsPlantJournal.js" as UtilsPlantJournal
 
 Item {
     id: journalWidget
@@ -54,7 +54,7 @@ Item {
                 z: -1
                 opacity: selected ? 0.5 : 0
                 Behavior on opacity { OpacityAnimator { duration: 133 } }
-                color: (Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader
+                color: (Theme.currentTheme === Theme.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader
             }
 
             Rectangle {

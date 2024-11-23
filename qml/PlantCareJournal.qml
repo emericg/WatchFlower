@@ -1,10 +1,9 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-
+import ComponentLibrary
+import WatchFlower
 import JournalUtils
-import "qrc:/js/UtilsPlantJournal.js" as UtilsPlantJournal
 
 Item {
     id: plantCareJournal
@@ -340,7 +339,7 @@ Item {
                                             backgroundVisible: true
                                             backgroundColor: Theme.colorBackground
                                             borderVisible: true
-                                            borderColor: selected ? Theme.colorPrimary : Theme.colorComponentBorder
+                                            borderColor: highlighted ? Theme.colorPrimary : Theme.colorComponentBorder
                                             highlightMode: "border"
 
                                             highlighted: (entryEditor.entryType === modelData)

@@ -1,7 +1,6 @@
 import QtQuick
 
-import ThemeEngine
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
 
 Item {
     id: indicatorAirQuality
@@ -36,7 +35,7 @@ Item {
             arcBegin: 0
             arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 1
             arcOffset: 225
-            arcColor: (Theme.currentTheme === ThemeEngine.THEME_PLANT ? Theme.colorLightGreen : Theme.colorGreen)
+            arcColor: (Theme.currentTheme === Theme.THEME_PLANT ? Theme.colorLightGreen : Theme.colorGreen)
             arcOpacity: 1
         }
         ProgressCircle { // arcWarning

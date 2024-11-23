@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 
 Item {
     id: deviceBrowser
@@ -370,7 +371,7 @@ Item {
                             z: -1
                             opacity: boxDevice.selected ? 0.5 : 0
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
-                            color: (Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader
+                            color: (Theme.currentTheme === Theme.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader
                         }
 
                         color: {

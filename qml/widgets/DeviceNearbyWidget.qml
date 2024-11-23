@@ -1,7 +1,7 @@
 import QtQuick
 
-import ThemeEngine
-import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
+import ComponentLibrary
+import WatchFlower
 
 Item {
     id: deviceNearbyWidget
@@ -26,7 +26,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         opacity: 0.33
-        color: (device.selected) ? ((Theme.currentTheme === ThemeEngine.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader) : Theme.colorBackground
+        color: (device.selected) ? ((Theme.currentTheme === Theme.THEME_SNOW) ? Theme.colorPrimary : Theme.colorHeader) : Theme.colorBackground
     }
 
     MouseArea {

@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 
 Item {
     id: screenDeviceList
@@ -65,11 +66,11 @@ Item {
             actionbarBluetoothStatus.hide()
 
             if (!deviceManager.bluetoothPermissions) {
-                loaderItemStatus.source = "ItemNoPermissions.qml"
+                loaderItemStatus.source = "components/ItemNoPermissions.qml"
             } else if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
-                loaderItemStatus.source = "ItemNoBluetooth.qml"
+                loaderItemStatus.source = "components/ItemNoBluetooth.qml"
             } else {
-                loaderItemStatus.source = "ItemNoDevice.qml"
+                loaderItemStatus.source = "components/ItemNoDevice.qml"
             }
         }
     }

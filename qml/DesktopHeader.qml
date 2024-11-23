@@ -1,6 +1,7 @@
 import QtQuick
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 
 Rectangle {
     id: appHeader

@@ -1,8 +1,8 @@
 import QtQuick
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 import PlantUtils
-import "qrc:/js/UtilsPlantDatabase.js" as UtilsPlantDatabase
 
 Column {
     id: plantHardinessWidget

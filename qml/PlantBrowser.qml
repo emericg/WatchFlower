@@ -2,7 +2,8 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 
 Loader {
     id: plantBrowser

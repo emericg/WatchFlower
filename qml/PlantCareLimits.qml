@@ -1,7 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 
 Flickable {
     id: plantCareLimits
@@ -407,108 +408,44 @@ Flickable {
                     width: rangeSlider_lumi.width - 2*rangeSlider_lumi.padding - 4
                     spacing: 3
 
-                    Rectangle {
-                        id: lux_1
-                        height: 20
+                    // inside
+                    LuxBox {
                         width: (lumiScale.width - 3*parent.spacing) * 0.1 // 0 to 1k
                         visible: currentDevice.deviceIsInside
                         color: Theme.colorGrey
-                        Text {
-                            anchors.fill: parent
-                            text: qsTr("low")
-                            textFormat: Text.PlainText
-                            color: "white"
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
-                        }
+                        text: qsTr("low")
                     }
-                    Rectangle {
-                        id: lux_2
-                        height: 20
+                    LuxBox {
                         width: (lumiScale.width - 3*parent.spacing) * 0.2 // 1k to 3k
                         visible: currentDevice.deviceIsInside
                         color: "grey"
-                        Text {
-                            anchors.fill: parent
-                            text: qsTr("indirect")
-                            textFormat: Text.PlainText
-                            color: "white"
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
-                        }
+                        text: qsTr("indirect")
                     }
-                    Rectangle {
-                        id: lux_3
-                        height: 20
+                    LuxBox {
                         width: (lumiScale.width - 3*parent.spacing) * 0.5 // 3k to 8k
                         visible: currentDevice.deviceIsInside
                         color: Theme.colorYellow
-                        Text {
-                            anchors.fill: parent
-                            text: qsTr("direct light (indoor)")
-                            textFormat: Text.PlainText
-                            color: "white"
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
-                        }
+                        text: qsTr("direct light (indoor)")
                     }
-                    Rectangle {
-                        id: lux_4
-                        height: 20
+                    LuxBox {
                         width: (lumiScale.width - 3*parent.spacing) * 0.2 // 8k+
                         visible: currentDevice.deviceIsInside
                         color: "orange"
-                        Text {
-                            anchors.fill: parent
-                            text: qsTr("sunlight")
-                            textFormat: Text.PlainText
-                            color: "white"
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
-                        }
+                        text: qsTr("sunlight")
                     }
 
-                    Rectangle {
-                        id: lux_5
-                        height: 20
+                    // ouside
+                    LuxBox {
                         width: (lumiScale.width - 2*parent.spacing) * 0.16 // 0-15k
                         visible: currentDevice.deviceIsOutside
                         color: "grey"
-                        Text {
-                            anchors.fill: parent
-                            text: qsTr("indirect")
-                            textFormat: Text.PlainText
-                            color: "white"
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
-                        }
+                        text: qsTr("indirect")
                     }
-                    Rectangle {
-                        id: lux_6
-                        height: 20
+                    LuxBox {
                         width: (lumiScale.width - 2*parent.spacing) * 0.84 // 15k+
                         visible: currentDevice.deviceIsOutside
                         color: Theme.colorYellow
-                        Text {
-                            anchors.fill: parent
-                            text: qsTr("sunlight")
-                            textFormat: Text.PlainText
-                            color: "white"
-                            font.pixelSize: Theme.fontSizeContentVerySmall
-                            verticalAlignment: Text.AlignVCenter
-                            horizontalAlignment: Text.AlignHCenter
-                            elide: Text.ElideRight
-                        }
+                        text: qsTr("sunlight")
                     }
                 }
             }

@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
+import ComponentLibrary
+import WatchFlower
 
 Loader {
     id: screenAbout
@@ -116,7 +116,7 @@ Loader {
                         source: "qrc:/IconLibrary/material-symbols/link.svg"
                         sourceSize: 28
                         font.bold: true
-                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
@@ -129,7 +129,7 @@ Loader {
                         source: "qrc:/IconLibrary/material-symbols/support.svg"
                         sourceSize: 22
                         font.bold: true
-                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                     }
@@ -144,7 +144,7 @@ Loader {
                         source: "qrc:/assets/gfx/logos/github.svg"
                         sourceSize: 22
                         font.bold: true
-                        color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                     }
@@ -184,7 +184,7 @@ Loader {
                     source: "qrc:/IconLibrary/material-symbols/link.svg"
                     sourceSize: 28
                     font.bold: true
-                    color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
@@ -197,7 +197,7 @@ Loader {
                     source: "qrc:/IconLibrary/material-symbols/support.svg"
                     sourceSize: 22
                     font.bold: true
-                    color: (Theme.currentTheme === ThemeEngine.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
 
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }

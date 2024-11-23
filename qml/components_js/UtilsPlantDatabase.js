@@ -4,7 +4,7 @@
 .pragma library
 
 .import PlantUtils as PlantUtils
-.import ThemeEngine as ThemeEngine
+.import ComponentLibrary as ThemeEngine
 
 /* ************************************************************************** */
 

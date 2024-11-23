@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Shapes
 
-import ThemeEngine
+import ComponentLibrary
 
 Item {
     id: toolsDeviceBrowser

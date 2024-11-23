@@ -80,8 +80,6 @@ set(SOURCES
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
     thirdparty/RC4/rc4.cpp thirdparty/RC4/rc4.h
-    qml/qml.qrc
-    qml/ComponentLibrary/ComponentLibrary.qrc
     thirdparty/IconLibrary/IconLibrary.qrc
     assets/assets.qrc
     assets/devices.qrc
@@ -103,6 +101,83 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
     ${SOURCES_DESKTOP}
 )
 
+qt_add_qml_module(${CMAKE_PROJECT_NAME}
+    URI ${CMAKE_PROJECT_NAME}
+    QML_FILES
+        qml/MobileApplication.qml
+        qml/MobileHeader.qml
+        qml/MobileDrawer.qml
+        qml/MobileExit.qml
+        qml/MobileMenu.qml
+        qml/MobilePermissions.qml
+        qml/DesktopApplication.qml
+        qml/DesktopHeader.qml
+        qml/PlantBrowser.qml
+        qml/PlantScreen.qml
+        qml/About.qml
+        qml/Settings.qml
+        qml/SettingsAdvanced.qml
+        qml/Tutorial.qml
+        qml/JournalWidget.qml
+        qml/DeviceList.qml
+        qml/DeviceListUnified.qml
+        qml/DeviceListSplit.qml
+        qml/DeviceBrowser.qml
+        qml/DevicePlantSensor.qml
+        qml/DevicePlantSensorData.qml
+        qml/DevicePlantSensorHistory.qml
+        qml/DevicePlantSensorCare.qml
+        qml/PlantCareInfos.qml
+        qml/PlantCareLimits.qml
+        qml/PlantCareJournal.qml
+        qml/DevicePlantSensorSettings.qml
+        qml/DeviceThermometer.qml
+        qml/DeviceEnvironmental.qml
+        qml/widgets/DeviceWidget.qml
+        qml/widgets/DeviceNearbyWidget.qml
+        qml/widgets/SunAndMoonWidget.qml
+        qml/widgets/DeviceBrowserWidget.qml
+        qml/widgets/PlantBrowserWidget.qml
+        qml/popups/PopupBackgroundUpdates.qml
+        qml/popups/PopupBlacklistDevice.qml
+        qml/popups/PopupCalibration.qml
+        qml/popups/PopupDate.qml
+        qml/popups/PopupDeleteData.qml
+        qml/popups/PopupDeleteDevice.qml
+        qml/charts/ChartHistory.qml
+        qml/charts/ChartPlantDataAio.qml
+        qml/charts/ChartThermometerMinMax.qml
+        qml/charts/ChartThermometerMinMaxBar.qml
+        qml/charts/ChartEnvironmentalVoc.qml
+        qml/charts/ChartEnvironmentalVocBar.qml
+        qml/components/ActionbarBluetooth.qml
+        qml/components/ActionbarSelection.qml
+        qml/components/ActionbarSync.qml
+        qml/components/ActionMenuFixed.qml
+        qml/components/AirQualityIndicator.qml
+        qml/components/IndicatorsCompact.qml
+        qml/components/IndicatorsSolid.qml
+        qml/components/ItemEnvBox.qml
+        qml/components/ItemWeatherBox.qml
+        qml/components/ItemLoadData.qml
+        qml/components/ItemNoBluetooth.qml
+        qml/components/ItemNoPermissions.qml
+        qml/components/ItemNoDevice.qml
+        qml/components/ItemNoDeviceNearby.qml
+        qml/components/ItemNoData.qml
+        qml/components/ItemNoPlant.qml
+        qml/components/ItemNoPlants.qml
+        qml/components/ItemNoJournal.qml
+        qml/components/LuxBox.qml
+        qml/components/PlantCalendarWidget.qml
+        qml/components/PlantHardinessWidget.qml
+        qml/components/PlantSizeWidget.qml
+        qml/components/SpinBoxHistory.qml
+        qml/components_js/UtilsDeviceSensors.js
+        qml/components_js/UtilsPlantDatabase.js
+        qml/components_js/UtilsPlantJournal.js
+)
+
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src/)
 
 ################################################################################
@@ -121,6 +196,7 @@ qt_add_translations(${CMAKE_PROJECT_NAME}
 ################################################################################
 
 # SingleApplication
+set(QAPPLICATION_CLASS QApplication)
 add_subdirectory(thirdparty/SingleApplication)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SingleApplication)
 
@@ -142,8 +218,8 @@ add_subdirectory(thirdparty/SunAndMoon)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
 
 # ComponentLibrary
-#add_subdirectory(thirdparty/ComponentLibrary)
-#target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ComponentLibraryplugin)
+add_subdirectory(thirdparty/ComponentLibrary)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ComponentLibraryplugin)
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/)
 

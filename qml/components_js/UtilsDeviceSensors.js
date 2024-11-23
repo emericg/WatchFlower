@@ -4,7 +4,7 @@
 .pragma library
 
 .import DeviceUtils as DeviceUtils
-.import ThemeEngine as ThemeEngine
+.import ComponentLibrary as ThemeEngine
 
 /* ************************************************************************** */
 

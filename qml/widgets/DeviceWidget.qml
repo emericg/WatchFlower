@@ -1,9 +1,8 @@
 import QtQuick
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 import DeviceUtils
-import "qrc:/utils/UtilsNumber.js" as UtilsNumber
-import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Item {
     id: deviceWidget
@@ -39,7 +38,7 @@ Item {
         function onLimitsUpdated() { updateSensorData() }
     }
     Connections {
-        target: ThemeEngine
+        target: Theme
         function onCurrentThemeChanged() {
             updateSensorTitle()
             updateSensorStatus()

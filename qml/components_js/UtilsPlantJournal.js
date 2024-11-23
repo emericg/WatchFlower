@@ -4,7 +4,7 @@
 .pragma library
 
 .import JournalUtils as JournalUtils
-.import ThemeEngine as ThemeEngine
+.import ComponentLibrary as ThemeEngine
 
 /* ************************************************************************** */
 

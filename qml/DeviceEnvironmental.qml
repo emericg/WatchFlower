@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Controls
 
-import ThemeEngine
+import ComponentLibrary
+import WatchFlower
 import DeviceUtils
-import "qrc:/js/UtilsDeviceSensors.js" as UtilsDeviceSensors
 
 Loader {
     id: deviceEnvironmental
@@ -403,16 +403,16 @@ Loader {
                     currentDevice.hasCoSensor || currentDevice.hasCo2Sensor) {
                     if (primary === "hygrometer") {
                         if (graphLoader.status !== Loader.Ready ||
-                            graphLoader.source !== "ChartThermometerMinMax.qml") {
-                            graphLoader.source = "ChartThermometerMinMax.qml"
+                            graphLoader.source !== "charts/ChartThermometerMinMax.qml") {
+                            graphLoader.source = "charts/ChartThermometerMinMax.qml"
                         } else {
                             envChart.loadGraph()
                             envChart.updateGraph()
                         }
                     } else {
                         if (graphLoader.status !== Loader.Ready ||
-                            graphLoader.source !== "ChartEnvironmentalVoc.qml") {
-                            graphLoader.source = "ChartEnvironmentalVoc.qml"
+                            graphLoader.source !== "charts/ChartEnvironmentalVoc.qml") {
+                            graphLoader.source = "charts/ChartEnvironmentalVoc.qml"
                         } else {
                             envChart.loadGraph()
                             envChart.updateGraph()
