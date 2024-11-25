@@ -9,8 +9,9 @@ Rectangle {
     implicitHeight: 20
     radius: 2
 
+    required property string text
+
     color: "grey"
-    property string text: ""
 
     Text {
         anchors.fill: parent

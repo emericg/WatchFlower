@@ -169,6 +169,7 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/components/ItemNoPlants.qml
         qml/components/ItemNoJournal.qml
         qml/components/LuxBox.qml
+        qml/components/PhBox.qml
         qml/components/PlantCalendarWidget.qml
         qml/components/PlantHardinessWidget.qml
         qml/components/PlantSizeWidget.qml

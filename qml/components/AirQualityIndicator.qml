@@ -35,6 +35,7 @@ Item {
             arcBegin: 0
             arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 1
             arcOffset: 225
+
             arcColor: (Theme.currentTheme === Theme.THEME_PLANT ? Theme.colorLightGreen : Theme.colorGreen)
             arcOpacity: 1
         }
@@ -50,6 +51,7 @@ Item {
             arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 1
             arcEnd: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) - 1
             arcOffset: 225
+
             arcColor: Theme.colorOrange
             arcOpacity: 1
         }
@@ -65,6 +67,7 @@ Item {
             arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 1
             arcEnd: 270
             arcOffset: 225
+
             arcColor: Theme.colorRed
             arcOpacity: 1
         }
@@ -80,8 +83,10 @@ Item {
         arcOffset: 225
         arcBegin: 0
         arcEnd: 270
+
         arcWidth: isMobile ? 12 : 18
         arcColor: indicatorAirQuality.color
+        arcCap: "round"
 
         background: true
         backgroundOpacity: 0.5
@@ -156,4 +161,6 @@ Item {
             font.bold: false
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

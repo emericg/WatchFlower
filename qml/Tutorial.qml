@@ -274,7 +274,7 @@ Rectangle {
                             font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         IconSvg {
-                            width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.66 : 0.3)
+                            width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.666 : 0.3)
                             height: width*0.2
                             anchors.horizontalCenter: parent.horizontalCenter
 
@@ -296,7 +296,7 @@ Rectangle {
                             font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         IconSvg {
-                            width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.66 : 0.3)
+                            width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.666 : 0.3)
                             height: width*0.1797
                             anchors.horizontalCenter: parent.horizontalCenter
 

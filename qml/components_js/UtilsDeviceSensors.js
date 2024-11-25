@@ -280,7 +280,7 @@ function getDeviceCapabilityIcon(capabilityId) {
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_CLOCK) {
         src = "qrc:/IconLibrary/material-icons/duotone/timer.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_LED_STATUS) {
-        src = "qrc:/IconLibrary/material-icons/duotone/emoji_objects.svg"
+        src = "qrc:/IconLibrary/material-symbols/backlight_low.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_LED_RGB) {
         src = "qrc:/IconLibrary/material-icons/duotone/emoji_objects.svg"
     } else if (capabilityId === DeviceUtils.DeviceUtils.DEVICE_BUTTONS) {
@@ -372,7 +372,7 @@ function getDeviceSensorIcon(sensorId) {
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_SOIL_PH) {
         src = "qrc:/IconLibrary/material-symbols/sensors/tonality.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_TEMPERATURE) {
-        src = "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
+        src = "qrc:/assets/gfx/icons/thermometer_big-24px.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_HUMIDITY) {
         src = "qrc:/IconLibrary/material-icons/duotone/water_full.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PRESSURE) {
@@ -400,11 +400,11 @@ function getDeviceSensorIcon(sensorId) {
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_O3) {
         src = "qrc:/IconLibrary/material-symbols/sensors/air.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_CO) {
-        src = "qrc:/IconLibrary/material-symbols/sensors/air.svg"
+        src = "qrc:/IconLibrary/material-symbols/sensors/detector_co.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_CO2) {
-        src = "qrc:/IconLibrary/material-symbols/sensors/air.svg"
+        src = "qrc:/IconLibrary/material-symbols/sensors/co2.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_eCO2) {
-        src = "qrc:/IconLibrary/material-symbols/sensors/air.svg"
+        src = "qrc:/IconLibrary/material-symbols/sensors/co2.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_NO2) {
         src = "qrc:/IconLibrary/material-symbols/sensors/air.svg"
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_SO2) {

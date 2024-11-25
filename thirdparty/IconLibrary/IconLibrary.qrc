@@ -440,10 +440,6 @@
         <file>material-symbols/sensors/aq.svg</file>
         <file>material-symbols/sensors/aq_indoor.svg</file>
         <file>material-symbols/sensors/atm.svg</file>
-        <file>material-symbols/sensors/bluetooth.svg</file>
-        <file>material-symbols/sensors/bluetooth_connected.svg</file>
-        <file>material-symbols/sensors/bluetooth_disabled.svg</file>
-        <file>material-symbols/sensors/bluetooth_searching.svg</file>
         <file>material-symbols/sensors/bolt.svg</file>
         <file>material-symbols/sensors/bolt-fill.svg</file>
         <file>material-symbols/sensors/bubble_chart.svg</file>
@@ -497,7 +493,6 @@
         <file>material-symbols/sensors/salinity.svg</file>
         <file>material-symbols/sensors/salinity-fill.svg</file>
         <file>material-symbols/sensors/sensors.svg</file>
-        <file>material-symbols/sensors/settings_bluetooth.svg</file>
         <file>material-symbols/sensors/severe_cold.svg</file>
         <file>material-symbols/sensors/spo2.svg</file>
         <file>material-symbols/sensors/spo2-fill.svg</file>
@@ -610,6 +605,10 @@
         <file>material-symbols/barcode.svg</file>
         <file>material-symbols/barcode_scanner.svg</file>
         <file>material-symbols/block.svg</file>
+        <file>material-symbols/bluetooth.svg</file>
+        <file>material-symbols/bluetooth_connected.svg</file>
+        <file>material-symbols/bluetooth_disabled.svg</file>
+        <file>material-symbols/bluetooth_searching.svg</file>
         <file>material-symbols/bottom_panel_close-fill.svg</file>
         <file>material-symbols/bottom_panel_open-fill.svg</file>
         <file>material-symbols/bug_report.svg</file>
@@ -795,6 +794,7 @@
         <file>material-symbols/search.svg</file>
         <file>material-symbols/settings.svg</file>
         <file>material-symbols/settings_applications.svg</file>
+        <file>material-symbols/settings_bluetooth.svg</file>
         <file>material-symbols/settings-fill.svg</file>
         <file>material-symbols/share.svg</file>
         <file>material-symbols/share-fill.svg</file>

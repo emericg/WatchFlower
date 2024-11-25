@@ -20,11 +20,13 @@ T.PageIndicator {
 
     property color color: Theme.colorHeaderContent
 
+    property bool compact: true
+
     ////////////////
 
     delegate: Rectangle {
-        implicitWidth: 12
-        implicitHeight: 12
+        implicitWidth: control.compact ? 12 : 24
+        implicitHeight: control.compact ? 12 : 8
         radius: (width / 2)
 
         color: control.color

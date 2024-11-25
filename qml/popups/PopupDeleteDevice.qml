@@ -26,6 +26,14 @@ Popup {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.5; to: 1.0; duration: 133; } }
+    //exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.0; duration: 200; } }
+
+    Overlay.modal: Rectangle {
+        color: "#000"
+        opacity: Theme.isLight ? 0.24 : 0.48
+    }
+
     background: Rectangle {
         color: Theme.colorBackground
         border.color: Theme.colorSeparator

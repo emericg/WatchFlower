@@ -20,6 +20,7 @@ Item {
 
     property color arcColor: Theme.colorPrimary
     property real arcOpacity: 1
+    property string arcCap: "butt"          // "butt", "round", "square" // Qt.FlatCap, Qt.RoundCap, Qt.SquareCap
 
     property bool background: true          // a full circle as a background of the arc
     property real backgroundOpacity: 1
@@ -105,7 +106,9 @@ Item {
             var start = Math.PI * ((control.arcBegin + control.arcOffset - 90) / 180)
             var end = Math.PI * ((control.arcEnd + control.arcOffset - 90) / 180)
             var end_value = Math.PI * ((control.arcValue + control.arcOffset - 90) / 180)
+
             ctx.reset()
+            ctx.lineCap = control.arcCap
 
             // draw
             if (control.isPie) {
@@ -143,4 +146,6 @@ Item {
             }
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

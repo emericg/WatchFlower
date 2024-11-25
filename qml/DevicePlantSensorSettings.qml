@@ -508,6 +508,10 @@ Flickable {
                             backgroundColor: Theme.colorBackground
                             iconColor: Theme.colorIcon
                             source: UtilsDeviceSensors.getDeviceSensorIcon(modelData.sensorId)
+                            sourceRotation: {
+                                if (source == "qrc:/IconLibrary/material-symbols/sensors/tonality.svg") return 90
+                                return 0
+                            }
                         }
                         Column {
                             anchors.verticalCenter: parent.verticalCenter

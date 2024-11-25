@@ -1267,12 +1267,12 @@ Grid {
                 border.color: Qt.darker(color, 1.03)
 
                 IconSvg {
-                    width: 28
-                    height: 28
                     anchors.top: parent.top
                     anchors.topMargin: 8
                     anchors.left: parent.left
                     anchors.leftMargin: 8
+                    width: 28
+                    height: 28
 
                     opacity: 0.66
                     color: Theme.colorSubText
@@ -1320,20 +1320,16 @@ Grid {
 
             Item {
                 id: itemHygro
-                height: 40
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
-                anchors.rightMargin: 0
+                height: 40
 
                 IconSvg {
                     id: imageHygro
+                    anchors.top: parent.top
+                    anchors.left: parent.left
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
 
                     color: Theme.colorSubText
                     source: "qrc:/IconLibrary/material-icons/duotone/water_mid.svg"
@@ -1378,19 +1374,16 @@ Grid {
                 id: itemCondu
                 height: 40
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 IconSvg {
                     id: imageCondu
+                    anchors.top: parent.top
+                    anchors.left: parent.left
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
 
+                    rotation: 90
                     color: Theme.colorSubText
                     source: "qrc:/IconLibrary/material-symbols/sensors/tonality.svg"
                 }
@@ -1433,19 +1426,16 @@ Grid {
                 id: itemSoilPH
                 height: 64
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 IconSvg {
                     id: imageSoilPH
+                    anchors.top: parent.top
+                    anchors.left: parent.left
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
 
+                    rotation: 90
                     color: Theme.colorSubText
                     source: "qrc:/IconLibrary/material-symbols/sensors/tonality.svg"
                 }
@@ -1492,95 +1482,29 @@ Grid {
                         spacing: 3
                         property int phsz: (rangeSlider_soilPH.width - 2*rangeSlider_soilPH.padding - 4 - 5*spacing) / 6
 
-                        Rectangle { // 4
+                        PhBox {
                             width: parent.phsz
-                            height: 20
-                            radius: Theme.componentRadius
-                            color: "#ff914d"
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "4"
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentVerySmall
-                            }
+                            text: "4"
                         }
-                        Rectangle { // 5
+                        PhBox {
                             width: parent.phsz
-                            height: 20
-                            radius: Theme.componentRadius
-                            color: "#ffbd59"
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "5"
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentVerySmall
-                            }
+                            text: "5"
                         }
-                        Rectangle { // 6
+                        PhBox {
                             width: parent.phsz
-                            height: 20
-                            radius: Theme.componentRadius
-                            color: "#ffde59"
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "6"
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentVerySmall
-                            }
+                            text: "6"
                         }
-                        Rectangle { // 7
+                        PhBox {
                             width: parent.phsz
-                            height: 20
-                            radius: Theme.componentRadius
-                            color: "#c9e265"
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "7"
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentVerySmall
-                            }
+                            text: "7"
                         }
-                        Rectangle { // 8
+                        PhBox {
                             width: parent.phsz
-                            height: 20
-                            radius: Theme.componentRadius
-                            color: "#03989e"
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "8"
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentVerySmall
-                            }
+                            text: "8"
                         }
-                        Rectangle { // 9
+                        PhBox {
                             width: parent.phsz
-                            height: 20
-                            radius: Theme.componentRadius
-                            color: "#2163bb"
-
-                            Text {
-                                anchors.centerIn: parent
-                                text: "9"
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentVerySmall
-                            }
+                            text: "9"
                         }
                     }
                 }
@@ -1589,22 +1513,19 @@ Grid {
             Item {
                 id: itemTemp
                 height: 40
-                anchors.right: parent.right
-                anchors.rightMargin: 0
                 anchors.left: parent.left
-                anchors.leftMargin: 0
+                anchors.right: parent.right
 
                 IconSvg {
                     id: imageTemp
+                    anchors.top: parent.top
+                    anchors.left: parent.left
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
 
                     color: Theme.colorSubText
-                    source: "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
+                    source: "qrc:/assets/gfx/icons/thermometer_big-24px.svg"
+                    //source: "qrc:/IconLibrary/material-symbols/sensors/thermometer-fill.svg"
                 }
                 Text {
                     anchors.left: imageTemp.right
@@ -1645,18 +1566,14 @@ Grid {
             Item {
                 height: 40
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 IconSvg {
                     id: imageHygro2
+                    anchors.top: parent.top
+                    anchors.left: parent.left
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
 
                     color: Theme.colorSubText
                     source: "qrc:/IconLibrary/material-icons/duotone/water_mid.svg"
@@ -1701,18 +1618,14 @@ Grid {
                 id: itemLumi
                 height: 64
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 IconSvg {
                     id: imageLumi
+                    anchors.top: parent.top
+                    anchors.left: parent.left
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
 
                     color: Theme.colorText
                     source: "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
@@ -1804,18 +1717,14 @@ Grid {
                 id: itemLumiMmol
                 height: 64
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 anchors.right: parent.right
-                anchors.rightMargin: 0
 
                 IconSvg {
                     id: imageLumiMmol
+                    anchors.top: parent.top
+                    anchors.left: parent.left
                     width: 24
                     height: 24
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
-                    anchors.left: parent.left
-                    anchors.leftMargin: 0
 
                     color: Theme.colorText
                     source: "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"

@@ -844,7 +844,7 @@ Loader {
 
                 ListTitle {
                     text: qsTr("Bluetooth")
-                    source: "qrc:/IconLibrary/material-symbols/sensors/bluetooth.svg"
+                    source: "qrc:/IconLibrary/material-symbols/bluetooth.svg"
                 }
 
                 ////////

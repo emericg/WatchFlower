@@ -113,7 +113,7 @@ Rectangle {
         onEntered: { buttonBackBg.opacity = 0.5; }
         onExited: { buttonBackBg.opacity = 0; buttonBack.width = 32; }
 
-        onPressed: buttonBack.width = 24
+        onPressed: buttonBack.width = 28
         onReleased: buttonBack.width = 32
         onClicked: backButtonClicked()
 
