@@ -5,7 +5,10 @@ set(CMAKE_AUTOMOC ON)
 
 ################################################################################
 
+# Optional stuff (for macOS)
 #set(UTILS_DOCK_ENABLED true)
+
+# Optional stuff (for iOS)
 #set(UTILS_WIFI_ENABLED true)
 #set(UTILS_NOTIFICATIONS_ENABLED true)
 
@@ -28,6 +31,8 @@ set(CORE_SOURCES
     utils_app.h
     utils_bits.cpp
     utils_bits.h
+    utils_clipboard.cpp
+    utils_clipboard.h
     utils_fpsmonitor.cpp
     utils_fpsmonitor.h
     utils_language.cpp

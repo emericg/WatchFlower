@@ -66,7 +66,7 @@ public class QGpsUtils
 
             final int locationMode;
             try {
-                //  This constant was deprecated in API level 28.
+                // This constant was deprecated in API level 28.
                 locationMode = Settings.Secure.getInt(context.getContentResolver(),
                                                       Settings.Secure.LOCATION_MODE);
             } catch (Settings.SettingNotFoundException e) {

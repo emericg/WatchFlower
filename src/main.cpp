@@ -255,12 +255,6 @@ int main(int argc, char *argv[])
     // Menu bar
     mb->setupMenubar(window, dm);
 
-#if defined(Q_OS_LINUX)
-    // GNOME hack for the mysterious disappearences of the tray icon with TopIcon Plus
-    // gnome-shell-extension-appindicator is recommanded instead of TopIcon Plus
-    //QObject::connect(&app, &SingleApplication::instanceStarted, st, &SystrayManager::REinstallSystray);
-#endif
-
 #if defined(Q_OS_MACOS)
     // macOS dock
     MacOSDockHandler *dockIconHandler = MacOSDockHandler::getInstance();

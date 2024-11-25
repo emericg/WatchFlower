@@ -43,10 +43,8 @@ class UtilsWiFi: public QObject
     Q_PROPERTY(bool permissionOS READ hasPermissionOS NOTIFY permissionsChanged)
 
     QString m_currentSSID;
-    QString getCurrentSSID() { return m_currentSSID; }
 
     bool m_permOS = false;
-    bool hasPermissionOS() const { return m_permOS; }
 
     void refreshWiFi_internal();
 
@@ -65,10 +63,12 @@ private slots:
 public:
     static UtilsWiFi *getInstance();
 
+    Q_INVOKABLE void refreshWiFi();
+    QString getCurrentSSID() { return m_currentSSID; }
+
     Q_INVOKABLE bool checkLocationPermissions();
     Q_INVOKABLE void requestLocationPermissions();
-
-    Q_INVOKABLE void refreshWiFi();
+    bool hasPermissionOS() const { return m_permOS; }
 };
 
 /* ************************************************************************** */
