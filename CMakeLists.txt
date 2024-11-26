@@ -188,7 +188,6 @@ qt_standard_project_setup(
 qt_add_translations(${CMAKE_PROJECT_NAME}
     TS_FILE_BASE ${CMAKE_PROJECT_NAME}
     TS_FILE_DIR ${CMAKE_SOURCE_DIR}/i18n/
-    SOURCES ${SOURCES}
     RESOURCE_PREFIX "/i18n"
 )
 

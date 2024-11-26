@@ -116,7 +116,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: singleColumn ? +6 : 0
 
-                text: qsTr("max")
+                text: qsTr("max", "short for maximum")
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: 11
@@ -145,7 +145,7 @@ Item {
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.verticalCenterOffset: singleColumn ? -6 : 0
 
-                text: qsTr("min")
+                text: qsTr("min", "short for minimum")
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: 11

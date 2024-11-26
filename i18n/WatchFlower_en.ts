@@ -71,7 +71,7 @@
 <context>
     <name>PopupDeleteDevice</name>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/popups/PopupDeleteDevice.qml" line="66"/>
+        <location filename="../../../perso/WatchFlower/qml/popups/PopupDeleteDevice.qml" line="75"/>
         <source>Are you sure you want to delete selected sensor(s)?</source>
         <translation>
             <numerusform>Are you sure you want to delete selected sensor?</numerusform>
@@ -79,7 +79,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/popups/PopupDeleteDevice.qml" line="79"/>
+        <location filename="../../../perso/WatchFlower/qml/popups/PopupDeleteDevice.qml" line="88"/>
         <source>Data from the sensor(s) are kept for an additional 90 days, in case you would like to re-add a sensor later.</source>
         <translation>
             <numerusform>Data from the sensor are kept for an additional 90 days, in case you would like to re-add a sensor later.</numerusform>

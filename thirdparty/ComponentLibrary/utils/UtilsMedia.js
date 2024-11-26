@@ -203,13 +203,13 @@ function bitrateModeToString(bitrateMode) {
     var text = '';
 
     if (bitrateMode === 1)
-        text = qsTr("CBR");
+        text = "CBR";
     else if (bitrateMode === 2)
-        text = qsTr("VBR");
+        text = "VBR";
     else if (bitrateMode === 3)
-        text = qsTr("ABR");
+        text = "ABR";
     else if (bitrateMode === 4)
-        text = qsTr("CVBR");
+        text = "CVBR";
 
     return text;
 }
@@ -221,7 +221,7 @@ function framerateToString(framerate) {
     var text = '';
 
     if (framerate > 0) {
-        text = framerate.toFixed(3) + " " + qsTr("FPS");
+        text = framerate.toFixed(3) + " " + "FPS";
     } else {
         text = qsTr("Unknown");
     }

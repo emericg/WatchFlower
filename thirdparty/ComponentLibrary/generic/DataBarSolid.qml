@@ -134,8 +134,7 @@ Item {
                          (x < indicator.x || x > indicator.x+indicator.width) &&
                          (x+width < indicator.x || x+width > indicator.x+indicator.width)
 
-                //: Short for minimum
-                text: qsTr("min")
+                text: qsTr("min", "short for minimum")
                 textFormat: Text.PlainText
 
                 font.pixelSize: Theme.fontSizeContentVerySmall
@@ -191,8 +190,7 @@ Item {
                          (x < indicator.x || x > indicator.x+indicator.width) &&
                          (x+width < indicator.x || x+width > indicator.x+indicator.width)
 
-                //: Short for maximum
-                text: qsTr("max")
+                text: qsTr("max", "short for maximum")
                 textFormat: Text.PlainText
 
                 font.pixelSize: Theme.fontSizeContentVerySmall
