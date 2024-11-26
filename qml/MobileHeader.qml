@@ -138,7 +138,7 @@ Rectangle {
                 width: headerHeight
                 height: headerHeight
 
-                visible: (appContent.state !== "Tutorial" &&
+                visible: (appContent.state !== "ScreenTutorial" &&
                           appContent.state !== "DevicePlantSensor" &&
                           appContent.state !== "DeviceThermometer" &&
                           appContent.state !== "DeviceEnvironmental")

@@ -7,7 +7,7 @@ Loader {
     id: settingsAdvanced
     anchors.fill: parent
 
-    property string entryPoint: "About"
+    property string entryPoint: "ScreenAbout"
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -17,7 +17,7 @@ Loader {
         settingsAdvanced.item.loadScreen()
 
         // change screen
-        appContent.state = "SettingsAdvanced"
+        appContent.state = "ScreenSettingsAdvanced"
     }
 
     function loadScreenFrom(screenname) {

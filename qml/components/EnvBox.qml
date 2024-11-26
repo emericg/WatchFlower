@@ -3,7 +3,8 @@ import QtQuick
 import ComponentLibrary
 
 Item {
-    id: itemEnvBox
+    id: control
+
     width: 144
     height: isPhone ? 62 : 72 // (width / 2)
 
@@ -27,7 +28,7 @@ Item {
 
     signal sensorSelection()
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////
 
     MouseArea {
         anchors.fill: parent
@@ -37,7 +38,7 @@ Item {
     ////////
 
     Rectangle {
-        color: itemEnvBox.color
+        color: control.color
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
@@ -58,7 +59,7 @@ Item {
             spacing: 8
 
             Text {
-                text: itemEnvBox.title
+                text: control.title
                 color: Theme.colorText
                 font.bold: true
                 font.pixelSize: Theme.fontSizeContent
@@ -66,7 +67,7 @@ Item {
 
             Text {
                 anchors.top: parent.top
-                text: itemEnvBox.legend
+                text: control.legend
                 color: Theme.colorSubText
                 font.bold: false
                 font.pixelSize: Theme.fontSizeContentSmall
@@ -74,10 +75,12 @@ Item {
         }
 
         Text {
-            text: (itemEnvBox.value > -99) ? itemEnvBox.value.toFixed(itemEnvBox.precision) : "?"
+            text: (control.value > -99) ? control.value.toFixed(control.precision) : "?"
             color: Theme.colorSubText
             font.bold: false
             font.pixelSize: isPhone ? 24 : 26
         }
     }
+
+    ////////
 }

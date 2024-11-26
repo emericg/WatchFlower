@@ -3,8 +3,9 @@ import QtQuick
 import ComponentLibrary
 
 Rectangle {
-    id: itemWeatherBox
-    width: (duo) ? sz*2 : sz
+    id: control
+
+    width: duo ? sz*2 : sz
     height: contentColumn.height + (isDesktop ? 24 : 22)
     radius: 4
 
@@ -26,7 +27,7 @@ Rectangle {
     border.color: Theme.colorSeparator
     border.width: 2
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////
 
     MouseArea {
         anchors.fill: parent
@@ -48,6 +49,8 @@ Rectangle {
         opacity: 0.1
     }
 
+    ////////
+
     Column {
         id: contentColumn
         anchors.left: parent.left
@@ -62,7 +65,7 @@ Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
 
-            text: itemWeatherBox.title
+            text: control.title
             wrapMode: Text.WordWrap
             color: Theme.colorSubText
             font.bold: true
@@ -78,15 +81,15 @@ Rectangle {
             Text {
                 anchors.verticalCenter: parent.verticalCenter
 
-                text: (itemWeatherBox.value > -99) ? itemWeatherBox.value.toFixed(itemWeatherBox.precision) : "?"
+                text: (control.value > -99) ? control.value.toFixed(control.precision) : "?"
                 color: Theme.colorText
                 font.bold: false
                 font.pixelSize: {
-                    if (itemWeatherBox.value >= 10000)
+                    if (control.value >= 10000)
                         return isDesktop ? 20 : 18
-                    else if (itemWeatherBox.value >= 1000)
+                    else if (control.value >= 1000)
                         return isDesktop ? 22 : 20
-                    else if (itemWeatherBox.precision > 1)
+                    else if (control.precision > 1)
                         return isDesktop ? 24 : 22
                     else
                         return isDesktop ? 26 : 24
@@ -98,7 +101,7 @@ Rectangle {
                     anchors.left: parent.right
                     anchors.rightMargin: 2
 
-                    text: itemWeatherBox.legend
+                    text: control.legend
                     textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: false
@@ -107,4 +110,6 @@ Rectangle {
             }
         }
     }
+
+    ////////
 }

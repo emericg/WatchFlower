@@ -15,7 +15,7 @@ Loader {
         screenAbout.active = true
 
         // change screen
-        appContent.state = "About"
+        appContent.state = "ScreenAbout"
     }
 
     function backAction() {
@@ -295,7 +295,7 @@ Loader {
                 sourceSize: 24
                 indicatorSource: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
 
-                onClicked: screenTutorial.loadScreenFrom("About")
+                onClicked: screenTutorial.loadScreenFrom("ScreenAbout")
             }
 
             ////////
@@ -313,7 +313,7 @@ Loader {
                 sourceSize: 24
                 indicatorSource: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
 
-                onClicked: screenAboutPermissions.loadScreenFrom("About")
+                onClicked: screenAboutPermissions.loadScreenFrom("ScreenAbout")
             }
 
             ListSeparator { }

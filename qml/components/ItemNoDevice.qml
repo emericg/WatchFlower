@@ -13,6 +13,8 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: -Theme.componentMarginXL
 
+        ////////
+
         IconSvg { // magnifying glass icon
             anchors.horizontalCenter: parent.horizontalCenter
             width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.66)
@@ -32,6 +34,8 @@ Item {
                 PropertyAnimation { to: 1; duration: 750; }
             }
         }
+
+        ////////
 
         Column {
             anchors.left: parent.left
@@ -112,7 +116,7 @@ Item {
 
             ////
         }
-    }
 
-    ////////////////////////////////////////////////////////////////////////////
+        ////////
+    }
 }

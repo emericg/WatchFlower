@@ -18,8 +18,8 @@ Item {
     property real limitMin: -1
     property real limitMax: -1
 
-    property var hhh // history mode
-    property var ddd // data mode
+    property int hhh // history mode
+    property int ddd // data mode
 
     enum Span {
         Daily = 0,

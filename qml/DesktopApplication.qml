@@ -84,7 +84,7 @@ ApplicationWindow {
     Connections {
         target: appHeader
         function onBackButtonClicked() {
-            if (appContent.state === "Tutorial") {
+            if (appContent.state === "ScreenTutorial") {
                 appContent.state = screenTutorial.entryPoint
             } else if (appContent.state === "PlantBrowser") {
                 appContent.state = screenPlantBrowser.entryPoint
@@ -241,7 +241,7 @@ ApplicationWindow {
     // User generated events handling //////////////////////////////////////////
 
     function backAction() {
-        if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") {
+        if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "DeviceList") {
             return // do nothing
         }
 
@@ -257,7 +257,7 @@ ApplicationWindow {
             screenDeviceBrowser.backAction()
         } else if (appContent.state === "PlantBrowser") {
             screenPlantBrowser.backAction()
-        } else if (appContent.state === "Tutorial") {
+        } else if (appContent.state === "ScreenTutorial") {
             appContent.state = screenTutorial.entryPoint
         } else { // default
             if (appContent.previousStates.length) {
@@ -372,7 +372,7 @@ ApplicationWindow {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        Tutorial {
+        ScreenTutorial {
             anchors.fill: parent
             id: screenTutorial
         }
@@ -393,15 +393,15 @@ ApplicationWindow {
             anchors.fill: parent
             id: screenDeviceEnvironmental
         }
-        Settings {
+        ScreenSettings {
             anchors.fill: parent
             id: screenSettings
         }
-        SettingsAdvanced {
+        ScreenSettingsAdvanced {
             anchors.fill: parent
             id: screenSettingsAdvanced
         }
-        About {
+        ScreenAbout {
             anchors.fill: parent
             id: screenAbout
         }
@@ -433,7 +433,7 @@ ApplicationWindow {
             screenDeviceList.exitSelectionMode()
             appHeader.setActiveMenu()
 
-            if (state === "Tutorial") return
+            if (state === "ScreenTutorial") return
             if (previousStates[previousStates.length-1] !== state) previousStates.push(state)
             if (previousStates.length > 4) previousStates.splice(0, 1)
             //console.log("states > " + appContent.previousStates)
@@ -441,7 +441,7 @@ ApplicationWindow {
 
         states: [
             State {
-                name: "Tutorial"
+                name: "ScreenTutorial"
                 PropertyChanges { target: screenTutorial; visible: true; enabled: true; focus: true; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
                 PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false }
@@ -506,7 +506,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
-                name: "Settings"
+                name: "ScreenSettings"
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
                 PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }
@@ -519,7 +519,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
-                name: "SettingsAdvanced"
+                name: "ScreenSettingsAdvanced"
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
                 PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }
@@ -532,7 +532,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
-                name: "About"
+                name: "ScreenAbout"
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
                 PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false; }

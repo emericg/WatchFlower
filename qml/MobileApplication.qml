@@ -48,7 +48,7 @@ ApplicationWindow {
         statusbarTheme: Theme.themeStatusbar
 
         navbarColor: {
-            if (appContent.state === "Tutorial") return Theme.colorHeader
+            if (appContent.state === "ScreenTutorial") return Theme.colorHeader
             return Theme.colorBackground
         }
 
@@ -133,7 +133,7 @@ ApplicationWindow {
     MobileDrawer {
         id: appDrawer
 
-        interactive: (appContent.state !== "Tutorial")
+        interactive: (appContent.state !== "ScreenTutorial")
     }
 
     // Events handling /////////////////////////////////////////////////////////
@@ -144,11 +144,11 @@ ApplicationWindow {
             if (appContent.state === "DeviceList") {
                 appDrawer.open()
             } else {
-                if (appContent.state === "Tutorial") {
+                if (appContent.state === "ScreenTutorial") {
                     appContent.state = screenTutorial.entryPoint
                 } else if (appContent.state === "PlantBrowser") {
                     appContent.state = screenPlantBrowser.entryPoint
-                } else if (appContent.state === "AboutPermissions") {
+                } else if (appContent.state === "ScreenAboutPermissions") {
                     appContent.state = screenAboutPermissions.entryPoint
                 } else {
                     screenDeviceList.loadScreen()
@@ -285,7 +285,7 @@ ApplicationWindow {
 
         focus: true
         Keys.onBackPressed: {
-            if (appContent.state === "Tutorial" && screenTutorial.entryPoint === "DeviceList") {
+            if (appContent.state === "ScreenTutorial" && screenTutorial.entryPoint === "DeviceList") {
                 return // do nothing
             }
 
@@ -313,9 +313,9 @@ ApplicationWindow {
                 screenDeviceThermometer.backAction()
             } else if (appContent.state === "DeviceEnvironmental") {
                 screenDeviceEnvironmental.backAction()
-            } else if (appContent.state === "AboutPermissions") {
+            } else if (appContent.state === "ScreenAboutPermissions") {
                 appContent.state = screenAboutPermissions.entryPoint
-            } else if (appContent.state === "Tutorial") {
+            } else if (appContent.state === "ScreenTutorial") {
                 appContent.state = screenTutorial.entryPoint
             } else if (appContent.state === "PlantBrowser") {
                 screenPlantBrowser.backAction()
@@ -398,7 +398,7 @@ ApplicationWindow {
 
             if (state === "DeviceList") {
                 appHeader.leftMenuMode = "drawer"
-            } else if (state === "Tutorial") {
+            } else if (state === "ScreenTutorial") {
                 appHeader.leftMenuMode = "close"
             } else {
                 appHeader.leftMenuMode = "back"
@@ -407,7 +407,7 @@ ApplicationWindow {
 
         states: [
             State {
-                name: "Tutorial"
+                name: "ScreenTutorial"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("Welcome"); }
                 PropertyChanges { target: screenTutorial; visible: true; enabled: true; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
@@ -482,7 +482,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
-                name: "Settings"
+                name: "ScreenSettings"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("Settings"); }
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
@@ -497,7 +497,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
-                name: "SettingsAdvanced"
+                name: "ScreenSettingsAdvanced"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("Settings"); }
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
@@ -512,7 +512,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
-                name: "About"
+                name: "ScreenAbout"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("About"); }
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
@@ -527,7 +527,7 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: false; enabled: false; }
             },
             State {
-                name: "AboutPermissions"
+                name: "ScreenAboutPermissions"
                 PropertyChanges { target: appHeader; headerTitle: qsTr("Permissions"); }
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
@@ -590,11 +590,11 @@ ApplicationWindow {
         anchors.bottom: parent.bottom
         height: screenPaddingNavbar
 
-        visible: (!mobileMenu.visible || appContent.state === "Tutorial")
+        visible: (!mobileMenu.visible || appContent.state === "ScreenTutorial")
         opacity: appWindow.isTablet ? 0.5 : 0.95
 
         color: {
-            if (appContent.state === "Tutorial") return Theme.colorHeader
+            if (appContent.state === "ScreenTutorial") return Theme.colorHeader
             return Theme.colorBackground
         }
     }

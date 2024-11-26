@@ -19,10 +19,10 @@ Item {
                            appContent.state === "DevicePlantSensor" ||
                            appContent.state === "DeviceBrowser" ||
                            appContent.state === "PlantBrowser" ||
-                           appContent.state === "Settings" ||
-                           appContent.state === "SettingsAdvanced" ||
-                           appContent.state === "About" ||
-                           appContent.state === "AboutPermissions")) ||
+                           appContent.state === "ScreenSettings" ||
+                           appContent.state === "ScreenSettingsAdvanced" ||
+                           appContent.state === "ScreenAbout" ||
+                           appContent.state === "ScreenAboutPermissions")) ||
              (isPhone && screenOrientation === Qt.PortraitOrientation &&
                           (appContent.state === "DevicePlantSensor"))
 
@@ -98,10 +98,10 @@ Item {
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "DeviceBrowser" ||
                       appContent.state === "PlantBrowser" ||
-                      appContent.state === "Settings" ||
-                      appContent.state === "SettingsAdvanced" ||
-                      appContent.state === "About" ||
-                      appContent.state === "AboutPermissions")
+                      appContent.state === "ScreenSettings" ||
+                      appContent.state === "ScreenSettingsAdvanced" ||
+                      appContent.state === "ScreenAbout" ||
+                      appContent.state === "ScreenAboutPermissions")
 
             MobileMenuItem_horizontal {
                 id: menuMainView
@@ -155,7 +155,7 @@ Item {
                 colorContent: Theme.colorTabletmenuContent
                 colorHighlight: Theme.colorTabletmenuHighlight
 
-                highlighted: (appContent.state === "Settings" || appContent.state === "SettingsAdvanced")
+                highlighted: (appContent.state === "ScreenSettings" || appContent.state === "ScreenSettingsAdvanced")
                 onClicked: screenSettings.loadScreen()
             }
             MobileMenuItem_horizontal {
@@ -168,7 +168,7 @@ Item {
                 colorContent: Theme.colorTabletmenuContent
                 colorHighlight: Theme.colorTabletmenuHighlight
 
-                highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
+                highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
                 onClicked: screenAbout.loadScreen()
             }
         }

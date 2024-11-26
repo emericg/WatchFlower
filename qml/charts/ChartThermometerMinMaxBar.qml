@@ -128,6 +128,8 @@ Item {
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 56
 
+        ////////
+
         Rectangle {
             id: rectangle_temp
             anchors.horizontalCenter: parent.horizontalCenter
@@ -212,6 +214,8 @@ Item {
             }
         }
 
+        ////////
+
         Rectangle {
             id: rectangle_water_low
             width: 32
@@ -246,6 +250,8 @@ Item {
                 }
             }
         }
+
+        ////////
     }
 
     ///////////////

@@ -15,6 +15,8 @@ Item {
     property int daysVisible: 0
     property int daysTick: isPhone ? 4 : settingsManager.graphAioDays
 
+    ////////////////////////////////////////////////////////////////////////////
+
     Connections {
         target: settingsManager
         function onGraphAioDaysChanged() {

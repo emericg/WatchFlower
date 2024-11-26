@@ -114,11 +114,10 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/DesktopHeader.qml
         qml/PlantBrowser.qml
         qml/PlantScreen.qml
-        qml/About.qml
-        qml/Settings.qml
-        qml/SettingsAdvanced.qml
-        qml/Tutorial.qml
-        qml/JournalWidget.qml
+        qml/ScreenAbout.qml
+        qml/ScreenSettings.qml
+        qml/ScreenSettingsAdvanced.qml
+        qml/ScreenTutorial.qml
         qml/DeviceList.qml
         qml/DeviceListUnified.qml
         qml/DeviceListSplit.qml
@@ -135,6 +134,7 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/DeviceEnvironmental.qml
         qml/widgets/DeviceWidget.qml
         qml/widgets/DeviceNearbyWidget.qml
+        qml/widgets/JournalWidget.qml
         qml/widgets/SunAndMoonWidget.qml
         qml/widgets/DeviceBrowserWidget.qml
         qml/widgets/PlantBrowserWidget.qml
@@ -157,8 +157,6 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/components/AirQualityIndicator.qml
         qml/components/IndicatorsCompact.qml
         qml/components/IndicatorsSolid.qml
-        qml/components/ItemEnvBox.qml
-        qml/components/ItemWeatherBox.qml
         qml/components/ItemLoadData.qml
         qml/components/ItemNoBluetooth.qml
         qml/components/ItemNoPermissions.qml
@@ -168,8 +166,10 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/components/ItemNoPlant.qml
         qml/components/ItemNoPlants.qml
         qml/components/ItemNoJournal.qml
+        qml/components/EnvBox.qml
         qml/components/LuxBox.qml
         qml/components/PhBox.qml
+        qml/components/WeatherBox.qml
         qml/components/PlantCalendarWidget.qml
         qml/components/PlantHardinessWidget.qml
         qml/components/PlantSizeWidget.qml

@@ -15,12 +15,12 @@ Rectangle {
 
     function loadScreen() {
         entryPoint = "DeviceList"
-        appContent.state = "Tutorial"
+        appContent.state = "ScreenTutorial"
     }
 
     function loadScreenFrom(screenname) {
         entryPoint = screenname
-        appContent.state = "Tutorial"
+        appContent.state = "ScreenTutorial"
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -29,7 +29,7 @@ Rectangle {
         id: tutorialLoader
         anchors.fill: parent
 
-        active: (appContent.state === "Tutorial")
+        active: (appContent.state === "ScreenTutorial")
         asynchronous: true
 
         sourceComponent: Item {
@@ -42,7 +42,7 @@ Rectangle {
             }
             function exit() {
                 reset()
-                if (entryPoint === "About") screenAbout.loadScreen()
+                if (entryPoint === "ScreenAbout") screenAbout.loadScreen()
                 else screenDeviceList.loadScreen()
             }
 

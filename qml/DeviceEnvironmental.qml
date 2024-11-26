@@ -826,7 +826,7 @@ Loader {
                                     property int wwwMax: 240
                                     property int www: wwwTarget
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: pm1
                                         width: airFlow.www
                                         visible: currentDevice.hasPM1Sensor
@@ -838,7 +838,7 @@ Loader {
                                         onSensorSelection: primary = "pm1"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: pm25
                                         width: airFlow.www
                                         visible: currentDevice.hasPM25Sensor
@@ -852,7 +852,7 @@ Loader {
                                         onSensorSelection: primary = "pm25"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: pm100
                                         width: airFlow.www
                                         visible: currentDevice.hasPM10Sensor
@@ -866,7 +866,7 @@ Loader {
                                         onSensorSelection: primary = "pm10"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: voc
                                         width: airFlow.www
                                         visible: currentDevice.hasVocSensor
@@ -880,7 +880,7 @@ Loader {
                                         onSensorSelection: primary = "voc"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: hcho
                                         width: airFlow.www
                                         visible: currentDevice.hasHchoSensor
@@ -894,7 +894,7 @@ Loader {
                                         onSensorSelection: primary = "hcho"
                                     }
 /*
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: o2
                                         width: airFlow.www
                                         visible: currentDevice.hasO2Sensor
@@ -906,7 +906,7 @@ Loader {
                                         onSensorSelection: primary = "o2"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: o3
                                         width: airFlow.www
                                         visible: currentDevice.hasO3Sensor
@@ -918,7 +918,7 @@ Loader {
                                         onSensorSelection: primary = "o3"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: so2
                                         width: airFlow.www
                                         visible: currentDevice.hasSo2Sensor
@@ -930,7 +930,7 @@ Loader {
                                         onSensorSelection: primary = "so2"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: no2
                                         width: airFlow.www
                                         visible: currentDevice.hasNo2Sensor
@@ -942,7 +942,7 @@ Loader {
                                         onSensorSelection: primary = "no2"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: co
                                         width: airFlow.www
                                         visible: currentDevice.hasCoSensor
@@ -954,7 +954,7 @@ Loader {
                                         onSensorSelection: primary = "co"
                                     }
 */
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: co2
                                         width: airFlow.www
                                         visible: currentDevice.hasCo2Sensor
@@ -1019,7 +1019,7 @@ Loader {
                                     property int wwwMax: 256
                                     property int www: wwwTarget
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: rad_h
                                         width: radFlow.www
 
@@ -1032,7 +1032,7 @@ Loader {
                                         onSensorSelection: primary = "radioactivity"
                                     }
 
-                                    ItemEnvBox {
+                                    EnvBox {
                                         id: rad_m
                                         width: radFlow.www
 
@@ -1097,7 +1097,7 @@ Loader {
                                     property int wwwMax: 240
                                     property int www: wwwTarget
 
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: temp
                                         visible: currentDevice.hasTemperatureSensor
                                         sz: weatherFlow.www
@@ -1110,7 +1110,7 @@ Loader {
                                         precision: 1
                                         onSensorSelection: primary = "hygrometer"
                                     }
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: humi
                                         visible: currentDevice.hasHumiditySensor
                                         sz: weatherFlow.www
@@ -1123,7 +1123,7 @@ Loader {
                                         precision: 0
                                         onSensorSelection: primary = "hygrometer"
                                     }
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: pres
                                         visible: currentDevice.hasPressureSensor
                                         sz: weatherFlow.www
@@ -1136,7 +1136,7 @@ Loader {
                                         precision: 0
                                     }
 
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: light
                                         visible: currentDevice.hasLuminositySensor
                                         sz: weatherFlow.www
@@ -1147,7 +1147,7 @@ Loader {
                                         value: currentDevice.luminosityLux
                                         precision: 0
                                     }
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: uv
                                         visible: currentDevice.hasUvSensor
                                         sz: weatherFlow.www
@@ -1159,7 +1159,7 @@ Loader {
                                         precision: 0
                                     }
 /*
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: sound
                                         visible: currentDevice.hasSoundSensor
                                         sz: weatherFlow.www
@@ -1171,7 +1171,7 @@ Loader {
                                         precision: 0
                                     }
 
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: windd
                                         visible: currentDevice.hasWindDirectionSensor
                                         sz: weatherFlow.www
@@ -1182,7 +1182,7 @@ Loader {
                                         value: 0
                                         precision: 0
                                     }
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: winds
                                         visible: currentDevice.hasWindSpeedSensor
                                         sz: weatherFlow.www
@@ -1194,7 +1194,7 @@ Loader {
                                         precision: 0
                                     }
 
-                                    ItemWeatherBox {
+                                    WeatherBox {
                                         id: rain
                                         visible: currentDevice.hasWaterLevelSensor
                                         sz: weatherFlow.www

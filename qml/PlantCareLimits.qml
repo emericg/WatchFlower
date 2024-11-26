@@ -145,8 +145,8 @@ Flickable {
             visible: itemHygro.visible
 
             text: qsTr("Ideal soil moisture for indoor plants is usually 15 to 50%. Cacti and succulents can go as low as 7%. Tropical plants like to have more water.") +
-                  qsTr("<br><b>Tip: </b>") + qsTr("Be careful, too much water over long periods of time can be just as lethal as not enough!") +
-                  qsTr("<br><b>Tip: </b>") + qsTr("Water your plants more frequently during their growth period.")
+                  "<br><b>" + qsTr("Tip:") + " </b>" + qsTr("Be careful, too much water over long periods of time can be just as lethal as not enough!") +
+                  "<br><b>" + qsTr("Tip:") + " </b>" + qsTr("Water your plants more frequently during their growth period.")
             textFormat: Text.StyledText
             wrapMode: Text.WordWrap
             color: Theme.colorSubText
@@ -223,7 +223,7 @@ Flickable {
             visible: itemCondu.visible
 
             text: qsTr("Soil 'Electrical Conductivity' value is an indication of the availability of nutrients in the soil. Use fertilizer (with moderation) to keep this value up.") +
-                  qsTr("<br><b>Tip: </b>") + qsTr("Be sure to use the right soil composition for your plants.")
+                  "<br><b>" + qsTr("Tip:") + " </b>" + qsTr("Be sure to use the right soil composition for your plants.")
             textFormat: Text.StyledText
             wrapMode: Text.WordWrap
             color: Theme.colorSubText
@@ -317,8 +317,8 @@ Flickable {
             visible: itemTemp.visible
 
             text: qsTr("Most indoor plants thrive between 15 and 25°C (59 to 77°F). Not many plants can tolerate -2°C (28°F) and below.") +
-                  qsTr("<br><b>Tip: </b>") + qsTr("Having constant temperature is important for indoor plants.") +
-                  qsTr("<br><b>Tip: </b>") + qsTr("If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).")
+                  "<br><b>" + qsTr("Tip:") + " </b>" + qsTr("Having constant temperature is important for indoor plants.") +
+                  "<br><b>" + qsTr("Tip:") + " </b>" + qsTr("If you have an hygrometer, you can monitor the air humidity so it stays between 40 and 60% (and even above for tropical plants).")
             textFormat: Text.StyledText
             wrapMode: Text.WordWrap
             color: Theme.colorSubText

@@ -50,7 +50,7 @@ Rectangle {
     signal deviceSettingsButtonClicked()
 
     function setActiveMenu() {
-        if (appContent.state === "Tutorial") {
+        if (appContent.state === "ScreenTutorial") {
             headerTitle = qsTr("Welcome")
             menus.visible = false
 
@@ -613,8 +613,8 @@ Rectangle {
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "DeviceBrowser" ||
                       appContent.state === "PlantBrowser" ||
-                      appContent.state === "Settings" ||
-                      appContent.state === "About")
+                      appContent.state === "ScreenSettings" ||
+                      appContent.state === "ScreenAbout")
             spacing: 0
 
             DesktopHeaderItem {
@@ -638,7 +638,7 @@ Rectangle {
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
-                highlighted: (appContent.state === "Settings")
+                highlighted: (appContent.state === "ScreenSettings")
                 onClicked: settingsButtonClicked()
             }
             DesktopHeaderItem {
@@ -650,7 +650,7 @@ Rectangle {
                 colorHighlight: Theme.colorHeaderHighlight
 
                 text: headerCompact ? "" : qsTr("About")
-                highlighted: (appContent.state === "About")
+                highlighted: (appContent.state === "ScreenAbout")
                 onClicked: aboutButtonClicked()
             }
         }
@@ -666,7 +666,7 @@ Rectangle {
         visible: (!headerUnicolor &&
                   appContent.state !== "DeviceThermometer" &&
                   appContent.state !== "DeviceEnvironmental" &&
-                  appContent.state !== "Tutorial")
+                  appContent.state !== "ScreenTutorial")
 
         height: 2
         opacity: 0.33

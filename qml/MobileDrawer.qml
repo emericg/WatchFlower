@@ -100,7 +100,7 @@ DrawerThemed {
                 }
 
                 DrawerItem {
-                    highlighted: (appContent.state === "Settings" || appContent.state === "SettingsAdvanced")
+                    highlighted: (appContent.state === "ScreenSettings" || appContent.state === "ScreenSettingsAdvanced")
                     text: qsTr("Settings")
                     source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
 
@@ -111,7 +111,7 @@ DrawerThemed {
                 }
 
                 DrawerItem {
-                    highlighted: (appContent.state === "About" || appContent.state === "AboutPermissions")
+                    highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
                     text: qsTr("About")
                     source: "qrc:/IconLibrary/material-icons/duotone/info.svg"
 
