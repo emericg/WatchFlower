@@ -9,10 +9,10 @@
 	<string>APPL</string>
 
 	<key>CFBundleName</key>
-	<string>QmlAppTemplate</string>
+	<string>WatchFlower</string>
 
 	<key>CFBundleDisplayName</key>
-	<string>QmlAppTemplate</string>
+	<string>WatchFlower</string>
 
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>

@@ -179,8 +179,6 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/components_js/UtilsPlantJournal.js
 )
 
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src/)
-
 ################################################################################
 
 qt_standard_project_setup(
@@ -222,8 +220,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
 add_subdirectory(thirdparty/ComponentLibrary)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ComponentLibraryplugin)
 
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/)
-
 ################################################################################
 
 # Qt
@@ -244,6 +240,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 if(NOT IOS AND NOT ANDROID)
     target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Widgets)
 endif()
+
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src/)
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/)
 
 ################################################################################
 
@@ -332,15 +331,15 @@ endif()
 
 # Output?
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-    #ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
 )
 
 # Output?
-#install(TARGETS ${CMAKE_PROJECT_NAME}
-#    BUNDLE DESTINATION bin/
-#    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-#)
+install(TARGETS ${CMAKE_PROJECT_NAME}
+    BUNDLE DESTINATION bin/
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+)
 
 ################################################################################

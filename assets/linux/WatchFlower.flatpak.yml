@@ -2,11 +2,11 @@ app-id: io.emeric.watchflower
 runtime: org.freedesktop.Platform
 runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
-command: watchflower
+command: WatchFlower
 
-rename-desktop-file: watchflower.desktop
-rename-appdata-file: watchflower.appdata.xml
-rename-icon: watchflower
+rename-desktop-file: WatchFlower.desktop
+rename-appdata-file: WatchFlower.appdata.xml
+rename-icon: WatchFlower
 
 finish-args:
   # Our UI is GPU accelerated
@@ -175,7 +175,7 @@ modules:
           url-template: https://download.qt.io/archive/qt/$major.$minor/$version/submodules/qtcharts-everywhere-src-$version.tar.xz
 
   - name: watchflower
-    buildsystem: qmake
+    buildsystem: cmake-ninja
     sources:
       - type: archive
         url: https://github.com/emericg/WatchFlower/archive/refs/tags/v6.0.tar.gz

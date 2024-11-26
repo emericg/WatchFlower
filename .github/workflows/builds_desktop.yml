@@ -96,7 +96,7 @@ jobs:
       # Install dependencies (from package manager)
       #- name: Install dependencies (from package manager)
       #  run: |
-      #       brew install qt6 cmake
+      #       brew install qt6 cmake ninja
 
       # Install Qt
       - name: Install Qt
@@ -114,7 +114,7 @@ jobs:
       - name: Build application
         run: |
              export CMAKE_BUILD_PARALLEL_LEVEL=`sysctl -n hw.logicalcpu`
-             cmake -B build/ -DCMAKE_BUILD_TYPE=Release
+             cmake -B build/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
              cmake --build build/ --config Release
 
       # Deploy application

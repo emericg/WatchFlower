@@ -4,7 +4,7 @@
 <component type="desktop-application">
   <id>io.emeric.watchflower</id>
   <name>WatchFlower</name>
-  <launchable type="desktop-id">watchflower.desktop</launchable>
+  <launchable type="desktop-id">WatchFlower.desktop</launchable>
 
   <summary>A plant monitoring application for Bluetooth Low Energy sensors and thermometers</summary>
   <description>

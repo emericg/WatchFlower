@@ -123,8 +123,8 @@ fi
 ## PACKAGE (archive) ###########################################################
 
 if [[ $create_package = true ]] ; then
-  export APP_NAME_LOWERCASE=${APP_NAME,,}
-  #export APP_NAME_LOWERCASE=$APP_NAME
+  #export APP_NAME_LOWERCASE=${APP_NAME,,}
+  export APP_NAME_LOWERCASE=$APP_NAME
 
   echo '---- Reorganize appdir into a regular directory'
   mkdir bin/$APP_NAME/
