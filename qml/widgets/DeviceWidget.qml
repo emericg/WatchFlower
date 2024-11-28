@@ -226,7 +226,7 @@ Item {
 
         RippleThemed {
             anchors.fill: parent
-            anchor: control
+            anchor: deviceWidget
             clip: true
 
             pressed: mousearea.pressed

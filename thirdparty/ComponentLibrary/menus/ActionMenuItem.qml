@@ -14,12 +14,12 @@ T.Button {
     anchors.right: parent.right
     anchors.rightMargin: Theme.componentBorderWidth
 
-    leftInset: Theme.componentMargin/2
-    rightInset: Theme.componentMargin/2
-    rightPadding: Theme.componentMargin
-    leftPadding: Theme.componentMargin
+    leftInset: 8
+    rightInset: 8
+    rightPadding: 16
+    leftPadding: 16
 
-    height: Theme.componentHeightL
+    height: Theme.componentHeight
 
     focusPolicy: Qt.NoFocus
 
@@ -41,7 +41,7 @@ T.Button {
             anchors.fill: parent
             radius: Theme.componentRadius
 
-            color: Theme.colorForeground
+            color: Theme.colorComponent
             //Behavior on color { ColorAnimation { duration: 133 } }
 
             opacity: control.enabled && control.hovered ? 1 : 0
@@ -50,10 +50,11 @@ T.Button {
 
         RippleThemed {
             anchors.fill: parent
+            anchor: control
 
-            pressed: control.down
-            active: enabled && control.down
-            color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.66)
+            pressed: control.pressed
+            active: control.enabled && (control.down || control.visualFocus)
+            color: Qt.rgba(Theme.colorComponentDown.r, Theme.colorComponentDown.g, Theme.colorComponentDown.b, 0.666)
         }
 
         layer.enabled: true

@@ -21,11 +21,14 @@ T.Popup {
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside
     parent: T.Overlay.overlay
 
+    property string titleTxt
+    property string titleSrc // disabled
+
+    property int layoutDirection: Qt.RightToLeft
+
     signal menuSelected(var index)
 
     ////////////////////////////////////////////////////////////////////////////
-
-    property int layoutDirection: Qt.RightToLeft
 
     property int actualHeight: {
         if (typeof mobileMenu !== "undefined" && mobileMenu.height)
@@ -89,8 +92,10 @@ T.Popup {
             anchors.rightMargin: screenPaddingRight
 
             topPadding: Theme.componentMargin
-            bottomPadding: 8
-            spacing: 4
+            bottomPadding: 4
+            spacing: 0
+
+            ////////
 
             property bool partonevisible: (actionUpdate.visible || actionRealtime.visible)
             property bool parttwovisible: (actionHistoryRefresh.visible || actionHistoryClear.visible)
@@ -98,16 +103,38 @@ T.Popup {
 
             ////////
 
+            Text { // title
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.componentMargin + 4
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.componentMargin
+
+                height: Theme.componentHeight
+                visible: actionMenu.titleTxt
+
+                text: actionMenu.titleTxt
+                textFormat: Text.PlainText
+
+                color: Theme.colorSubText
+                font.bold: false
+                font.pixelSize: Theme.fontSizeContentVeryBig
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignVCenter
+                elide: Text.ElideRight
+            }
+
+            ////////
+
             ActionMenuItem {
                 id: actionUpdate
-                anchors.left: parent.left
-                anchors.right: parent.right
                 index: 1
+
+                height: Theme.componentHeightL
+                layoutDirection: actionMenu.layoutDirection
+                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasBluetoothConnection))
 
                 text: qsTr("Update data")
                 source: "qrc:/IconLibrary/material-symbols/refresh.svg"
-                layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasBluetoothConnection))
 
                 onClicked: {
                     deviceRefreshButtonClicked()
@@ -120,10 +147,12 @@ T.Popup {
                 id: actionRealtime
                 index: 2
 
-                text: qsTr("Real time data")
-                source: "qrc:/IconLibrary/material-icons/duotone/update.svg"
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasRealTime))
+
+                text: qsTr("Real time data")
+                source: "qrc:/IconLibrary/material-icons/duotone/update.svg"
 
                 onClicked: {
                     deviceRefreshRealtimeButtonClicked()
@@ -145,10 +174,12 @@ T.Popup {
                 id: actionHistoryRefresh
                 index: 3
 
-                text: qsTr("Update history")
-                source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
+
+                text: qsTr("Update history")
+                source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
 
                 onClicked: {
                     deviceRefreshHistoryButtonClicked()
@@ -186,10 +217,12 @@ T.Popup {
                 id: actionLed
                 index: 8
 
-                text: qsTr("Blink LED")
-                source: "qrc:/IconLibrary/material-icons/duotone/emoji_objects.svg"
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED))
+
+                text: qsTr("Blink LED")
+                source: "qrc:/IconLibrary/material-icons/duotone/emoji_objects.svg"
 
                 onClicked: {
                     deviceLedButtonClicked()
@@ -202,10 +235,12 @@ T.Popup {
                 id: actionWatering
                 index: 9
 
-                text: qsTr("Watering")
-                source: "qrc:/IconLibrary/material-icons/duotone/local_drink.svg"
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasWaterTank))
+
+                text: qsTr("Watering")
+                source: "qrc:/IconLibrary/material-icons/duotone/local_drink.svg"
 
                 onClicked: {
                     deviceWateringButtonClicked()
@@ -218,10 +253,12 @@ T.Popup {
                 id: actionCalibrate
                 index: 10
 
-                text: qsTr("Calibrate sensor")
-                source: "qrc:/IconLibrary/material-icons/duotone/model_training.svg"
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasCalibration))
+
+                text: qsTr("Calibrate sensor")
+                source: "qrc:/IconLibrary/material-icons/duotone/model_training.svg"
 
                 onClicked: {
                     deviceCalibrateButtonClicked()
@@ -234,9 +271,11 @@ T.Popup {
                 id: actionGraphMode
                 index: 16
 
-                text: qsTr("Switch graph")
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (appContent.state === "DeviceThermometer")
+
+                text: qsTr("Switch graph")
                 source: (settingsManager.graphThermometer === "minmax") ?
                             "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg" :
                             "qrc:/IconLibrary/material-symbols/timeline.svg"
@@ -253,10 +292,12 @@ T.Popup {
                 id: actionShowSettings
                 index: 17
 
-                text: qsTr("Sensor infos")
-                source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (appContent.state === "DeviceThermometer" || appContent.state === "DeviceEnvironmental")
+
+                text: qsTr("Sensor infos")
+                source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
 
                 onClicked: {
                     deviceSettingsButtonClicked()
@@ -269,10 +310,12 @@ T.Popup {
                 id: actionReboot
                 index: 32
 
-                text: qsTr("Reboot sensor")
-                source: "qrc:/IconLibrary/material-symbols/refresh.svg"
+                height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
                 visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasReboot))
+
+                text: qsTr("Reboot sensor")
+                source: "qrc:/IconLibrary/material-symbols/refresh.svg"
 
                 onClicked: {
                     deviceRebootButtonClicked()
