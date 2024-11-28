@@ -107,11 +107,13 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/MobileApplication.qml
         qml/MobileHeader.qml
         qml/MobileDrawer.qml
-        qml/MobileExit.qml
-        qml/MobileMenu.qml
         qml/MobilePermissions.qml
+        qml/MobileMenu.qml
+        qml/MobileExit.qml
+
         qml/DesktopApplication.qml
         qml/DesktopHeader.qml
+
         qml/PlantBrowser.qml
         qml/PlantScreen.qml
         qml/ScreenAbout.qml
@@ -132,6 +134,7 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/DevicePlantSensorSettings.qml
         qml/DeviceThermometer.qml
         qml/DeviceEnvironmental.qml
+
         qml/widgets/DeviceWidget.qml
         qml/widgets/DeviceNearbyWidget.qml
         qml/widgets/JournalWidget.qml
@@ -246,7 +249,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/)
 ################################################################################
 
 ## Android
-if (CMAKE_SYSTEM_NAME STREQUAL "Android")
+if(CMAKE_SYSTEM_NAME STREQUAL "Android")
     set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
         #QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64"
         #QT_ANDROID_BUILD_ALL_ABIS ON
@@ -273,8 +276,8 @@ if(APPLE)
 endif()
 
 ## macOS
-if (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
     set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
     set(CMAKE_XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/macos/Info.plist")
     set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_CURRENT_SOURCE_DIR}/assets/macos/${CMAKE_PROJECT_NAME}.entitlements")
@@ -287,7 +290,7 @@ if (CMAKE_SYSTEM_NAME STREQUAL "iOS")
     set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0")
     set(CMAKE_XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "14.0")
     set(CMAKE_XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY "1,2") # iPhone,iPad
-    set(CMAKE_XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/ios/Info.plist")
+    set(CMAKE_XCODE_ATTRIBUTE_INFOPLIST_FILE "${CMAKE_SOURCE_DIR}/assets/ios/Info.plist")
 
     set(assets_catalog_path "${CMAKE_SOURCE_DIR}/assets/ios/Images.xcassets")
     target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${assets_catalog_path})
@@ -318,7 +321,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
 endif()
 
 ## Release build? Set "no debug" macros
-if (CMAKE_BUILD_TYPE STREQUAL Release)
+if(CMAKE_BUILD_TYPE STREQUAL Release)
     target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         NDEBUG
         QT_NO_DEBUG
@@ -330,14 +333,14 @@ endif()
 
 # Output?
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    #ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
+    #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
 )
 
 # Output?
 install(TARGETS ${CMAKE_PROJECT_NAME}
-    BUNDLE DESTINATION bin/
+    BUNDLE DESTINATION "${CMAKE_SOURCE_DIR}/bin"
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
