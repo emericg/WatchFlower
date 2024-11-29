@@ -177,7 +177,9 @@ set_source_files_properties(ThemeEngine.qml PROPERTIES
 
 set_target_properties(ComponentLibrary PROPERTIES AUTOMOC ON)
 
-target_link_libraries(ComponentLibrary PRIVATE Qt::Quick)
+find_package(Qt6 REQUIRED COMPONENTS Qml Quick QuickControls2)
+
+target_link_libraries(ComponentLibrary PRIVATE Qt6::Qml Qt6::Quick Qt6::QuickControls2 Qt6::QmlModels)
 
 qt_add_qml_module(ComponentLibrary
     URI ComponentLibrary

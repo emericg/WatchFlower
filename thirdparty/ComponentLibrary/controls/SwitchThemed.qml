@@ -29,8 +29,11 @@ T.Switch {
         implicitWidth: control.www
         implicitHeight: Theme.componentHeight
 
-        x: control.text ? (control.mirrored ? control.width - width - control.rightPadding : control.leftPadding) : control.leftPadding + (control.availableWidth - width) / 2
+        x: control.text ?
+               (control.mirrored ? control.width - width - control.rightPadding : control.leftPadding) :
+               (control.leftPadding + (control.availableWidth - width) / 2)
         y: control.topPadding + (control.availableHeight - height) / 2
+
         width: control.www
         height: control.hhh
         radius: control.hhh
@@ -57,7 +60,8 @@ T.Switch {
                 z: -1
                 radius: (width / 2)
                 color: parent.color
-                opacity: enabled && (control.pressed || control.hovered || control.visualFocus) ? 0.2 : 0
+                opacity: (control.enabled && control.checkable && (control.pressed || control.hovered || control.visualFocus)) ?
+                             (control.checked ? 0.16 : 0.32) : 0
                 Behavior on opacity { NumberAnimation { duration: 133 } }
             }
         }

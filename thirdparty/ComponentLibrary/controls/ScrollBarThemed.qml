@@ -31,7 +31,7 @@ T.ScrollBar {
         name: "active"
         when: (control.policy === T.ScrollBar.AlwaysOn) || (control.active && control.size < 1.0)
         PropertyChanges { control.background.opacity: 0.75 }
-        PropertyChanges { control.contentItem.opacity: 0.75 }
+        PropertyChanges { control.contentItem.opacity: 1.0 }
     }
 
     transitions: Transition {

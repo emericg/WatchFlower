@@ -29,10 +29,10 @@ T.Button {
     property string highlightMode: "off" // available: off
 
     // colors
-    property string iconColor: Theme.colorIcon
-    property string highlightColor: Theme.colorPrimary
-    property string borderColor: Theme.colorSeparator
-    property string backgroundColor: Theme.colorLowContrast
+    property color iconColor: Theme.colorIcon
+    property color highlightColor: Theme.colorComponent
+    property color borderColor: Theme.colorSeparator
+    property color backgroundColor: Theme.colorLowContrast
 
     ////////////////
 
@@ -69,7 +69,7 @@ T.Button {
                 width: parent.width
                 height: parent.width
 
-                color: Theme.colorComponent
+                color: control.highlightColor
                 opacity: button1_ma.containsMouse ? 0.66 : 0
                 Behavior on opacity { NumberAnimation { duration: 333 } }
             }
@@ -78,7 +78,7 @@ T.Button {
                 width: parent.width
                 height: parent.width
 
-                color: Theme.colorComponent
+                color: control.highlightColor
                 opacity: button2_ma.containsMouse ? 0.66 : 0
                 Behavior on opacity { NumberAnimation { duration: 333 } }
             }

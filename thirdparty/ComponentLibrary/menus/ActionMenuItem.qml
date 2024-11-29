@@ -54,7 +54,7 @@ T.Button {
 
             pressed: control.pressed
             active: control.enabled && (control.down || control.visualFocus)
-            color: Qt.rgba(Theme.colorComponentDown.r, Theme.colorComponentDown.g, Theme.colorComponentDown.b, 0.666)
+            color: Qt.rgba(Theme.colorComponentDown.r, Theme.colorComponentDown.g, Theme.colorComponentDown.b, 0.66)
         }
 
         layer.enabled: true

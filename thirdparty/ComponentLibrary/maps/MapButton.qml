@@ -24,10 +24,10 @@ T.Button {
     property string highlightMode: "off" // available: off
 
     // colors
-    property string iconColor: Theme.colorIcon
-    property string highlightColor: Theme.colorPrimary
-    property string borderColor: Theme.colorSeparator
-    property string backgroundColor: Theme.colorLowContrast
+    property color iconColor: Theme.colorIcon
+    property color highlightColor: Theme.colorComponent
+    property color borderColor: Theme.colorSeparator
+    property color backgroundColor: Theme.colorLowContrast
 
     ////////////////
 
@@ -54,17 +54,46 @@ T.Button {
             radius: control.radius
             color: control.backgroundColor
         }
-/*
-        RippleThemed {
-            anchors.fill: parent
-            anchor: control
 
-            clip: visible
-            pressed: control.pressed
-            active: enabled && (control.down || control.visualFocus || control.hovered)
-            color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.9)
-        }
+        Item {
+            id: bglayer
+            anchors.fill: parent
+/*
+            RippleThemed {
+                anchors.fill: parent
+                anchor: control
+
+                clip: visible
+                pressed: control.pressed
+                active: enabled && (control.down || control.visualFocus || control.hovered)
+                color: Qt.rgba(control.highlightColor.r, control.highlightColor.g, control.highlightColor.b, 0.66)
+            }
 */
+            Rectangle { // button_bg
+                anchors.fill: parent
+                color: control.highlightColor
+                opacity: control.hovered ? 0.66 : 0
+                Behavior on opacity { NumberAnimation { duration: 333 } }
+            }
+
+            layer.enabled: true
+            layer.effect: MultiEffect {
+                maskEnabled: true
+                maskInverted: false
+                maskThresholdMin: 0.5
+                maskSpreadAtMin: 1.0
+                maskSpreadAtMax: 0.0
+                maskSource: ShaderEffectSource {
+                    sourceItem: Rectangle {
+                        x: bglayer.x
+                        y: bglayer.y
+                        width: bglayer.width
+                        height: bglayer.height
+                        radius: control.radius
+                    }
+                }
+            }
+        }
     }
 
     ////////////////
