@@ -167,7 +167,7 @@ T.Popup {
                 anchors.leftMargin: Theme.componentMargin
                 anchors.rightMargin: Theme.componentMargin
                 height: 9
-                visible: (partonevisible && parttwovisible)
+                visible: (contentColumn.partonevisible && contentColumn.parttwovisible)
             }
 
             ActionMenuItem {
@@ -210,7 +210,7 @@ T.Popup {
                 anchors.leftMargin: Theme.componentMargin
                 anchors.rightMargin: Theme.componentMargin
                 height: 9
-                visible: ((partonevisible || parttwovisible) && partthreevisible)
+                visible: ((contentColumn.partonevisible || contentColumn.parttwovisible) && contentColumn.partthreevisible)
             }
 
             ActionMenuItem {

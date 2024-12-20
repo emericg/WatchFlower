@@ -324,7 +324,7 @@ ApplicationWindow {
             }
         }
 
-        Tutorial {
+        ScreenTutorial {
             id: screenTutorial
         }
 
@@ -347,19 +347,19 @@ ApplicationWindow {
             anchors.bottomMargin: mobileMenu.hhv
         }
 
-        Settings {
+        ScreenSettings {
             id: screenSettings
             anchors.leftMargin: screenPaddingLeft
             anchors.rightMargin: screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
-        SettingsAdvanced {
+        ScreenSettingsAdvanced {
             id: screenSettingsAdvanced
             anchors.leftMargin: screenPaddingLeft
             anchors.rightMargin: screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
-        About {
+        ScreenAbout {
             id: screenAbout
             anchors.leftMargin: screenPaddingLeft
             anchors.rightMargin: screenPaddingRight
