@@ -1,12 +1,13 @@
 QT += core network
 
-android:ios {
-    # Mobile OS
-    QT -= widgets
-    DEFINES -= QAPPLICATION_CLASS
-    DEFINES += QAPPLICATION_CLASS=QGuiApplication
-} else {
-    # Desktop OS
+!defined(QAPPLICATION_CLASS) {
+    android:ios {
+        # Mobile OS
+        DEFINES += QAPPLICATION_CLASS=QGuiApplication
+    } else {
+        # Desktop OS
+        DEFINES += QAPPLICATION_CLASS=QApplication
+    }
 }
 
 eval(QAPPLICATION_CLASS = QApplication) {

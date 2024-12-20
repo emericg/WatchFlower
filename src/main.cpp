@@ -204,8 +204,8 @@ int main(int argc, char *argv[])
     PlantUtils::registerQML();
 
     QQmlApplicationEngine engine;
-    engine.addImportPath(":/qt/qml/WatchFlower");
-    engine.addImportPath(":/qt/qml/ComponentLibrary");
+    engine.addImportPath(":/WatchFlower");
+    engine.addImportPath(":/ComponentLibrary");
 
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("deviceManager", dm);

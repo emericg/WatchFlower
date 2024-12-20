@@ -12,7 +12,11 @@ T.Switch {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding)
 
-    padding: 4
+    topPadding: 4
+    leftPadding: 0
+    rightPadding: 0
+    bottomPadding: 4
+
     spacing: 12
 
     font.pixelSize: Theme.componentFontSize

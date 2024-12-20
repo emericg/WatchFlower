@@ -3,12 +3,12 @@ project(MobileUI LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
 
+# Use that find_package() call in the root project:
+find_package(Qt6 6.7 REQUIRED COMPONENTS Core Gui Qml)
+
 ################################################################################
 
 # Generic dependencies
-set(CORE_COMPONENTS Core Gui Qml)
-find_package(Qt6 6.7 REQUIRED COMPONENTS ${CORE_COMPONENTS})
-
 set(CORE_LIBRARIES Qt::Core Qt::Gui Qt::Qml)
 
 # Generic sources

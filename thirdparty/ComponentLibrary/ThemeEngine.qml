@@ -3,6 +3,8 @@ pragma Singleton
 import QtQuick
 import QtQuick.Controls.Material
 
+import ComponentLibrary
+
 Item {
     enum ThemeNames {
         // Generic mobile themes

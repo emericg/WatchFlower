@@ -28,7 +28,7 @@ message(STATUS "[PROJECT] QT_HOST_PATH              = ${QT_HOST_PATH}")
 ################################################################################
 
 find_package(Qt6 REQUIRED COMPONENTS Core Bluetooth Positioning Network Sql)
-find_package(Qt6 REQUIRED COMPONENTS Gui Svg Qml Quick QuickControls2 Widgets Charts)
+find_package(Qt6 REQUIRED COMPONENTS Gui Svg Qml Quick QuickControls2 LabsQmlModels Widgets Charts)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 qt_standard_project_setup(REQUIRES 6.7)

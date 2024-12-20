@@ -29,7 +29,7 @@ elseif(QAPPLICATION_CLASS STREQUAL QGuiApplication)
     list(APPEND CORE_LIBRARIES Qt6::Gui)
 endif()
 
-find_package(Qt6 COMPONENTS ${CORE_COMPONENTS} REQUIRED)
+find_package(Qt6 6.5 REQUIRED COMPONENTS ${CORE_COMPONENTS})
 
 if(WIN32)
     if(MSVC)
@@ -43,7 +43,6 @@ endif()
 ################################################################################
 
 add_library(SingleApplication STATIC SingleApplication.cpp SingleApplication_private.cpp)
-add_library(SingleApplication::SingleApplication ALIAS SingleApplication)
 
 target_link_libraries(SingleApplication PRIVATE ${CORE_LIBRARIES} ${PLATFORM_LIBRARIES})
 target_include_directories(SingleApplication PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
@@ -59,5 +58,3 @@ target_compile_definitions(SingleApplication PRIVATE
     QT_NO_KEYWORDS
     QT_NO_FOREACH
 )
-
-################################################################################

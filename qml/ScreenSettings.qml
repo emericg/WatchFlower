@@ -288,7 +288,7 @@ Loader {
                     SwitchThemed {
                         id: switch_appThemeAuto
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -370,7 +370,7 @@ Loader {
                     SwitchThemed {
                         id: switch_splitView
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -522,7 +522,7 @@ Loader {
                     SwitchThemed {
                         id: switch_minimized
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -593,7 +593,7 @@ Loader {
                     SwitchThemed {
                         id: switch_worker
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -691,7 +691,7 @@ Loader {
                     SwitchThemed {
                         id: switch_notifications
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -756,7 +756,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_battery
                             anchors.right: parent.right
-                            anchors.rightMargin: 4
+                            anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -785,7 +785,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_water
                             anchors.right: parent.right
-                            anchors.rightMargin: 4
+                            anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -815,7 +815,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_subzero
                             anchors.right: parent.right
-                            anchors.rightMargin: 4
+                            anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -845,7 +845,7 @@ Loader {
                         SwitchThemed {
                             id: switch_notif_env
                             anchors.right: parent.right
-                            anchors.rightMargin: 4
+                            anchors.rightMargin: Theme.componentMargin
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
@@ -902,7 +902,7 @@ Loader {
                     SwitchThemed {
                         id: switch_bluetoothControl
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -966,7 +966,7 @@ Loader {
                     SwitchThemed {
                         id: switch_bluetoothRange
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
@@ -1443,7 +1443,7 @@ Loader {
                     SwitchThemed {
                         id: switch_sunandmoon
                         anchors.right: parent.right
-                        anchors.rightMargin: 4
+                        anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 

@@ -13,8 +13,8 @@ T.ComboBox {
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding)
 
-    leftPadding: 16
-    rightPadding: 16
+    leftPadding: 12
+    rightPadding: 12
 
     font.pixelSize: Theme.componentFontSize
 
