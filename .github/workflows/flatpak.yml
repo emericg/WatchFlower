@@ -21,6 +21,6 @@ jobs:
     - uses: actions/checkout@v4
     - uses: bilelmoussaoui/flatpak-github-actions/flatpak-builder@v6
       with:
-        bundle: watchflower.flatpak
-        manifest-path: assets/linux/watchflower.flatpak.yml
+        bundle: WatchFlower.flatpak
+        manifest-path: assets/linux/WatchFlower.flatpak.yml
         cache-key: flatpak-builder-${{ github.sha }}

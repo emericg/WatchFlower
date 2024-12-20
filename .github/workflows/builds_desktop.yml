@@ -56,13 +56,7 @@ jobs:
 
       # Deploy application
       - name: Deploy application
-        run: |
-             sudo rm ${{env.QT_ROOT_DIR}}/plugins/position/libqtposition_nmea.so
-             sudo rm ${{env.QT_ROOT_DIR}}/plugins/sqldrivers/libqsqlmimer.so
-             sudo rm ${{env.QT_ROOT_DIR}}/plugins/sqldrivers/libqsqlmysql.so
-             sudo rm ${{env.QT_ROOT_DIR}}/plugins/sqldrivers/libqsqlodbc.so
-             sudo rm ${{env.QT_ROOT_DIR}}/plugins/sqldrivers/libqsqlpsql.so
-             ./deploy_linux.sh -c -i -p
+        run: ./deploy_linux.sh -c -i -p
 
       # Upload application ZIP
       - name: Upload application ZIP
@@ -101,15 +95,11 @@ jobs:
           version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qtpositioning
 
-      # Setup env
-      - name: Setup env
-        run: |
-             cmake --version
-
       # Build application
       - name: Build application
         run: |
              export CMAKE_BUILD_PARALLEL_LEVEL=`sysctl -n hw.logicalcpu`
+             cmake --version
              cmake -B build/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
              cmake --build build/ --config Release
 

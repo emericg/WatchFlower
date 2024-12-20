@@ -4,6 +4,9 @@ export APP_NAME="WatchFlower"
 export APP_VERSION=6.0
 export GIT_VERSION=$(git rev-parse --short HEAD)
 
+#export APP_NAME_LOWERCASE=${APP_NAME,,}  # lowercase
+export APP_NAME_LOWERCASE=$APP_NAME       # not actually lowercase
+
 echo "> $APP_NAME packager (Linux x86_64) [v$APP_VERSION]"
 
 ## CHECKS ######################################################################
@@ -47,17 +50,9 @@ esac
 shift # skip argument or value
 done
 
-## APP INSTALL #################################################################
+## linuxdeploy INSTALL #########################################################
 
-if [[ $make_install = true ]] ; then
-  echo '---- Running make install'
-  make INSTALL_ROOT=bin/ install
-
-  #echo '---- Installation directory content recap (after make install):'
-  #find bin/
-fi
-
-## DEPLOY ######################################################################
+#unset LD_LIBRARY_PATH; #unset QT_PLUGIN_PATH; #unset QTDIR;
 
 if [[ $use_contribs = true ]] ; then
   export LD_LIBRARY_PATH=$(pwd)/contribs/src/env/linux_x86_64/usr/lib/:/usr/lib
@@ -66,16 +61,6 @@ else
 fi
 
 echo '---- Prepare linuxdeploy + plugins'
-
-unset LD_LIBRARY_PATH; #unset QT_PLUGIN_PATH; #unset QTDIR;
-
-USRDIR=/usr;
-if [ -d bin/usr/local ]; then
-  USRDIR=/usr/local
-fi
-if [ -z "$QTDIR" ]; then
-  QTDIR=/usr/lib/qt
-fi
 
 # linuxdeploy and plugins
 if [ ! -x contribs/deploy/linuxdeploy-x86_64.AppImage ]; then
@@ -87,15 +72,41 @@ chmod a+x contribs/deploy/linuxdeploy-x86_64.AppImage
 chmod a+x contribs/deploy/linuxdeploy-plugin-appimage-x86_64.AppImage
 chmod a+x contribs/deploy/linuxdeploy-plugin-qt-x86_64.AppImage
 
-# hacks
+# linuxdeploy qt hacks
 #export QMAKE="qmake6" # force Qt6, if you have Qt5 installed
 #export NO_STRIP=true  # workaround, strip not working on modern binutils
 
-# linuxdeploy settings
+# linuxdeploy qt settings
 export EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so;"
 export EXTRA_QT_PLUGINS="wayland-shell-integration;waylandclient;wayland-graphics-integration-client;"
 export EXTRA_QT_MODULES="svg;"
 export QML_SOURCES_PATHS="$(pwd)/qml/"
+export QML_MODULES_PATHS=""
+
+## APP INSTALL #################################################################
+
+if [[ $make_install = true ]] ; then
+  echo '---- Running make install'
+  make INSTALL_ROOT=bin/ install
+
+  #echo '---- Installation directory content recap (after make install):'
+  #find bin/
+fi
+
+## PACKAGES ####################################################################
+
+if [[ $create_package = true ]] ; then
+  if [[ -v QT_ROOT_DIR ]]; then
+    # cleanup undeployable Qt plugins (present, but missing their own dependencies)
+    # only if we are on a GitHub Action server, because this remove the plugins from the Qt directory
+    echo '---- Remove undeployable Qt plugins'
+    sudo rm $QT_ROOT_DIR/plugins/position/libqtposition_nmea.so
+    sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlmimer.so
+    sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlmysql.so
+    sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlodbc.so
+    sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlpsql.so
+  fi
+fi
 
 ## PACKAGE (AppImage) ##########################################################
 
@@ -107,10 +118,10 @@ if [[ $create_package = true ]] ; then
   mkdir -p bin/usr/share/pixmaps/
   mkdir -p bin/usr/share/icons/hicolor/scalable/apps/
   mv bin/$APP_NAME bin/usr/bin/$APP_NAME
-  cp assets/linux/$APP_NAME.appdata.xml bin/usr/share/appdata/$APP_NAME.appdata.xml
-  cp assets/linux/$APP_NAME.desktop bin/usr/share/applications/$APP_NAME.desktop
-  cp assets/linux/$APP_NAME.svg bin/usr/share/pixmaps/$APP_NAME.svg
-  cp assets/linux/$APP_NAME.svg  bin/usr/share/icons/hicolor/scalable/apps/$APP_NAME.svg
+  cp assets/linux/$APP_NAME_LOWERCASE.appdata.xml bin/usr/share/appdata/$APP_NAME_LOWERCASE.appdata.xml
+  cp assets/linux/$APP_NAME_LOWERCASE.desktop bin/usr/share/applications/$APP_NAME_LOWERCASE.desktop
+  cp assets/linux/$APP_NAME_LOWERCASE.svg bin/usr/share/pixmaps/$APP_NAME_LOWERCASE.svg
+  cp assets/linux/$APP_NAME_LOWERCASE.svg  bin/usr/share/icons/hicolor/scalable/apps/$APP_NAME_LOWERCASE.svg
 
   echo '---- Running AppImage packager'
   ./contribs/deploy/linuxdeploy-x86_64.AppImage --appdir bin --plugin qt --output appimage
@@ -123,9 +134,6 @@ fi
 ## PACKAGE (archive) ###########################################################
 
 if [[ $create_package = true ]] ; then
-  #export APP_NAME_LOWERCASE=${APP_NAME,,}
-  export APP_NAME_LOWERCASE=$APP_NAME
-
   echo '---- Reorganize appdir into a regular directory'
   mkdir bin/$APP_NAME/
   mv bin/usr/bin/* bin/$APP_NAME/
