@@ -33,11 +33,12 @@ Item {
 
             arcWidth: (isMobile ? 7 : 10)
             arcBegin: 0
-            arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 1
+            arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 2.5
             arcOffset: 225
 
             arcColor: (Theme.currentTheme === Theme.THEME_PLANT ? Theme.colorLightGreen : Theme.colorGreen)
             arcOpacity: 1
+            arcCap: "round"
         }
         ProgressCircle { // arcWarning
             anchors.fill: parent
@@ -48,12 +49,13 @@ Item {
             animationValue: false
 
             arcWidth: (isMobile ? 7 : 10)
-            arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 1
-            arcEnd: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) - 1
+            arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 2.5
+            arcEnd: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) - 2.5
             arcOffset: 225
 
             arcColor: Theme.colorOrange
             arcOpacity: 1
+            arcCap: "round"
         }
         ProgressCircle { // arcDanger
             anchors.fill: parent
@@ -64,12 +66,13 @@ Item {
             animationValue: false
 
             arcWidth: (isMobile ? 7 : 10)
-            arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 1
+            arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 2.5
             arcEnd: 270
             arcOffset: 225
 
             arcColor: Theme.colorRed
             arcOpacity: 1
+            arcCap: "round"
         }
     }
 
