@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Loader {
     id: plantBrowser

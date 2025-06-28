@@ -134,7 +134,7 @@ void UtilsLanguage::loadLanguage(const QString &lng)
 
     m_appTranslator = new QTranslator;
     if (m_appTranslator) {
-        if (m_appTranslator->load(":/i18n/" + m_appName + "_" + m_locale_str_short + ".qm")) {
+        if (m_appTranslator->load(":/i18n/RYLO-SmartCare_" + m_locale_str_short + ".qm")) {
             m_qt_app->installTranslator(m_appTranslator);
         } else {
             qWarning() << "appTranslator ERROR !" << m_appName << m_locale_str_full;

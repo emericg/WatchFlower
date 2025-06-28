@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@
  * Parrot "Flower Power" devices
  *
  * Protocol infos:
- * - WatchFlower/docs/flowerpower-ble-api.md
+ * - SmartCare/docs/flowerpower-ble-api.md
  * - https://developer.parrot.com/docs/FlowerPower/FlowerPower-BLE.pdf
  */
 class DeviceFlowerPower: public DevicePlantSensor

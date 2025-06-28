@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Flickable {
     id: plantSensorSettings
@@ -462,7 +462,7 @@ Flickable {
                 Text {
                     Layout.fillWidth: true
 
-                    text: qsTr("This sensor needs to be registered to its official application once before it can be used with third party applications like WatchFlower.")
+                    text: qsTr("This sensor needs to be registered to its official application once before it can be used with third party applications like SmartCare.")
                     textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: false

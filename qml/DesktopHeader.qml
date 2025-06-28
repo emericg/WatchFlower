@@ -1,7 +1,7 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Rectangle {
     id: appHeader
@@ -18,7 +18,7 @@ Rectangle {
 
     property int headerPosition: 64
 
-    property string headerTitle: "WatchFlower"
+    property string headerTitle: "SmartCare"
 
     property bool headerCompact: singleColumn
 
@@ -56,7 +56,7 @@ Rectangle {
 
             buttonBack.source = "qrc:/IconLibrary/material-symbols/close.svg"
         } else {
-            headerTitle = "WatchFlower"
+            headerTitle = "SmartCare"
             menus.visible = true
 
             if (appContent.state === "DeviceList") {

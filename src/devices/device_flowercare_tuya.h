@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@
  * Tuya "Flower Care" (HHCCJCY10)
  *
  * Protocol infos:
- * - WatchFlower/docs/flowercare_tuya-ble-api.md
+ * - SmartCare/docs/flowercare_tuya-ble-api.md
  */
 class DeviceFlowerCare_tuya: public DevicePlantSensor
 {

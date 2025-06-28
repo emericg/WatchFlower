@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Loader {
     id: screenAbout
@@ -84,7 +84,7 @@ Loader {
                         anchors.verticalCenterOffset: 4
 
                         Text {
-                            text: "WatchFlower"
+                            text: "SmartCare"
                             textFormat: Text.PlainText
                             color: Theme.colorText
                             font.pixelSize: Theme.fontSizeTitle

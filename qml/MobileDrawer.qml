@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 DrawerThemed {
     contentItem: Item {
@@ -53,7 +53,7 @@ DrawerThemed {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.verticalCenterOffset: 2
 
-                    text: "WatchFlower"
+                    text: "SmartCare"
                     textFormat: Text.PlainText
                     color: Theme.colorText
                     font.bold: true

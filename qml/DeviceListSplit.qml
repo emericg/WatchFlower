@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Item {
     id: deviceList

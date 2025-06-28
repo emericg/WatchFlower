@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtPositioning
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Loader {
     id: screenSettings
@@ -639,8 +639,8 @@ Loader {
                     visible: (element_worker.visible && isDesktop)
 
                     text: settingsManager.systray ?
-                              qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
-                              qsTr("WatchFlower is only active while the window is open.")
+                              qsTr("SmartCare will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
+                              qsTr("SmartCare is only active while the window is open.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -716,8 +716,8 @@ Loader {
                     opacity: settingsManager.systray ? 1 : 0.4
 
                     text: settingsManager.notifications ?
-                              qsTr("If a plant needs water, WatchFlower will bring it to your attention!") :
-                              qsTr("If a plant needs water, WatchFlower can bring it to your attention.")
+                              qsTr("If a plant needs water, SmartCare will bring it to your attention!") :
+                              qsTr("If a plant needs water, SmartCare can bring it to your attention.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -920,8 +920,8 @@ Loader {
                     bottomPadding: 0
                     visible: (Qt.platform.os === "android")
 
-                    text: settingsManager.bluetoothControl ? qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
-                                                             qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.")
+                    text: settingsManager.bluetoothControl ? qsTr("SmartCare will enable your device's Bluetooth in order to operate.") :
+                                                             qsTr("SmartCare will only operate if your device's Bluetooth is already enabled.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -1660,7 +1660,7 @@ Loader {
 
                         visible: isDesktop
 
-                        text: qsTr("Saved in your documents, under the 'WatchFlower' directory.")
+                        text: qsTr("Saved in your documents, under the 'SmartCare' directory.")
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         color: Theme.colorSubText

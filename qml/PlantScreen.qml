@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 import PlantUtils
 
 Grid {
@@ -1288,7 +1288,7 @@ Grid {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
-                    text: qsTr("Please note that WatchFlower should not be your definitive source of information about plant care.")
+                    text: qsTr("Please note that SmartCare should not be your definitive source of information about plant care.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText

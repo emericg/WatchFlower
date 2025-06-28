@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@
  * Xiaomi "RoPot" or VegTrug "Grow Care Pot" (HHCCPOT002)
  *
  * Protocol infos:
- * - WatchFlower/docs/ropot-ble-api.md
+ * - SmartCare/docs/ropot-ble-api.md
  */
 class DeviceRopot: public DevicePlantSensor
 {

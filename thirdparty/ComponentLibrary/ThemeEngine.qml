@@ -19,7 +19,7 @@ Item {
         THEME_DESKTOP_LIGHT,
         THEME_DESKTOP_DARK,
 
-        // WatchFlower
+        // SmartCare
         THEME_SNOW,
         THEME_PLANT,
         THEME_RAIN,
@@ -108,7 +108,7 @@ Item {
     // App specific (OffloadBuddy)
     property string sidebarSelector // 'arrow' or 'bar'
 
-    // App specific (WatchFlower)
+    // App specific (SmartCare)
     property color colorDeviceWidget
     readonly property color colorLightGrey: "#a9bcb8"
     readonly property color colorLightGreen: "#09debc"

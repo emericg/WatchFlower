@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Item {
     id: screenAboutPermissions
@@ -161,7 +161,7 @@ Item {
 
                 visible: (Qt.platform.os === "android")
 
-                text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
+                text: qsTr("SmartCare can activate your device's Bluetooth in order to operate.")
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
@@ -286,7 +286,7 @@ Item {
                 anchors.rightMargin: Theme.componentMargin
 
                 text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.") + "<br>" +
-                      qsTr("WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
+                      qsTr("SmartCare doesn't use, store nor communicate your location to anyone or anything.")
                 textFormat: Text.StyledText
                 wrapMode: Text.WordWrap
                 color: Theme.colorSubText
