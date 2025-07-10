@@ -29,8 +29,8 @@ Item {
 
     // colors
     property color colorText: Theme.colorText
-    property color colorForeground: Theme.colorPrimary
-    property color colorBackground: Theme.colorForeground
+    property color colorForeground: Theme.colorForeground
+    property color colorBackground: Theme.colorBackground
 
     ////////////////
 
@@ -69,6 +69,8 @@ Item {
                 radius: 4
                 clip: isDesktop
                 color: control.colorBackground
+                border.width: 2
+                border.color: Theme.colorSeparator
 
                 layer.enabled: !isDesktop
                 layer.effect: MultiEffect {

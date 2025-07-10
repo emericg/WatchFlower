@@ -15,7 +15,7 @@ Rectangle {
     radius: singleColumn ? 0 : Theme.componentRadius
     z: 2
 
-    color: Theme.colorForeground
+    color: Theme.colorBackground
     border.width: singleColumn ? 0 : Theme.componentBorderWidth
     border.color: Theme.colorSeparator
 

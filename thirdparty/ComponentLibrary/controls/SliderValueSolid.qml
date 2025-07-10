@@ -24,7 +24,7 @@ T.Slider {
     property bool showvalue: true
 
     // colors
-    property color colorBackground: Theme.colorForeground
+    property color colorBackground: Theme.colorBackground
     property color colorForeground: Theme.colorPrimary
     property color colorForegroundDisabled: Qt.tint(Theme.colorPrimary, "#44eeeeee")
     property color colorText: "white"
@@ -40,6 +40,8 @@ T.Slider {
         height: control.horizontal ? implicitHeight : control.availableHeight
 
         radius: control.hhh
+        border.width: 2
+        border.color: Theme.colorSeparator
         color: control.colorBackground
         scale: control.horizontal && control.mirrored ? -1 : 1
 

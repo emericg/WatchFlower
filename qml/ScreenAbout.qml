@@ -54,7 +54,7 @@ Loader {
                 anchors.rightMargin: -screenPaddingRight
 
                 height: 96
-                color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+                color: headerUnicolor ? Theme.colorForeground : Theme.colorBackground
 
                 Row {
                     anchors.left: parent.left
@@ -116,7 +116,7 @@ Loader {
                         source: "qrc:/IconLibrary/material-symbols/link.svg"
                         sourceSize: 28
                         font.bold: true
-                        color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: Theme.colorPrimary
 
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                     }
@@ -129,7 +129,7 @@ Loader {
                         source: "qrc:/IconLibrary/material-symbols/support.svg"
                         sourceSize: 22
                         font.bold: true
-                        color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color:  Theme.colorPrimary
 
                         onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                     }
@@ -144,7 +144,7 @@ Loader {
                         source: "qrc:/assets/gfx/logos/github.svg"
                         sourceSize: 22
                         font.bold: true
-                        color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                        color: Theme.colorPrimary
 
                         onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower")
                     }
@@ -184,7 +184,7 @@ Loader {
                     source: "qrc:/IconLibrary/material-symbols/link.svg"
                     sourceSize: 28
                     font.bold: true
-                    color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    color: Theme.colorPrimary
 
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower")
                 }
@@ -197,7 +197,7 @@ Loader {
                     source: "qrc:/IconLibrary/material-symbols/support.svg"
                     sourceSize: 22
                     font.bold: true
-                    color: (Theme.currentTheme === Theme.THEME_NIGHT) ? Theme.colorHeader : "#5483EF"
+                    color: Theme.colorPrimary
 
                     onClicked: Qt.openUrlExternally("https://emeric.io/WatchFlower/support.html")
                 }
@@ -208,7 +208,6 @@ Loader {
             ListItem { // description
                 anchors.left: parent.left
                 anchors.right: parent.right
-
                 text: qsTr("A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'.")
                 source: "qrc:/IconLibrary/material-symbols/info.svg"
             }
