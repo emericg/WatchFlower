@@ -712,7 +712,7 @@ Loader {
 
                         width: 24
                         height: 24
-                        color: Theme.colorIcon
+                        color: Theme.colorPrimary
                         source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
                     }
 
