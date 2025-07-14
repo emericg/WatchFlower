@@ -297,7 +297,7 @@ Item {
                 anchors.leftMargin: appHeader.headerPosition
                 height: 38
 
-                colorBackground: Theme.colorForeground
+                colorBackground: Theme.colorBackground
 
                 text: qsTr("Official information")
                 source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
@@ -446,7 +446,7 @@ Item {
                 height: 38
 
                 visible: (Qt.platform.os === "android")
-                colorBackground: Theme.colorForeground
+                colorBackground: Theme.colorBackground
 
                 text: qsTr("Location settings")
                 source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
@@ -582,7 +582,7 @@ Item {
                 height: 38
 
                 visible: (Qt.platform.os === "android")
-                colorBackground: Theme.colorForeground
+                colorBackground: Theme.colorBackground
 
                 text: qsTr("Application info")
                 source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
