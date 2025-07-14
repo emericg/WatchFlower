@@ -85,52 +85,53 @@ Loader {
 
                 ////////
 
-                Item { // element_appThemeAuto
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
+                // Item { // element_appThemeAuto
+                //     anchors.left: parent.left
+                //     anchors.leftMargin: contentColumn.paddingLeft
+                //     anchors.right: parent.right
+                //     anchors.rightMargin: contentColumn.paddingRight
+                //     height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                //     IconSvg {
+                //         anchors.left: parent.left
+                //         anchors.leftMargin: contentColumn.padIcon
+                //         anchors.verticalCenter: parent.verticalCenter
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
-                    }
+                //         width: 24
+                //         height: 24
+                //         color: Theme.colorIcon
+                //         source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
+                //     }
 
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_appThemeAuto.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
+                //     Text {
+                //         anchors.left: parent.left
+                //         anchors.leftMargin: contentColumn.padText
+                //         anchors.right: switch_appThemeAuto.left
+                //         anchors.rightMargin: Theme.componentMargin
+                //         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Automatic dark mode")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                    }
+                //         text: qsTr("Automatic dark mode")
+                //         textFormat: Text.PlainText
+                //         font.pixelSize: Theme.fontSizeContent
+                //         color: Theme.colorText
+                //         wrapMode: Text.WordWrap
+                //     }
 
-                    SwitchThemed {
-                        id: switch_appThemeAuto
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
+                //     SwitchThemed {
+                //         id: switch_appThemeAuto
+                //         anchors.right: parent.right
+                //         anchors.rightMargin: Theme.componentMargin
+                //         anchors.verticalCenter: parent.verticalCenter
+                //         z: 1
 
-                        checked: settingsManager.appThemeAuto
-                        onClicked: {
-                            settingsManager.appThemeAuto = checked
-                            Theme.loadTheme(settingsManager.appTheme)
-                        }
-                    }
-                }
+                //         checked: settingsManager.appThemeAuto
+                //         onClicked: {
+                //             settingsManager.appThemeAuto = checked
+                //             Theme.loadTheme(settingsManager.appTheme)
+                //         }
+                //     }
+                // }
+
                 Text { // legend_appThemeAuto
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
@@ -378,7 +379,7 @@ Loader {
                         height: 32
 
                         text: qsTr("about")
-                        colorBackground: Theme.colorForeground
+                        colorBackground: Theme.colorBackground
                         colorText: Theme.colorOrange
                         colorBorder: Theme.colorOrange
 

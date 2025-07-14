@@ -27,7 +27,9 @@ Item {
                 width: singleColumn ? (itemNoPermissions.width*0.5) : (itemNoPermissions.height*0.4)
                 height: width
                 radius: width
-                color: Theme.colorForeground
+                color: Theme.colorBackground
+                border.width : 3
+                border.color : Theme.colorPrimary
 
                 IconSvg { // lock icon
                     anchors.centerIn: parent
@@ -36,7 +38,7 @@ Item {
 
                     source: "qrc:/IconLibrary/material-symbols/lock.svg"
                     fillMode: Image.PreserveAspectFit
-                    color: Theme.colorSubText
+                    color: Theme.colorPrimary
                     opacity: 0.9
                     smooth: true
                 }

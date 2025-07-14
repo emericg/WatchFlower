@@ -327,7 +327,9 @@ Grid {
                 anchors.rightMargin: (uiMode === 1) ? -plantScreen.padding : 0
                 height: columnHeader.height
 
-                color: (uiMode === 1) ? Theme.colorForeground : Theme.colorBackground
+                color: (uiMode === 1) ? Theme.colorBackground : Theme.colorBackground
+                border.width : (uiMode === 1) ? 3 : 0
+                border.color : (uiMode === 1) ? Theme.colorComponentBorder : Theme.colorBackground
 
                 Column {
                     id: columnHeader
@@ -949,9 +951,10 @@ Grid {
                     height: width
 
                     radius: Theme.componentRadius
-                    color: Theme.colorForeground
+                    color: Theme.colorBackground
                     border.width: 2
-                    border.color: Qt.darker(color, 1.03)
+                    //border.color: Qt.darker(color, 1.03)
+                    border.color:  Theme.colorComponentBorder
 
                     Item {
                         anchors.right: parent.right
@@ -1036,9 +1039,10 @@ Grid {
                     height: width
 
                     radius: Theme.componentRadius
-                    color: Theme.colorForeground
+                    color: Theme.colorBackground
                     border.width: 2
-                    border.color: Qt.darker(color, 1.03)
+                    //border.color: Qt.darker(color, 1.03)
+                    border.color : Theme.colorComponentBorder
 
                     Item {
                         anchors.right: parent.right
@@ -1122,9 +1126,10 @@ Grid {
                 height: colFert.height + plantScreen.insidemargins*2
 
                 radius: Theme.componentRadius
-                color: Theme.colorForeground
+                color: Theme.colorBackground
                 border.width: 2
-                border.color: Qt.darker(color, 1.03)
+                //border.color: Qt.darker(color, 1.03)
+                border.color : Theme.colorComponentBorder
 
                 Column {
                     id: colFert
@@ -1173,9 +1178,10 @@ Grid {
                 height: colPrun.height + plantScreen.insidemargins*2
 
                 radius: Theme.componentRadius
-                color: Theme.colorForeground
+                color: Theme.colorBackground
                 border.width: 2
-                border.color: Qt.darker(color, 1.03)
+                //border.color: Qt.darker(color, 1.03)
+                border.color : Theme.colorComponentBorder
 
                 Column {
                     id: colPrun
@@ -1212,9 +1218,10 @@ Grid {
                 height: colSoil.height + plantScreen.insidemargins*2
 
                 radius: Theme.componentRadius
-                color: Theme.colorForeground
+                color: Theme.colorBackground
                 border.width: 2
-                border.color: Qt.darker(color, 1.03)
+                //border.color: Qt.darker(color, 1.03)
+                border.color : Theme.colorComponentBorder
 
                 Column {
                     id: colSoil
