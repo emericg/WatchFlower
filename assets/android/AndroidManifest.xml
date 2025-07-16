@@ -30,7 +30,7 @@
     <application android:name="org.qtproject.qt.android.bindings.QtApplication" android:hardwareAccelerated="true" android:allowNativeHeapPointerTagging="false" android:theme="@style/AppTheme" android:label="RYLO SmartCare" android:icon="@drawable/icon">
 
         <!-- Activity -->
-        <activity android:name="org.qtproject.qt.android.bindings.QtActivity" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density" android:screenOrientation="unspecified" android:windowSoftInputMode="adjustResize" android:launchMode="singleTop" android:exported="true" android:label="RYLO SmartCare">
+        <activity android:name="org.qtproject.qt.android.bindings.QtActivity" android:configChanges="orientation|uiMode|screenLayout|screenSize|smallestScreenSize|layoutDirection|locale|fontScale|keyboard|keyboardHidden|navigation|mcc|mnc|density" android:screenOrientation="unspecified" android:windowSoftInputMode="adjustResize" android:launchMode="singleTop" android:exported="true" android:label="RYLO SmartCare" android:theme="@style/splashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -38,12 +38,8 @@
             <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
             <meta-data android:name="android.app.arguments" android:value="-- %%INSERT_APP_ARGUMENTS%% --"/>
             <meta-data android:name="android.app.extract_android_style" android:value="minimal"/>
-            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splash"/>
-            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>
             <meta-data android:name="android.app.background_running" android:value="false"/>
-            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>
-            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>
-            <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>
+            <meta-data android:name="android.app.splash_screen_drawable" android:resource="@drawable/splashscreen"/>
             <meta-data android:name="android.app.splash_screen_sticky" android:value="true"/>
         </activity>
 
