@@ -854,8 +854,8 @@
     </message>
     <message>
         <location filename="../qml/DevicePlantSensorSettings.qml" line="465"/>
-        <source>This sensor needs to be registered to its official application once before it can be used with third party applications like WatchFlower.</source>
-        <translation>Ezt az érzékelőt egyszer regisztrálni kell a hivatalos alkalmazásban, mielőtt harmadik féltől származó alkalmazásokkal, például a WatchFlowerrel használható.</translation>
+        <source>This sensor needs to be registered to its official application once before it can be used with third party applications like SmartCare.</source>
+        <translation>Ezt az érzékelőt egyszer regisztrálni kell a hivatalos alkalmazásban, mielőtt harmadik féltől származó alkalmazásokkal, például a SmartCarerel használható.</translation>
     </message>
     <message>
         <location filename="../qml/DevicePlantSensorSettings.qml" line="489"/>
@@ -1375,8 +1375,8 @@
     </message>
     <message>
         <location filename="../src/MenubarManager.cpp" line="94"/>
-        <source>About WatchFlower</source>
-        <translation>A WatchFlower-ről</translation>
+        <source>About SmartCare</source>
+        <translation>A SmartCare-ről</translation>
     </message>
     <message>
         <location filename="../src/MenubarManager.cpp" line="95"/>
@@ -1585,8 +1585,8 @@
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="164"/>
-        <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation>WatchFlower aktiválhatja az eszköz Bluetooth-ját a működéshez.</translation>
+        <source>SmartCare can activate your device&apos;s Bluetooth in order to operate.</source>
+        <translation>SmartCare aktiválhatja az eszköz Bluetooth-ját a működéshez.</translation>
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="211"/>
@@ -1610,8 +1610,8 @@
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="289"/>
-        <source>WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation>WatchFlower nem használja, tárolja és nem közli az Ön tartózkodási helyét senkivel vagy semmivel.</translation>
+        <source>SmartCare doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
+        <translation>SmartCare nem használja, tárolja és nem közli az Ön tartózkodási helyét senkivel vagy semmivel.</translation>
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="302"/>
@@ -2037,8 +2037,8 @@
     </message>
     <message>
         <location filename="../qml/PlantScreen.qml" line="1291"/>
-        <source>Please note that WatchFlower should not be your definitive source of information about plant care.</source>
-        <translation>Kérjük, vegye figyelembe, hogy a WatchFlower nem lehet a növénygondozással kapcsolatos végleges információforrás.</translation>
+        <source>Please note that SmartCare should not be your definitive source of information about plant care.</source>
+        <translation>Kérjük, vegye figyelembe, hogy a SmartCare nem lehet a növénygondozással kapcsolatos végleges információforrás.</translation>
     </message>
     <message>
         <location filename="../qml/PlantScreen.qml" line="1318"/>
@@ -2102,8 +2102,8 @@
     </message>
     <message>
         <location filename="../qml/popups/PopupBackgroundUpdates.qml" line="117"/>
-        <source>To use the background update feature, the &lt;b&gt;background location permission&lt;/b&gt; is required, otherwise WatchFlower can&apos;t scan for Bluetooth Low Energy sensors and can&apos;t update data when the app is closed.</source>
-        <translation>A háttérfrissítés funkció használatához &lt;b&gt;háttér-helymeghatározási engedély&lt;/b&gt; szükséges, különben a WatchFlower nem tud keresni Bluetooth Low Energy érzékelőket, és nem tudja frissíteni az adatokat, amikor az alkalmazás be van zárva.</translation>
+        <source>To use the background update feature, the &lt;b&gt;background location permission&lt;/b&gt; is required, otherwise SmartCare can&apos;t scan for Bluetooth Low Energy sensors and can&apos;t update data when the app is closed.</source>
+        <translation>A háttérfrissítés funkció használatához &lt;b&gt;háttér-helymeghatározási engedély&lt;/b&gt; szükséges, különben a SmartCare nem tud keresni Bluetooth Low Energy érzékelőket, és nem tudja frissíteni az adatokat, amikor az alkalmazás be van zárva.</translation>
     </message>
     <message>
         <location filename="../qml/popups/PopupBackgroundUpdates.qml" line="136"/>
@@ -2515,13 +2515,13 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="642"/>
-        <source>WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
-        <translation type="unfinished">A WatchFlower az ablak bezárása után is aktív marad az értesítési területen, és rendszeres időközönként automatikusan frissíti az érzékelők adatait.</translation>
+        <source>SmartCare will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
+        <translation type="unfinished">A SmartCare az ablak bezárása után is aktív marad az értesítési területen, és rendszeres időközönként automatikusan frissíti az érzékelők adatait.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="643"/>
-        <source>WatchFlower is only active while the window is open.</source>
-        <translation type="unfinished">WatchFlower csak akkor aktív, ha az ablak nyitva van.</translation>
+        <source>SmartCare is only active while the window is open.</source>
+        <translation type="unfinished">SmartCare csak akkor aktív, ha az ablak nyitva van.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="683"/>
@@ -2530,13 +2530,13 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="719"/>
-        <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
-        <translation type="unfinished">Ha egy növénynek vízre van szüksége, a WatchFlower felhívja a figyelmét!</translation>
+        <source>If a plant needs water, SmartCare will bring it to your attention!</source>
+        <translation type="unfinished">Ha egy növénynek vízre van szüksége, a SmartCare felhívja a figyelmét!</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="720"/>
-        <source>If a plant needs water, WatchFlower can bring it to your attention.</source>
-        <translation type="unfinished">Ha egy növénynek vízre van szüksége, a WatchFlower felhívhatja a figyelmét.</translation>
+        <source>If a plant needs water, SmartCare can bring it to your attention.</source>
+        <translation type="unfinished">Ha egy növénynek vízre van szüksége, a SmartCare felhívhatja a figyelmét.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="750"/>
@@ -2570,13 +2570,13 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="923"/>
-        <source>WatchFlower will enable your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="unfinished">A WatchFlower működéséhez engedélyezi az eszköz Bluetooth-át.</translation>
+        <source>SmartCare will enable your device&apos;s Bluetooth in order to operate.</source>
+        <translation type="unfinished">A SmartCare működéséhez engedélyezi az eszköz Bluetooth-át.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="924"/>
-        <source>WatchFlower will only operate if your device&apos;s Bluetooth is already enabled.</source>
-        <translation type="unfinished">WatchFlower csak akkor működik, ha az eszköz Bluetooth-ja már engedélyezve van</translation>
+        <source>SmartCare will only operate if your device&apos;s Bluetooth is already enabled.</source>
+        <translation type="unfinished">SmartCare csak akkor működik, ha az eszköz Bluetooth-ja már engedélyezve van</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="958"/>
@@ -2704,8 +2704,8 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="1663"/>
-        <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation type="unfinished">A dokumentumokba mentve, a „WatchFlower” könyvtárban.</translation>
+        <source>Saved in your documents, under the &apos;SmartCare&apos; directory.</source>
+        <translation type="unfinished">A dokumentumokba mentve, a „SmartCare” könyvtárban.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="1690"/>
@@ -2762,8 +2762,8 @@
     <name>ScreenTutorial</name>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="90"/>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
-        <translation type="unfinished">A&lt;b&gt;WatchFlower&lt;/b&gt; egy növényfigyelő alkalmazás a Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; vagy Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; érzékelőihez.</translation>
+        <source>&lt;b&gt;SmartCare&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
+        <translation type="unfinished">A&lt;b&gt;SmartCare&lt;/b&gt; egy növényfigyelő alkalmazás a Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; vagy Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; érzékelőihez.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="112"/>
@@ -2777,8 +2777,8 @@
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="152"/>
-        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation type="unfinished">A WatchFlower használatának megkezdéséhez &lt;b&gt;keresnie kell&lt;/b&gt; a körülötte lévő &lt;b&gt;kompatibilis Bluetooth-érzékelőket&lt;/b&gt;.</translation>
+        <source>To start using SmartCare, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <translation type="unfinished">A SmartCare használatának megkezdéséhez &lt;b&gt;keresnie kell&lt;/b&gt; a körülötte lévő &lt;b&gt;kompatibilis Bluetooth-érzékelőket&lt;/b&gt;.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="174"/>
@@ -2787,13 +2787,13 @@
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="203"/>
-        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use WatchFlower.</source>
-        <translation type="unfinished">A &lt;b&gt;párosítást&lt;/b&gt; követően az érzékelők időnként &lt;b&gt;szinkronizálják&lt;/b&gt; adataikat, amikor Ön a WatchFlowert használja.</translation>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use SmartCare.</source>
+        <translation type="unfinished">A &lt;b&gt;párosítást&lt;/b&gt; követően az érzékelők időnként &lt;b&gt;szinkronizálják&lt;/b&gt; adataikat, amikor Ön a SmartCaret használja.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="217"/>
-        <source>WatchFlower &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
-        <translation type="unfinished">WatchFlower &lt;b&gt;lehet, hogy&lt;/b&gt; szinkronizálja az érzékelőket a háttérben.</translation>
+        <source>SmartCare &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
+        <translation type="unfinished">SmartCare &lt;b&gt;lehet, hogy&lt;/b&gt; szinkronizálja az érzékelőket a háttérben.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="239"/>
@@ -2892,12 +2892,12 @@
         <translation type="vanished">névjegy</translation>
     </message>
     <message>
-        <source>WatchFlower is only active while the window is open.</source>
-        <translation type="vanished">WatchFlower csak akkor aktív, ha az ablak nyitva van.</translation>
+        <source>SmartCare is only active while the window is open.</source>
+        <translation type="vanished">SmartCare csak akkor aktív, ha az ablak nyitva van.</translation>
     </message>
     <message>
-        <source>If a plant needs water, WatchFlower can bring it to your attention.</source>
-        <translation type="vanished">Ha egy növénynek vízre van szüksége, a WatchFlower felhívhatja a figyelmét.</translation>
+        <source>If a plant needs water, SmartCare can bring it to your attention.</source>
+        <translation type="vanished">Ha egy növénynek vízre van szüksége, a SmartCare felhívhatja a figyelmét.</translation>
     </message>
     <message>
         <source>battery level</source>
@@ -2948,16 +2948,16 @@
         <translation type="vanished">Engedélyezze a háttérfrissítéseket</translation>
     </message>
     <message>
-        <source>WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
-        <translation type="vanished">A WatchFlower az ablak bezárása után is aktív marad az értesítési területen, és rendszeres időközönként automatikusan frissíti az érzékelők adatait.</translation>
+        <source>SmartCare will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
+        <translation type="vanished">A SmartCare az ablak bezárása után is aktív marad az értesítési területen, és rendszeres időközönként automatikusan frissíti az érzékelők adatait.</translation>
     </message>
     <message>
-        <source>WatchFlower will only operate if your device&apos;s Bluetooth is already enabled.</source>
-        <translation type="vanished">WatchFlower csak akkor működik, ha az eszköz Bluetooth-ja már engedélyezve van</translation>
+        <source>SmartCare will only operate if your device&apos;s Bluetooth is already enabled.</source>
+        <translation type="vanished">SmartCare csak akkor működik, ha az eszköz Bluetooth-ja már engedélyezve van</translation>
     </message>
     <message>
-        <source>WatchFlower will enable your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="vanished">A WatchFlower működéséhez engedélyezi az eszköz Bluetooth-át.</translation>
+        <source>SmartCare will enable your device&apos;s Bluetooth in order to operate.</source>
+        <translation type="vanished">A SmartCare működéséhez engedélyezi az eszköz Bluetooth-át.</translation>
     </message>
     <message>
         <source>Will only scan for sensors approximately 2 meters around you.</source>
@@ -2992,8 +2992,8 @@
         <translation type="vanished">Értesítések engedélyezése</translation>
     </message>
     <message>
-        <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
-        <translation type="vanished">Ha egy növénynek vízre van szüksége, a WatchFlower felhívja a figyelmét!</translation>
+        <source>If a plant needs water, SmartCare will bring it to your attention!</source>
+        <translation type="vanished">Ha egy növénynek vízre van szüksége, a SmartCare felhívja a figyelmét!</translation>
     </message>
     <message>
         <source>Plant sensors</source>
@@ -3016,8 +3016,8 @@
         <translation type="vanished">Adatarchiválás</translation>
     </message>
     <message>
-        <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation type="vanished">A dokumentumokba mentve, a „WatchFlower” könyvtárban.</translation>
+        <source>Saved in your documents, under the &apos;SmartCare&apos; directory.</source>
+        <translation type="vanished">A dokumentumokba mentve, a „SmartCare” könyvtárban.</translation>
     </message>
     <message>
         <source>Export data</source>
@@ -3243,8 +3243,8 @@
 <context>
     <name>Tutorial</name>
     <message>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
-        <translation type="vanished">A&lt;b&gt;WatchFlower&lt;/b&gt; egy növényfigyelő alkalmazás a Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; vagy Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; érzékelőihez.</translation>
+        <source>&lt;b&gt;SmartCare&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
+        <translation type="vanished">A&lt;b&gt;SmartCare&lt;/b&gt; egy növényfigyelő alkalmazás a Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; vagy Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; érzékelőihez.</translation>
     </message>
     <message>
         <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt; and other sensors like &lt;b&gt;air quality monitors&lt;/b&gt; and &lt;b&gt;weather stations&lt;/b&gt;!</source>
@@ -3255,20 +3255,20 @@
         <translation type="vanished">Támogatott érzékelők</translation>
     </message>
     <message>
-        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation type="vanished">A WatchFlower használatának megkezdéséhez &lt;b&gt;keresnie kell&lt;/b&gt; a körülötte lévő &lt;b&gt;kompatibilis Bluetooth-érzékelőket&lt;/b&gt;.</translation>
+        <source>To start using SmartCare, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <translation type="vanished">A SmartCare használatának megkezdéséhez &lt;b&gt;keresnie kell&lt;/b&gt; a körülötte lévő &lt;b&gt;kompatibilis Bluetooth-érzékelőket&lt;/b&gt;.</translation>
     </message>
     <message>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
         <translation type="vanished">Bármikor &lt;b&gt;újra kereshet&lt;/b&gt; új eszközöket, vagy &lt;b&gt;törölheti&lt;/b&gt; a nem kívánt eszközöket.</translation>
     </message>
     <message>
-        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use WatchFlower.</source>
-        <translation type="vanished">A &lt;b&gt;párosítást&lt;/b&gt; követően az érzékelők időnként &lt;b&gt;szinkronizálják&lt;/b&gt; adataikat, amikor Ön a WatchFlowert használja.</translation>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use SmartCare.</source>
+        <translation type="vanished">A &lt;b&gt;párosítást&lt;/b&gt; követően az érzékelők időnként &lt;b&gt;szinkronizálják&lt;/b&gt; adataikat, amikor Ön a SmartCaret használja.</translation>
     </message>
     <message>
-        <source>WatchFlower &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
-        <translation type="vanished">WatchFlower &lt;b&gt;lehet, hogy&lt;/b&gt; szinkronizálja az érzékelőket a háttérben.</translation>
+        <source>SmartCare &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
+        <translation type="vanished">SmartCare &lt;b&gt;lehet, hogy&lt;/b&gt; szinkronizálja az érzékelőket a háttérben.</translation>
     </message>
     <message>
         <source>Keep in mind that Bluetooth only works in &lt;b&gt;close proximity&lt;/b&gt;.</source>

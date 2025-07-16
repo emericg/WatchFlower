@@ -752,7 +752,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/DevicePlantSensorSettings.qml" line="465"/>
-        <source>This sensor needs to be registered to its official application once before it can be used with third party applications like WatchFlower.</source>
+        <source>This sensor needs to be registered to its official application once before it can be used with third party applications like SmartCare.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1249,7 +1249,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../src/MenubarManager.cpp" line="94"/>
-        <source>About WatchFlower</source>
+        <source>About SmartCare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1455,7 +1455,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="164"/>
-        <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
+        <source>SmartCare can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1480,7 +1480,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="289"/>
-        <source>WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
+        <source>SmartCare doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1903,7 +1903,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/PlantScreen.qml" line="1291"/>
-        <source>Please note that WatchFlower should not be your definitive source of information about plant care.</source>
+        <source>Please note that SmartCare should not be your definitive source of information about plant care.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1968,7 +1968,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/popups/PopupBackgroundUpdates.qml" line="117"/>
-        <source>To use the background update feature, the &lt;b&gt;background location permission&lt;/b&gt; is required, otherwise WatchFlower can&apos;t scan for Bluetooth Low Energy sensors and can&apos;t update data when the app is closed.</source>
+        <source>To use the background update feature, the &lt;b&gt;background location permission&lt;/b&gt; is required, otherwise SmartCare can&apos;t scan for Bluetooth Low Energy sensors and can&apos;t update data when the app is closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2351,12 +2351,12 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="642"/>
-        <source>WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
+        <source>SmartCare will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="643"/>
-        <source>WatchFlower is only active while the window is open.</source>
+        <source>SmartCare is only active while the window is open.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2366,12 +2366,12 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="719"/>
-        <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
+        <source>If a plant needs water, SmartCare will bring it to your attention!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="720"/>
-        <source>If a plant needs water, WatchFlower can bring it to your attention.</source>
+        <source>If a plant needs water, SmartCare can bring it to your attention.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2406,12 +2406,12 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="923"/>
-        <source>WatchFlower will enable your device&apos;s Bluetooth in order to operate.</source>
+        <source>SmartCare will enable your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="924"/>
-        <source>WatchFlower will only operate if your device&apos;s Bluetooth is already enabled.</source>
+        <source>SmartCare will only operate if your device&apos;s Bluetooth is already enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2540,7 +2540,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="1663"/>
-        <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
+        <source>Saved in your documents, under the &apos;SmartCare&apos; directory.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2598,7 +2598,7 @@ Zaktualizuj dane</translation>
     <name>ScreenTutorial</name>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="90"/>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
+        <source>&lt;b&gt;SmartCare&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2613,7 +2613,7 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="152"/>
-        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <source>To start using SmartCare, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2623,12 +2623,12 @@ Zaktualizuj dane</translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="203"/>
-        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use WatchFlower.</source>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use SmartCare.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="217"/>
-        <source>WatchFlower &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
+        <source>SmartCare &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
