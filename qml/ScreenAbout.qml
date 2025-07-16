@@ -67,8 +67,8 @@ Loader {
 
                     Image { // logo
                         anchors.verticalCenter: parent.verticalCenter
-                        width: 96
-                        height: 96
+                        width: 90
+                        height: 90
 
                         source: "qrc:/assets/gfx/logos/logo.svg"
                         sourceSize: Qt.size(width, height)

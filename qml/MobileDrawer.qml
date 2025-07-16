@@ -91,7 +91,7 @@ DrawerThemed {
                 DrawerItem {
                     highlighted: (appContent.state === "DeviceList")
                     text: qsTr("Sensors")
-                    source: "qrc:/assets/gfx/logos/watchflower_tray_dark.svg"
+                    source: "qrc:/assets/gfx/logos/watchflower_monochrome.png"
 
                     onClicked: {
                         screenDeviceList.loadScreen()

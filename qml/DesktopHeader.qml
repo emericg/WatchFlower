@@ -60,7 +60,7 @@ Rectangle {
             menus.visible = true
 
             if (appContent.state === "DeviceList") {
-                buttonBack.source = "qrc:/assets/gfx/logos/watchflower_monochrome.svg"
+                buttonBack.source = "qrc:/assets/gfx/logos/watchflower_monochrome.png"
             } else {
                 buttonBack.source = "qrc:/assets/gfx/icons/arrow_back.svg"
             }
@@ -109,7 +109,7 @@ Rectangle {
         anchors.leftMargin: 12
         anchors.verticalCenter: parent.verticalCenter
 
-        hoverEnabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.svg")
+        hoverEnabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.png")
         onEntered: { buttonBackBg.opacity = 0.5; }
         onExited: { buttonBackBg.opacity = 0; buttonBack.width = 32; }
 
@@ -117,7 +117,7 @@ Rectangle {
         onReleased: buttonBack.width = 32
         onClicked: backButtonClicked()
 
-        enabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.svg" || wideMode)
+        enabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.png" || wideMode)
         visible: enabled
 
         Rectangle {
@@ -136,7 +136,7 @@ Rectangle {
             height: width
             anchors.centerIn: parent
 
-            source: "qrc:/assets/gfx/logos/watchflower_monochrome.svg"
+            source: "qrc:/assets/gfx/logos/watchflower_monochrome.png"
             color: Theme.colorHeaderContent
         }
     }
@@ -622,7 +622,7 @@ Rectangle {
                 height: headerHeight
 
                 text: headerCompact ? "" : qsTr("Sensor list")
-                source: "qrc:/assets/gfx/logos/watchflower_tray_monochrome.svg"
+                source: "qrc:/assets/gfx/logos/watchflower_monochrome.png"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
