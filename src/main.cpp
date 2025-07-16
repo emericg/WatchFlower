@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -85,9 +85,9 @@ int main(int argc, char *argv[])
     if (refresh_only)
     {
         QCoreApplication app(argc, argv);
-        app.setApplicationName("WatchFlower");
-        app.setOrganizationName("WatchFlower");
-        app.setOrganizationDomain("WatchFlower");
+        app.setApplicationName("SmartCare");
+        app.setOrganizationName("SmartCare");
+        app.setOrganizationDomain("SmartCare");
 
         SettingsManager *sm = SettingsManager::getInstance();
         DatabaseManager *db = DatabaseManager::getInstance();
@@ -108,9 +108,9 @@ int main(int argc, char *argv[])
     {
 #if defined(Q_OS_ANDROID)
         QAndroidService app(argc, argv);
-        app.setApplicationName("WatchFlower");
-        app.setOrganizationName("WatchFlower");
-        app.setOrganizationDomain("WatchFlower");
+        app.setApplicationName("SmartCare");
+        app.setOrganizationName("SmartCare");
+        app.setOrganizationDomain("SmartCare");
 
         SettingsManager *sm = SettingsManager::getInstance();
         if (sm && sm->getSysTray())
@@ -144,10 +144,10 @@ int main(int argc, char *argv[])
     SingleApplication app(argc, argv, false);
 
     // Application name
-    app.setApplicationName("WatchFlower");
-    app.setApplicationDisplayName("WatchFlower");
-    app.setOrganizationName("WatchFlower");
-    app.setOrganizationDomain("WatchFlower");
+    app.setApplicationName("SmartCare");
+    app.setApplicationDisplayName("SmartCare");
+    app.setOrganizationName("SmartCare");
+    app.setOrganizationDomain("SmartCare");
 
     // Init app components
     SettingsManager *sm = SettingsManager::getInstance();
@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
     PlantUtils::registerQML();
 
     QQmlApplicationEngine engine;
-    engine.addImportPath(":/WatchFlower");
+    engine.addImportPath(":/SmartCare");
     engine.addImportPath(":/ComponentLibrary");
 
     QQmlContext *engine_context = engine.rootContext();
@@ -223,11 +223,11 @@ int main(int argc, char *argv[])
     // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     engine_context->setContextProperty("utilsShare", utilsShare);
-    engine.loadFromModule("WatchFlower", "MobileApplication");
+    engine.loadFromModule("SmartCare", "MobileApplication");
 #else
     engine_context->setContextProperty("systrayManager", st);
     engine_context->setContextProperty("menubarManager", mb);
-    engine.loadFromModule("WatchFlower", "DesktopApplication");
+    engine.loadFromModule("SmartCare", "DesktopApplication");
 #endif
 
     if (engine.rootObjects().isEmpty())

@@ -31,7 +31,7 @@ T.ItemDelegate {
     background: Rectangle {
         implicitHeight: Theme.componentHeightL
 
-        color: control.highlighted ? Theme.colorForeground : Theme.colorBackground
+        color: control.highlighted ? Theme.colorSeparator : Theme.colorBackground
 
         RippleThemed {
             anchors.fill: parent
@@ -40,7 +40,7 @@ T.ItemDelegate {
             clip: visible
             pressed: control.pressed
             active: enabled && (control.down || control.visualFocus || control.hovered)
-            color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.5)
+            color: Qt.rgba(Theme.colorBackground.r, Theme.colorBackground.g, Theme.colorBackground.b, 0.5)
         }
     }
 

@@ -11,7 +11,10 @@ Rectangle {
     width: singleColumn ? (parent.width*0.5) : (parent.height*0.4)
     height: width
     radius: width
-    color: Theme.colorForeground
+    color: Theme.colorBackground
+
+    border.width : 2
+    border.color: Theme.colorPrimary
 
     IconSvg {
         anchors.centerIn: parent
@@ -20,7 +23,7 @@ Rectangle {
 
         source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
         fillMode: Image.PreserveAspectFit
-        color: Theme.colorIcon
+        color: Theme.colorPrimary
         opacity: 0.9
         smooth: true
 

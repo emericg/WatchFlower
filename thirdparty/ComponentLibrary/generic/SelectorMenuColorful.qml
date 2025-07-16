@@ -33,7 +33,7 @@ Item {
         color: selectorMenu.colorBackground
 
         border.width: 2
-        border.color: Theme.colorComponentDown
+        border.color: Theme.colorComponentBorder
     }
 
     ////////////////

@@ -27,7 +27,9 @@ Item {
                 width: singleColumn ? (itemNoBluetooth.width*0.5) : (itemNoBluetooth.height*0.4)
                 height: width
                 radius: width
-                color: Theme.colorForeground
+                color: Theme.colorBackground
+                border.width : 3
+                border.color : Theme.colorPrimary
 
                 IconSvg { // bluetooth disabled icon
                     anchors.centerIn: parent
@@ -36,7 +38,7 @@ Item {
 
                     source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
                     fillMode: Image.PreserveAspectFit
-                    color: Theme.colorSubText
+                    color: Theme.colorPrimary
                     opacity: 0.9
                     smooth: true
                 }

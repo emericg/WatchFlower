@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Window
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 import DeviceUtils
 
 ApplicationWindow {

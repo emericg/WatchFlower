@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@
  * Keychain Hygrometer (2ACD3-WS07) / (2ACD3-WS02)
  *
  * Protocol infos:
- * - WatchFlower/docs/thermobeacon-ble-api.md
+ * - SmartCare/docs/thermobeacon-ble-api.md
  */
 class DeviceThermoBeacon: public DeviceThermometer
 {

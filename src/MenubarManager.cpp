@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -91,7 +91,7 @@ void MenubarManager::setupMenubar(QQuickWindow *view, DeviceManager *dm)
     m_menuSensors->addAction(m_actionSensorScan);
     menuBar->addMenu(m_menuSensors);
 
-    m_actionAbout = new QAction(tr("About WatchFlower"));
+    m_actionAbout = new QAction(tr("About SmartCare"));
     m_actionPreferences = new QAction(tr("Preferences"));
     m_actionWebsite = new QAction(tr("Visit website"));
     m_actionIssueTracker = new QAction(tr("Visit issue tracker"));

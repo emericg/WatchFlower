@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@
  * LYWSDCGQ device / round body / LCD
  *
  * Protocol infos:
- * - WatchFlower/docs/lywsdcgq-ble-api.md
+ * - SmartCare/docs/lywsdcgq-ble-api.md
  */
 class DeviceHygrotempLYWSDCGQ: public DeviceThermometer
 {

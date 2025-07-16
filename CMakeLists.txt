@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.20)
 
-project(WatchFlower VERSION 6.0 LANGUAGES CXX)
+project(RYLO-SmartCare VERSION 6.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -118,8 +118,8 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
 )
 
 qt_add_qml_module(${CMAKE_PROJECT_NAME}
-    URI ${CMAKE_PROJECT_NAME}
-    RESOURCE_PREFIX "/WatchFlower"
+    URI "SmartCare"
+    RESOURCE_PREFIX "/SmartCare"
     QML_FILES
         qml/MobileApplication.qml
         qml/MobileHeader.qml
@@ -287,7 +287,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         MACOSX_BUNDLE ON
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/assets/macos/Info.plist"
         # New Xcode attributes (???)
-        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "io.emeric.watchflower"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "com.rylo.smartcare"
         XCODE_ATTRIBUTE_PRODUCT_NAME                        ${CMAKE_PROJECT_NAME}
         XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${CMAKE_PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -307,7 +307,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         # Qt
         QT_IOS_LAUNCH_SCREEN "${CMAKE_SOURCE_DIR}/assets/ios/LaunchScreen.storyboard"
         # New Xcode attributes (???)
-        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "io.emeric.watchflower"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "com.rylo.smartcare"
         XCODE_ATTRIBUTE_PRODUCT_NAME                        ${CMAKE_PROJECT_NAME}
         XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${CMAKE_PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
