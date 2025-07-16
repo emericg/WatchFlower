@@ -132,38 +132,39 @@ Loader {
                 //     }
                 // }
 
-                Text { // legend_appThemeAuto
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
+                // Text { // legend_appThemeAuto
+                //     anchors.left: parent.left
+                //     anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
+                //     anchors.right: parent.right
+                //     anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
-                    topPadding: -12
-                    bottomPadding: isDesktop ? 6 : 6
+                //     topPadding: -12
+                //     bottomPadding: isDesktop ? 6 : 6
 
-                    property bool osSupport: (Qt.platform.os !== "linux")
-                    property string osName: {
-                        if (Qt.platform.os === "android") return "Android"
-                        if (Qt.platform.os === "ios") return "iOS"
-                        if (Qt.platform.os === "osx") return "macOS"
-                        if (Qt.platform.os === "linux") return "Linux"
-                        if (Qt.platform.os === "windows") return "Windows"
-                        //: fallback string
-                        return qsTr("Operating System")
-                    }
+                //     property bool osSupport: (Qt.platform.os !== "linux")
+                //     property string osName: {
+                //         if (Qt.platform.os === "android") return "Android"
+                //         if (Qt.platform.os === "ios") return "iOS"
+                //         if (Qt.platform.os === "osx") return "macOS"
+                //         if (Qt.platform.os === "linux") return "Linux"
+                //         if (Qt.platform.os === "windows") return "Windows"
+                //         //: fallback string
+                //         return qsTr("Operating System")
+                //     }
 
-                    text: {
-                        if (settingsManager.appThemeAuto) {
-                            if (osSupport) return qsTr("Dark mode will follow %1 settings.").arg(osName)
-                            return qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
-                        }
-                        return qsTr("Dark mode schedule is disabled.")
-                    }
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                }
+                //     text: {
+                //         if (settingsManager.appThemeAuto) {
+                //             if (osSupport) return qsTr("Dark mode will follow %1 settings.").arg(osName)
+                //             return qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
+                //         }
+                //         return qsTr("Dark mode schedule is disabled.")
+                //     }
+
+                //     textFormat: Text.PlainText
+                //     wrapMode: Text.WordWrap
+                //     color: Theme.colorSubText
+                //     font.pixelSize: Theme.fontSizeContentSmall
+                // }
 
                 ////////
 
