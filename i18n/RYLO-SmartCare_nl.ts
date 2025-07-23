@@ -1037,7 +1037,7 @@
     </message>
     <message>
         <location filename="../qml/DevicePlantSensorSettings.qml" line="465"/>
-        <source>This sensor needs to be registered to its official application once before it can be used with third party applications like WatchFlower.</source>
+        <source>This sensor needs to be registered to its official application once before it can be used with third party applications like SmartCare.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1589,7 +1589,7 @@
     </message>
     <message>
         <location filename="../src/MenubarManager.cpp" line="94"/>
-        <source>About WatchFlower</source>
+        <source>About SmartCare</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1815,7 +1815,7 @@
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="164"/>
-        <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
+        <source>SmartCare can activate your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1840,7 +1840,7 @@
     </message>
     <message>
         <location filename="../qml/MobilePermissions.qml" line="289"/>
-        <source>WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
+        <source>SmartCare doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1911,8 +1911,8 @@
         <translation type="vanished">Locatie</translation>
     </message>
     <message>
-        <source>The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;WatchFlower doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
-        <translation type="obsolete">Android-besturingssysteeem verplicht applicaties te vragen om locatie-machtiging voor het scannen naar BLE-sensoren (Bluetooth Low Energy) in je omgeving.&lt;br&gt;Deze machtiging is alleen nodig tijdens het scannen naar nieuwe sensoren.&lt;br&gt;WatchFlower gebruikt je locatie niet en bewaart of communiceert deze ook met niets of niemand.</translation>
+        <source>The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.&lt;br&gt;This permission is only needed while scanning for new sensors.&lt;br&gt;SmartCare doesn&apos;t use, store nor communicate your location to anyone or anything.</source>
+        <translation type="obsolete">Android-besturingssysteeem verplicht applicaties te vragen om locatie-machtiging voor het scannen naar BLE-sensoren (Bluetooth Low Energy) in je omgeving.&lt;br&gt;Deze machtiging is alleen nodig tijdens het scannen naar nieuwe sensoren.&lt;br&gt;SmartCare gebruikt je locatie niet en bewaart of communiceert deze ook met niets of niemand.</translation>
     </message>
     <message>
         <source>Official information</source>
@@ -1931,8 +1931,8 @@
         <translation type="vanished">Bluetooth-bediening</translation>
     </message>
     <message>
-        <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="vanished">WatchFlower kan bluetooth op je apparaat inschakelen voor het inlezen van sensordata.</translation>
+        <source>SmartCare can activate your device&apos;s Bluetooth in order to operate.</source>
+        <translation type="vanished">SmartCare kan bluetooth op je apparaat inschakelen voor het inlezen van sensordata.</translation>
     </message>
 </context>
 <context>
@@ -2298,7 +2298,7 @@
     </message>
     <message>
         <location filename="../qml/PlantScreen.qml" line="1291"/>
-        <source>Please note that WatchFlower should not be your definitive source of information about plant care.</source>
+        <source>Please note that SmartCare should not be your definitive source of information about plant care.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2363,7 +2363,7 @@
     </message>
     <message>
         <location filename="../qml/popups/PopupBackgroundUpdates.qml" line="117"/>
-        <source>To use the background update feature, the &lt;b&gt;background location permission&lt;/b&gt; is required, otherwise WatchFlower can&apos;t scan for Bluetooth Low Energy sensors and can&apos;t update data when the app is closed.</source>
+        <source>To use the background update feature, the &lt;b&gt;background location permission&lt;/b&gt; is required, otherwise SmartCare can&apos;t scan for Bluetooth Low Energy sensors and can&apos;t update data when the app is closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2762,12 +2762,12 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="642"/>
-        <source>WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
+        <source>SmartCare will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="643"/>
-        <source>WatchFlower is only active while the window is open.</source>
+        <source>SmartCare is only active while the window is open.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2777,12 +2777,12 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="719"/>
-        <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
-        <translation type="unfinished">Als een plant water nodig heeft laat WatchFlower het je weten!</translation>
+        <source>If a plant needs water, SmartCare will bring it to your attention!</source>
+        <translation type="unfinished">Als een plant water nodig heeft laat SmartCare het je weten!</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="720"/>
-        <source>If a plant needs water, WatchFlower can bring it to your attention.</source>
+        <source>If a plant needs water, SmartCare can bring it to your attention.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2817,12 +2817,12 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="923"/>
-        <source>WatchFlower will enable your device&apos;s Bluetooth in order to operate.</source>
+        <source>SmartCare will enable your device&apos;s Bluetooth in order to operate.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="924"/>
-        <source>WatchFlower will only operate if your device&apos;s Bluetooth is already enabled.</source>
+        <source>SmartCare will only operate if your device&apos;s Bluetooth is already enabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2951,8 +2951,8 @@
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="1663"/>
-        <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation type="unfinished">Opgeslagen in je document in de &apos;WatchFlower&apos;-map.</translation>
+        <source>Saved in your documents, under the &apos;SmartCare&apos; directory.</source>
+        <translation type="unfinished">Opgeslagen in je document in de &apos;SmartCare&apos;-map.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenSettings.qml" line="1690"/>
@@ -3009,7 +3009,7 @@
     <name>ScreenTutorial</name>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="90"/>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
+        <source>&lt;b&gt;SmartCare&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3024,8 +3024,8 @@
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="152"/>
-        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation type="unfinished">Om WatchFlower te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetoothsensoren&lt;/b&gt; in de buurt.</translation>
+        <source>To start using SmartCare, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <translation type="unfinished">Om SmartCare te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetoothsensoren&lt;/b&gt; in de buurt.</translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="174"/>
@@ -3034,12 +3034,12 @@
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="203"/>
-        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use WatchFlower.</source>
+        <source>Once &lt;b&gt;paired&lt;/b&gt;, sensors will periodically &lt;b&gt;sync&lt;/b&gt; their data when you use SmartCare.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../qml/ScreenTutorial.qml" line="217"/>
-        <source>WatchFlower &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
+        <source>SmartCare &lt;b&gt;might&lt;/b&gt; be able to sync sensors in the background. Check out the &lt;b&gt;settings&lt;/b&gt; page for instructions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3115,8 +3115,8 @@
         <translation type="vanished">Automatische donkere modus</translation>
     </message>
     <message>
-        <source>WatchFlower can activate your device&apos;s Bluetooth in order to operate.</source>
-        <translation type="vanished">WatchFlower kan bluetooth op je apparaat automatisch inschakelen voor het inlezen van sensordata.</translation>
+        <source>SmartCare can activate your device&apos;s Bluetooth in order to operate.</source>
+        <translation type="vanished">SmartCare kan bluetooth op je apparaat automatisch inschakelen voor het inlezen van sensordata.</translation>
     </message>
     <message>
         <source>Simultaneous updates</source>
@@ -3168,16 +3168,16 @@
         <translation type="vanished">Op gezette tijden activeren om sensordata te verversen. Alleen als bluetooth (of bluetooth-bediening) is ingeschakeld.</translation>
     </message>
     <message>
-        <source>WatchFlower will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.</source>
-        <translation type="vanished">WatchFlower draait op de achtergrond (in systeemvak) en wordt op gezette tijden actief om sensordata te verversen.</translation>
+        <source>SmartCare will remain active in the system tray, and will wake up at a regular interval to refresh sensor data.</source>
+        <translation type="vanished">SmartCare draait op de achtergrond (in systeemvak) en wordt op gezette tijden actief om sensordata te verversen.</translation>
     </message>
     <message>
         <source>Enable notifications</source>
         <translation type="vanished">Meldingen inschakelen</translation>
     </message>
     <message>
-        <source>If a plant needs water, WatchFlower will bring it to your attention!</source>
-        <translation type="vanished">Als een plant water nodig heeft laat WatchFlower het je weten!</translation>
+        <source>If a plant needs water, SmartCare will bring it to your attention!</source>
+        <translation type="vanished">Als een plant water nodig heeft laat SmartCare het je weten!</translation>
     </message>
     <message>
         <source>Plant sensors</source>
@@ -3208,8 +3208,8 @@
         <translation type="vanished">Exporteer tot 90 dagen aan data in een CSV-bestand.</translation>
     </message>
     <message>
-        <source>Saved in your documents, under the &apos;WatchFlower&apos; directory.</source>
-        <translation type="obsolete">Opgeslagen in je document in de &apos;WatchFlower&apos;-map.</translation>
+        <source>Saved in your documents, under the &apos;SmartCare&apos; directory.</source>
+        <translation type="obsolete">Opgeslagen in je document in de &apos;SmartCare&apos;-map.</translation>
     </message>
     <message>
         <source>Export file</source>
@@ -3368,16 +3368,16 @@
 <context>
     <name>Tutorial</name>
     <message>
-        <source>&lt;b&gt;WatchFlower&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
-        <translation type="vanished">&lt;b&gt;WatchFlower&lt;/b&gt; is een plantobservatieapplicatie voor Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; en &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; en Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensoren.</translation>
+        <source>&lt;b&gt;SmartCare&lt;/b&gt; is a plant monitoring application for Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; and &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; or Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensors.</source>
+        <translation type="vanished">&lt;b&gt;SmartCare&lt;/b&gt; is een plantobservatieapplicatie voor Xiaomi &apos;&lt;b&gt;Flower Care&lt;/b&gt;&apos; en &apos;&lt;b&gt;RoPot&lt;/b&gt;&apos; en Parrot &apos;&lt;b&gt;Flower Power&lt;/b&gt;&apos; sensoren.</translation>
     </message>
     <message>
         <source>It also works great with a couple of &lt;b&gt;thermometers&lt;/b&gt;!</source>
         <translation type="vanished">Het werkt ook goed met een aantal &lt;b&gt;thermometers&lt;/b&gt;!</translation>
     </message>
     <message>
-        <source>To start using WatchFlower, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
-        <translation type="vanished">Om WatchFlower te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetoothsensoren&lt;/b&gt; in de buurt.</translation>
+        <source>To start using SmartCare, you&apos;ll need to &lt;b&gt;scan&lt;/b&gt; for &lt;b&gt;compatible Bluetooth sensors&lt;/b&gt; around you.</source>
+        <translation type="vanished">Om SmartCare te gebruiken start je met &lt;b&gt;scannen&lt;/b&gt; naar &lt;b&gt;compatibele bluetoothsensoren&lt;/b&gt; in de buurt.</translation>
     </message>
     <message>
         <source>You can &lt;b&gt;rescan&lt;/b&gt; for new devices at any time, or &lt;b&gt;delete&lt;/b&gt; the ones you don&apos;t want.</source>
