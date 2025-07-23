@@ -74,8 +74,8 @@ public:
     Q_INVOKABLE bool requestNotificationPermissions();
 
     QString getNotification() const { return m_message; }
-    void setNotification(const QString &title, const QString &message, int channel = 0);
-    void setNotificationShort(const QString &message);
+    Q_INVOKABLE void setNotification(const QString &title, const QString &message, int channel = 0);
+    Q_INVOKABLE void setNotificationShort(const QString &message);
 };
 
 /* ************************************************************************** */

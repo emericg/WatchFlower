@@ -28,10 +28,17 @@ Grid {
     ////////
 
     property var currentPlant: null
+    property string soilMoistureCheckMessage: ""
+    property string soilConductivityCheckMessage : ""
+    property string soilPHCheckMessage : ""
+    property string soilTemperatureCheckMessage : ""
+    property string soilHumidityCheckMessage : ""
+    property string soilLuminosityLUXCheckMessage : ""
+    property string soilLuminosityMMOLCheckMessage : ""
 
     onCurrentPlantChanged: {
         if (typeof currentPlant === "undefined" || !currentPlant) return
-/*
+
         console.log("> onCurrentPlantChanged()")
 
         console.log("full name: " + currentPlant.name)
@@ -58,7 +65,7 @@ Grid {
 
         console.log("soil Moisture m/m: " + currentPlant.soilMoist_min + " / " + currentPlant.soilMoist_max)
         console.log("mmol m/m: " + currentPlant.lightMmol_min + " / " + currentPlant.lightMmol_max)
-*/
+
         col1.contentY = 0
         col2.contentY = 0
         col3.contentY = 0
@@ -172,6 +179,7 @@ Grid {
         rangeSlider_temp.setValues(currentPlant.envTemp_min, currentPlant.envTemp_max)
         rangeSlider_humi.setValues(currentPlant.envHumi_min, currentPlant.envHumi_max)
         rangeSlider_lumi_lux.setValues(currentPlant.lightLux_min, currentPlant.lightLux_max)
+
 
         itemLumiMmol.visible = (currentPlant.lightMmol_min > 0)
         rangeSlider_lumi_mmol.setValues(currentPlant.lightMmol_min, Math.max(currentPlant.lightMmol_min, currentPlant.lightMmol_max))
@@ -1375,6 +1383,52 @@ Grid {
                     to: 100
                     stepSize: 1
                 }
+
+
+                Slider {
+
+                id: rangeSlider_soilMoist_check
+                anchors.top: rangeSlider_soilMoist.bottom
+                anchors.topMargin: 2
+                anchors.left: parent.left
+                anchors.leftMargin: 24
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+
+                from: 0
+                to: 100
+                stepSize: 1
+
+                    onPressedChanged:  {
+                    console.log("Slider value changed to: " + value);
+                    var minMoisture = currentPlant.soilMoist_min;
+                    var maxMoisture = currentPlant.soilMoist_max;
+
+                    console.log("Checking Moisture: " + value + " against min: " + minMoisture + ", max: " + maxMoisture);
+                    if(value < minMoisture){
+                        console.log("Moisture less than min threshold")
+                        soilMoistureCheckMessage = currentPlant.name + " moisture value declines from min value : " + minMoisture ;
+                        notificationManager.setNotification(
+                                    qsTr("Threshold Alert!"),
+                                    qsTr(soilMoistureCheckMessage),
+                                    101
+                                );
+                    }
+                    else if(value > maxMoisture){
+                        console.log("Moisture greater than max threshold");
+                        soilMoistureCheckMessage = currentPlant.name + " moisture value exceeds from max value : " + maxMoisture ;
+                        notificationManager.setNotification(
+                                    qsTr("Threshold Alert!"),
+                                    qsTr(soilMoistureCheckMessage),
+                                    101
+                                );
+                    }
+                    else{
+                        console.log("OK Moisture ! ")
+                    }
+                }
+            }
+
             }
 
             Item {
@@ -1427,6 +1481,51 @@ Grid {
                     to: 5000
                     stepSize: 50
                 }
+
+                Slider {
+
+                    id: rangeSlider_soilCondu_check
+                    anchors.top: rangeSlider_soilCondu.bottom
+                    anchors.topMargin: 2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    from: 0
+                    to: 5000
+                    stepSize: 50
+
+                    onPressedChanged:  {
+                        console.log("Slider value changed to: " + value);
+                        var minCondu = currentPlant.soilCondu_min;
+                        var maxCondu = currentPlant.soilCondu_max;
+
+                        console.log("Checking Conduc: " + value + " against min: " + minCondu + ", max: " + maxCondu);
+                        if(value < minCondu){
+                            console.log("Conductivty less than min threshold")
+                            soilConductivityCheckMessage = currentPlant.name + " conduct. value declines from min value : " + minCondu ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilConductivityCheckMessage),
+                                        102
+                                    );
+                        }
+                        else if(value > maxCondu){
+                            console.log("Conductivty greater than max threshold");
+                            soilConductivityCheckMessage = currentPlant.name + " conduct. value exceeds from max value : " + maxCondu ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilConductivityCheckMessage),
+                                        102
+                                    );
+                        }
+                        else{
+                            console.log("OK Conductivty ! ")
+                        }
+            }
+             }
+            
             }
 
             Item {
@@ -1515,6 +1614,51 @@ Grid {
                         }
                     }
                 }
+                Slider {
+                    id: rangeSlider_soilPH_check
+                    anchors.top: rangeSlider_soilPH.bottom
+                    anchors.topMargin: 2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    from: 4
+                    to: 10
+                    stepSize: 0.1
+
+
+                    onPressedChanged:  {
+                        console.log("Slider value changed to: " + value);
+                        var minSoilPH = currentPlant.soilPH_min;
+                        var maxSoilPH = currentPlant.soilPH_max;
+
+                        console.log("Checking SoilPH " + value + " against min: " + minSoilPH + ", max: " + maxSoilPH);
+                        if(value < minSoilPH){
+                            console.log("SoilPH less than min threshold")
+                            soilPHCheckMessage = currentPlant.name + " soilPH value declines from min value : " + minSoilPH ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilPHCheckMessage),
+                                        107
+                                    );
+                        }
+                        else if(value > maxSoilPH){
+                            console.log("SoilPH greater than max threshold");
+                            soilPHCheckMessage = currentPlant.name + " soilPH value exceeds from max value : " + maxSoilPH ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilPHCheckMessage),
+                                        107
+                                    );
+                        }
+                        else{
+                            console.log("OK SOILPH ! ")
+                        }
+                    }
+                 }
+
+
             }
 
             Item {
@@ -1568,6 +1712,49 @@ Grid {
                     to: 40
                     stepSize: 1
                 }
+                
+                Slider {
+                    id: rangeSlider_temp_check
+                    anchors.top: rangeSlider_temp.bottom
+                    anchors.topMargin: 2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    from: 0
+                    to: 40
+                    stepSize: 1
+
+                    onPressedChanged:  {
+                        console.log("Slider value changed to: " + value);
+                        var minTemp = currentPlant.envTemp_min;
+                        var maxTemp = currentPlant.envTemp_max;
+
+                        console.log("Checking Temp.: " + value + " against min: " + minTemp + ", max: " + maxTemp);
+                        if(value < minTemp){
+                            console.log("Temperature less than min threshold")
+                            soilTemperatureCheckMessage = currentPlant.name + " temp. value declines from min value : " + minTemp ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilTemperatureCheckMessage),
+                                        103
+                                    );
+                        }
+                        else if(value > maxTemp){
+                            console.log("Temperature greater than max threshold");
+                            soilTemperatureCheckMessage = currentPlant.name + " temp. value exceeds from max value : " + maxTemp ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilTemperatureCheckMessage),
+                                        103
+                                    );
+                        }
+                        else{
+                            console.log("OK Temperature ! ")
+                        }
+                     }
+                 }
             }
 
             Item {
@@ -1619,6 +1806,49 @@ Grid {
                     to: 100
                     stepSize: 1
                 }
+
+                Slider {
+                    id: rangeSlider_humi_check
+                    anchors.top: rangeSlider_humi.bottom
+                    anchors.topMargin: 2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    from: 0
+                    to: 100
+                    stepSize: 1
+
+                    onPressedChanged:  {
+                        console.log("Slider value changed to: " + value);
+                        var minHumi = currentPlant.envHumi_min;
+                        var maxHumi = currentPlant.envHumi_max;
+
+                        console.log("Checking Humidity " + value + " against min: " + minHumi + ", max: " + maxHumi);
+                        if(value < minHumi){
+                            console.log("Humidity less than min threshold")
+                            soilHumidityCheckMessage = currentPlant.name + " humidity value declines from min value : " + minHumi ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilHumidityCheckMessage),
+                                        104
+                                    );
+                        }
+                        else if(value > maxHumi){
+                            console.log("Humidity greater than max threshold");
+                            soilHumidityCheckMessage = currentPlant.name + " humidity value exceeds from max value : " + maxHumi ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilHumidityCheckMessage),
+                                        104
+                                    );
+                        }
+                        else{
+                            console.log("OK Humidity ! ")
+                        }
+                    }
+                 }
             }
 
             Item {
@@ -1718,6 +1948,49 @@ Grid {
                         }
                     }
                 }
+
+                Slider {
+                    id: rangeSlider_lumi_lux_check
+                    anchors.top: rangeSlider_lumi_lux.bottom
+                    anchors.topMargin: 2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    from: 0
+                    to: 10000
+                    stepSize: 1000
+
+                    onPressedChanged:  {
+                        console.log("Slider value changed to: " + value);
+                        var minLumiLUX = currentPlant.lightLux_min;
+                        var maxLumiLUX = currentPlant.lightLux_max;
+
+                        console.log("Checking Luminosity LUX " + value + " against min: " + minLumiLUX + ", max: " + maxLumiLUX);
+                        if(value < minLumiLUX){
+                            console.log("Luminosity LUX less than min threshold")
+                            soilLuminosityLUXCheckMessage = currentPlant.name + " lumi.(lux) value declines from min value : " + minLumiLUX ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilLuminosityLUXCheckMessage),
+                                        105
+                                    );
+                        }
+                        else if(value > maxLumiLUX){
+                            console.log("Luminosity LUX greater than max threshold");
+                            soilLuminosityLUXCheckMessage = currentPlant.name + " lumi.(lux) value exceeds from max value : " + maxLumiLUX ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilLuminosityLUXCheckMessage),
+                                        105
+                                    );
+                        }
+                        else{
+                            console.log("OK Luminosity LUX ! ")
+                        }
+                    }
+                 }
             }
 
             Item {
@@ -1771,6 +2044,50 @@ Grid {
                     to: 25000
                     stepSize: 100
                 }
+
+                Slider {
+                    id: rangeSlider_lumi_mmol_check
+                    anchors.top: rangeSlider_lumi_mmol.bottom
+                    anchors.topMargin: 2
+                    anchors.left: parent.left
+                    anchors.leftMargin: 24
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+
+                    from: 0
+                    to: 25000
+                    stepSize: 100
+
+                    onPressedChanged:  {
+                        console.log("Slider value changed to: " + value);
+                        var minLumiMMOL = currentPlant.lightMmol_min;
+                        var maxLumiMMOL = currentPlant.lightMmol_max;
+
+                        console.log("Checking Luminosity MMOL " + value + " against min: " + minLumiMMOL + ", max: " + maxLumiMMOL);
+                        if(value < minLumiMMOL){
+                            console.log("Luminosity MMOL less than min threshold")
+                            soilLuminosityMMOLCheckMessage = currentPlant.name + " lumi.(mmol) value declines from min value : " + minLumiMMOL ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilLuminosityMMOLCheckMessage),
+                                        106
+                                    );
+                        }
+                        else if(value > maxLumiMMOL){
+                            console.log("Luminosity MMOL than max threshold");
+                            soilLuminosityMMOLCheckMessage = currentPlant.name + " lumi.(mmol) value exceeds from max value : " + maxLumiMMOL ;
+                            notificationManager.setNotification(
+                                        qsTr("Threshold Alert!"),
+                                        qsTr(soilLuminosityMMOLCheckMessage),
+                                        106
+                                    );
+                        }
+                        else{
+                            console.log("OK Luminosity MMOL ! ")
+                        }
+                    }
+                 }
+
             }
 
             ////

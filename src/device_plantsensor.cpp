@@ -201,7 +201,7 @@ bool DevicePlantSensor::loadPlant()
     bool status = false;
 
     QSqlQuery queryPlant;
-    queryPlant.prepare("SELECT plantId, plantName, plantCache, plantStart " \
+    queryPlant.prepare("SELECT plantId, plantName,  plantCache, plantStart " \
                        "FROM plants WHERE deviceAddr = :deviceAddr;");
     queryPlant.bindValue(":deviceAddr", m_deviceAddress);
 

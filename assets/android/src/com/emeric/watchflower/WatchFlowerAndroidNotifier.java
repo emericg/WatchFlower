@@ -31,6 +31,7 @@ import android.app.NotificationChannel;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import androidx.core.app.NotificationCompat; 
 
 public class WatchFlowerAndroidNotifier {
 
@@ -82,7 +83,7 @@ public class WatchFlowerAndroidNotifier {
             PendingIntent resultPendingIntent = PendingIntent.getActivity(context, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             NotificationManager notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
-            Notification.Builder builder;
+            NotificationCompat.Builder builder;
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 NotificationChannel notificationChannel = new NotificationChannel(channelId, channelName, channelImportance);
@@ -93,9 +94,9 @@ public class WatchFlowerAndroidNotifier {
                 notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
 
                 notificationManager.createNotificationChannel(notificationChannel);
-                builder = new Notification.Builder(context, notificationChannel.getId());
+                builder = new NotificationCompat.Builder(context, notificationChannel.getId());
             } else {
-                builder = new Notification.Builder(context);
+                builder = new NotificationCompat.Builder(context);
             }
 
             builder.setSmallIcon(R.drawable.ic_stat_logo);
@@ -110,6 +111,7 @@ public class WatchFlowerAndroidNotifier {
             builder.setDefaults(Notification.DEFAULT_SOUND);
             builder.setOnlyAlertOnce(true);
             builder.setAutoCancel(true);
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText(message));
 
             notificationManager.notify(channel, builder.build());
         } catch (Exception e) {
