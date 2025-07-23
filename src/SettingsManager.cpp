@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -71,7 +71,7 @@ bool SettingsManager::saveSettings()
     QString internalPath = settings.fileName();
 
     // save dir
-    QString externalPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+    QString externalPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/SmartCare";
     QDir externalDir(externalPath);
     if (!externalDir.exists()) externalDir.mkpath(externalPath);
 

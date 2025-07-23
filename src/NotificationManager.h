@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -74,8 +74,8 @@ public:
     Q_INVOKABLE bool requestNotificationPermissions();
 
     QString getNotification() const { return m_message; }
-    void setNotification(const QString &title, const QString &message, int channel = 0);
-    void setNotificationShort(const QString &message);
+    Q_INVOKABLE void setNotification(const QString &title, const QString &message, int channel = 0);
+    Q_INVOKABLE void setNotificationShort(const QString &message);
 };
 
 /* ************************************************************************** */

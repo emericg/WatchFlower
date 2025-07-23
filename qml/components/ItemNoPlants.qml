@@ -10,16 +10,19 @@ Rectangle {
     width: singleColumn ? (parent.width*0.5) : (parent.height*0.4)
     height: width
     radius: width
-    color: Theme.colorForeground
+    color: Theme.colorBackground
+    border.width:  3
+    border.color: Theme.colorPrimary
 
     IconSvg {
         anchors.centerIn: parent
         width: parent.width*0.66
         height: width
 
-        source: "qrc:/assets/gfx/logos/watchflower_monochrome.svg"
+        source: "qrc:/assets/gfx/logos/watchflower_monochrome.png"
         fillMode: Image.PreserveAspectFit
-        color: Theme.colorIcon
+        color: Theme.colorPrimary
+
         opacity: 0.8
         smooth: true
     }

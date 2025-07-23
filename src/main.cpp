@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -49,6 +49,8 @@
 #include <QQmlContext>
 #include <QQuickWindow>
 #include <QSurfaceFormat>
+#include <QTimer>   // Make sure this is included for QTimer
+#include <QDebug>   // Make sure this is included for qDebug()
 
 #if defined(Q_OS_ANDROID)
 #include "AndroidService.h"
@@ -59,6 +61,8 @@
 
 int main(int argc, char *argv[])
 {
+    qDebug() << "main(): Application started."; // Debug: Entry point
+
     // Arguments parsing ///////////////////////////////////////////////////////
 
     bool start_minimized = false;
@@ -84,10 +88,11 @@ int main(int argc, char *argv[])
     // Refresh data in the background, without starting the UI, then exit
     if (refresh_only)
     {
+        qDebug() << "main(): Running in refresh-only mode."; // Debug: Mode check
         QCoreApplication app(argc, argv);
-        app.setApplicationName("WatchFlower");
-        app.setOrganizationName("WatchFlower");
-        app.setOrganizationDomain("WatchFlower");
+        app.setApplicationName("SmartCare");
+        app.setOrganizationName("SmartCare");
+        app.setOrganizationDomain("SmartCare");
 
         SettingsManager *sm = SettingsManager::getInstance();
         DatabaseManager *db = DatabaseManager::getInstance();
@@ -106,11 +111,12 @@ int main(int argc, char *argv[])
     // Android daemon
     if (background_service)
     {
+        qDebug() << "main(): Running as Android background service."; // Debug: Mode check
 #if defined(Q_OS_ANDROID)
         QAndroidService app(argc, argv);
-        app.setApplicationName("WatchFlower");
-        app.setOrganizationName("WatchFlower");
-        app.setOrganizationDomain("WatchFlower");
+        app.setApplicationName("SmartCare");
+        app.setOrganizationName("SmartCare");
+        app.setOrganizationDomain("SmartCare");
 
         SettingsManager *sm = SettingsManager::getInstance();
         if (sm && sm->getSysTray())
@@ -141,13 +147,14 @@ int main(int argc, char *argv[])
 
     // GUI application /////////////////////////////////////////////////////////
 
+    qDebug() << "main(): Initializing GUI application."; // Debug: GUI setup
     SingleApplication app(argc, argv, false);
 
     // Application name
-    app.setApplicationName("WatchFlower");
-    app.setApplicationDisplayName("WatchFlower");
-    app.setOrganizationName("WatchFlower");
-    app.setOrganizationDomain("WatchFlower");
+    app.setApplicationName("SmartCare");
+    app.setApplicationDisplayName("SmartCare");
+    app.setOrganizationName("SmartCare");
+    app.setOrganizationDomain("SmartCare");
 
     // Init app components
     SettingsManager *sm = SettingsManager::getInstance();
@@ -159,11 +166,14 @@ int main(int argc, char *argv[])
         qWarning() << "Cannot init app components!";
         return EXIT_FAILURE;
     }
+    qDebug() << "main(): Application components initialized."; // Debug: Components ready
+
+
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     ShareUtils *utilsShare = new ShareUtils();
 #else
-    QIcon appIcon(":/assets/gfx/logos/watchflower.svg");
+    QIcon appIcon(":/assets/gfx/logos/watchflower.png");
     app.setWindowIcon(appIcon);
 
     SystrayManager *st = SystrayManager::getInstance();
@@ -189,6 +199,7 @@ int main(int argc, char *argv[])
         qWarning() << "Cannot init generic utils!";
         return EXIT_FAILURE;
     }
+    qDebug() << "main(): Generic utils initialized."; // Debug: Utils ready
 
     bool qtConnectivityPatched = false;
 #if defined(QT_CONNECTIVITY_PATCHED)
@@ -204,7 +215,7 @@ int main(int argc, char *argv[])
     PlantUtils::registerQML();
 
     QQmlApplicationEngine engine;
-    engine.addImportPath(":/WatchFlower");
+    engine.addImportPath(":/SmartCare");
     engine.addImportPath(":/ComponentLibrary");
 
     QQmlContext *engine_context = engine.rootContext();
@@ -222,12 +233,14 @@ int main(int argc, char *argv[])
 
     // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+    qDebug() << "main(): Loading MobileApplication QML."; // Debug: QML Load
     engine_context->setContextProperty("utilsShare", utilsShare);
-    engine.loadFromModule("WatchFlower", "MobileApplication");
+    engine.loadFromModule("SmartCare", "MobileApplication");
 #else
+    qDebug() << "main(): Loading DesktopApplication QML."; // Debug: QML Load
     engine_context->setContextProperty("systrayManager", st);
     engine_context->setContextProperty("menubarManager", mb);
-    engine.loadFromModule("WatchFlower", "DesktopApplication");
+    engine.loadFromModule("SmartCare", "DesktopApplication");
 #endif
 
     if (engine.rootObjects().isEmpty())
@@ -235,6 +248,7 @@ int main(int argc, char *argv[])
         qWarning() << "Cannot init QmlApplicationEngine!";
         return EXIT_FAILURE;
     }
+    qDebug() << "main(): QML engine loaded successfully."; // Debug: QML loaded
 
     // For i18n retranslate
     utilsLanguage->setQmlEngine(&engine);
@@ -243,23 +257,34 @@ int main(int argc, char *argv[])
 
     // QQuickWindow must be valid at this point
     QQuickWindow *window = qobject_cast<QQuickWindow *>(engine.rootObjects().value(0));
-
-    // React to secondary instances
-    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
-    QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
+    if (window) {
+        qDebug() << "main(): QQuickWindow obtained."; // Debug: Window check
+        // React to secondary instances
+        QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::show);
+        QObject::connect(&app, &SingleApplication::instanceStarted, window, &QQuickWindow::raise);
+    } else {
+        qWarning() << "main(): QQuickWindow is null, cannot setup desktop features."; // Debug: Window is null
+    }
 
     // Systray?
     st->setupSystray(window);
-    if (sm->getSysTray()) st->installSystray();
+    if (sm->getSysTray()) {
+        st->installSystray();
+        qDebug() << "main(): Systray installed."; // Debug: Systray
+    } else {
+        qDebug() << "main(): Systray not enabled.";
+    }
 
     // Menu bar
     mb->setupMenubar(window, dm);
+    qDebug() << "main(): Menubar setup."; // Debug: Menubar
 
 #if defined(Q_OS_MACOS)
     // macOS dock
     MacOSDockHandler *dockIconHandler = MacOSDockHandler::getInstance();
     dockIconHandler->setupDock(window);
     engine_context->setContextProperty("utilsDock", dockIconHandler);
+    qDebug() << "main(): MacOS dock handler setup."; // Debug: MacOS dock
 #endif
 
 #endif // desktop section
@@ -267,8 +292,10 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_ANDROID)
     QNativeInterface::QAndroidApplication::hideSplashScreen(333);
     if (sm->getSysTray()) AndroidService::service_start();
+    qDebug() << "main(): Android specific setup complete."; // Debug: Android
 #endif
 
+    qDebug() << "main(): Entering application event loop."; // Debug: Before app.exec()
     return app.exec();
 }
 

@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -41,8 +41,8 @@
  * MHO-C303 device / rectangular body / E-Ink
  *
  * Protocol infos:
- * - WatchFlower/docs/lywsd02-ble-api.md
- * - WatchFlower/docs/mchohc303-ble-api.md
+ * - SmartCare/docs/lywsd02-ble-api.md
+ * - SmartCare/docs/mchohc303-ble-api.md
  */
 class DeviceHygrotempClock: public DeviceThermometer
 {

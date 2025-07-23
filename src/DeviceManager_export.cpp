@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -42,7 +42,7 @@ bool DeviceManager::exportDataSave()
 
     if (!m_devices_model->hasDevices()) return status;
 
-    QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+    QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/SmartCare";
 
     // Create exportDirectory
     if (!exportDirectoryPath.isEmpty())
@@ -115,7 +115,7 @@ QString DeviceManager::exportDataOpen()
 QString DeviceManager::exportDataFolder()
 {
     // Get home directory path
-    QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
+    QString exportDirectoryPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/SmartCare";
 
     // Check if directory exist
     QDir exportDirectory(exportDirectoryPath);

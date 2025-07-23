@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -44,14 +44,14 @@
  * Qingping Temp & RH Monitor Lite (CGDK2)
  *
  * MiBeacon format:
- * - WatchFlower/docs/mibeacon-ble-api.md
+ * - SmartCare/docs/mibeacon-ble-api.md
  *
  * BTHome v1 format:
  * - https://bthome.io/v1/
  *
  * BTHome v2 format:
  * - https://bthome.io/format/
- * - WatchFlower/docs/bthome-ble-api.md
+ * - SmartCare/docs/bthome-ble-api.md
  */
 class DeviceHygrotempATC: public DeviceThermometer
 {

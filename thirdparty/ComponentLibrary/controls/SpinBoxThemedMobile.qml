@@ -36,7 +36,7 @@ T.SpinBox {
         implicitHeight: Theme.componentHeight
 
         radius: Theme.componentRadius
-        color: Theme.colorComponentBackground
+        color: Theme.colorBackground
         opacity: control.enabled ? 1 : 0.66
 
         Rectangle {
@@ -44,7 +44,7 @@ T.SpinBox {
             height: control.height
             anchors.verticalCenter: parent.verticalCenter
             x: control.mirrored ? 0 : control.width - width
-            color: control.up.pressed ? Theme.colorComponentDown : Theme.colorComponent
+            color: control.up.pressed ? Theme.colorPrimary : Theme.colorPrimary
             opacity: control.up.hovered ? 0.8 : 1
             Behavior on opacity { NumberAnimation { duration: 133 } }
         }
@@ -53,7 +53,7 @@ T.SpinBox {
             height: control.height
             anchors.verticalCenter: parent.verticalCenter
             x: control.mirrored ? control.width - width : 0
-            color: control.down.pressed ? Theme.colorComponentDown : Theme.colorComponent
+            color: control.down.pressed ? Theme.colorPrimary : Theme.colorPrimary
             opacity: control.down.hovered ? 0.8 : 1
             Behavior on opacity { NumberAnimation { duration: 133 } }
         }
@@ -96,9 +96,9 @@ T.SpinBox {
                 height: control.height
                 anchors.verticalCenter: parent.verticalCenter
 
-                color: Theme.colorComponentText
+                color: Theme.colorComponentContent
                 selectionColor: Theme.colorPrimary
-                selectedTextColor: "white"
+                selectedTextColor: Theme.colorComponentContent
                 selectByMouse: control.editable
 
                 text: control.value
@@ -134,7 +134,7 @@ T.SpinBox {
                 anchors.verticalCenter: parent.verticalCenter
 
                 visible: control.legend
-                color: Theme.colorComponentText
+                color: "black"
                 opacity: 0.66
 
                 text: control.legend
@@ -163,13 +163,13 @@ T.SpinBox {
             anchors.centerIn: parent
             width: UtilsNumber.round2(parent.height * 0.4)
             height: 2
-            color: Theme.colorComponentContent
+            color: Theme.colorLowContrast
         }
         Rectangle {
             anchors.centerIn: parent
             width: 2
             height: UtilsNumber.round2(parent.height * 0.4)
-            color: Theme.colorComponentContent
+            color: Theme.colorLowContrast
         }
     }
 
@@ -190,7 +190,7 @@ T.SpinBox {
             anchors.centerIn: parent
             width: UtilsNumber.round2(parent.height * 0.4)
             height: 2
-            color: Theme.colorComponentContent
+            color: Theme.colorLowContrast
         }
     }
 

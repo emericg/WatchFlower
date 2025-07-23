@@ -3,17 +3,11 @@
         <file>gfx/logos/logo.svg</file>
         <file>gfx/logos/github.svg</file>
         <file>gfx/logos/watchflower.svg</file>
-        <file>gfx/logos/watchflower_tray_light.svg</file>
-        <file>gfx/logos/watchflower_tray_dark.svg</file>
-        <file>gfx/logos/watchflower_tray_monochrome.svg</file>
-        <file>gfx/logos/watchflower_monochrome.svg</file>
-
         <file>gfx/tutorial/welcome-devices.svg</file>
         <file>gfx/tutorial/welcome-bluetooth-searching.svg</file>
         <file>gfx/tutorial/welcome-app-connected.svg</file>
         <file>gfx/tutorial/welcome-limits.svg</file>
         <file>gfx/tutorial/welcome-plants.svg</file>
-
         <file>gfx/icons/arrow_back.svg</file>
         <file>gfx/icons/droplet1.svg</file>
         <file>gfx/icons/droplet2.svg</file>
@@ -36,5 +30,6 @@
         <file>gfx/icons/sunlight_borders.svg</file>
         <file>gfx/icons/thermometer-24px.svg</file>
         <file>gfx/icons/thermometer_big-24px.svg</file>
+        <file>gfx/logos/watchflower_monochrome.png</file>
     </qresource>
 </RCC>

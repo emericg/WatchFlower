@@ -5,8 +5,8 @@ Unicode True
 !include "FileFunc.nsh"
 !include "LogicLib.nsh"
 
-!define APPNAME                      "WatchFlower"
-!define EXECNAME                     "WatchFlower"
+!define APPNAME                      "RYLO SmartCare"
+!define EXECNAME                     "RYLO SmartCare"
 !define COMPANYNAME                  "Emeric Grange"
 !define DESCRIPTION                  "A plant monitoring application that reads and plots data from compatible Bluetooth sensors and thermometers like Xiaomi 'Flower Care' or Parrot 'Flower Power'"
 !define VERSIONMAJOR                 6

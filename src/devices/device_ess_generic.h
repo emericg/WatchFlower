@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@
  * Generic implementation for Bluetooth Low Energy "Environmental Sensing Service".
  *
  * Protocol infos:
- * - WatchFlower/docs/ess-ble-api.md
+ * - SmartCare/docs/ess-ble-api.md
  * - https://www.bluetooth.com/specifications/specs/environmental-sensing-profile-1-0/
  * - https://www.bluetooth.com/specifications/specs/environmental-sensing-service-1-0/
  * - https://www.bluetooth.com/specifications/assigned-numbers/environmental-sensing-service-characteristics/

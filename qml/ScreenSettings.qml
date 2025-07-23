@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtPositioning
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Loader {
     id: screenSettings
@@ -82,255 +82,89 @@ Loader {
 
                 ////////////////
 
-                Item { // element_appTheme
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
-
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/style.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: appTheme_selector.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Theme")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                    }
-
-                    Row {
-                        id: appTheme_selector
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        z: 1
-                        spacing: Theme.componentMargin / 2
-
-                        Rectangle {
-                            id: rectangleSnow
-                            width: wideWideMode ? 80 : 32
-                            height: 32
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            radius: 2
-                            color: "white"
-                            border.color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ddd"
-                            border.width: 2
-
-                            Text {
-                                anchors.centerIn: parent
-                                visible: wideWideMode
-                                text: qsTr("snow")
-                                textFormat: Text.PlainText
-                                color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ccc"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentSmall
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_SNOW"
-                            }
-                        }
-                        Rectangle {
-                            id: rectangleRain
-                            width: wideWideMode ? 80 : 32
-                            height: 32
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            radius: 2
-                            color: "#476cae"
-                            border.color: "#06307a"
-                            border.width: (settingsManager.appTheme === "THEME_RAIN") ? 2 : 0
-
-                            Text {
-                                anchors.centerIn: parent
-                                visible: wideWideMode
-                                text: qsTr("rain")
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentSmall
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_RAIN"
-                            }
-                        }
-                        Rectangle {
-                            id: rectangleGreen
-                            width: wideWideMode ? 80 : 32
-                            height: 32
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            radius: 2
-                            color: "#09debc" // green theme colorSecondary
-                            border.color: Theme.colorPrimary
-                            border.width: (settingsManager.appTheme === "THEME_PLANT") ? 2 : 0
-
-                            Text {
-                                anchors.centerIn: parent
-                                visible: wideWideMode
-                                text: qsTr("plant")
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentSmall
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_PLANT"
-                            }
-                        }
-                        Rectangle {
-                            id: rectangleDay
-                            width: wideWideMode ? 80 : 32
-                            height: 32
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            radius: 2
-                            color: "#FFE400" // day theme colorSecondary
-                            border.color: Theme.colorPrimary
-                            border.width: (settingsManager.appTheme === "THEME_DAY") ? 2 : 0
-
-                            Text {
-                                anchors.centerIn: parent
-                                visible: wideWideMode
-                                text: qsTr("day")
-                                textFormat: Text.PlainText
-                                color: "white"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentSmall
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_DAY"
-                            }
-                        }
-                        Rectangle {
-                            id: rectangleNight
-                            width: wideWideMode ? 80 : 32
-                            height: 32
-                            anchors.verticalCenter: parent.verticalCenter
-
-                            radius: 2
-                            color: "#555151"
-                            border.color: Theme.colorPrimary
-                            border.width: (settingsManager.appTheme === "THEME_NIGHT") ? 2 : 0
-
-                            Text {
-                                anchors.centerIn: parent
-                                visible: wideWideMode
-                                text: qsTr("night")
-                                textFormat: Text.PlainText
-                                color: (settingsManager.appTheme === "THEME_NIGHT") ? Theme.colorPrimary : "#ececec"
-                                font.bold: true
-                                font.pixelSize: Theme.fontSizeContentSmall
-                            }
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_NIGHT"
-                            }
-                        }
-                    }
-                }
 
                 ////////
 
-                Item { // element_appThemeAuto
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
+                // Item { // element_appThemeAuto
+                //     anchors.left: parent.left
+                //     anchors.leftMargin: contentColumn.paddingLeft
+                //     anchors.right: parent.right
+                //     anchors.rightMargin: contentColumn.paddingRight
+                //     height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                //     IconSvg {
+                //         anchors.left: parent.left
+                //         anchors.leftMargin: contentColumn.padIcon
+                //         anchors.verticalCenter: parent.verticalCenter
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
-                    }
+                //         width: 24
+                //         height: 24
+                //         color: Theme.colorIcon
+                //         source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
+                //     }
 
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_appThemeAuto.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
+                //     Text {
+                //         anchors.left: parent.left
+                //         anchors.leftMargin: contentColumn.padText
+                //         anchors.right: switch_appThemeAuto.left
+                //         anchors.rightMargin: Theme.componentMargin
+                //         anchors.verticalCenter: parent.verticalCenter
 
-                        text: qsTr("Automatic dark mode")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                    }
+                //         text: qsTr("Automatic dark mode")
+                //         textFormat: Text.PlainText
+                //         font.pixelSize: Theme.fontSizeContent
+                //         color: Theme.colorText
+                //         wrapMode: Text.WordWrap
+                //     }
 
-                    SwitchThemed {
-                        id: switch_appThemeAuto
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
+                //     SwitchThemed {
+                //         id: switch_appThemeAuto
+                //         anchors.right: parent.right
+                //         anchors.rightMargin: Theme.componentMargin
+                //         anchors.verticalCenter: parent.verticalCenter
+                //         z: 1
 
-                        checked: settingsManager.appThemeAuto
-                        onClicked: {
-                            settingsManager.appThemeAuto = checked
-                            Theme.loadTheme(settingsManager.appTheme)
-                        }
-                    }
-                }
-                Text { // legend_appThemeAuto
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
+                //         checked: settingsManager.appThemeAuto
+                //         onClicked: {
+                //             settingsManager.appThemeAuto = checked
+                //             Theme.loadTheme(settingsManager.appTheme)
+                //         }
+                //     }
+                // }
 
-                    topPadding: -12
-                    bottomPadding: isDesktop ? 6 : 6
+                // Text { // legend_appThemeAuto
+                //     anchors.left: parent.left
+                //     anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
+                //     anchors.right: parent.right
+                //     anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
-                    property bool osSupport: (Qt.platform.os !== "linux")
-                    property string osName: {
-                        if (Qt.platform.os === "android") return "Android"
-                        if (Qt.platform.os === "ios") return "iOS"
-                        if (Qt.platform.os === "osx") return "macOS"
-                        if (Qt.platform.os === "linux") return "Linux"
-                        if (Qt.platform.os === "windows") return "Windows"
-                        //: fallback string
-                        return qsTr("Operating System")
-                    }
+                //     topPadding: -12
+                //     bottomPadding: isDesktop ? 6 : 6
 
-                    text: {
-                        if (settingsManager.appThemeAuto) {
-                            if (osSupport) return qsTr("Dark mode will follow %1 settings.").arg(osName)
-                            return qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
-                        }
-                        return qsTr("Dark mode schedule is disabled.")
-                    }
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                }
+                //     property bool osSupport: (Qt.platform.os !== "linux")
+                //     property string osName: {
+                //         if (Qt.platform.os === "android") return "Android"
+                //         if (Qt.platform.os === "ios") return "iOS"
+                //         if (Qt.platform.os === "osx") return "macOS"
+                //         if (Qt.platform.os === "linux") return "Linux"
+                //         if (Qt.platform.os === "windows") return "Windows"
+                //         //: fallback string
+                //         return qsTr("Operating System")
+                //     }
+
+                //     text: {
+                //         if (settingsManager.appThemeAuto) {
+                //             if (osSupport) return qsTr("Dark mode will follow %1 settings.").arg(osName)
+                //             return qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
+                //         }
+                //         return qsTr("Dark mode schedule is disabled.")
+                //     }
+
+                //     textFormat: Text.PlainText
+                //     wrapMode: Text.WordWrap
+                //     color: Theme.colorSubText
+                //     font.pixelSize: Theme.fontSizeContentSmall
+                // }
 
                 ////////
 
@@ -546,7 +380,7 @@ Loader {
                         height: 32
 
                         text: qsTr("about")
-                        colorBackground: Theme.colorForeground
+                        colorBackground: Theme.colorBackground
                         colorText: Theme.colorOrange
                         colorBorder: Theme.colorOrange
 
@@ -639,8 +473,8 @@ Loader {
                     visible: (element_worker.visible && isDesktop)
 
                     text: settingsManager.systray ?
-                              qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
-                              qsTr("WatchFlower is only active while the window is open.")
+                              qsTr("SmartCare will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
+                              qsTr("SmartCare is only active while the window is open.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -716,8 +550,8 @@ Loader {
                     opacity: settingsManager.systray ? 1 : 0.4
 
                     text: settingsManager.notifications ?
-                              qsTr("If a plant needs water, WatchFlower will bring it to your attention!") :
-                              qsTr("If a plant needs water, WatchFlower can bring it to your attention.")
+                              qsTr("If a plant needs water, SmartCare will bring it to your attention!") :
+                              qsTr("If a plant needs water, SmartCare can bring it to your attention.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -880,7 +714,7 @@ Loader {
 
                         width: 24
                         height: 24
-                        color: Theme.colorIcon
+                        color: Theme.colorPrimary
                         source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
                     }
 
@@ -920,8 +754,8 @@ Loader {
                     bottomPadding: 0
                     visible: (Qt.platform.os === "android")
 
-                    text: settingsManager.bluetoothControl ? qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
-                                                             qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.")
+                    text: settingsManager.bluetoothControl ? qsTr("SmartCare will enable your device's Bluetooth in order to operate.") :
+                                                             qsTr("SmartCare will only operate if your device's Bluetooth is already enabled.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -1660,7 +1494,7 @@ Loader {
 
                         visible: isDesktop
 
-                        text: qsTr("Saved in your documents, under the 'WatchFlower' directory.")
+                        text: qsTr("Saved in your documents, under the 'SmartCare' directory.")
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         color: Theme.colorSubText
