@@ -1,7 +1,7 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 import DeviceUtils
 
 Item {
@@ -547,7 +547,7 @@ Item {
                     width: 32
                     height: 32
 
-                    color: Theme.colorIcon
+                    color: Theme.colorPrimary
                     opacity: 0.8
 
                     source: {

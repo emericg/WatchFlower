@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 import PlantUtils
 
 Grid {
@@ -28,37 +28,17 @@ Grid {
     ////////
 
     property var currentPlant: null
+    property string soilMoistureCheckMessage: ""
+    property string soilConductivityCheckMessage : ""
+    property string soilPHCheckMessage : ""
+    property string soilTemperatureCheckMessage : ""
+    property string soilHumidityCheckMessage : ""
+    property string soilLuminosityLUXCheckMessage : ""
+    property string soilLuminosityMMOLCheckMessage : ""
 
     onCurrentPlantChanged: {
         if (typeof currentPlant === "undefined" || !currentPlant) return
-/*
-        console.log("> onCurrentPlantChanged()")
 
-        console.log("full name: " + currentPlant.name)
-        console.log("botanical name: " + currentPlant.nameBotanical)
-        console.log("variety name: " + currentPlant.nameVariety)
-        console.log("common name: " + currentPlant.nameCommon)
-
-        console.log("diameter: " + currentPlant.diameter)
-        console.log("height: " + currentPlant.height)
-
-        console.log("tags: " + currentPlant.tags)
-
-        console.log("calendarPlanting: " + currentPlant.calendarPlanting)
-        console.log("calendarGrowing: " + currentPlant.calendarGrowing)
-        console.log("calendarBlooming: " + currentPlant.calendarBlooming)
-        console.log("calendarFruiting: " + currentPlant.calendarFruiting)
-
-        console.log("colors1: " + currentPlant.colorsLeaf)
-        console.log("colors2: " + currentPlant.colorsBract)
-        console.log("colors3: " + currentPlant.colorsFlower)
-        console.log("colors4: " + currentPlant.colorsFruit)
-
-        console.log("watering: " + currentPlant.watering)
-
-        console.log("soil Moisture m/m: " + currentPlant.soilMoist_min + " / " + currentPlant.soilMoist_max)
-        console.log("mmol m/m: " + currentPlant.lightMmol_min + " / " + currentPlant.lightMmol_max)
-*/
         col1.contentY = 0
         col2.contentY = 0
         col3.contentY = 0
@@ -172,6 +152,7 @@ Grid {
         rangeSlider_temp.setValues(currentPlant.envTemp_min, currentPlant.envTemp_max)
         rangeSlider_humi.setValues(currentPlant.envHumi_min, currentPlant.envHumi_max)
         rangeSlider_lumi_lux.setValues(currentPlant.lightLux_min, currentPlant.lightLux_max)
+
 
         itemLumiMmol.visible = (currentPlant.lightMmol_min > 0)
         rangeSlider_lumi_mmol.setValues(currentPlant.lightMmol_min, Math.max(currentPlant.lightMmol_min, currentPlant.lightMmol_max))
@@ -327,7 +308,9 @@ Grid {
                 anchors.rightMargin: (uiMode === 1) ? -plantScreen.padding : 0
                 height: columnHeader.height
 
-                color: (uiMode === 1) ? Theme.colorForeground : Theme.colorBackground
+                color: (uiMode === 1) ? Theme.colorBackground : Theme.colorBackground
+                border.width : (uiMode === 1) ? 3 : 0
+                border.color : (uiMode === 1) ? Theme.colorComponentBorder : Theme.colorBackground
 
                 Column {
                     id: columnHeader
@@ -949,9 +932,10 @@ Grid {
                     height: width
 
                     radius: Theme.componentRadius
-                    color: Theme.colorForeground
+                    color: Theme.colorBackground
                     border.width: 2
-                    border.color: Qt.darker(color, 1.03)
+                    //border.color: Qt.darker(color, 1.03)
+                    border.color:  Theme.colorComponentBorder
 
                     Item {
                         anchors.right: parent.right
@@ -1036,9 +1020,10 @@ Grid {
                     height: width
 
                     radius: Theme.componentRadius
-                    color: Theme.colorForeground
+                    color: Theme.colorBackground
                     border.width: 2
-                    border.color: Qt.darker(color, 1.03)
+                    //border.color: Qt.darker(color, 1.03)
+                    border.color : Theme.colorComponentBorder
 
                     Item {
                         anchors.right: parent.right
@@ -1122,9 +1107,10 @@ Grid {
                 height: colFert.height + plantScreen.insidemargins*2
 
                 radius: Theme.componentRadius
-                color: Theme.colorForeground
+                color: Theme.colorBackground
                 border.width: 2
-                border.color: Qt.darker(color, 1.03)
+                //border.color: Qt.darker(color, 1.03)
+                border.color : Theme.colorComponentBorder
 
                 Column {
                     id: colFert
@@ -1173,9 +1159,10 @@ Grid {
                 height: colPrun.height + plantScreen.insidemargins*2
 
                 radius: Theme.componentRadius
-                color: Theme.colorForeground
+                color: Theme.colorBackground
                 border.width: 2
-                border.color: Qt.darker(color, 1.03)
+                //border.color: Qt.darker(color, 1.03)
+                border.color : Theme.colorComponentBorder
 
                 Column {
                     id: colPrun
@@ -1212,9 +1199,9 @@ Grid {
                 height: colSoil.height + plantScreen.insidemargins*2
 
                 radius: Theme.componentRadius
-                color: Theme.colorForeground
+                color: Theme.colorBackground
                 border.width: 2
-                border.color: Qt.darker(color, 1.03)
+                border.color : Theme.colorComponentBorder
 
                 Column {
                     id: colSoil
@@ -1288,7 +1275,7 @@ Grid {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
-                    text: qsTr("Please note that WatchFlower should not be your definitive source of information about plant care.")
+                    text: qsTr("Please note that SmartCare should not be your definitive source of information about plant care.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     color: Theme.colorSubText
@@ -1420,6 +1407,7 @@ Grid {
                     to: 5000
                     stepSize: 50
                 }
+
             }
 
             Item {
@@ -1764,6 +1752,7 @@ Grid {
                     to: 25000
                     stepSize: 100
                 }
+
             }
 
             ////

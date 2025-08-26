@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@
  * VSON technology "Air Box WP6003"
  *
  * Protocol infos:
- * - WatchFlower/docs/wp6003.md
+ * - SmartCare/docs/wp6003.md
  */
 class DeviceWP6003: public DeviceEnvironmental
 {

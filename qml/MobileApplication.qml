@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Window
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 import MobileUI
 
 ApplicationWindow {
@@ -423,7 +423,7 @@ ApplicationWindow {
             },
             State {
                 name: "DeviceList"
-                PropertyChanges { target: appHeader; headerTitle: "WatchFlower"; }
+                PropertyChanges { target: appHeader; headerTitle: "SmartCare"; }
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: true; enabled: true; }
                 PropertyChanges { target: screenDevicePlantSensor; visible: false; enabled: false }

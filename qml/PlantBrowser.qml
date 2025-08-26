@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Loader {
     id: plantBrowser
@@ -218,7 +218,7 @@ Loader {
                     width: ListView.view.width
                     height: 40
 
-                    color: (index % 2) ? Theme.colorForeground :Theme.colorBackground
+                    color: (index % 2) ? Theme.colorComponentBorder :Theme.colorBackground
 
                     Row {
                         anchors.left: parent.left
@@ -384,7 +384,7 @@ Loader {
 
             z: 5
             height: 52
-            color: Theme.colorForeground
+            color: Theme.colorBackground
             visible: (singleColumn &&
                       appContent.state === "PlantBrowser" &&
                       screenPlantBrowser.entryPoint === "DevicePlantSensor" &&

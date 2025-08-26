@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -201,7 +201,7 @@ bool DevicePlantSensor::loadPlant()
     bool status = false;
 
     QSqlQuery queryPlant;
-    queryPlant.prepare("SELECT plantId, plantName, plantCache, plantStart " \
+    queryPlant.prepare("SELECT plantId, plantName,  plantCache, plantStart " \
                        "FROM plants WHERE deviceAddr = :deviceAddr;");
     queryPlant.bindValue(":deviceAddr", m_deviceAddress);
 

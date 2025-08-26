@@ -29,7 +29,7 @@ Item {
 
     // colors
     property color colorForeground: Theme.colorPrimary
-    property color colorBackground: Theme.colorForeground
+    property color colorBackground: Theme.colorBackground
 
     ////////////////
 
@@ -67,6 +67,8 @@ Item {
 
                 radius: control.hhh
                 color: control.colorBackground
+                border.width: 2
+                border.color: Theme.colorComponentBorder
 
                 layer.enabled: true
                 layer.effect: MultiEffect {
@@ -138,7 +140,7 @@ Item {
                 textFormat: Text.PlainText
 
                 font.pixelSize: Theme.fontSizeContentVerySmall
-                color: (control.limitMin <= control.value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                color: (control.limitMin <= control.value) ? Theme.colorHighContrast : Theme.colorHighContrast
                 opacity: (control.limitMin <= control.value) ? 0.75 : 0.25
                 Behavior on color { ColorAnimation { duration: control.animated ? 333 : 0 } }
                 Behavior on opacity { OpacityAnimator { duration: control.animated ? 333 : 0 } }
@@ -194,7 +196,7 @@ Item {
                 textFormat: Text.PlainText
 
                 font.pixelSize: Theme.fontSizeContentVerySmall
-                color: (control.limitMax < control.value) ? Theme.colorLowContrast : Theme.colorHighContrast
+                color: (control.limitMax < control.value) ? Theme.colorHighContrast : Theme.colorHighContrast
                 opacity: (control.limitMax < control.value) ? 0.75 : 0.25
                 Behavior on color { ColorAnimation { duration: control.animated ? 333 : 0 } }
                 Behavior on opacity { OpacityAnimator { duration: control.animated ? 333 : 0 } }

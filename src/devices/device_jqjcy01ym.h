@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@
  * JQJCY01YM device / squared body / OLED
  *
  * Protocol infos:
- * - WatchFlower/docs/jqjcy01m-ble-api.md
+ * - SmartCare/docs/jqjcy01m-ble-api.md
  */
 class DeviceJQJCY01YM: public DeviceEnvironmental
 {

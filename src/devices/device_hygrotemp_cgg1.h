@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@
  * CGG1 device / round body / E-Ink
  *
  * Protocol infos:
- * - WatchFlower/docs/cgg1-ble-api.md
+ * - SmartCare/docs/cgg1-ble-api.md
  */
 class DeviceHygrotempCGG1: public DeviceThermometer
 {

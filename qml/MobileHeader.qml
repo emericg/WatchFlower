@@ -1,7 +1,7 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Rectangle {
     id: appHeader

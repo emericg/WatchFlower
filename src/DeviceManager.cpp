@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -1644,7 +1644,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
     Device *d = nullptr;
 
-    // Regular WatchFlower device
+    // Regular SmartCare device
     if (info.name() == "Flower care" || info.name() == "Flower mate" ||
         info.name() == "Grow care garden" ||
         info.name() == "TY" ||

@@ -1,5 +1,5 @@
 /*!
- * This file is part of WatchFlower.
+ * This file is part of SmartCare.
  * Copyright (c) 2022 Emeric Grange - All Rights Reserved
  *
  * This program is free software: you can redistribute it and/or modify
@@ -123,9 +123,9 @@ void SystrayManager::initSystray()
         }
 
 #if defined(Q_OS_MACOS)
-        m_sysTrayIcon = new QIcon(":/assets/gfx/logos/watchflower_tray_dark.svg");
+        m_sysTrayIcon = new QIcon(":/assets/gfx/logos/watchflower_monochrome.png");
 #else
-        m_sysTrayIcon = new QIcon(":/assets/gfx/logos/watchflower_tray_dark.svg");
+        m_sysTrayIcon = new QIcon(":/assets/gfx/logos/watchflower_monochrome.png");
 #endif
     }
 }
@@ -159,7 +159,7 @@ bool SystrayManager::installSystray()
             connect(m_saved_window, &QQuickWindow::visibilityChanged, this, &SystrayManager::visibilityChanged);
 
             // Show greetings
-            //m_sysTray->showMessage("WatchFlower", tr("WatchFlower is running in the background!"));
+            //m_sysTray->showMessage("SmartCare", tr("SmartCare is running in the background!"));
 
             status = true;
         }
@@ -229,7 +229,7 @@ void SystrayManager::sendNotification(const QString &text)
 {
     if (m_sysTray && QSystemTrayIcon::isSystemTrayAvailable())
     {
-        m_sysTray->showMessage("WatchFlower", text);
+        m_sysTray->showMessage("SmartCare", text);
     }
 }
 

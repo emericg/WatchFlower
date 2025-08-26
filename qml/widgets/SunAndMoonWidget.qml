@@ -3,7 +3,7 @@ import QtQuick.Controls
 import QtQuick.Shapes
 
 import ComponentLibrary
-import WatchFlower
+import SmartCare
 
 Item {
     id: sunAndMoonWidget
