@@ -25,7 +25,7 @@ jobs:
   ## Android build #############################################################
   build-android:
     name: "Android CI build"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     steps:
       # Checkout repository (and submodules)
       - name: Checkout repository (and submodules)
@@ -33,21 +33,21 @@ jobs:
         with:
           submodules: recursive
 
-      # Java environment (already installed in 'ubuntu-20.04')
-      - name: Setup Java environment
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      # Java environment (already installed in 'ubuntu-24.04')
+      #- name: Setup Java environment
+      #  uses: actions/setup-java@v4
+      #  with:
+      #    distribution: 'temurin'
+      #    java-version: '17'
 
-      # Android environment (already installed in 'ubuntu-20.04')
+      # Android environment (already installed in 'ubuntu-24.04')
       #- name: Setup Android environment
       #  uses: android-actions/setup-android@v3
       #- name: Install Android SDK / NDK / tools
       #  run: |
-      #       sdkmanager "platforms;android-35"
+      #       sdkmanager "platforms;android-36"
       #       sdkmanager "ndk;26.1.10909125"
-      #       sdkmanager "build-tools;35.0.0"
+      #       sdkmanager "build-tools;36.0.0"
 
       # Install Qt (desktop & Android)
       - name: Install Qt (desktop & Android)
@@ -63,7 +63,7 @@ jobs:
       # Install dependencies (from package manager)
       - name: Install dependencies (from package manager)
         run: |
-             sudo apt-get install ninja-build -y;
+             sudo apt-get install cmake ninja-build -y;
 
       # Setup env
       - name: Setup env
@@ -92,7 +92,7 @@ jobs:
   ## iOS build #################################################################
   build-ios:
     name: "iOS CI build"
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       # Checkout repository (and submodules)
       - name: Checkout repository (and submodules)

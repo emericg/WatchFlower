@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "6.0"
-  QT_VERSION: "6.7.3"
+  QT_VERSION: "6.9.2"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -25,7 +25,7 @@ jobs:
   ## GNU/Linux build ###########################################################
   build-linux:
     name: "Linux CI build"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       # Checkout repository (and submodules)
       - name: Checkout repository (and submodules)
@@ -38,7 +38,7 @@ jobs:
         run: |
              sudo apt-get install libgl1-mesa-dev libxkbcommon-x11-dev libx11-xcb-dev libzstd-dev -y;
              sudo apt-get install cmake ninja-build pkgconf libtool -y;
-             sudo apt-get install appstream -y;
+             sudo apt-get install libfuse2 appstream -y;
 
       # Install Qt
       - name: Install Qt
@@ -75,7 +75,7 @@ jobs:
   ## macOS build ###############################################################
   build-mac:
     name: "macOS CI build"
-    runs-on: macos-13
+    runs-on: macos-15
     steps:
       # Checkout repository (and submodules)
       - name: Checkout repository (and submodules)
@@ -144,7 +144,7 @@ jobs:
         with:
           version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qtpositioning
-          arch: 'win64_msvc2019_64'
+          arch: 'win64_msvc2022_64'
 
       # Build application
       - name: Build application
