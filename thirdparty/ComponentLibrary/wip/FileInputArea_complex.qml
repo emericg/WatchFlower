@@ -38,9 +38,11 @@ T.TextField {
     Keys.onBackPressed: focus = false
 
     // settings
-    property string file: control.text
-    property string path: control.text
-    property bool isValid: (control.text.length > 0)
+    property alias folder: control.text
+    property alias file: fileArea.text
+    property alias extension: extensionArea.text
+    property string path: folder + file + "." + extension
+    property bool isValid: (control.text.length > 0 && fileArea.text.length > 0 && extensionArea.text.length > 0)
 
     // settings
     property string dialogTitle: qsTr("Please choose a file!")
@@ -69,10 +71,9 @@ T.TextField {
         asynchronous: false
         sourceComponent: FileDialog {
             title: control.dialogTitle
-
             nameFilters: control.dialogFilter
-            fileMode: control.dialogFileMode
 
+            fileMode: control.dialogFileMode
             currentFolder: UtilsPath.makeUrl(control.text)
             currentFile: UtilsPath.makeUrl(control.text)
 
@@ -82,6 +83,7 @@ T.TextField {
                 //console.log("fileDialog selectedFile: " + selectedFile)
 
                 var f = UtilsPath.cleanUrl(selectedFile)
+                if (f.slice(0, -1) !== "/") f += "/"
 
                 control.text = f
             }
@@ -118,6 +120,48 @@ T.TextField {
 
     ////////////////
 
+    Row {
+        id: contentRow
+        anchors.left: parent.left
+        anchors.leftMargin: control.leftPadding + control.contentWidth
+        anchors.right: parent.right
+        anchors.rightMargin: control.rightPadding
+        anchors.verticalCenter: parent.verticalCenter
+
+        clip: true
+
+        TextInput { // fileArea
+            id: fileArea
+            anchors.verticalCenter: parent.verticalCenter
+
+            width: contentWidth
+            autoScroll: false
+            color: Theme.colorSubText
+
+            selectByMouse: true
+            selectionColor: control.colorSelection
+            selectedTextColor: control.colorSelectedText
+
+            onTextChanged: control.textChanged()
+            onEditingFinished: focus = false
+        }
+        Text { // dot
+            id: extensionDot
+            anchors.verticalCenter: parent.verticalCenter
+            text: "."
+            color: Theme.colorSubText
+            verticalAlignment: Text.AlignVCenter
+        }
+        Text { // extension
+            id: extensionArea
+            anchors.verticalCenter: parent.verticalCenter
+            color: Theme.colorSubText
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    ////////////////
+
     ButtonThemed {
         id: buttonChange
         anchors.top: parent.top
@@ -138,7 +182,7 @@ T.TextField {
         color: "transparent"
 
         border.width: 2
-        border.color: control.activeFocus ? control.colorSelection : control.colorBorder
+        border.color: (control.activeFocus || fileArea.activeFocus) ? control.colorSelection : control.colorBorder
     }
 
     ////////////////

@@ -119,7 +119,6 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
 
 qt_add_qml_module(${CMAKE_PROJECT_NAME}
     URI ${CMAKE_PROJECT_NAME}
-    RESOURCE_PREFIX "/WatchFlower"
     QML_FILES
         qml/MobileApplication.qml
         qml/MobileHeader.qml

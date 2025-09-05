@@ -204,10 +204,8 @@ int main(int argc, char *argv[])
     PlantUtils::registerQML();
 
     QQmlApplicationEngine engine;
-    engine.addImportPath(":/WatchFlower");
-    engine.addImportPath(":/ComponentLibrary");
-
     QQmlContext *engine_context = engine.rootContext();
+
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("databaseManager", db);

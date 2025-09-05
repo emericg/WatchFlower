@@ -125,7 +125,7 @@ T.Popup {
 
             ////////
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionUpdate
                 index: 1
 
@@ -143,7 +143,7 @@ T.Popup {
                 }
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionRealtime
                 index: 2
 
@@ -163,14 +163,13 @@ T.Popup {
 
             ////////
 
-            ListSeparatorPadded {
+            ActionMenuItem_separator {
                 anchors.leftMargin: Theme.componentMargin
                 anchors.rightMargin: Theme.componentMargin
-                height: 9
                 visible: (contentColumn.partonevisible && contentColumn.parttwovisible)
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionHistoryRefresh
                 index: 3
 
@@ -188,7 +187,7 @@ T.Popup {
                 }
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionHistoryClear
                 index: 4
 
@@ -206,14 +205,13 @@ T.Popup {
 
             ////////
 
-            ListSeparatorPadded {
+            ActionMenuItem_separator {
                 anchors.leftMargin: Theme.componentMargin
                 anchors.rightMargin: Theme.componentMargin
-                height: 9
                 visible: ((contentColumn.partonevisible || contentColumn.parttwovisible) && contentColumn.partthreevisible)
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionLed
                 index: 8
 
@@ -231,7 +229,7 @@ T.Popup {
                 }
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionWatering
                 index: 9
 
@@ -249,7 +247,7 @@ T.Popup {
                 }
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionCalibrate
                 index: 10
 
@@ -267,7 +265,7 @@ T.Popup {
                 }
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionGraphMode
                 index: 16
 
@@ -288,7 +286,7 @@ T.Popup {
                 }
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionShowSettings
                 index: 17
 
@@ -306,7 +304,7 @@ T.Popup {
                 }
             }
 
-            ActionMenuItem {
+            ActionMenuItem_button {
                 id: actionReboot
                 index: 32
 
