@@ -133,6 +133,8 @@ Item {
                     font.pixelSize: Theme.fontSizeContentSmall
                 }
             }
+
+            ////////
         }
     }
 
@@ -387,7 +389,11 @@ Item {
                         }
                     }
                 }
+
+                ////////
             }
+
+            ////////////////
         }
     }
 

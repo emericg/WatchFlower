@@ -13,10 +13,17 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadDevice(clickedDevice) {
-        // set device
+        // checks
         if (typeof clickedDevice === "undefined" || !clickedDevice) return
         if (!clickedDevice.isPlantSensor) return
-        if (clickedDevice === currentDevice) return
+
+        // already set?
+        if (clickedDevice === currentDevice) {
+            appContent.state = "DevicePlantSensor"
+            return
+        }
+
+        // set device
         currentDevice = clickedDevice
 
         // load screen

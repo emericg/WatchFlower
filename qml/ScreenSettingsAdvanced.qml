@@ -36,11 +36,9 @@ Loader {
     asynchronous: false
 
     sourceComponent: Item {
-        id: itemSettingsAdvanced
-        implicitWidth: 480
-        implicitHeight: 720
+        anchors.fill: parent
 
-        focus: parent.focus
+        ////////////////
 
         function loadScreen() {
             //console.log("SettingsAdvanced // loadScreen()")
@@ -64,8 +62,11 @@ Loader {
 
             Column {
                 id: contentColumn
+
                 anchors.left: parent.left
+                anchors.leftMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
                 anchors.right: parent.right
+                anchors.rightMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
 
                 topPadding: Theme.componentMargin
                 bottomPadding: Theme.componentMargin
@@ -220,7 +221,7 @@ Loader {
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        text: mainDatabase.getDatabaseDirectory()
+                        text: databaseManager.getDatabaseDirectory()
                         readOnly: true
 
                         ButtonFlat {
@@ -242,14 +243,14 @@ Loader {
 
                         ButtonFlat {
                             text: "save"
-                            onClicked: mainDatabase.saveDatabase()
+                            onClicked: databaseManager.saveDatabase()
                         }
 
                         ButtonFlat {
                             color: Theme.colorWarning
 
                             text: "restore"
-                            //onPressAndHold: mainDatabase.restoreDatabase()
+                            //onPressAndHold: databaseManager.restoreDatabase()
                         }
                     }
                 }

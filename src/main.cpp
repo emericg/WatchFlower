@@ -210,6 +210,7 @@ int main(int argc, char *argv[])
     QQmlContext *engine_context = engine.rootContext();
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
+    engine_context->setContextProperty("databaseManager", db);
     engine_context->setContextProperty("notificationManager", nm);
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);

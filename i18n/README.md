@@ -71,6 +71,9 @@ Special thanks
 **Norwegian (Bokmål and Nynorsk)**
 - Guttorm Flatabø https://github.com/dittaeva
 
+**Polish**
+- Andrzej Dopierała https://github.com/theundefined
+
 **Russian**
 - Pavel Markin
 

@@ -32,11 +32,11 @@ Loader {
     sourceComponent: Item {
         anchors.fill: parent
 
+        ////////////////
+
         function backAction() {
             screenDeviceList.loadScreen()
         }
-
-        ////////////////
 
         PopupBackgroundUpdates {
             id: popupBackgroundUpdates
@@ -60,8 +60,11 @@ Loader {
 
             Column {
                 id: contentColumn
+
                 anchors.left: parent.left
+                anchors.leftMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
                 anchors.right: parent.right
+                anchors.rightMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
 
                 topPadding: 16
                 bottomPadding: 16
@@ -462,6 +465,7 @@ Loader {
                             ListElement { text: "Nederlands"; }
                             ListElement { text: "Norsk (Bokmål)"; }
                             ListElement { text: "Norsk (Nynorsk)"; }
+                            ListElement { text: "Polski"; }
                             ListElement { text: "Pусский"; }
                         }
 
@@ -1728,6 +1732,8 @@ Loader {
                         }
                     }
                 }
+
+                ////////
             }
         }
 

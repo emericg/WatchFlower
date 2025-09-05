@@ -14,10 +14,17 @@ Loader {
     ////////////////////////////////////////////////////////////////////////////
 
     function loadDevice(clickedDevice) {
-        // set device
+        // checks
         if (typeof clickedDevice === "undefined" || !clickedDevice) return
         if (!clickedDevice.isThermometer) return
-        if (clickedDevice === currentDevice) return
+
+        // already set?
+        if (clickedDevice === currentDevice) {
+            appContent.state = "DeviceThermometer"
+            return
+        }
+
+        // set device
         currentDevice = clickedDevice
 
         // load screen

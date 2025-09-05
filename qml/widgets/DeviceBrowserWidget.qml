@@ -175,4 +175,6 @@ Item {
         visible: listMode
         color: Theme.colorSeparator
     }
+
+    ////////////////
 }

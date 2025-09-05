@@ -150,94 +150,89 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle { // rectangle border
-        anchors.fill: deviceWidgetRectangle
-
-        anchors.topMargin: listMode ? -halfmargin : 0
-        anchors.leftMargin: listMode ? -margin : 0
-        anchors.rightMargin: listMode ? -margin : 0
-        anchors.bottomMargin: listMode ? -halfmargin : 0
-
-        radius: Math.min(Theme.componentRadius, 8)
-        border.width: Theme.componentBorderWidth
-        border.color: {
-            if (listMode) return "transparent"
-            if (mousearea.containsPress) return Qt.lighter(Theme.colorSecondary, 1.1)
-            return Theme.colorSeparator
-        }
-        Behavior on border.color { ColorAnimation { duration: 133 } }
-
-        color: boxDevice.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
-        Behavior on color { ColorAnimation { duration: 133 } }
-
-        opacity: boxDevice.selected ? 0.5 : (listMode ? 0 : 1)
-        Behavior on opacity { OpacityAnimator { duration: 133 } }
-    }
-
-    Item { // outside indicator
+    Item {
         anchors.fill: parent
-        anchors.topMargin: listMode ? 0 : halfmargin
-        anchors.leftMargin: listMode ? -halfmargin : halfmargin
-        clip: true
+        anchors.topMargin: deviceWidget.listMode ? 0 : deviceWidget.halfmargin
+        anchors.leftMargin: deviceWidget.listMode ? -deviceWidget.margin : deviceWidget.halfmargin
+        anchors.rightMargin: deviceWidget.listMode ? -deviceWidget.margin : deviceWidget.halfmargin
+        anchors.bottomMargin: deviceWidget.listMode ? 0 : deviceWidget.halfmargin
 
-        Loader {
+        Loader { // background+border rectangle
+            anchors.fill: parent
+
             asynchronous: true
-            active: boxDevice.deviceIsOutside
-            sourceComponent: IconSvg {
-                anchors.top: parent.top
-                anchors.topMargin: -40
-                anchors.left: parent.left
-                anchors.leftMargin: -40
+            active: !deviceWidget.listMode
+            sourceComponent: Rectangle {
+                radius: Math.min(Theme.componentRadius, 8)
 
-                width: 96
-                height: 96
-                opacity: 0.2
+                opacity: boxDevice.selected ? 0.5 : 1
+                Behavior on opacity { OpacityAnimator { duration: 133 } }
 
-                property bool isIsDay: sunAndMoon.isItDay
+                color: boxDevice.selected ? Theme.colorSeparator : Theme.colorDeviceWidget
+                Behavior on color { ColorAnimation { duration: 133 } }
 
-                source: isIsDay ? "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
-                                : "qrc:/IconLibrary/material-symbols/weather/brightness_1-fill.svg"
-                color: isIsDay ? Theme.colorYellow : Theme.colorBlue
+                border.width: Theme.componentBorderWidth
+                border.color: mousearea.containsPress ? Qt.lighter(Theme.colorSecondary, 1.1) : Theme.colorSeparator
+                Behavior on border.color { ColorAnimation { duration: 133 } }
             }
         }
-    }
 
-    Rectangle { // bottom separator
-        anchors.left: parent.left
-        anchors.leftMargin: -halfmargin
-        anchors.right: parent.right
-        anchors.rightMargin: -halfmargin
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: -1
-
-        height: 1
-        visible: listMode
-        color: Theme.colorSeparator
-    }
-
-    ////////////////////////////////////////////////////////////////////////////
-
-    Item {
-        id: deviceWidgetRectangle
-        anchors.fill: parent
-        anchors.margins: halfmargin
-
-        opacity: boxDevice.deviceEnabled ? 1 : 0.66
-
-        RippleThemed {
+        RippleThemed { // click indicator
             anchors.fill: parent
-            anchor: deviceWidget
+            anchor: parent
             clip: true
 
             pressed: mousearea.pressed
-            active: mousearea.enabled && mousearea.down
+            active: enabled && mousearea.containsPress
             color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.8)
+        }
+
+        Loader { // outside indicator
+            anchors.fill: parent
+            clip: true
+
+            asynchronous: true
+            active: boxDevice.deviceIsOutside
+            sourceComponent: Item {
+                IconSvg {
+                    anchors.top: parent.top
+                    anchors.topMargin: -40
+                    anchors.left: parent.left
+                    anchors.leftMargin: -40
+
+                    width: 96
+                    height: 96
+                    opacity: 0.2
+
+                    property bool isIsDay: sunAndMoon.isItDay
+
+                    source: isIsDay ? "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
+                                    : "qrc:/IconLibrary/material-symbols/weather/brightness_1-fill.svg"
+                    color: isIsDay ? Theme.colorYellow : Theme.colorBlue
+                }
+            }
+        }
+
+        Loader { // bottom separator
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: -1
+
+            asynchronous: true
+            active: deviceWidget.listMode
+            sourceComponent: Rectangle { // bottom separator
+                height: 1
+                color: Theme.colorSeparator
+            }
         }
 
         MouseArea {
             id: mousearea
             anchors.fill: parent
             acceptedButtons: Qt.LeftButton | Qt.MiddleButton
+
+            ////
 
             onClicked: (mouse) => {
                 if (mouse.button === Qt.LeftButton) {
@@ -286,37 +281,50 @@ Item {
                     deviceList.deselectDevice(index, boxDevice.deviceType)
                 }
             }
+
+            ////
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Item {
+        id: deviceWidgetRectangle
+
+        anchors.fill: parent
+        anchors.margins: deviceWidget.halfmargin
+
+        opacity: boxDevice.deviceEnabled ? 1 : 0.66
 
         ////////////////
 
         Row {
             id: rowLeft
             anchors.top: parent.top
-            anchors.topMargin: hugeMode ? 16 : 8
+            anchors.topMargin: deviceWidget.hugeMode ? 16 : 8
             anchors.left: parent.left
-            anchors.leftMargin: hugeMode ? (listMode ? 0 : 16) : (listMode ? 2 : 12)
+            anchors.leftMargin: deviceWidget.hugeMode ? (deviceWidget.listMode ? 0 : 16) : (deviceWidget.listMode ? 2 : 12)
             anchors.right: rowRight.left
-            anchors.rightMargin: listMode ? 2 : 8
+            anchors.rightMargin: deviceWidget.listMode ? 2 : 8
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: hugeMode ? 16 : 8
+            anchors.bottomMargin: deviceWidget.hugeMode ? 16 : 8
 
-            spacing: hugeMode ? (listMode ? 14 : 12) : (listMode ? 18 : 10)
+            spacing: deviceWidget.hugeMode ? (deviceWidget.listMode ? 14 : 12) : (deviceWidget.listMode ? 18 : 10)
 
             IconSvg {
                 id: imageDevice
-                width: hugeMode ? 32 : 24
-                height: hugeMode ? 32 : 24
+                width: deviceWidget.hugeMode ? 32 : 24
+                height: deviceWidget.hugeMode ? 32 : 24
                 anchors.verticalCenter: parent.verticalCenter
 
                 color: Theme.colorHighContrast
-                visible: (wideMode || hugeMode)
+                visible: (deviceWidget.wideMode || deviceWidget.hugeMode)
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
 
                 source: {
                     if (boxDevice.isPlantSensor) {
-                        if (hasHygro) {
+                        if (deviceWidget.hasHygro) {
                             if (boxDevice.deviceName === "ropot" || boxDevice.deviceName === "Parrot pot")
                                 return "qrc:/assets/gfx/icons/pot_flower-24px.svg"
                             else
@@ -328,7 +336,7 @@ Item {
                                 return "qrc:/IconLibrary/material-symbols/hardware/settings_remote.svg"
                         }
                     }
-                    return UtilsDeviceSensors.getDeviceIcon(boxDevice, hasHygro)
+                    return UtilsDeviceSensors.getDeviceIcon(boxDevice, deviceWidget.hasHygro)
                 }
             }
 
@@ -341,7 +349,7 @@ Item {
 
                     textFormat: Text.PlainText
                     color: Theme.colorText
-                    font.pixelSize: hugeMode ? 22 : 20
+                    font.pixelSize: deviceWidget.hugeMode ? 22 : 20
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
@@ -352,20 +360,20 @@ Item {
 
                     textFormat: Text.PlainText
                     color: Theme.colorSubText
-                    font.pixelSize: hugeMode ? 20 : 18
+                    font.pixelSize: deviceWidget.hugeMode ? 20 : 18
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
 
                 Row {
-                    height: hugeMode ? 26 : 22
+                    height: deviceWidget.hugeMode ? 26 : 22
                     anchors.left: parent.left
                     spacing: 8
 
                     IconSvg {
                         id: imageBattery
-                        width: hugeMode ? 30 : 28
-                        height: hugeMode ? 32 : 30
+                        width: deviceWidget.hugeMode ? 30 : 28
+                        height: deviceWidget.hugeMode ? 32 : 30
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: (boxDevice.hasBattery && boxDevice.deviceBattery >= 0)
@@ -381,7 +389,7 @@ Item {
 
                         textFormat: Text.PlainText
                         color: Theme.colorGreen
-                        font.pixelSize: hugeMode ? 16 : 15
+                        font.pixelSize: deviceWidget.hugeMode ? 16 : 15
 
                         SequentialAnimation on opacity {
                             id: opa
@@ -413,7 +421,7 @@ Item {
 
             Loader { // alarmWater
                 asynchronous: true
-                active: (hasHygro && boxDevice.hasDataToday &&
+                active: (deviceWidget.hasHygro && boxDevice.hasDataToday &&
                          (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) ||
                          (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax))
 
@@ -512,11 +520,11 @@ Item {
         Row {
             id: rowRight
             anchors.top: parent.top
-            anchors.topMargin: hugeMode ? 16 : 8
+            anchors.topMargin: deviceWidget.hugeMode ? 16 : 8
             anchors.right: parent.right
-            anchors.rightMargin: listMode ? -4 : (hugeMode ? 14 : 10)
+            anchors.rightMargin: deviceWidget.listMode ? -4 : (deviceWidget.hugeMode ? 14 : 10)
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: hugeMode ? 16 : 8
+            anchors.bottomMargin: deviceWidget.hugeMode ? 16 : 8
 
             spacing: 8
 
@@ -585,7 +593,7 @@ Item {
                 height: 32
                 anchors.verticalCenter: parent.verticalCenter
 
-                visible: listMode
+                visible: deviceWidget.listMode
                 color: boxDevice.hasData ? Theme.colorHighContrast : Theme.colorSubText
                 source: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
             }
@@ -604,8 +612,8 @@ Item {
             height: rowRight.height
 
             spacing: isPhone ? 7 : 8
-            property int sensorWidth: isPhone ? 9 : (hugeMode ? 12 : 10)
-            property int sensorRadius: hugeMode ? 3 : 2
+            property int sensorWidth: isPhone ? 9 : (deviceWidget.hugeMode ? 12 : 10)
+            property int sensorRadius: deviceWidget.hugeMode ? 3 : 2
 
             function initData() { }
             function updateData() { }
@@ -616,7 +624,7 @@ Item {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
-                visible: hasHygro
+                visible: deviceWidget.hasHygro
 
                 Rectangle {
                     anchors.fill: parent
@@ -648,7 +656,7 @@ Item {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
 
-                visible: hasHygro
+                visible: deviceWidget.hasHygro
 
                 Rectangle {
                     anchors.fill: parent
@@ -781,7 +789,7 @@ Item {
                 textFormat: Text.PlainText
                 color: Theme.colorText
                 font.letterSpacing: -1.4
-                font.pixelSize: hugeMode ? 28 : 24
+                font.pixelSize: deviceWidget.hugeMode ? 28 : 24
             }
             Text {
                 id: unit
@@ -790,7 +798,7 @@ Item {
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.letterSpacing: -1.4
-                font.pixelSize: hugeMode ? 24 : 20
+                font.pixelSize: deviceWidget.hugeMode ? 24 : 20
             }
         }
     }
@@ -818,7 +826,7 @@ Item {
                 textFormat: Text.PlainText
                 color: Theme.colorText
                 font.letterSpacing: -1.4
-                font.pixelSize: hugeMode ? 32 : 28
+                font.pixelSize: deviceWidget.hugeMode ? 32 : 28
             }
 
             Text {
@@ -827,7 +835,7 @@ Item {
 
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
-                font.pixelSize: hugeMode ? 26 : 22
+                font.pixelSize: deviceWidget.hugeMode ? 26 : 22
             }
         }
     }
@@ -945,7 +953,7 @@ Item {
                 anchors.fill: parent
                 anchors.margins: isPhone ? 0 : 2
 
-                arcWidth: isPhone ? 8 : (hugeMode ? 10 : 8)
+                arcWidth: isPhone ? 8 : (deviceWidget.hugeMode ? 10 : 8)
                 arcSpan: 270
                 arcCap: "round"
 
@@ -962,8 +970,8 @@ Item {
     ////////////////
 
     component AlarmIndicator: IconSvg {
-        width: hugeMode ? 28 : 24
-        height: hugeMode ? 28 : 24
+        width: deviceWidget.hugeMode ? 28 : 24
+        height: deviceWidget.hugeMode ? 28 : 24
         anchors.verticalCenter: parent.verticalCenter
 
         Rectangle {
@@ -984,5 +992,5 @@ Item {
         }
     }
 
-    ////////////////
+    ////////////////////////////////////////////////////////////////////////////
 }
