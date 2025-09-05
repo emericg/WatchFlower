@@ -303,8 +303,7 @@ int MobileUIPrivate::getStatusbarHeight()
 {
     return QNativeInterface::QAndroidApplication::runOnAndroidMainThread([]() -> int {
                QJniObject activity = QNativeInterface::QAndroidApplication::context();
-               QJniObject resources
-                   = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+               QJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
 
                QJniObject name = QJniObject::fromString("status_bar_height");
                QJniObject defType = QJniObject::fromString("dimen");
@@ -332,8 +331,7 @@ int MobileUIPrivate::getNavbarHeight()
 {
     return QNativeInterface::QAndroidApplication::runOnAndroidMainThread([]() -> int {
                QJniObject activity = QNativeInterface::QAndroidApplication::context();
-               QJniObject resources
-                   = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+               QJniObject resources = activity.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
 
                QJniObject name = QJniObject::fromString("navigation_bar_height");
                QJniObject defType = QJniObject::fromString("dimen");
@@ -455,30 +453,20 @@ int MobileUIPrivate::getScreenBrightness()
 {
     return QNativeInterface::QAndroidApplication::runOnAndroidMainThread([] {
                // If we have set a brightness value for the current application
-               QJniObject layoutParams = getAndroidWindow().callObjectMethod(
-                   "getAttributes", "()Landroid/view/WindowManager$LayoutParams;");
+               QJniObject layoutParams = getAndroidWindow().callObjectMethod( "getAttributes", "()Landroid/view/WindowManager$LayoutParams;");
                float brightnessApp = layoutParams.getField<jfloat>("screenBrightness");
-               if (brightnessApp >= 0.f)
-                   return static_cast<int>(brightnessApp * 100.f);
+               if (brightnessApp >= 0.f) return static_cast<int>(brightnessApp * 100.f);
 
                // Otherwise, we try to read the system wide brightness value
                QJniObject activity = QNativeInterface::QAndroidApplication::context();
-               QJniObject contentResolver
-                   = activity.callObjectMethod("getContentResolver",
-                                               "()Landroid/content/ContentResolver;");
-               QJniObject SCREEN_BRIGHTNESS
-                   = QJniObject::getStaticObjectField("android/provider/Settings$System",
-                                                      "SCREEN_BRIGHTNESS",
-                                                      "Ljava/lang/String;");
-               jint brightnessOS = QJniObject::callStaticMethod<jint>(
-                   "android/provider/Settings$System",
-                   "getInt",
-                   "(Landroid/content/ContentResolver;Ljava/lang/String;)I",
-                   contentResolver.object(),
-                   SCREEN_BRIGHTNESS.object<jstring>());
+               QJniObject contentResolver = activity.callObjectMethod("getContentResolver", "()Landroid/content/ContentResolver;");
+               QJniObject SCREEN_BRIGHTNESS = QJniObject::getStaticObjectField("android/provider/Settings$System",
+                                                                               "SCREEN_BRIGHTNESS", "Ljava/lang/String;");
+               jint brightnessOS = QJniObject::callStaticMethod<jint>("android/provider/Settings$System", "getInt",
+                                                                      "(Landroid/content/ContentResolver;Ljava/lang/String;)I",
+                                                                      contentResolver.object(), SCREEN_BRIGHTNESS.object<jstring>());
 
-               return static_cast<int>((brightnessOS / 255.f)
-                                       * 100.f); // SCREEN_BRIGHTNESS is 0 to ???
+               return static_cast<int>((brightnessOS / 255.f) * 100.f); // SCREEN_BRIGHTNESS is 0 to ???
            })
         .result()
         .toInt();

@@ -8,12 +8,7 @@ HEADERS += $${PWD}/MobileUI.h \
 INCLUDEPATH += $${PWD}
 
 android {
-    versionAtLeast(QT_VERSION, 6.0) {
-        SOURCES += $${PWD}/MobileUI_android_qt6.cpp
-    } else {
-        QT += androidextras
-        SOURCES += $${PWD}/MobileUI_android_qt5.cpp
-    }
+    SOURCES += $${PWD}/MobileUI_android.cpp
 } else: ios {
     LIBS += -framework UIKit
     SOURCES += $${PWD}/MobileUI_ios.mm
