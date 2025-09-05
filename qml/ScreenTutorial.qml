@@ -96,7 +96,7 @@ Rectangle {
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
-                            height: width*0.229
+                            height: width*0.2347
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             source: "qrc:/assets/gfx/tutorial/welcome-devices.svg"
@@ -297,7 +297,7 @@ Rectangle {
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.666 : 0.3)
-                            height: width*0.1797
+                            height: width*0.2
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             source: "qrc:/assets/gfx/tutorial/welcome-limits.svg"
