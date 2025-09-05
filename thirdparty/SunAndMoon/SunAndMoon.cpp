@@ -97,7 +97,7 @@ void SunAndMoon::set(const double latitude, const double longitude, const QDateT
 
     int interval_s1 = (m_sr.setTime - m_sr.riseTime);
     if (interval_s1 < 0) interval_s1 += 24*3600;
-    int interval_s2 = (QDateTime::currentDateTimeUtc().toSecsSinceEpoch() - m_sr.riseTime);
+    int interval_s2 = (QDateTime::currentSecsSinceEpoch() - m_sr.riseTime);
     if (interval_s2 < 0) interval_s2 += 24*3600;
     sun_percent = std::round((interval_s2 / static_cast<float>(interval_s1)) * 100.f);
     //if (sun_percent < 0) sun_percent = 0;
@@ -105,7 +105,7 @@ void SunAndMoon::set(const double latitude, const double longitude, const QDateT
 
     int interval_m1 = (m_mr.setTime - m_mr.riseTime);
     if (interval_m1 < 0) interval_m1 += 24*3600;
-    int interval_m2 = (QDateTime::currentDateTimeUtc().toSecsSinceEpoch() - m_mr.riseTime);
+    int interval_m2 = (QDateTime::currentSecsSinceEpoch() - m_mr.riseTime);
     if (interval_m2 < 0) interval_m2 += 24*3600;
     moon_percent = std::round((interval_m2 / static_cast<float>(interval_m1)) * 100.f);
     //if (moon_percent < 0) moon_percent = 0;

@@ -70,7 +70,7 @@ public:
         DEVICE_THERMOMETER,
         DEVICE_ENVIRONMENTAL,
 
-        DEVICE_LIGHT                 = 8,
+        DEVICE_LIGHT                = 8,
         DEVICE_BEACON,
         DEVICE_REMOTE,
         DEVICE_PBP,

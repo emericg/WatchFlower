@@ -470,7 +470,6 @@ void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
             {
                 refreshAdvertisement();
             }
-
 /*
             qDebug() << "* ThermoBeacon manufacturer data:" << getAddress();
             qDebug() << "- battery:" << m_deviceBattery;

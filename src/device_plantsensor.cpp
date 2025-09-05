@@ -462,7 +462,7 @@ void DevicePlantSensor::resetPlant()
     Q_EMIT plantUpdated();
 
     QSqlQuery setPlant;
-    setPlant.prepare("UPDATE  plants SET plantName = :plantName, plantCache = :plantCache "
+    setPlant.prepare("UPDATE plants SET plantName = :plantName, plantCache = :plantCache "
                      "WHERE deviceAddr = :deviceAddr;");
     setPlant.bindValue(":plantName", m_plantName);
     setPlant.bindValue(":plantCache", m_plantCache);
@@ -623,7 +623,7 @@ void DevicePlantSensor::updateChartData_history_today()
         QString strftime_short = "strftime('%d-%H', timestamp)"; // sqlite
         if (m_dbExternal) strftime_short = "DATE_FORMAT(timestamp, '%d-%H')"; // mysql
 
-        QString datetime_day = "datetime('now','-1 day')"; // sqlite
+        QString datetime_day = "datetime('now', '-1 day')"; // sqlite
         if (m_dbExternal) datetime_day = "DATE_SUB(NOW(), INTERVAL -1 DAY)"; // mysql
 
         QSqlQuery graphData;

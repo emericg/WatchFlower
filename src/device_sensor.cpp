@@ -1421,7 +1421,7 @@ QDateTime DeviceSensor::getLastMove() const
 {
     if (m_device_lastmove > 0)
     {
-        return QDateTime::fromSecsSinceEpoch(QDateTime::currentDateTime().toSecsSinceEpoch() - m_device_lastmove);
+        return QDateTime::fromSecsSinceEpoch(QDateTime::currentSecsSinceEpoch() - m_device_lastmove);
     }
 
     return QDateTime();
