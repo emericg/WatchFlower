@@ -83,7 +83,7 @@ set(SOURCES
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
     thirdparty/RC4/rc4.cpp thirdparty/RC4/rc4.h
-    thirdparty/IconLibrary/IconLibrary.qrc
+    thirdparty/IconLibrary/IconLibrary_material.qrc
     assets/assets.qrc
     assets/devices.qrc
     assets/plants.qrc
