@@ -8,10 +8,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-string(TIMESTAMP CURRENT_TIMESTAMP "%s" UTC)
 set(APP_NAME ${CMAKE_PROJECT_NAME})
 set(APP_VERSION ${CMAKE_PROJECT_VERSION})
 set(APP_VERSION_CODE ${TIMESTAMP})
+string(TIMESTAMP CURRENT_TIMESTAMP "%s" UTC)
 
 ################################################################################
 
@@ -119,6 +119,7 @@ qt_add_executable(${CMAKE_PROJECT_NAME}
 
 qt_add_qml_module(${CMAKE_PROJECT_NAME}
     URI ${CMAKE_PROJECT_NAME}
+    NO_PLUGIN
     QML_FILES
         qml/MobileApplication.qml
         qml/MobileHeader.qml
