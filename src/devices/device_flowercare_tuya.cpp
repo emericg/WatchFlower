@@ -109,7 +109,7 @@ void DeviceFlowerCare_tuya::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceFlowerCare_tuya::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceData && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerCare_tuya::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
     }

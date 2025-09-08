@@ -256,68 +256,62 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceInfos && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceInfos)
+        QBluetoothUuid uuid_fw(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic cfw = serviceInfos->characteristic(uuid_fw);
+        if (cfw.value().size() > 0)
         {
-            QBluetoothUuid uuid_fw(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic cfw = serviceInfos->characteristic(uuid_fw);
-            if (cfw.value().size() > 0)
-            {
-                QString fw = cfw.value().split('_')[1].split('-')[1];
-                setFirmware(fw);
+            QString fw = cfw.value().split('_')[1].split('-')[1];
+            setFirmware(fw);
 
-                if (m_deviceFirmware.size() == 6)
+            if (m_deviceFirmware.size() == 6)
+            {
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
                 {
-                    if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
-                    {
-                        m_firmware_uptodate = true;
-                        Q_EMIT sensorUpdated();
-                    }
+                    m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
                 }
             }
-            else
-            {
-                serviceInfos->readCharacteristic(cfw);
-            }
+        }
+        else
+        {
+            serviceInfos->readCharacteristic(cfw);
         }
     }
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceBattery && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceBattery)
-        {
-            // Characteristic "Battery Level"
-            QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
+        // Characteristic "Battery Level"
+        QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
-            if (cbat.value().size() == 1)
-            {
-                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-                setBattery(lvl);
-            }
-            else
-            {
-                serviceBattery->readCharacteristic(cbat);
-            }
+        if (cbat.value().size() == 1)
+        {
+            int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+            setBattery(lvl);
+        }
+        else
+        {
+            serviceBattery->readCharacteristic(cbat);
         }
     }
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceLive && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_live(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceLive && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
+        if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
             QBluetoothUuid led(QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
@@ -325,7 +319,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
         }
 
-        if (serviceLive && m_ble_action == DeviceUtils::ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             const quint8 *rawData = nullptr;
             double rawValue = 0;
@@ -449,11 +443,11 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
 void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceWatering && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_watering(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceWatering && m_ble_action == DeviceUtils::ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             QBluetoothUuid uuid_wt_lvl(QStringLiteral("39e1f907-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_lvl);
@@ -466,7 +460,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
             }
         }
 
-        if (serviceWatering && m_ble_action == DeviceUtils::ACTION_WATERING)
+        if (m_ble_action == DeviceUtils::ACTION_WATERING)
         {
             QBluetoothUuid uuid_wt_trigger(QStringLiteral("39e1f906-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_trigger);
@@ -477,34 +471,28 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
 
 void DeviceParrotPot::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceClock && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_clock(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceClock)
+        QBluetoothUuid uuid_clk(QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b"));
+        QLowEnergyCharacteristic cclk = serviceClock->characteristic(uuid_clk);
+        if (cclk.value().size() > 0)
         {
-            QBluetoothUuid uuid_clk(QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic cclk = serviceClock->characteristic(uuid_clk);
-            if (cclk.value().size() > 0)
-            {
-                const quint8 *data = reinterpret_cast<const quint8 *>(cclk.value().constData());
-                m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
-                m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
+            const quint8 *data = reinterpret_cast<const quint8 *>(cclk.value().constData());
+            m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
+            m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
-                qDebug() << "* DeviceParrotPot clock: " << m_device_time;
-            }
+            qDebug() << "* DeviceParrotPot clock: " << m_device_time;
         }
     }
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceHistory && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
-        if (serviceHistory)
-        {
-            //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
-        }
+        //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
     }
 }
 

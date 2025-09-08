@@ -209,6 +209,7 @@ public:
     {
         datetime = dt;
     }
+
     ChartDataHistory(const ChartDataHistory &dt,
                      QObject *parent) : QObject(parent)
     {
@@ -226,6 +227,7 @@ public:
         temperatureMax = dt.temperatureMax;
         luminosityLuxMax = dt.luminosityLuxMax;
     }
+
     ChartDataHistory(const QDateTime &dt,
                      float sm, float sc, float st,
                      float t, float h, float l,

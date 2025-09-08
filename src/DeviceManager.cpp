@@ -23,7 +23,9 @@
 #include "DatabaseManager.h"
 #include "SettingsManager.h"
 
+#if defined(Q_OS_ANDROID)
 #include "utils_app.h"
+#endif
 
 #include "device.h"
 #include "devices/device_flowercare.h"
@@ -59,8 +61,8 @@
 
 #include <QSqlDatabase>
 #include <QSqlDriver>
-#include <QSqlError>
 #include <QSqlQuery>
+#include <QSqlError>
 
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS) || defined(Q_OS_ANDROID)
 #if QT_CONFIG(permissions)
@@ -135,7 +137,7 @@ DeviceManager::DeviceManager(bool daemon)
         while (queryDevices.next())
         {
             QString deviceName = queryDevices.value(0).toString();
-            QString deviceModel = queryDevices.value(1).toString();
+            //QString deviceModel = queryDevices.value(1).toString();
             QString deviceAddr = queryDevices.value(2).toString();
 
             Device *d = nullptr;
@@ -929,6 +931,7 @@ void DeviceManager::scanDevices_start()
 {
     //qDebug() << "DeviceManager::scanDevices_start()";
 
+    // scan
     if (hasBluetooth())
     {
         if (!m_discoveryAgent)
@@ -1617,7 +1620,7 @@ bool DeviceManager::isBleDeviceBlacklisted(const QString &addr)
 
 void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 {
-    //qDebug() << "DeviceManager::addBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
+    SettingsManager *sm = SettingsManager::getInstance();
 
     // Various sanity checks
     {
@@ -1625,10 +1628,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         //if ((info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration) == false) return; // not a BLE device
         if (m_devices_blacklist.contains(info.address().toString())) return; // device is blacklisted
         if (m_devices_blacklist.contains(info.deviceUuid().toString())) return; // device is blacklisted
-
-        SettingsManager *sm = SettingsManager::getInstance();
         if (sm && sm->getBluetoothLimitScanningRange() && info.rssi() < -70) return; // device is too far away
-
         if ((info.coreConfigurations() & QBluetoothDeviceInfo::LowEnergyCoreConfiguration) == false) return; // not a BLE device
 
         for (auto ed: std::as_const(m_devices_model->m_devices)) // device is already in the UI
@@ -1641,6 +1641,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             }
         }
     }
+
+    qDebug() << "DeviceManager::addBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
 
     Device *d = nullptr;
 

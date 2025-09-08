@@ -24,7 +24,6 @@
 #include "utils_versionchecker.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
@@ -149,28 +148,25 @@ void DeviceHygrotempCGG1::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceHygrotempCGG1::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceInfos && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempCGG1::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceInfos)
+        // Characteristic "Firmware Revision String"
+        QBluetoothUuid c(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
+        if (chc.value().size() > 0)
         {
-            // Characteristic "Firmware Revision String"
-            QBluetoothUuid c(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
-            if (chc.value().size() > 0)
-            {
-               QString fw = chc.value();
-               setFirmware(fw);
-            }
+           QString fw = chc.value();
+           setFirmware(fw);
+        }
 
-            if (m_deviceFirmware.size() == 10)
+        if (m_deviceFirmware.size() == 10)
+        {
+            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGG1))
             {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGG1))
-                {
-                    m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
-                }
+                m_firmware_uptodate = true;
+                Q_EMIT sensorUpdated();
             }
         }
     }
@@ -178,40 +174,34 @@ void DeviceHygrotempCGG1::serviceDetailsDiscovered_infos(QLowEnergyService::Serv
 
 void DeviceHygrotempCGG1::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceBattery && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempCGG1::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceBattery)
-        {
-            // Characteristic "Battery Level"
-            QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
+        // Characteristic "Battery Level"
+        QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
-            if (cbat.value().size() == 1)
-            {
-                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-                setBattery(lvl);
-            }
+        if (cbat.value().size() == 1)
+        {
+            int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+            setBattery(lvl);
         }
     }
 }
 
 void DeviceHygrotempCGG1::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceData && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempCGG1::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
+        // hygrotemp readings
         {
-            // hygrotemp readings
-            {
-                QBluetoothUuid a(QStringLiteral("00000100-0000-1000-8000-00805f9b34fb"));
-                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-                m_notificationDesc = cha.clientCharacteristicConfiguration();
-                serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
-            }
+            QBluetoothUuid a(QStringLiteral("00000100-0000-1000-8000-00805f9b34fb"));
+            QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+            m_notificationDesc = cha.clientCharacteristicConfiguration();
+            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
         }
     }
 }

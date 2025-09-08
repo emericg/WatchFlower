@@ -130,123 +130,117 @@ void DeviceHygrotempClock::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceData && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
+        SettingsManager *sm = SettingsManager::getInstance();
+
+        // Characteristic "Units" // 1 byte READ WRITE // 0x00 - F, 0x01 - C    READ WRITE
         {
-            SettingsManager *sm = SettingsManager::getInstance();
+            QBluetoothUuid u(QStringLiteral("EBE0CCBE-7A0A-4B0C-8A1A-6FF2997DA3A6"));
+            QLowEnergyCharacteristic chu = serviceData->characteristic(u);
 
-            // Characteristic "Units" // 1 byte READ WRITE // 0x00 - F, 0x01 - C    READ WRITE
+            const quint8 *unit = reinterpret_cast<const quint8 *>(chu.value().constData());
+            //qDebug() << "Units (0xFF: CELSIUS / 0x01: FAHRENHEIT) > " << chu.value();
+            if (unit[0] == 0xFF && sm->getTempUnit() == "F")
             {
-                QBluetoothUuid u(QStringLiteral("EBE0CCBE-7A0A-4B0C-8A1A-6FF2997DA3A6"));
-                QLowEnergyCharacteristic chu = serviceData->characteristic(u);
-
-                const quint8 *unit = reinterpret_cast<const quint8 *>(chu.value().constData());
-                //qDebug() << "Units (0xFF: CELSIUS / 0x01: FAHRENHEIT) > " << chu.value();
-                if (unit[0] == 0xFF && sm->getTempUnit() == "F")
-                {
-                    serviceData->writeCharacteristic(chu, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
-                }
-                else if (unit[0] == 0x01 && sm->getTempUnit() == "C")
-                {
-                    serviceData->writeCharacteristic(chu, QByteArray::fromHex("FF"), QLowEnergyService::WriteWithResponse);
-                }
+                serviceData->writeCharacteristic(chu, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
             }
-
-            // History
-            //UUID_HISTORY = 'EBE0CCBC-7A0A-4B0C-8A1A-6FF2997DA3A6'   # Last idx 152          READ NOTIFY
-
-            // Characteristic "Time" // 5 bytes READ WRITE
+            else if (unit[0] == 0x01 && sm->getTempUnit() == "C")
             {
-                QBluetoothUuid a(QStringLiteral("EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6"));
-                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
-                //serviceData->readCharacteristic(cha); // trigger a new time read, not necessary
+                serviceData->writeCharacteristic(chu, QByteArray::fromHex("FF"), QLowEnergyService::WriteWithResponse);
+            }
+        }
 
-                const qint8 *timedata = reinterpret_cast<const qint8 *>(cha.value().constData());
-                int8_t timezone_read = timedata[4]; Q_UNUSED(timezone_read)
-                int32_t epoch_read = timedata[0];
-                epoch_read += (timedata[1] << 8);
-                epoch_read += (timedata[2] << 16);
-                epoch_read += (timedata[3] << 24);
+        // History
+        //UUID_HISTORY = 'EBE0CCBC-7A0A-4B0C-8A1A-6FF2997DA3A6'   # Last idx 152          READ NOTIFY
+
+        // Characteristic "Time" // 5 bytes READ WRITE
+        {
+            QBluetoothUuid a(QStringLiteral("EBE0CCB7-7A0A-4B0C-8A1A-6FF2997DA3A6"));
+            QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+            //serviceData->readCharacteristic(cha); // trigger a new time read, not necessary
+
+            const qint8 *timedata = reinterpret_cast<const qint8 *>(cha.value().constData());
+            int8_t timezone_read = timedata[4]; Q_UNUSED(timezone_read)
+            int32_t epoch_read = timedata[0];
+            epoch_read += (timedata[1] << 8);
+            epoch_read += (timedata[2] << 16);
+            epoch_read += (timedata[3] << 24);
 /*
-                QDateTime time_read;
-                time_read.setSecsSinceEpoch(epoch_read);
-                qDebug() << "epoch READ: " << epoch_read;
-                qDebug() << "QDateTime READ: " << time_read;
-                qDebug() << "QTimeZone READ: " << timezone_read;
+            QDateTime time_read;
+            time_read.setSecsSinceEpoch(epoch_read);
+            qDebug() << "epoch READ: " << epoch_read;
+            qDebug() << "QDateTime READ: " << time_read;
+            qDebug() << "QTimeZone READ: " << timezone_read;
 */
-                int32_t epoch_now = static_cast<int32_t>(QDateTime::currentSecsSinceEpoch()); // This device clock will not handle the year 2038...
-                int8_t offset_now = static_cast<int8_t>(QDateTime::currentDateTime().offsetFromUtc() / 3600);
+            int32_t epoch_now = static_cast<int32_t>(QDateTime::currentSecsSinceEpoch()); // This device clock will not handle the year 2038...
+            int8_t offset_now = static_cast<int8_t>(QDateTime::currentDateTime().offsetFromUtc() / 3600);
 /*
-                qDebug() << "QDateTime NOW: " << QDateTime::currentDateTime();
-                qDebug() << "QTimeZone NOW: " << offset_now;
-                qDebug() << "epoch NOW: " << epoch_now;
+            qDebug() << "QDateTime NOW: " << QDateTime::currentDateTime();
+            qDebug() << "QTimeZone NOW: " << offset_now;
+            qDebug() << "epoch NOW: " << epoch_now;
 */
-                // Note: the device doesn't update its "Time" characteristic value often
-                // So we don't use a single minute mismatch, but 5, to avoid reseting clock everytime
-                if (std::abs(epoch_read - epoch_now) > 5*60)
-                {
-                    //qDebug() << "CLOCK TIME NEEDS AN UPDATE (diff: " << std::abs(epoch_read - epoch_now);
-
-                    QByteArray timedata_write;
-                    timedata_write.resize(5);
-                    timedata_write[0] = static_cast<char>((epoch_now      ) & 0xFF);
-                    timedata_write[1] = static_cast<char>((epoch_now >>  8) & 0xFF);
-                    timedata_write[2] = static_cast<char>((epoch_now >> 16) & 0xFF);
-                    timedata_write[3] = static_cast<char>((epoch_now >> 24) & 0xFF);
-                    timedata_write[4] = offset_now;
-
-                    //qDebug() << "QDateTime WRITE:" << timedata_write << " size:" << timedata_write.size();
-                    serviceData->writeCharacteristic(cha, timedata_write, QLowEnergyService::WriteWithResponse);
-                }
-            }
-
-            // Characteristic "Temp&Humi" // 3 bytes, READ NOTIFY
+            // Note: the device doesn't update its "Time" characteristic value often
+            // So we don't use a single minute mismatch, but 5, to avoid reseting clock everytime
+            if (std::abs(epoch_read - epoch_now) > 5*60)
             {
-                QBluetoothUuid b(QStringLiteral("EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6"));
-                QLowEnergyCharacteristic chb = serviceData->characteristic(b);
-                m_notificationDesc = chb.clientCharacteristicConfiguration();
-                serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
-            }
+                //qDebug() << "CLOCK TIME NEEDS AN UPDATE (diff: " << std::abs(epoch_read - epoch_now);
 
-            // Characteristic "Battery level" // 1 byte READ
-            {
-                QBluetoothUuid b(QStringLiteral("EBE0CCC4-7A0A-4B0C-8A1A-6FF2997DA3A6"));
-                QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+                QByteArray timedata_write;
+                timedata_write.resize(5);
+                timedata_write[0] = static_cast<char>((epoch_now      ) & 0xFF);
+                timedata_write[1] = static_cast<char>((epoch_now >>  8) & 0xFF);
+                timedata_write[2] = static_cast<char>((epoch_now >> 16) & 0xFF);
+                timedata_write[3] = static_cast<char>((epoch_now >> 24) & 0xFF);
+                timedata_write[4] = offset_now;
 
-                int lvl = static_cast<uint8_t>(chb.value().constData()[0]);
-                setBattery(lvl);
+                //qDebug() << "QDateTime WRITE:" << timedata_write << " size:" << timedata_write.size();
+                serviceData->writeCharacteristic(cha, timedata_write, QLowEnergyService::WriteWithResponse);
             }
+        }
+
+        // Characteristic "Temp&Humi" // 3 bytes, READ NOTIFY
+        {
+            QBluetoothUuid b(QStringLiteral("EBE0CCC1-7A0A-4B0C-8A1A-6FF2997DA3A6"));
+            QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+            m_notificationDesc = chb.clientCharacteristicConfiguration();
+            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+        }
+
+        // Characteristic "Battery level" // 1 byte READ
+        {
+            QBluetoothUuid b(QStringLiteral("EBE0CCC4-7A0A-4B0C-8A1A-6FF2997DA3A6"));
+            QLowEnergyCharacteristic chb = serviceData->characteristic(b);
+
+            int lvl = static_cast<uint8_t>(chb.value().constData()[0]);
+            setBattery(lvl);
         }
     }
 }
 
 void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceInfos && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceHygrotempClock::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceInfos)
+        // Characteristic "Firmware Revision String"
+        QBluetoothUuid c(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
+        if (chc.value().size() > 0)
         {
-            // Characteristic "Firmware Revision String"
-            QBluetoothUuid c(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic chc = serviceInfos->characteristic(c);
-            if (chc.value().size() > 0)
-            {
-               QString fw = chc.value();
-               setFirmware(fw);
-            }
+           QString fw = chc.value();
+           setFirmware(fw);
+        }
 
-            if (m_deviceFirmware.size() == 10)
+        if (m_deviceFirmware.size() == 10)
+        {
+            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_MHOC303))
             {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_MHOC303))
-                {
-                    m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
-                }
+                m_firmware_uptodate = true;
+                Q_EMIT sensorUpdated();
             }
         }
     }

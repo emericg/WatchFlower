@@ -1142,6 +1142,8 @@ void Device::setModelID(const QString &modelID)
 
 void Device::setFirmware(const QString &firmware)
 {
+    //qDebug() << "Device::setFirmware(" << firmware << ")";
+
     if (!firmware.isEmpty() && m_deviceFirmware != firmware)
     {
         m_deviceFirmware = firmware;
@@ -1165,6 +1167,8 @@ void Device::setFirmware(const QString &firmware)
 
 void Device::setBattery(const int battery)
 {
+    //qDebug() << "Device::setBattery(" << battery << ")";
+
     if (battery > 0 && battery <= 100)
     {
         if (!hasBatteryLevel())
@@ -1436,24 +1440,24 @@ void Device::serviceScanDone()
 
 void Device::bleWriteDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    //qDebug() << "Device::bleWriteDone(" << m_deviceAddress << ")";
+    //qDebug() << "Device::bleWriteDone(" << getAddress() << ")";
 }
 
 void Device::bleReadDone(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    //qDebug() << "Device::bleReadDone(" << m_deviceAddress << ")";
+    //qDebug() << "Device::bleReadDone(" << getAddress() << ")";
 }
 
 void Device::bleReadNotify(const QLowEnergyCharacteristic &, const QByteArray &)
 {
-    //qDebug() << "Device::bleReadNotify(" << m_deviceAddress << ")";
+    //qDebug() << "Device::bleReadNotify(" << getAddress() << ")";
 }
 
 /* ************************************************************************** */
 
 void Device::parseAdvertisementData(const uint16_t, const uint16_t, const QByteArray &)
 {
-    //qDebug() << "Device::parseAdvertisementData(" << m_deviceName << m_deviceAddress << ")";
+    //qDebug() << "Device::parseAdvertisementData(" << m_deviceName << getAddress() << ")";
 }
 
 /* ************************************************************************** */

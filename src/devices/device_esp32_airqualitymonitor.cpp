@@ -147,58 +147,49 @@ void DeviceEsp32AirQualityMonitor::addLowEnergyService(const QBluetoothUuid &uui
 
 void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceInfos && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceInfos)
-        {
-            QBluetoothUuid f(QStringLiteral("00002a24-a002-4cbd-b00b-6b519bf2780f")); // firmware version
-            QLowEnergyCharacteristic chf = serviceInfos->characteristic(f);
+        QBluetoothUuid f(QStringLiteral("00002a24-a002-4cbd-b00b-6b519bf2780f")); // firmware version
+        QLowEnergyCharacteristic chf = serviceInfos->characteristic(f);
 
-            if (chf.value().size() > 0)
-            {
-                QString fw = chf.value();
-                setFirmware(fw);
-            }
+        if (chf.value().size() > 0)
+        {
+            QString fw = chf.value();
+            setFirmware(fw);
         }
     }
 }
 
 void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceBattery && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceBattery)
-        {
-            // Characteristic "Battery level"
-            QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
+        // Characteristic "Battery level"
+        QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
-            if (cbat.value().size() == 1)
-            {
-                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-                setBattery(lvl);
-            }
+        if (cbat.value().size() == 1)
+        {
+            int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+            setBattery(lvl);
         }
     }
 }
 
 void DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceData && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceEsp32AirQualityMonitor::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
-        {
-            QBluetoothUuid rt(QStringLiteral("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // rt data
-            QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
-            m_notificationDesc = chrt.clientCharacteristicConfiguration();
-            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
-        }
+        QBluetoothUuid rt(QStringLiteral("eeee9a32-a0a0-4cbd-b00b-6b519bf2780f")); // rt data
+        QLowEnergyCharacteristic chrt = serviceData->characteristic(rt);
+        m_notificationDesc = chrt.clientCharacteristicConfiguration();
+        serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
     }
 }
 

@@ -138,77 +138,71 @@ void DeviceThermoBeacon::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceThermoBeacon::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceInfos && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceThermoBeacon::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceInfos)
-        {
-            // Disabled, there is nothing of interest over there
-        }
+        // Disabled, there is nothing of interest over there
     }
 }
 
 void DeviceThermoBeacon::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceData && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceThermoBeacon::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
-        {
-            QBluetoothUuid uuid_rx(QStringLiteral("0000FFF3-0000-1000-8000-00805F9B34FB")); // handle 0x24
-            QBluetoothUuid uuid_tx(QStringLiteral("0000FFF5-0000-1000-8000-00805F9B34FB")); // handle 0x21
+        QBluetoothUuid uuid_rx(QStringLiteral("0000FFF3-0000-1000-8000-00805F9B34FB"));
+        QBluetoothUuid uuid_tx(QStringLiteral("0000FFF5-0000-1000-8000-00805F9B34FB"));
 
-            // Characteristic "RX" // NOTIFY
+        // Characteristic "RX" // NOTIFY
+        {
+            QLowEnergyCharacteristic crx = serviceData->characteristic(uuid_rx);
+            m_notificationDesc = crx.clientCharacteristicConfiguration();
+            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+        }
+
+        // Characteristic "TX" // WRITE
+        {
+            QLowEnergyCharacteristic ctx = serviceData->characteristic(uuid_tx);
+
+            //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0300000000"), QLowEnergyService::WriteWithResponse);
+            //DATA: 0x "0300000000036101000000000504000000000000"
+            // return 1 pair of data // almost same as 07 ?
+
+            //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0500000000"), QLowEnergyService::WriteWithResponse);
+            // no resp on RX // unknown command
+
+            //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0600000000"), QLowEnergyService::WriteWithResponse);
+            // no resp on RX // unknown command
+
+            //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0700000000"), QLowEnergyService::WriteWithoutResponse);
+            //DATA: 0x "0700000000037901730172015a025e025e020000"
+            // return 3 pair of data
+
+            //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0800000000"), QLowEnergyService::WriteWithResponse);
+            // no resp on RX // unknown command
+
+            //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0900000000"), QLowEnergyService::WriteWithResponse);
+            // no resp on RX // unknown command
+
+            if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
+                m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
-                QLowEnergyCharacteristic crx = serviceData->characteristic(uuid_rx);
-                m_notificationDesc = crx.clientCharacteristicConfiguration();
-                serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+                // Ask the device for entry count
+                serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0100000000"));
             }
 
-            // Characteristic "TX" // WRITE
+            if (m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
             {
-                QLowEnergyCharacteristic ctx = serviceData->characteristic(uuid_tx);
+                serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0200000000"));
+                // no resp on RX, 3 slow blinks
+            }
 
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0300000000"), QLowEnergyService::WriteWithResponse);
-                //DATA: 0x "0300000000036101000000000504000000000000"
-                // return 1 pair of data // almost same as 07 ?
-
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0500000000"), QLowEnergyService::WriteWithResponse);
-                // no resp on RX // unknown command
-
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0600000000"), QLowEnergyService::WriteWithResponse);
-                // no resp on RX // unknown command
-
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0700000000"), QLowEnergyService::WriteWithoutResponse);
-                //DATA: 0x "0700000000037901730172015a025e025e020000"
-                // return 3 pair of data
-
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0800000000"), QLowEnergyService::WriteWithResponse);
-                // no resp on RX // unknown command
-
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0900000000"), QLowEnergyService::WriteWithResponse);
-                // no resp on RX // unknown command
-
-                if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
-                    m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
-                {
-                    // Ask the device for entry count
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0100000000"));
-                }
-
-                if (m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
-                {
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0200000000"));
-                    // no resp on RX, 3 slow blinks
-                }
-
-                if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
-                {
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0400000000"));
-                    // no resp on RX, many fast blinks
-                }
+            if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
+            {
+                serviceData->writeCharacteristic(ctx, QByteArray::fromHex("0400000000"));
+                // no resp on RX, many fast blinks
             }
         }
     }

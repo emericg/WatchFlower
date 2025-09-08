@@ -45,9 +45,12 @@ class DeviceManager: public QObject
 {
     Q_OBJECT
 
+    ////////
+
     Q_PROPERTY(bool hasDevices READ areDevicesAvailable NOTIFY devicesListUpdated)
     Q_PROPERTY(int deviceCount READ getDeviceCount NOTIFY devicesListUpdated)
     Q_PROPERTY(DeviceFilter *devicesList READ getDevicesFiltered NOTIFY devicesListUpdated)
+    Q_PROPERTY(DeviceFilter *devicesNearby READ getDevicesNearby NOTIFY devicesNearbyUpdated)
 
     Q_PROPERTY(DeviceFilter *devicesPlantList READ getDevicesPlantFiltered NOTIFY devicesListUpdated)
     Q_PROPERTY(int devicePlantCount READ getDevicePlantCount NOTIFY devicesListUpdated)
@@ -55,8 +58,6 @@ class DeviceManager: public QObject
     Q_PROPERTY(int deviceThermoCount READ getDeviceThermoCount NOTIFY devicesListUpdated)
     Q_PROPERTY(DeviceFilter *devicesEnvList READ getDevicesEnvFiltered NOTIFY devicesListUpdated)
     Q_PROPERTY(int deviceEnvCount READ getDeviceEnvCount NOTIFY devicesListUpdated)
-
-    Q_PROPERTY(DeviceFilter *devicesNearby READ getDevicesNearby NOTIFY devicesNearbyUpdated)
 
     ////////
 
@@ -78,6 +79,8 @@ class DeviceManager: public QObject
 
     Q_PROPERTY(int bluetoothHostMode READ getBluetoothHostMode NOTIFY hostModeChanged)
 
+    ////
+
     static const int ble_scanning_duration = 30;
     static const int ble_listening_duration = 60;
     static const int ble_listening_duration_nearby = 60;
@@ -87,6 +90,8 @@ class DeviceManager: public QObject
     bool m_dbExternal = false;  //!< do we have a remote MySQL database?
 
     bool m_daemonMode = false;  //!< did we start without UI?
+
+    ////
 
     bool m_bleAdapter = false;      //!< do we have a BLE adapter?
     bool m_bleEnabled = false;      //!< is the BLE adapter enabled?
@@ -102,6 +107,8 @@ class DeviceManager: public QObject
     QBluetoothLocalDevice::HostMode m_ble_hostmode = QBluetoothLocalDevice::HostPoweredOff;
 
     QList <QObject *> m_bluetoothAdapters;
+
+    ////
 
     QList <QString> m_devices_blacklist;
 
@@ -123,6 +130,8 @@ class DeviceManager: public QObject
 
     QList <QObject *> m_devices_syncing_queue;
     QList <QObject *> m_devices_syncing;
+
+    ////
 
     bool m_advertising = false;
     bool isAdvertising() const { return m_advertising; }
@@ -224,11 +233,11 @@ public:
     Q_INVOKABLE void scanDevices_start();
     Q_INVOKABLE void scanDevices_stop();
 
-    Q_INVOKABLE void refreshDevices_background();   //!< Refresh devices on the Android background service
-    Q_INVOKABLE void refreshDevices_listen();       //!< Refresh devices with data >xh old (as they appear nearby)
-
     Q_INVOKABLE void listenDevices_start();
     Q_INVOKABLE void listenDevices_stop();
+
+    Q_INVOKABLE void refreshDevices_background();   //!< Refresh devices on the Android background service
+    Q_INVOKABLE void refreshDevices_listen();       //!< Refresh devices with data >xh old (as they appear nearby)
 
     Q_INVOKABLE void refreshDevices_check();        //!< Refresh devices with data >xh old (if necessary)
     Q_INVOKABLE void refreshDevices_start();        //!< Refresh every device

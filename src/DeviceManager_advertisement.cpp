@@ -87,6 +87,7 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
             }
 
             // Dynamic updates //
+
             if (m_listening && dd->hasBluetoothConnection())
             {
                 // old or no data: go for refresh
@@ -106,7 +107,9 @@ void DeviceManager::updateBleDevice(const QBluetoothDeviceInfo &info,
         }
     }
 
-    if (m_scanning) // Dynamic scanning ////////////////////////////////////////
+    /// Dynamic scanning ///////////////////////////////////////////////////////
+
+    if (m_scanning)
     {
         //qDebug() << "addBleDevice(" << info.name() << ") FROM DYNAMIC SCANNING";
         addBleDevice(info);

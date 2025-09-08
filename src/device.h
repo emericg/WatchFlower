@@ -114,6 +114,7 @@ class Device: public QObject
     Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY statusUpdated)
     Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY statusUpdated)
 
+    // UI state(s)
     Q_PROPERTY(bool selected READ isSelected WRITE setSelected NOTIFY selectionUpdated)
     bool selected = false;
     bool isSelected() const { return selected; }
@@ -173,6 +174,7 @@ protected:
     // Status
     int m_ble_status = 0;           //!< See DeviceStatus enum
     int m_ble_action = 0;           //!< See DeviceActions enum
+
     QDateTime m_lastUpdate;
     QDateTime m_lastUpdateDatabase;
     QDateTime m_lastHistorySeen;
@@ -348,6 +350,7 @@ public:
     void setInside(const bool inside);
     bool isOutside() const { return m_isOutside; }
     void setOutside(const bool outside);
+
     // Device additional settings
     Q_INVOKABLE bool hasSetting(const QString &key) const;
     Q_INVOKABLE QVariant getSetting(const QString &key) const;

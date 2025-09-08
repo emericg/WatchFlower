@@ -22,7 +22,6 @@
 #include "device_jqjcy01ym.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>

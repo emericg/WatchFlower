@@ -221,68 +221,62 @@ void DeviceFlowerPower::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceInfos && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceInfos)
+        QBluetoothUuid fw(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
+        if (cfw.value().size() > 0)
         {
-            QBluetoothUuid fw(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic cfw = serviceInfos->characteristic(fw);
-            if (cfw.value().size() > 0)
-            {
-                QString fw = cfw.value().split('_')[1].split('-')[1];
-                setFirmware(fw);
+            QString fw = cfw.value().split('_')[1].split('-')[1];
+            setFirmware(fw);
 
-                if (m_deviceFirmware.size() == 5)
+            if (m_deviceFirmware.size() == 5)
+            {
+                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
                 {
-                    if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
-                    {
-                        m_firmware_uptodate = true;
-                        Q_EMIT sensorUpdated();
-                    }
+                    m_firmware_uptodate = true;
+                    Q_EMIT sensorUpdated();
                 }
             }
-            else
-            {
-                serviceInfos->readCharacteristic(cfw);
-            }
+        }
+        else
+        {
+            serviceInfos->readCharacteristic(cfw);
         }
     }
 }
 
 void DeviceFlowerPower::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceBattery && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceBattery)
-        {
-            // Characteristic "Battery Level"
-            QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
-            QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
+        // Characteristic "Battery Level"
+        QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
+        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
 
-            if (cbat.value().size() == 1)
-            {
-                int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-                setBattery(lvl);
-            }
-            else
-            {
-                serviceBattery->readCharacteristic(cbat);
-            }
+        if (cbat.value().size() == 1)
+        {
+            int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
+            setBattery(lvl);
+        }
+        else
+        {
+            serviceBattery->readCharacteristic(cbat);
         }
     }
 }
 
 void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceLive && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_live(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceLive && m_ble_action == DeviceUtils::ACTION_LED_BLINK)
+        if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
             QBluetoothUuid led(QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
@@ -291,7 +285,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             //controller->disconnectFromDevice();
         }
 
-        if (serviceLive && m_ble_action == DeviceUtils::ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             const quint8 *rawData = nullptr;
             double rawValue = 0;
@@ -424,33 +418,30 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
 void DeviceFlowerPower::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceClock && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_clock(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceClock)
+        QBluetoothUuid clk(QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b"));
+        QLowEnergyCharacteristic cclk = serviceClock->characteristic(clk);
+        if (cclk.value().size() > 0)
         {
-            QBluetoothUuid clk(QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic cclk = serviceClock->characteristic(clk);
-            if (cclk.value().size() > 0)
-            {
-                const quint8 *data = reinterpret_cast<const quint8 *>(cclk.value().constData());
-                m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
-                m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
+            const quint8 *data = reinterpret_cast<const quint8 *>(cclk.value().constData());
+            m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
+            m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
-                qDebug() << "* DeviceFlowerPower clock: " << m_device_time;
-            }
+            qDebug() << "* DeviceFlowerPower clock: " << m_device_time;
         }
     }
 }
 
 void DeviceFlowerPower::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceHistory && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceFlowerPower::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
             //39e1fc01-84a8-11e2-afba-0002a5d5c51b	0x48	read	number of entries
             //39e1fc02-84a8-11e2-afba-0002a5d5c51b	0x4c	read	last entry index
@@ -460,7 +451,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_history(QLowEnergyService::Serv
             //39e1fc06-84a8-11e2-afba-0002a5d5c51b	0x5c	read	current session period
         }
 
-        if (serviceHistory && m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY)
         {
             //
         }

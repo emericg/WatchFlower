@@ -49,6 +49,7 @@ void DeviceManager::scanNearby_start()
         {
             startBleAgent();
         }
+
         if (m_discoveryAgent)
         {
             if (m_discoveryAgent->isActive() && m_scanning)

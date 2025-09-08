@@ -22,7 +22,6 @@
 #include "device_sensor.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>

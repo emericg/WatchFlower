@@ -22,7 +22,6 @@
 #include "device_wp6003.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
@@ -107,53 +106,50 @@ void DeviceWP6003::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceWP6003::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState newState)
 {
-    if (newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (serviceData && newState == QLowEnergyService::RemoteServiceDiscovered)
     {
         //qDebug() << "DeviceWP6003::serviceDetailsDiscovered_data(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        if (serviceData)
+        QBluetoothUuid uuid_tx(QStringLiteral("0000FFF1-0000-1000-8000-00805F9B34FB"));
+        QBluetoothUuid uuid_rx(QStringLiteral("0000FFF4-0000-1000-8000-00805F9B34FB"));
+
+        // Characteristic "RX" // NOTIFY
         {
-            QBluetoothUuid uuid_tx(QStringLiteral("0000FFF1-0000-1000-8000-00805F9B34FB"));
-            QBluetoothUuid uuid_rx(QStringLiteral("0000FFF4-0000-1000-8000-00805F9B34FB"));
+            QLowEnergyCharacteristic crx = serviceData->characteristic(uuid_rx);
+            m_notificationDesc = crx.clientCharacteristicConfiguration();
+            serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+        }
 
-            // Characteristic "RX" // NOTIFY
+        // Characteristic "TX" // WRITE
+        {
+            QLowEnergyCharacteristic ctx = serviceData->characteristic(uuid_tx);
+
+            // send initialize command "ee"
+            //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ee"), QLowEnergyService::WriteWithoutResponse);
+
+            if (m_ble_action == DeviceUtils::ACTION_CALIBRATE)
             {
-                QLowEnergyCharacteristic crx = serviceData->characteristic(uuid_rx);
-                m_notificationDesc = crx.clientCharacteristicConfiguration();
-                serviceData->writeDescriptor(m_notificationDesc, QByteArray::fromHex("0100"));
+                // send qualibration request "ad"
+                serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ad"), QLowEnergyService::WriteWithoutResponse);
             }
-
-            // Characteristic "TX" // WRITE
+            else // if (m_ble_action == DeviceUtils::ACTION_UPDATE)
             {
-                QLowEnergyCharacteristic ctx = serviceData->characteristic(uuid_tx);
+                // send command "aa" + datetime
+                QDateTime cdt = QDateTime::currentDateTime();
+                QByteArray cmd(QByteArray::fromHex("aa"));
+                cmd.push_back(cdt.date().year()%100);
+                cmd.push_back(cdt.date().month());
+                cmd.push_back(cdt.date().day());
+                cmd.push_back(cdt.time().hour());
+                cmd.push_back(cdt.time().minute());
+                cmd.push_back(cdt.time().second());
+                serviceData->writeCharacteristic(ctx, cmd, QLowEnergyService::WriteWithoutResponse);
 
-                // send initialize command "ee"
-                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ee"), QLowEnergyService::WriteWithoutResponse);
+                // set notify interval "ae" + interval
+                //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ae0101"), QLowEnergyService::WriteWithoutResponse);
 
-                if (m_ble_action == DeviceUtils::ACTION_CALIBRATE)
-                {
-                    // send qualibration request "ad"
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ad"), QLowEnergyService::WriteWithoutResponse);
-                }
-                else // if (m_ble_action == DeviceUtils::ACTION_UPDATE)
-                {
-                    // send command "aa" + datetime
-                    QDateTime cdt = QDateTime::currentDateTime();
-                    QByteArray cmd(QByteArray::fromHex("aa"));
-                    cmd.push_back(cdt.date().year()%100);
-                    cmd.push_back(cdt.date().month());
-                    cmd.push_back(cdt.date().day());
-                    cmd.push_back(cdt.time().hour());
-                    cmd.push_back(cdt.time().minute());
-                    cmd.push_back(cdt.time().second());
-                    serviceData->writeCharacteristic(ctx, cmd, QLowEnergyService::WriteWithoutResponse);
-
-                    // set notify interval "ae" + interval
-                    //serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ae0101"), QLowEnergyService::WriteWithoutResponse);
-
-                    // send notify request "ab"
-                    serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ab"), QLowEnergyService::WriteWithoutResponse);
-                }
+                // send notify request "ab"
+                serviceData->writeCharacteristic(ctx, QByteArray::fromHex("ab"), QLowEnergyService::WriteWithoutResponse);
             }
         }
     }
