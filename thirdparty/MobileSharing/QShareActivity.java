@@ -21,12 +21,12 @@
  * SOFTWARE.
  */
 
-package com.emeric.watchflower;
+package io.emeric.qmlapptemplate;
 
-import com.emeric.utils.*;
+import io.emeric.utils.*;
 
-import org.qtproject.qt5.android.QtNative;
-import org.qtproject.qt5.android.bindings.QtActivity;
+import org.qtproject.qt.android.QtNative;
+import org.qtproject.qt.android.bindings.QtActivity;
 import android.os.*;
 import android.app.*;
 import android.content.*;
@@ -63,18 +63,18 @@ public class QShareActivity extends QtActivity
     // more details: my blog at Qt
     @Override
     public void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-          Log.d("QShareActivity", "onCreate() QShareActivity");
-          // now we're checking if the App was started from another Android App via Intent
-          Intent theIntent = getIntent();
-          if (theIntent != null) {
-              String theAction = theIntent.getAction();
-              if (theAction != null) {
-                  Log.d("QShareActivity", " onCreate()" + theAction);
-                  // QML UI not ready yet, delay processIntent();
-                  isIntentPending = true;
-              }
-          }
+        super.onCreate(savedInstanceState);
+        Log.d("QShareActivity", " onCreate() QShareActivity");
+        // now we're checking if the App was started from another Android App via Intent
+        Intent theIntent = getIntent();
+        if (theIntent != null) {
+            String theAction = theIntent.getAction();
+            if (theAction != null) {
+                Log.d("QShareActivity", " onCreate()" + theAction);
+                // QML UI not ready yet, delay processIntent();
+                isIntentPending = true;
+            }
+        }
     }
 
     // WIP - trying to find a solution to survive a 2nd onCreate
@@ -98,8 +98,10 @@ public class QShareActivity extends QtActivity
     // this method here - otherwise you'll get wrong request or result codes
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("QShareActivity", " onActivityResult() requestCode: " + requestCode);
+        super.onActivityResult(requestCode, resultCode, data);
+
         // Check which request we're responding to
-        Log.d("QShareActivity", " onActivityResult() requestCode: "+requestCode);
         if (resultCode == RESULT_OK) {
             Log.d("QShareActivity", " onActivityResult() requestCode SUCCESS");
         } else {
@@ -118,6 +120,7 @@ public class QShareActivity extends QtActivity
     public void onNewIntent(Intent intent) {
         Log.d("QShareActivity", " onNewIntent()");
         super.onNewIntent(intent);
+
         setIntent(intent);
         // Intent will be processed, if all is initialized and Qt / QML can handle the event
         if (isInitialized) {
@@ -136,7 +139,7 @@ public class QShareActivity extends QtActivity
             Log.d("QShareActivity", " checkPendingIntents() true");
             processIntent();
         } else {
-            Log.d("QShareActivity", " checkPendingIntents() nothingPending");
+            //Log.d("QShareActivity", " checkPendingIntents() nothingPending");
         }
     }
 
@@ -224,10 +227,9 @@ public class QShareActivity extends QtActivity
         // trying the InputStream way:
         filePath = QShareUtils.createFile(cR, intentUri, workingDirPath);
         if (filePath == null) {
-             Log.d("QShareUtils", " processIntent() Intent FilePath: is NULL");
-             return;
+            Log.d("QShareUtils", " processIntent() Intent FilePath: is NULL");
+            return;
         }
         setFileReceivedAndSaved(filePath);
     }
-
 }

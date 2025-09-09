@@ -1,6 +1,6 @@
 # MobileSharing
 
-A tool to interact with the "sharing" feature found on Android and iOS. Works with Qt5 and Qt6.
+A tool to interact with the "sharing" feature found on Android and iOS. Works with Qt6.
 
 ## Quick start
 
@@ -48,8 +48,8 @@ Sharing files on Android in not trivial. Many steps are needed.
 
 Add this line to the dependencies {} section of `build.gradle` file:
 ```
-implementation 'androidx.appcompat:appcompat:1.3.0'
-implementation 'androidx.core:core:1.3.0'
+implementation 'androidx.appcompat:appcompat:1.6.1'
+implementation 'androidx.core:core:1.6.1'
 ```
 
 And add this line in `gradle.properties` file:
@@ -59,16 +59,16 @@ android.useAndroidX=true
 
 Add these files to your project file:
 ```
-OTHER_FILES += $${PWD}/src/com/emeric/qmlapptemplate/QShareActivity.java
-               $${PWD}/src/com/emeric/utils/QShareUtils.java \
-               $${PWD}/src/com/emeric/utils/QSharePathResolver.java
+OTHER_FILES += $${PWD}/src/io/emeric/APPLICATIONNAME/QShareActivity.java
+               $${PWD}/src/io/emeric/utils/QShareUtils.java \
+               $${PWD}/src/io/emeric/utils/QSharePathResolver.java
 ```
 
 Edit the code and rename these to match your project name:
 ```
-com/emeric/utils
-com.emeric.qmlapptemplate
-com_emeric_qmlapptemplate
+io/emeric/utils
+io.emeric.APPLICATIONNAME
+io_emeric_APPLICATIONNAME
 ```
 
 Then edit the manifest to handle incoming and/or outgoing files:
@@ -94,7 +94,7 @@ Then edit the manifest to handle incoming and/or outgoing files:
 <!-- Handle outgoing urls -->
 <provider
     android:name="androidx.core.content.FileProvider"
-    android:authorities="com.emeric.qmlapptemplate.fileprovider"
+    android:authorities="io.emeric.APPLICATIONNAME.fileprovider"
     android:exported="false"
     android:grantUriPermissions="true">
     <meta-data
@@ -158,4 +158,4 @@ This project is licensed under the MIT license, see LICENSE file for details.
 
 > Copyright (c) 2017 Ekkehard Gentz (ekke)  
 
-> Copyright (c) 2020 Emeric Grange (emeric.grange@gmail.com)  
+> Copyright (c) 2020-2025 Emeric Grange (emeric.grange@gmail.com)  

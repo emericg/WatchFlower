@@ -64,6 +64,18 @@ ShareUtils::ShareUtils(QObject *parent) : QObject(parent)
 
 /* ************************************************************************** */
 
+void ShareUtils::registerQML()
+{
+    //
+}
+
+/* ************************************************************************** */
+
+void ShareUtils::checkPendingIntents(const QString &workingDirPath)
+{
+    mPlatformShareUtils->checkPendingIntents(workingDirPath);
+}
+
 bool ShareUtils::checkMimeTypeView(const QString &mimeType)
 {
     return mPlatformShareUtils->checkMimeTypeView(mimeType);
@@ -74,9 +86,9 @@ bool ShareUtils::checkMimeTypeEdit(const QString &mimeType)
     return mPlatformShareUtils->checkMimeTypeEdit(mimeType);
 }
 
-void ShareUtils::share(const QString &text, const QUrl &url)
+void ShareUtils::sendText(const QString &text, const QString &subject, const QUrl &url)
 {
-    mPlatformShareUtils->share(text, url);
+    mPlatformShareUtils->sendText(text, subject, url);
 }
 
 void ShareUtils::sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId)
@@ -94,10 +106,12 @@ void ShareUtils::editFile(const QString &filePath, const QString &title, const Q
     mPlatformShareUtils->editFile(filePath, title, mimeType, requestId);
 }
 
-void ShareUtils::checkPendingIntents(const QString workingDirPath)
+const QMimeDatabase &ShareUtils::getMimeDatabase() const
 {
-    mPlatformShareUtils->checkPendingIntents(workingDirPath);
+    return mPlatformShareUtils->getMimeDatabase();
 }
+
+/* ************************************************************************** */
 
 void ShareUtils::onShareEditDone(int requestCode)
 {
@@ -114,17 +128,17 @@ void ShareUtils::onShareNoAppAvailable(int requestCode)
     Q_EMIT shareNoAppAvailable(requestCode);
 }
 
-void ShareUtils::onShareError(int requestCode, QString message)
+void ShareUtils::onShareError(int requestCode, const QString &message)
 {
     Q_EMIT shareError(requestCode, message);
 }
 
-void ShareUtils::onFileUrlReceived(QString url)
+void ShareUtils::onFileUrlReceived(const QString &url)
 {
     Q_EMIT fileUrlReceived(url);
 }
 
-void ShareUtils::onFileReceivedAndSaved(QString url)
+void ShareUtils::onFileReceivedAndSaved(const QString &url)
 {
     Q_EMIT fileReceivedAndSaved(url);
 }

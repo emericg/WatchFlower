@@ -45,6 +45,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QMimeDatabase>
 #include <QUrl>
 #include <QDebug>
 
@@ -66,6 +67,9 @@ public:
     PlatformShareUtils(QObject *parent = nullptr) : QObject(parent) { };
     virtual ~PlatformShareUtils() = default;
 
+    virtual void checkPendingIntents(const QString &workingDirPath) {
+        qDebug() << "checkPendingIntents" << workingDirPath;
+    }
     virtual bool checkMimeTypeView(const QString &mimeType) {
         qDebug() << "check view for" << mimeType;
         return true;
@@ -74,8 +78,9 @@ public:
         qDebug() << "check edit for" << mimeType;
         return true;
     }
-    virtual void share(const QString &text, const QUrl &url) {
-        qDebug() << text << url.url();
+
+    virtual void sendText(const QString &text, const QString &subject, const QUrl &url) {
+        qDebug() << text << subject << url.url();
     }
     virtual void sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) {
         qDebug() << filePath << " - " << title << "requestId: " << requestId << " - " << mimeType;
@@ -87,9 +92,12 @@ public:
         qDebug() << filePath << " - " << title << "requestId: " << requestId << " - " << mimeType;
     }
 
-    virtual void checkPendingIntents(const QString workingDirPath) {
-        qDebug() << "checkPendingIntents" << workingDirPath;
+    const QMimeDatabase &getMimeDatabase() const {
+        return m_mimeDatabase;
     }
+
+private:
+    QMimeDatabase m_mimeDatabase;
 };
 
 /* ************************************************************************** */
@@ -112,19 +120,25 @@ public slots:
     void onShareEditDone(int requestCode);
     void onShareFinished(int requestCode);
     void onShareNoAppAvailable(int requestCode);
-    void onShareError(int requestCode, QString message);
-    void onFileUrlReceived(QString url);
-    void onFileReceivedAndSaved(QString url);
+    void onShareError(int requestCode, const QString &message);
+    void onFileUrlReceived(const QString &url);
+    void onFileReceivedAndSaved(const QString &url);
 
 public:
     explicit ShareUtils(QObject *parent = nullptr);
+
+    static void registerQML();
+
+    Q_INVOKABLE void checkPendingIntents(const QString &workingDirPath);
     Q_INVOKABLE bool checkMimeTypeView(const QString &mimeType);
     Q_INVOKABLE bool checkMimeTypeEdit(const QString &mimeType);
-    Q_INVOKABLE void share(const QString &text, const QUrl &url);
+    const QMimeDatabase &getMimeDatabase() const;
+
+    Q_INVOKABLE void sendText(const QString &text, const QString &subject, const QUrl &url);
+
     Q_INVOKABLE void sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId);
     Q_INVOKABLE void viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId);
     Q_INVOKABLE void editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId);
-    Q_INVOKABLE void checkPendingIntents(const QString workingDirPath);
 };
 
 /* ************************************************************************** */

@@ -9,10 +9,6 @@ set(CMAKE_AUTORCC ON)
 
 ################################################################################
 
-if(NOT QT_DEFAULT_MAJOR_VERSION)
-    set(QT_DEFAULT_MAJOR_VERSION 6 CACHE STRING "Qt version to use (5 or 6), defaults to 6")
-endif()
-
 # Generic dependencies
 set(CORE_COMPONENTS Core Gui Qml)
 find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS ${CORE_COMPONENTS})
@@ -26,21 +22,10 @@ set(CORE_SOURCES
 
 # OS specific sources & dependencies
 if (ANDROID)
-    if(QT_DEFAULT_MAJOR_VERSION EQUAL 6)
-        set(PLATFORM_SOURCES
-            SharingUtils_android_qt6.cpp
-            SharingUtils_android.h)
-
-        set(PLATFORM_LIBRARIES Qt::CorePrivate)
-    elseif(QT_DEFAULT_MAJOR_VERSION EQUAL 5)
-        set(PLATFORM_SOURCES
-            SharingUtils_android_qt5.cpp
-            SharingUtils_android.h)
-
-        find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS AndroidExtras)
-        set(PLATFORM_LIBRARIES Qt::AndroidExtras)
-    endif()
-
+    set(PLATFORM_LIBRARIES Qt::CorePrivate)
+    set(PLATFORM_SOURCES
+        SharingUtils_android.cpp
+        SharingUtils_android.h)
 elseif (IOS)
     find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS Quick)
     set(PLATFORM_LIBRARIES Qt::Quick)

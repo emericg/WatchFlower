@@ -28,16 +28,10 @@
 #include "SharingUtils.h"
 
 #include <QtGlobal>
-
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
-#include <QCoreApplication>
 #include <QtCore/private/qandroidextras_p.h>
+
+#include <QCoreApplication>
 #include <QJniObject>
-#else
-#include <QtAndroid>
-#include <QAndroidJniObject>
-#include <QAndroidActivityResultReceiver>
-#endif
 
 /* ************************************************************************** */
 
@@ -45,12 +39,13 @@ class AndroidShareUtils : public PlatformShareUtils, public QAndroidActivityResu
 {
     static AndroidShareUtils *mInstance;
 
-    bool mAltImpl = false;
     bool mIsEditMode = false;
     qint64 mLastModified = 0;
     QString mCurrentFilePath;
 
     void processActivityResult(int requestCode, int resultCode);
+
+    QString getExternalFilesDirPath() const;
 
 public:
     AndroidShareUtils(QObject *parent = nullptr);
@@ -58,19 +53,17 @@ public:
 
     bool checkMimeTypeView(const QString &mimeType) override;
     bool checkMimeTypeEdit(const QString &mimeType) override;
-    void share(const QString &text, const QUrl &url) override;
+
+    void sendText(const QString &text, const QString &subject, const QUrl &url) override;
+
     void sendFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) override;
     void viewFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) override;
     void editFile(const QString &filePath, const QString &title, const QString &mimeType, const int &requestId) override;
 
-#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
     void handleActivityResult(int receiverRequestCode, int resultCode, const QJniObject &data) override;
-#else
-    void handleActivityResult(int receiverRequestCode, int resultCode, const QAndroidJniObject &data) override;
-#endif
     void onActivityResult(int requestCode, int resultCode);
 
-    void checkPendingIntents(const QString workingDirPath) override;
+    void checkPendingIntents(const QString &workingDirPath) override;
 
 public slots:
     void setFileUrlReceived(const QString &url);

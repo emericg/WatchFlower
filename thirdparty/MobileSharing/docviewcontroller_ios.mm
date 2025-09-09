@@ -35,7 +35,7 @@
 }
 #pragma mark -
 #pragma mark Document Interaction Controller Delegate Methods
-- (UIViewController *) documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller {
+- (UIViewController *)documentInteractionControllerViewControllerForPreview: (UIDocumentInteractionController *) controller {
 #pragma unused (controller)
     return self;
 }

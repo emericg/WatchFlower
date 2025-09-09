@@ -26,7 +26,6 @@
 
 #include <QGuiApplication>
 #include <QQmlContext>
-#include <QtQml>
 
 #include <QDir>
 #include <QFile>
@@ -40,22 +39,12 @@ SharingApplication::SharingApplication(int &argc, char **argv) : QGuiApplication
 {
     mShareUtils = new ShareUtils(this);
 
-    connect(this, &SharingApplication::applicationStateChanged, this, &SharingApplication::onApplicationStateChanged);
+    connect(this, &QGuiApplication::applicationStateChanged, this, &SharingApplication::onApplicationStateChanged);
 }
 
 SharingApplication::~SharingApplication()
 {
     //
-}
-
-/* ************************************************************************** */
-
-void SharingApplication::registerQML(QQmlContext *context)
-{
-    if (context)
-    {
-        context->setContextProperty("utilsShare", mShareUtils);
-    }
 }
 
 /* ************************************************************************** */
@@ -68,7 +57,7 @@ bool SharingApplication::event(QEvent *e)
         QFileOpenEvent *openEvent = static_cast<QFileOpenEvent *>(e);
         if (QFile::exists(openEvent->file()))
         {
-            //Q_EMIT fileDropped(openEvent->file());
+            Q_EMIT fileDropped(openEvent->file());
         }
     }
 
@@ -77,11 +66,6 @@ bool SharingApplication::event(QEvent *e)
 
 void SharingApplication::onApplicationStateChanged(Qt::ApplicationState appState)
 {
-    if (appState == Qt::ApplicationSuspended || appState == Qt::ApplicationInactive)
-    {
-        //
-    }
-
     if (appState == Qt::ApplicationState::ApplicationActive)
     {
         if (!mPendingIntentsChecked)

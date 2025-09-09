@@ -36,23 +36,18 @@ class SharingApplication : public QGuiApplication
 {
     Q_OBJECT
 
-     ShareUtils *mShareUtils = nullptr;
-     bool mPendingIntentsChecked = false;
+    ShareUtils *mShareUtils = nullptr;
+    bool mPendingIntentsChecked = false;
 
-     QString mAppDataFilesPath;
-     QString mDocumentsWorkPath;
+    QString mAppDataFilesPath;
+    QString mDocumentsWorkPath;
 
 public:
     explicit SharingApplication(int &argc, char **argv);
     ~SharingApplication();
 
-     void registerQML(QQmlContext *context);
-     //Q_INVOKABLE QString filePathDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool deleteFromDocumentsLocation(const int requestId);
-     //Q_INVOKABLE bool updateFileFromDocumentsLocation(const int requestId);
-
 signals:
-     void noDocumentsWorkLocation();
+    void fileDropped(const QString &filePath);
 
 public slots:
     void onApplicationStateChanged(Qt::ApplicationState state);

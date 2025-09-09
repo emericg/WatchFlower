@@ -56,7 +56,9 @@ bool IosShareUtils::checkMimeTypeEdit(const QString &mimeType) {
     return true;
 }
 
-void IosShareUtils::share(const QString &text, const QUrl &url) {
+/* ************************************************************************** */
+
+void IosShareUtils::sendText(const QString &text, const QString &subject, const QUrl &url) {
 
     NSMutableArray *sharingItems = [NSMutableArray new];
 
@@ -121,6 +123,8 @@ void IosShareUtils::editFile(const QString &filePath, const QString &title, cons
 
     sendFile(filePath, title, mimeType, requestId);
 }
+
+/* ************************************************************************** */
 
 void IosShareUtils::handleDocumentPreviewDone(const int &requestId)
 {
