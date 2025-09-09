@@ -63,9 +63,11 @@ void DeviceManager::scanNearby_start()
                        this, &DeviceManager::deviceDiscoveryFinished);
 
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-                    this, &DeviceManager::addNearbyBleDevice, Qt::UniqueConnection);
+                    this, &DeviceManager::addBleDeviceNearby, Qt::UniqueConnection);
+            connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                    this, &DeviceManager::bleDeviceNearby_discovered, Qt::UniqueConnection);
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                    this, &DeviceManager::updateNearbyBleDevice, Qt::UniqueConnection);
+                    this, &DeviceManager::bleDeviceNearby_updated, Qt::UniqueConnection);
 
             connect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished,
                     this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
@@ -73,23 +75,27 @@ void DeviceManager::scanNearby_start()
                     this, &DeviceManager::deviceDiscoveryStopped, Qt::UniqueConnection);
 
             m_discoveryAgent->setLowEnergyDiscoveryTimeout(ble_listening_duration_nearby*1000);
-            m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
 
-            if (m_discoveryAgent->isActive())
+            if (hasBluetoothPermissions())
             {
-                m_listening = true;
-                Q_EMIT listeningChanged();
-                //qDebug() << "Listening for nearby devices...";
+                m_discoveryAgent->start(QBluetoothDeviceDiscoveryAgent::LowEnergyMethod);
+
+                if (m_discoveryAgent->isActive())
+                {
+                    m_listening = true;
+                    Q_EMIT listeningChanged();
+                    qDebug() << "Listening (Bluetooth) for devices...";
+                }
             }
             else
             {
-                qWarning() << "DeviceManager::listenDevices_start() DID NOT START";
+                qWarning() << "Cannot scan or listen without BLE permissions";
             }
         }
     }
     else
     {
-        qWarning() << "Cannot scan or listen without BLE or BLE permissions";
+        qWarning() << "Cannot scan or listen without BLE";
     }
 }
 
@@ -102,9 +108,11 @@ void DeviceManager::scanNearby_stop()
         if (m_discoveryAgent->isActive())
         {
             disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
-                       this, &DeviceManager::addNearbyBleDevice);
+                       this, &DeviceManager::addBleDeviceNearby);
+            disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceDiscovered,
+                       this, &DeviceManager::bleDeviceNearby_discovered);
             disconnect(m_discoveryAgent, &QBluetoothDeviceDiscoveryAgent::deviceUpdated,
-                       this, &DeviceManager::updateNearbyBleDevice);
+                       this, &DeviceManager::bleDeviceNearby_updated);
 
             m_discoveryAgent->stop();
 
@@ -124,9 +132,9 @@ void DeviceManager::scanNearby_stop()
 
 /* ************************************************************************** */
 
-void DeviceManager::addNearbyBleDevice(const QBluetoothDeviceInfo &info)
+void DeviceManager::addBleDeviceNearby(const QBluetoothDeviceInfo &info)
 {
-    //qDebug() << "DeviceManager::addNearbyBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
+    //qDebug() << "DeviceManager::addBleDeviceNearby()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
 
     //if (info.isCached()) return; // we probably just hit the device cache
     if (info.rssi() >= 0) return; // we probably just hit the device cache
@@ -165,12 +173,17 @@ void DeviceManager::addNearbyBleDevice(const QBluetoothDeviceInfo &info)
     }
 }
 
-void DeviceManager::updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
+void DeviceManager::bleDeviceNearby_discovered(const QBluetoothDeviceInfo &info)
 {
-    //qDebug() << "DeviceManager::updateNearbyBleDevice()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
+    //
+}
+
+void DeviceManager::bleDeviceNearby_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
+{
+    //qDebug() << "DeviceManager::bleDeviceNearby_updated()" << " > NAME" << info.name() << " > RSSI" << info.rssi();
     Q_UNUSED(updatedFields)
 
-    addNearbyBleDevice(info);
+    addBleDeviceNearby(info);
 }
 
 /* ************************************************************************** */

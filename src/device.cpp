@@ -76,8 +76,7 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
         else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
-
-        if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
+        else if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
             m_deviceAddressMAC = m_deviceName.last(12);
             for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
             m_deviceName = "WP6003";
@@ -94,11 +93,11 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedout);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedOut);
 
     // Configure RSSI timer
     m_rssiTimer.setSingleShot(true);
-    m_rssiTimer.setInterval(m_rssiTimeoutInterval*1000);
+    m_rssiTimer.setInterval(s_rssiTimeoutInterval*1000);
     connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
 }
 
@@ -124,8 +123,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
         else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
-
-        if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
+        else if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
             m_deviceAddressMAC = m_deviceName.last(12);
             for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
             m_deviceName = "WP6003";
@@ -142,17 +140,21 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 
     // Configure timeout timer
     m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedout);
+    m_timeoutTimer.setInterval(s_timeoutInterval*1000);
+    connect(&m_timeoutTimer, &QTimer::timeout, this, &Device::actionTimedOut);
 
     // Configure RSSI timer
     m_rssiTimer.setSingleShot(true);
-    m_rssiTimer.setInterval(m_rssiTimeoutInterval*1000);
+    m_rssiTimer.setInterval(s_rssiTimeoutInterval*1000);
     connect(&m_rssiTimer, &QTimer::timeout, this, &Device::cleanRssi);
 }
 
 Device::~Device()
 {
-    deviceDisconnect();
+    if (m_bleController)
+    {
+        delete m_bleController;
+    }
 }
 
 /* ************************************************************************** */
@@ -180,8 +182,14 @@ void Device::deviceConnect()
                 connect(m_bleController, &QLowEnergyController::disconnected, this, &Device::deviceDisconnected);
                 connect(m_bleController, &QLowEnergyController::serviceDiscovered, this, &Device::addLowEnergyService, Qt::QueuedConnection);
                 connect(m_bleController, &QLowEnergyController::discoveryFinished, this, &Device::serviceScanDone, Qt::QueuedConnection); // Windows hack, see: QTBUG-80770 and QTBUG-78488
+
                 connect(m_bleController, QOverload<QLowEnergyController::Error>::of(&QLowEnergyController::errorOccurred), this, &Device::deviceErrored);
                 connect(m_bleController, &QLowEnergyController::stateChanged, this, &Device::deviceStateChanged);
+                connect(m_bleController, &QLowEnergyController::mtuChanged, this, &Device::deviceMtuChanged);
+
+                connect(m_bleController, &QLowEnergyController::mtuChanged, this, &Device::deviceMtuChanged);
+                connect(m_bleController, &QLowEnergyController::rssiRead, this, &Device::deviceRssiChanged);
+                connect(m_bleController, &QLowEnergyController::connectionUpdated, this, &Device::deviceConnParamChanged);
             }
             else
             {
@@ -197,26 +205,32 @@ void Device::deviceConnect()
     }
 
     // Start the actual connection process
-    if (m_bleController)
+    if (m_bleController && m_bleController->state() == QLowEnergyController::UnconnectedState)
     {
-        m_ble_status = DeviceUtils::DEVICE_CONNECTING;
-        Q_EMIT statusUpdated();
+        if (m_ble_status <= DeviceUtils::DEVICE_AVAILABLE || m_ble_status <= DeviceUtils::DEVICE_QUEUED)
+        {
+            m_ble_status = DeviceUtils::DEVICE_CONNECTING;
+            Q_EMIT statusUpdated();
 
-        m_bleController->connectToDevice();
-        setTimeoutTimer();
+            m_bleController->connectToDevice();
+            setTimeoutTimer();
+        }
     }
 }
 
 void Device::deviceDisconnect()
 {
-    //qDebug() << "Device::deviceDisconnect()" << getAddress() << getName();
-
     if (m_bleController && m_bleController->state() != QLowEnergyController::UnconnectedState)
     {
-        m_ble_status = DeviceUtils::DEVICE_DISCONNECTING;
-        Q_EMIT statusUpdated();
+        qDebug() << "Device::deviceDisconnect()" << getAddress() << getName();
 
-        m_bleController->disconnectFromDevice();
+        if (m_ble_status >= DeviceUtils::DEVICE_CONNECTED)
+        {
+            m_ble_status = DeviceUtils::DEVICE_DISCONNECTING;
+            Q_EMIT statusUpdated();
+
+            m_bleController->disconnectFromDevice();
+        }
     }
 }
 
@@ -225,23 +239,34 @@ void Device::deviceDisconnect()
 
 void Device::actionConnect()
 {
-    //qDebug() << "Device::actionConnect()" << getAddress() << getName();
-
-    if (!isBusy())
+    if ((m_ble_status <= DeviceUtils::DEVICE_AVAILABLE))
     {
-        m_ble_action = DeviceUtils::ACTION_IDLE;
-        actionStarted();
+        qDebug() << "Device::actionConnect()" << getAddress() << getName();
+
+        actionStarted(DeviceUtils::ACTION_CONNECT);
+
         deviceConnect();
+    }
+    else
+    {
+        qWarning() << "Device::actionConnect() status: " << m_ble_status;
     }
 }
 
-/* ************************************************************************** */
-
 void Device::actionDisconnect()
 {
-    //qDebug() << "Device::actionConnect()" << getAddress() << getName();
+    if ((m_ble_status >= DeviceUtils::DEVICE_CONNECTED))
+    {
+        qDebug() << "Device::actionDisconnect()" << getAddress() << getName();
 
-    deviceDisconnect();
+        actionStarted(DeviceUtils::ACTION_DISCONNECT);
+
+        deviceDisconnect();
+    }
+    else
+    {
+        qWarning() << "Device::actionDisconnect() status: " << m_ble_status;
+    }
 }
 
 /* ************************************************************************** */
@@ -250,10 +275,9 @@ void Device::actionScan()
 {
     //qDebug() << "Device::actionScan()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_SCAN;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_SCAN);
         deviceConnect();
     }
 }
@@ -262,10 +286,9 @@ void Device::actionScanWithValues()
 {
     //qDebug() << "Device::actionScanWithValues()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_SCAN_WITH_VALUES;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_SCAN_WITH_VALUES);
         deviceConnect();
     }
 }
@@ -276,7 +299,7 @@ void Device::actionClearData()
 {
     //qDebug() << "Device::actionClearData()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
         QSqlQuery resetDeviceLastSync;
         resetDeviceLastSync.prepare("UPDATE devices SET lastSync = :sync WHERE deviceAddr = :deviceAddr");
@@ -314,7 +337,7 @@ void Device::actionClearDeviceData()
 {
     //qDebug() << "Device::actionClearDeviceData()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
         m_ble_action = DeviceUtils::ACTION_CLEAR_HISTORY;
         actionStarted();
@@ -326,7 +349,7 @@ void Device::actionLedBlink()
 {
     //qDebug() << "Device::actionLedBlink()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
         m_ble_action = DeviceUtils::ACTION_LED_BLINK;
         actionStarted();
@@ -338,7 +361,7 @@ void Device::actionWatering()
 {
     //qDebug() << "Device::actionWatering()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
         m_ble_action = DeviceUtils::ACTION_WATERING;
         actionStarted();
@@ -350,7 +373,7 @@ void Device::actionCalibrate()
 {
     //qDebug() << "Device::actionCalibrate()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
         m_ble_action = DeviceUtils::ACTION_CALIBRATE;
         actionStarted();
@@ -358,14 +381,15 @@ void Device::actionCalibrate()
     }
 }
 
+/* ************************************************************************** */
+
 void Device::actionReboot()
 {
     //qDebug() << "Device::actionReboot()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_REBOOT;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_REBOOT);
         deviceConnect();
     }
 }
@@ -374,14 +398,120 @@ void Device::actionShutdown()
 {
     //qDebug() << "Device::actionShutdown()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_SHUTDOWN;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_SHUTDOWN);
         deviceConnect();
     }
 }
 
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+void Device::actionStarted(int action)
+{
+    qDebug() << "Device::actionStarted()" << getAddress() << getName() << "> action:" << action;
+
+    if (m_ble_action != action)
+    {
+        m_ble_action = action;
+        Q_EMIT actionUpdated();
+    }
+
+    if (m_ble_action == DeviceUtils::ACTION_REBOOT || m_ble_action == DeviceUtils::ACTION_SHUTDOWN ||
+        m_ble_action == DeviceUtils::ACTION_CONNECT || m_ble_action == DeviceUtils::ACTION_RECONNECT ||
+        m_ble_action == DeviceUtils::ACTION_DISCONNECT || m_ble_action == DeviceUtils::ACTION_DISCONNECT_FORNOW)
+    {
+        // don't change the status
+    }
+    else if (m_ble_status == DeviceUtils::DEVICE_CONNECTED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_WORKING;
+        Q_EMIT statusUpdated();
+    }
+}
+
+void Device::actionFinished()
+{
+    qDebug() << "Device::actionFinished()" << getAddress() << getName() << "> action:" << m_ble_action;
+
+    if (m_ble_action != DeviceUtils::ACTION_IDLE)
+    {
+        m_ble_action = DeviceUtils::ACTION_IDLE;
+        Q_EMIT actionUpdated();
+    }
+
+    if (m_ble_status > DeviceUtils::DEVICE_CONNECTED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_CONNECTED;
+        Q_EMIT statusUpdated();
+    }
+}
+
+void Device::actionErrored()
+{
+    qWarning() << "Device::actionErrored()" << getAddress() << getName() << "> action:" << m_ble_action;
+
+    if (m_ble_action != DeviceUtils::ACTION_IDLE)
+    {
+        m_ble_action = DeviceUtils::ACTION_IDLE;
+        Q_EMIT actionUpdated();
+    }
+
+    if (m_ble_status > DeviceUtils::DEVICE_CONNECTED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_CONNECTED;
+        Q_EMIT statusUpdated();
+    }
+}
+
+void Device::actionCanceled()
+{
+    qWarning() << "Device::actionCanceled()" << getAddress() << getName() << "> action:" << m_ble_action;
+
+    if (m_ble_action != DeviceUtils::ACTION_IDLE)
+    {
+        m_ble_action = DeviceUtils::ACTION_IDLE;
+        Q_EMIT actionUpdated();
+    }
+
+    if (m_ble_status > DeviceUtils::DEVICE_CONNECTED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_CONNECTED;
+        Q_EMIT statusUpdated();
+    }
+
+    deviceDisconnect();
+}
+
+void Device::actionTimedOut()
+{
+    qWarning() << "Device::actionTimedOut()" << getAddress() << getName() << "> action:" << m_ble_action;
+
+    if (m_ble_action != DeviceUtils::ACTION_IDLE)
+    {
+        m_ble_action = DeviceUtils::ACTION_IDLE;
+        Q_EMIT actionUpdated();
+    }
+
+    if (m_ble_status > DeviceUtils::DEVICE_CONNECTED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_CONNECTED;
+        Q_EMIT statusUpdated();
+    }
+    else if (m_ble_status < DeviceUtils::DEVICE_CONNECTED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+        Q_EMIT statusUpdated();
+    }
+}
+
+void Device::actionKeepAlive()
+{
+    //qDebug() << "Device::actionKeepAlive()";
+}
+
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 void Device::refreshQueued()
@@ -406,10 +536,9 @@ void Device::refreshStart()
 {
     //qDebug() << "Device::refreshStart()" << getAddress() << getName() << "/ last update: " << getLastUpdateInt();
 
-    if (!isBusy())
+    if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_UPDATE;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_UPDATE);
         deviceConnect();
     }
 }
@@ -418,10 +547,9 @@ void Device::refreshStartHistory()
 {
     //qDebug() << "Device::refreshStartHistory()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_UPDATE_HISTORY;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_UPDATE_HISTORY);
         deviceConnect();
     }
 }
@@ -430,7 +558,7 @@ void Device::refreshStartRealtime()
 {
     //qDebug() << "Device::refreshStartRealtime()" << getAddress() << getName();
 
-    if (!isBusy())
+    if (!isWorking())
     {
         m_ble_action = DeviceUtils::ACTION_UPDATE_REALTIME;
         actionStarted();
@@ -445,34 +573,9 @@ void Device::refreshStop()
     deviceDisconnect();
 }
 
-void Device::actionCanceled()
-{
-    //qDebug() << "Device::actionCanceled()" << getAddress() << getName();
-
-    deviceDisconnect();
-
-    refreshDataFinished(false);
-}
-
-void Device::actionTimedout()
-{
-    //qDebug() << "Device::actionTimedout()" << getAddress() << getName();
-
-    deviceDisconnect();
-
-    refreshDataFinished(false);
-}
-
 void Device::refreshRetry()
 {
     //qDebug() << "Device::refreshRetry()" << getAddress() << getName();
-}
-
-/* ************************************************************************** */
-
-void Device::actionStarted()
-{
-    //qDebug() << "Device::actionStarted()" << getAddress() << getName();
 }
 
 void Device::refreshDataFinished(bool status, bool cached)
@@ -587,6 +690,12 @@ void Device::setTimeoutTimer(int time_s)
     m_timeoutTimer.start();
 }
 
+void Device::setKeepaliveTimer(int time_s)
+{
+    m_keepaliveTimer.setInterval(time_s*1000);
+    m_keepaliveTimer.start();
+}
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 
@@ -657,14 +766,14 @@ bool Device::getSqlDeviceInfos()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-bool Device::isErrored() const
+bool Device::isDisconnecting() const
 {
-    return (getLastErrorInt() >= 0 && getLastErrorInt() <= 5);
+    return (m_ble_status == DeviceUtils::DEVICE_DISCONNECTING);
 }
 
-bool Device::isBusy() const
+bool Device::isConnecting() const
 {
-    return (m_ble_status >= DeviceUtils::DEVICE_CONNECTING);
+    return (m_ble_status == DeviceUtils::DEVICE_CONNECTING);
 }
 
 bool Device::isConnected() const
@@ -674,12 +783,17 @@ bool Device::isConnected() const
 
 bool Device::isWorking() const
 {
-    return (m_ble_status == DeviceUtils::DEVICE_WORKING);
+    return (m_ble_status >= DeviceUtils::DEVICE_WORKING);
 }
 
 bool Device::isUpdating() const
 {
     return (m_ble_status >= DeviceUtils::DEVICE_UPDATING);
+}
+
+bool Device::isErrored() const
+{
+    return (getLastErrorInt() >= 0 && getLastErrorInt() <= 5);
 }
 
 /* ************************************************************************** */
@@ -688,7 +802,7 @@ QDateTime Device::getDeviceUptime() const
 {
     if (m_device_time > 0)
     {
-        return QDateTime::fromSecsSinceEpoch(QDateTime::currentDateTime().toSecsSinceEpoch() - m_device_time);
+        return QDateTime::fromSecsSinceEpoch(QDateTime::currentSecsSinceEpoch() - m_device_time);
     }
 
     return QDateTime();
@@ -720,14 +834,14 @@ QDateTime Device::getLastHistorySync() const
 int Device::getLastHistorySync_int() const
 {
     if (m_lastHistorySync.isValid())
-        return QDateTime::currentDateTime().toSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
+        return QDateTime::currentSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
 
     return -1;
 }
 
 float Device::getLastHistorySync_days() const
 {
-    int64_t sec = QDateTime::currentDateTime().toSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
+    int64_t sec = QDateTime::currentSecsSinceEpoch() - m_lastHistorySync.toSecsSinceEpoch();
 
     float days = (sec / 3600.f / 24.f);
     if (days < 0.f) days = 0.f;
@@ -1284,16 +1398,43 @@ void Device::setRssi(const int rssi)
         Q_EMIT rssiUpdated();
     }
 
-    if (m_rssiTimeoutInterval > 0)
+    if (s_rssis_window > 0)
+    {
+        m_rssis.push_back(rssi);
+        while (m_rssis.size() < s_rssis_window) m_rssis.push_front(rssi); // init
+        if (m_rssis.size() > s_rssis_window) m_rssis.pop_front();
+        Q_EMIT rssiMeanUpdated();
+    }
+
+    if (s_rssiTimeoutInterval > 0)
     {
         m_rssiTimer.start();
     }
+
+    if (m_rssi < 0)
+    {
+        m_ble_status = DeviceUtils::DEVICE_AVAILABLE;
+        Q_EMIT statusUpdated();
+    }
+}
+
+int Device::getRssiMean() const
+{
+    float rssiMean = 0.f;
+    for (auto v: m_rssis) rssiMean += v;
+    return (rssiMean / s_rssis_window);
 }
 
 void Device::cleanRssi()
 {
     m_rssi = std::abs(m_rssi);
     Q_EMIT rssiUpdated();
+
+    if (m_ble_status == DeviceUtils::DEVICE_AVAILABLE)
+    {
+        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+        Q_EMIT statusUpdated();
+    }
 }
 
 /* ************************************************************************** */
@@ -1302,6 +1443,12 @@ void Device::cleanRssi()
 void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << getAddress() << ")";
+
+    if (m_mtu != m_bleController->mtu())
+    {
+        m_mtu = m_bleController->mtu();
+        Q_EMIT mtuUpdated();
+    }
 
     m_ble_status = DeviceUtils::DEVICE_CONNECTED;
 
@@ -1362,6 +1509,13 @@ void Device::deviceDisconnected()
 {
     //qDebug() << "Device::deviceDisconnected(" << getAddress() << ")";
 
+    m_timeoutTimer.stop();
+    m_keepaliveTimer.stop();
+
+    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+    Q_EMIT statusUpdated();
+
+    // We are disconnected
     Q_EMIT disconnected();
 
     if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
@@ -1410,13 +1564,50 @@ void Device::deviceErrored(QLowEnergyController::Error error)
     QLowEnergyController::AuthorizationError (since Qt 5.14)	8	The local Bluetooth device closed the connection due to insufficient authorization.
     QLowEnergyController::MissingPermissionsError (since Qt 6.4)	9	The operating system requests permissions which were not granted by the user.
 */
+    m_timeoutTimer.stop();
+    m_keepaliveTimer.stop();
+
     m_lastError = QDateTime::currentDateTime();
+    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+    Q_EMIT statusUpdated();
+
     refreshDataFinished(false);
 }
 
 void Device::deviceStateChanged(QLowEnergyController::ControllerState)
 {
     //qDebug() << "Device::deviceStateChanged(" << getAddress() << ") state:" << state;
+}
+
+void Device::deviceMtuChanged(int mtu)
+{
+    qDebug() << "Device::deviceMtuChanged(" << getAddress() << ") MTU:" << mtu;
+
+    if (m_mtu != mtu)
+    {
+        m_mtu = mtu;
+        Q_EMIT mtuUpdated();
+    }
+}
+
+void Device::deviceRssiChanged(qint16 rssi)
+{
+    qDebug() << "Device::deviceRssiChanged(" << getAddress() << ") RSSI:" << rssi;
+
+    if (m_rssi != rssi)
+    {
+        m_rssi = rssi;
+        Q_EMIT rssiUpdated();
+    }
+}
+
+void Device::deviceConnParamChanged(const QLowEnergyConnectionParameters &newParameters)
+{
+    qDebug() << "Device::deviceConnParamChanged(" << getAddress() << ")";
+    qDebug() << "- latency: " << newParameters.latency();
+    qDebug() << "- minimumInterval: " << newParameters.minimumInterval();
+    qDebug() << "- maximumInterval: " << newParameters.maximumInterval();
+    qDebug() << "- supervisionTimeout: " << newParameters.supervisionTimeout();
 }
 
 /* ************************************************************************** */

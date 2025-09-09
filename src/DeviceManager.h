@@ -195,21 +195,29 @@ private slots:
     void bluetoothPermissionsChanged();
 
     // QBluetoothDeviceDiscoveryAgent related
-    void addNearbyBleDevice(const QBluetoothDeviceInfo &info);
-    void updateNearbyBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
-    void addBleDevice(const QBluetoothDeviceInfo &info);
-    void updateBleDevice(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
-    void updateBleDevice_simple(const QBluetoothDeviceInfo &info);
     void deviceDiscoveryError(QBluetoothDeviceDiscoveryAgent::Error);
     void deviceDiscoveryErrorIOS();
     void deviceDiscoveryFinished();
     void deviceDiscoveryStopped();
+
+    //
+    void addBleDeviceNearby(const QBluetoothDeviceInfo &info);
+    void bleDeviceNearby_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+    void bleDeviceNearby_discovered(const QBluetoothDeviceInfo &info);
+
+    void addBleDevice(const QBluetoothDeviceInfo &info);
+    void bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+    void bleDevice_discovered(const QBluetoothDeviceInfo &info);
 
 public:
     DeviceManager(bool daemon = false);
     ~DeviceManager();
 
     bool isDaemon() const { return m_daemonMode; }
+
+    Q_INVOKABLE bool areDevicesConnected() const;
+    Q_INVOKABLE void disconnectDevices() const;
+    Q_INVOKABLE void disconnectAndExit() const;
 
     // Adapters management
     Q_INVOKABLE bool areAdaptersAvailable() const { return m_bluetoothAdapters.size(); }

@@ -91,19 +91,24 @@ class Device: public QObject
     Q_PROPERTY(bool deviceIsInside READ isInside WRITE setInside NOTIFY settingsUpdated)
     Q_PROPERTY(bool deviceIsOutside READ isOutside WRITE setOutside NOTIFY settingsUpdated)
 
-    Q_PROPERTY(int rssi READ getRssi NOTIFY rssiUpdated)
-    Q_PROPERTY(bool available READ isAvailable NOTIFY rssiUpdated)
-
+    // BLE
+    Q_PROPERTY(int mtu READ getMTU NOTIFY mtuUpdated)
     Q_PROPERTY(int minorClass READ getMinorClass NOTIFY advertisementUpdated)
     Q_PROPERTY(int majorClass READ getMajorClass NOTIFY advertisementUpdated)
     Q_PROPERTY(int serviceClass READ getServiceClass NOTIFY advertisementUpdated)
     Q_PROPERTY(int bluetoothConfiguration READ getBluetoothConfiguration NOTIFY advertisementUpdated)
 
+    Q_PROPERTY(int rssi READ getRssi NOTIFY rssiUpdated)
+    Q_PROPERTY(int rssiMean READ getRssiMean NOTIFY rssiMeanUpdated)
+    Q_PROPERTY(bool available READ isAvailable NOTIFY rssiUpdated)
+
     Q_PROPERTY(int status READ getStatus NOTIFY statusUpdated)
-    Q_PROPERTY(int action READ getAction NOTIFY statusUpdated)
+    Q_PROPERTY(int action READ getAction NOTIFY actionUpdated)
+
     Q_PROPERTY(bool enabled READ isEnabled NOTIFY statusUpdated)
+    Q_PROPERTY(bool disconnecting READ isDisconnecting NOTIFY statusUpdated)
+    Q_PROPERTY(bool connecting READ isConnecting NOTIFY statusUpdated)
     Q_PROPERTY(bool connected READ isConnected NOTIFY statusUpdated)
-    Q_PROPERTY(bool busy READ isBusy NOTIFY statusUpdated)
     Q_PROPERTY(bool working READ isWorking NOTIFY statusUpdated)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
@@ -126,18 +131,24 @@ Q_SIGNALS:
 
     void deviceUpdated(Device *d);
     void deviceSynced(Device *d);
+
     void sensorUpdated();
     void sensorsUpdated();
     void capabilitiesUpdated();
+    void connectivityUpdated();
     void settingsUpdated();
     void selectionUpdated();
 
-    void batteryUpdated();
+    void mtuUpdated();
     void rssiUpdated();
-    void advertisementUpdated();
+    void rssiMeanUpdated();
+
+    void batteryUpdated();
     void statusUpdated();
-    void dataAvailableUpdated();
+    void actionUpdated();
     void dataUpdated();
+    void dataAvailableUpdated();
+    void advertisementUpdated();
     void refreshUpdated();  // sent when a manual refresh is successful
     void historyUpdated();  // sent when history sync is successful
     void realtimeUpdated(); // sent when a realtime update is received
@@ -182,12 +193,20 @@ protected:
     QDateTime m_lastError;
     bool m_firmware_uptodate = false;
 
-    const static int s_timeout = 12;
-    const static int s_timeoutConnection = 12;
-    const static int s_timeoutError = 12;
+    QTimer m_updateTimer;
+    void setUpdateTimer(int updateInterval_m = 0);
 
     QTimer m_timeoutTimer;
-    void setTimeoutTimer(int time_s = s_timeout);
+    const static int s_timeoutInterval = 12;
+    void setTimeoutTimer(int time_s = s_timeoutInterval);
+
+    QTimer m_keepaliveTimer;
+    const static int s_keepaliveInterval = 1;
+    void setKeepaliveTimer(int time_s = s_keepaliveInterval);
+
+    bool m_stayConnected = false;
+    int m_retry = 0;
+    const static int s_retryCount = 999;
 
     // Device time
     int64_t m_device_time = -1;
@@ -198,22 +217,28 @@ protected:
     QLowEnergyController *m_bleController = nullptr;
 
     int m_bluetoothCoreConfiguration = 0; //!< See QBluetoothDeviceInfo::CoreConfiguration enum
+    int m_mtu = -1;
+    int m_major = 0;
+    int m_minor = 0;
+    int m_service = 0;
 
     int m_rssi = 0;
     int m_rssiMin = 0;
     int m_rssiMax = -100;
 
-    QTimer m_rssiTimer;
-    int m_rssiTimeoutInterval = 16;
+    QList <int> m_rssis;
+    const static int s_rssis_window = 16;
 
-    int m_major = 0;
-    int m_minor = 0;
-    int m_service = 0;
+    QTimer m_rssiTimer;
+    const static int s_rssiTimeoutInterval = 16;
 
     virtual void deviceConnected();
     virtual void deviceDisconnected();
-    virtual void deviceErrored(QLowEnergyController::Error);
+    virtual void deviceErrored(QLowEnergyController::Error error);
     virtual void deviceStateChanged(QLowEnergyController::ControllerState state);
+    virtual void deviceMtuChanged(int mtu);
+    virtual void deviceRssiChanged(qint16 rssi);
+    virtual void deviceConnParamChanged(const QLowEnergyConnectionParameters &newParameters);
 
     virtual void addLowEnergyService(const QBluetoothUuid &uuid);
     virtual void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
@@ -223,9 +248,13 @@ protected:
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
-    virtual void actionStarted();
+    virtual void actionStarted(int action = 0);
+    virtual void actionFinished();
+    virtual void actionErrored();
     virtual void actionCanceled();
-    virtual void actionTimedout();
+    virtual void actionTimedOut();
+    virtual void actionKeepAlive();
+
     virtual void refreshDataFinished(bool status, bool cached = false);
     virtual void refreshHistoryFinished(bool status);
     virtual void refreshRealtime();
@@ -298,14 +327,15 @@ public:
     bool hasReboot() const { return (m_deviceCapabilities & DeviceUtils::DEVICE_REBOOT); }
 
     // Device RSSI
+    bool isAvailable() const { return (m_rssi < 0); }
+    int getRssi() const { return m_rssi; }
+    int getRssiMean() const;
+    int getRssiMin() const { return m_rssiMin; }
+    int getRssiMax() const { return m_rssiMax; }
     void setRssi(const int rssi);
     void cleanRssi();
 
-    bool isAvailable() const { return (m_rssi < 0); }
-    int getRssi() const { return m_rssi; }
-    int getRssiMin() const { return m_rssiMin; }
-    int getRssiMax() const { return m_rssiMax; }
-
+    int getMTU() const { return m_mtu; }
     int getMinorClass() const { return m_minor; }
     int getMajorClass() const { return m_major; }
     int getServiceClass() const { return m_service; }
@@ -313,9 +343,10 @@ public:
     // Device status
     int getAction() const { return m_ble_action; }
     int getStatus() const { return m_ble_status; }
-    bool isBusy() const;                //!< Is currently doing/trying something?
+    bool isDisconnecting() const;       //!< Is disconnecting
+    bool isConnecting() const;          //!< Is connecting
     bool isConnected() const;           //!< Is currently connected
-    bool isWorking() const;             //!< Is currently working?
+    bool isWorking() const;             //!< Is currently working? doing/trying something?
     bool isUpdating() const;            //!< Is currently being updated?
     bool isErrored() const;             //!< Has emitted a BLE error
 
@@ -355,24 +386,30 @@ public:
     Q_INVOKABLE bool hasSetting(const QString &key) const;
     Q_INVOKABLE QVariant getSetting(const QString &key) const;
     Q_INVOKABLE bool setSetting(const QString &key, QVariant value);
+/*
+    // BLE lifecycle
+    virtual void deviceConnect();
+    virtual void deviceReconnect();
+    virtual void deviceDisconnect();
+    virtual void deviceDisconnectForNow();
+*/
+    // BLE advertisement
+    virtual void parseAdvertisementData(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &data);
 
-    // Start actions
-    Q_INVOKABLE void actionConnect();
-    Q_INVOKABLE void actionDisconnect();
-    Q_INVOKABLE void actionScan();
-    Q_INVOKABLE void actionScanWithValues();
+    // BLE generic actions
+    Q_INVOKABLE virtual void actionConnect();
+    Q_INVOKABLE virtual void actionDisconnect();
+    Q_INVOKABLE virtual void actionScan();
+    Q_INVOKABLE virtual void actionScanWithValues();
+    Q_INVOKABLE virtual void actionReboot();
+    Q_INVOKABLE virtual void actionShutdown();
+
+    // Other actions
     Q_INVOKABLE void actionClearData();
     Q_INVOKABLE void actionClearDeviceData();
     Q_INVOKABLE void actionLedBlink();
     Q_INVOKABLE void actionWatering();
     Q_INVOKABLE void actionCalibrate();
-    Q_INVOKABLE void actionReboot();
-    Q_INVOKABLE void actionShutdown();
-
-    // BLE advertisement
-    virtual void parseAdvertisementData(const uint16_t adv_mode,
-                                        const uint16_t adv_id,
-                                        const QByteArray &data);
 
 public slots:
     void deviceConnect();               //!< Initiate a BLE connection with a device
