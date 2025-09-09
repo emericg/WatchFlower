@@ -41,15 +41,13 @@ T.ItemDelegate {
         anchors.right: parent.right
         anchors.rightMargin: Theme.componentMargin
 
+        spacing: 0
         opacity: control.enabled ? 1 : 0.4
 
         Item {
             Layout.preferredWidth: appHeader.headerPosition - parent.anchors.leftMargin
             Layout.preferredHeight: Theme.componentHeightXL
-
             Layout.alignment: Qt.AlignTop
-            Layout.topMargin: 0
-            Layout.bottomMargin: 12
 
             IconSvg {
                 anchors.left: parent.left
@@ -67,6 +65,8 @@ T.ItemDelegate {
         Text {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
+            Layout.topMargin: 0
+            Layout.bottomMargin: 4
 
             text: control.text
             color: control.textColor

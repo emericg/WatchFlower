@@ -208,8 +208,19 @@ Loader {
                 }
 
                 Component.onCompleted: {
-                    if (isMobile) {
-                        maximumFlickVelocity *= 1.5
+                    //console.log("> (default) flick maximum velocity: " + maximumFlickVelocity)
+                    //console.log("> (default) flick deceleration: " + flickDeceleration)
+
+                    if (isDesktop) {
+                        // mouse wheel or trackpad
+                        maximumFlickVelocity = 6500
+                        flickDeceleration = 5000
+                        boundsBehavior = Flickable.OvershootBounds
+                    } else {
+                        // touch
+                        maximumFlickVelocity = 7500
+                        flickDeceleration = 3000
+                        boundsBehavior = Flickable.DragAndOvershootBounds
                     }
                 }
 

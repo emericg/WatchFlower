@@ -46,13 +46,51 @@ Flickable {
 
         ////////////////////////////////
 
-        FrameThemed {
+        //FrameThemed {
+        //    id: itemDevice
+        //    width: www
+        //    ColumnLayout {
+        //        id: itemDeviceContent
+        //        anchors.fill: parent
+        //        spacing: 12
+
+        Rectangle {
             id: itemDevice
             width: www
+            height: itemDeviceContent.height + 24
+
+            radius: Theme.componentRadius
+            color: Theme.colorForeground
+            border.width: 2
+            border.color: Qt.darker(color, 1.03)
+
+            IconSvg {
+                anchors.top: parent.top
+                anchors.right: parent.right
+                anchors.rightMargin: 12
+                anchors.bottom: parent.bottom
+                anchors.margins: 0
+
+                width: parent.height * 0.85
+                height: parent.height * 0.85
+
+                asynchronous: true
+                smooth: true
+                opacity: 0.75
+                color: Theme.colorIcon
+                fillMode: Image.PreserveAspectFit
+
+                source: UtilsDeviceSensors.getDeviceImage(currentDevice.deviceName)
+            }
 
             ColumnLayout {
-                anchors.fill: parent
-                spacing: 12
+                id: itemDeviceContent
+                anchors.top: parent.top
+                anchors.topMargin: 12
+                anchors.left: parent.left
+                anchors.leftMargin: 12
+                anchors.right: parent.right
+                anchors.rightMargin: 12
 
                 Column {
                     Layout.fillWidth: true

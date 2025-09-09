@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     // Qt 6.6+ mouse wheel hack
-    qputenv("QT_QUICK_FLICKABLE_WHEEL_DECELERATION", "2500");
+    qputenv("QT_QUICK_FLICKABLE_WHEEL_DECELERATION", "8000");
 #endif
 
     // GUI application /////////////////////////////////////////////////////////
@@ -220,7 +220,7 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("qtConnectivityPatched", qtConnectivityPatched);
 
     // Load the main view
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
     engine_context->setContextProperty("utilsShare", utilsShare);
     engine.loadFromModule("WatchFlower", "MobileApplication");
 #else
