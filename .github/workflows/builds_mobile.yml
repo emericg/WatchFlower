@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "6.0"
-  QT_VERSION: "6.7.3"
+  QT_VERSION: "6.9.3"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -34,20 +34,20 @@ jobs:
           submodules: recursive
 
       # Java environment (already installed in 'ubuntu-24.04')
-      #- name: Setup Java environment
-      #  uses: actions/setup-java@v4
-      #  with:
-      #    distribution: 'temurin'
-      #    java-version: '17'
+      - name: Setup Java environment
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
       # Android environment (already installed in 'ubuntu-24.04')
-      #- name: Setup Android environment
-      #  uses: android-actions/setup-android@v3
-      #- name: Install Android SDK / NDK / tools
-      #  run: |
-      #       sdkmanager "platforms;android-36"
-      #       sdkmanager "ndk;26.1.10909125"
-      #       sdkmanager "build-tools;36.0.0"
+      - name: Setup Android environment
+        uses: android-actions/setup-android@v3
+      - name: Install Android SDK / NDK / tools
+        run: |
+             sdkmanager "platforms;android-36"
+             sdkmanager "ndk;28.2.13676358"
+             sdkmanager "build-tools;36.1.0"
 
       # Install Qt (desktop & Android)
       - name: Install Qt (desktop & Android)
