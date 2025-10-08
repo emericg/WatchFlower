@@ -47,6 +47,7 @@ T.ItemDelegate {
         Item {
             Layout.preferredWidth: appHeader.headerPosition - parent.anchors.leftMargin
             Layout.preferredHeight: Theme.componentHeightXL
+
             Layout.alignment: Qt.AlignTop
 
             IconSvg {
