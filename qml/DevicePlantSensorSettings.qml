@@ -76,7 +76,7 @@ Flickable {
 
                 asynchronous: true
                 smooth: true
-                opacity: 0.75
+                opacity: 0.33
                 color: Theme.colorIcon
                 fillMode: Image.PreserveAspectFit
 

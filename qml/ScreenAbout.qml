@@ -84,7 +84,7 @@ Loader {
                     border.width: (singleColumn || isPhone) ? 0 : Theme.componentBorderWidth
                     border.color: Theme.colorSeparator
 
-                    property int availaleWidth: (contentHeader.width - rowTitle.width)
+                    property int availableWidth: (contentHeader.width - rowTitle.width)
 
                     ////////
 
@@ -138,11 +138,11 @@ Loader {
                         anchors.rightMargin: screenPaddingRight + Theme.componentMarginL
                         anchors.verticalCenter: parent.verticalCenter
 
+                        visible: (contentHeader.availableWidth > 560)
                         spacing: Theme.componentMargin
-                        visible: (contentHeader.availaleWidth > 560)
 
                         ButtonSolid {
-                            visible: (width*3 < contentHeader.availaleWidth)
+                            visible: (width*3 < contentHeader.availableWidth)
                             width: isPhone ? 150 : 160
                             height: 40
 
@@ -156,7 +156,7 @@ Loader {
                         }
 
                         ButtonSolid {
-                            visible: (width*2 < contentHeader.availaleWidth)
+                            visible: (width*2 < contentHeader.availableWidth)
                             width: isPhone ? 150 : 160
                             height: 40
 
@@ -170,7 +170,7 @@ Loader {
                         }
 
                         ButtonSolid {
-                            visible: (width*1 < contentHeader.availaleWidth)
+                            visible: (width*1 < contentHeader.availableWidth)
                             width: isPhone ? 150 : 160
                             height: 40
 
@@ -200,7 +200,7 @@ Loader {
                     anchors.rightMargin: Theme.componentMargin
 
                     spacing: Theme.componentMargin
-                    visible: (contentHeader.availaleWidth <= 560)
+                    visible: (contentHeader.availableWidth <= 560)
 
                     ButtonFlat {
                         anchors.verticalCenter: parent.verticalCenter
@@ -230,6 +230,22 @@ Loader {
                     }
                 }
 
+                ////////////////
+/*
+                IconSvg { // image devices
+                    anchors.left: parent.left
+                    anchors.leftMargin: Theme.componentMargin // appHeader.headerPosition
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.componentMargin
+
+                    visible: isPhone
+                    height: width*0.2347222
+
+                    source: "qrc:/assets/gfx/tutorial/welcome-devices.svg"
+                    fillMode: Image.PreserveAspectFit
+                    color: Theme.colorPrimary
+                }
+*/
                 ////////////////
 
                 ListItem { // description
@@ -293,20 +309,6 @@ Loader {
                     indicatorSource: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
 
                     onClicked: Qt.openUrlExternally("https://github.com/emericg/WatchFlower/blob/master/docs/README.md")
-                }
-
-                IconSvg { // image devices
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-
-                    visible: isPhone
-                    height: width*0.2347222
-
-                    source: "qrc:/assets/gfx/tutorial/welcome-devices.svg"
-                    fillMode: Image.PreserveAspectFit
-                    color: Theme.colorPrimary
                 }
 
                 ////////
