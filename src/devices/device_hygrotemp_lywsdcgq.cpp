@@ -249,7 +249,8 @@ void DeviceHygrotempLYWSDCGQ::bleReadNotify(const QLowEnergyCharacteristic &c, c
             else
             {
                 refreshDataFinished(true);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceHygrotempLYWSDCGQ update:" << getAddress();
@@ -271,7 +272,7 @@ void DeviceHygrotempLYWSDCGQ::confirmedDescriptorWrite(const QLowEnergyDescripto
         qDebug() << "confirmedDescriptorWrite() disconnect?!";
 
         //disabled notifications -> assume disconnect intent
-        //m_control->disconnectFromDevice();
+        //deviceDisconnect();
         //delete m_service;
         //m_service = nullptr;
     }

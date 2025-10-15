@@ -164,7 +164,7 @@ Device::~Device()
  * \brief Device::deviceConnect
  * \return false means immediate error, true means connection process started
  */
-void Device::deviceConnect()
+void Device::deviceConnect(const bool stayConnected)
 {
     //qDebug() << "Device::deviceConnect()" << getAddress() << getName();
 
@@ -209,6 +209,9 @@ void Device::deviceConnect()
     {
         if (m_ble_status <= DeviceUtils::DEVICE_AVAILABLE || m_ble_status <= DeviceUtils::DEVICE_QUEUED)
         {
+            m_stayConnected = stayConnected ? true : false;
+            m_retry = stayConnected ? 0 : 999;
+
             m_ble_status = DeviceUtils::DEVICE_CONNECTING;
             Q_EMIT statusUpdated();
 
@@ -218,12 +221,65 @@ void Device::deviceConnect()
     }
 }
 
-void Device::deviceDisconnect()
+void Device::deviceReconnect()
 {
+    if (m_ble_status != DeviceUtils::DEVICE_AVAILABLE) return; // then we can't reconnect
+
+    //qDebug() << "Device::deviceReconnect(retry" << m_retry << "/" << s_retryCount << ")"
+    //         << "[" << getAddress() << getName() << "] { status:" << m_ble_status << "}";
+
+    if (m_bleController && m_bleController->state() == QLowEnergyController::UnconnectedState)
+    {
+        if (m_retry > s_retryCount)
+        {
+            qWarning() << "Device::deviceReconnect(retry" << m_retry << "/" << s_retryCount << ")" << getAddress() << getName();
+
+            m_stayConnected = false;
+            m_retry = 0;
+        }
+        else
+        {
+            qDebug() << "Device::deviceReconnect(retry" << m_retry << "/" << s_retryCount << ")" << getAddress() << getName();
+
+            m_retry++;
+
+            m_ble_status = DeviceUtils::DEVICE_CONNECTING;
+            Q_EMIT statusUpdated();
+
+            m_bleController->connectToDevice();
+            setTimeoutTimer();
+        }
+    }
+}
+
+void Device::deviceDisconnect(const bool stayConnected)
+{
+    qDebug() << "Device::deviceDisconnect()" << getAddress() << getName();
+
+    m_stayConnected = stayConnected;
+    m_retry = s_retryCount;
+
     if (m_bleController && m_bleController->state() != QLowEnergyController::UnconnectedState)
     {
-        qDebug() << "Device::deviceDisconnect()" << getAddress() << getName();
+        if (m_ble_status >= DeviceUtils::DEVICE_CONNECTED)
+        {
+            m_ble_status = DeviceUtils::DEVICE_DISCONNECTING;
+            Q_EMIT statusUpdated();
 
+            m_bleController->disconnectFromDevice();
+        }
+    }
+}
+
+void Device::deviceDisconnect_temporary()
+{
+    qDebug() << "Device::deviceDisconnect_temporary()" << getAddress() << getName();
+
+    m_stayConnected = true; // that is the difference
+    m_retry = s_retryCount;
+
+    if (m_bleController && m_bleController->state() != QLowEnergyController::UnconnectedState)
+    {
         if (m_ble_status >= DeviceUtils::DEVICE_CONNECTED)
         {
             m_ble_status = DeviceUtils::DEVICE_DISCONNECTING;
@@ -237,15 +293,14 @@ void Device::deviceDisconnect()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void Device::actionConnect()
+void Device::actionConnect(const bool stayConnected)
 {
     if ((m_ble_status <= DeviceUtils::DEVICE_AVAILABLE))
     {
         qDebug() << "Device::actionConnect()" << getAddress() << getName();
 
         actionStarted(DeviceUtils::ACTION_CONNECT);
-
-        deviceConnect();
+        deviceConnect(stayConnected);
     }
     else
     {
@@ -253,15 +308,14 @@ void Device::actionConnect()
     }
 }
 
-void Device::actionDisconnect()
+void Device::actionDisconnect(const bool stayConnected)
 {
     if ((m_ble_status >= DeviceUtils::DEVICE_CONNECTED))
     {
         qDebug() << "Device::actionDisconnect()" << getAddress() << getName();
 
         actionStarted(DeviceUtils::ACTION_DISCONNECT);
-
-        deviceDisconnect();
+        deviceDisconnect(stayConnected);
     }
     else
     {
@@ -308,7 +362,7 @@ void Device::actionClearData()
         if (resetDeviceLastSync.exec())
         {
             m_lastHistorySync = QDateTime();
-            Q_EMIT statusUpdated();
+            Q_EMIT lastUpdated();
         }
         else
         {
@@ -584,9 +638,6 @@ void Device::refreshDataFinished(bool status, bool cached)
 
     m_timeoutTimer.stop();
 
-    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-    Q_EMIT statusUpdated();
-
     if (status == true)
     {
         // Only update data on success
@@ -594,7 +645,7 @@ void Device::refreshDataFinished(bool status, bool cached)
 
         // Reset last error
         m_lastError = QDateTime();
-        Q_EMIT statusUpdated();
+        Q_EMIT lastUpdated();
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
@@ -611,7 +662,7 @@ void Device::refreshDataFinished(bool status, bool cached)
         if (!cached)
         {
             m_lastError = QDateTime::currentDateTime();
-            Q_EMIT statusUpdated();
+            Q_EMIT lastUpdated();
         }
     }
 
@@ -636,9 +687,6 @@ void Device::refreshHistoryFinished(bool status)
     //qDebug() << "Device::refreshHistoryFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
-
-    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-    Q_EMIT statusUpdated();
 
     if (status == true)
     {
@@ -668,9 +716,6 @@ void Device::refreshRealtimeFinished()
     //qDebug() << "Device::refreshRealtimeFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
-
-    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-    Q_EMIT statusUpdated();
 }
 
 void Device::refreshAdvertisement()
@@ -1411,10 +1456,15 @@ void Device::setRssi(const int rssi)
         m_rssiTimer.start();
     }
 
-    if (m_rssi < 0)
+    if (m_rssi < 0 && m_ble_status == DeviceUtils::DEVICE_OFFLINE)
     {
         m_ble_status = DeviceUtils::DEVICE_AVAILABLE;
         Q_EMIT statusUpdated();
+    }
+
+    if (m_stayConnected)
+    {
+        deviceReconnect();
     }
 }
 
@@ -1541,11 +1591,6 @@ void Device::deviceDisconnected()
     {
         refreshRealtimeFinished();
     }
-    else
-    {
-        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-        Q_EMIT statusUpdated();
-    }
 }
 
 void Device::deviceErrored(QLowEnergyController::Error error)
@@ -1568,8 +1613,13 @@ void Device::deviceErrored(QLowEnergyController::Error error)
     m_keepaliveTimer.stop();
 
     m_lastError = QDateTime::currentDateTime();
-    m_ble_status = DeviceUtils::DEVICE_OFFLINE;
-    Q_EMIT statusUpdated();
+    Q_EMIT lastUpdated();
+
+    if (m_ble_status < DeviceUtils::DEVICE_CONNECTED)
+    {
+        m_ble_status = DeviceUtils::DEVICE_OFFLINE;
+        Q_EMIT statusUpdated();
+    }
 
     refreshDataFinished(false);
 }

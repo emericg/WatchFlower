@@ -425,7 +425,8 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
                                                 m_temperature, -99.f, m_luminosityLux);
 
                 refreshDataFinished(status);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceParrotPot update:" << getAddress();

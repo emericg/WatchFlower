@@ -1038,7 +1038,7 @@ void DeviceManager::scanDevices_start()
     }
     else
     {
-        qWarning() << "Cannot scan or listen without BLE or BLE permissions";
+        qWarning() << "Cannot scan or listen without BLE (or BLE permissions)";
     }
 }
 
@@ -1151,7 +1151,7 @@ void DeviceManager::listenDevices_start()
     }
     else
     {
-        qWarning() << "Cannot scan or listen without BLE or BLE permissions";
+        qWarning() << "Cannot scan or listen without BLE (or BLE permissions)";
     }
 }
 

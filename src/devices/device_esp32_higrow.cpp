@@ -232,7 +232,8 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
                                   m_temperature, m_humidity, m_luminosityLux);
 
                 refreshDataFinished(true);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceEsp32HiGrow update:" << getAddress();

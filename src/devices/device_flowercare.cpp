@@ -258,16 +258,17 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
             // Make the LED blink
             serviceData->writeCharacteristic(chl, QByteArray::fromHex("FDFF"), QLowEnergyService::WriteWithoutResponse);
 
-            m_bleController->disconnectFromDevice();
+            // Disconnect
+            deviceDisconnect();
         }
         else
         {
-            // Make sure the LED is OFF
-            //if (chl.value().size() == 2 && (chl.value().at(0) != 0 || chl.value().at(1) != 0))
-            //{
-            //    serviceData->writeCharacteristic(chl, QByteArray::fromHex("0000"), QLowEnergyService::WriteWithoutResponse);
-            //    qWarning() << "FlowerCare LED was ON!";
-            //}
+            // Make sure the LED is OFF (?)
+            if (chl.value().size() == 2 && (chl.value().at(0) != 0 || chl.value().at(1) != 0))
+            {
+                serviceData->writeCharacteristic(chl, QByteArray::fromHex("0000"), QLowEnergyService::WriteWithoutResponse);
+                qWarning() << "FlowerCare LED was ON!";
+            }
         }
     }
 }
@@ -500,7 +501,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             if (m_history_entryIndex < 0)
             {
                 // abort sync?
-                m_bleController->disconnectFromDevice();
+                deviceDisconnect();
                 return;
             }
 
@@ -554,10 +555,9 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             }
             else
             {
-                // Finish it
                 refreshHistoryFinished(true);
-                m_bleController->disconnectFromDevice();
-                return;
+
+                deviceDisconnect();
             }
         }
 
@@ -606,7 +606,8 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                                                 m_temperature, -99.f, m_luminosityLux);
 
                 refreshDataFinished(status);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceFlowerCare update:" << getAddress();

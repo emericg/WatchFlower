@@ -113,11 +113,11 @@ class Device: public QObject
     Q_PROPERTY(bool updating READ isUpdating NOTIFY statusUpdated)
     Q_PROPERTY(bool errored READ isErrored NOTIFY statusUpdated)
 
-    Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY statusUpdated)
-    Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY statusUpdated)
-    Q_PROPERTY(QDateTime lastUpdate READ getLastUpdate NOTIFY statusUpdated)
-    Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY statusUpdated)
-    Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY statusUpdated)
+    Q_PROPERTY(int lastUpdateMin READ getLastUpdateInt NOTIFY lastUpdated)
+    Q_PROPERTY(QString lastUpdateStr READ getLastUpdateString NOTIFY lastUpdated)
+    Q_PROPERTY(QDateTime lastUpdate READ getLastUpdate NOTIFY lastUpdated)
+    Q_PROPERTY(QDateTime lastHistorySync READ getLastHistorySync NOTIFY lastUpdated)
+    Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY uptimeUpdated)
 
     // UI state(s)
     Q_PROPERTY(bool selected READ isSelected WRITE setSelected NOTIFY selectionUpdated)
@@ -146,6 +146,8 @@ Q_SIGNALS:
     void batteryUpdated();
     void statusUpdated();
     void actionUpdated();
+    void uptimeUpdated();
+    void lastUpdated();
     void dataUpdated();
     void dataAvailableUpdated();
     void advertisementUpdated();
@@ -386,19 +388,19 @@ public:
     Q_INVOKABLE bool hasSetting(const QString &key) const;
     Q_INVOKABLE QVariant getSetting(const QString &key) const;
     Q_INVOKABLE bool setSetting(const QString &key, QVariant value);
-/*
+
     // BLE lifecycle
-    virtual void deviceConnect();
+    virtual void deviceConnect(const bool stayConnected = false); //!< Initiate a BLE connection with a device
     virtual void deviceReconnect();
-    virtual void deviceDisconnect();
-    virtual void deviceDisconnectForNow();
-*/
+    virtual void deviceDisconnect(const bool stayConnected = false);
+    virtual void deviceDisconnect_temporary();
+
     // BLE advertisement
     virtual void parseAdvertisementData(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &data);
 
     // BLE generic actions
-    Q_INVOKABLE virtual void actionConnect();
-    Q_INVOKABLE virtual void actionDisconnect();
+    Q_INVOKABLE virtual void actionConnect(const bool stayConnected = false);
+    Q_INVOKABLE virtual void actionDisconnect(const bool stayConnected = false);
     Q_INVOKABLE virtual void actionScan();
     Q_INVOKABLE virtual void actionScanWithValues();
     Q_INVOKABLE virtual void actionReboot();
@@ -411,16 +413,13 @@ public:
     Q_INVOKABLE void actionWatering();
     Q_INVOKABLE void actionCalibrate();
 
-public slots:
-    void deviceConnect();               //!< Initiate a BLE connection with a device
-    void deviceDisconnect();
+    Q_INVOKABLE void refreshStart();
+    Q_INVOKABLE void refreshStartHistory();
+    Q_INVOKABLE void refreshStartRealtime();
 
+    // Internal actions
     void refreshQueued();
     void refreshDequeued();
-
-    void refreshStart();
-    void refreshStartHistory();
-    void refreshStartRealtime();
     void refreshRetry();
     void refreshStop();
 };

@@ -304,7 +304,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 if (m_history_entryIndex >= m_history_entryCount)
                 {
                     // abort sync?
-                    m_bleController->disconnectFromDevice();
+                    deviceDisconnect();
                     return;
                 }
 
@@ -371,10 +371,9 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                     int64_t lastSync = m_device_wall_time + (m_history_entryCount * 10 * 60);
                     m_lastHistorySync.setSecsSinceEpoch(lastSync);
 
-                    // Finish it
                     refreshHistoryFinished(true);
-                    m_bleController->disconnectFromDevice();
-                    return;
+
+                    deviceDisconnect();
                 }
             }
             else
@@ -396,8 +395,8 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 }
 
                 refreshDataFinished(true);
-                m_bleController->disconnectFromDevice();
-                return;
+
+                deviceDisconnect();
             }
         }
     }

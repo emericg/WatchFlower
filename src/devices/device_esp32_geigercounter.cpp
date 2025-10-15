@@ -238,7 +238,8 @@ void DeviceEsp32GeigerCounter::bleReadNotify(const QLowEnergyCharacteristic &c, 
                 addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(), m_rm);
 
                 refreshDataFinished(true);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceEsp32GeigerCounter update:" << getAddress();

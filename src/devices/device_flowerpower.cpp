@@ -282,7 +282,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
             QBluetoothUuid led(QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic cled = serviceLive->characteristic(led);
             serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
-            //controller->disconnectFromDevice();
+
+            //deviceDisconnect();
         }
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
@@ -399,7 +400,8 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                                                 m_temperature, -99.f, m_luminosityLux);
 
                 refreshDataFinished(status);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceFlowerPower update:" << getAddress();

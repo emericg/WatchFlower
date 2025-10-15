@@ -244,7 +244,8 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             }
 
             refreshDataFinished(true);
-            m_bleController->disconnectFromDevice();
+
+            deviceDisconnect();
 /*
             qDebug() << "* DeviceWP6003 update:" << getAddress();
             qDebug() << "- timecode:" << QDateTime(d, t);

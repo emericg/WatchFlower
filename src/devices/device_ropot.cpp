@@ -455,7 +455,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             if (m_history_entryIndex < 0)
             {
                 // abort sync?
-                m_bleController->disconnectFromDevice();
+                deviceDisconnect();
                 return;
             }
 
@@ -502,10 +502,9 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             }
             else
             {
-                // Finish it
                 refreshHistoryFinished(true);
-                m_bleController->disconnectFromDevice();
-                return;
+
+                deviceDisconnect();
             }
         }
 
@@ -553,7 +552,8 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
                                                 m_temperature, -99.f, -99.f);
 
                 refreshDataFinished(status);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceRopot update:" << getAddress();

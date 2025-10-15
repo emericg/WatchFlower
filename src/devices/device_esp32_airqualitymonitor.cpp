@@ -226,7 +226,8 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
                                   m_temperature, m_humidity, m_pressure, m_voc, m_co2);
 
                 refreshDataFinished(true);
-                m_bleController->disconnectFromDevice();
+
+                deviceDisconnect();
             }
 /*
             qDebug() << "* DeviceEsp32AirQualityMonitor update:" << getAddress();
