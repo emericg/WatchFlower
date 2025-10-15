@@ -34,11 +34,11 @@ jobs:
           submodules: recursive
 
       # Java environment (already installed in 'ubuntu-24.04')
-      - name: Setup Java environment
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '17'
+      #- name: Setup Java environment
+      #  uses: actions/setup-java@v4
+      #  with:
+      #    distribution: 'temurin'
+      #    java-version: '17'
 
       # Android environment (already installed in 'ubuntu-24.04')
       - name: Setup Android environment

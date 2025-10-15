@@ -1,10 +1,14 @@
+cmake_minimum_required(VERSION 3.20)
+
 project(MobileUI LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
 
 # Use that find_package() call in the root project:
-find_package(Qt6 6.7 REQUIRED COMPONENTS Core Gui Qml)
+find_package(Qt6 6.5 REQUIRED COMPONENTS Core Gui Qml)
 
 ################################################################################
 
@@ -12,9 +16,7 @@ find_package(Qt6 6.7 REQUIRED COMPONENTS Core Gui Qml)
 set(CORE_LIBRARIES Qt::Core Qt::Gui Qt::Qml)
 
 # Generic sources
-set(CORE_SOURCES
-    MobileUI.h
-    MobileUI.cpp)
+set(CORE_SOURCES MobileUI.h MobileUI.cpp)
 
 # OS specific sources & dependencies
 if(ANDROID)

@@ -2,17 +2,16 @@ cmake_minimum_required(VERSION 3.20)
 
 project(MobileSharing LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(QT_NO_PRIVATE_MODULE_WARNING ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 ################################################################################
 
 # Generic dependencies
-set(CORE_COMPONENTS Core Gui Qml)
-find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS ${CORE_COMPONENTS})
-
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml)
 set(CORE_LIBRARIES Qt::Core Qt::Gui Qt::Qml)
 
 # Generic sources
@@ -22,12 +21,13 @@ set(CORE_SOURCES
 
 # OS specific sources & dependencies
 if (ANDROID)
+    find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
     set(PLATFORM_LIBRARIES Qt::CorePrivate)
     set(PLATFORM_SOURCES
         SharingUtils_android.cpp
         SharingUtils_android.h)
 elseif (IOS)
-    find_package(Qt${QT_DEFAULT_MAJOR_VERSION} REQUIRED COMPONENTS Quick)
+    find_package(Qt6 REQUIRED COMPONENTS Quick)
     set(PLATFORM_LIBRARIES Qt::Quick)
     set(PLATFORM_SOURCES
         SharingUtils_ios.mm

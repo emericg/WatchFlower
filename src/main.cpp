@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
 
     // GUI application /////////////////////////////////////////////////////////
 
-    SingleApplication app(argc, argv, false);
+    SingleApplication app(argc, argv, true);
 
     // Application name
     app.setApplicationName("WatchFlower");
@@ -195,26 +195,29 @@ int main(int argc, char *argv[])
     qtConnectivityPatched = true;
 #endif
 
-    // Translate the application
-    utilsLanguage->loadLanguage(sm->getAppLanguage());
-
     MobileUI::registerQML();
     DeviceUtils::registerQML();
     JournalUtils::registerQML();
     PlantUtils::registerQML();
 
+    // Translate the application
+    utilsLanguage->loadLanguage(sm->getAppLanguage());
+
+    // Start the application
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
 
-    engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("settingsManager", sm);
     engine_context->setContextProperty("databaseManager", db);
     engine_context->setContextProperty("notificationManager", nm);
+    engine_context->setContextProperty("deviceManager", dm);
+
+    engine_context->setContextProperty("plantDatabase", pdb);
+    engine_context->setContextProperty("sunAndMoon", &sam);
+
     engine_context->setContextProperty("utilsApp", utilsApp);
     engine_context->setContextProperty("utilsScreen", utilsScreen);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
-    engine_context->setContextProperty("plantDatabase", pdb);
-    engine_context->setContextProperty("sunAndMoon", &sam);
 
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
     engine_context->setContextProperty("qtConnectivityPatched", qtConnectivityPatched);
