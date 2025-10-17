@@ -77,7 +77,7 @@ chmod a+x contribs/deploy/linuxdeploy-plugin-qt-x86_64.AppImage
 #export NO_STRIP=true  # workaround, strip not working on modern binutils
 
 # linuxdeploy qt settings
-export EXTRA_PLATFORM_PLUGINS="libqwayland-egl.so;libqwayland-generic.so;"
+export EXTRA_PLATFORM_PLUGINS="libqwayland.so;"
 export EXTRA_QT_PLUGINS="wayland-shell-integration;waylandclient;wayland-graphics-integration-client;"
 export EXTRA_QT_MODULES="svg;"
 export QML_SOURCES_PATHS="$(pwd)/qml/"
@@ -103,6 +103,7 @@ if [[ $create_package = true ]] ; then
     sudo rm $QT_ROOT_DIR/plugins/position/libqtposition_nmea.so
     sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlmimer.so
     sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlmysql.so
+    sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqloci.so
     sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlodbc.so
     sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlpsql.so
   fi

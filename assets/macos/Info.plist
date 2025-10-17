@@ -2,9 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleInfoDictionaryVersion</key>
-	<string>6.0</string>
-
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 
@@ -20,14 +17,14 @@
 	<key>CFBundleIdentifier</key>
 	<string>io.emeric.watchflower</string>
 
+	<key>CFBundleIconFile</key>
+	<string>WatchFlower.icns</string>
+
 	<key>CFBundleVersion</key>
 	<string>0600001</string>
 
 	<key>CFBundleShortVersionString</key>
 	<string>6.0</string>
-
-	<key>CFBundleIconFile</key>
-	<string>WatchFlower.icns</string>
 
 	<key>LSMinimumSystemVersion</key>
 	<string>11.0</string>
