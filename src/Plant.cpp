@@ -174,7 +174,8 @@ void Plant::read_json_watchflower(QJsonObject &json)
 
         if (infos.contains("tags") && infos["tags"].isArray())
         {
-            for (const auto &t:infos["tags"].toArray().toVariantList())
+            const QVariantList tagsArray = infos["tags"].toArray().toVariantList();
+            for (const auto &t: tagsArray)
             {
                 tags.push_back(t.toString());
             }
@@ -183,28 +184,32 @@ void Plant::read_json_watchflower(QJsonObject &json)
         /// colors
         if (infos.contains("colors_leaf") && infos["colors_leaf"].isArray())
         {
-            for (const auto &c: infos["colors_leaf"].toArray().toVariantList())
+            const QVariantList color = infos["colors_leaf"].toArray().toVariantList();
+            for (const auto &c: color)
             {
                 colors_leaf.push_back(c.toString());
             }
         }
         if (infos.contains("colors_bract") && infos["colors_bract"].isArray())
         {
-            for (const auto &c: infos["colors_bract"].toArray().toVariantList())
+            const QVariantList color = infos["colors_bract"].toArray().toVariantList();
+            for (const auto &c: color)
             {
                 colors_bract.push_back(c.toString());
             }
         }
         if (infos.contains("colors_flower") && infos["colors_flower"].isArray())
         {
-            for (const auto &c: infos["colors_flower"].toArray().toVariantList())
+            const QVariantList color = infos["flower_bract"].toArray().toVariantList();
+            for (const auto &c: color)
             {
                 colors_flower.push_back(c.toString());
             }
         }
         if (infos.contains("colors_fruit") && infos["colors_fruit"].isArray())
         {
-            for (const auto &c: infos["colors_fruit"].toArray().toVariantList())
+            const QVariantList color = infos["colors_fruit"].toArray().toVariantList();
+            for (const auto &c: color)
             {
                 colors_fruit.push_back(c.toString());
             }
@@ -213,35 +218,40 @@ void Plant::read_json_watchflower(QJsonObject &json)
         /// calendar
         if (infos.contains("calendar_planting") && infos["calendar_planting"].isArray())
         {
-            for (const auto &c: infos["calendar_planting"].toArray().toVariantList())
+            const QVariantList calendar = infos["calendar_planting"].toArray().toVariantList();
+            for (const auto &c: calendar)
             {
                 calendar_planting.push_back(c.toString());
             }
         }
         if (infos.contains("calendar_fertilizing") && infos["calendar_fertilizing"].isArray())
         {
-            for (const auto &c: infos["calendar_fertilizing"].toArray().toVariantList())
+            const QVariantList calendar = infos["calendar_fertilizing"].toArray().toVariantList();
+            for (const auto &c: calendar)
             {
                 calendar_fertilizing.push_back(c.toString());
             }
         }
         if (infos.contains("calendar_growing") && infos["calendar_growing"].isArray())
         {
-            for (const auto &c: infos["calendar_growing"].toArray().toVariantList())
+            const QVariantList calendar = infos["calendar_growing"].toArray().toVariantList();
+            for (const auto &c: calendar)
             {
                 calendar_growing.push_back(c.toString());
             }
         }
         if (infos.contains("calendar_blooming") && infos["calendar_blooming"].isArray())
         {
-            for (const auto &c: infos["calendar_blooming"].toArray().toVariantList())
+            const QVariantList calendar = infos["calendar_blooming"].toArray().toVariantList();
+            for (const auto &c: calendar)
             {
                 calendar_blooming.push_back(c.toString());
             }
         }
         if (infos.contains("calendar_fruiting") && infos["calendar_fruiting"].isArray())
         {
-            for (const auto &c: infos["calendar_fruiting"].toArray().toVariantList())
+            const QVariantList calendar = infos["calendar_fruiting"].toArray().toVariantList();
+            for (const auto &c: calendar)
             {
                 calendar_fruiting.push_back(c.toString());
             }

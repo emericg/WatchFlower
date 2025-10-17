@@ -171,10 +171,10 @@ function getDeviceStatusColor(deviceStatus) {
 }
 
 function getDeviceStatusIcon(deviceStatus) {
-    var src = "qrc:/IconLibrary/material-symbols/outlined/bluetooth.svg"
+    var src = "qrc:/IconLibrary/material-symbols/bluetooth.svg"
 
     if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_OFFLINE) {
-        src = "qrc:/IconLibrary/material/bluetooth_disabled.svg"
+        src = "qrc:/IconLibrary/material-symbols/bluetooth_disabled.svg"
     } else if (deviceStatus === DeviceUtils.DeviceUtils.DEVICE_QUEUED ||
                deviceStatus === DeviceUtils.DeviceUtils.DEVICE_DISCONNECTING ||
                deviceStatus === DeviceUtils.DeviceUtils.DEVICE_CONNECTING) {
@@ -214,7 +214,7 @@ function getDeviceBatteryIcon(batteryLevel) {
         src = "qrc:/IconLibrary/material-icons/duotone/battery_30.svg";
     } else if (batteryLevel > 15) {
         src = "qrc:/IconLibrary/material-icons/duotone/battery_20.svg";
-    } else if (batteryLevel > 1) {
+    } else if (batteryLevel >  1) {
         src = "qrc:/IconLibrary/material-icons/duotone/battery_10.svg";
     } else if (batteryLevel >= 0) {
         src = "qrc:/IconLibrary/material-icons/duotone/battery_unknown.svg";

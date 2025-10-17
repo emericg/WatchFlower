@@ -35,8 +35,7 @@ void DeviceManager::bleDevice_discovered(const QBluetoothDeviceInfo &info)
 
 /* ************************************************************************** */
 
-void DeviceManager::bleDevice_updated(const QBluetoothDeviceInfo &info,
-                                    QBluetoothDeviceInfo::Fields updatedFields)
+void DeviceManager::bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
 {
     //qDebug() << "bleDevice_updated() " << info.name() << info.address(); // << info.deviceUuid() // << " updatedFields: " << updatedFields
 
@@ -71,7 +70,7 @@ void DeviceManager::bleDevice_updated(const QBluetoothDeviceInfo &info,
 
             // Handle advertisement //
 
-            const QList<quint16> &manufacturerIds = info.manufacturerIds();
+            const QList <quint16> &manufacturerIds = info.manufacturerIds();
             for (const auto id: manufacturerIds)
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
@@ -82,7 +81,7 @@ void DeviceManager::bleDevice_updated(const QBluetoothDeviceInfo &info,
                 dd->parseAdvertisementData(DeviceUtils::BLE_ADV_MANUFACTURERDATA, id, info.manufacturerData(id));
             }
 
-            const QList<QBluetoothUuid> &serviceIds = info.serviceIds();
+            const QList <QBluetoothUuid> &serviceIds = info.serviceIds();
             for (const auto id: serviceIds)
             {
                 //qDebug() << info.name() << info.address() << Qt::hex
@@ -120,6 +119,7 @@ void DeviceManager::bleDevice_updated(const QBluetoothDeviceInfo &info,
     {
         //qDebug() << "addBleDevice(" << info.name() << ") FROM DYNAMIC SCANNING";
         addBleDevice(info);
+        return;
     }
 }
 

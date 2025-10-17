@@ -68,6 +68,32 @@ bool DeviceFilter::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePare
 }
 
 /* ************************************************************************** */
+
+bool DeviceFilter::lessThan(const QModelIndex &left, const QModelIndex &right) const
+{
+    QVariant leftData = sourceModel()->data(left, sortRole());
+    QVariant rightData = sourceModel()->data(right, sortRole());
+
+    if (leftData.userType() == QMetaType::QString)
+    {
+        if (leftData.toString().isEmpty()) return (sortOrder() == Qt::DescendingOrder);
+        if (rightData.toString().isEmpty()) return (sortOrder() == Qt::AscendingOrder);
+    }
+    else if (leftData.userType() == QMetaType::QDateTime)
+    {
+        if (!leftData.toDateTime().isValid()) return (sortOrder() == Qt::DescendingOrder);
+        if (!rightData.toDateTime().isValid()) return (sortOrder() == Qt::AscendingOrder);
+    }
+    else if (leftData.userType() == QMetaType::Int)
+    {
+        if (leftData.toInt() <= 0) return (sortOrder() == Qt::DescendingOrder);
+        if (rightData.toInt() <= 0) return (sortOrder() == Qt::AscendingOrder);
+    }
+
+    return QSortFilterProxyModel::lessThan(left, right);
+}
+
+/* ************************************************************************** */
 /* ************************************************************************** */
 
 DeviceModel::DeviceModel(QObject *parent)
@@ -115,6 +141,17 @@ int DeviceModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_devices.count();
+}
+
+int DeviceModel::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent)
+    return 8; // ???
+}
+
+Device *DeviceModel::device(const QModelIndex &index) const
+{
+    return m_devices[index.row()];
 }
 
 QVariant DeviceModel::data(const QModelIndex &index, int role) const

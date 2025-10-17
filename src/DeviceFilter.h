@@ -29,6 +29,7 @@
 #include <QByteArray>
 #include <QMetaType>
 #include <QAbstractListModel>
+#include <QAbstractTableModel>
 #include <QSortFilterProxyModel>
 
 /* ************************************************************************** */
@@ -38,7 +39,8 @@ class DeviceFilter : public QSortFilterProxyModel
     Q_OBJECT
 
 protected:
-    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const;
+    bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+    bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 public:
     DeviceFilter(QObject *parent = nullptr);
@@ -62,7 +64,10 @@ public:
     ~DeviceModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+    Device *device(const QModelIndex &index) const;
 
     bool hasDevices() const { return !m_devices.isEmpty(); }
     void getDevices(QList <Device *> &device);

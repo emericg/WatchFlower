@@ -122,7 +122,9 @@ void DeviceInfos::load(const QJsonObject &obj)
 
     m_model = obj["model"].toString();
     m_manufacturer = obj["manufacturer"].toString();
-    for (const auto &vv: obj["ID"].toArray())
+
+    const QJsonArray idArray = obj["ID"].toArray();
+    for (const auto &vv: idArray)
     {
         if (!m_id.isEmpty()) m_id += ", ";
         m_id += vv.toString();
@@ -134,7 +136,8 @@ void DeviceInfos::load(const QJsonObject &obj)
     m_ipx = obj["ipx"].toString();
     m_needsOfficialApp = obj["onboarding"].toBool();
 
-    for (const auto &vv: obj["sensors"].toArray())
+    const QJsonArray sensorsArray = obj["sensors"].toArray();
+    for (const auto &vv: sensorsArray)
     {
         QJsonArray vvv = vv.toArray();
         if (vvv.size() == 2)
@@ -146,7 +149,8 @@ void DeviceInfos::load(const QJsonObject &obj)
         }
     }
 
-    for (const auto &vv: obj["capabilities"].toArray())
+    const QJsonArray capabilitiesArray = obj["capabilities"].toArray();
+    for (const auto &vv: capabilitiesArray)
     {
         QJsonArray vvv = vv.toArray();
         if (vvv.size() == 2)
@@ -172,7 +176,7 @@ bool DeviceInfos::loadSlow(const QString &name, const QString &model, const QStr
         QJsonObject capsObj = capsDoc.object();
         file.close();
 
-        QJsonArray deviceArray = capsObj["devices"].toArray();
+        const QJsonArray deviceArray = capsObj["devices"].toArray();
         for (const auto &value: deviceArray)
         {
             QJsonObject obj = value.toObject();
@@ -185,7 +189,9 @@ bool DeviceInfos::loadSlow(const QString &name, const QString &model, const QStr
 
                 m_model = obj["model"].toString();
                 m_manufacturer = obj["manufacturer"].toString();
-                for (const auto &vv: obj["ID"].toArray())
+
+                const QJsonArray idArray = obj["ID"].toArray();
+                for (const auto &vv: idArray)
                 {
                     if (!m_id.isEmpty()) m_id += ", ";
                     m_id += vv.toString();
@@ -197,7 +203,8 @@ bool DeviceInfos::loadSlow(const QString &name, const QString &model, const QStr
                 m_ipx = obj["ipx"].toString();
                 m_needsOfficialApp = obj["onboarding"].toBool();
 
-                for (const auto &vv: obj["sensors"].toArray())
+                const QJsonArray sensorsArray = obj["sensors"].toArray();
+                for (const auto &vv: sensorsArray)
                 {
                     QJsonArray vvv = vv.toArray();
                     if (vvv.size() == 2)
@@ -209,7 +216,8 @@ bool DeviceInfos::loadSlow(const QString &name, const QString &model, const QStr
                     }
                 }
 
-                for (const auto &vv: obj["capabilities"].toArray())
+                const QJsonArray capabilitiesArray = obj["capabilities"].toArray();
+                for (const auto &vv: capabilitiesArray)
                 {
                     QJsonArray vvv = vv.toArray();
                     if (vvv.size() == 2)

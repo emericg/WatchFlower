@@ -417,7 +417,9 @@ public:
     }
     static QStringList colorssvg_tostringlist(const QString &str) {
         QStringList ret;
-        for (const auto &s: str.split(',', Qt::SkipEmptyParts)) {
+
+        const QStringList strList = str.split(',', Qt::SkipEmptyParts);
+        for (const auto &s: strList) {
             ret.push_back(colorssvg_tostring(s));
         }
         return ret;

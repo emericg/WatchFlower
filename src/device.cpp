@@ -68,7 +68,7 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
     // Check address validity
     if (m_bleDevice.isValid() == false)
     {
-        qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
+        qWarning() << "Device() '" << getAddress() << "' is an invalid QBluetoothDeviceInfo...";
     }
 
     // Device name hacks // Remove MAC address from device names
@@ -115,7 +115,7 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     // Check address validity
     if (m_bleDevice.isValid() == false)
     {
-        qWarning() << "Device() '" << m_deviceAddress << "' is an invalid QBluetoothDeviceInfo...";
+        qWarning() << "Device() '" << getAddress() << "' is an invalid QBluetoothDeviceInfo...";
     }
 
     // Device name hacks // Remove MAC address from device names
@@ -746,7 +746,7 @@ void Device::setKeepaliveTimer(int time_s)
 
 bool Device::getSqlDeviceInfos()
 {
-    //qDebug() << "Device::getSqlDeviceInfos(" << m_deviceAddress << ")";
+    //qDebug() << "Device::getSqlDeviceInfos(" << getAddress() << ")";
     bool status = false;
 
     if (m_dbInternal || m_dbExternal)
@@ -1494,13 +1494,13 @@ void Device::deviceConnected()
 {
     //qDebug() << "Device::deviceConnected(" << getAddress() << ")";
 
+    m_ble_status = DeviceUtils::DEVICE_CONNECTED;
+
     if (m_mtu != m_bleController->mtu())
     {
         m_mtu = m_bleController->mtu();
         Q_EMIT mtuUpdated();
     }
-
-    m_ble_status = DeviceUtils::DEVICE_CONNECTED;
 
     if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
         m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
