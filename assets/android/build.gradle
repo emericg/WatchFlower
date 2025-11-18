@@ -5,7 +5,9 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:8.2.2' // works with Qt 6.7+ // Java 17
+        //noinspection AndroidGradlePluginVersion
+        classpath 'com.android.tools.build:gradle:8.6.1' // works with Qt 6.8+ // Java 17
+        //classpath 'com.android.tools.build:gradle:8.10.1' // works with Qt 6.10+ // Java 17
     }
 }
 
@@ -26,19 +28,21 @@ def getTimestampStr() { return new Date().format('yyyyMMddHHmmss') }
 def timestampInt = (int)(new Date().getTime() / 1000 / 1)
 
 android {
-    /*******************************************************
-     * The following variables:
-     * - androidBuildToolsVersion,
-     * - androidCompileSdkVersion
-     * - qtAndroidDir - holds the path to qt android files
-     *                   needed to build any Qt application
-     *                   on Android.
-     *
-     * are defined in gradle.properties file. This file is
-     * updated by QtCreator and androiddeployqt tools.
-     * Changing them manually might break the compilation!
-     *******************************************************/
+   /*******************************************************
+    * The following variables:
+    * - androidBuildToolsVersion,
+    * - androidCompileSdkVersion
+    * - qtAndroidDir - holds the path to qt android files
+    *                   needed to build any Qt application
+    *                   on Android.
+    * - qtGradlePluginType - whether to build an app or a library
+    *
+    * are defined in gradle.properties file. This file is
+    * updated by QtCreator and androiddeployqt tools.
+    * Changing them manually might break the compilation!
+    *******************************************************/
 
+    namespace = androidPackageName
     compileSdkVersion androidCompileSdkVersion
     buildToolsVersion androidBuildToolsVersion
     ndkVersion androidNdkVersion
@@ -58,17 +62,12 @@ android {
 
     tasks.withType(JavaCompile) {
         options.incremental = true
+        options.compilerArgs += ['-Xlint:all']
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
-    }
-
-    packagingOptions {
-        jniLibs {
-            useLegacyPackaging true
-        }
     }
 
     lintOptions {
@@ -82,7 +81,7 @@ android {
 
     defaultConfig {
         resConfig "en"
-        minSdkVersion 23 // qtMinSdkVersion
+        minSdkVersion 28 // qtMinSdkVersion
         targetSdkVersion 36 // qtTargetSdkVersion
         ndk.abiFilters = qtTargetAbiList.split(",")
 

@@ -5,6 +5,7 @@ contribs/*
 appdir/*
 
 # QtCreator temporary project files
+.qtcreator/*
 WatchFlower.config
 WatchFlower.creator*
 WatchFlower.files

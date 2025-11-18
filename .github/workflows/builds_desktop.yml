@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "6.0"
-  QT_VERSION: "6.10.0"
+  QT_VERSION: "6.10.1"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -47,10 +47,15 @@ jobs:
           version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qtpositioning
 
+      # Setup env
+      - name: Setup env
+        run: |
+             qmake --version
+             cmake --version
+
       # Build application
       - name: Build application
         run: |
-             cmake --version
              cmake -B build/ -DCMAKE_BUILD_TYPE=Release -G Ninja
              cmake --build build/ --config Release
 
@@ -95,11 +100,16 @@ jobs:
           version: ${{env.QT_VERSION}}
           modules: qtconnectivity qtcharts qtpositioning
 
+      # Setup env
+      - name: Setup env
+        run: |
+             qmake --version
+             cmake --version
+             export CMAKE_BUILD_PARALLEL_LEVEL=`sysctl -n hw.logicalcpu`
+
       # Build application
       - name: Build application
         run: |
-             export CMAKE_BUILD_PARALLEL_LEVEL=`sysctl -n hw.logicalcpu`
-             cmake --version
              cmake -B build/ -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
              cmake --build build/ --config Release
 
@@ -146,10 +156,15 @@ jobs:
           modules: qtconnectivity qtcharts qtpositioning
           arch: 'win64_msvc2022_64'
 
+      # Setup env
+      - name: Setup env
+        run: |
+             qmake --version
+             cmake --version
+
       # Build application
       - name: Build application
         run: |
-             cmake --version
              cmake -B build/ -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles"
              cd build/
              nmake

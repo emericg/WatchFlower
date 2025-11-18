@@ -28,7 +28,7 @@ Virtually all phones and laptops have Bluetooth "Low Energy", but you will need 
 * Clickable two-week graphs
 * Monthly/weekly/daily data histograms
 * 90 days CSV data export
-* Scalable UI: 4.6" to 34" screens, landscape or portrait
+* Scalable UI: 5" to 34" screens, landscape or portrait
 
 #### Download
 

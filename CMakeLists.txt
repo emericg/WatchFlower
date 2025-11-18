@@ -30,13 +30,14 @@ find_package(Qt6 REQUIRED COMPONENTS Core Bluetooth Positioning Network Sql)
 find_package(Qt6 REQUIRED COMPONENTS Gui Svg Qml Quick QuickControls2 LabsQmlModels Widgets Charts)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
-qt_standard_project_setup(REQUIRES 6.7
+qt_standard_project_setup(REQUIRES 6.8
                           I18N_SOURCE_LANGUAGE en
                           I18N_TRANSLATED_LANGUAGES ca da de es fr fy hu nb nl nn pl pt ru zh_CN zh_TW)
 
 qt_policy(SET QTP0001 NEW)
 qt_policy(SET QTP0002 NEW)
 qt_policy(SET QTP0003 NEW)
+qt_policy(SET QTP0004 NEW)
 
 set(SOURCES
     src/main.cpp
@@ -101,6 +102,7 @@ if(NOT IOS AND NOT ANDROID)
         set(app_icon_macos "${CMAKE_SOURCE_DIR}/assets/macos/${CMAKE_PROJECT_NAME}.icns")
     endif()
 
+    # Desktop only source files
     set(SOURCES_DESKTOP
         src/SystrayManager.cpp src/SystrayManager.h
         src/MenubarManager.cpp src/MenubarManager.h
@@ -310,7 +312,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${CMAKE_PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET          "16.0"
-        XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY              "1,2"   # iPhone,iPad
+        XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY              "1,2" # iPhone,iPad
         XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME  "AppIcon"
         XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS      "YES"
     )
@@ -336,17 +338,19 @@ endif()
 
 ################################################################################
 
-# Output?
+# Output (build)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     #ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
 )
 
-# Output?
+# Output (install)
+include(GNUInstallDirs)
 install(TARGETS ${CMAKE_PROJECT_NAME}
-    BUNDLE DESTINATION "${CMAKE_SOURCE_DIR}/bin"
+    BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 ################################################################################
