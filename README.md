@@ -12,7 +12,7 @@ It works with international and Chinese Xiaomi devices, doesn't require an accou
 Works on Linux, macOS, Windows, but also Android and iOS! Desktop binaries are available on the "release" page, mobile applications are on the app stores.  
 Virtually all phones and laptops have Bluetooth "Low Energy", but you will need to make sure your desktop computer has a Bluetooth card or dongle (and for Windows, a working driver too).  
 
-> Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, Hungarian, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!
+> Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, German, Hungarian, Norwegian (Bokmål and Nynorsk), Russian and Spanish!
 
 > Application developed by [Emeric Grange](https://emeric.io/). Visual design by [Chris Díaz](https://dribbble.com/chrisdiaz).
 
@@ -180,9 +180,12 @@ You could also give WatchFlower binary the _net_raw_ and _net_admin_ capabilitie
 #### Third party projects used by WatchFlower
 
 * [Qt6](https://www.qt.io) ([LGPL v3](https://www.gnu.org/licenses/lgpl-3.0.txt))
+* [AppUtils](thirdparty/AppUtils/README.md) ([MIT](https://opensource.org/licenses/MIT))
 * [MobileUI](src/thirdparty/MobileUI/) ([MIT](https://opensource.org/licenses/MIT))
 * [MobileSharing](src/thirdparty/MobileSharing/) ([MIT](https://opensource.org/licenses/MIT))
 * [SingleApplication](https://github.com/itay-grudev/SingleApplication) ([MIT](https://opensource.org/licenses/MIT))
+* [ComponentLibrary](thirdparty/ComponentLibrary/) ([MIT](https://opensource.org/licenses/MIT))
+* [IconLibrary](thirdparty/IconLibrary/) uses a combinaison of licenses, see [COPYING](thirdparty/IconLibrary/COPYING)
 * RC4 code from Christophe Devine ([GPL v2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt))
 * Graphical resources: [assets/COPYING](assets/COPYING)
 

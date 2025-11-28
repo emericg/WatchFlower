@@ -4,9 +4,9 @@ project(WatchFlower VERSION 6.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(APP_NAME ${CMAKE_PROJECT_NAME})
 set(APP_VERSION ${CMAKE_PROJECT_VERSION})
@@ -26,8 +26,8 @@ message(STATUS "[PROJECT] QT_HOST_PATH              = ${QT_HOST_PATH}")
 
 ################################################################################
 
-find_package(Qt6 REQUIRED COMPONENTS Core Bluetooth Positioning Network Sql)
-find_package(Qt6 REQUIRED COMPONENTS Gui Svg Qml Quick QuickControls2 LabsQmlModels Widgets Charts)
+find_package(Qt6 REQUIRED COMPONENTS Core Gui Svg Qml Quick QuickControls2)
+find_package(Qt6 REQUIRED COMPONENTS Sql Bluetooth Network Positioning Charts Widgets)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 qt_standard_project_setup(REQUIRES 6.8
@@ -44,6 +44,7 @@ set(SOURCES
     src/SettingsManager.cpp src/SettingsManager.h
     src/DatabaseManager.cpp src/DatabaseManager.h
     src/NotificationManager.cpp src/NotificationManager.h
+
     src/PlantDatabase.cpp src/PlantDatabase.h
     src/Plant.cpp src/Plant.h src/PlantUtils.h
     src/Journal.cpp src/Journal.h
@@ -81,8 +82,10 @@ set(SOURCES
     src/devices/device_esp32_geigercounter.cpp src/devices/device_esp32_geigercounter.h
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
+
     thirdparty/RC4/rc4.cpp thirdparty/RC4/rc4.h
     thirdparty/IconLibrary/IconLibrary_material.qrc
+
     assets/assets.qrc
     assets/devices.qrc
     assets/plants.qrc
@@ -95,7 +98,7 @@ if(ANDROID)
 endif()
 
 if(NOT IOS AND NOT ANDROID)
-    # Set app icons
+    # Set app desktop icons
     if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
         set(app_icon_windows "${CMAKE_SOURCE_DIR}/assets/windows/${CMAKE_PROJECT_NAME}.rc")
     elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
@@ -207,6 +210,25 @@ qt_add_translations(${CMAKE_PROJECT_NAME}
 
 ################################################################################
 
+# 'Other Files" macro
+function(add_other_files target)
+    foreach(file IN LISTS ARGN)
+        target_sources(${target} PRIVATE ${file})
+        source_group("Other Files" FILES ${file})
+    endforeach()
+endfunction()
+
+add_other_files(${CMAKE_PROJECT_NAME}
+    README.md LICENSE.md
+    deploy_linux.sh deploy_macos.sh deploy_windows.sh
+    .github/workflows/builds_desktop.yml
+    .github/workflows/builds_mobile.yml
+    .github/workflows/flatpak.yml
+    .gitignore
+)
+
+################################################################################
+
 # SingleApplication
 set(QAPPLICATION_CLASS QApplication)
 add_subdirectory(thirdparty/SingleApplication)
@@ -233,18 +255,18 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
 add_subdirectory(thirdparty/ComponentLibrary)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ComponentLibraryplugin)
 
-# Qt
+# Qt libraries
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Qt6::Core
-    Qt6::Network
-    Qt6::Bluetooth
-    Qt6::Positioning
-    Qt6::Sql
     Qt6::Gui
     Qt6::Svg
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
+    Qt6::Sql
+    Qt6::Network
+    Qt6::Bluetooth
+    Qt6::Positioning
     Qt6::Charts
 )
 
@@ -256,6 +278,26 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src/)
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/)
 
 ################################################################################
+
+## Release build? Set "no debug" macros
+if(CMAKE_BUILD_TYPE STREQUAL Release)
+    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+        NDEBUG
+        QT_NO_DEBUG
+        QT_NO_DEBUG_OUTPUT
+    )
+endif()
+
+## Linux
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    # System install rules
+    install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION bin/)
+    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.desktop DESTINATION share/applications/)
+    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.appdata.xml DESTINATION share/appdata/)
+    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.svg DESTINATION share/pixmaps/)
+    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.svg DESTINATION share/icons/hicolor/scalable/apps/)
+    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.md DESTINATION share/licenses/${CMAKE_PROJECT_NAME}/)
+endif()
 
 ## Android
 if(CMAKE_SYSTEM_NAME STREQUAL "Android")
@@ -320,19 +362,8 @@ endif()
 
 ## Windows
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    #set(app_icon_windows "${CMAKE_SOURCE_DIR}/assets/windows/${CMAKE_PROJECT_NAME}.rc")
-
     set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
         WIN32_EXECUTABLE ON
-    )
-endif()
-
-## Release build? Set "no debug" macros
-if(CMAKE_BUILD_TYPE STREQUAL Release)
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-        NDEBUG
-        QT_NO_DEBUG
-        QT_NO_DEBUG_OUTPUT
     )
 endif()
 
@@ -343,14 +374,6 @@ set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
     #ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
     RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
-)
-
-# Output (install)
-include(GNUInstallDirs)
-install(TARGETS ${CMAKE_PROJECT_NAME}
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 )
 
 ################################################################################
