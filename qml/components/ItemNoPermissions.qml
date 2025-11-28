@@ -142,7 +142,7 @@ Item {
             width: singleColumn ? (itemNoPermissions.width*0.85) : undefined
             spacing: Theme.componentMargin
 
-            visible: (Qt.platform.os === "android" && !deviceManager.permissionLocationGPS)
+            visible: (Qt.platform.os === "android" && !deviceManager.gpsEnabled)
 
             IconSvg {
                 Layout.preferredWidth: 20
