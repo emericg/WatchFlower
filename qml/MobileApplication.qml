@@ -8,6 +8,7 @@ import MobileUI
 
 Window {
     id: appWindow
+
     minimumWidth: 480
     minimumHeight: 960
 
@@ -38,34 +39,39 @@ Window {
 
     Connections {
         target: Screen
-        function onOrientationChanged() {
-            mobileUI.handleSafeAreas()
-            rotateTimer1.start()
-            rotateTimer2.start()
-            rotateTimer3.start()
-        }
+        function onOrientationChanged() { mobileUI.handleSafeAreas_withDelays() }
     }
     Connections {
         target: Theme
-        function onCurrentThemeChanged() { mobileUI.handleSafeAreas() }
+        function onCurrentThemeChanged() { mobileUI.handleSafeAreas_withDelays() }
     }
 
     Timer {
         id: rotateTimer1
-        interval: 40
-        running: false; repeat: false;
+        interval: 50
+        running: false
+        repeat: false
         onTriggered: { mobileUI.handleSafeAreas() }
     }
     Timer {
         id: rotateTimer2
-        interval: 128
-        running: false; repeat: false;
+        interval: 256
+        running: false
+        repeat: false
         onTriggered: { mobileUI.handleSafeAreas() }
     }
     Timer {
         id: rotateTimer3
-        interval: 256
-        running: false; repeat: false;
+        interval: 512
+        running: false
+        repeat: false
+        onTriggered: { mobileUI.handleSafeAreas() }
+    }
+    Timer {
+        id: rotateTimer4
+        interval: 1000
+        running: false
+        repeat: false
         onTriggered: { mobileUI.handleSafeAreas() }
     }
 
@@ -81,7 +87,17 @@ Window {
         }
         navbarTheme: MobileUI.Light
 
-        Component.onCompleted: handleSafeAreas()
+        Component.onCompleted: {
+            mobileUI.handleSafeAreas_withDelays()
+        }
+
+        function handleSafeAreas_withDelays() {
+            handleSafeAreas()
+            rotateTimer1.start()
+            rotateTimer2.start()
+            rotateTimer3.start()
+            rotateTimer4.start()
+        }
 
         function handleSafeAreas() {
             // safe areas handling is a work in progress /!\
@@ -627,6 +643,31 @@ Window {
         color: {
             if (appContent.state === "ScreenTutorial") return Theme.colorHeader
             return Theme.colorBackground
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Timer {
+        id: disconnectTimer
+        interval: 33
+        running: false
+        repeat: true
+        onTriggered: {
+            if (!deviceManager.areDevicesConnected()) {
+                appWindow.close()
+            }
+        }
+    }
+    onClosing: (close) => {
+        //console.log("onClosing(" + close + ")")
+
+        // If BLE devices are still connected, disconnect them first
+        if (deviceManager.areDevicesConnected()) {
+            deviceManager.disconnectDevices()
+            disconnectTimer.start()
+            close.accepted = false
+            return
         }
     }
 

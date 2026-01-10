@@ -229,15 +229,6 @@ ApplicationWindow {
          }
     }
 
-    onClosing: (close) => {
-        //console.log("onClosing(" + close + ")")
-
-        if (settingsManager.systray || Qt.platform.os === "osx") {
-            close.accepted = false
-            appWindow.hide()
-        }
-    }
-
     // User generated events handling //////////////////////////////////////////
 
     function backAction() {
@@ -571,6 +562,38 @@ ApplicationWindow {
                 PropertyChanges { target: screenDeviceBrowser; visible: true; enabled: true; focus: true; }
             }
         ]
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    Timer {
+        id: disconnectTimer
+        interval: 33
+        running: false
+        repeat: true
+        onTriggered: {
+            if (!deviceManager.areDevicesConnected()) {
+                appWindow.close()
+            }
+        }
+    }
+    onClosing: (close) => {
+        //console.log("onClosing(" + close + ")")
+
+        // macOS hide in dock
+        if (settingsManager.systray || Qt.platform.os === "osx") {
+            close.accepted = false
+            appWindow.hide()
+            return
+        }
+
+        // If BLE devices are still connected, disconnect them first
+        if (deviceManager.areDevicesConnected()) {
+            deviceManager.disconnectDevices()
+            disconnectTimer.start()
+            close.accepted = false
+            return
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

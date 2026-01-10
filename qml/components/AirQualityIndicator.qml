@@ -133,7 +133,7 @@ Item {
         SequentialAnimation on opacity {
             id: lungsAnimation
             loops: Animation.Infinite
-            running: visible
+            running: indicatorAirQuality.visible
             //alwaysRunToEnd: true
             OpacityAnimator { from: lungsIcon.minOpacity; to: lungsIcon.maxOpacity; duration: lungsIcon.duration }
             OpacityAnimator { from: lungsIcon.maxOpacity; to: lungsIcon.minOpacity; duration: lungsIcon.duration }
