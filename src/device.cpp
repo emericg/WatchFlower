@@ -106,6 +106,12 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     m_bleDevice = d;
     m_deviceName = m_bleDevice.name();
 
+    m_major = d.majorDeviceClass();
+    m_minor = d.minorDeviceClass();
+    m_service = d.serviceClasses();
+
+    setRssi(d.rssi());
+
 #if defined(Q_OS_MACOS) || defined(Q_OS_IOS)
     m_deviceAddress = m_bleDevice.deviceUuid().toString();
 #else
@@ -176,6 +182,9 @@ void Device::deviceConnect(const bool stayConnected)
             if (m_bleController->role() == QLowEnergyController::CentralRole)
             {
                 m_bleController->setRemoteAddressType(QLowEnergyController::PublicAddress);
+
+                m_mtu = m_bleController->mtu();
+                Q_EMIT mtuUpdated();
 
                 // Connecting signals and slots for connecting to LE services.
                 connect(m_bleController, &QLowEnergyController::connected, this, &Device::deviceConnected);
@@ -517,6 +526,11 @@ void Device::actionErrored()
         m_ble_status = DeviceUtils::DEVICE_CONNECTED;
         Q_EMIT statusUpdated();
     }
+
+    if (!m_stayConnected)
+    {
+        deviceDisconnect();
+    }
 }
 
 void Device::actionCanceled()
@@ -535,7 +549,10 @@ void Device::actionCanceled()
         Q_EMIT statusUpdated();
     }
 
-    deviceDisconnect();
+    if (!m_stayConnected)
+    {
+        deviceDisconnect();
+    }
 }
 
 void Device::actionTimedOut()
@@ -557,6 +574,11 @@ void Device::actionTimedOut()
     {
         m_ble_status = DeviceUtils::DEVICE_OFFLINE;
         Q_EMIT statusUpdated();
+    }
+
+    if (!m_stayConnected)
+    {
+        deviceDisconnect();
     }
 }
 
@@ -723,7 +745,7 @@ void Device::refreshAdvertisement()
     //qDebug() << "Device::refreshAdvertisement()" << getAddress() << getName();
 
     Q_EMIT dataUpdated();
-    Q_EMIT realtimeUpdated();
+    Q_EMIT advertisementUpdated();
 }
 
 /* ************************************************************************** */
@@ -1667,14 +1689,14 @@ void Device::addLowEnergyService(const QBluetoothUuid &)
     //qDebug() << "Device::addLowEnergyService(" << uuid.toString() << ")";
 }
 
-void Device::serviceDetailsDiscovered(QLowEnergyService::ServiceState)
-{
-    //qDebug() << "Device::serviceDetailsDiscovered(" << getAddress() << ")";
-}
-
 void Device::serviceScanDone()
 {
     //qDebug() << "Device::serviceScanDone(" << getAddress() << ")";
+}
+
+void Device::serviceDiscoveryDone()
+{
+    //qDebug() << "Device::serviceDiscoveryDone(" << getAddress() << ")";
 }
 
 /* ************************************************************************** */

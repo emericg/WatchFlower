@@ -22,7 +22,6 @@
 #include "DeviceManager.h"
 
 #include <QBluetoothDeviceInfo>
-#include <QList>
 #include <QDebug>
 
 /* ************************************************************************** */
@@ -30,6 +29,7 @@
 void DeviceManager::bleDevice_discovered(const QBluetoothDeviceInfo &info)
 {
     //qDebug() << "bleDevice_discovered() " << info.name() << info.address(); // << info.deviceUuid();
+
     bleDevice_updated(info, QBluetoothDeviceInfo::Field::None);
 }
 
@@ -38,7 +38,6 @@ void DeviceManager::bleDevice_discovered(const QBluetoothDeviceInfo &info)
 void DeviceManager::bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields)
 {
     //qDebug() << "bleDevice_updated() " << info.name() << info.address(); // << info.deviceUuid() // << " updatedFields: " << updatedFields
-
     Q_UNUSED(updatedFields) // We don't use QBluetoothDeviceInfo::Fields, it's unreliable
 
     //if (!info.isValid()) return; // skip invalid devices
@@ -65,8 +64,10 @@ void DeviceManager::bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoo
         {
             if (!dd->isEnabled()) return;
 
-            //dd->setName(info.name());
-            //dd->setRssi(info.rssi());
+            dd->setName(info.name());
+            dd->setRssi(info.rssi());
+            dd->setCoreConfiguration(info.coreConfigurations());
+            dd->setDeviceClass(info.majorDeviceClass(), info.minorDeviceClass(), info.serviceClasses());
 
             // Handle advertisement //
 

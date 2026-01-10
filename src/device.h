@@ -123,6 +123,7 @@ class Device: public QObject
     Q_PROPERTY(QDateTime deviceUptime READ getDeviceUptime NOTIFY uptimeUpdated)
 
     // UI state(s)
+
     Q_PROPERTY(bool selected READ isSelected WRITE setSelected NOTIFY selectionUpdated)
     bool selected = false;
     bool isSelected() const { return selected; }
@@ -246,8 +247,8 @@ protected:
     virtual void deviceConnParamChanged(const QLowEnergyConnectionParameters &newParameters);
 
     virtual void addLowEnergyService(const QBluetoothUuid &uuid);
-    virtual void serviceDetailsDiscovered(QLowEnergyService::ServiceState newState);
     virtual void serviceScanDone();
+    virtual void serviceDiscoveryDone();
 
     virtual void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);

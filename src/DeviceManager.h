@@ -65,6 +65,7 @@ class DeviceManager: public QObject
     Q_PROPERTY(bool advertising READ isAdvertising NOTIFY advertisingChanged)
     Q_PROPERTY(bool listening READ isListening NOTIFY listeningChanged)
     Q_PROPERTY(bool scanning READ isScanning NOTIFY scanningChanged)
+    Q_PROPERTY(bool scanningNearby READ isScanningNearby NOTIFY scanningNearbyChanged)
     Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
     Q_PROPERTY(bool syncing READ isSyncing NOTIFY syncingChanged)
 
@@ -82,10 +83,10 @@ class DeviceManager: public QObject
 
     ////
 
-    static const int ble_scanning_duration = 30;
-    static const int ble_listening_duration = 60;
-    static const int ble_listening_duration_nearby = 60;
-    static const int ble_listening_duration_background = 45;
+    static const int ble_scanning_duration = 60;
+    static const int ble_listening_duration = 0;
+    static const int ble_listening_duration_nearby = 0;
+    static const int ble_listening_duration_background = 60;
 
     bool m_dbInternal = false;  //!< do we have an internal SQLite database?
     bool m_dbExternal = false;  //!< do we have a remote MySQL database?
@@ -142,6 +143,9 @@ class DeviceManager: public QObject
     bool m_scanning = false;
     bool isScanning() const { return m_scanning; }
 
+    bool m_scanning_nearby = false;
+    bool isScanningNearby() const { return m_scanning_nearby; }
+
     bool m_updating = false;
     bool isUpdating() const;
 
@@ -189,6 +193,7 @@ Q_SIGNALS:
     void advertisingChanged();
     void listeningChanged();
     void scanningChanged();
+    void scanningNearbyChanged();
     void updatingChanged();
     void syncingChanged();
 
@@ -210,7 +215,6 @@ private slots:
     void bleDeviceNearby_discovered(const QBluetoothDeviceInfo &info);
 
     void addBleDevice(const QBluetoothDeviceInfo &info);
-
     void bleDevice_discovered(const QBluetoothDeviceInfo &info);
     void bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
 
