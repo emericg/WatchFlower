@@ -57,14 +57,14 @@ if [[ $use_contribs = true ]] ; then
   export LD_LIBRARY_PATH=$(pwd)/contribs/src/env/macOS_x86_64/usr/lib/:$(pwd)/contribs/src/env/macOS_arm64/usr/lib/:$LD_LIBRARY_PATH
 fi
 
+# only if we are on a GitHub Action server, because this remove the plugins from the Qt directory
 if [[ -n "${QT_ROOT_DIR:-}" ]]; then
   # cleanup undeployable Qt plugins (present, but missing their own dependencies)
-  # only if we are on a GitHub Action server, because this remove the plugins from the Qt directory
   echo '---- Remove undeployable Qt plugins'
   sudo rm $QT_ROOT_DIR/plugins/position/libqtposition_nmea.dylib
   sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlmimer.dylib
-  sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlodbc.so
-  sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlpsql.so
+  sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlodbc.dylib
+  sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlpsql.dylib
 fi
 
 ## APP INSTALL #################################################################

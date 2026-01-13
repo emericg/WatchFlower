@@ -235,7 +235,7 @@ add_subdirectory(thirdparty/SingleApplication)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SingleApplication)
 
 # AppUtils
-set(UTILS_DOCK_ENABLED ON)
+set(UTILS_DOCK_ENABLED ON CACHE BOOL "" FORCE)
 add_subdirectory(thirdparty/AppUtils)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE AppUtils)
 
@@ -313,7 +313,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
     #target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
 
     # Android background service
-    find_package(Qt6 REQUIRED COMPONENTS GuiPrivate)
+    find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
     target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::CorePrivate)
 endif()
 
