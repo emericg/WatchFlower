@@ -309,6 +309,9 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
         QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/assets/android/"
     )
 
+    # Support 16 KB page sizes / pre NDK28
+    target_link_options(${CMAKE_PROJECT_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
+
     # Patched QtConnectivity
     #target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
 
