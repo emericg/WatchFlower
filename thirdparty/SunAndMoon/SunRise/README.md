@@ -30,15 +30,23 @@ unlikely that accurate results will be produced on systems with four-byte
 double precision floats (such as the older Arduinos using ATmega processors).
 Satisfactory results will be had on newer processors such as the ESP8266.
 
+The solar postions, based upon T.C. Van Flandern and K.F. Pulkkinen's 1979 paper,
+are accurate to within 1' for times within 300 years of 1979.  This class uses
+the Unix epoch as an input parameter, and is therefore constrained as written
+to find events after January 1, 1970.
+
 ## Historical background
 This software was originally adapted to javascript by Stephen R. Schmitt
 from a BASIC program from the 'Astronomical Computing' column of Sky & Telescope,
-April 1994, page 84, written by Roger W. Sinnott.
+August 1994, page 84, written by Roger W. Sinnott.  This latter program based
+its calculations of the Sun's position upon T.C. Van Flandern
+and K.F. Pulkkinen's 1979 paper "Low-Precision Formulae for Planetary Positions".
+All three references are included in the references subdirectory of this repository.
 
 ## Usage
 
 To use the SunRise library, include SunRise.h
-
+	
 	#include <SunRise.h>
 
 ### Detailed synopsis
@@ -51,7 +59,7 @@ To use the SunRise library, include SunRise.h
 		from -90 (south pole) to 90 (north pole).  Longitude ranges
 		from -180 (west of Greenwich) to 180 (east of Greenwich).
 
-	time:
+	time:  
 		The time to search for events, in UTC seconds from the Unix
 		epoch (January 1, 1970).  The closest sun rise/set event will
 		be found before and after this time.  In polar regions there
@@ -63,8 +71,8 @@ To use the SunRise library, include SunRise.h
 	bool sr.isVisible;	// If sun is visible at *time*.
 
 	bool sr.hasRise;	// There was a sunrise event found in the search
-						// interval (default 48 hours, 24 hours before and
-						// after *time*).
+				// interval (default 48 hours, 24 hours before and
+				// after *time*).
 
 	bool sr.hasSet;		// There was a sunset event found in the search interval.
 

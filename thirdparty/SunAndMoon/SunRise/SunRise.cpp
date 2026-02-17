@@ -1,4 +1,4 @@
-// Compute times of sunise and sunset at a specified latitude and longitude.
+// Compute times of sunrise and sunset at a specified latitude and longitude.
 //
 // This software minimizes computational work by performing the full calculation
 // of the solar position three times, at the beginning, middle, and end of the
@@ -15,23 +15,22 @@
 // Subsequently adapted from Stephen R. Schmitt's javascript to c++ for the Arduino
 // by Cyrus Rahman, this work is subject to Stephen Schmitt's copyright:
 //
-// Copyright 2007 Stephen R. Schmitt
-// Subsequent work Copyright 2020 Cyrus Rahman
+// Copyright 2007 Stephen R. Schmitt  
+// Subsequent work Copyright 2020-2026 Cyrus Rahman
 // You may use or modify this source code in any way you find useful, provided
-// that you agree that the author(s) have no warranty, obligations or liability.
-// You must determine the suitability of this source code for your use.
+// that you agree that the author(s) have no warranty, obligations or liability.  You
+// must determine the suitability of this source code for your use.
 //
 // Redistributions of this source code must retain this copyright notice.
 
-#include "SunRise.h"
-
 #include <math.h>
+#include "SunRise.h"
 
 #define K1 15*(M_PI/180)*1.0027379
 
 struct skyCoordinates {
-  double RA;            // Right ascension
-  double declination;   // Declination
+  double RA;		    // Right ascension
+  double declination;	    // Declination
 };
 
 // Determine the nearest sun rise or set event previous, and the nearest
@@ -50,7 +49,7 @@ SunRise::calculate(double latitude, double longitude, time_t t) {
   queryTime = t;
   offsetDays = julianDate(t) - 2451545L;     // Days since Jan 1, 2000, 1200UTC.
   // Begin testing (SR_WINDOW / 2) hours before requested time.
-  offsetDays -= (double)SR_WINDOW / (2 * 24) ;
+  offsetDays -= (double)SR_WINDOW / (2 * 24) ;	
 
   // Calculate coordinates at start, middle, and end of search period.
   for (int i = 0; i < 3; i ++) {
@@ -69,24 +68,27 @@ SunRise::calculate(double latitude, double longitude, time_t t) {
   spWindow[0].RA  = sunPosition[0].RA;
   spWindow[0].declination = sunPosition[0].declination;
 
-  for (int k = 0; k < SR_WINDOW; k++) {    // Check each interval of search period
+  for (int k = 0; k < SR_WINDOW; k++) {	    // Check each interval of search period
     float ph = (float)(k + 1)/SR_WINDOW;
-
-    spWindow[2].RA = interpolate(sunPosition[0].RA, sunPosition[1].RA, sunPosition[2].RA, ph);
-    spWindow[2].declination = interpolate(sunPosition[0].declination, sunPosition[1].declination, sunPosition[2].declination, ph);
+        
+    spWindow[2].RA = interpolate(sunPosition[0].RA,
+				 sunPosition[1].RA,
+				 sunPosition[2].RA, ph);
+    spWindow[2].declination = interpolate(sunPosition[0].declination,
+					  sunPosition[1].declination,
+					  sunPosition[2].declination, ph);
 
     // Look for sunrise/set events during this interval.
     testSunRiseSet(k, offsetDays, latitude, longitude, spWindow);
 
-    spWindow[0] = spWindow[2];        // Advance to next interval.
+    spWindow[0] = spWindow[2];		    // Advance to next interval.
   }
 }
 
 // Look for sun rise or set events during an hour.
 void
-SunRise::testSunRiseSet(int k, double offsetDays,
-                        double latitude, double longitude,
-                        skyCoordinates *sp) {
+SunRise::testSunRiseSet(int k, double offsetDays, double latitude, double longitude,
+			skyCoordinates *sp) {
   double ha[3], VHz[3];
   double lSideTime;
 
@@ -107,27 +109,37 @@ SunRise::testSunRiseSet(int k, double offsetDays,
   // refraction + sun semidiameter at horizon
   double z = cos(M_PI / 180 * 90.833);
 
+  // Combine corrections into a vertical unit sphere length.
   VHz[0] = s * sin(sp[0].declination) + c * cos(sp[0].declination) * cos(ha[0]) - z;
   VHz[2] = s * sin(sp[2].declination) + c * cos(sp[2].declination) * cos(ha[2]) - z;
 
   if (signbit(VHz[0]) == signbit(VHz[2]))
-    goto noevent;          // No event this hour.
+    goto noevent;			    // No event this hour.
     
   VHz[1] = s * sin(sp[1].declination) + c * cos(sp[1].declination) * cos(ha[1]) - z;
 
+  // Use quadratic formula to invert the quadratic interpolation.
   double a, b, d, e, time;
   a = 2 * VHz[2] - 4 * VHz[1] + 2 * VHz[0];
   b = 4 * VHz[1] - 3 * VHz[0] - VHz[2];
   d = b * b - 4 * a * VHz[0];
 
-  if (d < 0)
-    goto noevent;          // No event this hour.
+  // Switch to linear interpolation if a is too small.  This unusual situation
+  // can arise if the rise/set occurs at the midpoint of the test interval (ha[1])
+  // and will lead to a division by zero.
+  // (found by Claude.ai)
+  if (fabs(a) < 1e-6) {			    // Switch to linear interpolation.
+    e = -VHz[0] / (VHz[2] - VHz[0]);
+  } else {
+    if (d < 0)				    // This probably never happens.
+      goto noevent;
 
-  d = sqrt(d);
-  e = (-b + d) / (2 * a);
-  if ((e < 0) || (e > 1))
-    e = (-b - d) / (2 * a);
-  time = k + e + 1 / 120;      // Time since k=0 of event (in hours).
+    d = sqrt(d);
+    e = (-b + d) / (2 * a);
+    if ((e < 0) || (e > 1))
+      e = (-b - d) / (2 * a);
+  }
+  time = k + e + 1.0 / 120;	    // Round off. Time since k=0 of event (in hours).
 
   // The time we started searching + the time from the start of the search to the
   // event is the time of the event.  Add (time since k=0) - window/2 hours.
@@ -135,7 +147,7 @@ SunRise::testSunRiseSet(int k, double offsetDays,
   eventTime = queryTime + (time - SR_WINDOW / 2) *60 *60;
 
   double hz, nz, dz, az;
-  hz = ha[0] + e * (ha[2] - ha[0]);    // Azimuth of the sun at the event.
+  hz = ha[0] + e * (ha[2] - ha[0]);	    // Azimuth of the sun at the event.
   nz = -cos(sp[1].declination) * sin(hz);
   dz = c * sin(sp[1].declination) - s * cos(sp[1].declination) * cos(hz);
   az = atan2(nz, dz) / (M_PI / 180);
@@ -161,10 +173,11 @@ SunRise::testSunRiseSet(int k, double offsetDays,
   //
   if ((VHz[0] < 0) && (VHz[2] > 0)) {
     if (!hasRise ||
-        ((riseTime < queryTime) == (eventTime < queryTime) &&
-         fabs(riseTime - queryTime) > fabs(eventTime - queryTime)) ||
-        ((riseTime < queryTime) != (eventTime < queryTime) &&
-         (hasSet && (riseTime < queryTime) == (setTime < queryTime)))) {
+	((riseTime < queryTime) == (eventTime < queryTime) &&
+	 fabs(riseTime - queryTime) > fabs(eventTime - queryTime)) ||
+	((riseTime < queryTime) != (eventTime < queryTime) &&
+	 (hasSet && 
+	  (riseTime < queryTime) == (setTime < queryTime)))) {
       riseTime = eventTime;
       riseAz = az;
       hasRise = true;
@@ -172,10 +185,11 @@ SunRise::testSunRiseSet(int k, double offsetDays,
   }
   if ((VHz[0] > 0) && (VHz[2] < 0)) {
     if (!hasSet ||
-        ((setTime < queryTime) == (eventTime < queryTime) &&
-         fabs(setTime - queryTime) > fabs(eventTime - queryTime)) ||
-        ((setTime < queryTime) != (eventTime < queryTime) &&
-         (hasRise && (setTime < queryTime) == (riseTime < queryTime)))) {
+	((setTime < queryTime) == (eventTime < queryTime) &&
+	 fabs(setTime - queryTime) > fabs(eventTime - queryTime)) ||
+	((setTime < queryTime) != (eventTime < queryTime) &&
+	 (hasRise && 
+	  (setTime < queryTime) == (riseTime < queryTime)))) {
       setTime = eventTime;
       setAz = az;
       hasSet = true;
@@ -192,47 +206,47 @@ noevent:
     isVisible = (queryTime < setTime);
   else
     isVisible = ((riseTime < setTime && riseTime < queryTime && setTime > queryTime) ||
-                 (riseTime > setTime && (riseTime < queryTime || setTime > queryTime)));
+		 (riseTime > setTime && (riseTime < queryTime || setTime > queryTime)));
 
   return;
 }
 
 // Sun position using fundamental arguments
-// (Van Flandern & Pulkkinen, 1979)
+// c.f. Van Flandern & Pulkkinen, 1979, accurate within 1' in interval 1979 +/- 300 years
 skyCoordinates
 SunRise::sun(double dayOffset) {
-  double centuryOffset = dayOffset / 36525 + 1;        // Centuries from 1900.0
+  double centuryOffset = dayOffset / 36525 + 1;	      // Centuries from 1900.0
 
   double l = 0.779072 + 0.00273790931 * dayOffset;
   double g = 0.993126 + 0.00273777850 * dayOffset;
 
   l = 2 * M_PI * (l - floor(l));
   g = 2 * M_PI * (g - floor(g));
-
+    
   double v, u, w;
   v = 0.39785 * sin(l)
     - 0.01000 * sin(l - g)
     + 0.00333 * sin(l + g)
     - 0.00021 * centuryOffset * sin(l);
-
+    
   u = 1
     - 0.03349 * cos(g)
     - 0.00014 * cos(2*l)
     + 0.00008 * cos(l);
-
+    
   w = -0.00010
      - 0.04129 * sin(2*l)
      + 0.03211 * sin(g)
      + 0.00104 * sin(2*l - g)
      - 0.00035 * sin(2*l + g)
      - 0.00008 * centuryOffset * sin(g);
-
+    
   double s;
   skyCoordinates sc;
-  s = w / sqrt(u - v*v);        // Right ascension
+  s = w / sqrt(u - v*v);			    // Right ascension  
   sc.RA = l + atan(s / sqrt(1 - s*s));
 
-  s = v / sqrt(u);              // Declination
+  s = v / sqrt(u);				    // Declination
   sc.declination = atan(s / sqrt(1 - s*s));
   return(sc);
 }
@@ -240,9 +254,9 @@ SunRise::sun(double dayOffset) {
 // 3-point interpolation
 double
 SunRise::interpolate(double f0, double f1, double f2, double p) {
-  double a = f1 - f0;
-  double b = f2 - f1 - a;
-  return(f0 + p * (2*a + b * (2*p - 1)));
+    double a = f1 - f0;
+    double b = f2 - f1 - a;
+    return(f0 + p * (2*a + b * (2*p - 1)));
 }
 
 // Determine Julian date from Unix time.
@@ -277,10 +291,11 @@ SunRise::julianDate(time_t t) {
 double
 SunRise::localSiderealTime(double offsetDays, double longitude) {
   double lSideTime = (15.0L * (6.697374558L + 0.06570982441908L * offsetDays +
-                      remainder(offsetDays, 1) * 24 + 12 +
-                      0.000026 * (offsetDays / 36525) * (offsetDays / 36525))+ longitude) / 360;
+			       remainder(offsetDays, 1) * 24 + 12 +
+			       0.000026 * (offsetDays / 36525) * (offsetDays / 36525))
+		      + longitude) / 360;
   lSideTime -= floor(lSideTime);
-  lSideTime *= 360;             // Convert to degrees.
+  lSideTime *= 360;			  // Convert to degrees.
   return(lSideTime);
 }
 

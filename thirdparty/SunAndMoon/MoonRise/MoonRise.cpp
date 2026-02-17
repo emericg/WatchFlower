@@ -10,29 +10,28 @@
 //
 // This software was originally adapted to javascript by Stephen R. Schmitt
 // from a BASIC program from the 'Astronomical Computing' column of Sky & Telescope,
-// April 1989, page 78.
+// July 1989, page 78.
 //
 // Subsequently adapted from Stephen R. Schmitt's javascript to c++ for the Arduino
 // by Cyrus Rahman, this work is subject to Stephen Schmitt's copyright:
 //
-// Copyright 2007 Stephen R. Schmitt
-// Subsequent work Copyright 2020 Cyrus Rahman
+// Copyright 2007 Stephen R. Schmitt  
+// Subsequent work Copyright 2020-2026 Cyrus Rahman
 // You may use or modify this source code in any way you find useful, provided
-// that you agree that the author(s) have no warranty, obligations or liability.
-// You must determine the suitability of this source code for your use.
+// that you agree that the author(s) have no warranty, obligations or liability.  You
+// must determine the suitability of this source code for your use.
 //
 // Redistributions of this source code must retain this copyright notice.
 
-#include "MoonRise.h"
-
 #include <math.h>
+#include "MoonRise.h"
 
 #define K1 15*(M_PI/180)*1.0027379
 
 struct skyCoordinates {
-  double RA;            // Right ascension
-  double declination;   // Declination
-  double distance;      // Distance
+  double RA;		    // Right ascension
+  double declination;	    // Declination
+  double distance;	    // Distance
 };
 
 // Determine the nearest moon rise or set event previous, and the nearest
@@ -51,7 +50,7 @@ MoonRise::calculate(double latitude, double longitude, time_t t) {
   queryTime = t;
   offsetDays = julianDate(t) - 2451545L;     // Days since Jan 1, 2000, 1200UTC.
   // Begin testing (MR_WINDOW / 2) hours before requested time.
-  offsetDays -= (double)MR_WINDOW / (2 * 24) ;
+  offsetDays -= (double)MR_WINDOW / (2 * 24) ;	
 
   // Calculate coordinates at start, middle, and end of search period.
   for (int i = 0; i < 3; i++) {
@@ -71,25 +70,28 @@ MoonRise::calculate(double latitude, double longitude, time_t t) {
   mpWindow[0].declination = moonPosition[0].declination;
   mpWindow[0].distance = moonPosition[0].distance;
 
-  for (int k = 0; k < MR_WINDOW; k++) {      // Check each interval of search period
+  for (int k = 0; k < MR_WINDOW; k++) {	    // Check each interval of search period
     float ph = (float)(k + 1)/MR_WINDOW;
-
-    mpWindow[2].RA = interpolate(moonPosition[0].RA, moonPosition[1].RA, moonPosition[2].RA, ph);
-    mpWindow[2].declination = interpolate(moonPosition[0].declination, moonPosition[1].declination, moonPosition[2].declination, ph);
+        
+    mpWindow[2].RA = interpolate(moonPosition[0].RA,
+				 moonPosition[1].RA,
+				 moonPosition[2].RA, ph);
+    mpWindow[2].declination = interpolate(moonPosition[0].declination,
+					  moonPosition[1].declination,
+					  moonPosition[2].declination, ph);
     mpWindow[2].distance = moonPosition[2].distance;
 
     // Look for moonrise/set events during this interval.
     testMoonRiseSet(k, offsetDays, latitude, longitude, mpWindow);
 
-    mpWindow[0] = mpWindow[2];        // Advance to next interval.
+    mpWindow[0] = mpWindow[2];		    // Advance to next interval.
   }
 }
 
 // Look for moon rise and set events during an hour.
 void
-MoonRise::testMoonRiseSet(int k, double offsetDays,
-                          double latitude, double longitude,
-                          struct skyCoordinates *mp) {
+MoonRise::testMoonRiseSet(int k, double offsetDays, double latitude, double longitude,
+			  struct skyCoordinates *mp) {
   double ha[3], VHz[3];
   double lSideTime;
 
@@ -110,27 +112,37 @@ MoonRise::testMoonRiseSet(int k, double offsetDays,
   // refraction + semidiameter at horizon + distance correction
   double z = cos(M_PI / 180 * (90.567 - 41.685 / mp[0].distance));
 
+  // Combine corrections into a vertical unit sphere length.
   VHz[0] = s * sin(mp[0].declination) + c * cos(mp[0].declination) * cos(ha[0]) - z;
   VHz[2] = s * sin(mp[2].declination) + c * cos(mp[2].declination) * cos(ha[2]) - z;
 
   if (signbit(VHz[0]) == signbit(VHz[2]))
-    goto noevent;          // No event this hour.
+    goto noevent;			    // No event this hour.
     
   VHz[1] = s * sin(mp[1].declination) + c * cos(mp[1].declination) * cos(ha[1]) - z;
 
+  // Use quadratic formula to invert the quadratic interpolation.
   double a, b, d, e, time;
   a = 2 * VHz[2] - 4 * VHz[1] + 2 * VHz[0];
   b = 4 * VHz[1] - 3 * VHz[0] - VHz[2];
   d = b * b - 4 * a * VHz[0];
 
-  if (d < 0)
-    goto noevent;          // No event this hour.
+  // Switch to linear interpolation if a is too small.  This unusual situation
+  // can arise if the rise/set occurs at the midpoint of the test interval (ha[1])
+  // and will lead to a division by zero.
+  // (found by Claude.ai)
+  if (fabs(a) < 1e-6) {			    // Switch to linear interpolation.
+    e = -VHz[0] / (VHz[2] - VHz[0]);
+  } else {
+    if (d < 0)				    // This probably never happens.
+      goto noevent;
 
-  d = sqrt(d);
-  e = (-b + d) / (2 * a);
-  if ((e < 0) || (e > 1))
-    e = (-b - d) / (2 * a);
-  time = k + e + 1 / 120;      // Time since k=0 of event (in hours).
+    d = sqrt(d);
+    e = (-b + d) / (2 * a);
+    if ((e < 0) || (e > 1))
+      e = (-b - d) / (2 * a);
+  }
+  time = k + e + 1.0 / 120;	    // Round off. Time since k=0 of event (in hours).
 
   // The time we started searching + the time from the start of the search to the
   // event is the time of the event.  Add (time since k=0) - window/2 hours.
@@ -138,7 +150,7 @@ MoonRise::testMoonRiseSet(int k, double offsetDays,
   eventTime = queryTime + (time - MR_WINDOW / 2) *60 *60;
 
   double hz, nz, dz, az;
-  hz = ha[0] + e * (ha[2] - ha[0]);      // Azimuth of the moon at the event.
+  hz = ha[0] + e * (ha[2] - ha[0]);	    // Azimuth of the moon at the event.
   nz = -cos(mp[1].declination) * sin(hz);
   dz = c * sin(mp[1].declination) - s * cos(mp[1].declination) * cos(hz);
   az = atan2(nz, dz) / (M_PI / 180);
@@ -164,10 +176,11 @@ MoonRise::testMoonRiseSet(int k, double offsetDays,
   //
   if ((VHz[0] < 0) && (VHz[2] > 0)) {
     if (!hasRise ||
-        ((riseTime < queryTime) == (eventTime < queryTime) &&
-         fabs(riseTime - queryTime) > fabs(eventTime - queryTime)) ||
-        ((riseTime < queryTime) != (eventTime < queryTime) &&
-         (hasSet && (riseTime < queryTime) == (setTime < queryTime)))) {
+	((riseTime < queryTime) == (eventTime < queryTime) &&
+	 fabs(riseTime - queryTime) > fabs(eventTime - queryTime)) ||
+	((riseTime < queryTime) != (eventTime < queryTime) &&
+	 (hasSet && 
+	  (riseTime < queryTime) == (setTime < queryTime)))) {
       riseTime = eventTime;
       riseAz = az;
       hasRise = true;
@@ -175,10 +188,11 @@ MoonRise::testMoonRiseSet(int k, double offsetDays,
   }
   if ((VHz[0] > 0) && (VHz[2] < 0)) {
     if (!hasSet ||
-        ((setTime < queryTime) == (eventTime < queryTime) &&
-         fabs(setTime - queryTime) > fabs(eventTime - queryTime)) ||
-        ((setTime < queryTime) != (eventTime < queryTime) &&
-         (hasRise && (setTime < queryTime) == (riseTime < queryTime)))) {
+	((setTime < queryTime) == (eventTime < queryTime) &&
+	 fabs(setTime - queryTime) > fabs(eventTime - queryTime)) ||
+	((setTime < queryTime) != (eventTime < queryTime) &&
+	 (hasRise && 
+	  (setTime < queryTime) == (riseTime < queryTime)))) {
       setTime = eventTime;
       setAz = az;
       hasSet = true;
@@ -195,13 +209,14 @@ noevent:
     isVisible = (queryTime < setTime);
   else
     isVisible = ((riseTime < setTime && riseTime < queryTime && setTime > queryTime) ||
-                 (riseTime > setTime && (riseTime < queryTime || setTime > queryTime)));
+		 (riseTime > setTime && (riseTime < queryTime || setTime > queryTime)));
 
   return;
 }
 
 // Moon position using fundamental arguments 
 // (Van Flandern & Pulkkinen, 1979)
+// c.f. Van Flandern & Pulkkinen, 1979, accurate within 1' in interval 1979 +/- 300 years
 struct skyCoordinates
 MoonRise::moon(double dayOffset) {
   double l = 0.606434 + 0.03660110129 * dayOffset;
@@ -232,7 +247,7 @@ MoonRise::moon(double dayOffset) {
     - 0.00108 * sin(m + f - 2*d)
     - 0.00079 * sin(f - n)
     + 0.00078 * sin(f + 2*d + n);
-
+    
   u = 1
     - 0.10828 * cos(m)
     - 0.01880 * cos(m - 2*d)
@@ -241,7 +256,7 @@ MoonRise::moon(double dayOffset) {
     - 0.00147 * cos(2*m)
     - 0.00105 * cos(2*d - g)
     - 0.00075 * cos(m - 2*d + g);
-
+    
   w = 0.10478 * sin(m)
     - 0.04105 * sin(2*f + 2*n)
     - 0.02130 * sin(m - 2*d)
@@ -260,20 +275,20 @@ MoonRise::moon(double dayOffset) {
   double s;
   struct skyCoordinates sc;
   s = w / sqrt(u - v*v);
-  sc.RA = l + atan(s / sqrt(1 - s*s));          // Right ascension
+  sc.RA = l + atan(s / sqrt(1 - s*s));		      // Right ascension
 
   s = v / sqrt(u);
-  sc.declination = atan(s / sqrt(1 - s*s));     // Declination
-  sc.distance = 60.40974 * sqrt(u);             // Distance
+  sc.declination = atan(s / sqrt(1 - s*s));	      // Declination
+  sc.distance = 60.40974 * sqrt(u);		      // Distance
   return(sc);
 }
 
 // 3-point interpolation
 double
 MoonRise::interpolate(double f0, double f1, double f2, double p) {
-  double a = f1 - f0;
-  double b = f2 - f1 - a;
-  return(f0 + p * (2*a + b * (2*p - 1)));
+    double a = f1 - f0;
+    double b = f2 - f1 - a;
+    return(f0 + p * (2*a + b * (2*p - 1)));
 }
 
 // Determine Julian date from Unix time.
@@ -308,10 +323,11 @@ MoonRise::julianDate(time_t t) {
 double
 MoonRise::localSiderealTime(double offsetDays, double longitude) {
   double lSideTime = (15.0L * (6.697374558L + 0.06570982441908L * offsetDays +
-                      remainder(offsetDays, 1) * 24 + 12 +
-                      0.000026 * (offsetDays / 36525) * (offsetDays / 36525)) + longitude) / 360;
+			       remainder(offsetDays, 1) * 24 + 12 +
+			       0.000026 * (offsetDays / 36525) * (offsetDays / 36525))
+		      + longitude) / 360;
   lSideTime -= floor(lSideTime);
-  lSideTime *= 360;        // Convert to degrees.
+  lSideTime *= 360;			  // Convert to degrees.
   return(lSideTime);
 }
 

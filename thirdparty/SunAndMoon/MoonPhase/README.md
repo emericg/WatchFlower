@@ -18,7 +18,7 @@ Arduino processors) there is a version of the software included in
 this distribution (MoonPhaseFXP, for Floating X Precision) that avoids exceeding the
 available precision.
 
-To paraphrase the original author Bradley E Schaefer:
+To paraphrase the original author Bradley E. Schaefer:
 
 	I can only think of one application where lunar phase is needed to a
 	hundredth of a day, whereas nearly all applications are happy to have
@@ -33,12 +33,12 @@ To paraphrase the original author Bradley E Schaefer:
 
 This software was originally adapted to javascript by Stephen R. Schmitt
 from a BASIC program from the 'Astronomical Computing' column of Sky & Telescope,
-April 1994, page 84, written by Bradley E. Schaefer.
+April 1994, page 86, written by Bradley E. Schaefer.
 
 ## Usage
 
 To use the MoonPhase library, include MoonPhase.h
-
+	
 	#include <MoonPhase.h>
 	#include <MoonPhaseFXP.h>		// (for 4-byte double precision)
 
@@ -50,7 +50,7 @@ To use the MoonPhase library, include MoonPhase.h
 	mp.calculate(time_t time);		// (for 4-byte double precision)
 
 ### Arguments
-	time:	// The time of the desired the moon phase and position, in UTC
+	time:	// The time of the desired moon phase and position, in UTC
 		// seconds from the Unix epoch (January 1, 1970).
 
 		// As the moon phase changes slowly and precision within a few

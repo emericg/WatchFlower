@@ -1477,6 +1477,22 @@ Loader {
                     }
                 }
 
+                Text { // legend_sunandmoon
+                    anchors.left: parent.left
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
+                    anchors.right: parent.right
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
+
+                    topPadding: -12
+                    bottomPadding: 12
+
+                    text: qsTr("Gives you sunset / sunrise time at your location.")
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContentSmall
+                }
+
                 ////////
 
                 Item {

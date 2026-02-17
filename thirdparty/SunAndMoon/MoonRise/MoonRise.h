@@ -10,7 +10,7 @@
 // windows will increase interpolation error.  Useful values are probably from
 // 12 - 48 but will depend upon your application.
 
-#define MR_WINDOW   48      // Even integer
+#define MR_WINDOW   48	    // Even integer
 
 class MoonRise {
   public:
@@ -26,12 +26,12 @@ class MoonRise {
     void calculate(double latitude, double longitude, time_t t);
 
   private:
-    void testMoonRiseSet(int i, double offsetDays, double latitude, double longitude, struct skyCoordinates *mp);
+    void testMoonRiseSet(int i, double offsetDays, double latitude, double longitude,
+			 struct skyCoordinates *mp);
     struct skyCoordinates moon(double dayOffset);
     double interpolate(double f0, double f1, double f2, double p);
     double julianDate(time_t t);
     double localSiderealTime(double offsetDays, double longitude);
     void initClass();
 };
-
 #endif
