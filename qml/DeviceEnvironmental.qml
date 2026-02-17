@@ -392,12 +392,13 @@ Loader {
 
             textStatus.text = UtilsDeviceSensors.getDeviceStatusText(currentDevice.status)
 
-            if (currentDevice.status === DeviceUtils.DEVICE_OFFLINE &&
-                (currentDevice.isDataFresh_rt() || currentDevice.isDataToday())) {
-                if (currentDevice.lastUpdateMin <= 1)
-                    textStatus.text = qsTr("Synced")
-                else
-                    textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
+            if (currentDevice.status <= DeviceUtils.DEVICE_AVAILABLE) {
+                if (currentDevice.isDataFresh_rt() || currentDevice.isDataToday()) {
+                    if (currentDevice.lastUpdateMin <= 1)
+                        textStatus.text = qsTr("Synced")
+                    else
+                        textStatus.text = qsTr("Synced %1 ago").arg(currentDevice.lastUpdateStr)
+                }
             }
         }
 
@@ -1234,6 +1235,7 @@ Loader {
                                     opacity: 0
                                     Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }
 
+                                    //active: deviceEnvironmental.visible
                                     asynchronous: true
                                     onLoaded: {
                                         envChart.loadGraph()

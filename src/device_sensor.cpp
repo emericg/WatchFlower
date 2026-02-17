@@ -82,19 +82,18 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
     if (status == true)
     {
         SettingsManager *sm = SettingsManager::getInstance();
-        NotificationManager *nm = NotificationManager::getInstance();
-        DeviceManager *dm = static_cast<DeviceManager *>(parent());
-        if (!sm || !nm || !dm) return;
 
-        // FIXME // Plant sensor? Reorder the sensor list by water level (if needed)
-        //if (isPlantSensor() && sm->getOrderBy() == "waterlevel") dm->invalidate();
+        // Plant sensor? Reorder the sensor list by water level (if needed)
+        //DeviceManager *dm = static_cast<DeviceManager *>(parent());
+        //if (isPlantSensor() && sm && sm->getOrderBy() == "waterlevel") dm->invalidate(); // FIXME
 
         // Notifications enabled?
-        if (sm->getNotifs())
+        if (sm && sm->getNotifs())
         {
 #if defined(Q_OS_ANDROID)
             // Don't show notifications when the Android application is on the foreground
-            if (!dm->isDaemon()) return;
+            DeviceManager *dm = static_cast<DeviceManager *>(parent());
+            if (dm && !dm->isDaemon()) return;
 #endif
             QString title;
             QString message;
@@ -182,6 +181,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
             // Send notification
             if (!title.isEmpty() && !message.isEmpty())
             {
+                NotificationManager *nm = NotificationManager::getInstance();
                 nm->setNotification(title, message, channel);
             }
         }

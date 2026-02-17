@@ -402,8 +402,7 @@ void Device::actionClearDeviceData()
 
     if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_CLEAR_HISTORY;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_CLEAR_HISTORY);
         deviceConnect();
     }
 }
@@ -414,8 +413,7 @@ void Device::actionLedBlink()
 
     if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_LED_BLINK;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_LED_BLINK);
         deviceConnect();
     }
 }
@@ -426,8 +424,7 @@ void Device::actionWatering()
 
     if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_WATERING;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_WATERING);
         deviceConnect();
     }
 }
@@ -438,8 +435,7 @@ void Device::actionCalibrate()
 
     if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_CALIBRATE;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_CALIBRATE);
         deviceConnect();
     }
 }
@@ -636,8 +632,7 @@ void Device::refreshStartRealtime()
 
     if (!isWorking())
     {
-        m_ble_action = DeviceUtils::ACTION_UPDATE_REALTIME;
-        actionStarted();
+        actionStarted(DeviceUtils::ACTION_UPDATE_REALTIME);
         deviceConnect();
     }
 }
