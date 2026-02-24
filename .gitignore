@@ -30,10 +30,6 @@ Release/*
 WatchFlower.xcodeproj/*
 asset_catalog_compiler.Info.plist
 
-# XCode signatures
-assets/ios/ios_signature.pri
-assets/macos/macos_signature.pri
-
 # Others
 stash/*
 .DS_Store

@@ -6,8 +6,8 @@ buildscript {
 
     dependencies {
         //noinspection AndroidGradlePluginVersion
-        classpath 'com.android.tools.build:gradle:8.6.1' // works with Qt 6.8+ // Java 17
         //classpath 'com.android.tools.build:gradle:8.10.1' // works with Qt 6.10+ // Java 17
+        classpath 'com.android.tools.build:gradle:8.6.1' // works with Qt 6.8+ // Java 17
     }
 }
 
@@ -86,7 +86,7 @@ android {
         ndk.abiFilters = qtTargetAbiList.split(",")
 
         namespace 'com.emeric.watchflower'
-        versionName "6.0"
+        versionName '6.0'
         versionCode timestampInt
         manifestPlaceholders = [versionName: versionName, versionCode: versionCode]
     }

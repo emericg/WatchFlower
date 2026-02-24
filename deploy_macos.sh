@@ -57,9 +57,9 @@ if [[ $use_contribs = true ]] ; then
   export LD_LIBRARY_PATH=$(pwd)/contribs/src/env/macOS_x86_64/usr/lib/:$(pwd)/contribs/src/env/macOS_arm64/usr/lib/:$LD_LIBRARY_PATH
 fi
 
-# only if we are on a GitHub Action server, because this remove the plugins from the Qt directory
 if [[ -n "${QT_ROOT_DIR:-}" ]]; then
   # cleanup undeployable Qt plugins (present, but missing their own dependencies)
+  # only if we are on a GitHub Action server, because this remove the plugins from the Qt directory
   echo '---- Remove undeployable Qt plugins'
   sudo rm $QT_ROOT_DIR/plugins/position/libqtposition_nmea.dylib
   sudo rm $QT_ROOT_DIR/plugins/sqldrivers/libqsqlmimer.dylib
@@ -80,7 +80,7 @@ fi
 ## APP DEPLOY ##################################################################
 
 echo '---- Running macdeployqt'
-if [[ $notarize_bundle = true ]] ; then
+if [[ $notarize_bundle = true && -n "${MACOS_CERTIFICATE_NAME:-}" ]] ; then
   macdeployqt bin/$APP_NAME.app -qmldir=qml/ -hardened-runtime -timestamp -appstore-compliant -codesign=$MACOS_CERTIFICATE_NAME
 else
   macdeployqt bin/$APP_NAME.app -qmldir=qml/
