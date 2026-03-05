@@ -15,8 +15,8 @@ Item {
                             ((boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0) ||
                              (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity")))
 
-    property bool wideMode: ((width >= 380) || (isTablet && width >= 480))
-    property bool hugeMode: (!isHdpi || (isTablet && width >= 480))
+    property bool wideMode: ((width >= 380) || (appWindow.isTablet && width >= 480))
+    property bool hugeMode: (!appWindow.isHdpi || (appWindow.isTablet && width >= 480))
     property bool listMode: false
 
     property int margin: Theme.componentMargin
@@ -420,54 +420,61 @@ Item {
             layoutDirection: Qt.RightToLeft
 
             Loader { // alarmWater
-                asynchronous: true
+                anchors.verticalCenter: parent.verticalCenter
+
                 active: (deviceWidget.hasHygro && boxDevice.hasDataToday &&
                          (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin) ||
                          (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax))
 
-                visible: active
-
+                asynchronous: true
                 sourceComponent: AlarmIndicator {
+                    hugeMode: deviceWidget.hugeMode
                     source: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
                                 "qrc:/IconLibrary/material-icons/duotone/water_full.svg" :
                                 "qrc:/IconLibrary/material-icons/duotone/water_mid.svg"
                     color: (boxDevice.soilMoisture < boxDevice.soilMoisture_limitMin - 5 ||
                             boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax + 5) ?
                                 Theme.colorBlue : Theme.colorBlue
+                    tooltipText: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
+                                     qsTr("Too much water!") : qsTr("Not enough water!")
                 }
             }
 
             Loader { // alarmFreeze // alarmHeat
-                asynchronous: true
+                anchors.verticalCenter: parent.verticalCenter
+
                 active: ((boxDevice.temperatureC > 38) ||
                          (boxDevice.temperatureC <= 2 && boxDevice.temperatureC > -80))
 
-                visible: active
-
+                asynchronous: true
                 sourceComponent: AlarmIndicator {
+                    hugeMode: deviceWidget.hugeMode
                     source: (boxDevice.temperatureC > 38) ?
-                             "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg" :
-                             "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
+                                "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg" :
+                                "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
                     color: {
                         if (boxDevice.temperatureC <= -4 || boxDevice.temperatureC >= 44)
                             return Theme.colorRed
                         else
                             return Theme.colorYellow
                     }
+                    tooltipText: (boxDevice.temperatureC > 38) ? qsTr("Heat warning!")
+                                                               : qsTr("Freeze warning!")
                 }
             }
 
             Loader { // alarmVentilate
-                asynchronous: true
+                anchors.verticalCenter: parent.verticalCenter
+
                 active: ((boxDevice.hasVocSensor && boxDevice.voc > 500) ||
                          (boxDevice.hasHchoSensor && boxDevice.hcho > 500) ||
                          (boxDevice.hasCo2Sensor && boxDevice.co2 > 1000) ||
                          (boxDevice.hasPM25Sensor && boxDevice.pm25 > 120) ||
                          (boxDevice.hasPM10Sensor && boxDevice.pm10 > 350))
 
-                visible: active
-
+                asynchronous: true
                 sourceComponent: AlarmIndicator {
+                    hugeMode: deviceWidget.hugeMode
                     source: "qrc:/IconLibrary/material-symbols/sensors/air.svg"
                     color: {
                         if ((boxDevice.hasVocSensor && boxDevice.voc > 1000) ||
@@ -482,16 +489,18 @@ Item {
                             return Theme.colorYellow
                         }
                     }
+                    tooltipText: qsTr("Low air quality!")
                 }
             }
 
             Loader { // alarmRadiation
-                asynchronous: true
+                anchors.verticalCenter: parent.verticalCenter
+
                 active: (boxDevice.hasGeigerCounter && boxDevice.radioactivityM > 1)
 
-                visible: active
-
+                asynchronous: true
                 sourceComponent: AlarmIndicator {
+                    hugeMode: deviceWidget.hugeMode
                     source: "qrc:/assets/gfx/icons/nuclear_icon.svg"
                     color: {
                         if (boxDevice.radioactivityM > 10)
@@ -499,18 +508,21 @@ Item {
                         else
                             return Theme.colorYellow
                     }
+                    tooltipText: qsTr("Radiation warning!")
                 }
             }
 
             Loader { // alarmWarning
-                asynchronous: true
+                anchors.verticalCenter: parent.verticalCenter
+
                 active: false
 
-                visible: active
-
+                asynchronous: true
                 sourceComponent: AlarmIndicator {
+                    hugeMode: deviceWidget.hugeMode
                     source: "qrc:/IconLibrary/material-symbols/warning.svg"
                     color: Theme.colorYellow
+                    tooltipText: qsTr("Warning!")
                 }
             }
         }
@@ -611,8 +623,8 @@ Item {
             id: rectangleSensors
             height: rowRight.height
 
-            spacing: isPhone ? 7 : 8
-            property int sensorWidth: isPhone ? 9 : (deviceWidget.hugeMode ? 12 : 10)
+            spacing: appWindow.isPhone ? 7 : 8
+            property int sensorWidth: appWindow.isPhone ? 9 : (deviceWidget.hugeMode ? 12 : 10)
             property int sensorRadius: deviceWidget.hugeMode ? 3 : 2
 
             function initData() { }
@@ -951,9 +963,9 @@ Item {
             ProgressArc {
                 id: gaugeValue
                 anchors.fill: parent
-                anchors.margins: isPhone ? 0 : 2
+                anchors.margins: appWindow.isPhone ? 0 : 2
 
-                arcWidth: isPhone ? 8 : (deviceWidget.hugeMode ? 10 : 8)
+                arcWidth: appWindow.isPhone ? 8 : (deviceWidget.hugeMode ? 10 : 8)
                 arcSpan: 270
                 arcCap: "round"
 
@@ -963,31 +975,6 @@ Item {
 
                 background: true
                 backgroundOpacity: 0.33
-            }
-        }
-    }
-
-    ////////////////
-
-    component AlarmIndicator: IconSvg {
-        width: deviceWidget.hugeMode ? 28 : 24
-        height: deviceWidget.hugeMode ? 28 : 24
-        anchors.verticalCenter: parent.verticalCenter
-
-        Rectangle {
-            anchors.centerIn: parent
-            width: parent.width + 8
-            height: width
-            radius: width
-
-            z: -1
-            color: parent.color
-            opacity: 0.08
-
-            SequentialAnimation on opacity {
-                loops: Animation.Infinite
-                PropertyAnimation { to: 0.24; duration: 1333; }
-                PropertyAnimation { to: 0.08; duration: 1333; }
             }
         }
     }

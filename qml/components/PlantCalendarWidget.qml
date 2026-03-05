@@ -29,7 +29,7 @@ Column {
                 width: www
                 height: hhh
 
-                text: locale.monthName(modelData, Locale.NarrowFormat)
+                text: Qt.locale().monthName(modelData, Locale.NarrowFormat)
                 color: Theme.colorSubText
                 font.pixelSize: Theme.fontSizeContentSmall
                 horizontalAlignment: Text.AlignHCenter

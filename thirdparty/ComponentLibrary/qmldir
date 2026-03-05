@@ -47,6 +47,8 @@ SquareButtonSolid 1.0 SquareButtonSolid.qml
 SquareButtonWireframe 1.0 SquareButtonWireframe.qml
 SquareButtonSunken 1.0 SquareButtonSunken.qml
 SquareButtonImpl 1.0 SquareButtonImpl.qml
+BannerButton 1.0 BannerButton.qml
+BannerProgressButton 1.0 BannerProgressButton.qml
 ButtonChip 1.0 ButtonChip.qml
 ButtonFab 1.0 ButtonFab.qml
 ButtonFabExtended 1.0 ButtonFabExtended.qml

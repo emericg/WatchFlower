@@ -112,7 +112,7 @@ T.Button {
             text: control.text
             textFormat: Text.PlainText
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: Theme.fontSizeContentSmall - 1
+            font.pixelSize: Theme.fontSizeContentVerySmall
             font.bold: true
 
             color: control.highlighted ? control.colorHighlight : control.colorContent

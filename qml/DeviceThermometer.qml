@@ -96,6 +96,7 @@ Loader {
 
         Connections {
             target: appHeader
+
             // desktop only
             function onDeviceDataButtonClicked() {
                 appHeader.setActiveDeviceData()
@@ -312,8 +313,8 @@ Loader {
                 property int dimboxw: Math.min(deviceThermometer.width * 0.4, isPhone ? 320 : 600)
                 property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 180 : 256)
 
-                width: (uiMode === 1) ? parent.width : dimboxw
-                height: (uiMode === 1) ? dimboxh : parent.height
+                width: (itemDeviceThermometer.uiMode === 1) ? parent.width : dimboxw
+                height: (itemDeviceThermometer.uiMode === 1) ? dimboxh : parent.height
 
                 color: Theme.colorHeader
                 z: 5
@@ -550,14 +551,6 @@ Loader {
                 }
 
                 Item {
-                    ActionbarSync {
-                        id: bannersync
-                        z: 5
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                    }
-
                     ItemNoData {
                         id: noDataIndicator
                         visible: false
@@ -565,7 +558,7 @@ Loader {
 
                     Loader {
                         id: graphLoader
-                        anchors.top: bannersync.bottom
+                        anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
@@ -585,9 +578,19 @@ Loader {
                     }
                 }
 
+                ////////////////
+
                 DevicePlantSensorSettings {
                     id: sensorSettings
                 }
+
+                ////////////////
+
+                ActionbarSync {
+                    id: syncBanner
+                }
+
+                ////////////////
             }
         }
 

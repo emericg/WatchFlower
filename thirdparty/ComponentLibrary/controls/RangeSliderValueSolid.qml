@@ -27,7 +27,7 @@ T.RangeSlider {
     // colors
     property color colorBackground: Theme.colorForeground
     property color colorForeground: Theme.colorPrimary
-    property color colorForegroundDisabled: Qt.tint(Theme.colorPrimary, "#44eeeeee")
+    property color colorForegroundDisabled: Qt.tint(colorForeground, "#44eeeeee")
     property color colorText: "white"
 
     ////////////////
@@ -103,8 +103,7 @@ T.RangeSlider {
         width: (control.horizontal && control.showvalue) ? t2.contentWidth + 16 : control.hhh
         height: control.hhh
         radius: control.hhh
-        color: control.colorForeground
-        border.color: control.colorForeground
+        color: enabled ? control.colorForeground : control.colorForegroundDisabled
 
         Text {
             id: t2

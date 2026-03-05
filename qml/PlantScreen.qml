@@ -25,7 +25,7 @@ Grid {
     property int www2: (uiMode === 1) ? (parentWidth - plantScreen.padding*2) : (parentWidth - plantScreen.spacing*4) / 3
     property int insidemargins: (uiMode === 1) ? 12 : 16
 
-    ////////
+    ////////////////////////////////////////////////////////////////////////////
 
     property var currentPlant: null
 
@@ -1769,4 +1769,6 @@ Grid {
             ////
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

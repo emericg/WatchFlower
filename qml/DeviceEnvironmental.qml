@@ -105,6 +105,7 @@ Loader {
 
         Connections {
             target: appHeader
+
             // desktop only
             function onDeviceDataButtonClicked() {
                 appHeader.setActiveDeviceData()
@@ -461,8 +462,8 @@ Loader {
                 property int dimboxw: Math.min(deviceEnvironmental.width * 0.4, isPhone ? 320 : 600)
                 property int dimboxh: Math.max(deviceEnvironmental.height * 0.333, isPhone ? 180 : 256)
 
-                width: (uiMode === 1) ? parent.width : dimboxw
-                height: (uiMode === 1) ? dimboxh : parent.height
+                width: (itemDeviceEnvironmental.uiMode === 1) ? parent.width : dimboxw
+                height: (itemDeviceEnvironmental.uiMode === 1) ? dimboxh : parent.height
 
                 color: Theme.colorHeader
                 z: 5
@@ -493,7 +494,7 @@ Loader {
 
                     AirQualityIndicator {
                         id: indicatorAirQuality
-                        width: (uiMode === 1) ? headerBox.height-24 : headerBox.width * 0.60
+                        width: (itemDeviceEnvironmental.uiMode === 1) ? headerBox.height-24 : headerBox.width * 0.60
                         height: width
                         anchors.centerIn: parent
 
@@ -771,16 +772,10 @@ Loader {
                 ////////////////
 
                 Item {
-                    ActionbarSync {
-                        id: bannersync
-                        z: 5
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                    }
-
                     Flickable {
                         id: sensorFlick
-                        anchors.top: bannersync.bottom
+
+                        anchors.top: parent.top
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
@@ -1256,6 +1251,12 @@ Loader {
 
                 DevicePlantSensorSettings {
                     id: sensorSettings
+                }
+
+                ////////////////
+
+                ActionbarSync {
+                    id: syncBanner
                 }
 
                 ////////////////

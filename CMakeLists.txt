@@ -178,6 +178,7 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/components/ActionbarSync.qml
         qml/components/ActionMenuFixed.qml
         qml/components/AirQualityIndicator.qml
+        qml/components/AlarmIndicator.qml
         qml/components/IndicatorsCompact.qml
         qml/components/IndicatorsSolid.qml
         qml/components/ItemLoadData.qml
@@ -197,6 +198,7 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/components/PlantHardinessWidget.qml
         qml/components/PlantSizeWidget.qml
         qml/components/SpinBoxHistory.qml
+
         qml/components_js/UtilsDeviceSensors.js
         qml/components_js/UtilsPlantDatabase.js
         qml/components_js/UtilsPlantJournal.js

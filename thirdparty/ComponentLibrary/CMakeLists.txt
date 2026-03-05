@@ -57,6 +57,8 @@ list(APPEND MODULE_QML_FILES
     buttons/SquareButtonSunken.qml
     buttons/SquareButtonImpl.qml
 
+    generic/BannerButton.qml
+    generic/BannerProgressButton.qml
     generic/ButtonChip.qml
     generic/ButtonFab.qml
     generic/ButtonFabExtended.qml
