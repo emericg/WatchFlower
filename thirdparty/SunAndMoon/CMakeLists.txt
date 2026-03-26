@@ -2,28 +2,22 @@ cmake_minimum_required(VERSION 3.20)
 
 project(SunAndMoon LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml)
 
 ################################################################################
 
 # Generic dependencies
+find_package(Qt6 REQUIRED COMPONENTS Core)
 set(CORE_LIBRARIES Qt::Core)
 
 # Generic sources
 set(CORE_SOURCES
-    SunAndMoon.cpp
-    SunRise/SunRise.cpp
-    MoonRise/MoonRise.cpp
-    MoonPhase/MoonPhase.cpp
-    SunAndMoon.h
-    SunRise/SunRise.h
-    MoonRise/MoonRise.h
-    MoonPhase/MoonPhase.h
+    SunAndMoon.cpp SunAndMoon.h
+    SunRise/SunRise.cpp SunRise/SunRise.h
+    MoonRise/MoonRise.cpp MoonRise/MoonRise.h
+    MoonPhase/MoonPhase.cpp MoonPhase/MoonPhase.h
 )
 
 ################################################################################

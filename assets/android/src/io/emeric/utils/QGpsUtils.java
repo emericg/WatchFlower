@@ -62,8 +62,8 @@ public class QGpsUtils
 
             return gps_enabled;
 
-        } else { // up to API level 27
-
+        } else { // up to API level 27 // DEPRECATED anyway
+/*
             final int locationMode;
             try {
                 // This constant was deprecated in API level 28.
@@ -84,6 +84,8 @@ public class QGpsUtils
                 default:
                     return false;
             }
+*/
+            return false;
         }
     }
 

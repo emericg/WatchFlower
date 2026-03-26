@@ -17,8 +17,11 @@ message(STATUS "[CMAKE]   CMAKE_VERSION             = ${CMAKE_VERSION}")
 message(STATUS "[CMAKE]   CMAKE_PREFIX_PATH         = ${CMAKE_PREFIX_PATH}")
 message(STATUS "[SYSTEM]  (HOST) SYSTEM NAME        = ${CMAKE_HOST_SYSTEM_NAME}")
 message(STATUS "[SYSTEM]  (HOST) SYSTEM VERSION     = ${CMAKE_HOST_SYSTEM_VERSION}")
+message(STATUS "[SYSTEM]  (HOST) SYSTEM PROCESSOR   = ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message(STATUS "[SYSTEM]  (TARGET) SYSTEM NAME      = ${CMAKE_SYSTEM_NAME}")
 message(STATUS "[SYSTEM]  (TARGET) SYSTEM VERSION   = ${CMAKE_SYSTEM_VERSION}")
+message(STATUS "[SYSTEM]  (TARGET) SYSTEM PROCESSOR = ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "[PROJECT] CURRENT_SOURCE_DIR        = ${CMAKE_CURRENT_SOURCE_DIR}")
 message(STATUS "[PROJECT] SOURCE_DIR                = ${CMAKE_SOURCE_DIR}")
 message(STATUS "[PROJECT] BUILD_TYPE                = ${CMAKE_BUILD_TYPE}")
 message(STATUS "[PROJECT] TOOLCHAIN_FILE            = ${CMAKE_TOOLCHAIN_FILE}")
@@ -301,27 +304,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.md DESTINATION share/licenses/${CMAKE_PROJECT_NAME}/)
 endif()
 
-## Android
-if(CMAKE_SYSTEM_NAME STREQUAL "Android")
-    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        #QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64"
-        #QT_ANDROID_BUILD_ALL_ABIS ON
-        QT_ANDROID_MIN_SDK_VERSION 28
-        QT_ANDROID_TARGET_SDK_VERSION 36
-        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/assets/android/"
-    )
-
-    # Support 16 KB page sizes / pre NDK28
-    target_link_options(${CMAKE_PROJECT_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
-
-    # Patched QtConnectivity
-    #target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
-
-    # Android background service
-    find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
-    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::CorePrivate)
-endif()
-
 ## macOS
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
@@ -340,6 +322,36 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS             "${CMAKE_SOURCE_DIR}/assets/macos/${CMAKE_PROJECT_NAME}.entitlements"
     )
+endif()
+
+## Windows
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+        WIN32_EXECUTABLE ON
+    )
+endif()
+
+################################################################################
+
+## Android
+if(CMAKE_SYSTEM_NAME STREQUAL "Android")
+    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+        #QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64"
+        #QT_ANDROID_BUILD_ALL_ABIS ON
+        QT_ANDROID_MIN_SDK_VERSION 28
+        QT_ANDROID_TARGET_SDK_VERSION 36
+        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/assets/android/"
+    )
+
+    # Support 16 KB page sizes / pre NDK28
+    target_link_options(${CMAKE_PROJECT_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
+
+    # Patched QtConnectivity
+    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
+
+    # Android background service
+    find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
+    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::CorePrivate)
 endif()
 
 ## iOS
@@ -362,13 +374,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY              "1,2" # iPhone,iPad
         XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME  "AppIcon"
         XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS      "YES"
-    )
-endif()
-
-## Windows
-if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-        WIN32_EXECUTABLE ON
     )
 endif()
 
