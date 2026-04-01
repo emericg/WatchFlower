@@ -103,7 +103,8 @@ Item {
         textStatus.text = UtilsDeviceSensors.getDeviceStatusText(boxDevice.status)
         textStatus.color = UtilsDeviceSensors.getDeviceStatusColor(boxDevice.status)
 
-        if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE) {
+        if (boxDevice.status === DeviceUtils.DEVICE_OFFLINE ||
+            boxDevice.status === DeviceUtils.DEVICE_AVAILABLE) {
             if (boxDevice.isDataFresh_rt()) {
                 textStatus.color = Theme.colorGreen
                 textStatus.text = qsTr("Synced")
@@ -395,10 +396,7 @@ Item {
                             id: opa
                             loops: Animation.Infinite
                             alwaysRunToEnd: true
-                            running: (visible &&
-                                      boxDevice.status !== DeviceUtils.DEVICE_OFFLINE &&
-                                      boxDevice.status !== DeviceUtils.DEVICE_QUEUED &&
-                                      boxDevice.status !== DeviceUtils.DEVICE_CONNECTED)
+                            running: (visible && boxDevice.status >= DeviceUtils.DEVICE_WORKING)
 
                             PropertyAnimation { to: 0.33; duration: 750; }
                             PropertyAnimation { to: 1; duration: 750; }

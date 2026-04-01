@@ -124,14 +124,14 @@ Item {
                 listMode: devicesView.listWidget
             }
 
-            DeviceBrowserWidget {
+            PlantBrowserWidget {
                 width: devicesView.cellWidth
                 height: devicesView.cellWidth * 0.33
                 listMode: devicesView.listWidget
                 visible: isDesktop
             }
 
-            PlantBrowserWidget {
+            DeviceBrowserWidget {
                 width: devicesView.cellWidth
                 height: devicesView.cellWidth * 0.33
                 listMode: devicesView.listWidget

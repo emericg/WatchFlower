@@ -211,13 +211,13 @@ Item {
                     listMode: devicesView.listWidget
                 }
 
-                DeviceBrowserWidget {
+                PlantBrowserWidget {
                     width: devicesView.cellWidth
                     height: devicesView.cellWidth * 0.33
                     listMode: devicesView.listWidget
                 }
 
-                PlantBrowserWidget {
+                DeviceBrowserWidget {
                     width: devicesView.cellWidth
                     height: devicesView.cellWidth * 0.33
                     listMode: devicesView.listWidget
