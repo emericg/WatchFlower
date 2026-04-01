@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 import ComponentLibrary
 import WatchFlower
@@ -17,9 +18,11 @@ Rectangle {
 
     property int headerHeight: 52
 
-    property int headerPosition: 56
+    property int headerPosition: 56 // horizontal
 
-    property string headerTitle: utilsApp.appName()
+    property string headerTitle: "WatchFlower"
+
+    property string headerSubTitle: ""
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -80,8 +83,8 @@ Rectangle {
         ////////////
 
         MouseArea { // left button
-            width: headerHeight
-            height: headerHeight
+            width: appHeader.headerHeight
+            height: appHeader.headerHeight
 
             visible: true
             onClicked: leftMenuClicked()
@@ -97,8 +100,8 @@ Rectangle {
 
             IconSvg {
                 anchors.centerIn: parent
-                width: (headerHeight / 2)
-                height: (headerHeight / 2)
+                width: (appHeader.headerHeight / 2)
+                height: (appHeader.headerHeight / 2)
 
                 source: {
                     if (leftMenuMode === "drawer") return "qrc:/IconLibrary/material-symbols/menu.svg"
@@ -109,19 +112,49 @@ Rectangle {
             }
         }
 
-        Text { // header title
+        RowLayout {
             anchors.left: parent.left
-            anchors.leftMargin: headerPosition
+            anchors.leftMargin: appHeader.headerPosition
             anchors.right: rightArea.left
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
 
-            text: headerTitle
-            textFormat: Text.PlainText
-            font.bold: false
-            font.pixelSize: Theme.fontSizeHeader
-            color: Theme.colorHeaderContent
-            elide: Text.ElideRight
+            Text { // header title
+                Layout.alignment: Qt.AlignVCenter
+
+                text: appHeader.headerTitle
+                textFormat: Text.PlainText
+                font.bold: false
+                font.pixelSize: Theme.fontSizeHeader
+                color: Theme.colorHeaderContent
+                elide: Text.ElideRight
+            }
+
+            Text { // separator
+                Layout.alignment: Qt.AlignVCenter
+
+                visible: appHeader.headerSubTitle
+
+                text: "/"
+                textFormat: Text.PlainText
+                font.pixelSize: Theme.fontSizeHeader - 2
+                color: Theme.colorHeaderContent
+                opacity: 0.66
+            }
+
+            Text { // header subtitle
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignVCenter
+
+                visible: appHeader.headerSubTitle
+
+                text: appHeader.headerSubTitle
+                textFormat: Text.PlainText
+                font.pixelSize: Theme.fontSizeHeader - 2
+                color: Theme.colorHeaderContent
+                opacity: 0.88
+                elide: Text.ElideRight
+            }
         }
 
         ////////////
@@ -135,8 +168,8 @@ Rectangle {
             spacing: 4
 
             Item { // right indicator
-                width: headerHeight
-                height: headerHeight
+                width: appHeader.headerHeight
+                height: appHeader.headerHeight
 
                 visible: (appContent.state !== "ScreenTutorial" &&
                           appContent.state !== "DevicePlantSensor" &&
@@ -184,8 +217,8 @@ Rectangle {
             }
 
             MouseArea { // right button
-                width: headerHeight
-                height: headerHeight
+                width: appHeader.headerHeight
+                height: appHeader.headerHeight
 
                 visible: (deviceManager.bluetooth &&
                           ((appContent.state === "DevicePlantSensor" && selectedDevice.hasBluetoothConnection) ||
@@ -208,8 +241,8 @@ Rectangle {
 
                 IconSvg {
                     anchors.centerIn: parent
-                    width: (headerHeight / 2)
-                    height: (headerHeight / 2)
+                    width: (appHeader.headerHeight / 2)
+                    height: (appHeader.headerHeight / 2)
 
                     source: "qrc:/IconLibrary/material-symbols/more_vert.svg"
                     color: Theme.colorHeaderContent

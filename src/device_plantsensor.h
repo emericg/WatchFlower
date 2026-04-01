@@ -72,12 +72,6 @@ class DevicePlantSensor: public DeviceSensor
     bool loadJournalEntries();
     QVariant getJournalEntries() const { return QVariant::fromValue(m_journal_entries); }
 
-    QString getPlantName() const { return m_plantName; }
-    QString getPlantNameDisplay() const {
-        if (!m_plantName.isEmpty()) return m_plantName;
-        if (!m_associatedName.isEmpty()) return m_associatedName;
-        return QString();
-    }
     QString getPlantCache() const { return m_plantCache; }
     QDateTime getPlantStart() const { return m_plantStart; }
 
@@ -104,6 +98,13 @@ public:
     Q_INVOKABLE void setPlantName(const QString &plant, const bool setLimits = true);
     Q_INVOKABLE void resetPlant();
     Q_INVOKABLE void resetLimits();
+
+    QString getPlantName() const { return m_plantName; }
+    QString getPlantNameDisplay() const {
+        if (!m_plantName.isEmpty()) return m_plantName;
+        if (!m_associatedName.isEmpty()) return m_associatedName;
+        return QString();
+    }
 
     // Journal
     Q_INVOKABLE bool addJournalEntry(const int type, const QDateTime &date, const QString &comment);

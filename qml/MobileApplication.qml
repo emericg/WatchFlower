@@ -485,7 +485,7 @@ Window {
             },
             State {
                 name: "DevicePlantSensor"
-                PropertyChanges { target: appHeader; headerTitle: selectedDevice.deviceName; }
+                PropertyChanges { target: appHeader; headerTitle: selectedDevice.deviceModel; headerSubTitle: selectedDevice.plantNameDisplay; }
                 PropertyChanges { target: screenTutorial; visible: false; enabled: false; }
                 PropertyChanges { target: screenDeviceList; visible: false; enabled: false; }
                 PropertyChanges { target: screenDevicePlantSensor; visible: true; enabled: true; }

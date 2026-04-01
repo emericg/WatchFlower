@@ -102,6 +102,13 @@ class DeviceInfos: public QObject
     QList <QObject *> m_sensors;
     QList <QObject *> m_capabilities;
 
+public:
+    DeviceInfos(QObject *parent);
+    ~DeviceInfos();
+
+    void load(const QJsonObject &device);
+    bool loadSlow(const QString &name, const QString &model, const QString &modelId);
+
     QString getDeviceModel() { return m_model; }
     QString getDeviceManufacturer() { return m_manufacturer; }
     QString getDeviceId() { return m_id; }
@@ -113,13 +120,6 @@ class DeviceInfos: public QObject
 
     QVariant getDeviceSensors() { return QVariant::fromValue(m_sensors); }
     QVariant getDeviceCapabilities() { return QVariant::fromValue(m_capabilities); }
-
-public:
-    DeviceInfos(QObject *parent);
-    ~DeviceInfos();
-
-    void load(const QJsonObject &device);
-    bool loadSlow(const QString &name, const QString &model, const QString &modelId);
 };
 
 class DeviceInfosLoader: public QObject

@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 import ComponentLibrary
 import WatchFlower
@@ -16,9 +17,11 @@ Rectangle {
 
     property int headerHeight: isHdpi ? 58 : 64
 
-    property int headerPosition: 64
+    property int headerPosition: 64 // horizontal
 
     property string headerTitle: "WatchFlower"
+
+    property string headerSubTitle: (selectedDevice && selectedDevice.deviceModel)
 
     property bool headerCompact: singleColumn
 
@@ -141,7 +144,7 @@ Rectangle {
         }
     }
 
-    Text { // header title
+    RowLayout {
         anchors.left: parent.left
         anchors.leftMargin: headerPosition
         anchors.right: menus.left
@@ -150,11 +153,46 @@ Rectangle {
 
         visible: wideMode
 
-        text: headerTitle
-        font.bold: true
-        font.pixelSize: Theme.fontSizeHeader
-        color: Theme.colorHeaderContent
-        elide: Text.ElideRight
+        Text { // header title
+            Layout.alignment: Qt.AlignVCenter
+
+            text: headerTitle
+            font.bold: true
+            font.pixelSize: Theme.fontSizeHeader
+            color: Theme.colorHeaderContent
+            elide: Text.ElideRight
+        }
+        Text { // separator
+            Layout.alignment: Qt.AlignVCenter
+
+            visible: headerSubTitle.length &&
+                     (appContent.state === "DevicePlantSensor" ||
+                      appContent.state === "DeviceThermometer" ||
+                      appContent.state === "DeviceEnvironmental")
+
+            text: "/"
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeHeader
+            color: Theme.colorHeaderContent
+            opacity: 0.66
+        }
+
+        Text { // header subtitle
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignVCenter
+
+            visible: headerSubTitle.length &&
+                     (appContent.state === "DevicePlantSensor" ||
+                      appContent.state === "DeviceThermometer" ||
+                      appContent.state === "DeviceEnvironmental")
+
+            text: headerSubTitle
+            textFormat: Text.PlainText
+            font.pixelSize: Theme.fontSizeHeader
+            color: Theme.colorHeaderContent
+            opacity: 0.8
+            elide: Text.ElideRight
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////

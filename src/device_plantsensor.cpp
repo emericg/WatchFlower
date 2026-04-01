@@ -60,6 +60,14 @@ DevicePlantSensor::DevicePlantSensor(const QString &deviceAddr, const QString &d
     // Device infos
     DeviceInfosLoader *devloader = DeviceInfosLoader::getInstance();
     m_deviceInfos = devloader->getDeviceInfos(m_deviceName, m_deviceModel, m_deviceModelID);
+
+    if (m_deviceInfos)
+    {
+        if (!m_deviceInfos->getDeviceModel().isEmpty())
+        {
+            setModel(m_deviceInfos->getDeviceModel());
+        }
+    }
 }
 
 DevicePlantSensor::DevicePlantSensor(const QBluetoothDeviceInfo &d, QObject *parent):
