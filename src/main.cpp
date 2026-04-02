@@ -156,8 +156,7 @@ int main(int argc, char *argv[])
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     ShareUtils *utilsShare = new ShareUtils();
 #else
-    QIcon appIcon(":/assets/gfx/logos/watchflower.svg");
-    app.setWindowIcon(appIcon);
+    app.setWindowIcon(QIcon(":/assets/gfx/logos/watchflower.svg"));
 
     SystrayManager *st = SystrayManager::getInstance();
     MenubarManager *mb = MenubarManager::getInstance();

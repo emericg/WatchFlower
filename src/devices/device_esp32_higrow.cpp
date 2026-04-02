@@ -22,7 +22,6 @@
 #include "device_esp32_higrow.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
