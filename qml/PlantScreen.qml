@@ -118,12 +118,12 @@ Grid {
             sunlight3.color = colorDisabled
             sunlight4.color = colorDisabled
 
-            var parts = currentPlant.sunlight.split('-')
-            for (var i = parts[0]; i <= (parts[1] || parts[0]); i++) {
-                if (i == 1 || currentPlant.sunlight === "4") sunlight1.color = Theme.colorYellow
-                if (i == 2 || currentPlant.sunlight === "4") sunlight2.color = Theme.colorYellow
-                if (i == 3 || currentPlant.sunlight === "4") sunlight3.color = Theme.colorYellow
-                if (i == 4 || currentPlant.sunlight === "4") sunlight4.color = Theme.colorYellow
+            var partsSun = currentPlant.sunlight.split('-')
+            for (var is = partsSun[0]; is <= (partsSun[1] || partsSun[0]); is++) {
+                if (is === 1 || currentPlant.sunlight === "4") sunlight1.color = Theme.colorYellow
+                if (is === 2 || currentPlant.sunlight === "4") sunlight2.color = Theme.colorYellow
+                if (is === 3 || currentPlant.sunlight === "4") sunlight3.color = Theme.colorYellow
+                if (is === 4 || currentPlant.sunlight === "4") sunlight4.color = Theme.colorYellow
             }
         }
 
@@ -137,17 +137,17 @@ Grid {
             water4.color = colorDisabled
 
             var total = currentPlant.watering.split(',')
-            var parts = total[0].split('-')
-            if (parts.length > 1) {
-                for (var i = parts[0]; i <= (parts[1] || parts[0]); i++) {
-                    if (i == 2) water2.color = Theme.colorBlue
-                    if (i == 3) water3.color = Theme.colorBlue
-                    if (i == 4) water4.color = Theme.colorBlue
+            var partsWater = total[0].split('-')
+            if (partsWater.length > 1) {
+                for (var iw = partsWater[0]; iw <= (partsWater[1] || partsWater[0]); iw++) {
+                    if (iw === 2) water2.color = Theme.colorBlue
+                    if (iw === 3) water3.color = Theme.colorBlue
+                    if (iw === 4) water4.color = Theme.colorBlue
                 }
             } else {
-                water2.color = (parts[0] >= 2) ? Theme.colorBlue : colorDisabled
-                water3.color = (parts[0] >= 3) ? Theme.colorBlue : colorDisabled
-                water4.color = (parts[0] >= 4) ? Theme.colorBlue : colorDisabled
+                water2.color = (partsWater[0] >= 2) ? Theme.colorBlue : colorDisabled
+                water3.color = (partsWater[0] >= 3) ? Theme.colorBlue : colorDisabled
+                water4.color = (partsWater[0] >= 4) ? Theme.colorBlue : colorDisabled
             }
         }
 

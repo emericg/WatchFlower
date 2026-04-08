@@ -22,6 +22,8 @@
 
 #include "SunAndMoon.h"
 
+#include <QTimeZone>
+
 /* ************************************************************************** */
 
 SunAndMoon::SunAndMoon(QObject *parent) : QObject(parent)
@@ -122,10 +124,10 @@ void SunAndMoon::print()
 {
     qDebug() << "SunAndMoon::print()";
     qDebug() << "- latitude: " << m_latitude_saved << " / longitude: " << m_longitude_saved;
-    qDebug() << "- SunRise: " << QDateTime::fromSecsSinceEpoch(m_sr.riseTime, Qt::UTC, 0);
-    qDebug() << "- SunSet: " << QDateTime::fromSecsSinceEpoch(m_sr.setTime, Qt::UTC, 0);
-    qDebug() << "- MoonRise: " << QDateTime::fromSecsSinceEpoch(m_mr.riseTime, Qt::UTC, 0);
-    qDebug() << "- MoonSet: " << QDateTime::fromSecsSinceEpoch(m_mr.setTime, Qt::UTC, 0);
+    qDebug() << "- SunRise: " << QDateTime::fromSecsSinceEpoch(m_sr.riseTime, QTimeZone::UTC);
+    qDebug() << "- SunSet: " << QDateTime::fromSecsSinceEpoch(m_sr.setTime, QTimeZone::UTC);
+    qDebug() << "- MoonRise: " << QDateTime::fromSecsSinceEpoch(m_mr.riseTime, QTimeZone::UTC);
+    qDebug() << "- MoonSet: " << QDateTime::fromSecsSinceEpoch(m_mr.setTime, QTimeZone::UTC);
 }
 
 /* ************************************************************************** */
