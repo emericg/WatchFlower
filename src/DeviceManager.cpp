@@ -193,8 +193,8 @@ DeviceManager::DeviceManager(bool daemon)
 
             if (d)
             {
-                connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-                connect(d, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
+                connect(d, &Device::deviceIsUpdated, this, &DeviceManager::refreshDevices_finished);
+                connect(d, &Device::deviceIsSynced, this, &DeviceManager::syncDevices_finished);
 
                 m_devices_model->addDevice(d);
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
@@ -1226,7 +1226,7 @@ void DeviceManager::listenDevices_start()
             {
                 m_listening = true;
                 Q_EMIT listeningChanged();
-                //qDebug() << "Listening for BLE advertisement packets...";
+                //qDebug() << ">> Listening for BLE advertisement packets...";
 
                 // Update lastRun
                 setLastRun();
@@ -1911,8 +1911,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             SettingsManager *sm = SettingsManager::getInstance();
 
             // Connect and handle update
-            connect(d, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-            connect(d, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
+            connect(d, &Device::deviceIsUpdated, this, &DeviceManager::refreshDevices_finished);
+            connect(d, &Device::deviceIsSynced, this, &DeviceManager::syncDevices_finished);
 
             // old or no data: go for refresh
             if (d->getLastUpdateInt() < 0 ||
@@ -1955,8 +1955,8 @@ void DeviceManager::removeDevice(const QString &address)
             qDebug() << "- Removing device: " << dd->getName() << "/" << dd->getAddress() << "from local database";
 
             // Make sure its not being used
-            disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::refreshDevices_finished);
-            disconnect(dd, &Device::deviceSynced, this, &DeviceManager::syncDevices_finished);
+            disconnect(dd, &Device::deviceIsUpdated, this, &DeviceManager::refreshDevices_finished);
+            disconnect(dd, &Device::deviceIsSynced, this, &DeviceManager::syncDevices_finished);
             dd->refreshStop();
             refreshDevices_finished(dd);
 

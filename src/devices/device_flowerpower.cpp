@@ -237,7 +237,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
                 if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
                 {
                     m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
+                    Q_EMIT firmwareUpdated();
                 }
             }
         }
@@ -487,7 +487,7 @@ void DeviceFlowerPower::bleReadDone(const QLowEnergyCharacteristic &c, const QBy
             if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT sensorUpdated();
+                Q_EMIT firmwareUpdated();
             }
         }
     }

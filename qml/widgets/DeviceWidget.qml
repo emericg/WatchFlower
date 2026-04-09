@@ -28,7 +28,7 @@ Item {
 
     Connections {
         target: boxDevice
-        function onSensorUpdated() { initBoxData() }
+        function onDeviceUpdated() { initBoxData() }
         function onSensorsUpdated() { initBoxData() }
         function onCapabilitiesUpdated() { initBoxData() }
         function onStatusUpdated() { updateSensorStatus() }

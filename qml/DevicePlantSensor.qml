@@ -58,7 +58,7 @@ Loader {
             function onStatusUpdated() {
                 plantSensorData.updateHeader()
             }
-            function onSensorUpdated() {
+            function onDeviceUpdated() {
                 plantSensorData.updateHeader()
                 plantSensorCare.updateHeader()
             }

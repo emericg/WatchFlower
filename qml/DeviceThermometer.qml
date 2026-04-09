@@ -63,7 +63,7 @@ Loader {
 
         Connections {
             target: currentDevice
-            function onSensorUpdated() { updateHeader() }
+            function onDeviceUpdated() { updateHeader() }
             function onSensorsUpdated() { updateHeader() }
             function onCapabilitiesUpdated() { updateHeader() }
             function onStatusUpdated() { updateHeader() }

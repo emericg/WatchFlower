@@ -221,13 +221,13 @@ void DeviceFlowerCare::serviceDetailsDiscovered_data(QLowEnergyService::ServiceS
                     VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
                 {
                     m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
+                    Q_EMIT firmwareUpdated();
                 }
                 if (m_deviceName == "Grow care garden" &&
                     VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE_MAX))
                 {
                     m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
+                    Q_EMIT firmwareUpdated();
                 }
                 if (VersionChecker(m_deviceFirmware) <= VersionChecker("2.6.6"))
                 {

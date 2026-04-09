@@ -50,27 +50,27 @@ class Device: public QObject
     Q_PROPERTY(int deviceCapabilities READ getDeviceCapabilities NOTIFY capabilitiesUpdated)
     Q_PROPERTY(int deviceSensors READ getDeviceSensors NOTIFY sensorsUpdated)
 
-    Q_PROPERTY(QString deviceName READ getName NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceModel READ getModel NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceModelID READ getModelID NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceManufacturer READ getManufacturer NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceAddressMAC READ getAddressMAC WRITE setAddressMAC NOTIFY sensorUpdated)
-    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY sensorUpdated)
-    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY sensorUpdated)
+    Q_PROPERTY(QString deviceName READ getName NOTIFY deviceUpdated)
+    Q_PROPERTY(QString deviceModel READ getModel NOTIFY deviceUpdated)
+    Q_PROPERTY(QString deviceModelID READ getModelID NOTIFY deviceUpdated)
+    Q_PROPERTY(QString deviceManufacturer READ getManufacturer NOTIFY deviceUpdated)
+    Q_PROPERTY(QString deviceAddress READ getAddress NOTIFY deviceUpdated)
+    Q_PROPERTY(QString deviceAddressMAC READ getAddressMAC WRITE setAddressMAC NOTIFY deviceUpdated)
+    Q_PROPERTY(QString deviceFirmware READ getFirmware NOTIFY firmwareUpdated)
+    Q_PROPERTY(bool deviceFirmwareUpToDate READ isFirmwareUpToDate NOTIFY firmwareUpdated)
     Q_PROPERTY(int deviceBattery READ getBatteryLevel NOTIFY batteryUpdated)
 
     // Sensor
 
-    Q_PROPERTY(bool isPlantSensor READ isPlantSensor NOTIFY sensorUpdated)
-    Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY sensorUpdated)
-    Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isPlantSensor READ isPlantSensor NOTIFY deviceUpdated)
+    Q_PROPERTY(bool isThermometer READ isThermometer NOTIFY deviceUpdated)
+    Q_PROPERTY(bool isEnvironmentalSensor READ isEnvironmentalSensor NOTIFY deviceUpdated)
 
-    Q_PROPERTY(bool isLight READ isLight NOTIFY sensorUpdated)
-    Q_PROPERTY(bool isBeacon READ isBeacon NOTIFY sensorUpdated)
-    Q_PROPERTY(bool isRemote READ isRemote NOTIFY sensorUpdated)
-    Q_PROPERTY(bool isPBP READ isPBP NOTIFY sensorUpdated)
-    Q_PROPERTY(bool isPGP READ isPGP NOTIFY sensorUpdated)
+    Q_PROPERTY(bool isLight READ isLight NOTIFY deviceUpdated)
+    Q_PROPERTY(bool isBeacon READ isBeacon NOTIFY deviceUpdated)
+    Q_PROPERTY(bool isRemote READ isRemote NOTIFY deviceUpdated)
+    Q_PROPERTY(bool isPBP READ isPBP NOTIFY deviceUpdated)
+    Q_PROPERTY(bool isPGP READ isPGP NOTIFY deviceUpdated)
 
     Q_PROPERTY(bool hasBluetoothConnection READ hasBluetoothConnection CONSTANT)
     Q_PROPERTY(bool hasBluetoothAdvertisement READ hasBluetoothAdvertisement CONSTANT)
@@ -133,13 +133,16 @@ Q_SIGNALS:
     void connected();
     void disconnected();
 
-    void deviceUpdated(Device *d);
-    void deviceSynced(Device *d);
+    void deviceIsUpdated(Device *d);
+    void deviceIsSynced(Device *d);
 
-    void sensorUpdated();
+    void deviceUpdated();
     void sensorsUpdated();
     void capabilitiesUpdated();
     void connectivityUpdated();
+    void firmwareUpdated();
+    void batteryUpdated();
+
     void settingsUpdated();
     void selectionUpdated();
 
@@ -147,7 +150,6 @@ Q_SIGNALS:
     void rssiUpdated();
     void rssiMeanUpdated();
 
-    void batteryUpdated();
     void statusUpdated();
     void actionUpdated();
     void uptimeUpdated();
@@ -173,8 +175,9 @@ protected:
     QString m_deviceModel;
     QString m_deviceName;
 
-    QString m_deviceFirmware = "UNKN";
     int m_deviceBattery = -1;
+    QString m_deviceFirmware = "UNKN";
+    bool m_firmware_uptodate = false;
 
     // Db availability shortcuts
     bool m_dbInternal = false;
@@ -192,15 +195,17 @@ protected:
     int m_ble_status = 0;           //!< See DeviceStatus enum
     int m_ble_action = 0;           //!< See DeviceActions enum
 
+    QDateTime m_lastSeen;
+    QDateTime m_lastConnection;
     QDateTime m_lastUpdate;
     QDateTime m_lastUpdateDatabase;
     QDateTime m_lastHistorySeen;
     QDateTime m_lastHistorySync;
     QDateTime m_lastError;
-    bool m_firmware_uptodate = false;
 
     QTimer m_updateTimer;
-    void setUpdateTimer(int updateInterval_m = 0);
+    const static int s_updateInterval = 0;
+    void setUpdateTimer(int updateInterval_m = s_updateInterval);
 
     QTimer m_timeoutTimer;
     const static int s_timeoutInterval = 12;
@@ -254,8 +259,8 @@ protected:
     virtual void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     virtual void bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
-    virtual void actionStarted(int action = 0);
-    virtual void actionFinished();
+    virtual void actionStarted(int action);
+    virtual void actionFinished(int action = 0);
     virtual void actionErrored();
     virtual void actionCanceled();
     virtual void actionTimedOut();
@@ -395,9 +400,9 @@ public:
 
     // BLE lifecycle
     virtual void deviceConnect(const bool stayConnected = false); //!< Initiate a BLE connection with a device
-    virtual void deviceReconnect();
     virtual void deviceDisconnect(const bool stayConnected = false);
     virtual void deviceDisconnect_temporary();
+    virtual void deviceReconnect();
 
     // BLE advertisement
     virtual void parseAdvertisementData(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &data);

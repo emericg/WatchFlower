@@ -97,7 +97,7 @@ class DeviceManager: public QObject
 
     bool m_bleAdapter = false;      //!< do we have a BLE adapter?
     bool m_bleEnabled = false;      //!< is the BLE adapter enabled?
-    bool m_blePermission = false;   //!< do we have necessary BLE permissions?
+    bool m_blePermission = false;   //!< do we have necessary BLE permission(s)?
 
     bool m_locPermission_foreground = false;    //!< do we have location permission? (Android)
     bool m_locPermission_background = false;    //!< do we have background location permission? (Android)
@@ -214,6 +214,7 @@ private slots:
     void bleDeviceNearby_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
     void bleDeviceNearby_discovered(const QBluetoothDeviceInfo &info);
 
+    //
     void addBleDevice(const QBluetoothDeviceInfo &info);
     void bleDevice_discovered(const QBluetoothDeviceInfo &info);
     void bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);

@@ -272,7 +272,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
                 if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
                 {
                     m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
+                    Q_EMIT firmwareUpdated();
                 }
             }
         }
@@ -524,7 +524,7 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
             if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT sensorUpdated();
+                Q_EMIT firmwareUpdated();
             }
         }
     }

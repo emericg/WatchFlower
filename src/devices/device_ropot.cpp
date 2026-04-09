@@ -216,7 +216,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
                 if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_ROPOT))
                 {
                     m_firmware_uptodate = true;
-                    Q_EMIT sensorUpdated();
+                    Q_EMIT firmwareUpdated();
                 }
             }
 

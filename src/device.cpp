@@ -232,6 +232,7 @@ void Device::deviceConnect(const bool stayConnected)
 
 void Device::deviceReconnect()
 {
+    if (m_stayConnected == false) return; // then we don't need to reconnect
     if (m_ble_status != DeviceUtils::DEVICE_AVAILABLE) return; // then we can't reconnect
 
     //qDebug() << "Device::deviceReconnect(retry" << m_retry << "/" << s_retryCount << ")"
@@ -490,7 +491,7 @@ void Device::actionStarted(int action)
     }
 }
 
-void Device::actionFinished()
+void Device::actionFinished(int action)
 {
     qDebug() << "Device::actionFinished()" << getAddress() << getName() << "> action:" << m_ble_action;
 
@@ -690,13 +691,15 @@ void Device::refreshDataFinished(bool status, bool cached)
     {
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
-            Q_EMIT deviceUpdated(this);
+            Q_EMIT deviceIsUpdated(this);
         }
         else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
         {
-            Q_EMIT deviceSynced(this);
+            Q_EMIT deviceIsSynced(this);
         }
     }
+
+    actionFinished(m_ble_action);
 }
 
 void Device::refreshHistoryFinished(bool status)
@@ -717,7 +720,9 @@ void Device::refreshHistoryFinished(bool status)
     checkDataAvailability(); // TODO // probably need more than that
 
     // Inform device manager
-    Q_EMIT deviceSynced(this);
+    Q_EMIT deviceIsSynced(this);
+
+    actionFinished(m_ble_action);
 }
 
 void Device::refreshRealtime()
@@ -733,6 +738,8 @@ void Device::refreshRealtimeFinished()
     //qDebug() << "Device::refreshRealtimeFinished()" << getAddress() << getName();
 
     m_timeoutTimer.stop();
+
+    actionFinished(m_ble_action);
 }
 
 void Device::refreshAdvertisement()
@@ -810,8 +817,9 @@ bool Device::getSqlDeviceInfos()
                 }
 
                 status = true;
+                Q_EMIT firmwareUpdated();
                 Q_EMIT batteryUpdated();
-                Q_EMIT sensorUpdated();
+                Q_EMIT deviceUpdated();
                 Q_EMIT settingsUpdated();
             }
         }
@@ -1156,7 +1164,7 @@ void Device::setAddressMAC(const QString &mac)
         if (m_deviceAddressMAC != mac)
         {
             m_deviceAddressMAC = mac;
-            Q_EMIT sensorUpdated();
+            Q_EMIT deviceUpdated();
 
             if (m_dbInternal || m_dbExternal)
             {
@@ -1193,7 +1201,7 @@ void Device::setAddressUUID(const QString &uuid)
             if (m_deviceAddress != uuid)
             {
                 m_deviceAddress = uuid;
-                Q_EMIT sensorUpdated();
+                Q_EMIT deviceUpdated();
 
                 if (m_dbInternal || m_dbExternal)
                 {
@@ -1265,7 +1273,7 @@ void Device::setName(const QString &name)
         if (m_deviceName != name)
         {
             m_deviceName = name;
-            Q_EMIT sensorUpdated();
+            Q_EMIT deviceUpdated();
         }
     }
 }
@@ -1275,7 +1283,7 @@ void Device::setModel(const QString &model)
     if (!model.isEmpty() && m_deviceModel != model)
     {
         m_deviceModel = model;
-        Q_EMIT sensorUpdated();
+        Q_EMIT deviceUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
@@ -1298,7 +1306,7 @@ void Device::setModelID(const QString &modelID)
     if (!modelID.isEmpty() && m_deviceModel != modelID)
     {
         m_deviceModelID = modelID;
-        Q_EMIT sensorUpdated();
+        Q_EMIT deviceUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
@@ -1323,7 +1331,7 @@ void Device::setFirmware(const QString &firmware)
     if (!firmware.isEmpty() && m_deviceFirmware != firmware)
     {
         m_deviceFirmware = firmware;
-        Q_EMIT sensorUpdated();
+        Q_EMIT deviceUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {
@@ -1388,7 +1396,7 @@ void Device::setBatteryFirmware(const int battery, const QString &firmware)
     if (!firmware.isEmpty() && m_deviceFirmware != firmware)
     {
         m_deviceFirmware = firmware;
-        Q_EMIT sensorUpdated();
+        Q_EMIT firmwareUpdated();
         changes = true;
     }
 
@@ -1445,6 +1453,8 @@ void Device::setDeviceClass(const int major, const int minor, const int service)
 
 void Device::setRssi(const int rssi)
 {
+    if (rssi == 0) return;
+
     if (m_rssiMin > rssi)
     {
         m_rssiMin = rssi;
@@ -1607,6 +1617,10 @@ void Device::deviceDisconnected()
     else if (m_ble_status == DeviceUtils::DEVICE_UPDATING_REALTIME)
     {
         refreshRealtimeFinished();
+    }
+    else
+    {
+        actionFinished();
     }
 }
 

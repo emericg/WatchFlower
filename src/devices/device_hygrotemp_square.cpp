@@ -204,7 +204,7 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_infos(QLowEnergyService::Se
             if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
             {
                 m_firmware_uptodate = true;
-                Q_EMIT sensorUpdated();
+                Q_EMIT firmwareUpdated();
             }
         }
     }
