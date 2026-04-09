@@ -72,11 +72,9 @@ void SunAndMoon::update()
 
 void SunAndMoon::set(const double latitude, const double longitude, const QDateTime datetime)
 {
-    //qDebug() << "SunAndMoon::set(" << latitude << "," << longitude << "/" << datetime << ")";
-
     //QDateTime t1 = QDateTime::currentDateTime(); // benchmark
 
-    // Latitude and longitude must be valid
+    // Latitude and longitude checks
     if (latitude < -90.0 || latitude > 90.0 || longitude < -180.0  || longitude > 180.0)
     {
         qWarning() << "SunAndMoon::set() ERROR invalid latitude or longitude"
@@ -84,9 +82,17 @@ void SunAndMoon::set(const double latitude, const double longitude, const QDateT
         return;
     }
 
-    // Results are cached for 10 minutes
-    if (m_latitude_saved == latitude && m_longitude_saved == longitude &&
-        m_lastupdate.isValid() && m_lastupdate.secsTo(datetime) < 600) return;
+    // Results caching
+    if (m_latitude_saved == latitude && m_longitude_saved == longitude && m_lastupdate.isValid())
+    {
+        // Results are cached for 30 minutes
+        //if (m_lastupdate.secsTo(datetime) < (30*60)) return;
+
+        // Results are cached for the day
+        if (m_lastupdate.date() == QDate::currentDate()) return;
+    }
+
+    //qDebug() << "SunAndMoon::set(" << latitude << "," << longitude << "/" << datetime << ")";
 
     m_latitude_saved = latitude;
     m_longitude_saved = longitude;
@@ -115,9 +121,13 @@ void SunAndMoon::set(const double latitude, const double longitude, const QDateT
 
     Q_EMIT updated();
 
-    //QDateTime t2 = QDateTime::currentDateTime(); // benchmark
+    // Benchmark results
+    //QDateTime t2 = QDateTime::currentDateTime();
     //int64_t load_ms = t2.toMSecsSinceEpoch() - t1.toMSecsSinceEpoch();
     //qDebug() << "SunAndMoon::update()" << load_ms << "ms";
+
+    // Print results
+    //print();
 }
 
 void SunAndMoon::print()

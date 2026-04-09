@@ -73,7 +73,6 @@ class SettingsManager: public QObject
     Q_PROPERTY(bool bigIndicator READ getBigIndicator WRITE setBigIndicator NOTIFY bigIndicatorChanged)
     Q_PROPERTY(bool dynaScale READ getDynaScale WRITE setDynaScale NOTIFY dynaScaleChanged)
 
-    Q_PROPERTY(bool location READ getLocation WRITE setLocation NOTIFY locationChanged)
     Q_PROPERTY(bool locationSet READ getLocationSet NOTIFY positionChanged)
     Q_PROPERTY(float latitude READ getLatitude WRITE setLatitude NOTIFY positionChanged)
     Q_PROPERTY(float longitude READ getLongitude WRITE setLongitude NOTIFY positionChanged)
@@ -137,7 +136,6 @@ class SettingsManager: public QObject
     bool m_splitView = false;
     QString m_orderBy = "model";
 
-    bool m_location = false;
     float m_location_latitude = 0.f;
     float m_location_longitude = 0.f;
     bool m_sunandmoon = false;
@@ -297,18 +295,15 @@ public:
 
     unsigned getDataRetentionDays() const { return m_dataRetentionDays; }
 
-    bool getLocation() const { return m_location; }
-    void setLocation(const bool value);
+    float getLatitude() const { return m_location_latitude; }
+    void setLatitude(const float value);
+    float getLongitude() const { return m_location_longitude; }
+    void setLongitude(const float value);
 
     bool getLocationSet() const { return m_location_latitude != 0.f &&m_location_longitude != 0.f ; }
 
     bool getSunAndMoon() const { return m_sunandmoon; }
     void setSunAndMoon(const bool value);
-
-    float getLatitude() const { return m_location_latitude; }
-    void setLatitude(const float value);
-    float getLongitude() const { return m_location_longitude; }
-    void setLongitude(const float value);
 
     bool getMySQL() const { return m_mysql; }
     void setMySQL(const bool value);

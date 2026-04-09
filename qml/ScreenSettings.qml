@@ -1470,10 +1470,14 @@ Loader {
 
                         checked: settingsManager.sunandmoon
                         onClicked: {
-                            var currentDate = new Date()
-                            sunAndMoon.set(settingsManager.latitude, settingsManager.longitude, currentDate)
                             settingsManager.sunandmoon = checked
+                            element_sunandmoon.updateSunAndMoon()
                         }
+                    }
+
+                    function updateSunAndMoon() {
+                        var currentDate = new Date()
+                        sunAndMoon.set(settingsManager.latitude, settingsManager.longitude, currentDate)
                     }
                 }
 
@@ -1538,15 +1542,78 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 12
 
-                        TextFieldThemed {
+                        property bool manualEdit: false
+
+                        TextFieldThemed { // display position
                             width: contentWidth + leftPadding*2
                             readOnly: true
-                            visible: settingsManager.locationSet
+                            visible: settingsManager.locationSet && !rowPosition.manualEdit
                             text: {
-                                settingsManager.latitude.toFixed(5) + ", " + settingsManager.longitude.toFixed(5)
+                                settingsManager.latitude.toFixed(3) + ", " + settingsManager.longitude.toFixed(3)
                             }
                         }
 
+                        TextFieldThemed { // edit latitude
+                            id: latitudeEdit
+                            width: contentWidth + leftPadding*2
+                            visible: rowPosition.manualEdit
+
+                            validator: DoubleValidator {
+                                bottom: -90
+                                top: 90
+                                decimals: 6
+                                locale: "en_US"
+                                notation: DoubleValidator.StandardNotation
+                            }
+                            colorBorder: latitudeEdit.acceptableInput ? Theme.colorComponentBorder : Theme.colorWarning
+
+                            text: {
+                                settingsManager.latitude.toFixed(3)
+                            }
+                            onEditingFinished: {
+                                //console.log("latitudeEdit.onEditingFinished: " + text + " - " + displayText)
+                                settingsManager.latitude = latitudeEdit.displayText
+                                element_sunandmoon.updateSunAndMoon()
+                                latitudeEdit.text = settingsManager.latitude.toFixed(3)
+                            }
+                        }
+                        TextFieldThemed { // edit longitude
+                            id: longitudeEdit
+                            width: contentWidth + leftPadding*2
+                            visible: rowPosition.manualEdit
+
+                            validator: DoubleValidator {
+                                bottom: -180
+                                top: 180
+                                decimals: 6
+                                locale: "en_US"
+                                notation: DoubleValidator.StandardNotation
+                            }
+                            colorBorder: longitudeEdit.acceptableInput ? Theme.colorComponentBorder : Theme.colorWarning
+
+                            text: {
+                                settingsManager.longitude.toFixed(3)
+                            }
+                            onEditingFinished: {
+                                //console.log("longitudeEdit.onEditingFinished: " + text + " - " + displayText)
+                                settingsManager.longitude = longitudeEdit.displayText
+                                longitudeEdit.text = settingsManager.longitude.toFixed(3)
+                                element_sunandmoon.updateSunAndMoon()
+                            }
+                        }
+
+                        SquareButtonOutline {
+                            source: "qrc:/IconLibrary/material-symbols/edit.svg"
+                            color: rowPosition.manualEdit ? "white" : Theme.colorPrimary
+                            colorBackground: rowPosition.manualEdit ? Theme.colorPrimary : "transparent"
+                            onClicked: {
+                                if (rowPosition.manualEdit) {
+                                    latitudeEdit.focus = false
+                                    longitudeEdit.focus = false
+                                }
+                                rowPosition.manualEdit = !rowPosition.manualEdit
+                            }
+                        }
                         SquareButtonOutline {
                             source: "qrc:/IconLibrary/material-symbols/location/my_location-fill.svg"
                             onClicked: gpsLoader.start()
@@ -1591,6 +1658,7 @@ Loader {
                                 if (position.horizontalAccuracy < 3333) {
                                     settingsManager.latitude = position.coordinate.latitude
                                     settingsManager.longitude = position.coordinate.longitude
+                                    element_sunandmoon.updateSunAndMoon()
                                 }
                                 if (position.horizontalAccuracy < 100) {
                                     gpsLoader.stop()
@@ -1604,6 +1672,7 @@ Loader {
                                     if (position.horizontalAccuracy < 3333) {
                                         settingsManager.latitude = position.coordinate.latitude
                                         settingsManager.longitude = position.coordinate.longitude
+                                        element_sunandmoon.updateSunAndMoon()
                                     }
                                 }
                             }
@@ -1659,6 +1728,22 @@ Loader {
                     //    autoUpdate: false
                     //}
 */
+                }
+
+                Text { // legend_location
+                    anchors.left: parent.left
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
+                    anchors.right: parent.right
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
+
+                    topPadding: -12
+                    bottomPadding: 12
+
+                    text: qsTr("Coarse location is required to give you sunset and sunrise times.")
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: Theme.colorSubText
+                    font.pixelSize: Theme.fontSizeContentSmall
                 }
 
                 ////////////////

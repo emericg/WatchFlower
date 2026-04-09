@@ -63,6 +63,33 @@ Item {
                 anchors.verticalCenter: title.verticalCenter
                 spacing: 4
 
+                visible: !sunAndMoon.valid
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr("Location is not set")
+                    textFormat: Text.PlainText
+                    font.pixelSize: Theme.fontSizeContent
+                    color: Theme.colorSubText
+                }
+
+                IconSvg {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 24
+                    height: 24
+
+                    source: "qrc:/IconLibrary/material-symbols/location/location_disabled.svg"
+                    color: Theme.colorIcon
+                }
+            }
+
+            Row {
+                anchors.right: parent.right
+                anchors.verticalCenter: title.verticalCenter
+                spacing: 4
+
+                visible: sunAndMoon.valid
+
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
                     text: sunAndMoon.moonphaseName
@@ -131,8 +158,15 @@ Item {
                 property real centerY: (widgetInterior.height - 28)
                 property real radiusX: (widgetInterior.width / 2)
                 property real radiusY: (widgetInterior.height * (listMode ? 0.6 : 0.66))
-                property real sunsunsun: UtilsNumber.mapNumber(sunAndMoon.sunpath, 0, 100, 0, 160)
-                property real moonmoonmoon: UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 0, 160)
+
+                property real sunpath: sunAndMoon.valid ? sunAndMoon.sunpath : 33
+                property real moonpath: sunAndMoon.valid ? sunAndMoon.moonpath : 66
+
+                property real sunarc: UtilsNumber.mapNumber(shapes.sunpath, 0, 100, 0, 160)
+                property real moonarc: UtilsNumber.mapNumber(shapes.moonpath, 0, 100, 0, 160)
+
+                property bool sunvisible: sunAndMoon.valid ? sunAndMoon.sunIsVisible : true
+                property bool moonvisible: sunAndMoon.valid ? sunAndMoon.moonIsVisible : true
 /*
                 Rectangle { // shapes area
                     anchors.fill: parent
@@ -175,14 +209,14 @@ Item {
                         x1: 0; y1: 0;
                         x2: 0; y2: widgetInterior.height;
 
-                        GradientStop { position: 0.0; color: (sunAndMoon.sunpath >= 0 && sunAndMoon.sunpath <= 100)
+                        GradientStop { position: 0.0; color: (shapes.sunpath >= 0 && shapes.sunpath <= 100)
                                                               ? shape_bg.colorDay : shape_bg.colorNight }
                         GradientStop { position: 1.0; color: Theme.colorDeviceWidget }
                     }
                 }
-                ShapePath { // moon path
+                ShapePath { // Moon path
                     fillColor: "transparent" // Theme.colorDeviceWidget
-                    strokeColor: sunAndMoon.moonIsVisible ? Theme.colorBlue : Theme.colorSeparator
+                    strokeColor: shapes.moonvisible ? Theme.colorBlue : Theme.colorSeparator
                     strokeWidth: 4
                     capStyle: ShapePath.RoundCap
 
@@ -192,12 +226,12 @@ Item {
                         radiusX: shapes.radiusX
                         radiusY: shapes.radiusY
                         startAngle: -170
-                        sweepAngle: shapes.moonmoonmoon
+                        sweepAngle: shapes.moonarc
                     }
                 }
-                ShapePath { // sun path
+                ShapePath { // Sun path
                     fillColor: "transparent" // Theme.colorDeviceWidget
-                    strokeColor: sunAndMoon.sunIsVisible ? Theme.colorYellow : Theme.colorSeparator
+                    strokeColor: shapes.sunvisible ? Theme.colorYellow : Theme.colorSeparator
                     strokeWidth: 4
                     capStyle: ShapePath.RoundCap
 
@@ -207,14 +241,14 @@ Item {
                         radiusX: shapes.radiusX
                         radiusY: shapes.radiusY
                         startAngle: -170
-                        sweepAngle: shapes.sunsunsun
+                        sweepAngle: shapes.sunarc
                     }
                 }
             }
 
             ////
 
-            Rectangle { // moon background and icon
+            Rectangle { // Moon background and icon
                 width: 32
                 height: 32
                 radius: 32
@@ -223,9 +257,9 @@ Item {
                 border.width: 2
                 border.color: Theme.colorSeparator
 
-                visible: (sunAndMoon.moonpath > 0 && sunAndMoon.moonpath < 100)
-                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
-                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(sunAndMoon.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+                visible: (shapes.moonpath > 0 && shapes.moonpath < 100)
+                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(shapes.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(shapes.moonpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
 
                 IconSvg {
                     anchors.centerIn: parent
@@ -236,7 +270,7 @@ Item {
                 }
             }
 
-            Rectangle { // sun background and rotating icon
+            Rectangle { // Sun background and rotating icon
                 width: 32
                 height: 32
                 radius: 32
@@ -245,9 +279,9 @@ Item {
                 border.width: 2
                 border.color: Theme.colorSeparator
 
-                visible: (sunAndMoon.sunpath > 0 && sunAndMoon.sunpath < 100)
-                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(sunAndMoon.sunpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
-                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(sunAndMoon.sunpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+                visible: (shapes.sunpath > 0 && shapes.sunpath < 100)
+                x: (shapes.centerX + shapes.radiusX * -Math.cos((UtilsNumber.mapNumber(shapes.sunpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
+                y: (shapes.centerY + shapes.radiusY * -Math.sin((UtilsNumber.mapNumber(shapes.sunpath, 0, 100, 10, 170) / 180) * Math.PI)) - (width/2)
 
                 IconSvg {
                     anchors.centerIn: parent
@@ -267,11 +301,12 @@ Item {
 
             ////
 
-            Row {
+            Row { // Sun times
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
+                spacing: 4
 
                 IconSvg {
                     width: 40
@@ -279,9 +314,13 @@ Item {
                     source: "qrc:/IconLibrary/material-symbols/weather/sunny.svg"
                     color: Theme.colorIcon
                 }
+
                 Column {
+                    anchors.verticalCenter: parent.verticalCenter
+
                     Row {
                         anchors.left: parent.left
+
                         IconSvg {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 16
@@ -292,7 +331,9 @@ Item {
                         }
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
+                            height: 20
 
+                            visible: sunAndMoon.valid
                             text: sunAndMoon.sunrise.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
                             textFormat: Text.PlainText
                             color: Theme.colorSubText
@@ -300,6 +341,7 @@ Item {
                     }
                     Row {
                         anchors.left: parent.left
+
                         IconSvg {
                             anchors.verticalCenter: parent.verticalCenter
                             width: 16
@@ -310,7 +352,9 @@ Item {
                         }
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
+                            height: 20
 
+                            visible: sunAndMoon.valid
                             text: sunAndMoon.sunset.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
                             textFormat: Text.PlainText
                             color: Theme.colorSubText
@@ -321,18 +365,26 @@ Item {
 
             ////
 
-            Row {
+            Row { // Moon times
                 anchors.right: parent.right
                 anchors.rightMargin: 0
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 0
+                spacing: 0
 
                 Column {
+                    anchors.verticalCenter: parent.verticalCenter
+
                     Row {
                         anchors.right: parent.right
+
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+
+                            visible: sunAndMoon.valid
                             text: sunAndMoon.moonrise.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                         }
                         IconSvg {
@@ -346,9 +398,14 @@ Item {
                     }
                     Row {
                         anchors.right: parent.right
+
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
+                            height: 20
+
+                            visible: sunAndMoon.valid
                             text: sunAndMoon.moonset.toLocaleTimeString(Qt.locale(), Locale.ShortFormat)
+                            textFormat: Text.PlainText
                             color: Theme.colorSubText
                         }
                         IconSvg {
@@ -369,9 +426,9 @@ Item {
                     color: Theme.colorIcon
                 }
             }
-        }
 
-        ////
+            ////
+        }
     }
 
     ////////////////

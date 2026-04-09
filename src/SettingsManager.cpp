@@ -212,8 +212,6 @@ bool SettingsManager::readSettings()
         if (settings.contains("settings/orderBy"))
             m_orderBy = settings.value("settings/orderBy").toString();
 
-        if (settings.contains("settings/location"))
-            m_location = settings.value("settings/location").toBool();
         if (settings.contains("settings/locationLatitude"))
             m_location_latitude = settings.value("settings/locationLatitude").toFloat();
         if (settings.contains("settings/locationLongitude"))
@@ -295,7 +293,6 @@ bool SettingsManager::writeSettings()
         settings.setValue("settings/splitView", m_splitView);
         settings.setValue("settings/orderBy", m_orderBy);
 
-        settings.setValue("settings/location", m_location_latitude);
         settings.setValue("settings/locationLatitude", m_location_latitude);
         settings.setValue("settings/locationLongitude", m_location_longitude);
         settings.setValue("settings/sunandmoon", m_sunandmoon);
@@ -397,7 +394,6 @@ void SettingsManager::resetSettings()
     m_dynaScale = false;
     Q_EMIT dynaScaleChanged();
 
-    m_location = false;
     m_location_latitude = 0.f;
     m_location_longitude = 0.f;
     m_sunandmoon = false;
@@ -722,16 +718,6 @@ void SettingsManager::setOrderBy(const QString &value)
 }
 
 /* ************************************************************************** */
-
-void SettingsManager::setLocation(const bool value)
-{
-    if (m_location != value)
-    {
-        m_location = value;
-        writeSettings();
-        Q_EMIT locationChanged();
-    }
-}
 
 void SettingsManager::setSunAndMoon(const bool value)
 {
