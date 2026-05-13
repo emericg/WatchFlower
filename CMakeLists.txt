@@ -54,6 +54,12 @@ set(SOURCES
     src/PlantDatabase.cpp src/PlantDatabase.h
     src/Plant.cpp src/Plant.h src/PlantUtils.h
     src/Journal.cpp src/Journal.h
+    src/DeviceManager.cpp src/DeviceManager.h
+    src/DeviceManager_advertisement.cpp
+    src/DeviceManager_nearby.cpp
+    src/DeviceManager_export.cpp
+    src/DeviceFilter.cpp src/DeviceFilter.h
+
     src/device.cpp src/device.h
     src/device_infos.cpp src/device_infos.h
     src/device_utils.h src/device_firmwares.h
@@ -61,11 +67,7 @@ set(SOURCES
     src/device_plantsensor.cpp src/device_plantsensor.h
     src/device_thermometer.cpp src/device_thermometer.h
     src/device_environmental.cpp src/device_environmental.h
-    src/DeviceManager.cpp src/DeviceManager.h
-    src/DeviceManager_advertisement.cpp
-    src/DeviceManager_nearby.cpp
-    src/DeviceManager_export.cpp
-    src/DeviceFilter.cpp src/DeviceFilter.h
+
     src/devices/device_flowercare.cpp src/devices/device_flowercare.h
     src/devices/device_flowercare_tuya.cpp src/devices/device_flowercare_tuya.h
     src/devices/device_flowerpower.cpp src/devices/device_flowerpower.h
@@ -104,7 +106,7 @@ if(ANDROID)
 endif()
 
 if(NOT IOS AND NOT ANDROID)
-    # Set app desktop icons
+    # Desktop app icons
     if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
         set(app_icon_windows "${CMAKE_SOURCE_DIR}/assets/windows/${CMAKE_PROJECT_NAME}.rc")
     elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
