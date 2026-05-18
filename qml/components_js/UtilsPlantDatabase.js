@@ -104,7 +104,7 @@ function getSunlightText(sunlight) {
 function getFertilizationTagsText(fert) {
     var txt = ""
 
-    var tags = fert[1].split('-')
+    var tags = parseInt(fert.split(',')[1]) || 0
 
     if (tags & PlantUtils.PlantUtils.LOW_NEEDS) {
         if (txt.length > 0) txt += ", "
@@ -156,7 +156,7 @@ function getFertilizationTagsText(fert) {
 function getFertilizationText(fert) {
     var txt = ""
 
-    var freq = fert[0].split('-')
+    var freq = parseInt(fert.split(',')[0])
 
     if (freq == PlantUtils.PlantUtils.FERT_NONE) txt = qsTr("no extra fertilization needed")
     else if (freq == PlantUtils.PlantUtils.FERT_THREEWEEKLY) txt = qsTr("every 2-3 days")
