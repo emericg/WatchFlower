@@ -36,7 +36,7 @@ Loader {
             screenMainView.loadScreen()
         }
 
-        Rectangle { // hide the space between the top of the screen and the top of scanWidget
+        Rectangle { // hide the space between the top of the screen and the top of contentColumn
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right

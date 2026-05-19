@@ -54,7 +54,11 @@ Grid {
         console.log("colors3: " + currentPlant.colorsFlower)
         console.log("colors4: " + currentPlant.colorsFruit)
 
+        console.log("sunlight: " + currentPlant.sunlight)
         console.log("watering: " + currentPlant.watering)
+        console.log("fertilization: " + currentPlant.fertilization)
+        console.log("pruning: " + currentPlant.pruning)
+        console.log("soil: " + currentPlant.soil)
 
         console.log("soil Moisture m/m: " + currentPlant.soilMoist_min + " / " + currentPlant.soilMoist_max)
         console.log("mmol m/m: " + currentPlant.lightMmol_min + " / " + currentPlant.lightMmol_max)
@@ -120,10 +124,10 @@ Grid {
 
             var partsSun = currentPlant.sunlight.split('-')
             for (var is = partsSun[0]; is <= (partsSun[1] || partsSun[0]); is++) {
-                if (is === 1 || currentPlant.sunlight === "4") sunlight1.color = Theme.colorYellow
-                if (is === 2 || currentPlant.sunlight === "4") sunlight2.color = Theme.colorYellow
-                if (is === 3 || currentPlant.sunlight === "4") sunlight3.color = Theme.colorYellow
-                if (is === 4 || currentPlant.sunlight === "4") sunlight4.color = Theme.colorYellow
+                if (is == 1 || currentPlant.sunlight === "4") sunlight1.color = Theme.colorYellow
+                if (is == 2 || currentPlant.sunlight === "4") sunlight2.color = Theme.colorYellow
+                if (is == 3 || currentPlant.sunlight === "4") sunlight3.color = Theme.colorYellow
+                if (is == 4 || currentPlant.sunlight === "4") sunlight4.color = Theme.colorYellow
             }
         }
 
@@ -140,9 +144,9 @@ Grid {
             var partsWater = total[0].split('-')
             if (partsWater.length > 1) {
                 for (var iw = partsWater[0]; iw <= (partsWater[1] || partsWater[0]); iw++) {
-                    if (iw === 2) water2.color = Theme.colorBlue
-                    if (iw === 3) water3.color = Theme.colorBlue
-                    if (iw === 4) water4.color = Theme.colorBlue
+                    if (iw == 2) water2.color = Theme.colorBlue
+                    if (iw == 3) water3.color = Theme.colorBlue
+                    if (iw == 4) water4.color = Theme.colorBlue
                 }
             } else {
                 water2.color = (partsWater[0] >= 2) ? Theme.colorBlue : colorDisabled
@@ -893,8 +897,8 @@ Grid {
 
                         onClicked: Qt.openUrlExternally("https://wikipedia.org/wiki/" + currentPlant.nameBotanical_url)
                     }
-
-                    ButtonFlat {
+/*
+                    ButtonFlat { // offline? definitively?
                         layoutDirection: Qt.RightToLeft
 
                         text: "Hortipedia"
@@ -903,7 +907,7 @@ Grid {
 
                         onClicked: Qt.openUrlExternally("https://hortipedia.com/" + currentPlant.nameBotanical_url)
                     }
-
+*/
                     ButtonFlat {
                         layoutDirection: Qt.RightToLeft
 

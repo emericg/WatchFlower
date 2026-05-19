@@ -158,18 +158,18 @@ function getFertilizationText(fert) {
 
     var freq = parseInt(fert.split(',')[0])
 
-    if (freq == PlantUtils.PlantUtils.FERT_NONE) txt = qsTr("no extra fertilization needed")
-    else if (freq == PlantUtils.PlantUtils.FERT_THREEWEEKLY) txt = qsTr("every 2-3 days")
-    else if (freq == PlantUtils.PlantUtils.FERT_BIWEEKLY) txt = qsTr("twice a week")
-    else if (freq == PlantUtils.PlantUtils.FERT_WEEKLY) txt = qsTr("once a week")
-    else if (freq == PlantUtils.PlantUtils.FERT_THREEMONTHLY) txt = qsTr("every 10-15 days")
-    else if (freq == PlantUtils.PlantUtils.FERT_BIMONTHLY) txt = qsTr("twice a month")
-    else if (freq == PlantUtils.PlantUtils.FERT_MONTHLY) txt = qsTr("once a month")
-    else if (freq == PlantUtils.PlantUtils.FERT_SIXYEARLY) txt = qsTr("every 2 months")
-    else if (freq == PlantUtils.PlantUtils.FERT_FOURYEARLY) txt = qsTr("every 3 months")
-    else if (freq == PlantUtils.PlantUtils.FERT_THREEYEARLY) txt = qsTr("every 4 months")
-    else if (freq == PlantUtils.PlantUtils.FERT_BIYEARLY) txt = qsTr("every 6 months")
-    else if (freq == PlantUtils.PlantUtils.FERT_YEARLY) txt = qsTr("once a year")
+    if (freq === PlantUtils.PlantUtils.FERT_NONE) txt = qsTr("no extra fertilization needed")
+    else if (freq === PlantUtils.PlantUtils.FERT_THREEWEEKLY) txt = qsTr("every 2-3 days")
+    else if (freq === PlantUtils.PlantUtils.FERT_BIWEEKLY) txt = qsTr("twice a week")
+    else if (freq === PlantUtils.PlantUtils.FERT_WEEKLY) txt = qsTr("once a week")
+    else if (freq === PlantUtils.PlantUtils.FERT_THREEMONTHLY) txt = qsTr("every 10-15 days")
+    else if (freq === PlantUtils.PlantUtils.FERT_BIMONTHLY) txt = qsTr("twice a month")
+    else if (freq === PlantUtils.PlantUtils.FERT_MONTHLY) txt = qsTr("once a month")
+    else if (freq === PlantUtils.PlantUtils.FERT_SIXYEARLY) txt = qsTr("every 2 months")
+    else if (freq === PlantUtils.PlantUtils.FERT_FOURYEARLY) txt = qsTr("every 3 months")
+    else if (freq === PlantUtils.PlantUtils.FERT_THREEYEARLY) txt = qsTr("every 4 months")
+    else if (freq === PlantUtils.PlantUtils.FERT_BIYEARLY) txt = qsTr("every 6 months")
+    else if (freq === PlantUtils.PlantUtils.FERT_YEARLY) txt = qsTr("once a year")
 
     return txt
 }
