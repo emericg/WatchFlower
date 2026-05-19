@@ -558,10 +558,10 @@ Loader {
 
                     Loader {
                         id: graphLoader
-                        anchors.top: parent.top
-                        anchors.left: parent.left
-                        anchors.right: parent.right
-                        anchors.bottom: parent.bottom
+
+                        anchors.fill: parent
+                        //anchors.leftMargin: appWindow.screenPaddingLeft
+                        //anchors.rightMargin: appWindow.screenPaddingRight
 
                         opacity: 0
                         Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }

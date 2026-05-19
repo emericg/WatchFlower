@@ -38,7 +38,7 @@ Item {
     Component {
         id: componentDeviceBrowser_mobile
 
-        Item { // itemDeviceBrowser mobile
+        Item {
             anchors.fill: parent
 
             ////////
@@ -142,8 +142,10 @@ Item {
     Component {
         id: componentDeviceBrowser_desktop
 
-        Item { // itemDeviceBrowser desktop
+        Item {
             anchors.fill: parent
+            anchors.leftMargin: appWindow.screenPaddingLeft
+            anchors.rightMargin: appWindow.screenPaddingRight
 
             ////////
 

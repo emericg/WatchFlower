@@ -148,7 +148,7 @@ Item {
                     text: qsTr("Bluetooth control")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 17
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -211,7 +211,7 @@ Item {
                     text: qsTr("Bluetooth")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 17
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -274,7 +274,7 @@ Item {
                     text: qsTr("Location")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 17
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -356,7 +356,7 @@ Item {
                     text: qsTr("Background location")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 17
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -420,7 +420,7 @@ Item {
                     text: qsTr("GPS")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 17
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }
@@ -501,7 +501,7 @@ Item {
                     text: qsTr("Notifications")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 17
+                    font.pixelSize: Theme.fontSizeContentBig
                     color: Theme.colorText
                     verticalAlignment: Text.AlignVCenter
                 }

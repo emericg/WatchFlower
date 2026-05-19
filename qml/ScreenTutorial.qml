@@ -51,6 +51,8 @@ Rectangle {
             SwipeView {
                 id: tutorialPages
                 anchors.fill: parent
+                anchors.leftMargin: appWindow.screenPaddingLeft
+                anchors.rightMargin: appWindow.screenPaddingRight
                 anchors.bottomMargin: 56
 
                 property int margins: isPhone ? 24 : 40
@@ -75,9 +77,7 @@ Rectangle {
 
                     Column {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 32
 
@@ -137,9 +137,7 @@ Rectangle {
 
                     Column {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 32
 
@@ -188,9 +186,7 @@ Rectangle {
 
                     Column {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 20
 
@@ -253,9 +249,7 @@ Rectangle {
 
                     Column {
                         anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: 20
 
@@ -335,7 +329,7 @@ Rectangle {
 
             Text {
                 id: pagePrevious
-                anchors.left: parent.left
+                anchors.left: tutorialPages.left
                 anchors.leftMargin: tutorialPages.margins
                 anchors.verticalCenter: pageIndicator.verticalCenter
 
@@ -362,7 +356,7 @@ Rectangle {
 
             PageIndicatorThemed {
                 id: pageIndicator
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.horizontalCenter: tutorialPages.horizontalCenter
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: tutorialPages.margins/2
 
@@ -372,7 +366,7 @@ Rectangle {
 
             Text {
                 id: pageNext
-                anchors.right: parent.right
+                anchors.right: tutorialPages.right
                 anchors.rightMargin: tutorialPages.margins
                 anchors.verticalCenter: pageIndicator.verticalCenter
 

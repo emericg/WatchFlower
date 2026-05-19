@@ -87,9 +87,9 @@ T.Popup {
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.left: parent.left
-            anchors.leftMargin: screenPaddingLeft
+            anchors.leftMargin: appWindow.screenPaddingLeft
             anchors.right: parent.right
-            anchors.rightMargin: screenPaddingRight
+            anchors.rightMargin: appWindow.screenPaddingRight
 
             topPadding: Theme.componentMargin
             bottomPadding: 4

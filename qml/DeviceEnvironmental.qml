@@ -1225,7 +1225,10 @@ Loader {
 
                                 Loader {
                                     id: graphLoader
+
                                     anchors.fill: parent
+                                    //anchors.leftMargin: appWindow.screenPaddingLeft
+                                    //anchors.rightMargin: appWindow.screenPaddingRight
 
                                     opacity: 0
                                     Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }

@@ -248,6 +248,8 @@ Loader {
 */
                 ////////////////
 
+                Item { width: 16; height: 16; visible: (!singleColumn && isPhone); }
+
                 ListItem { // description
                     anchors.left: parent.left
                     anchors.right: parent.right

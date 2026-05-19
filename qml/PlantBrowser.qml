@@ -118,11 +118,13 @@ Loader {
             focusSearchBox()
         }
 
-        ////////////////
+        ////////////////////////////////////////////////////////////////////
 
         Item {
             id: itemPlantBrowser
             anchors.fill: parent
+
+            ////////////////
 
             Rectangle {
                 id: plantSearchArea
@@ -189,14 +191,16 @@ Loader {
                 }
             }
 
+            ////////////////
+
             ListView {
                 id: plantList
-                anchors.fill: parent
-                anchors.topMargin: plantSearchArea.height
-                anchors.leftMargin: 0
-                anchors.rightMargin: 0
 
-                topMargin: 0
+                anchors.fill: parent
+                anchors.leftMargin: appWindow.screenPaddingLeft
+                anchors.rightMargin: appWindow.screenPaddingRight
+
+                topMargin: plantSearchArea.height
                 bottomMargin: 0
                 spacing: 0
 
@@ -275,15 +279,21 @@ Loader {
                     visible: (plantList.count <= 0)
                 }
             }
+
+            ////////////////
         }
 
         ////////////////////////////////////////////////////////////////////
 
         Flickable {
             id: itemPlantViewer
+
             anchors.fill: parent
-            anchors.topMargin: plantSelector_desktop.visible ? plantSelector_desktop.height : 0
-            anchors.bottomMargin: plantSelector_mobile.visible ? plantSelector_mobile.height : 0
+            anchors.leftMargin: appWindow.screenPaddingLeft
+            anchors.rightMargin: appWindow.screenPaddingRight
+
+            topMargin: plantSelector_desktop.visible ? plantSelector_desktop.height : 0
+            bottomMargin: plantSelector_mobile.visible ? plantSelector_mobile.height : 0
 
             visible: false
 
@@ -308,6 +318,7 @@ Loader {
 
             PlantScreen {
                 id: plantScreen
+                parentWidth: itemPlantViewer.width
             }
         }
 
@@ -385,7 +396,7 @@ Loader {
             }
         }
 
-        ////////
+        ////////////////
 
         Rectangle {
             id: plantSelector_mobile
@@ -441,4 +452,6 @@ Loader {
 
         ////////////////////////////////////////////////////////////////////
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }
