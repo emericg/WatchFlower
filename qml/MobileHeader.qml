@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
 
 Rectangle {
     id: appHeader
@@ -11,16 +10,20 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: headerHeight + Math.max(screenPaddingStatusbar, screenPaddingTop)
+    height: headerFullHeight
     color: Theme.colorHeader
     clip: true
     z: 10
 
-    property int headerHeight: 52
+    property int headerFullHeight: headerHeight + Math.max(screenPaddingStatusbar, screenPaddingTop) - (headerUnicolor ? 12 : 0)
+
+    property bool headerUnicolor: (Theme.colorHeader === Theme.colorStatusbar)
+
+    property int headerHeight: 56 // vertical
 
     property int headerPosition: 56 // horizontal
 
-    property string headerTitle: "WatchFlower"
+    property string headerTitle: utilsApp.appName()
 
     property string headerSubTitle: ""
 
@@ -32,10 +35,10 @@ Rectangle {
     property string rightMenuMode: "off" // on / off
     signal rightMenuClicked()
 
-    ////////////////////////////////////////////////////////////////////////////
-
     function rightMenuIsOpen() { return actionMenu.visible; }
     function rightMenuClose() { actionMenu.close(); }
+
+    ////////////////////////////////////////////////////////////////////////////
 
     signal deviceRebootButtonClicked()
     signal deviceCalibrateButtonClicked()
@@ -72,13 +75,18 @@ Rectangle {
 
         height: Math.max(screenPaddingStatusbar, screenPaddingTop)
         color: Theme.colorStatusbar
+        visible: !appHeader.headerUnicolor
     }
 
     Item {
-        anchors.fill: parent
-        anchors.topMargin: Math.max(screenPaddingStatusbar, screenPaddingTop)
+        anchors.left: parent.left
         anchors.leftMargin: screenPaddingLeft
+        anchors.right: parent.right
         anchors.rightMargin: screenPaddingRight
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: appHeader.headerUnicolor ? -4 : 0
+
+        height: appHeader.headerHeight
 
         ////////////
 
@@ -167,6 +175,8 @@ Rectangle {
 
             spacing: 4
 
+            ////
+
             Item { // right indicator
                 width: appHeader.headerHeight
                 height: appHeader.headerHeight
@@ -178,8 +188,8 @@ Rectangle {
 
                 IconSvg {
                     id: workingIndicator
-                    width: 24; height: 24;
                     anchors.centerIn: parent
+                    width: 24; height: 24;
 
                     source: {
                         if (deviceManager.scanning)
@@ -216,6 +226,8 @@ Rectangle {
                 }
             }
 
+            ////
+
             MouseArea { // right button
                 width: appHeader.headerHeight
                 height: appHeader.headerHeight
@@ -226,7 +238,7 @@ Rectangle {
                            appContent.state === "DeviceEnvironmental"))
 
                 onClicked: {
-                    rightMenuClicked()
+                    appHeader.rightMenuClicked()
                     actionMenu.open()
                 }
 
@@ -248,6 +260,8 @@ Rectangle {
                     color: Theme.colorHeaderContent
                 }
             }
+
+            ////
         }
 
         ////////////

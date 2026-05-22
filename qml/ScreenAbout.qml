@@ -277,6 +277,7 @@ Loader {
 
                     text: qsTr("Rate the application")
                     source: "qrc:/IconLibrary/material-symbols/stars-fill.svg"
+                    sourceSize: 28
                     indicatorSource: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
 
                     onClicked: {
@@ -341,7 +342,7 @@ Loader {
 
                     text: qsTr("About app permissions")
                     source: "qrc:/IconLibrary/material-symbols/flaky.svg"
-                    sourceSize: 24
+                    sourceSize: 26
                     indicatorSource: "qrc:/IconLibrary/material-symbols/chevron_right.svg"
 
                     onClicked: screenAboutPermissions.loadScreenFrom("ScreenAbout")

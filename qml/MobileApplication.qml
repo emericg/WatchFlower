@@ -1,6 +1,6 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Window
+import QtQuick.Controls
 
 import ComponentLibrary
 import WatchFlower
@@ -125,7 +125,7 @@ Window {
                         screenPaddingNavbar = 0
                     }
                     if (appWindow.flags & Qt.MaximizeUsingFullscreenGeometryHint) {
-                        if (mobileUI.isPhone) {
+                        if (appWindow.isPhone) {
                             if (Screen.orientation === Qt.LandscapeOrientation) {
                                 screenPaddingLeft = screenPaddingStatusbar
                                 screenPaddingRight = screenPaddingNavbar
