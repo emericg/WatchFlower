@@ -39,9 +39,10 @@ Item {
 
     ////////////////
 
-    property bool isHdpi: (utilsScreen.screenDpi >= 128 || utilsScreen.screenPar >= 2.0)
     property bool isDesktop: (Qt.platform.os !== "ios" && Qt.platform.os !== "android")
     property bool isMobile: (Qt.platform.os === "ios" || Qt.platform.os === "android")
+
+    property bool isHdpi: (utilsScreen.screenDpi >= 128 || utilsScreen.screenPar >= 2.0)
     property bool isPhone: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize < 7.0))
     property bool isTablet: ((Qt.platform.os === "ios" || Qt.platform.os === "android") && (utilsScreen.screenSize >= 7.0))
 
@@ -746,7 +747,7 @@ Item {
             isDark = false
 
             themeStatusbar = Material.Dark
-            colorStatusbar = "#009688"
+            colorStatusbar = colorGreen // "#009688"
 
             colorHeader                 = colorGreen
             colorHeaderContent          = "white"
@@ -764,8 +765,8 @@ Item {
             colorTabletmenuContent      = "#9d9d9d"
             colorTabletmenuHighlight    = "#0079fe"
 
-            colorBackground             = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "white" : colorMaterialLightGrey
-            colorForeground             = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? colorMaterialLightGrey : "#eeeeee"
+            colorBackground             = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "#fafafa" : "#f8f8f8"
+            colorForeground             = (Qt.platform.os === "android" || Qt.platform.os === "ios") ? "#f0f0f0" : "#eeeeee"
 
             colorPrimary                = colorGreen
             colorSecondary              = colorLightGreen
@@ -805,7 +806,7 @@ Item {
             isDark = false
 
             themeStatusbar = Material.Dark
-            colorStatusbar = "#1e3c77"
+            colorStatusbar = "#325da9" // "#1e3c77"
 
             colorHeader                 = "#325da9"
             colorHeaderHighlight        = "#0f295c"
@@ -864,7 +865,7 @@ Item {
             isDark = false
 
             themeStatusbar = Material.Dark
-            colorStatusbar = colorNeutralNight
+            colorStatusbar = "#ffcf00" // colorNeutralNight
 
             colorHeader                 = "#ffcf00"
             colorHeaderContent          = "white"
@@ -879,7 +880,7 @@ Item {
             colorActionbarHighlight     = "#7ab800"
 
             colorTabletmenu             = "#f3f3f3"
-            colorTabletmenuContent      = "#9d9d9d"
+            colorTabletmenuContent      = "#909090"
             colorTabletmenuHighlight    = "#0079fe"
 
             colorBackground             = "white"
@@ -923,7 +924,7 @@ Item {
             isDark = true
 
             themeStatusbar = Material.Dark
-            colorStatusbar = "#725595"
+            colorStatusbar = "#b16bee" // "#725595"
 
             colorHeader                 = "#b16bee"
             colorHeaderContent          = "white"

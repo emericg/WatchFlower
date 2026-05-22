@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
 
 import ComponentLibrary
@@ -27,7 +26,7 @@ T.Button {
     property color colorIndicator: Theme.colorPrimary
 
     // settings
-    property bool backgroundVisible: true
+    property bool backgroundVisible: false
 
     // activity indicator
     property bool indicatorVisible: false

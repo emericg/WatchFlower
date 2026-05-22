@@ -36,7 +36,6 @@
 #include "utils_os_macos_dock.h"
 #endif
 
-#include <MobileUI>
 #include <MobileSharing>
 #include <SingleApplication>
 #include <SunAndMoon>
@@ -187,7 +186,6 @@ int main(int argc, char *argv[])
     qtConnectivityPatched = true;
 #endif
 
-    MobileUI::registerQML();
     DeviceUtils::registerQML();
     JournalUtils::registerQML();
     PlantUtils::registerQML();

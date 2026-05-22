@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Layouts
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
 
 import ComponentLibrary
@@ -33,7 +32,7 @@ T.Button {
     ////////////////
 
     contentItem: RowLayout {
-        spacing: isPhone ? 6 : 12
+        spacing: Theme.isPhone ? 6 : 12
 
         IconSvg { // contentImage
             Layout.preferredWidth: control.sourceSize

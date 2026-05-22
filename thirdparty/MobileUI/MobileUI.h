@@ -25,6 +25,8 @@
 #define MOBILEUI_H
 /* ************************************************************************** */
 
+#include <QtQml/qqmlregistration.h>
+
 #include <QObject>
 #include <QColor>
 
@@ -33,6 +35,7 @@
 class MobileUI : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
 
     Q_PROPERTY(Theme deviceTheme READ getDeviceTheme NOTIFY devicethemeUpdated)
 

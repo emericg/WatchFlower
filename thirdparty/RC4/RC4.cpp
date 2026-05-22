@@ -18,7 +18,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-#include "rc4.h"
+#include "RC4.h"
 
 /* ************************************************************************** */
 

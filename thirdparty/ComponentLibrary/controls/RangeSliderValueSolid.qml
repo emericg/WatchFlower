@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
 
 import ComponentLibrary
@@ -76,14 +75,14 @@ T.RangeSlider {
             visible: control.showvalue
 
             text: {
-                var vvalue = first.value
+                var vvalue = control.first.value
                 if (control.unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(control.floatprecision)
-                return ((control.kshort && first.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
+                return ((control.kshort && control.first.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
             font.bold: true
-            font.pixelSize: isDesktop ? 12 : 13
+            font.pixelSize: Theme.isDesktop ? 12 : 13
             fontSizeMode: Text.Fit
             minimumPixelSize: Theme.fontSizeContentVerySmall
             color: control.colorText
@@ -112,14 +111,14 @@ T.RangeSlider {
             visible: control.showvalue
 
             text: {
-                var vvalue = second.value
+                var vvalue = control.second.value
                 if (control.unit === "°" && settingsManager.tempUnit === "F") vvalue = UtilsNumber.tempCelsiusToFahrenheit(vvalue)
                 vvalue = vvalue.toFixed(control.floatprecision)
-                return ((control.kshort && second.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
+                return ((control.kshort && control.second.value > 999) ? (vvalue / 1000) : vvalue) + control.unit
             }
             textFormat: Text.PlainText
             font.bold: true
-            font.pixelSize: isDesktop ? 12 : 13
+            font.pixelSize: Theme.isDesktop ? 12 : 13
             fontSizeMode: Text.Fit
             minimumPixelSize: Theme.fontSizeContentVerySmall
             color: control.colorText

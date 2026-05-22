@@ -24,9 +24,9 @@ message(STATUS "[SYSTEM] (HOST) SYSTEM PROCESSOR    = ${CMAKE_HOST_SYSTEM_PROCES
 message(STATUS "[SYSTEM] (TARGET) SYSTEM NAME       = ${CMAKE_SYSTEM_NAME}")
 message(STATUS "[SYSTEM] (TARGET) SYSTEM VERSION    = ${CMAKE_SYSTEM_VERSION}")
 message(STATUS "[SYSTEM] (TARGET) SYSTEM PROCESSOR  = ${CMAKE_SYSTEM_PROCESSOR}")
-message(STATUS "[PROJECT] CMAKE_PROJECT_NAME        = ${PROJECT_NAME}")
+message(STATUS "[PROJECT] PROJECT_NAME              = ${PROJECT_NAME}")
 message(STATUS "[PROJECT] CURRENT_SOURCE_DIR        = ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "[PROJECT] PROJECT_NAME              = ${CMAKE_PROJECT_NAME}")
+message(STATUS "[PROJECT] CMAKE_PROJECT_NAME        = ${CMAKE_PROJECT_NAME}")
 message(STATUS "[PROJECT] SOURCE_DIR                = ${CMAKE_SOURCE_DIR}")
 message(STATUS "[PROJECT] BUILD_TYPE                = ${CMAKE_BUILD_TYPE}")
 
@@ -91,7 +91,6 @@ set(SOURCES
     src/devices/device_esp32_higrow.cpp src/devices/device_esp32_higrow.h
     src/devices/device_ess_generic.cpp src/devices/device_ess_generic.h
 
-    thirdparty/RC4/rc4.cpp thirdparty/RC4/rc4.h
     thirdparty/IconLibrary/IconLibrary_material.qrc
 
     assets/assets.qrc
@@ -251,7 +250,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE AppUtils)
 
 # MobileUI
 add_subdirectory(thirdparty/MobileUI)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileUI)
+target_link_libraries(${PROJECT_NAME} PRIVATE MobileUI_plugin)
 
 # MobileSharing
 add_subdirectory(thirdparty/MobileSharing)
@@ -263,7 +262,11 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
 
 # ComponentLibrary
 add_subdirectory(thirdparty/ComponentLibrary)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE ComponentLibraryplugin)
+target_link_libraries(${PROJECT_NAME} PRIVATE ComponentLibrary_plugin)
+
+# RC4
+add_subdirectory(thirdparty/RC4)
+target_link_libraries(${PROJECT_NAME} PRIVATE RC4)
 
 # Qt libraries
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
