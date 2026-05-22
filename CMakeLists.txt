@@ -4,31 +4,33 @@ project(WatchFlower VERSION 6.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(APP_NAME ${CMAKE_PROJECT_NAME})
-set(APP_VERSION ${CMAKE_PROJECT_VERSION})
+set(APP_NAME ${PROJECT_NAME})
+set(APP_VERSION ${PROJECT_VERSION})
 
 ################################################################################
 
-message(STATUS ">>> BUILDING ${PROJECT_NAME} >>>")
+message(STATUS ">>> BUILDING ${PROJECT_NAME} v${PROJECT_VERSION} >>>")
 message(STATUS "[CMAKE] CMAKE_VERSION               = ${CMAKE_VERSION}")
 message(STATUS "[CMAKE] CMAKE_PREFIX_PATH           = ${CMAKE_PREFIX_PATH}")
 message(STATUS "[BUILD] QT_HOST_PATH                = ${QT_HOST_PATH}")
 message(STATUS "[BUILD] TOOLCHAIN_FILE              = ${CMAKE_TOOLCHAIN_FILE}")
+message(STATUS "[BUILD] BUILD_TYPE                  = ${CMAKE_BUILD_TYPE}")
 message(STATUS "[SYSTEM] (HOST) SYSTEM NAME         = ${CMAKE_HOST_SYSTEM_NAME}")
 message(STATUS "[SYSTEM] (HOST) SYSTEM VERSION      = ${CMAKE_HOST_SYSTEM_VERSION}")
 message(STATUS "[SYSTEM] (HOST) SYSTEM PROCESSOR    = ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message(STATUS "[SYSTEM] (TARGET) SYSTEM NAME       = ${CMAKE_SYSTEM_NAME}")
 message(STATUS "[SYSTEM] (TARGET) SYSTEM VERSION    = ${CMAKE_SYSTEM_VERSION}")
 message(STATUS "[SYSTEM] (TARGET) SYSTEM PROCESSOR  = ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "[TOP PROJECT] CMAKE_PROJECT_NAME    = ${CMAKE_PROJECT_NAME}")
+message(STATUS "[TOP PROJECT] CMAKE_PROJECT_VERSION = ${CMAKE_PROJECT_VERSION}")
+message(STATUS "[TOP PROJECT] CMAKE_SOURCE_DIR      = ${CMAKE_SOURCE_DIR}")
 message(STATUS "[PROJECT] PROJECT_NAME              = ${PROJECT_NAME}")
-message(STATUS "[PROJECT] CURRENT_SOURCE_DIR        = ${CMAKE_CURRENT_SOURCE_DIR}")
-message(STATUS "[PROJECT] CMAKE_PROJECT_NAME        = ${CMAKE_PROJECT_NAME}")
-message(STATUS "[PROJECT] SOURCE_DIR                = ${CMAKE_SOURCE_DIR}")
-message(STATUS "[PROJECT] BUILD_TYPE                = ${CMAKE_BUILD_TYPE}")
+message(STATUS "[PROJECT] PROJECT_VERSION           = ${PROJECT_VERSION}")
+message(STATUS "[PROJECT] PROJECT_SOURCE_DIR        = ${PROJECT_SOURCE_DIR}")
+message(STATUS "[PROJECT] CMAKE_CURRENT_SOURCE_DIR  = ${CMAKE_CURRENT_SOURCE_DIR}")
 
 ################################################################################
 
@@ -107,9 +109,9 @@ endif()
 if(NOT IOS AND NOT ANDROID)
     # Desktop app icons
     if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-        set(app_icon_windows "${CMAKE_SOURCE_DIR}/assets/windows/${CMAKE_PROJECT_NAME}.rc")
+        set(app_icon_windows "${PROJECT_SOURCE_DIR}/assets/windows/${PROJECT_NAME}.rc")
     elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-        set(app_icon_macos "${CMAKE_SOURCE_DIR}/assets/macos/${CMAKE_PROJECT_NAME}.icns")
+        set(app_icon_macos "${PROJECT_SOURCE_DIR}/assets/macos/${PROJECT_NAME}.icns")
     endif()
 
     # Desktop only source files
@@ -121,14 +123,14 @@ if(NOT IOS AND NOT ANDROID)
     )
 endif()
 
-qt_add_executable(${CMAKE_PROJECT_NAME}
+qt_add_executable(${PROJECT_NAME}
     ${SOURCES}
     ${SOURCES_ANDROID}
     ${SOURCES_DESKTOP}
 )
 
-qt_add_qml_module(${CMAKE_PROJECT_NAME}
-    URI ${CMAKE_PROJECT_NAME}
+qt_add_qml_module(${PROJECT_NAME}
+    URI ${PROJECT_NAME}
     NO_PLUGIN
     QML_FILES
         qml/MobileApplication.qml
@@ -211,9 +213,9 @@ qt_add_qml_module(${CMAKE_PROJECT_NAME}
         qml/components_js/UtilsPlantJournal.js
 )
 
-qt_add_translations(${CMAKE_PROJECT_NAME}
-    TS_FILE_BASE ${CMAKE_PROJECT_NAME}
-    TS_FILE_DIR ${CMAKE_SOURCE_DIR}/i18n/
+qt_add_translations(${PROJECT_NAME}
+    TS_FILE_BASE ${PROJECT_NAME}
+    TS_FILE_DIR ${PROJECT_SOURCE_DIR}/i18n/
     RESOURCE_PREFIX "/i18n"
 )
 
@@ -227,7 +229,7 @@ function(add_other_files target)
     endforeach()
 endfunction()
 
-add_other_files(${CMAKE_PROJECT_NAME}
+add_other_files(${PROJECT_NAME}
     README.md LICENSE.md
     deploy_linux.sh deploy_macos.sh deploy_windows.sh
     .github/workflows/builds_desktop.yml
@@ -241,12 +243,12 @@ add_other_files(${CMAKE_PROJECT_NAME}
 # SingleApplication
 set(QAPPLICATION_CLASS QApplication)
 add_subdirectory(thirdparty/SingleApplication)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SingleApplication)
+target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication)
 
 # AppUtils
 set(UTILS_DOCK_ENABLED ON CACHE BOOL "" FORCE)
 add_subdirectory(thirdparty/AppUtils)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE AppUtils)
+target_link_libraries(${PROJECT_NAME} PRIVATE AppUtils)
 
 # MobileUI
 add_subdirectory(thirdparty/MobileUI)
@@ -254,11 +256,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE MobileUI_plugin)
 
 # MobileSharing
 add_subdirectory(thirdparty/MobileSharing)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE MobileSharing)
+target_link_libraries(${PROJECT_NAME} PRIVATE MobileSharing)
 
 # SunAndMoon
 add_subdirectory(thirdparty/SunAndMoon)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SunAndMoon)
+target_link_libraries(${PROJECT_NAME} PRIVATE SunAndMoon)
 
 # ComponentLibrary
 add_subdirectory(thirdparty/ComponentLibrary)
@@ -269,7 +271,7 @@ add_subdirectory(thirdparty/RC4)
 target_link_libraries(${PROJECT_NAME} PRIVATE RC4)
 
 # Qt libraries
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
+target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Core
     Qt6::Gui
     Qt6::Svg
@@ -284,32 +286,44 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 if(NOT IOS AND NOT ANDROID)
-    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt6::Widgets)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
 endif()
 
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src/)
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE thirdparty/)
+target_include_directories(${PROJECT_NAME} PRIVATE src/)
+target_include_directories(${PROJECT_NAME} PRIVATE thirdparty/)
+
+# Qt official hacks...
+set(QML_IMPORT_PATH
+    "${CMAKE_BINARY_DIR}/thirdparty/"
+    "${CMAKE_BINARY_DIR}/thirdparty/MobileUI"
+    "${CMAKE_BINARY_DIR}/thirdparty/ComponentLibrary"
+    CACHE STRING "QML Modules import paths" FORCE)
+
+# Qt official hacks...
+set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 ################################################################################
 
 ## Release build? Set "no debug" macros
-if(CMAKE_BUILD_TYPE STREQUAL Release)
-    target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
-        NDEBUG
-        QT_NO_DEBUG
-        QT_NO_DEBUG_OUTPUT
-    )
-endif()
+target_compile_definitions(${PROJECT_NAME} PRIVATE
+    $<$<CONFIG:Release>:NDEBUG>
+    $<$<CONFIG:Release>:QT_NO_DEBUG>
+    $<$<CONFIG:Release>:QT_NO_DEBUG_OUTPUT>
+)
+
+set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
+################################################################################
+
+include(GNUInstallDirs)
 
 ## Linux
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    # System install rules
-    install(TARGETS ${CMAKE_PROJECT_NAME} RUNTIME DESTINATION bin/)
-    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.desktop DESTINATION share/applications/)
-    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.appdata.xml DESTINATION share/appdata/)
-    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.svg DESTINATION share/pixmaps/)
-    install(FILES ${CMAKE_SOURCE_DIR}/assets/linux/${CMAKE_PROJECT_NAME}.svg DESTINATION share/icons/hicolor/scalable/apps/)
-    install(FILES ${CMAKE_SOURCE_DIR}/LICENSE.md DESTINATION share/licenses/${CMAKE_PROJECT_NAME}/)
+    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.desktop DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications/)
+    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/appdata/)
+    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.svg DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pixmaps/)
+    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.svg DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps/)
+    install(FILES ${PROJECT_SOURCE_DIR}/LICENSE.md DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/licenses/${PROJECT_NAME}/)
 endif()
 
 ## macOS
@@ -317,24 +331,24 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
     set(CMAKE_OSX_DEPLOYMENT_TARGET "12.0")
 
-    set(app_icon_macos "${CMAKE_SOURCE_DIR}/assets/macos/${CMAKE_PROJECT_NAME}.icns")
+    set(app_icon_macos "${PROJECT_SOURCE_DIR}/assets/macos/${PROJECT_NAME}.icns")
     set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+    set_target_properties(${PROJECT_NAME} PROPERTIES
         MACOSX_BUNDLE ON
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/assets/macos/Info.plist"
+        MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/assets/macos/Info.plist"
         # New Xcode attributes (???)
         XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "io.emeric.watchflower"
-        XCODE_ATTRIBUTE_PRODUCT_NAME                        ${CMAKE_PROJECT_NAME}
-        XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${CMAKE_PROJECT_VERSION}
+        XCODE_ATTRIBUTE_PRODUCT_NAME                        ${PROJECT_NAME}
+        XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-        XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS             "${CMAKE_SOURCE_DIR}/assets/macos/${CMAKE_PROJECT_NAME}.entitlements"
+        XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS             "${PROJECT_SOURCE_DIR}/assets/macos/${PROJECT_NAME}.entitlements"
     )
 endif()
 
 ## Windows
 if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+    set_target_properties(${PROJECT_NAME} PROPERTIES
         WIN32_EXECUTABLE ON
     )
 endif()
@@ -343,40 +357,40 @@ endif()
 
 ## Android
 if(CMAKE_SYSTEM_NAME STREQUAL "Android")
-    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+    set_target_properties(${PROJECT_NAME} PROPERTIES
         #QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64"
         #QT_ANDROID_BUILD_ALL_ABIS ON
         QT_ANDROID_MIN_SDK_VERSION 28
         QT_ANDROID_TARGET_SDK_VERSION 36
-        QT_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/assets/android/"
+        QT_ANDROID_PACKAGE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/assets/android/"
     )
 
     # Support 16 KB page sizes / pre NDK28
-    target_link_options(${CMAKE_PROJECT_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
+    target_link_options(${PROJECT_NAME} PUBLIC "-Wl,-z,max-page-size=16384")
 
     # Patched QtConnectivity
-    #target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
+    #target_compile_definitions(${PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
 
     # Android background service
     find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
-    target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt::CorePrivate)
+    target_link_libraries(${PROJECT_NAME} PRIVATE Qt::CorePrivate)
 endif()
 
 ## iOS
 if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
-    set(app_icon_ios "${CMAKE_SOURCE_DIR}/assets/ios/Images.xcassets")
-    target_sources(${CMAKE_PROJECT_NAME} PRIVATE ${app_icon_ios})
+    set(app_icon_ios "${PROJECT_SOURCE_DIR}/assets/ios/Images.xcassets")
+    target_sources(${PROJECT_NAME} PRIVATE ${app_icon_ios})
     set_source_files_properties(${app_icon_ios} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
-    set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
+    set_target_properties(${PROJECT_NAME} PROPERTIES
         MACOSX_BUNDLE ON
-        MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/assets/ios/Info.plist"
+        MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/assets/ios/Info.plist"
         # Qt
-        QT_IOS_LAUNCH_SCREEN "${CMAKE_SOURCE_DIR}/assets/ios/LaunchScreen.storyboard"
+        QT_IOS_LAUNCH_SCREEN "${PROJECT_SOURCE_DIR}/assets/ios/LaunchScreen.storyboard"
         # New Xcode attributes (???)
         XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "io.emeric.watchflower"
-        XCODE_ATTRIBUTE_PRODUCT_NAME                        ${CMAKE_PROJECT_NAME}
-        XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${CMAKE_PROJECT_VERSION}
+        XCODE_ATTRIBUTE_PRODUCT_NAME                        ${PROJECT_NAME}
+        XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
         XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET          "16.0"
         XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY              "1,2" # iPhone,iPad
@@ -388,10 +402,15 @@ endif()
 ################################################################################
 
 # Output (build)
-set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
-    #ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    #LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/lib"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin"
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+)
+
+# Output (install)
+install(TARGETS ${PROJECT_NAME}
+    BUNDLE DESTINATION ${CMAKE_INSTALL_BINDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
 ################################################################################
