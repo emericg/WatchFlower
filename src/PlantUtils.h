@@ -505,7 +505,7 @@ public:
                 if (splt->first <= splt->second) {
                     if (i >= splt->first && i <= splt->second) ret[i-1] = "1";
                 } else {
-                    if (i <= splt->first && i >= splt->second) ret[i-1] = "1";
+                    if (i >= splt->first || i <= splt->second) ret[i-1] = "1";
                 }
             }
         }
