@@ -200,7 +200,7 @@ void Plant::read_json_watchflower(QJsonObject &json)
         }
         if (infos.contains("colors_flower") && infos["colors_flower"].isArray())
         {
-            const QVariantList color = infos["flower_bract"].toArray().toVariantList();
+            const QVariantList color = infos["colors_flower"].toArray().toVariantList();
             for (const auto &c: color)
             {
                 colors_flower.push_back(c.toString());
