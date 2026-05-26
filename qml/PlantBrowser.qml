@@ -15,8 +15,8 @@ Loader {
 
     function loadScreen() {
         // load the data
-        plantDatabase.load()
-        plantDatabase.filter("")
+        PlantDatabase.load()
+        PlantDatabase.filter("")
 
         if (status === Loader.Ready) {
             // reset state
@@ -150,7 +150,7 @@ Loader {
                     selectByMouse: true
                     colorSelectedText: "white"
 
-                    onDisplayTextChanged: plantDatabase.filter(displayText)
+                    onDisplayTextChanged: PlantDatabase.filter(displayText)
 
                     Row {
                         anchors.right: parent.right
@@ -161,7 +161,7 @@ Loader {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
 
-                            text: qsTr("%1 plants").arg(((plantSearchBox.displayText) ? plantDatabase.plantCountFiltered : plantDatabase.plantCount))
+                            text: qsTr("%1 plants").arg(((plantSearchBox.displayText) ? PlantDatabase.plantCountFiltered : PlantDatabase.plantCount))
                             textFormat: Text.PlainText
                             font.pixelSize: Theme.fontSizeContentSmall
                             color: Theme.colorSubText
@@ -228,7 +228,7 @@ Loader {
                     }
                 }
 
-                model: plantDatabase.plantsFiltered
+                model: PlantDatabase.plantsFiltered
                 delegate: Rectangle {
                     width: ListView.view.width
                     height: 40

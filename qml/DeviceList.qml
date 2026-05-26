@@ -24,7 +24,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property bool splitView: settingsManager.splitView
+    property bool splitView: SettingsManager.splitView
     onSplitViewChanged: loadList()
 
     property bool deviceAvailable: deviceManager.hasDevices

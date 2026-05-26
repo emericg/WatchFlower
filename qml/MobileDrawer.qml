@@ -131,26 +131,26 @@ DrawerThemed {
                     source: "qrc:/IconLibrary/material-symbols/sort.svg"
                     text: {
                         var txt = qsTr("Order by:") + " "
-                        if (settingsManager.orderBy === "waterlevel") {
+                        if (SettingsManager.orderBy === "waterlevel") {
                             txt += qsTr("water level")
-                        } else if (settingsManager.orderBy === "plant") {
+                        } else if (SettingsManager.orderBy === "plant") {
                             txt += qsTr("plant name")
-                        } else if (settingsManager.orderBy === "model") {
+                        } else if (SettingsManager.orderBy === "model") {
                             txt += qsTr("sensor model")
-                        } else if (settingsManager.orderBy === "location") {
+                        } else if (SettingsManager.orderBy === "location") {
                             txt += qsTr("location")
                         }
                         return txt
                     }
 
                     property int sortmode: {
-                        if (settingsManager.orderBy === "waterlevel") {
+                        if (SettingsManager.orderBy === "waterlevel") {
                             return 3
-                        } else if (settingsManager.orderBy === "plant") {
+                        } else if (SettingsManager.orderBy === "plant") {
                             return 2
-                        } else if (settingsManager.orderBy === "model") {
+                        } else if (SettingsManager.orderBy === "model") {
                             return 1
-                        } else { // if (settingsManager.orderBy === "location") {
+                        } else { // if (SettingsManager.orderBy === "location") {
                             return 0
                         }
                     }
@@ -160,16 +160,16 @@ DrawerThemed {
                         if (sortmode > 3) sortmode = 0
 
                         if (sortmode === 0) {
-                            settingsManager.orderBy = "location"
+                            SettingsManager.orderBy = "location"
                             deviceManager.orderby_location()
                         } else if (sortmode === 1) {
-                            settingsManager.orderBy = "model"
+                            SettingsManager.orderBy = "model"
                             deviceManager.orderby_model()
                         } else if (sortmode === 2) {
-                            settingsManager.orderBy = "plant"
+                            SettingsManager.orderBy = "plant"
                             deviceManager.orderby_plant()
                         } else if (sortmode === 3) {
-                            settingsManager.orderBy = "waterlevel"
+                            SettingsManager.orderBy = "waterlevel"
                             deviceManager.orderby_waterlevel()
                         }
                     }

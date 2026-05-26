@@ -81,7 +81,7 @@ Loader {
         }
 
         Connections {
-            target: settingsManager
+            target: SettingsManager
             function onTempUnitChanged() {
                 updateData()
             }
@@ -242,8 +242,8 @@ Loader {
         function loadGraph() {
             //console.log("DeviceThermometer // loadGraph() >> " + currentDevice)
 
-            var reload = !(settingsManager.graphThermometer === "lines" && graphLoader.source === "charts/ChartPlantDataAio.qml") ||
-                         !(settingsManager.graphThermometer === "minmax" && graphLoader.source === "charts/ChartThermometerMinMax.qml")
+            var reload = !(SettingsManager.graphThermometer === "lines" && graphLoader.source === "charts/ChartPlantDataAio.qml") ||
+                         !(SettingsManager.graphThermometer === "minmax" && graphLoader.source === "charts/ChartThermometerMinMax.qml")
 
             if (reload) {
                 graphLoader.source = ""
@@ -251,7 +251,7 @@ Loader {
             }
 
             if (graphLoader.status !== Loader.Ready) {
-                if (settingsManager.graphThermometer === "lines") {
+                if (SettingsManager.graphThermometer === "lines") {
                     graphLoader.source = "charts/ChartPlantDataAio.qml"
                 } else {
                     graphLoader.source = "charts/ChartThermometerMinMax.qml"

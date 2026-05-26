@@ -21,7 +21,7 @@ Item {
     }
 
     Connections {
-        target: settingsManager
+        target: SettingsManager
         function onTempUnitChanged() { setTemp() }
     }
 
@@ -72,7 +72,7 @@ Item {
         var th = modelData.tempMax
         var tl = modelData.tempMin
 
-        if (settingsManager.tempUnit === "F") {
+        if (SettingsManager.tempUnit === "F") {
             th = UtilsNumber.tempCelsiusToFahrenheit(modelData.tempMax)
             tl = UtilsNumber.tempCelsiusToFahrenheit(modelData.tempMin)
         }

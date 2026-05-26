@@ -23,12 +23,17 @@
 #define NOTIFICATION_MANAGER_H
 /* ************************************************************************** */
 
+#include <QtQml/qqmlregistration.h>
+
 #include <QObject>
 #include <QString>
 
 #if defined(Q_OS_IOS)
 #include "utils_os_ios_notif.h"
 #endif
+
+class QJSEngine;
+class QQmlEngine;
 
 /* ************************************************************************** */
 
@@ -38,6 +43,8 @@
 class NotificationManager : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     Q_PROPERTY(QString notification READ getNotification WRITE setNotificationShort NOTIFY notificationChanged)
     Q_PROPERTY(bool permissionOS READ hasPermissionOS NOTIFY permissionsChanged)
@@ -69,11 +76,12 @@ Q_SIGNALS:
 
 public:
     static NotificationManager *getInstance();
+    static NotificationManager *create(QQmlEngine *, QJSEngine *);
 
     Q_INVOKABLE bool checkNotificationPermissions();
     Q_INVOKABLE bool requestNotificationPermissions();
 
-    QString getNotification() const { return m_message; }
+    const QString &getNotification() const { return m_message; }
     void setNotification(const QString &title, const QString &message, int channel = 0);
     void setNotificationShort(const QString &message);
 };

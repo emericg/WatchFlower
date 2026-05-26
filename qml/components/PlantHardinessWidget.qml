@@ -56,7 +56,7 @@ Column {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        text: plant && UtilsPlantDatabase.getHardinessText(plant.hardiness, settingsManager.tempUnit)
+        text: plant && UtilsPlantDatabase.getHardinessText(plant.hardiness, SettingsManager.tempUnit)
         color: Theme.colorText
         wrapMode: Text.WordWrap
         font.pixelSize: Theme.fontSizeContentBig

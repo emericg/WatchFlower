@@ -42,8 +42,8 @@ Loader {
             id: popupBackgroundUpdates
 
             onClosed: {
-                settingsManager.systray = utilsApp.checkMobileBackgroundLocationPermission()
-                switch_worker.checked = settingsManager.systray
+                SettingsManager.systray = utilsApp.checkMobileBackgroundLocationPermission()
+                switch_worker.checked = SettingsManager.systray
             }
         }
 
@@ -151,7 +151,7 @@ Loader {
 
                             radius: 2
                             color: "white"
-                            border.color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ddd"
+                            border.color: (SettingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ddd"
                             border.width: 2
 
                             Text {
@@ -159,13 +159,13 @@ Loader {
                                 visible: wideWideMode
                                 text: qsTr("snow")
                                 textFormat: Text.PlainText
-                                color: (settingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ccc"
+                                color: (SettingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ccc"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentSmall
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_SNOW"
+                                onClicked: SettingsManager.appTheme = "THEME_SNOW"
                             }
                         }
                         Rectangle {
@@ -177,7 +177,7 @@ Loader {
                             radius: 2
                             color: "#476cae"
                             border.color: "#06307a"
-                            border.width: (settingsManager.appTheme === "THEME_RAIN") ? 2 : 0
+                            border.width: (SettingsManager.appTheme === "THEME_RAIN") ? 2 : 0
 
                             Text {
                                 anchors.centerIn: parent
@@ -190,7 +190,7 @@ Loader {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_RAIN"
+                                onClicked: SettingsManager.appTheme = "THEME_RAIN"
                             }
                         }
                         Rectangle {
@@ -202,7 +202,7 @@ Loader {
                             radius: 2
                             color: "#09debc" // green theme colorSecondary
                             border.color: Theme.colorPrimary
-                            border.width: (settingsManager.appTheme === "THEME_PLANT") ? 2 : 0
+                            border.width: (SettingsManager.appTheme === "THEME_PLANT") ? 2 : 0
 
                             Text {
                                 anchors.centerIn: parent
@@ -215,7 +215,7 @@ Loader {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_PLANT"
+                                onClicked: SettingsManager.appTheme = "THEME_PLANT"
                             }
                         }
                         Rectangle {
@@ -227,7 +227,7 @@ Loader {
                             radius: 2
                             color: "#FFE400" // day theme colorSecondary
                             border.color: Theme.colorPrimary
-                            border.width: (settingsManager.appTheme === "THEME_DAY") ? 2 : 0
+                            border.width: (SettingsManager.appTheme === "THEME_DAY") ? 2 : 0
 
                             Text {
                                 anchors.centerIn: parent
@@ -240,7 +240,7 @@ Loader {
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_DAY"
+                                onClicked: SettingsManager.appTheme = "THEME_DAY"
                             }
                         }
                         Rectangle {
@@ -252,20 +252,20 @@ Loader {
                             radius: 2
                             color: "#555151"
                             border.color: Theme.colorPrimary
-                            border.width: (settingsManager.appTheme === "THEME_NIGHT") ? 2 : 0
+                            border.width: (SettingsManager.appTheme === "THEME_NIGHT") ? 2 : 0
 
                             Text {
                                 anchors.centerIn: parent
                                 visible: wideWideMode
                                 text: qsTr("night")
                                 textFormat: Text.PlainText
-                                color: (settingsManager.appTheme === "THEME_NIGHT") ? Theme.colorPrimary : "#ececec"
+                                color: (SettingsManager.appTheme === "THEME_NIGHT") ? Theme.colorPrimary : "#ececec"
                                 font.bold: true
                                 font.pixelSize: Theme.fontSizeContentSmall
                             }
                             MouseArea {
                                 anchors.fill: parent
-                                onClicked: settingsManager.appTheme = "THEME_NIGHT"
+                                onClicked: SettingsManager.appTheme = "THEME_NIGHT"
                             }
                         }
                     }
@@ -312,10 +312,10 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.appThemeAuto
+                        checked: SettingsManager.appThemeAuto
                         onClicked: {
-                            settingsManager.appThemeAuto = checked
-                            Theme.loadTheme(settingsManager.appTheme)
+                            SettingsManager.appThemeAuto = checked
+                            Theme.loadTheme(SettingsManager.appTheme)
                         }
                     }
                 }
@@ -340,7 +340,7 @@ Loader {
                     }
 
                     text: {
-                        if (settingsManager.appThemeAuto) {
+                        if (SettingsManager.appThemeAuto) {
                             if (osSupport) return qsTr("Dark mode will follow %1 settings.").arg(osName)
                             return qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
                         }
@@ -394,8 +394,8 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.splitView
-                        onClicked: settingsManager.splitView = checked
+                        checked: SettingsManager.splitView
+                        onClicked: SettingsManager.splitView = checked
                     }
                 }
                 Text { // legend_splitView
@@ -407,7 +407,7 @@ Loader {
                     topPadding: -12
                     bottomPadding: isDesktop ? 12 : 6
 
-                    text: settingsManager.splitView ?
+                    text: SettingsManager.splitView ?
                               qsTr("Devices will be split into categories (plant sensors, thermometers, air quality monitors)") :
                               qsTr("Devices will be shown together.")
                     textFormat: Text.PlainText
@@ -488,13 +488,13 @@ Loader {
 
                         Component.onCompleted: {
                             for (var i = 0; i < cbAppLanguage.count; i++) {
-                                if (cbAppLanguage.get(i).text === settingsManager.appLanguage)
+                                if (cbAppLanguage.get(i).text === SettingsManager.appLanguage)
                                     currentIndex = i
                             }
                         }
                         onActivated: {
                             utilsLanguage.loadLanguage(cbAppLanguage.get(currentIndex).text)
-                            settingsManager.appLanguage = cbAppLanguage.get(currentIndex).text
+                            SettingsManager.appLanguage = cbAppLanguage.get(currentIndex).text
                         }
                     }
                 }
@@ -547,8 +547,8 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.startMinimized
-                        onClicked: settingsManager.startMinimized = checked
+                        checked: SettingsManager.startMinimized
+                        onClicked: SettingsManager.startMinimized = checked
                     }
                 }
 
@@ -618,17 +618,17 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.systray
+                        checked: SettingsManager.systray
                         onClicked: {
                             if (isMobile) {
                                 if (checked) {
                                     checked = false
                                     popupBackgroundUpdates.open()
                                 } else {
-                                    settingsManager.systray = false
+                                    SettingsManager.systray = false
                                 }
                             } else {
-                                settingsManager.systray = checked
+                                SettingsManager.systray = checked
                             }
                         }
                     }
@@ -659,7 +659,7 @@ Loader {
                     bottomPadding: element_notifications.visible ? 0 : 12
                     visible: (element_worker.visible && isDesktop)
 
-                    text: settingsManager.systray ?
+                    text: SettingsManager.systray ?
                               qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
                               qsTr("WatchFlower is only active while the window is open.")
                     textFormat: Text.PlainText
@@ -680,8 +680,8 @@ Loader {
 
                     // every platforms except iOS // also, need the systray
                     visible: (Qt.platform.os !== "ios")
-                    enabled: settingsManager.systray
-                    opacity: settingsManager.systray ? 1 : 0.4
+                    enabled: SettingsManager.systray
+                    opacity: SettingsManager.systray ? 1 : 0.4
 
                     IconSvg {
                         anchors.left: parent.left
@@ -716,10 +716,10 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.notifications
+                        checked: SettingsManager.notifications
                         onClicked: {
-                            settingsManager.notifications = checked
-                            if (settingsManager.notifications) {
+                            SettingsManager.notifications = checked
+                            if (SettingsManager.notifications) {
                                 utilsApp.getMobileNotificationPermission()
                             }
                         }
@@ -732,11 +732,11 @@ Loader {
                     anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
-                    bottomPadding: settingsManager.notifications ? 0 : 12
-                    visible: (element_notifications.visible && !settingsManager.notifications)
-                    opacity: settingsManager.systray ? 1 : 0.4
+                    bottomPadding: SettingsManager.notifications ? 0 : 12
+                    visible: (element_notifications.visible && !SettingsManager.notifications)
+                    opacity: SettingsManager.systray ? 1 : 0.4
 
-                    text: settingsManager.notifications ?
+                    text: SettingsManager.notifications ?
                               qsTr("If a plant needs water, WatchFlower will bring it to your attention!") :
                               qsTr("If a plant needs water, WatchFlower can bring it to your attention.")
                     textFormat: Text.PlainText
@@ -754,7 +754,7 @@ Loader {
                     anchors.rightMargin: contentColumn.paddingRight
 
                     topPadding: -12
-                    visible: settingsManager.systray && settingsManager.notifications
+                    visible: SettingsManager.systray && SettingsManager.notifications
 
                     Item {
                         anchors.left: parent.left
@@ -781,8 +781,8 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
-                            checked: settingsManager.notif_battery
-                            onClicked: settingsManager.notif_battery = checked
+                            checked: SettingsManager.notif_battery
+                            onClicked: SettingsManager.notif_battery = checked
                         }
                     }
                     Item {
@@ -810,8 +810,8 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
-                            checked: settingsManager.notif_water
-                            onClicked: settingsManager.notif_water = checked
+                            checked: SettingsManager.notif_water
+                            onClicked: SettingsManager.notif_water = checked
                         }
                     }
                     Item {
@@ -840,8 +840,8 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
-                            checked: settingsManager.notif_subzero
-                            onClicked: settingsManager.notif_subzero = checked
+                            checked: SettingsManager.notif_subzero
+                            onClicked: SettingsManager.notif_subzero = checked
                         }
                     }
                     Item {
@@ -870,8 +870,8 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
                             z: 1
 
-                            checked: settingsManager.notif_env
-                            onClicked: settingsManager.notif_env = checked
+                            checked: SettingsManager.notif_env
+                            onClicked: SettingsManager.notif_env = checked
                         }
                     }
                 }
@@ -927,8 +927,8 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.bluetoothControl
-                        onClicked: settingsManager.bluetoothControl = checked
+                        checked: SettingsManager.bluetoothControl
+                        onClicked: SettingsManager.bluetoothControl = checked
                     }
                 }
                 Text { // legend_bluetoothControl
@@ -941,7 +941,7 @@ Loader {
                     bottomPadding: 0
                     visible: (Qt.platform.os === "android")
 
-                    text: settingsManager.bluetoothControl ? qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
+                    text: SettingsManager.bluetoothControl ? qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
                                                              qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.")
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
@@ -991,8 +991,8 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.bluetoothLimitScanningRange
-                        onClicked: settingsManager.bluetoothLimitScanningRange = checked
+                        checked: SettingsManager.bluetoothLimitScanningRange
+                        onClicked: SettingsManager.bluetoothLimitScanningRange = checked
                     }
                 }
                 Text { // legend_bluetoothRange
@@ -1004,7 +1004,7 @@ Loader {
                     topPadding: -12
                     bottomPadding: 0
 
-                    text: settingsManager.bluetoothLimitScanningRange ?
+                    text: SettingsManager.bluetoothLimitScanningRange ?
                               qsTr("Will only scan for sensors approximately 2 meters around you.") :
                               qsTr("Sensor scanning range is not limited.")
                     textFormat: Text.PlainText
@@ -1066,8 +1066,8 @@ Loader {
                         snapMode: Slider.SnapOnRelease
                         wheelEnabled: false
 
-                        value: settingsManager.bluetoothSimUpdates
-                        onMoved: settingsManager.bluetoothSimUpdates = value
+                        value: SettingsManager.bluetoothSimUpdates
+                        onMoved: SettingsManager.bluetoothSimUpdates = value
                     }
                     SpinBoxThemedMobile {
                         id: spinBox_bluetoothSimUpdate
@@ -1085,8 +1085,8 @@ Loader {
                         stepSize: 1
                         editable: false
 
-                        value: settingsManager.bluetoothSimUpdates
-                        onValueModified: settingsManager.bluetoothSimUpdates = value
+                        value: SettingsManager.bluetoothSimUpdates
+                        onValueModified: SettingsManager.bluetoothSimUpdates = value
                     }
                 }
                 Text { // legend_bluetoothSimUpdate
@@ -1165,8 +1165,8 @@ Loader {
                         editable: false
                         wheelEnabled: isDesktop
 
-                        value: (settingsManager.updateIntervalPlant / 60)
-                        onValueModified: settingsManager.updateIntervalPlant = (value * 60)
+                        value: (SettingsManager.updateIntervalPlant / 60)
+                        onValueModified: SettingsManager.updateIntervalPlant = (value * 60)
                     }
                 }
 
@@ -1226,10 +1226,10 @@ Loader {
                                 ListElement { idx: 2; txt: qsTr("solid"); src: ""; sz: 16; }
                             }
 
-                            currentSelection: (settingsManager.bigIndicator) ? 2 : 1
+                            currentSelection: (SettingsManager.bigIndicator) ? 2 : 1
                             onMenuSelected: (index) => {
                                 currentSelection = index
-                                settingsManager.bigIndicator = (index === 2)
+                                SettingsManager.bigIndicator = (index === 2)
                             }
                         }
 
@@ -1242,10 +1242,10 @@ Loader {
                                 ListElement { idx: 2; txt: qsTr("dynamic"); src: ""; sz: 16; }
                             }
 
-                            currentSelection: (settingsManager.dynaScale) ? 2 : 1
+                            currentSelection: (SettingsManager.dynaScale) ? 2 : 1
                             onMenuSelected: (index) => {
                                 currentSelection = index
-                                settingsManager.dynaScale = (index === 2)
+                                SettingsManager.dynaScale = (index === 2)
                             }
                         }
                     }
@@ -1263,17 +1263,17 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.verticalCenterOffset: -8
 
-                            visible: !settingsManager.bigIndicator
+                            visible: !SettingsManager.bigIndicator
                             width: singleColumn ? parent.width : element_plant_indicators_selector.width
 
                             animated: false
                             legend: qsTr("preview")
-                            suffix: "°" + settingsManager.tempUnit
+                            suffix: "°" + SettingsManager.tempUnit
                             colorForeground: Theme.colorLightGrey
 
                             value: 24
-                            valueMin: settingsManager.dynaScale ? 16 : 0
-                            valueMax: settingsManager.dynaScale ? 32 : 40
+                            valueMin: SettingsManager.dynaScale ? 16 : 0
+                            valueMax: SettingsManager.dynaScale ? 32 : 40
                             limitMin: 20
                             limitMax: 28
                         }
@@ -1284,17 +1284,17 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
                             anchors.verticalCenterOffset: -8
 
-                            visible: settingsManager.bigIndicator
+                            visible: SettingsManager.bigIndicator
                             width: singleColumn ? parent.width : element_plant_indicators_selector.width
 
                             animated: false
                             legend: qsTr("preview")
-                            suffix: "°" + settingsManager.tempUnit
+                            suffix: "°" + SettingsManager.tempUnit
                             colorForeground: Theme.colorLightGrey
 
                             value: 24
-                            valueMin: settingsManager.dynaScale ? 16 : 0
-                            valueMax: settingsManager.dynaScale ? 32 : 40
+                            valueMin: SettingsManager.dynaScale ? 16 : 0
+                            valueMax: SettingsManager.dynaScale ? 32 : 40
                             limitMin: 20
                             limitMax: 28
                         }
@@ -1359,8 +1359,8 @@ Loader {
                         editable: false
                         wheelEnabled: isDesktop
 
-                        value: (settingsManager.updateIntervalThermo / 60)
-                        onValueModified: settingsManager.updateIntervalThermo = (value * 60)
+                        value: (SettingsManager.updateIntervalThermo / 60)
+                        onValueModified: SettingsManager.updateIntervalThermo = (value * 60)
                     }
                 }
 
@@ -1410,10 +1410,10 @@ Loader {
                             ListElement { idx: 2; txt: qsTr("°F"); src: ""; sz: 16; }
                         }
 
-                        currentSelection: (settingsManager.tempUnit === 'C') ? 1 : 2
+                        currentSelection: (SettingsManager.tempUnit === 'C') ? 1 : 2
                         onMenuSelected: (index) => {
                             currentSelection = index
-                            settingsManager.tempUnit = (index === 1) ? 'C' : 'F'
+                            SettingsManager.tempUnit = (index === 1) ? 'C' : 'F'
                         }
                     }
                 }
@@ -1468,16 +1468,16 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
                         z: 1
 
-                        checked: settingsManager.sunandmoon
+                        checked: SettingsManager.sunandmoon
                         onClicked: {
-                            settingsManager.sunandmoon = checked
+                            SettingsManager.sunandmoon = checked
                             element_sunandmoon.updateSunAndMoon()
                         }
                     }
 
                     function updateSunAndMoon() {
                         var currentDate = new Date()
-                        sunAndMoon.set(settingsManager.latitude, settingsManager.longitude, currentDate)
+                        sunAndMoon.set(SettingsManager.latitude, SettingsManager.longitude, currentDate)
                     }
                 }
 
@@ -1507,7 +1507,7 @@ Loader {
                     anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
-                    visible: settingsManager.sunandmoon
+                    visible: SettingsManager.sunandmoon
 
                     IconSvg {
                         anchors.left: parent.left
@@ -1547,9 +1547,9 @@ Loader {
                         TextFieldThemed { // display position
                             width: contentWidth + leftPadding*2
                             readOnly: true
-                            visible: settingsManager.locationSet && !rowPosition.manualEdit
+                            visible: SettingsManager.locationSet && !rowPosition.manualEdit
                             text: {
-                                settingsManager.latitude.toFixed(3) + ", " + settingsManager.longitude.toFixed(3)
+                                SettingsManager.latitude.toFixed(3) + ", " + SettingsManager.longitude.toFixed(3)
                             }
                         }
 
@@ -1568,13 +1568,13 @@ Loader {
                             colorBorder: latitudeEdit.acceptableInput ? Theme.colorComponentBorder : Theme.colorWarning
 
                             text: {
-                                settingsManager.latitude.toFixed(3)
+                                SettingsManager.latitude.toFixed(3)
                             }
                             onEditingFinished: {
                                 //console.log("latitudeEdit.onEditingFinished: " + text + " - " + displayText)
-                                settingsManager.latitude = latitudeEdit.displayText
+                                SettingsManager.latitude = latitudeEdit.displayText
                                 element_sunandmoon.updateSunAndMoon()
-                                latitudeEdit.text = settingsManager.latitude.toFixed(3)
+                                latitudeEdit.text = SettingsManager.latitude.toFixed(3)
                             }
                         }
                         TextFieldThemed { // edit longitude
@@ -1592,12 +1592,12 @@ Loader {
                             colorBorder: longitudeEdit.acceptableInput ? Theme.colorComponentBorder : Theme.colorWarning
 
                             text: {
-                                settingsManager.longitude.toFixed(3)
+                                SettingsManager.longitude.toFixed(3)
                             }
                             onEditingFinished: {
                                 //console.log("longitudeEdit.onEditingFinished: " + text + " - " + displayText)
-                                settingsManager.longitude = longitudeEdit.displayText
-                                longitudeEdit.text = settingsManager.longitude.toFixed(3)
+                                SettingsManager.longitude = longitudeEdit.displayText
+                                longitudeEdit.text = SettingsManager.longitude.toFixed(3)
                                 element_sunandmoon.updateSunAndMoon()
                             }
                         }
@@ -1656,8 +1656,8 @@ Loader {
                             }
                             onPositionChanged: {
                                 if (position.horizontalAccuracy < 3333) {
-                                    settingsManager.latitude = position.coordinate.latitude
-                                    settingsManager.longitude = position.coordinate.longitude
+                                    SettingsManager.latitude = position.coordinate.latitude
+                                    SettingsManager.longitude = position.coordinate.longitude
                                     element_sunandmoon.updateSunAndMoon()
                                 }
                                 if (position.horizontalAccuracy < 100) {
@@ -1670,8 +1670,8 @@ Loader {
 
                                 if (position.latitudeValid && position.longitudeValid) {
                                     if (position.horizontalAccuracy < 3333) {
-                                        settingsManager.latitude = position.coordinate.latitude
-                                        settingsManager.longitude = position.coordinate.longitude
+                                        SettingsManager.latitude = position.coordinate.latitude
+                                        SettingsManager.longitude = position.coordinate.longitude
                                         element_sunandmoon.updateSunAndMoon()
                                     }
                                 }
@@ -1715,8 +1715,8 @@ Loader {
                             console.log("Accuracy  : ", position.horizontalAccuracy)
 
                             if (position.latitudeValid && position.longitudeValid) {
-                                settingsManager.latitude = position.coordinate.latitude
-                                settingsManager.longitude = position.coordinate.longitude
+                                SettingsManager.latitude = position.coordinate.latitude
+                                SettingsManager.longitude = position.coordinate.longitude
 
                                 //geocodeModel.query = position.coordinate
                                 //geocodeModel.update()

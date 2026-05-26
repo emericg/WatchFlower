@@ -270,12 +270,12 @@ Window {
                     //console.log("Qt.ApplicationActive")
 
                     // Update sun position
-                    if (sunAndMoon && settingsManager.sunandmoon) {
+                    if (sunAndMoon && SettingsManager.sunandmoon) {
                         sunAndMoon.update()
                     }
 
                     // Check if we need an 'automatic' theme change
-                    Theme.loadTheme(settingsManager.appTheme)
+                    Theme.loadTheme(SettingsManager.appTheme)
 
                     if (appContent.state === "DeviceBrowser") {
                         // Restart the device browser

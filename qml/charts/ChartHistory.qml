@@ -402,7 +402,7 @@ Item {
 
             text: {
                 if (ddd === ChartHistory.Data.Temperature || ddd === ChartHistory.Data.SoilTemperature)
-                    if (settingsManager.tempUnit === "F")
+                    if (SettingsManager.tempUnit === "F")
                         return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix
                 return value.toFixed(floatprecision) + suffix
             }
@@ -433,7 +433,7 @@ Item {
             color: "white"
             text: {
                 if (ddd === ChartHistory.Data.Temperature || ddd === ChartHistory.Data.SoilTemperature)
-                    if (settingsManager.tempUnit === "F")
+                    if (SettingsManager.tempUnit === "F")
                         return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix.replace("<br>", "")
                 return value.toFixed(floatprecision) + suffix.replace("<br>", "")
             }

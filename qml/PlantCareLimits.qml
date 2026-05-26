@@ -279,10 +279,13 @@ Flickable {
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
-                unit: "°"
                 from: currentDevice.deviceIsOutside ? 0 : 12
                 to: currentDevice.deviceIsOutside ? 50 : 32
                 stepSize: 1
+
+                unit: "°"
+                value_unit: "°C"
+                display_unit: (SettingsManager.tempUnit === "F") ? "°F" : "°C"
 
                 first.onPressedChanged: plantSensorPages.interactive = !first.pressed
                 first.onMoved: {

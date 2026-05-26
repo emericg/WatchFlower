@@ -23,10 +23,15 @@
 #define PLANT_DATABASE_H
 /* ************************************************************************** */
 
+#include <QtQml/qqmlregistration.h>
+
 #include <QObject>
 #include <QString>
 #include <QVariant>
 #include <QList>
+
+class QJSEngine;
+class QQmlEngine;
 
 class Plant;
 
@@ -35,6 +40,8 @@ class Plant;
 class PlantDatabase: public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     QList <QObject *> m_plants;
     Q_PROPERTY(QVariant plants READ getPlants NOTIFY plantsChanged)
@@ -65,6 +72,7 @@ Q_SIGNALS:
 
 public:
     static PlantDatabase *getInstance();
+    static PlantDatabase *create(QQmlEngine *, QJSEngine *);
 
     Q_INVOKABLE bool load();
     Q_INVOKABLE void filter(const QString &filter);

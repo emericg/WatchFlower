@@ -23,20 +23,20 @@ ApplicationWindow {
     minimumHeight: isHdpi ? 480 : 560
 
     width: {
-        if (settingsManager.initialSize.width > 0)
-            return settingsManager.initialSize.width
+        if (SettingsManager.initialSize.width > 0)
+            return SettingsManager.initialSize.width
         else
             return isHdpi ? 800 : 1280
     }
     height: {
-        if (settingsManager.initialSize.height > 0)
-            return settingsManager.initialSize.height
+        if (SettingsManager.initialSize.height > 0)
+            return SettingsManager.initialSize.height
         else
             return isHdpi ? 560 : 720
     }
-    x: settingsManager.initialPosition.width
-    y: settingsManager.initialPosition.height
-    visibility: settingsManager.initialVisibility
+    x: SettingsManager.initialPosition.width
+    y: SettingsManager.initialPosition.height
+    visibility: SettingsManager.initialVisibility
     visible: true
 
     WindowGeometrySaver {
@@ -45,7 +45,7 @@ ApplicationWindow {
             // Make sure we handle window visibility correctly
             if (startMinimized) {
                 visible = false
-                if (settingsManager.systray) {
+                if (SettingsManager.systray) {
                     visibility = Window.Hidden
                 } else {
                     visibility = Window.Minimized
@@ -167,13 +167,13 @@ ApplicationWindow {
     }
 
     Connections {
-        target: systrayManager
+        target: SystrayManager
         function onSensorsClicked() { screenDeviceList.loadScreen() }
         function onSettingsClicked() { screenSettings.loadScreen() }
     }
 
     Connections {
-        target: menubarManager
+        target: MenubarManager
         function onSensorsClicked() { screenDeviceList.loadScreen() }
         function onSettingsClicked() { screenSettings.loadScreen() }
         function onAboutClicked() { screenAbout.loadScreen() }
@@ -192,12 +192,12 @@ ApplicationWindow {
                     //console.log("Qt.ApplicationActive")
 
                     // Update sun position
-                    if (sunAndMoon && settingsManager.sunandmoon) {
+                    if (sunAndMoon && SettingsManager.sunandmoon) {
                         sunAndMoon.update()
                     }
 
                     // Check if we need an 'automatic' theme change
-                    Theme.loadTheme(settingsManager.appTheme)
+                    Theme.loadTheme(SettingsManager.appTheme)
 
                     if (appContent.state === "DeviceBrowser") {
                         // Restart the device browser
@@ -216,14 +216,14 @@ ApplicationWindow {
         //console.log("onVisibilityChanged(" + visibility + ")")
 
         if (visibility === Window.Hidden) {
-            if (settingsManager.systray && Qt.platform.os === "osx") {
+            if (SettingsManager.systray && Qt.platform.os === "osx") {
                 utilsDock.toggleDockIconVisibility(false)
             }
         }
         if (visibility === Window.AutomaticVisibility ||
             visibility === Window.Minimized || visibility === Window.Maximized ||
             visibility === Window.Windowed || visibility === Window.FullScreen) {
-             if (settingsManager.systray && Qt.platform.os === "osx") {
+             if (SettingsManager.systray && Qt.platform.os === "osx") {
                  utilsDock.toggleDockIconVisibility(true)
              }
          }
@@ -581,7 +581,7 @@ ApplicationWindow {
         //console.log("onClosing(" + close + ")")
 
         // macOS hide in dock
-        if (settingsManager.systray || Qt.platform.os === "osx") {
+        if (SettingsManager.systray || Qt.platform.os === "osx") {
             close.accepted = false
             appWindow.hide()
             return

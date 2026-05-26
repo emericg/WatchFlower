@@ -45,7 +45,7 @@ Item {
 
     function loadIndicators() {
         if (indicatorsLoader.status !== Loader.Ready) {
-            if (settingsManager.bigIndicator)
+            if (SettingsManager.bigIndicator)
                 indicatorsLoader.source = "components/IndicatorsSolid.qml"
             else
                 indicatorsLoader.source = "components/IndicatorsCompact.qml"
@@ -54,7 +54,7 @@ Item {
         }
     }
     function reloadIndicators() {
-        if (settingsManager.bigIndicator)
+        if (SettingsManager.bigIndicator)
             indicatorsLoader.source = "components/IndicatorsSolid.qml"
         else
             indicatorsLoader.source = "components/IndicatorsCompact.qml"

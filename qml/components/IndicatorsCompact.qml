@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
+import WatchFlower
 
 Item {
     id: indicatorsCompact
@@ -57,7 +58,7 @@ Item {
     }
 
     function tempHelper(tempDeg) {
-        return (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
+        return (SettingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(tempDeg) : tempDeg
     }
 
     function updateData() {
@@ -147,7 +148,7 @@ Item {
 
             value: currentDevice.soilMoisture
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.hygroMax*1.10) : 50
+            valueMax: SettingsManager.dynaScale ? Math.ceil(currentDevice.hygroMax*1.10) : 50
             limitMin: currentDevice.soilMoisture_limitMin
             limitMax: currentDevice.soilMoisture_limitMax
         }
@@ -167,7 +168,7 @@ Item {
 
             value: currentDevice.soilConductivity
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 2000
+            valueMax: SettingsManager.dynaScale ? Math.ceil(currentDevice.conduMax*1.10) : 2000
             limitMin: currentDevice.soilConductivity_limitMin
             limitMax: currentDevice.soilConductivity_limitMax
         }
@@ -181,14 +182,14 @@ Item {
 
             legend: qsTr("Soil temp.")
             legendWidth: indicatorsCompact.legendWidth
-            suffix: "°" + settingsManager.tempUnit
+            suffix: "°" + SettingsManager.tempUnit
             colorForeground: Qt.darker(Theme.colorGreen, 1.1)
             colorBackground: indicatorsCompact.colorBackground
 
             floatprecision: 1
             value: tempHelper(currentDevice.soilTemperature)
-            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
-            valueMax: tempHelper(settingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
+            valueMin: tempHelper(SettingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
+            valueMax: tempHelper(SettingsManager.dynaScale ? (currentDevice.tempMax*1.20) : tempHelper(40))
             limitMin: 0
             limitMax: 0
         }
@@ -224,14 +225,14 @@ Item {
             legend: qsTr("Temperature")
             legendWidth: indicatorsCompact.legendWidth
             warning: true
-            suffix: "°" + settingsManager.tempUnit
+            suffix: "°" + SettingsManager.tempUnit
             colorForeground: Theme.colorGreen
             colorBackground: indicatorsCompact.colorBackground
 
             floatprecision: 1
             value: currentDevice.temperature
-            valueMin: tempHelper(settingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
-            valueMax: tempHelper(settingsManager.dynaScale ? Math.ceil(currentDevice.tempMax*1.20) : tempHelper(40))
+            valueMin: tempHelper(SettingsManager.dynaScale ? Math.floor(currentDevice.tempMin*0.80) : tempHelper(0))
+            valueMax: tempHelper(SettingsManager.dynaScale ? Math.ceil(currentDevice.tempMax*1.20) : tempHelper(40))
             limitMin: tempHelper(currentDevice.temperature_limitMin)
             limitMax: tempHelper(currentDevice.temperature_limitMax)
         }
@@ -271,7 +272,7 @@ Item {
 
             value: currentDevice.luminosityLux
             valueMin: 0
-            valueMax: settingsManager.dynaScale ? Math.ceil(currentDevice.luxMax*1.10) : 10000
+            valueMax: SettingsManager.dynaScale ? Math.ceil(currentDevice.luxMax*1.10) : 10000
             limitMin: currentDevice.luminosityLux_limitMin
             limitMax: currentDevice.luminosityLux_limitMax
         }

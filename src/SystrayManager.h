@@ -47,6 +47,8 @@ class QQuickWindow;
 class SystrayManager: public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     QApplication *m_saved_app = nullptr;
     QQuickWindow *m_saved_window = nullptr;

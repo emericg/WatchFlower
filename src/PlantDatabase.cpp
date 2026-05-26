@@ -42,6 +42,11 @@ PlantDatabase *PlantDatabase::getInstance()
     return instance;
 }
 
+PlantDatabase *PlantDatabase::create(QQmlEngine *, QJSEngine *)
+{
+    return getInstance();
+}
+
 PlantDatabase::PlantDatabase()
 {
     //

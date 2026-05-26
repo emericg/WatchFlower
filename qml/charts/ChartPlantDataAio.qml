@@ -8,17 +8,17 @@ Item {
     anchors.fill: parent
 
     property bool useOpenGL: true
-    property bool showGraphDots: settingsManager.graphAioShowDots
+    property bool showGraphDots: SettingsManager.graphAioShowDots
     property color legendColor: Theme.colorSubText
 
-    property int daysTarget: settingsManager.graphAioDays
+    property int daysTarget: SettingsManager.graphAioDays
     property int daysVisible: 0
-    property int daysTick: isPhone ? 4 : settingsManager.graphAioDays
+    property int daysTick: isPhone ? 4 : SettingsManager.graphAioDays
 
     ////////////////////////////////////////////////////////////////////////////
 
     Connections {
-        target: settingsManager
+        target: SettingsManager
         function onGraphAioDaysChanged() {
             updateGraph()
             clickableGraphArea.forceUpdate()
@@ -61,7 +61,7 @@ Item {
 
         // graph visibility
         aioGraph.visible = (tempData.count > 1)
-        showGraphDots = (settingsManager.graphAioShowDots && tempData.count < 16)
+        showGraphDots = (SettingsManager.graphAioShowDots && tempData.count < 16)
 
         //// AXIS
         axisHygro.min = 0
@@ -347,7 +347,7 @@ Item {
                                                   tempData.at(i).y, -99, lumiData.at(i).y)
                 } else if (appContent.state === "DeviceThermometer") {
                     dataIndicator.visible = true
-                    dataIndicatorTxt.text = (settingsManager.tempUnit === "F") ?
+                    dataIndicatorTxt.text = (SettingsManager.tempUnit === "F") ?
                                             UtilsNumber.tempCelsiusToFahrenheit(tempData.at(i).y).toFixed(1) + qsTr("°F") :
                                             tempData.at(i).y.toFixed(1) + qsTr("°C")
                     dataIndicatorTxt.text += " " + hygroData.at(i).y.toFixed(0) + "%"
@@ -375,7 +375,7 @@ Item {
             } else if (appContent.state === "DeviceThermometer") {
                 dataIndicator.visible = true
                 var temmp = qpoint_lerp(tempData.at(x1), tempData.at(x2), verticalIndicator.clickedCoordinates.x)
-                dataIndicatorTxt.text = (settingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
+                dataIndicatorTxt.text = (SettingsManager.tempUnit === "F") ? UtilsNumber.tempCelsiusToFahrenheit(temmp).toFixed(1) + "°F" : temmp.toFixed(1) + "°C"
                 dataIndicatorTxt.text += " " + qpoint_lerp(hygroData.at(x1), hygroData.at(x2), verticalIndicator.clickedCoordinates.x).toFixed(0) + "%"
             }
         }
@@ -575,17 +575,17 @@ Item {
                 }
 
                 currentSelection: {
-                    if (settingsManager.graphAioDays === 31) return 1
-                    if (settingsManager.graphAioDays === 14) return 2
-                    if (settingsManager.graphAioDays === 7) return 3
+                    if (SettingsManager.graphAioDays === 31) return 1
+                    if (SettingsManager.graphAioDays === 14) return 2
+                    if (SettingsManager.graphAioDays === 7) return 3
                     return 2
                 }
 
                 onMenuSelected: (index) => {
-                    if (index === 1) settingsManager.graphAioDays = 31
-                    else if (index === 2) settingsManager.graphAioDays = 14
-                    else if (index === 3) settingsManager.graphAioDays = 7
-                    else settingsManager.graphAioDays = 14
+                    if (index === 1) SettingsManager.graphAioDays = 31
+                    else if (index === 2) SettingsManager.graphAioDays = 14
+                    else if (index === 3) SettingsManager.graphAioDays = 7
+                    else SettingsManager.graphAioDays = 14
                 }
             }
         }

@@ -1560,10 +1560,13 @@ Grid {
                     enabled: false
                     colorBackground: Theme.colorYellow
                     colorForeground: Theme.colorGreen
-                    unit: "°"
                     from: 0
                     to: 40
                     stepSize: 1
+
+                    unit: "°"
+                    value_unit: "°C"
+                    display_unit: (SettingsManager.tempUnit === "F") ? "°F" : "°C"
                 }
             }
 

@@ -46,7 +46,7 @@ Item {
         }
     }
     Connections {
-        target: settingsManager
+        target: SettingsManager
         function onAppLanguageChanged() {
             updateSensorTitle()
             updateSensorStatus()

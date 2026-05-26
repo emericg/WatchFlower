@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
+import WatchFlower
 
 Rectangle {
     id: actionbarBluetoothStatus
@@ -73,7 +74,7 @@ Rectangle {
                 deviceManager.requestBluetoothPermissions()
             }
             if (!deviceManager.bluetoothEnabled) {
-                deviceManager.enableBluetooth(settingsManager.bluetoothControl)
+                deviceManager.enableBluetooth(SettingsManager.bluetoothControl)
             }
             deviceManager.checkBluetooth()
         }

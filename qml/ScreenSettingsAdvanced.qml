@@ -170,8 +170,8 @@ Loader {
                         id: switch_mysql
 
                         text: "Enable MySQL database support"
-                        checked: settingsManager.mysql
-                        onClicked: settingsManager.mysql = checked
+                        checked: SettingsManager.mysql
+                        onClicked: SettingsManager.mysql = checked
                     }
 
                     Text {
@@ -196,7 +196,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin + 8
 
-                    active: isDesktop && settingsManager.mysql
+                    active: isDesktop && SettingsManager.mysql
                     asynchronous: true
                     sourceComponent: dbSettingsScalable
                 }
@@ -221,7 +221,7 @@ Loader {
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        text: databaseManager.getDatabaseDirectory()
+                        text: DatabaseManager.getDatabaseDirectory()
                         readOnly: true
 
                         ButtonFlat {
@@ -243,14 +243,14 @@ Loader {
 
                         ButtonFlat {
                             text: "save"
-                            onClicked: databaseManager.saveDatabase()
+                            onClicked: DatabaseManager.saveDatabase()
                         }
 
                         ButtonFlat {
                             color: Theme.colorWarning
 
                             text: "restore"
-                            //onPressAndHold: databaseManager.restoreDatabase()
+                            //onPressAndHold: DatabaseManager.restoreDatabase()
                         }
                     }
                 }
@@ -275,7 +275,7 @@ Loader {
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        text: settingsManager.getSettingsDirectory()
+                        text: SettingsManager.getSettingsDirectory()
                         readOnly: true
 
                         ButtonFlat {
@@ -299,7 +299,7 @@ Loader {
                             anchors.verticalCenter: parent.verticalCenter
 
                             text: "save"
-                            onClicked: settingsManager.saveSettings()
+                            onClicked: SettingsManager.saveSettings()
                         }
 
                         ButtonFlat {
@@ -307,7 +307,7 @@ Loader {
                             color: Theme.colorWarning
 
                             text: "restore"
-                            //onPressAndHold: settingsManager.restoreSettings()
+                            //onPressAndHold: SettingsManager.restoreSettings()
                         }
                     }
                 }
@@ -332,8 +332,8 @@ Loader {
                         id: switch_logs
 
                         text: "Enable logging"
-                        //checked: settingsManager.logging
-                        //onClicked: settingsManager.logging = checked
+                        //checked: SettingsManager.logging
+                        //onClicked: SettingsManager.logging = checked
                     }
 
                     Row {
@@ -417,8 +417,8 @@ Loader {
                     height: 36
 
                     placeholderText: qsTr("Host")
-                    text: settingsManager.mysqlHost
-                    onEditingFinished: settingsManager.mysqlHost = text
+                    text: SettingsManager.mysqlHost
+                    onEditingFinished: SettingsManager.mysqlHost = text
                     selectByMouse: true
 
                     IconSvg {
@@ -438,8 +438,8 @@ Loader {
                     height: 36
 
                     placeholderText: qsTr("Port")
-                    text: settingsManager.mysqlPort
-                    onEditingFinished: settingsManager.mysqlPort = parseInt(text, 10)
+                    text: SettingsManager.mysqlPort
+                    onEditingFinished: SettingsManager.mysqlPort = parseInt(text, 10)
                     validator: IntValidator { bottom: 1; top: 65535; }
                     selectByMouse: true
 
@@ -460,8 +460,8 @@ Loader {
                     height: 36
 
                     placeholderText: qsTr("User")
-                    text: settingsManager.mysqlUser
-                    onEditingFinished: settingsManager.mysqlUser = text
+                    text: SettingsManager.mysqlUser
+                    onEditingFinished: SettingsManager.mysqlUser = text
                     selectByMouse: true
 
                     IconSvg {
@@ -481,8 +481,8 @@ Loader {
                     height: 36
 
                     placeholderText: qsTr("Password")
-                    text: settingsManager.mysqlPassword
-                    onEditingFinished: settingsManager.mysqlPassword = text
+                    text: SettingsManager.mysqlPassword
+                    onEditingFinished: SettingsManager.mysqlPassword = text
                     selectByMouse: true
                     echoMode: TextInput.PasswordEchoOnEdit
 

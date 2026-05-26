@@ -81,7 +81,7 @@ Loader {
         }
 
         Connections {
-            target: settingsManager
+            target: SettingsManager
 
             function onBigIndicatorChanged() {
                 plantSensorData.reloadIndicators()

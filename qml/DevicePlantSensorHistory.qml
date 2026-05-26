@@ -91,15 +91,15 @@ Item {
         var today = new Date()
         var offset = 0
 
-        if (settingsManager.graphHistory === "daily") {
+        if (SettingsManager.graphHistory === "daily") {
             offset = selector_day.value
-        } else if (settingsManager.graphHistory === "weekly") {
+        } else if (SettingsManager.graphHistory === "weekly") {
             offset = selector_week.value
-        } else if (settingsManager.graphHistory === "monthly") {
+        } else if (SettingsManager.graphHistory === "monthly") {
             offset = selector_month.value
         }
 
-        if (settingsManager.graphHistory === "daily") {
+        if (SettingsManager.graphHistory === "daily") {
 
             if (offset === 0) {
                 currentDevice.updateChartData_history_today()
@@ -109,7 +109,7 @@ Item {
                 currentDevice.updateChartData_history_day(d1)
             }
 
-        } else if (settingsManager.graphHistory === "weekly") {
+        } else if (SettingsManager.graphHistory === "weekly") {
 
             if (offset === 0) {
                 currentDevice.updateChartData_history_thisweek()
@@ -126,7 +126,7 @@ Item {
                 currentDevice.updateChartData_history_week(w1, w2)
             }
 
-        } else if (settingsManager.graphHistory === "monthly") {
+        } else if (SettingsManager.graphHistory === "monthly") {
 
             if (offset === 0) {
                 currentDevice.updateChartData_history_thismonth(30)
@@ -141,11 +141,11 @@ Item {
     }
 
     function updateHistoryMode() {
-        if (settingsManager.graphHistory === "daily") {
+        if (SettingsManager.graphHistory === "daily") {
             graphGrid.mode = ChartHistory.Span.Daily
-        } else if (settingsManager.graphHistory === "weekly") {
+        } else if (SettingsManager.graphHistory === "weekly") {
             graphGrid.mode = ChartHistory.Span.Weekly
-        } else if (settingsManager.graphHistory === "monthly") {
+        } else if (SettingsManager.graphHistory === "monthly") {
             graphGrid.mode = ChartHistory.Span.Monthly
         }
     }
@@ -288,15 +288,15 @@ Item {
                 height: isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
-                colorBackground: (settingsManager.graphHistory === "monthly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
-                colorText: (settingsManager.graphHistory === "monthly") ? "white" : color
+                colorBackground: (SettingsManager.graphHistory === "monthly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: (SettingsManager.graphHistory === "monthly") ? "white" : color
 
                 text: qsTr("Month")
                 onClicked: {
-                    if (settingsManager.graphHistory === "monthly") {
+                    if (SettingsManager.graphHistory === "monthly") {
                         selectors.visible = !(selectors.visible && selector_month.value === 0)
                     } else {
-                        settingsManager.graphHistory = "monthly"
+                        SettingsManager.graphHistory = "monthly"
                         if (!selectors.visible && selector_month.value !== 0) selectors.visible = true
                     }
                 }
@@ -307,15 +307,15 @@ Item {
                 height: isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
-                colorBackground: (settingsManager.graphHistory === "weekly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
-                colorText: (settingsManager.graphHistory === "weekly") ? "white" : color
+                colorBackground: (SettingsManager.graphHistory === "weekly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: (SettingsManager.graphHistory === "weekly") ? "white" : color
 
                 text: qsTr("Week")
                 onClicked: {
-                    if (settingsManager.graphHistory === "weekly") {
+                    if (SettingsManager.graphHistory === "weekly") {
                         selectors.visible = !(selectors.visible && selector_week.value === 0)
                     } else {
-                        settingsManager.graphHistory = "weekly"
+                        SettingsManager.graphHistory = "weekly"
                         if (!selectors.visible && selector_week.value !== 0) selectors.visible = true
                     }
                 }
@@ -326,15 +326,15 @@ Item {
                 height: isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
-                colorBackground: (settingsManager.graphHistory === "daily") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
-                colorText: (settingsManager.graphHistory === "daily") ? "white" : color
+                colorBackground: (SettingsManager.graphHistory === "daily") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
+                colorText: (SettingsManager.graphHistory === "daily") ? "white" : color
 
                 text: qsTr("Day")
                 onClicked: {
-                    if (settingsManager.graphHistory === "daily") {
+                    if (SettingsManager.graphHistory === "daily") {
                         selectors.visible = !(selectors.visible && selector_day.value === 0)
                     } else {
-                        settingsManager.graphHistory = "daily"
+                        SettingsManager.graphHistory = "daily"
                         if (!selectors.visible && selector_day.value !== 0) selectors.visible = true
                     }
                 }
@@ -390,7 +390,7 @@ Item {
             id: selector_month
             width: buttonPanel.width
             height: isPhone ? 32 : 36
-            visible: (settingsManager.graphHistory === "monthly")
+            visible: (SettingsManager.graphHistory === "monthly")
 
             from: -2
             to: 0
@@ -403,7 +403,7 @@ Item {
             id: selector_week
             width: buttonPanel.width
             height: isPhone ? 32 : 36
-            visible: (settingsManager.graphHistory === "weekly")
+            visible: (SettingsManager.graphHistory === "weekly")
 
             from: -3
             to: 0
@@ -416,7 +416,7 @@ Item {
             id: selector_day
             width: buttonPanel.width
             height: isPhone ? 32 : 36
-            visible: (settingsManager.graphHistory === "daily")
+            visible: (SettingsManager.graphHistory === "daily")
 
             from: -6
             to: 0

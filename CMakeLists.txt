@@ -121,6 +121,10 @@ if(NOT IOS AND NOT ANDROID)
         ${app_icon_windows}
         ${app_icon_macos}
     )
+    set(SOURCES_DESKTOP_QML
+        src/SystrayManager.cpp src/SystrayManager.h
+        src/MenubarManager.cpp src/MenubarManager.h
+    )
 endif()
 
 qt_add_executable(${PROJECT_NAME}
@@ -214,9 +218,10 @@ qt_add_qml_module(${PROJECT_NAME}
 
     SOURCES
         src/DatabaseManager.cpp src/DatabaseManager.cpp
-        src/MenubarManager.cpp src/MenubarManager.cpp
+        src/NotificationManager.cpp src/NotificationManager.h
         src/SettingsManager.cpp src/SettingsManager.cpp
-        src/SystrayManager.cpp src/SystrayManager.cpp
+        src/PlantDatabase.cpp src/PlantDatabase.h
+        ${SOURCES_DESKTOP_QML}
 )
 
 qt_add_translations(${PROJECT_NAME}

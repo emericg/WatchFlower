@@ -197,12 +197,7 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
 
-    engine_context->setContextProperty("settingsManager", sm);
-    engine_context->setContextProperty("databaseManager", db);
-    engine_context->setContextProperty("notificationManager", nm);
     engine_context->setContextProperty("deviceManager", dm);
-
-    engine_context->setContextProperty("plantDatabase", pdb);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
     engine_context->setContextProperty("utilsApp", utilsApp);
@@ -217,8 +212,6 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("utilsShare", utilsShare);
     engine.loadFromModule("WatchFlower", "MobileApplication");
 #else
-    engine_context->setContextProperty("systrayManager", st);
-    engine_context->setContextProperty("menubarManager", mb);
     engine.loadFromModule("WatchFlower", "DesktopApplication");
 #endif
 

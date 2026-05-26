@@ -93,7 +93,7 @@ Loader {
         }
 
         Connections {
-            target: settingsManager
+            target: SettingsManager
             function onTempUnitChanged() {
                 updateData()
             }
@@ -1107,7 +1107,7 @@ Loader {
                                         duo: false
 
                                         title: qsTr("Temperature")
-                                        legend: "°" + settingsManager.tempUnit
+                                        legend: "°" + SettingsManager.tempUnit
                                         icon: "qrc:/assets/gfx/icons/thermometer-24px.svg"
                                         value: currentDevice.temperature
                                         precision: 1

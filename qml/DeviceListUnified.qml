@@ -118,7 +118,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             SunAndMoonWidget {
-                visible: settingsManager.sunandmoon
+                visible: SettingsManager.sunandmoon
                 width: devicesView.cellWidth
                 height: devicesView.cellWidth * (devicesView.listWidget ? 0.6 : 0.5)
                 listMode: devicesView.listWidget

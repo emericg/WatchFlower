@@ -274,13 +274,13 @@ T.Popup {
                 visible: (appContent.state === "DeviceThermometer")
 
                 text: qsTr("Switch graph")
-                source: (settingsManager.graphThermometer === "minmax") ?
+                source: (SettingsManager.graphThermometer === "minmax") ?
                             "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg" :
                             "qrc:/IconLibrary/material-symbols/timeline.svg"
 
                 onClicked: {
-                    if (settingsManager.graphThermometer === "minmax") settingsManager.graphThermometer = "lines"
-                    else settingsManager.graphThermometer = "minmax"
+                    if (SettingsManager.graphThermometer === "minmax") SettingsManager.graphThermometer = "lines"
+                    else SettingsManager.graphThermometer = "minmax"
                     menuSelected(index)
                     close()
                 }

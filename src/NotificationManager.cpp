@@ -44,6 +44,11 @@ NotificationManager *NotificationManager::getInstance()
     return instance;
 }
 
+NotificationManager *NotificationManager::create(QQmlEngine *, QJSEngine *)
+{
+    return getInstance();
+}
+
 NotificationManager::NotificationManager()
 {
     //checkNotificationPermissions();
