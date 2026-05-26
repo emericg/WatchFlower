@@ -47,6 +47,11 @@ DatabaseManager *DatabaseManager::getInstance()
     return instance;
 }
 
+DatabaseManager *DatabaseManager::create(QQmlEngine *, QJSEngine *)
+{
+    return getInstance();
+}
+
 DatabaseManager::DatabaseManager()
 {
     bool status = false;

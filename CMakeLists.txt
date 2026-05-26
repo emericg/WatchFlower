@@ -211,6 +211,12 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/components_js/UtilsDeviceSensors.js
         qml/components_js/UtilsPlantDatabase.js
         qml/components_js/UtilsPlantJournal.js
+
+    SOURCES
+        src/DatabaseManager.cpp src/DatabaseManager.cpp
+        src/MenubarManager.cpp src/MenubarManager.cpp
+        src/SettingsManager.cpp src/SettingsManager.cpp
+        src/SystrayManager.cpp src/SystrayManager.cpp
 )
 
 qt_add_translations(${PROJECT_NAME}

@@ -28,8 +28,8 @@
 #include <QDebug>
 
 #include <QStandardPaths>
-#include <QDir>
 #include <QFile>
+#include <QDir>
 
 /* ************************************************************************** */
 
@@ -43,6 +43,11 @@ SettingsManager *SettingsManager::getInstance()
     }
 
     return instance;
+}
+
+SettingsManager *SettingsManager::create(QQmlEngine *, QJSEngine *)
+{
+    return getInstance();
 }
 
 SettingsManager::SettingsManager()

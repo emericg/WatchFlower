@@ -23,9 +23,14 @@
 #define SETTINGS_MANAGER_H
 /* ************************************************************************** */
 
+#include <QtQml/qqmlregistration.h>
+
 #include <QObject>
 #include <QString>
 #include <QSize>
+
+class QJSEngine;
+class QQmlEngine;
 
 /* ************************************************************************** */
 
@@ -35,6 +40,8 @@
 class SettingsManager: public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     Q_PROPERTY(bool firstLaunch READ isFirstLaunch NOTIFY firstLaunchChanged)
 
@@ -205,6 +212,7 @@ public:
 
 public:
     static SettingsManager *getInstance();
+    static SettingsManager *create(QQmlEngine *, QJSEngine *);
 
     bool isFirstLaunch() const { return m_firstlaunch; }
 
@@ -212,7 +220,7 @@ public:
     QSize getInitialPosition() { return m_appPosition; }
     unsigned getInitialVisibility() { return m_appVisibility; }
 
-    QString getAppTheme() const { return m_appTheme; }
+    const QString &getAppTheme() const { return m_appTheme; }
     void setAppTheme(const QString &value);
 
     bool getAppThemeAuto() const { return m_appThemeAuto; }
@@ -224,7 +232,7 @@ public:
     unsigned getAppUnits() const { return m_appUnits; }
     void setAppUnits(unsigned value);
 
-    QString getAppLanguage() const { return m_appLanguage; }
+    const QString &getAppLanguage() const { return m_appLanguage; }
     void setAppLanguage(const QString &value);
 
     bool getMinimized() const { return m_startMinimized; }
@@ -269,10 +277,10 @@ public:
     QString getTempUnit() const { return m_tempUnit; }
     void setTempUnit(const QString &value);
 
-    QString getGraphHistogram() const { return m_graphHistogram; }
+    const QString &getGraphHistogram() const { return m_graphHistogram; }
     void setGraphHistogram(const QString &value);
 
-    QString getGraphThermometer() const { return m_graphThermometer; }
+    const QString &getGraphThermometer() const { return m_graphThermometer; }
     void setGraphThermometer(const QString &value);
 
     int getGraphAioDays() const { return m_graphAioDays; }
@@ -290,7 +298,7 @@ public:
     bool getSplitView() const { return m_splitView; }
     void setSplitView(const bool value);
 
-    QString getOrderBy() const { return m_orderBy; }
+    const QString &getOrderBy() const { return m_orderBy; }
     void setOrderBy(const QString &value);
 
     unsigned getDataRetentionDays() const { return m_dataRetentionDays; }
@@ -308,40 +316,40 @@ public:
     bool getMySQL() const { return m_mysql; }
     void setMySQL(const bool value);
 
-    QString getMysqlHost() const { return m_mysqlHost; }
+    const QString &getMysqlHost() const { return m_mysqlHost; }
     void setMysqlHost(const QString &value);
 
     int getMysqlPort() const { return m_mysqlPort; }
     void setMysqlPort(const int value);
 
-    QString getMysqlName() const { return m_mysqlName; }
+    const QString &getMysqlName() const { return m_mysqlName; }
     void setMysqlName(const QString &value);
 
-    QString getMysqlUser() const { return m_mysqlUser; }
+    const QString &getMysqlUser() const { return m_mysqlUser; }
     void setMysqlUser(const QString &value);
 
-    QString getMysqlPassword() const { return m_mysqlPassword; }
+    const QString &getMysqlPassword() const { return m_mysqlPassword; }
     void setMysqlPassword(const QString &value);
 
     bool getMQTT() const { return m_mqtt; }
     void setMQTT(const bool value);
 
-    QString getMqttHost() const { return m_mqttHost; }
+    const QString &getMqttHost() const { return m_mqttHost; }
     void setMqttHost(const QString &value);
 
     int getMqttPort() const { return m_mqttPort; }
     void setMqttPort(const int value);
 
-    QString getMqttName() const { return m_mqttName; }
+    const QString &getMqttName() const { return m_mqttName; }
     void setMqttName(const QString &value);
 
-    QString getMqttUser() const { return m_mqttUser; }
+    const QString &getMqttUser() const { return m_mqttUser; }
     void setMqttUser(const QString &value);
 
-    QString getMqttPassword() const { return m_mqttPassword; }
+    const QString &getMqttPassword() const { return m_mqttPassword; }
     void setMqttPassword(const QString &value);
 
-    QString getMqttTopics() const { return m_mqttTopics; }
+    const QString &getMqttTopics() const { return m_mqttTopics; }
     void setMqttTopics(const QString &value);
 
     // Utils

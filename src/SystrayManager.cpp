@@ -41,6 +41,11 @@ SystrayManager *SystrayManager::getInstance()
     return instance;
 }
 
+SystrayManager *SystrayManager::create(QQmlEngine *, QJSEngine *)
+{
+    return getInstance();
+}
+
 SystrayManager::SystrayManager()
 {
     // Connect retry timer
