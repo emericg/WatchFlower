@@ -114,6 +114,7 @@ jobs:
 
       # Setup certificate(s)
       - name: Setup certificate(s)
+        if: env.MACOS_CERTIFICATE
         env:
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
           MACOS_CERTIFICATE_NAME: ${{ secrets.MACOS_CERTIFICATE_NAME }}
@@ -214,13 +215,13 @@ jobs:
         run: |
              qmake --version
              cmake --version
+             ninja --version
 
       # Build application
       - name: Build application
         run: |
-             cmake -B build/ -DCMAKE_BUILD_TYPE=Release -G "NMake Makefiles"
-             cd build/
-             nmake
+             cmake -B build/ -G Ninja -DCMAKE_BUILD_TYPE=Release
+             cmake --build build/ --config Release
 
       # Deploy application
       - name: Deploy application
