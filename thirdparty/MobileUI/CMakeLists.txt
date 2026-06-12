@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20)
 
-#project(MobileUI LANGUAGES CXX)
+project(MobileUI LANGUAGES CXX)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ################################################################################
@@ -22,7 +22,7 @@ endif()
 
 ################################################################################
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Quick Qml)
+find_package(Qt6 6.8 REQUIRED COMPONENTS Core Quick Qml)
 
 qt_add_library(MobileUI STATIC)
 

@@ -1,6 +1,6 @@
 /*!
  * Copyright (c) 2016 J-P Nurmi
- * Copyright (c) 2023 Emeric Grange
+ * Copyright (c) 2026 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,39 +25,38 @@
 #include "MobileUI_private.h"
 
 #include <QGuiApplication>
+#include <QStyleHints>
 #include <QQmlEngine>
 #include <QScreen>
+#include <QWindow>
+#include <QTimer>
+#include <QDebug>
+
+#include <cmath>
 
 /* ************************************************************************** */
 
-bool MobileUI::isPhone = false;
-bool MobileUI::isTablet = false;
+MobileUI *MobileUI::instance = nullptr;
 
-bool MobileUIPrivate::areRefreshSlotsConnected = false;
-
-MobileUI::Theme MobileUIPrivate::deviceTheme = MobileUI::Light;
-
-QColor MobileUIPrivate::statusbarColor;
-MobileUI::Theme MobileUIPrivate::statusbarTheme = MobileUI::Light;
-
-QColor MobileUIPrivate::navbarColor;
-MobileUI::Theme MobileUIPrivate::navbarTheme = MobileUI::Light;
-
-bool MobileUIPrivate::screenAlwaysOn = false;
-
-MobileUI::ScreenOrientation MobileUIPrivate::screenOrientation = MobileUI::Unlocked;
-
-/* ************************************************************************** */
-
-void MobileUI::registerQML()
+MobileUI *MobileUI::getInstance()
 {
-    qRegisterMetaType<MobileUI::Theme>("MobileUI::Theme");
-    qRegisterMetaType<MobileUI::ScreenOrientation>("MobileUI::ScreenOrientation");
+    if (instance == nullptr)
+    {
+        instance = new MobileUI();
+        QJSEngine::setObjectOwnership(instance, QJSEngine::CppOwnership);
+    }
+
+    return instance;
+}
+
+MobileUI *MobileUI::create(QQmlEngine *, QJSEngine *)
+{
+    return MobileUI::getInstance();
 }
 
 /* ************************************************************************** */
 
-MobileUI::MobileUI(QObject *parent) : QObject(parent)
+MobileUI::MobileUI(QObject *parent) : QObject(parent), d(std::make_unique<MobileUIPrivate>())
 {
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     QScreen *screen = qApp->primaryScreen();
@@ -66,165 +65,295 @@ MobileUI::MobileUI(QObject *parent) : QObject(parent)
         double screenSizeInch = std::sqrt(std::pow(screen->physicalSize().width(), 2.0) +
                                           std::pow(screen->physicalSize().height(), 2.0)) / (2.54 * 10.0);
 
-        if (screenSizeInch < 7.0) MobileUI::isPhone = true;
-        else MobileUI::isTablet = true;
+        if (screenSizeInch >= 7.0) m_isTablet = true;
+        else  m_isPhone = true;
     }
+
+    // The application window doesn't exist yet when this object is created from
+    // QML, so defer the signal hookup and the first safe area computation until
+    // the event loop is running. connectSignals() must be called only ONCE.
+    QTimer::singleShot(0, this, [this]() {
+        connectSignals();
+
+        refreshSystemBars();
+        refreshSafeAreas();
+        getDeviceTheme();
+    });
 #endif
+}
+
+MobileUI::~MobileUI() = default;
+
+/* ************************************************************************** */
+
+void MobileUI::connectSignals()
+{
+    QScreen *screen = qApp->primaryScreen();
+    if (screen)
+    {
+        QObject::connect(screen, &QScreen::orientationChanged,
+                         this, [this](Qt::ScreenOrientation) { refreshMobileUI(); });
+    }
+
+    const QWindowList windows = qApp->allWindows();
+    QWindow *window = windows.isEmpty() ? nullptr : windows.first();
+    if (window)
+    {
+        QObject::connect(window, &QWindow::visibilityChanged,
+                         this, [this](QWindow::Visibility) { refreshMobileUI(); });
+    }
+
+    // The OS may reset the native system bar styles/colors when the application
+    // returns to the foreground, so we re-apply them when becoming active again.
+    QObject::connect(qApp, &QGuiApplication::applicationStateChanged,
+                     this, [this](Qt::ApplicationState state) { if (state == Qt::ApplicationActive) refreshSafeAreas(); });
+
+    // A light/dark mode change does not emit orientationChanged/visibilityChanged,
+    // so make sure we re-apply our settings.
+    if (QStyleHints *hints = qApp->styleHints())
+    {
+        QObject::connect(hints, &QStyleHints::colorSchemeChanged,
+                         this, [this](Qt::ColorScheme) { refreshMobileUI(); getDeviceTheme(); Q_EMIT devicethemeUpdated(); });
+    }
+}
+
+/* ************************************************************************** */
+
+void MobileUI::refreshMobileUI()
+{
+    // Re-apply the native bar colors / themes (lost on rotation or resume)
+    refreshSystemBars();
+
+    // Re-compute safe areas (changed on rotation)
+    refreshSafeAreas();
+
+    // After an orientation or visibility change the native insets and bar sizes are not always settled immediately,
+    // so re-read them a few times with increasing delays until they stabilize.
+    for (int delay : {66, 256, 512, 1024})
+    {
+        QTimer::singleShot(delay, this, [this]() { refreshSystemBars(); refreshSafeAreas(); });
+    }
 }
 
 /* ************************************************************************** */
 
 MobileUI::Theme MobileUI::getDeviceTheme()
 {
-    return static_cast<MobileUI::Theme>(MobileUIPrivate::getDeviceTheme());
+    return static_cast<MobileUI::Theme>(d->getDeviceTheme());
 }
 
 /* ************************************************************************** */
 
-QColor MobileUI::getStatusbarColor()
+QColor MobileUI::getStatusbarColor() const
 {
-    return MobileUIPrivate::statusbarColor;
+    return m_statusbarColor;
 }
 
 void MobileUI::setStatusbarColor(const QColor &color)
 {
-    if (color.isValid())
+    if (!color.isValid()) return;
+
+    m_statusbarColor = color;
+    d->setColor_statusbar(color);
+
+    //qDebug() << "MobileUI::setStatusbarColor(" << color.name() << ") luminance:" << colorLuminance(color);
+
+    // Automatically derive a theme from the underlying color
+    // If transparent, that responsability is best left to the user
+    if (color.alpha() > 0)
     {
-        MobileUIPrivate::statusbarColor = color;
-        MobileUIPrivate::setColor_statusbar(color);
+        const MobileUI::Theme theme = static_cast<MobileUI::Theme>(!isColorLight_android(color));
+        if (theme != m_statusbarTheme)
+        {
+            m_statusbarTheme = theme;
+            d->setTheme_statusbar(theme);
+        }
     }
 }
 
-MobileUI::Theme MobileUI::getStatusbarTheme()
+MobileUI::Theme MobileUI::getStatusbarTheme() const
 {
-    return MobileUIPrivate::statusbarTheme;
+    return m_statusbarTheme;
 }
 
 void MobileUI::setStatusbarTheme(const MobileUI::Theme theme)
 {
-    MobileUIPrivate::statusbarTheme = theme;
-    MobileUIPrivate::setTheme_statusbar(theme);
+    m_statusbarTheme = theme;
+    d->setTheme_statusbar(theme);
 }
 
 /* ************************************************************************** */
 
-QColor MobileUI::getNavbarColor()
+QColor MobileUI::getNavbarColor() const
 {
-    return MobileUIPrivate::navbarColor;
+    return m_navbarColor;
 }
 
 void MobileUI::setNavbarColor(const QColor &color)
 {
-    if (color.isValid())
+    if (!color.isValid()) return;
+
+    m_navbarColor = color;
+    d->setColor_navbar(color);
+
+    //qDebug() << "MobileUI::setNavbarColor(" << color.name() << ") luminance:" << colorLuminance(color);
+
+    // Automatically derive a theme from the underlying color
+    // If transparent, that responsability is best left to the user
+    if (color.alpha() > 0)
     {
-        MobileUIPrivate::navbarColor = color;
-        MobileUIPrivate::setColor_navbar(color);
+        const MobileUI::Theme theme = static_cast<MobileUI::Theme>(!isColorLight_android(color));
+        if (theme != m_navbarTheme)
+        {
+            m_navbarTheme = theme;
+            d->setTheme_navbar(theme);
+        }
     }
 }
 
-MobileUI::Theme MobileUI::getNavbarTheme()
+MobileUI::Theme MobileUI::getNavbarTheme() const
 {
-    return MobileUIPrivate::navbarTheme;
+    return m_navbarTheme;
 }
 
 void MobileUI::setNavbarTheme(const MobileUI::Theme theme)
 {
-    MobileUIPrivate::navbarTheme = theme;
-    MobileUIPrivate::setTheme_navbar(theme);
+    m_navbarTheme = theme;
+    d->setTheme_navbar(theme);
 }
 
 /* ************************************************************************** */
 
-void MobileUI::refreshUI()
+void MobileUI::refreshSystemBars()
 {
-    if (MobileUIPrivate::statusbarColor.isValid())
-        MobileUIPrivate::setColor_statusbar(MobileUIPrivate::statusbarColor);
+    if (m_statusbarColor.isValid())
+        d->setColor_statusbar(m_statusbarColor);
 
-    if (MobileUIPrivate::navbarColor.isValid())
-        MobileUIPrivate::setColor_navbar(MobileUIPrivate::navbarColor);
+    if (m_navbarColor.isValid())
+        d->setColor_navbar(m_navbarColor);
 
-    MobileUIPrivate::setTheme_statusbar(MobileUIPrivate::statusbarTheme);
-    MobileUIPrivate::setTheme_navbar(MobileUIPrivate::navbarTheme);
+    d->setTheme_statusbar(m_statusbarTheme);
+    d->setTheme_navbar(m_navbarTheme);
 }
 
 /* ************************************************************************** */
 
-int MobileUI::getStatusbarHeight()
+void MobileUI::refreshSafeAreas()
 {
-    return MobileUIPrivate::getStatusbarHeight();
-}
+    int statusbar = d->getStatusbarHeight();
+    int navbar = d->getNavbarHeight();
+    int top = 0;
+    int left = 0;
+    int right = 0;
+    int bottom = 0;
 
-int MobileUI::getNavbarHeight()
-{
-    return MobileUIPrivate::getNavbarHeight();
-}
+    const QWindowList windows = qApp->allWindows();
+    QWindow *window = windows.isEmpty() ? nullptr : windows.first();
 
-int MobileUI::getSafeAreaTop()
-{
-    return MobileUIPrivate::getSafeAreaTop();
-}
+    const bool fullscreenMode = (window && window->visibility() == QWindow::FullScreen);
 
-int MobileUI::getSafeAreaLeft()
-{
-    return MobileUIPrivate::getSafeAreaLeft();
-}
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    const bool maximizedHint = (window && (window->flags() & Qt::ExpandedClientAreaHint));
+#else
+    const bool maximizedHint = (window && (window->flags() & Qt::MaximizeUsingFullscreenGeometryHint));
+#endif
 
-int MobileUI::getSafeAreaRight()
-{
-    return MobileUIPrivate::getSafeAreaRight();
-}
+    // Safe areas
+    top = d->getSafeAreaTop();
+    left = d->getSafeAreaLeft();
+    right = d->getSafeAreaRight();
+    bottom = d->getSafeAreaBottom();
 
-int MobileUI::getSafeAreaBottom()
-{
-    return MobileUIPrivate::getSafeAreaBottom();
+    // When the window is in full screen mode, the system bars are no shown
+    if (fullscreenMode)
+    {
+        statusbar = 0;
+        navbar = 0;
+    }
+
+    // Notify the UI safeAreas have changed, if needed
+    if (statusbar != m_statusbarHeight || navbar != m_navbarHeight ||
+        top != m_safeAreaTop || left != m_safeAreaLeft ||
+        right != m_safeAreaRight || bottom != m_safeAreaBottom)
+    {
+        m_statusbarHeight = statusbar;
+        m_navbarHeight = navbar;
+        m_safeAreaTop = top;
+        m_safeAreaLeft = left;
+        m_safeAreaRight = right;
+        m_safeAreaBottom = bottom;
+
+        Q_EMIT safeAreaUpdated();
+    }
 }
 
 /* ************************************************************************** */
 
-MobileUI::ScreenOrientation MobileUI::getScreenOrientation()
+MobileUI::ScreenOrientation MobileUI::getScreenOrientation() const
 {
-    return MobileUIPrivate::screenOrientation;
+    return m_screenOrientation;
 }
 
 void MobileUI::setScreenOrientation(const MobileUI::ScreenOrientation orientation)
 {
-    MobileUIPrivate::screenOrientation = orientation;
-    MobileUIPrivate::setScreenOrientation(orientation);
+    m_screenOrientation = orientation;
+    d->setScreenOrientation(orientation);
+
+    // Forcing the screen orientation does not emit QScreen::orientationChanged,
+    // so we refresh the safe areas ourselves
+    refreshMobileUI();
 }
 
-bool MobileUI::getScreenAlwaysOn()
+bool MobileUI::getScreenAlwaysOn() const
 {
-    return MobileUIPrivate::screenAlwaysOn;
+    return m_screenAlwaysOn;
 }
 
 void MobileUI::setScreenAlwaysOn(const bool value)
 {
-    MobileUIPrivate::screenAlwaysOn = value;
-    MobileUIPrivate::setScreenAlwaysOn(value);
+    m_screenAlwaysOn = value;
+    d->setScreenAlwaysOn(value);
 }
 
 /* ************************************************************************** */
 
 int MobileUI::getScreenBrightness()
 {
-    return MobileUIPrivate::getScreenBrightness();
+    return d->getScreenBrightness();
 }
 
 void MobileUI::setScreenBrightness(const int value)
 {
-    return MobileUIPrivate::setScreenBrightness(value);
+    d->setScreenBrightness(value);
 }
 
 /* ************************************************************************** */
 
 void MobileUI::vibrate()
 {
-    MobileUIPrivate::vibrate();
+    d->vibrate();
 }
 
 void MobileUI::backToHomeScreen()
 {
-    MobileUIPrivate::backToHomeScreen();
+    d->backToHomeScreen();
+}
+
+/* ************************************************************************** */
+
+double MobileUI::colorLuminance(const QColor &color)
+{
+    return (0.299 * color.red() + 0.587 * color.green() + 0.114 * color.blue()) / 255.0;
+}
+
+bool MobileUI::isColorLight_android(const QColor &color)
+{
+    return colorLuminance(color) > 0.66;
+}
+
+bool MobileUI::isColorLight_hyperos(const QColor &color)
+{
+    return colorLuminance(color) > 0.5;
 }
 
 /* ************************************************************************** */

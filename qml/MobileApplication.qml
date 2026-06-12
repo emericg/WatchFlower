@@ -29,147 +29,25 @@ Window {
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
 
-    property int screenPaddingStatusbar: 0
-    property int screenPaddingNavbar: 0
+    property int screenPaddingStatusbar: MobileUI.statusbarHeight
+    property int screenPaddingNavbar: MobileUI.navbarHeight
 
-    property int screenPaddingTop: 0
-    property int screenPaddingLeft: 0
-    property int screenPaddingRight: 0
-    property int screenPaddingBottom: 0
+    property int screenPaddingTop: MobileUI.safeAreaTop
+    property int screenPaddingLeft: MobileUI.safeAreaLeft
+    property int screenPaddingRight: MobileUI.safeAreaRight
+    property int screenPaddingBottom: MobileUI.safeAreaBottom
 
-    Connections {
-        target: Screen
-        function onOrientationChanged() { mobileUI.handleSafeAreas_withDelays() }
+    Binding {
+        target: MobileUI
+        property: "statusbarTheme"
+        value: { return Theme.themeStatusbar }
     }
-    Connections {
-        target: Theme
-        function onCurrentThemeChanged() { mobileUI.handleSafeAreas_withDelays() }
-    }
-
-    Timer {
-        id: rotateTimer1
-        interval: 50
-        running: false
-        repeat: false
-        onTriggered: { mobileUI.handleSafeAreas() }
-    }
-    Timer {
-        id: rotateTimer2
-        interval: 256
-        running: false
-        repeat: false
-        onTriggered: { mobileUI.handleSafeAreas() }
-    }
-    Timer {
-        id: rotateTimer3
-        interval: 512
-        running: false
-        repeat: false
-        onTriggered: { mobileUI.handleSafeAreas() }
-    }
-    Timer {
-        id: rotateTimer4
-        interval: 1000
-        running: false
-        repeat: false
-        onTriggered: { mobileUI.handleSafeAreas() }
-    }
-
-    MobileUI {
-        id: mobileUI
-
-        statusbarColor: "transparent"
-        statusbarTheme: Theme.themeStatusbar
-
-        navbarColor: {
+    Binding {
+        target: MobileUI
+        property: "navbarColor"
+        value: {
             if (appContent.state === "ScreenTutorial") return Theme.colorHeader
             return Theme.colorBackground
-        }
-        navbarTheme: MobileUI.Light
-
-        Component.onCompleted: {
-            mobileUI.handleSafeAreas_withDelays()
-        }
-
-        function handleSafeAreas_withDelays() {
-            handleSafeAreas()
-            rotateTimer1.start()
-            rotateTimer2.start()
-            rotateTimer3.start()
-            rotateTimer4.start()
-        }
-
-        function handleSafeAreas() {
-            // safe areas handling is a work in progress /!\
-            // safe areas are only taken into account when using maximized geometry / full screen mode
-
-            mobileUI.refreshUI() // hack
-
-            mobileUI.statusbarTheme = Theme.themeStatusbar // hack
-
-            if (appWindow.visibility === Window.FullScreen ||
-                appWindow.flags & Qt.MaximizeUsingFullscreenGeometryHint) {
-
-                screenPaddingStatusbar = mobileUI.statusbarHeight
-                screenPaddingNavbar = mobileUI.navbarHeight
-
-                screenPaddingTop = mobileUI.safeAreaTop
-                screenPaddingLeft = mobileUI.safeAreaLeft
-                screenPaddingRight = mobileUI.safeAreaRight
-                screenPaddingBottom = mobileUI.safeAreaBottom
-
-                // hacks
-                if (Qt.platform.os === "android") {
-                    if (appWindow.visibility === Window.FullScreen) {
-                        screenPaddingStatusbar = 0
-                        screenPaddingNavbar = 0
-                    }
-                    if (appWindow.flags & Qt.MaximizeUsingFullscreenGeometryHint) {
-                        if (appWindow.isPhone) {
-                            if (Screen.orientation === Qt.LandscapeOrientation) {
-                                screenPaddingLeft = screenPaddingStatusbar
-                                screenPaddingRight = screenPaddingNavbar
-                                screenPaddingNavbar = 0
-                            } else if (Screen.orientation === Qt.InvertedLandscapeOrientation) {
-                                screenPaddingLeft = screenPaddingNavbar
-                                screenPaddingRight = screenPaddingStatusbar
-                                screenPaddingNavbar = 0
-                            }
-                        }
-                    }
-                }
-                // hacks
-                if (Qt.platform.os === "ios") {
-                    if (appWindow.visibility === Window.FullScreen) {
-                        screenPaddingStatusbar = 0
-                    }
-                }
-            } else {
-                screenPaddingStatusbar = 0
-                screenPaddingNavbar = 0
-                screenPaddingTop = 0
-                screenPaddingLeft = 0
-                screenPaddingRight = 0
-                screenPaddingBottom = 0
-            }
-/*
-            console.log("> handleSafeAreas()")
-            console.log("- window mode:         " + appWindow.visibility)
-            console.log("- window flags:        " + appWindow.flags)
-            console.log("- screen dpi:          " + Screen.devicePixelRatio)
-            console.log("- screen width:        " + Screen.width)
-            console.log("- screen width avail:  " + Screen.desktopAvailableWidth)
-            console.log("- screen height:       " + Screen.height)
-            console.log("- screen height avail: " + Screen.desktopAvailableHeight)
-            console.log("- screen orientation (full): " + Screen.orientation)
-            console.log("- screen orientation (primary): " + Screen.primaryOrientation)
-            console.log("- screenSizeStatusbar: " + screenPaddingStatusbar)
-            console.log("- screenSizeNavbar:    " + screenPaddingNavbar)
-            console.log("- screenPaddingTop:    " + screenPaddingTop)
-            console.log("- screenPaddingLeft:   " + screenPaddingLeft)
-            console.log("- screenPaddingRight:  " + screenPaddingRight)
-            console.log("- screenPaddingBottom: " + screenPaddingBottom)
-*/
         }
     }
 
@@ -428,8 +306,8 @@ Window {
             anchors.bottomMargin: mobileMenu.hhv
         }
 
-        // Start on the device list or tutorial?
         Component.onCompleted: {
+            // Start on the device list or tutorial?
             if (deviceManager.areDevicesAvailable()) {
                 screenDeviceList.loadScreen()
             } else {

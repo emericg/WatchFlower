@@ -1,6 +1,6 @@
 /*!
  * Copyright (c) 2016 J-P Nurmi
- * Copyright (c) 2023 Emeric Grange
+ * Copyright (c) 2026 Emeric Grange
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,48 +32,35 @@
 class MobileUIPrivate
 {
 public:
-    static bool areRefreshSlotsConnected;
+    MobileUIPrivate() = default;
+    ~MobileUIPrivate() = default;
 
-    static MobileUI::Theme deviceTheme;
+    int getDeviceTheme();
 
-    static QColor statusbarColor;
-    static MobileUI::Theme statusbarTheme;
+    void setColor_statusbar(const QColor &color);
+    void setTheme_statusbar(const MobileUI::Theme theme);
 
-    static QColor navbarColor;
-    static MobileUI::Theme navbarTheme;
+    void setColor_navbar(const QColor &color);
+    void setTheme_navbar(const MobileUI::Theme theme);
 
-    static bool screenAlwaysOn;
+    int getStatusbarHeight();
+    int getNavbarHeight();
 
-    static MobileUI::ScreenOrientation screenOrientation;
+    int getSafeAreaTop();
+    int getSafeAreaLeft();
+    int getSafeAreaRight();
+    int getSafeAreaBottom();
 
-    static int getDeviceTheme();
+    void setScreenAlwaysOn(const bool on);
 
-    static void refreshUI_async();
+    void setScreenOrientation(const MobileUI::ScreenOrientation orientation);
 
-    static void setColor_statusbar(const QColor &color);
-    static void setTheme_statusbar(const MobileUI::Theme theme);
+    int getScreenBrightness();
+    void setScreenBrightness(const int value);
 
-    static void setColor_navbar(const QColor &color);
-    static void setTheme_navbar(const MobileUI::Theme theme);
+    void vibrate();
 
-    static int getStatusbarHeight();
-    static int getNavbarHeight();
-
-    static int getSafeAreaTop();
-    static int getSafeAreaLeft();
-    static int getSafeAreaRight();
-    static int getSafeAreaBottom();
-
-    static void setScreenAlwaysOn(const bool on);
-
-    static void setScreenOrientation(const MobileUI::ScreenOrientation orientation);
-
-    static int getScreenBrightness();
-    static void setScreenBrightness(const int value);
-
-    static void vibrate();
-
-    static void backToHomeScreen();
+    void backToHomeScreen();
 };
 
 /* ************************************************************************** */

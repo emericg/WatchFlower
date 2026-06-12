@@ -4,11 +4,19 @@ MobileUI allows QML applications to interact with Mobile specific features, like
 
 You can see it in action in the [MobileUI demo](https://github.com/emericg/MobileUI_demo).
 
-> Supports Qt6 with CMake and QMake.
+> Supports Qt 6.8+ with CMake.
 
-> Supports iOS 11+ (tested up to iOS 17.5 devices).
+> Supports iOS 16+. Tested up to iOS 17.7 devices.
 
-> Supports Android API 21+ (tested up to API 34 devices).
+> Supports Android 9+ (API 28). Tested up to Android 16 (API 36) devices.
+
+> [!IMPORTANT]
+> If you want the modern architecture but without the QML singleton for MobileUI, you can still use the **LEGACY** 'v1' branch.  
+> It could help you migrate your application from an older MobileUI version. Same requirements (Qt 6.8+ and CMake).  
+
+> [!IMPORTANT]
+> If you need a QMake build system, or support for Qt5 / earlier Qt6 version, you can still use the **LEGACY** 'v0' branch.  
+
 
 ## Features
 
@@ -31,23 +39,69 @@ You can see it in action in the [MobileUI demo](https://github.com/emericg/Mobil
 ### Build
 
 To get started, simply checkout the MobileUI repository as a submodule, or copy the
-MobileUI directory into your project, then include the library files with either
-the `CMakeLists.txt` CMake project file or the `MobileUI.pro` QMake project file.
+MobileUI directory into your project, then include the `CMakeLists.txt` CMake project file:
 
 ```cmake
 add_subdirectory(MobileUI/)
-target_link_libraries(${PROJECT_NAME} MobileUI::MobileUI)
+target_link_libraries(${PROJECT_NAME} PRIVATE MobileUI MobileUI_plugin)
 ```
 
-```qmake
-include(MobileUI/MobileUI.pri)
+You might need some hacks so the QML Language Server recognize the MobileUI module:
+
+```cmake
+set(QML_IMPORT_PATH "${CMAKE_BINARY_DIR}/MobileUI/" CACHE STRING "QML Modules import paths" FORCE)
+set(QT_QML_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 ```
 
 ### Use
 
-First, you need to register the MobileUI QML module in your C++ main.cpp file.
+MobileUI is a QML singleton, so it is registered automatically by the QML engine.
 
-You can also use MobileUI directly in the C++ code if you want to.
+```qml
+import QtQuick
+import MobileUI
+
+// Do not use ApplicationWindow, or you'll get Qt inferior safe area implementation!
+Window {
+
+    // EITHER set the variables declaratively
+    Component.onCompleted: {
+        MobileUI.statusbarColor = "red"
+        MobileUI.statusbarTheme = MobileUI.Dark
+    
+        MobileUI.navbarColor = "blue"
+        MobileUI.navbarTheme = MobileUI.Dark
+    }
+    
+    // OR use bindings
+    Binding {
+            target: MobileUI
+            property: "statusbarTheme"
+            value: { return YourTheme.themeStatusbar }
+        }
+        Binding {
+            target: MobileUI
+            property: "navbarColor"
+            value: {
+                if (something) return YourTheme.colorForeground
+                return YourTheme.colorBackground
+            }
+        }
+
+    // Use SafeAreas however you see fit
+    Rectangle {
+        anchors.left: parent.left
+        anchors.leftMargin: MobileUI.safeAreaLeft
+        anchors.right: parent.right
+        anchors.rightMargin: MobileUI.safeAreaRight
+
+        height: 333
+        color: "purple"
+    }
+}
+```
+
+You can also use MobileUI directly from C++ code if you want.
 
 ```cpp
 #include <QGuiApplication>
@@ -57,9 +111,7 @@ You can also use MobileUI directly in the C++ code if you want to.
 int main() {
     QGuiApplication app();
 
-    MobileUI::registerQML(); // that is required
-
-    MobileUI::setStatusbarColor("white"); // use it directly if you want
+    MobileUI::getInstance()->setStatusbarColor("white");
 
     QQmlApplicationEngine engine;
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
@@ -68,51 +120,6 @@ int main() {
 }
 ```
 
-Example usage in QML:
-
-```qml
-import QtQuick
-import MobileUI
-
-Window {
-    MobileUI {
-        id: mobileUI
-
-        statusbarColor: "white"
-        statusbarTheme: MobileUI.Light
-        navbarColor: "white"
-        navbarTheme: MobileUI.Light
-    }
-}
-```
-
-## Caveats
-
-### iOS
-
-- It looks like forcing the screen orientation on an iPad is not allowed.
-
-### Android
-
-- Transition between the splash screen and the application window will glitch. As far as I know there is no way to fix that.  
-You'll see the window beeing resized (more or less the size of the status bar), and the status bar changing color, usually to black, but you might be lucky and
-get a light grey depending on your device. It's bad if you're coming from a white splash screen, seeing a black bar appear, and going to a white application background...
-
-- The infamous "white bar" bug (a white line visible between the Android status bar and the Qt appliation content) make the "regular" window mode pretty much useless (pre Qt 6.7).
-
-- Screen rotation is mostly broken (pre Qt 6.7).
-
-- Keyboard always appears when an application is brought back to the foreground if `android:windowSoftInputMode="adjustResize"` is set in the manifest (Qt 6.7).
-
-- Keyboard doesn't resize/adjust the app view when appearing. (Qt 6.7).
-
-- Switching dynamically between the three window modes is very glitchy, and not advised. Especially between the "regular" mode and the other twos.
-
-- When using the "Regular with transparent bars" window mode, screen rotation will break presentation if no status bar color has been set. Setting a transparent color seems to be enough to fix the issue.
-
-- When using Qt 6.9 / 6.10, Qt has introduced its own "SafeArea" system. Because it's still fairly buggy, I would advise not to use it yet, and for that you'll need to use regular `Window` instead of `ApplicationWindow` QML item.
-
-All in all, window modes, geometry, rotation and many smaller things are just **very** buggy on Android, and subtly broken depending on which Qt version is used.
 
 ## Quick documentation
 
@@ -132,11 +139,11 @@ Window {
 - Black status bar on iOS (you can't change that).
 - User can set colors for both status and navigation bars on Android.
 - Available geometry is fullscreen - system bars height.
-- No need to handle safe areas.
+- No (real) need to handle safe areas.
 
-That is the default mode on Android, but the infamous "white bar" bug make it pretty much useless (pre Qt 6.7.x).
+That is was default mode on Android, but it has been deprecated on Android 15 (API 35). You should NOT use this mode.
 
-#### "Regular with transparent bars"
+#### "Regular with transparent bars" / "edge to edge" mode
 
 ```qml
 Window {
@@ -150,9 +157,14 @@ Window {
 - The navigation bar is transparent on Android, and you can choose the theme. MobileUI will prevent you from forcing a color, because that would change the windows mode back to "regular", but not really.
 - Available geometry is the full screen, including what's behind system bars.
 
-That is the default mode on iOS.
+That is the default mode on iOS. This is the mandatory default on Android 15+ (API 35+).
 
-#### Full screen / "immersive" modes
+See Android best practices: https://developer.android.com/design/ui/mobile/guides/foundations/system-bars
+
+> [!TIP]
+> That is the mode we really recommand! It offers the most flexibility, but you'll need to handle the space occupied by the status and navigation bars yourself.
+
+#### Full screen / "immersive" mode
 
 ```qml
 Window {
@@ -163,15 +175,6 @@ Window {
 
 - No system bars drawn at all.
 - Available geometry is the full screen.
-
-#### Notes
-
-"Regular with transparent bars" is really the mode I would recommend.
-It offers the most flexibility, but you'll need to handle the space occupied by the status and navigation bars yourself.
-
-Switching dynamically between the three modes on Android is very glitchy, and not advised. Especially between the "regular" mode and the other two.
-
-All in all, window modes and window geometry are just very buggy on Android, and subtly broken depending on which Qt version is used.
 
 ### Settings colors and theme
 
@@ -187,7 +190,12 @@ Settings a color will also set a theme, by automatically evaluating if the bar c
 
 Set the status bar theme explicitly, `MobileUI.Light` or `MobileUI.Dark`.
 
-On iOS and Android API 28+, the theme must be set each time the window visibility or orientation changes. This is done automatically.
+On iOS and Android API 28+, the theme must be set each time the window visibility or orientation changes. This is handled automatically by MobileUI.
+
+> [!WARNING]
+> When using a Xiaomi MIUI / HyperOS devices in dark mode, you cannot control the status bar theme!  
+> These ROMs use a form of auto-contrast the status bar icons from the perceived brightness of the bar's background color.  
+> You can use the isColorLight_hyperos() helper to check if the color you choose is below of above the ~0.5 luminance point cutoff used.  
 
 > navbarColor
 
@@ -201,7 +209,7 @@ Settings a color will also set a theme, by automatically evaluating if the bar c
 
 Set the navigation bar theme explicitly, `MobileUI.Light` or `MobileUI.Dark`.
 
-On Android API 28+, the theme must be set each time the window visibility or orientation changes. This is done automatically.
+On Android API 28+, the theme must be set each time the window visibility or orientation changes. This is handled automatically by MobileUI.
 
 ### Device theme
 
@@ -219,7 +227,7 @@ Connections {
     target: Qt.application
     function onStateChanged() {
         case Qt.ApplicationActive:
-            console.log("device theme (%1)".arg(mobileUI.deviceTheme ? "dark" : "light"))
+            console.log("device theme (%1)".arg(MobileUI.deviceTheme ? "dark" : "light"))
             break
     }
 }
@@ -231,13 +239,17 @@ Safe areas handling is not straightforward, unfortunately. Most of it will be le
 
 > statusbarHeight
 
+Status bar size, in pixels.
+
+Status bar is always at the top of the screen, when visible. Otherwise this value will be set to 0.
+
 > navbarHeight
 
-Status bar and navigation bar size, in pixels. These values do not change when the screen is rotated.
+Navigation bar size, in pixels.
 
-Status bar is always on top of the screen when visible.
+Navigation bar is usually at the bottom of the screen, when visible. Otherwise this value will be set to 0.
 
-The navigation bar can be left/right of the screen, when the phone is rotated.
+The navigation bar can be left/right of the screen, when the phone is rotated. Then this value will be set to 0, and the left/right safe areas will integrate the navbar size.
 
 > safeAreaTop
 
@@ -247,20 +259,18 @@ The navigation bar can be left/right of the screen, when the phone is rotated.
 
 > safeAreaBottom
 
-These values are what's returned by the OS, and you'll need to understand what's what,
-depending on what window mode and screen rotation you're in, and especially,
-what do you want to do with them depending on the need of your application.
+These values are changed automatically when the screen is rotated.
 
-These values are changed by the OS when the screen is rotated.
+safeAreaTop and safeAreaBottom will integrate the system bar height if needed.
+
 
 ### Lock screensaver
 
-Either call `setScreenAlwaysOn(true/false)` or set `screenAlwaysOn: true/false` in QML.
-This will disable/enable the device screensaver.
+Either call `setScreenAlwaysOn(true/false)` or set `screenAlwaysOn: true/false` (in QML) to disable/re-enable the device screensaver.
 
 ```qml
-mobileUI.setScreenAlwaysOn(true)
-mobileUI.screenAlwaysOn: true
+MobileUI.setScreenAlwaysOn(true)
+MobileUI.screenAlwaysOn: true
 ```
 
 ### Set screen orientation
@@ -268,11 +278,11 @@ mobileUI.screenAlwaysOn: true
 This will force the device screen orientation into one of the available values.
 This cannot be used to read the actual device orientation.
 
-Either call `setScreenOrientation(MobileUI.ScreenOrientation)` or set `screenOrientation: MobileUI.ScreenOrientation` in QML.
+Either call `setScreenOrientation(MobileUI.ScreenOrientation)` or set `screenOrientation: MobileUI.ScreenOrientation` (in QML).
 
 ```qml
-mobileUI.setScreenOrientation(MobileUI.Landscape_left)
-mobileUI.screenOrientation: MobileUI.Landscape_right
+MobileUI.setScreenOrientation(MobileUI.Landscape_left)
+MobileUI.screenOrientation: MobileUI.Landscape_right
 ```
 
 Available orientations:
@@ -299,8 +309,8 @@ Set screen brightness for the currently running application (on Android) or syst
 Slider {
     from: 0
     to: 100
-    value: mobileUI.screenBrightness
-    onMoved: mobileUI.screenBrightness = value
+    value: MobileUI.screenBrightness
+    onMoved: MobileUI.screenBrightness = value
 }
 ```
 
@@ -311,7 +321,7 @@ Produce a simple haptic feedback, called "notification feedback" on iOS or a "ti
 No model of iPad includes a haptic engine. Android tablets usually have one.
 
 ```qml
-mobileUI.vibrate()
+MobileUI.vibrate()
 ```
 
 ### Back to home screen
@@ -328,7 +338,7 @@ Either use it on your application window 'onClosing' signal:
 onClosing: (close) => {
     if (Qt.platform.os == "android") {
         close.accepted = false
-        mobileUI.backToHomeScreen()
+        MobileUI.backToHomeScreen()
     }
 }
 ```
@@ -337,13 +347,32 @@ Or on an appropriate 'onBackPressed' signal:
 
 ```qml
 Keys.onBackPressed: {
-    mobileUI.backToHomeScreen()
+    MobileUI.backToHomeScreen()
 }
 ```
 
 #### iOS
 
 Going back to the home screen from an application is not possible on iOS, and thus this function does nothing.
+
+
+## Caveats
+
+- When using Qt 6.9+, Qt has introduced its own "SafeArea" system. Because it's still fairly buggy, and not really powerful enough to match MobileUI features, I would advise not to use it just yet, and for that you'll need to use regular `Window` instead of `ApplicationWindow` QML item.
+
+### iOS
+
+- It looks like forcing the screen orientation on an iPad is not allowed.
+
+### Android
+
+- Transition between the splash screen and the application window will glitch. As far as I know there is no way to fix that.  
+You'll see the window beeing resized (more or less the size of the status bar), and the status bar changing color, usually to black, but you might be lucky and
+get a light grey depending on your device. It's bad if you're coming from a white splash screen, seeing a black bar appear, and going to a white application background...
+
+- Qt 6.11 force your app to go fullscreen each time it goes back to the foreground...
+
+- All in all, window modes, geometry, rotation and many smaller things are just buggy on Qt for Android, and often subtly broken depending on which Qt version is used. Using only Qt 6.8 and up helps a lot...
 
 ## Licensing
 
