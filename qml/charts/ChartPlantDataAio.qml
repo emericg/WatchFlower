@@ -76,26 +76,26 @@ Item {
         // Min/Max axis for hygrometery / humidity
         if (currentDevice.isPlantSensor) {
             if (currentDevice.hygroMin*0.85 < 0.0) axisHygro.min = 0
-            else axisHygro.min = currentDevice.hygroMin*0.85
+            else axisHygro.min = currentDevice.hygroMin*0.8
             if (currentDevice.hygroMax*1.15 > 100.0) axisHygro.max = 100
-            else axisHygro.max = currentDevice.hygroMax*1.15
+            else axisHygro.max = currentDevice.hygroMax*1.05
         }
         if (currentDevice.isThermometer) {
             if (currentDevice.humiMin*0.85 < 0.0) axisHygro.min = 0
-            else axisHygro.min = currentDevice.humiMin*0.85
+            else axisHygro.min = currentDevice.humiMin*0.8
             if (currentDevice.humiMax*1.15 > 100.0) axisHygro.max = 100
-            else axisHygro.max = currentDevice.humiMax*1.15
+            else axisHygro.max = currentDevice.humiMax*1.05
         }
 
         // Min/Max axis for temperature
-        axisTemp.min = currentDevice.tempMin*0.85
-        axisTemp.max = currentDevice.tempMax*1.15
+        axisTemp.min = currentDevice.tempMin*0.8
+        axisTemp.max = currentDevice.tempMax*1.05
 
         // Max axis for conductivity
-        axisCondu.max = currentDevice.conduMax*2.0
+        axisCondu.max = currentDevice.conduMax*1.5
 
         // Max axis for luminosity?
-        axisLumi.max = currentDevice.luxMax*3.0
+        axisLumi.max = currentDevice.luxMax*2.0
 
         //// ADJUSTMENTS
         hygroData.width = 2

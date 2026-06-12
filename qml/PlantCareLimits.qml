@@ -99,7 +99,6 @@ Flickable {
                 anchors.left: imageHygro.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: imageHygro.verticalCenter
-                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Soil moisture")
                 textFormat: Text.PlainText
@@ -178,7 +177,6 @@ Flickable {
                 anchors.left: imageCondu.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: imageCondu.verticalCenter
-                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Soil conductivity")
                 textFormat: Text.PlainText
@@ -243,19 +241,18 @@ Flickable {
                 id: imageTemp
                 anchors.top: parent.top
                 anchors.left: parent.left
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
 
-                width: 24
-                height: 24
+                width: 32
+                height: 32
 
                 color: Theme.colorText
-                source: "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
+                source: "qrc:/IconLibrary/material-symbols/sensors/thermometer-fill.svg"
             }
             Text {
                 anchors.left: imageTemp.right
-                anchors.leftMargin: 8
+                anchors.leftMargin: 4
                 anchors.verticalCenter: imageTemp.verticalCenter
-                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Temperature")
                 textFormat: Text.PlainText
@@ -352,7 +349,6 @@ Flickable {
                 anchors.left: imageLumi.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: imageLumi.verticalCenter
-                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Luminosity")
                 textFormat: Text.PlainText
@@ -493,7 +489,6 @@ Flickable {
                 anchors.left: imageOther.right
                 anchors.leftMargin: 8
                 anchors.verticalCenter: imageOther.verticalCenter
-                anchors.verticalCenterOffset: isDesktop ? 1 : 0
 
                 text: qsTr("Other settings")
                 textFormat: Text.PlainText

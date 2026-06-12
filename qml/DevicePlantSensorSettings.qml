@@ -35,13 +35,16 @@ Flickable {
         id: flow
         anchors.left: parent.left
         anchors.right: parent.right
-        height: (uiMode === 1) ? maxheight : plantSensorSettings.height
 
         property int maxheight: 2*topPadding + 3*spacing + itemDevice.height + itemDeviceInfos.height +
                                 itemDeviceConnection.height + itemDeviceSensors.height + itemDeviceSettings.height
 
+        height: (uiMode === 1) ? maxheight : plantSensorSettings.height
+
+        topPadding: Theme.componentMargin + 4
         padding: Theme.componentMargin
         spacing: Theme.componentMargin
+
         flow: Flow.TopToBottom
 
         ////////////////////////////////

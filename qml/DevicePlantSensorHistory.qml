@@ -440,11 +440,12 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: 4
 
         onWidthChanged: updateSize()
 
         property int columns: 1
-        property var mode: ChartHistory.Span.Weekly
+        property int mode: ChartHistory.Span.Weekly
 
         property int barSelectionIndex: -1
         property int barSelectionDays: -1
