@@ -29,8 +29,6 @@
 #include "PlantUtils.h"
 #include "Journal.h"
 
-#include "utils_app.h"
-#include "utils_screen.h"
 #include "utils_language.h"
 #if defined(Q_OS_MACOS)
 #include "utils_os_macos_dock.h"
@@ -152,9 +150,7 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
-    ShareUtils *utilsShare = new ShareUtils();
-#else
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
     app.setWindowIcon(QIcon(":/assets/gfx/logos/watchflower.svg"));
 
     SystrayManager *st = SystrayManager::getInstance();
@@ -172,10 +168,8 @@ int main(int argc, char *argv[])
     PlantDatabase *pdb = PlantDatabase::getInstance();
 
     // Init generic utils
-    UtilsApp *utilsApp = UtilsApp::getInstance();
-    UtilsScreen *utilsScreen = UtilsScreen::getInstance();
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
-    if (!utilsApp || !utilsScreen || !utilsLanguage)
+    if (!utilsLanguage)
     {
         qWarning() << "Cannot init generic utils!";
         return EXIT_FAILURE;
@@ -200,8 +194,6 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
-    engine_context->setContextProperty("utilsApp", utilsApp);
-    engine_context->setContextProperty("utilsScreen", utilsScreen);
     engine_context->setContextProperty("utilsLanguage", utilsLanguage);
 
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
@@ -209,7 +201,6 @@ int main(int argc, char *argv[])
 
     // Load the main view
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS) || defined(FORCE_MOBILE_UI)
-    engine_context->setContextProperty("utilsShare", utilsShare);
     engine.loadFromModule("WatchFlower", "MobileApplication");
 #else
     engine.loadFromModule("WatchFlower", "DesktopApplication");

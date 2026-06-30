@@ -1,7 +1,7 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
+import AppUtils
 
 Item {
     id: mobileMenu

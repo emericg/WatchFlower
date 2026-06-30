@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import ComponentLibrary
+import AppUtils
 
 Rectangle {
     id: appHeader
@@ -23,7 +24,7 @@ Rectangle {
 
     property int headerPosition: 56 // horizontal
 
-    property string headerTitle: utilsApp.appName()
+    property string headerTitle: UtilsApp.appName()
 
     property string headerSubTitle: ""
 

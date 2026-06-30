@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
 
 Loader {
     id: plantBrowser

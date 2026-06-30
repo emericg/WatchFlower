@@ -22,11 +22,11 @@
 #include "device_parrotpot.h"
 #include "device_firmwares.h"
 #include "utils_maths.h"
-#include "utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>
 
+#include <QVersionNumber>
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
 
@@ -269,7 +269,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
 
             if (m_deviceFirmware.size() == 6)
             {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+                if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT firmwareUpdated();
@@ -322,7 +322,7 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
             const quint8 *rawData = nullptr;
-            double rawValue = 0;
+            uint32_t rawValue = 0;
             uint32_t rawValueCal;
 
             /////////
@@ -521,7 +521,7 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
 
         if (m_deviceFirmware.size() == 6)
         {
-            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+            if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
             {
                 m_firmware_uptodate = true;
                 Q_EMIT firmwareUpdated();

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
+import AppUtils
 
 Loader {
     id: screenAbout
@@ -123,7 +124,7 @@ Loader {
                                 font.pixelSize: Theme.fontSizeTitle
                             }
                             Text {
-                                text: qsTr("version %1 %2").arg(utilsApp.appVersion()).arg(utilsApp.appBuildMode())
+                                text: qsTr("version %1 %2").arg(UtilsApp.appVersion()).arg(UtilsApp.appBuildMode())
                                 textFormat: Text.PlainText
                                 color: Theme.colorSubText
                                 font.pixelSize: Theme.fontSizeContentBig

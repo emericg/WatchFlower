@@ -22,7 +22,6 @@
 #include "device_hygrotemp_cgd1.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>

@@ -3,7 +3,8 @@ import QtQuick.Controls
 import QtPositioning
 
 import ComponentLibrary
-import WatchFlower
+import MobileSharing
+import AppUtils
 
 Loader {
     id: screenSettings
@@ -42,7 +43,7 @@ Loader {
             id: popupBackgroundUpdates
 
             onClosed: {
-                SettingsManager.systray = utilsApp.checkMobileBackgroundLocationPermission()
+                SettingsManager.systray = UtilsOS.checkMobileBackgroundLocationPermission()
                 switch_worker.checked = SettingsManager.systray
             }
         }
@@ -720,7 +721,7 @@ Loader {
                         onClicked: {
                             SettingsManager.notifications = checked
                             if (SettingsManager.notifications) {
-                                utilsApp.getMobileNotificationPermission()
+                                UtilsOS.getMobileNotificationPermission()
                             }
                         }
                     }
@@ -1833,7 +1834,7 @@ Loader {
 
                         text: qsTr("Open folder")
                         onClicked: {
-                            utilsApp.openWith(deviceManager.exportDataFolder())
+                            UtilsApp.openWith(deviceManager.exportDataFolder())
                         }
                     }
 
@@ -1846,7 +1847,7 @@ Loader {
                         text: qsTr("Export file")
                         onClicked: {
                             var file = deviceManager.exportDataOpen()
-                            utilsShare.sendFile(file, qsTr("Export file"), "text/csv", 0)
+                            MobileSharing.sendFile(file, qsTr("Export file"), "text/csv", 0)
                         }
                     }
                 }

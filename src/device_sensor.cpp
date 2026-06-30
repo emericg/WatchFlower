@@ -21,7 +21,6 @@
 
 #include "device_sensor.h"
 #include "device_firmwares.h"
-#include "utils_versionchecker.h"
 
 #include "DeviceManager.h"
 #include "SettingsManager.h"
@@ -30,6 +29,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
+#include <QVersionNumber>
 #include <QDateTime>
 #include <QTimer>
 #include <QDebug>
@@ -226,7 +226,7 @@ bool DeviceSensor::getSqlDeviceInfos()
 
     if ((m_deviceName == "Flower care" || m_deviceName == "Flower mate") && (m_deviceFirmware.size() == 5))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_FLOWERCARE))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -234,7 +234,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName.startsWith("Flower power")) && (m_deviceFirmware.size() == 5))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -242,7 +242,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if (m_deviceName == "Grow care garden" && m_deviceFirmware.size() == 5)
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE_MAX))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_FLOWERCARE_MAX))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -250,7 +250,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if (m_deviceName == "TY" && m_deviceFirmware.size() == 4)
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERCARE_TUYA))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_FLOWERCARE_TUYA))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -258,7 +258,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "ropot") && (m_deviceFirmware.size() == 5))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_ROPOT))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_ROPOT))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -266,7 +266,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName.startsWith("Parrot pot")) && (m_deviceFirmware.size() == 6))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -274,7 +274,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "MJ_HT_V1") && (m_deviceFirmware.size() == 8))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSDCGQ))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSDCGQ))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -282,7 +282,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "ClearGrass Temp & RH") && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGG1))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGG1))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -290,7 +290,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName.startsWith("Qingping Temp & RH")) && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGDK2))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_CGDK2))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -298,7 +298,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "LYWSD02") && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD02))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD02))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -306,7 +306,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "LYWSD03MMC") && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -314,7 +314,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "XMWSDJO4MMC") && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_XMWSDJO4MMC))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_XMWSDJO4MMC))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();
@@ -322,7 +322,7 @@ bool DeviceSensor::getSqlDeviceInfos()
     }
     else if ((m_deviceName == "MHO-C401") && (m_deviceFirmware.size() == 10))
     {
-        if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_MHOC401))
+        if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_MHOC401))
         {
             m_firmware_uptodate = true;
             Q_EMIT firmwareUpdated();

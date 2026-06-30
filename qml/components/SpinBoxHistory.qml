@@ -3,7 +3,6 @@ import QtQuick.Controls.impl
 import QtQuick.Templates as T
 
 import ComponentLibrary
-import WatchFlower
 
 T.SpinBox {
     id: control

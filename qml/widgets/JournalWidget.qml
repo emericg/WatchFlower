@@ -1,7 +1,7 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
+import AppUtils
 import JournalUtils
 
 Item {
@@ -111,7 +111,7 @@ Item {
         onExited: buttonrow.opacity = 0
 */
         onClicked: {
-            utilsApp.vibrate(25)
+            UtilsOS.hapticFeedback()
 
             if (selected)
                 entriesView.entrySelected = -1

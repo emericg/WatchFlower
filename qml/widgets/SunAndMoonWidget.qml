@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Shapes
 
 import ComponentLibrary
-import WatchFlower
 
 Item {
     id: sunAndMoonWidget

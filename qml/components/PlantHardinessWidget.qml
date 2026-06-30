@@ -1,7 +1,6 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
 import PlantUtils
 
 Column {

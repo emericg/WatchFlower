@@ -3,7 +3,7 @@ import QtQuick.Window
 import QtQuick.Controls
 
 import ComponentLibrary
-import WatchFlower
+import AppUtils
 import MobileUI
 
 Window {
@@ -16,11 +16,39 @@ Window {
     color: Theme.colorBackground
     visible: true
 
-    property bool isHdpi: (utilsScreen.screenDpi >= 128 || utilsScreen.screenPar >= 2.0)
+    // Helpers
+    property bool isHdpi: (UtilsScreen.screenDpi >= 128 || UtilsScreen.screenPar >= 2.0)
     property bool isDesktop: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
     property bool isMobile: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-    property bool isPhone: ((Qt.platform.os === "android" || Qt.platform.os === "ios") && (utilsScreen.screenSize < 7.0))
-    property bool isTablet: ((Qt.platform.os === "android" || Qt.platform.os === "ios") && (utilsScreen.screenSize >= 7.0))
+    property bool isPhone: ((Qt.platform.os === "android" || Qt.platform.os === "ios") && (UtilsScreen.screenSize < 7.0))
+    property bool isTablet: ((Qt.platform.os === "android" || Qt.platform.os === "ios") && (UtilsScreen.screenSize >= 7.0))
+
+    // Setup ThemeEngine
+    Binding { target: Theme; property: "appTheme";               value: SettingsManager.appTheme }
+    Binding { target: Theme; property: "appThemeAuto";           value: SettingsManager.appThemeAuto }
+    Binding { target: Theme; property: "appThemeAutoMethod";     value: SettingsManager.appThemeAutoMethod }
+    Binding { target: Theme; property: "appWidth";               value: appWindow.width }
+    Binding { target: Theme; property: "appHeight";              value: appWindow.height }
+    Binding { target: Theme; property: "screenOrientation";      value: Screen.primaryOrientation }
+    Binding { target: Theme; property: "screenDpi";              value: UtilsScreen.screenDpi }
+    Binding { target: Theme; property: "screenPar";              value: UtilsScreen.screenPar }
+    Binding { target: Theme; property: "screenSize";             value: UtilsScreen.screenSize }
+    Binding { target: Theme; property: "screenPaddingStatusbar"; value: MobileUI.statusbarHeight }
+    Binding { target: Theme; property: "screenPaddingNavbar";    value: MobileUI.navbarHeight }
+    Binding { target: Theme; property: "screenPaddingTop";       value: MobileUI.safeAreaTop }
+    Binding { target: Theme; property: "screenPaddingLeft";      value: MobileUI.safeAreaLeft }
+    Binding { target: Theme; property: "screenPaddingRight";     value: MobileUI.safeAreaRight }
+    Binding { target: Theme; property: "screenPaddingBottom";    value: MobileUI.safeAreaBottom }
+
+    // Setup MobileUI
+    Binding { target: MobileUI; property: "statusbarColor";      value: Theme.colorStatusbar }
+    Binding { target: MobileUI; property: "statusbarTheme";      value: Theme.themeStatusbar }
+    Binding { target: MobileUI; property: "navbarColor";
+        value: {
+            if (appContent.state === "ScreenTutorial") return Theme.colorHeader
+            return Theme.colorBackground
+        }
+    }
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
@@ -36,20 +64,6 @@ Window {
     property int screenPaddingLeft: MobileUI.safeAreaLeft
     property int screenPaddingRight: MobileUI.safeAreaRight
     property int screenPaddingBottom: MobileUI.safeAreaBottom
-
-    Binding {
-        target: MobileUI
-        property: "statusbarTheme"
-        value: { return Theme.themeStatusbar }
-    }
-    Binding {
-        target: MobileUI
-        property: "navbarColor"
-        value: {
-            if (appContent.state === "ScreenTutorial") return Theme.colorHeader
-            return Theme.colorBackground
-        }
-    }
 
     MobileHeader {
         id: appHeader
@@ -229,7 +243,7 @@ Window {
                         else
                             mobileExit.timerStart()
                     } else {
-                        mobileUI.backToHomeScreen()
+                        MobileUI.backToHomeScreen()
                     }
                 }
             } else if (appContent.state === "DevicePlantSensor") {

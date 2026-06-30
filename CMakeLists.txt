@@ -259,23 +259,23 @@ target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication)
 # AppUtils
 set(UTILS_DOCK_ENABLED ON CACHE BOOL "" FORCE)
 add_subdirectory(thirdparty/AppUtils)
-target_link_libraries(${PROJECT_NAME} PRIVATE AppUtils)
+target_link_libraries(${PROJECT_NAME} PRIVATE AppUtils AppUtils_plugin)
 
 # MobileUI
 add_subdirectory(thirdparty/MobileUI)
-target_link_libraries(${PROJECT_NAME} PRIVATE MobileUI_plugin)
+target_link_libraries(${PROJECT_NAME} PRIVATE MobileUI MobileUI_plugin)
 
 # MobileSharing
 add_subdirectory(thirdparty/MobileSharing)
-target_link_libraries(${PROJECT_NAME} PRIVATE MobileSharing)
+target_link_libraries(${PROJECT_NAME} PRIVATE MobileSharing MobileSharing_plugin)
+
+# ComponentLibrary
+add_subdirectory(thirdparty/ComponentLibrary)
+target_link_libraries(${PROJECT_NAME} PRIVATE ComponentLibrary ComponentLibrary_plugin)
 
 # SunAndMoon
 add_subdirectory(thirdparty/SunAndMoon)
 target_link_libraries(${PROJECT_NAME} PRIVATE SunAndMoon)
-
-# ComponentLibrary
-add_subdirectory(thirdparty/ComponentLibrary)
-target_link_libraries(${PROJECT_NAME} PRIVATE ComponentLibrary_plugin)
 
 # RC4
 add_subdirectory(thirdparty/RC4)

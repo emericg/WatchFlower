@@ -21,7 +21,6 @@
 
 #include "device_ropot.h"
 #include "device_firmwares.h"
-#include "utils_versionchecker.h"
 #include "RC4/RC4.h"
 
 #include <cstdint>
@@ -32,6 +31,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 
+#include <QVersionNumber>
 #include <QDateTime>
 #include <QDebug>
 
@@ -213,7 +213,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
             bool need_modechange = true;
             if (m_deviceFirmware.size() == 5)
             {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_ROPOT))
+                if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_ROPOT))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT firmwareUpdated();

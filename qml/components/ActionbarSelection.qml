@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
-import WatchFlower
 
 Rectangle {
     id: actionbarSelection

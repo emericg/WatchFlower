@@ -2,7 +2,6 @@ import QtQuick
 import QtQuick.Layouts
 
 import ComponentLibrary
-import WatchFlower
 
 Flickable {
     id: plantSensorSettings

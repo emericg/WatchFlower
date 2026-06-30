@@ -3,19 +3,21 @@ import QtQuick.Controls
 import QtQuick.Window
 
 import ComponentLibrary
-import WatchFlower
+import AppUtils
 import DeviceUtils
 
 ApplicationWindow {
     id: appWindow
+
     flags: Qt.Window
     color: Theme.colorBackground
 
+    // Helpers
+    property bool isHdpi: (UtilsScreen.screenDpi >= 128 || UtilsScreen.screenPar >= 2.0)
     property bool isDesktop: true
     property bool isMobile: false
     property bool isPhone: false
     property bool isTablet: false
-    property bool isHdpi: (utilsScreen.screenDpi >= 128 || utilsScreen.screenPar >= 2.0)
 
     // Desktop stuff ///////////////////////////////////////////////////////////
 
@@ -317,7 +319,7 @@ ApplicationWindow {
     }
     Shortcut {
         sequences: [StandardKey.Quit]
-        onActivated: utilsApp.appExit()
+        onActivated: UtilsApp.appExit()
     }
 
     // UI sizes ////////////////////////////////////////////////////////////////

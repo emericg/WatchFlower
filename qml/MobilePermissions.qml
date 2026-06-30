@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
-import WatchFlower
+import AppUtils
 
 Item {
     id: screenAboutPermissions
@@ -15,7 +15,7 @@ Item {
     function loadScreen() {
         // refresh permissions
         deviceManager.checkBluetoothPermissions()
-        notifButton.validperm = utilsApp.checkMobileNotificationPermission()
+        notifButton.validperm = UtilsOS.checkMobileNotificationPermission()
 
         // change screen
         appContent.state = "ScreenAboutPermissions"
@@ -36,7 +36,7 @@ Item {
         repeat: false
         onTriggered: {
             deviceManager.checkBluetoothPermissions()
-            notifButton.validperm = utilsApp.checkMobileNotificationPermission()
+            notifButton.validperm = UtilsOS.checkMobileNotificationPermission()
         }
     }
 
@@ -194,8 +194,8 @@ Item {
                     backgroundVisible: true
 
                     onClicked: {
-                        utilsApp.vibrate(25)
-                        utilsApp.getMobileBluetoothPermission()
+                        UtilsOS.hapticFeedback()
+                        UtilsOS.getMobileBluetoothPermission()
                         refreshPermissions.start()
                     }
                 }
@@ -257,8 +257,8 @@ Item {
                     backgroundVisible: true
 
                     onClicked: {
-                        utilsApp.vibrate(25)
-                        utilsApp.getMobileBleLocationPermission()
+                        UtilsOS.hapticFeedback()
+                        UtilsOS.getMobileBleLocationPermission()
                         refreshPermissions.start()
                     }
                 }
@@ -304,7 +304,7 @@ Item {
                 sourceSize: 20
 
                 onClicked: {
-                    if (utilsApp.getAndroidSdkVersion() >= 12)
+                    if (UtilsApp.getAndroidSdkVersion() >= 12)
                         Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android12-or-higher")
                     else
                         Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
@@ -339,8 +339,8 @@ Item {
                     backgroundVisible: true
 
                     onClicked: {
-                        utilsApp.vibrate(25)
-                        utilsApp.getMobileBackgroundLocationPermission()
+                        UtilsOS.vibrate(25)
+                        UtilsOS.getMobileBackgroundLocationPermission()
                         refreshPermissions.start()
                     }
                 }
@@ -404,7 +404,7 @@ Item {
                     backgroundVisible: true
 
                     onClicked: {
-                        utilsApp.vibrate(25)
+                        UtilsOS.vibrate(25)
                         refreshPermissions.start()
                     }
                 }
@@ -452,7 +452,7 @@ Item {
                 source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 sourceSize: 20
 
-                onClicked: utilsApp.openAndroidLocationSettings()
+                onClicked: UtilsApp.openAndroidLocationSettings()
             }
 
             ////////
@@ -466,7 +466,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                visible: (Qt.platform.os === "ios" || utilsApp.getAndroidSdkVersion() >= 13)
+                visible: (Qt.platform.os === "ios" || UtilsApp.getAndroidSdkVersion() >= 13)
 
                 RoundButtonIcon {
                     id: notifButton
@@ -484,8 +484,8 @@ Item {
                     backgroundVisible: true
 
                     onClicked: {
-                        utilsApp.vibrate(25)
-                        validperm = utilsApp.getMobileNotificationPermission()
+                        UtilsOS.hapticFeedback()
+                        validperm = UtilsOS.getMobileNotificationPermission()
                         refreshPermissions.start()
                     }
                 }
@@ -512,7 +512,7 @@ Item {
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
-                visible: (Qt.platform.os === "ios" || utilsApp.getAndroidSdkVersion() >= 13)
+                visible: (Qt.platform.os === "ios" || UtilsApp.getAndroidSdkVersion() >= 13)
 
                 text: qsTr("The Android operating system requires permission to send notifications.")
                 textFormat: Text.StyledText
@@ -588,7 +588,7 @@ Item {
                 source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 sourceSize: 20
 
-                onClicked: utilsApp.openAndroidAppInfo("com.emeric.watchflower")
+                onClicked: UtilsApp.openAndroidAppInfo("com.emeric.watchflower")
             }
 
             ////////

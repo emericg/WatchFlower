@@ -21,7 +21,6 @@
 
 #include "device_flowerpower.h"
 #include "device_firmwares.h"
-#include "utils_versionchecker.h"
 
 #include <cstdint>
 #include <cmath>
@@ -29,6 +28,7 @@
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
 
+#include <QVersionNumber>
 #include <QDateTime>
 #include <QDebug>
 
@@ -234,7 +234,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_infos(QLowEnergyService::Servic
 
             if (m_deviceFirmware.size() == 5)
             {
-                if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+                if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT firmwareUpdated();
@@ -293,7 +293,7 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
             /////////
 /*
-            if (VersionChecker(m_firmware) >= Version("1.1.0"))
+            if (QVersionNumber::fromString(m_firmware) >= Version("1.1.0"))
             {
                 QBluetoothUuid sm_calibrated(QStringLiteral("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
                 QBluetoothUuid at_calibrated(QStringLiteral("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
@@ -484,7 +484,7 @@ void DeviceFlowerPower::bleReadDone(const QLowEnergyCharacteristic &c, const QBy
 
         if (m_deviceFirmware.size() == 5)
         {
-            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
+            if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
             {
                 m_firmware_uptodate = true;
                 Q_EMIT firmwareUpdated();

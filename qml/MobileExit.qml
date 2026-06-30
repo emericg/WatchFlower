@@ -1,7 +1,6 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
 
 Rectangle {
     id: mobileExit

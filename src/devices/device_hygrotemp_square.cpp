@@ -21,12 +21,12 @@
 
 #include "device_hygrotemp_square.h"
 #include "device_firmwares.h"
-#include "utils_versionchecker.h"
 
 #include "SettingsManager.h"
 
 #include <cstdint>
 
+#include <QVersionNumber>
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
 
@@ -201,7 +201,7 @@ void DeviceHygrotempSquare::serviceDetailsDiscovered_infos(QLowEnergyService::Se
 
         if (m_deviceFirmware.size() == 10)
         {
-            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
+            if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_LYWSD03MMC))
             {
                 m_firmware_uptodate = true;
                 Q_EMIT firmwareUpdated();

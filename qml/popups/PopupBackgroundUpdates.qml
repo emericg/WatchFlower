@@ -3,6 +3,7 @@ import QtQuick.Effects
 import QtQuick.Controls
 
 import ComponentLibrary
+import AppUtils
 
 Popup {
     id: popupBackgroundUpdates
@@ -27,7 +28,7 @@ Popup {
     property bool locPerm: false
 
     onAboutToShow: {
-         locPerm = utilsApp.checkMobileBackgroundLocationPermission()
+         locPerm = UtilsOS.checkMobileBackgroundLocationPermission()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -138,7 +139,7 @@ Popup {
                         sourceSize: 20
 
                         onClicked: {
-                            if (utilsApp.getAndroidSdkVersion() >= 12)
+                            if (UtilsApp.getAndroidSdkVersion() >= 12)
                                 Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android12-or-higher")
                             else
                                 Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
@@ -165,7 +166,7 @@ Popup {
                         source: "qrc:/IconLibrary/material-symbols/check.svg"
 
                         onClicked: {
-                            utilsApp.getMobileBackgroundLocationPermission()
+                            UtilsOS.getMobileBackgroundLocationPermission()
                             popupBackgroundUpdates.locPerm = true
                         }
                     }
@@ -249,7 +250,7 @@ Popup {
                         sourceSize: 20
 
                         onClicked: {
-                            utilsApp.openAndroidAppInfo("com.emeric.watchflower")
+                            UtilsApp.openAndroidAppInfo("com.emeric.watchflower")
                         }
                     }
 

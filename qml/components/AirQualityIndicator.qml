@@ -27,9 +27,7 @@ Item {
             anchors.fill: parent
             value: 100
 
-            animationBegin: false
-            animationEnd: false
-            animationValue: false
+            animation: false
 
             arcWidth: (isMobile ? 7 : 10)
             arcBegin: 0
@@ -44,9 +42,7 @@ Item {
             anchors.fill: parent
             value: 100
 
-            animationBegin: false
-            animationEnd: false
-            animationValue: false
+            animation: false
 
             arcWidth: (isMobile ? 7 : 10)
             arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 2.5
@@ -61,9 +57,7 @@ Item {
             anchors.fill: parent
             value: 100
 
-            animationBegin: false
-            animationEnd: false
-            animationValue: false
+            animation: false
 
             arcWidth: (isMobile ? 7 : 10)
             arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 2.5

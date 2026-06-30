@@ -1,7 +1,7 @@
 import QtQuick
 
 import ComponentLibrary
-import WatchFlower
+import AppUtils
 import DeviceUtils
 
 Item {
@@ -276,7 +276,7 @@ Item {
             onPressAndHold: {
                 // multi selection
                 if (!boxDevice.selected) {
-                    utilsApp.vibrate(25)
+                    UtilsOS.hapticFeedback()
                     deviceList.selectDevice(index, boxDevice.deviceType)
                 } else {
                     deviceList.deselectDevice(index, boxDevice.deviceType)

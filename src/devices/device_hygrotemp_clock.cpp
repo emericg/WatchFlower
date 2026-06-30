@@ -21,7 +21,6 @@
 
 #include "device_hygrotemp_clock.h"
 #include "device_firmwares.h"
-#include "utils_versionchecker.h"
 
 #include "SettingsManager.h"
 
@@ -31,6 +30,7 @@
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
 
+#include <QVersionNumber>
 #include <QDateTime>
 #include <QTimeZone>
 #include <QDebug>
@@ -237,7 +237,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_infos(QLowEnergyService::Ser
 
         if (m_deviceFirmware.size() == 10)
         {
-            if (VersionChecker(m_deviceFirmware) >= VersionChecker(LATEST_KNOWN_FIRMWARE_HYGROTEMP_MHOC303))
+            if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_HYGROTEMP_MHOC303))
             {
                 m_firmware_uptodate = true;
                 Q_EMIT firmwareUpdated();

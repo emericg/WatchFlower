@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider path for MobileSharing cache directory.
+  These paths reference the app's own sandbox directories only.
+
+  Other paths can be used, for instance:
+    <files-path name="files" path="." />
+    <cache-path name="cache" path="." />
+    <external-files-path name="external_files" path="." />
+    <external-cache-path name="external_cache" path="." />
+-->
+<paths>
+  <cache-path name="MobileSharing cache folder" path="MobileSharing/" />
+</paths>

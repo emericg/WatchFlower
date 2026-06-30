@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
+import AppUtils
 
 Loader {
     id: settingsAdvanced
@@ -90,37 +91,37 @@ Loader {
 
                     Text {
                         color: Theme.colorSubText
-                        text: "app name: %1".arg(utilsApp.appName())
+                        text: "app name: %1".arg(UtilsApp.appName())
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: "app version: %1".arg(utilsApp.appVersion())
+                        text: "app version: %1".arg(UtilsApp.appVersion())
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: "build mode: %1".arg(utilsApp.appBuildModeFull())
+                        text: "build mode: %1".arg(UtilsApp.appBuildModeFull())
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: "build architecture: %1".arg(utilsApp.qtArchitecture())
+                        text: "build architecture: %1".arg(UtilsApp.qtArchitecture())
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: "build date: %1".arg(utilsApp.appBuildDateTime())
+                        text: "build date: %1".arg(UtilsApp.appBuildDateTime())
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
                     Text {
                         color: Theme.colorSubText
-                        text: "Qt version: %1".arg(utilsApp.qtVersion())
+                        text: "Qt version: %1".arg(UtilsApp.qtVersion())
                         textFormat: Text.PlainText
                         font.pixelSize: Theme.fontSizeContent
                     }
@@ -230,7 +231,7 @@ Loader {
 
                             visible: isDesktop
                             text: "open"
-                            onClicked: utilsApp.openWith(parent.text)
+                            onClicked: UtilsApp.openWith(parent.text)
                         }
                     }
 
@@ -284,7 +285,7 @@ Loader {
 
                             visible: isDesktop
                             text: "open"
-                            onClicked: utilsApp.openWith(parent.text)
+                            onClicked: UtilsApp.openWith(parent.text)
                         }
                     }
 

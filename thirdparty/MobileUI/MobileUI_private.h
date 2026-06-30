@@ -43,22 +43,34 @@ public:
     void setColor_navbar(const QColor &color);
     void setTheme_navbar(const MobileUI::Theme theme);
 
-    int getStatusbarHeight();
-    int getNavbarHeight();
+    /*!
+     * \brief getSafeAreaMetrics()
+     *
+     * Read all system bar sizes and safe area insets (in device-independent pixels)
+     * in a single pass (one backend round-trip, especially useful for the Android
+     * backend and it's Android main thread usage).
+     */
+    void getSafeAreaMetrics(int &statusbarHeight, int &navbarHeight,
+                            int &top, int &left, int &right, int &bottom);
 
-    int getSafeAreaTop();
-    int getSafeAreaLeft();
-    int getSafeAreaRight();
-    int getSafeAreaBottom();
-
-    void setScreenAlwaysOn(const bool on);
-
-    void setScreenOrientation(const MobileUI::ScreenOrientation orientation);
+    int getKeyboardHeight();
 
     int getScreenBrightness();
     void setScreenBrightness(const int value);
 
-    void vibrate();
+    void setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation);
+
+    void setScreenAlwaysOn(const bool on);
+
+    void setScreenSecure(const bool on);
+
+    void setHighRefreshRate(const bool value);
+
+    void triggerHapticFeedback(const MobileUI::HapticFeedback type);
+
+    bool setTorch(const bool on);
+
+    void setIconBadgeNumber(const int number);
 
     void backToHomeScreen();
 };

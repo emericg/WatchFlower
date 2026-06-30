@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import ComponentLibrary
+import AppUtils
 
 Item {
     id: itemNoDevice
@@ -56,7 +57,7 @@ Item {
                     // Just to be sure...
                     if (!deviceManager.bluetoothPermissions) {
                         // Ask permission
-                        utilsApp.getMobileBleLocationPermission()
+                        UtilsOS.getMobileBleLocationPermission()
                     }
                     if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
                         // Enable

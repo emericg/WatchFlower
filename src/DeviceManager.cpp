@@ -71,6 +71,7 @@
 
 #if defined(Q_OS_ANDROID)
 #include "utils_app.h"
+#include "utils_os.h"
 #endif
 
 /* ************************************************************************** */
@@ -468,9 +469,9 @@ bool DeviceManager::checkBluetoothPermissions()
 #if defined(Q_OS_ANDROID)
     if (UtilsApp::getInstance()->getAndroidSdkVersion() <= 30)
     {
-        m_locPermission_foreground = UtilsApp::checkMobileBleLocationPermission();
-        m_locPermission_background = UtilsApp::checkMobileBackgroundLocationPermission();
-        m_gpsEnabled = UtilsApp::isMobileGpsEnabled();
+        m_locPermission_foreground = UtilsOS::checkMobileBleLocationPermission();
+        m_locPermission_background = UtilsOS::checkMobileBackgroundLocationPermission();
+        m_gpsEnabled = UtilsOS::isMobileGpsEnabled();
     }
 #endif
 
