@@ -32,8 +32,8 @@
 #include "utils_os_ios_notif.h"
 #endif
 
-class QJSEngine;
 class QQmlEngine;
+class QJSEngine;
 
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ class NotificationManager : public QObject
 #endif
 
     // Singleton
-    static NotificationManager *instance;
-    NotificationManager();
-    ~NotificationManager();
+    explicit NotificationManager(QObject *parent = nullptr);
 
 private slots:
     void updateNotificationAndroid();

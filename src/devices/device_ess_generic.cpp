@@ -22,7 +22,6 @@
 #include "device_ess_generic.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>

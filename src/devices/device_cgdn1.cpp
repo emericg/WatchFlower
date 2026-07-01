@@ -74,7 +74,7 @@ void DeviceCGDN1::serviceScanDone()
 void DeviceCGDN1::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceCGDN1::addLowEnergyService(" << uuid.toString() << ")";
-    Q_UNUSED (uuid)
+    Q_UNUSED(uuid)
 }
 
 /* ************************************************************************** */

@@ -30,6 +30,7 @@
 #include "Journal.h"
 
 #include "utils_language.h"
+#include "utils_log.h"
 #if defined(Q_OS_MACOS)
 #include "utils_os_macos_dock.h"
 #endif
@@ -112,7 +113,7 @@ int main(int argc, char *argv[])
         SettingsManager *sm = SettingsManager::getInstance();
         if (sm && sm->getSysTray())
         {
-            AndroidService *as = new AndroidService();
+            AndroidService *as = new AndroidService(&app);
             if (!as) return EXIT_FAILURE;
 
             return app.exec();

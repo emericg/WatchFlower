@@ -42,7 +42,7 @@ set(CORE_SOURCES
     utils_fpsmonitor.cpp utils_fpsmonitor.h
     utils_language.cpp utils_language.h
     PermissionManager.cpp PermissionManager.h
-    # os utils
+    # system utils
     utils_os.cpp utils_os.h
     utils_screen.cpp utils_screen.h
     utils_sysinfo.cpp utils_sysinfo.h

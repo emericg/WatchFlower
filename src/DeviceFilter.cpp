@@ -115,7 +115,6 @@ DeviceModel::DeviceModel(const DeviceModel &other, QObject *parent)
 
 DeviceModel::~DeviceModel()
 {
-    qDeleteAll(m_devices);
     m_devices.clear();
 }
 

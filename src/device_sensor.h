@@ -334,10 +334,10 @@ protected:
     Q_PROPERTY(DeviceInfos *deviceInfos READ getDeviceInfos CONSTANT)
 
 protected:
-    virtual void refreshDataFinished(bool status, bool cached = false);
-    virtual void refreshHistoryFinished(bool status);
+    virtual void refreshDataFinished(bool status, bool cached = false) override;
+    virtual void refreshHistoryFinished(bool status) override;
 
-    virtual bool getSqlDeviceInfos();
+    virtual bool getSqlDeviceInfos() override;
 
     virtual bool getSqlPlantData(int minutes);
     virtual bool getSqlPlantBias();
@@ -400,10 +400,10 @@ public:
     Q_INVOKABLE bool isDataFresh_rt() const;        //!< Has at most Xh (user defined) old data (from immediate records)
     Q_INVOKABLE bool isDataFresh_db() const;        //!< Has at most Xh (user defined) old data (from database records)
 
-    virtual void checkDataAvailability();
-    virtual bool needsUpdateRt() const;             //!< Does this sensor has 'immediate' (but possibly incomplete) record
-    virtual bool needsUpdateDb() const;             //!< Does this sensor has a recent record in the database
-    virtual bool needsUpdateDb_mini() const;        //!< Does this sensor can save a new record in the database (instead of overwriting the current one)
+    virtual void checkDataAvailability() override;
+    virtual bool needsUpdateRt() const override;    //!< Does this sensor has 'immediate' (but possibly incomplete) record
+    virtual bool needsUpdateDb() const override;    //!< Does this sensor has a recent record in the database
+    virtual bool needsUpdateDb_mini() const override; //!< Does this sensor can save a new record in the database (instead of overwriting the current one)
 
     bool setSqlPlantBias();
     bool setSqlPlantLimits();
@@ -539,7 +539,7 @@ public:
     int getLuxMax_history() const { return m_luxMax_history; }
 
     // History sync
-    int getHistoryUpdatePercent() const;
+    int getHistoryUpdatePercent() const override;
 };
 
 /* ************************************************************************** */

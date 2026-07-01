@@ -1081,7 +1081,7 @@ int DeviceManager::getLastRun()
 {
     if (m_dbInternal || m_dbExternal)
     {
-        return getLastRun_s();
+        return getLastRun_min();
     }
 
     return -1;

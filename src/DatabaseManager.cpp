@@ -22,37 +22,36 @@
 #include "DatabaseManager.h"
 #include "SettingsManager.h"
 
-#include <QDir>
-#include <QFile>
-#include <QString>
-#include <QDateTime>
-#include <QStandardPaths>
-#include <QDebug>
+#include <QCoreApplication>
+#include <QQmlEngine>
+#include <QJSEngine>
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QSqlError>
 
-/* ************************************************************************** */
+#include <QStandardPaths>
+#include <QDateTime>
+#include <QFile>
+#include <QDir>
+#include <QDebug>
 
-DatabaseManager *DatabaseManager::instance = nullptr;
+/* ************************************************************************** */
 
 DatabaseManager *DatabaseManager::getInstance()
 {
-    if (instance == nullptr)
-    {
-        instance = new DatabaseManager();
-    }
-
+    static DatabaseManager *instance = new DatabaseManager(QCoreApplication::instance());
     return instance;
 }
 
 DatabaseManager *DatabaseManager::create(QQmlEngine *, QJSEngine *)
 {
-    return getInstance();
+    DatabaseManager *instance = getInstance();
+    QJSEngine::setObjectOwnership(instance, QJSEngine::CppOwnership);
+    return instance;
 }
 
-DatabaseManager::DatabaseManager()
+DatabaseManager::DatabaseManager(QObject *parent) : QObject(parent)
 {
     bool status = false;
 
@@ -64,11 +63,11 @@ DatabaseManager::DatabaseManager()
     {
         status = openDatabase_sqlite();
     }
-}
 
-DatabaseManager::~DatabaseManager()
-{
-    //
+    if (!status)
+    {
+        qWarning() << "DatabaseManager > NO DATABASE AVAILABLE !!!";
+    }
 }
 
 /* ************************************************************************** */
@@ -668,7 +667,7 @@ void DatabaseManager::createDatabase()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
-void DatabaseManager::migrateDatabase()
+bool DatabaseManager::migrateDatabase()
 {
     int dbVersion = 0;
 
@@ -684,6 +683,8 @@ void DatabaseManager::migrateDatabase()
 
     if (dbVersion > 0 && dbVersion != s_dbCurrentVersion)
     {
+        qDebug() << "dbVersion is #" << dbVersion;
+
         if (dbVersion == 1)
         {
             if (migrate_v1v2())
@@ -701,7 +702,11 @@ void DatabaseManager::migrateDatabase()
                 dbVersion = 3;
             }
         }
+
+        qDebug() << "dbVersion is now #" << dbVersion;
     }
+
+    return (dbVersion == s_dbCurrentVersion);
 }
 
 /* ************************************************************************** */

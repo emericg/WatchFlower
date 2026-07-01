@@ -70,11 +70,11 @@ class PermissionManager: public QObject
     static const int s_waittimeout_interval = 33; // in ms
 
     bool m_bluetoothPermission = false;
-    bool m_calendarPermission = false;
+    bool m_calendarPermission = false; // TODO
     bool m_cameraPermission = false;
-    bool m_contactsPermission = false;
+    bool m_contactsPermission = false; // TODO
     bool m_locationPermission = false;
-    bool m_microphonePermission = false;
+    bool m_microphonePermission = false; // TODO
 
     void setBluetoothPermission(bool perm);
     void setCalendarPermission(bool perm);

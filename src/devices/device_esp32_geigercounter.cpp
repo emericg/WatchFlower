@@ -22,7 +22,6 @@
 #include "device_esp32_geigercounter.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>

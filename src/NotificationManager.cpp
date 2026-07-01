@@ -22,6 +22,10 @@
 #include "NotificationManager.h"
 #include "SystrayManager.h"
 
+#include <QCoreApplication>
+#include <QQmlEngine>
+#include <QJSEngine>
+
 #if defined(Q_OS_ANDROID)
 #include "utils_os_android.h"
 #include <QJniObject>
@@ -32,24 +36,20 @@
 
 /* ************************************************************************** */
 
-NotificationManager *NotificationManager::instance = nullptr;
-
 NotificationManager *NotificationManager::getInstance()
 {
-    if (instance == nullptr)
-    {
-        instance = new NotificationManager();
-    }
-
+    static NotificationManager *instance = new NotificationManager(QCoreApplication::instance());
     return instance;
 }
 
 NotificationManager *NotificationManager::create(QQmlEngine *, QJSEngine *)
 {
-    return getInstance();
+    NotificationManager *instance = getInstance();
+    QJSEngine::setObjectOwnership(instance, QJSEngine::CppOwnership);
+    return instance;
 }
 
-NotificationManager::NotificationManager()
+NotificationManager::NotificationManager(QObject *parent) : QObject(parent)
 {
     //checkNotificationPermissions();
 
@@ -60,11 +60,6 @@ NotificationManager::NotificationManager()
 #else
     connect(this, SIGNAL(notificationChanged()), this, SLOT(updateNotificationDesktop()));
 #endif
-}
-
-NotificationManager::~NotificationManager()
-{
-    //
 }
 
 /* ************************************************************************** */

@@ -22,32 +22,31 @@
 #include "PlantDatabase.h"
 #include "Plant.h"
 
+#include <QCoreApplication>
+#include <QQmlEngine>
+#include <QDebug>
+
 #include <QDir>
 #include <QFile>
 #include <QStringList>
-
 #include <QDebug>
 
 /* ************************************************************************** */
 
-PlantDatabase *PlantDatabase::instance = nullptr;
-
 PlantDatabase *PlantDatabase::getInstance()
 {
-    if (instance == nullptr)
-    {
-        instance = new PlantDatabase();
-    }
-
+    static PlantDatabase *instance = new PlantDatabase(QCoreApplication::instance());
     return instance;
 }
 
 PlantDatabase *PlantDatabase::create(QQmlEngine *, QJSEngine *)
 {
-    return getInstance();
+    PlantDatabase *instance = getInstance();
+    QJSEngine::setObjectOwnership(instance, QJSEngine::CppOwnership);
+    return instance;
 }
 
-PlantDatabase::PlantDatabase()
+PlantDatabase::PlantDatabase(QObject *parent) : QObject(parent)
 {
     //
 }

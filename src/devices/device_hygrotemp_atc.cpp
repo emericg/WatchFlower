@@ -22,7 +22,6 @@
 #include "device_hygrotemp_atc.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>
@@ -70,7 +69,7 @@ void DeviceHygrotempATC::serviceScanDone()
 void DeviceHygrotempATC::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceHygrotempATC::addLowEnergyService(" << uuid.toString() << ")";
-    Q_UNUSED (uuid)
+    Q_UNUSED(uuid)
 }
 
 /* ************************************************************************** */

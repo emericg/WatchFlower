@@ -29,8 +29,8 @@
 #include <QString>
 #include <QSize>
 
-class QJSEngine;
 class QQmlEngine;
+class QJSEngine;
 
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appThemeChanged)
     Q_PROPERTY(bool appThemeAuto READ getAppThemeAuto WRITE setAppThemeAuto NOTIFY appThemeAutoChanged)
-    Q_PROPERTY(bool appThemeCSD READ getAppThemeCSD WRITE setAppThemeCSD NOTIFY appThemeCSDChanged)
-    Q_PROPERTY(uint appUnits READ getAppUnits WRITE setAppUnits NOTIFY appUnitsChanged)
+    Q_PROPERTY(uint appThemeAutoMethod READ getAppThemeAutoMethod WRITE setAppThemeAutoMethod NOTIFY appThemeAutoChanged)
+    Q_PROPERTY(uint appUnitSystem READ getAppUnitSystem WRITE setAppUnitSystem NOTIFY appUnitSystemChanged)
     Q_PROPERTY(QString appLanguage READ getAppLanguage WRITE setAppLanguage NOTIFY appLanguageChanged)
 
     Q_PROPERTY(bool startMinimized READ getMinimized WRITE setMinimized NOTIFY minimizedChanged)
@@ -100,19 +100,22 @@ class SettingsManager: public QObject
 
     bool m_firstlaunch = true;
 
-    // Application window
-    QSize m_appSize;
-    QSize m_appPosition;
+    /// Application window
+
+    QSize m_appSize = QSize(1280, 720);
+    QSize m_appPosition = QSize(64, 64);
     unsigned m_appVisibility = 1;               //!< QWindow::Visibility
 
-    // Application generic
+    /// Application generic
+
     QString m_appTheme = "THEME_PLANT";
     bool m_appThemeAuto = false;
-    bool m_appThemeCSD = false;
-    unsigned m_appUnits = 0;                    //!< QLocale::MeasurementSystem
+    unsigned m_appThemeAutoMethod = 0;
+    unsigned m_appUnitSystem = 0;               //!< QLocale::MeasurementSystem
     QString m_appLanguage = "auto";
 
-    // Application specific
+    /// Application specific
+
     bool m_startMinimized = false;
     bool m_systrayEnabled = false;
     bool m_notificationsEnabled = false;
@@ -162,21 +165,22 @@ class SettingsManager: public QObject
     QString m_mqttPassword = "watchflower";
     QString m_mqttTopics = "watchflower";
 
-    // Singleton
-    static SettingsManager *instance;
-    SettingsManager();
-    ~SettingsManager();
+    /// SettingsManager
 
+    // Read / Write settings
     bool readSettings();
     bool writeSettings();
+
+    // Singleton
+    explicit SettingsManager(QObject *parent = nullptr);
 
 Q_SIGNALS:
     void firstLaunchChanged();
     void initialSizeChanged();
     void appThemeChanged();
     void appThemeAutoChanged();
-    void appThemeCSDChanged();
-    void appUnitsChanged();
+    void appThemeAutoMethodChanged();
+    void appUnitSystemChanged();
     void appLanguageChanged();
     void minimizedChanged();
     void systrayChanged();
@@ -214,6 +218,8 @@ public:
     static SettingsManager *getInstance();
     static SettingsManager *create(QQmlEngine *, QJSEngine *);
 
+    /// Generic
+
     bool isFirstLaunch() const { return m_firstlaunch; }
 
     QSize getInitialSize() { return m_appSize; }
@@ -226,14 +232,16 @@ public:
     bool getAppThemeAuto() const { return m_appThemeAuto; }
     void setAppThemeAuto(const bool value);
 
-    bool getAppThemeCSD() const { return m_appThemeCSD; }
-    void setAppThemeCSD(const bool value);
+    unsigned getAppThemeAutoMethod() const { return m_appThemeAutoMethod; }
+    void setAppThemeAutoMethod(const unsigned value);
 
-    unsigned getAppUnits() const { return m_appUnits; }
-    void setAppUnits(unsigned value);
+    unsigned getAppUnitSystem() const { return m_appUnitSystem; }
+    void setAppUnitSystem(const unsigned value);
 
     const QString &getAppLanguage() const { return m_appLanguage; }
     void setAppLanguage(const QString &value);
+
+    /// App
 
     bool getMinimized() const { return m_startMinimized; }
     void setMinimized(const bool value);
@@ -352,7 +360,8 @@ public:
     const QString &getMqttTopics() const { return m_mqttTopics; }
     void setMqttTopics(const QString &value);
 
-    // Utils
+    /// Utils
+
     Q_INVOKABLE QString getSettingsDirectory();
     Q_INVOKABLE void resetSettings();
     Q_INVOKABLE bool saveSettings();

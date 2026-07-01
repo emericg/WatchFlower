@@ -30,8 +30,8 @@
 #include <QVariant>
 #include <QList>
 
-class QJSEngine;
 class QQmlEngine;
+class QJSEngine;
 
 class Plant;
 
@@ -62,8 +62,7 @@ class PlantDatabase: public QObject
     void stats();
 
     // Singleton
-    static PlantDatabase *instance;
-    PlantDatabase();
+    explicit PlantDatabase(QObject *parent = nullptr);
     ~PlantDatabase();
 
 Q_SIGNALS:

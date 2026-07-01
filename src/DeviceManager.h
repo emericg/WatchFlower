@@ -245,7 +245,7 @@ public:
     void requestLocationPermission_results(const QPermission &permission);
 
     // Scanning management
-    static int getLastRun_s();
+    static int getLastRun_min();
     Q_INVOKABLE int getLastRun();
 
     Q_INVOKABLE void scanNearby_start();
