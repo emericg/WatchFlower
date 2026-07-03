@@ -3,8 +3,8 @@ import QtQuick.Window
 import QtQuick.Controls
 
 import ComponentLibrary
-import AppUtils
 import MobileUI
+import AppUtils
 
 Window {
     id: appWindow
@@ -41,11 +41,11 @@ Window {
     Binding { target: Theme; property: "screenPaddingBottom";    value: MobileUI.safeAreaBottom }
 
     // Setup MobileUI
-    Binding { target: MobileUI; property: "statusbarColor";      value: Theme.colorStatusbar }
-    Binding { target: MobileUI; property: "statusbarTheme";      value: Theme.themeStatusbar }
-    Binding { target: MobileUI; property: "navbarColor";
-        value: {
+    Binding { target: MobileUI; property: "statusbarContentColor"; value: Theme.colorStatusbar }
+    Binding { target: MobileUI; property: "navbarColor"; value: "transparent" }
+    Binding { target: MobileUI; property: "navbarContentColor"; value: {
             if (appContent.state === "ScreenTutorial") return Theme.colorHeader
+            // if(mobileMenu.visible) return appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
             return Theme.colorBackground
         }
     }

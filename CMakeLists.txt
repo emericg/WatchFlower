@@ -258,7 +258,7 @@ add_subdirectory(thirdparty/SingleApplication)
 target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication)
 
 # AppUtils
-set(UTILS_DOCK_ENABLED ON CACHE BOOL "" FORCE)
+set(UTILS_DOCK_ENABLED ON CACHE BOOL "UTILS_DOCK_ENABLED" FORCE)
 add_subdirectory(thirdparty/AppUtils)
 target_link_libraries(${PROJECT_NAME} PRIVATE AppUtils AppUtils_plugin)
 

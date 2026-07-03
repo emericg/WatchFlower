@@ -2,7 +2,6 @@ pragma Singleton
 
 import QtQuick
 
-
 Item {
     ////////////////////////////////////////////////////////////////////////////
 
@@ -48,7 +47,7 @@ Item {
     // Bind these from the calling application OR set values directly here
 
     // Theme engine
-    property string appTheme: "THEME_PLANT"
+    property string appTheme: "THEME_DEFAULT"
     property bool appThemeAuto: false
     property int appThemeAutoMethod: 0
 
