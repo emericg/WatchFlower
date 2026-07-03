@@ -104,98 +104,112 @@ bool DatabaseManager::restoreDatabase()
 
 bool DatabaseManager::openDatabase_sqlite()
 {
-    if (QSqlDatabase::isDriverAvailable("QSQLITE"))
+    if (QSqlDatabase::isDriverAvailable("QSQLITE") == false)
     {
-        m_dbInternalAvailable = true;
+        qWarning() << "> SQLite is NOT available";
+        return false;
+    }
 
-        if (m_dbInternalOpen)
+    m_dbInternalAvailable = true;
+
+    if (m_dbInternalOpen)
+    {
+        closeDatabase();
+    }
+
+    QString dbPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    QDir dbDirectory(dbPath);
+
+    if (dbPath.isEmpty() == false)
+    {
+        if (dbDirectory.exists() == false)
         {
-            closeDatabase();
+            if (dbDirectory.mkpath(dbPath) == false)
+            {
+                qWarning() << "Cannot create dbDirectory...";
+            }
         }
+    }
+    if (dbPath.isEmpty() || dbDirectory.exists() == false)
+    {
+        qWarning() << "> Cannot make a SQLite database file";
+        return false;
+    }
 
-        QString dbPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+    dbPath += "/data.db";
 
-        if (dbPath.isEmpty() == false)
+    QSqlDatabase dbFile(QSqlDatabase::addDatabase("QSQLITE"));
+    dbFile.setDatabaseName(dbPath);
+
+    if (dbFile.isOpen())
+    {
+        m_dbInternalOpen = true;
+    }
+    else
+    {
+        if (dbFile.open())
         {
-            QDir dbDirectory(dbPath);
-            if (dbDirectory.exists() == false)
+            if (dbFile.isOpenError())
             {
-                if (dbDirectory.mkpath(dbPath) == false)
-                    qWarning() << "Cannot create dbDirectory...";
+                qWarning() << "Error while opening database:" << dbFile.lastError();
             }
 
-            if (dbDirectory.exists())
+            m_dbInternalOpen = true;
+
+            // Concurrency settings ////////////////////////////////////////////
+
+            // WatchFlower and its Android background service run in separate processes, but share this database file.
+            // - WAL mode allows one writer and concurrent readers across processes
+            // - busy_timeout makes a blocked writer retry instead of failing immediately with SQLITE_BUSY
+
+            QSqlQuery setWalMode("PRAGMA journal_mode = WAL");
+            QSqlQuery("PRAGMA synchronous = NORMAL");
+            QSqlQuery("PRAGMA busy_timeout = 5000");
+
+            // PRAGMA journal_mode returns the resulting mode, so we warn if WAL wasn't actually applied
+            if (setWalMode.next())
             {
-                dbPath += "/data.db";
-
-                QSqlDatabase dbFile(QSqlDatabase::addDatabase("QSQLITE"));
-                dbFile.setDatabaseName(dbPath);
-
-                if (dbFile.isOpen())
+                QString journalMode = setWalMode.value(0).toString();
+                if (journalMode.compare("wal", Qt::CaseInsensitive) != 0)
                 {
-                    m_dbInternalOpen = true;
-                }
-                else
-                {
-                    if (dbFile.open())
-                    {
-                        if (dbFile.isOpenError())
-                        {
-                            qWarning() << "Error while opening database:" << dbFile.lastError();
-                        }
-
-                        m_dbInternalOpen = true;
-
-                        // Migrations //////////////////////////////////////////
-
-                        // Must be done before the creation, so we migrate old data tables
-                        // instead of creating new empty tables
-
-                        migrateDatabase();
-
-                        // Check if our tables exists //////////////////////////
-
-                        createDatabase();
-
-                        // Sanitize database ///////////////////////////////////
-
-                        int maxDays = SettingsManager::getInstance()->getDataRetentionDays();
-                        if (maxDays < 30) maxDays = 30;
-
-                        // Delete everything xx days old
-                        QSqlQuery sanitizePastData1("DELETE FROM plantData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
-                        QSqlQuery sanitizePastData2("DELETE FROM thermoData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
-                        QSqlQuery sanitizePastData3("DELETE FROM sensorData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
-
-                        // Basic check to see if the device clock is correctly set
-                        if (QDate::currentDate().year() >= 2023)
-                        {
-                            // Delete everything that's in the future
-                            QSqlQuery sanitizeFuruteData1("DELETE FROM plantData WHERE timestamp > DATE('now', '+1 days')");
-                            QSqlQuery sanitizeFuruteData2("DELETE FROM thermoData WHERE timestamp > DATE('now', '+1 days')");
-                            QSqlQuery sanitizeFuruteData3("DELETE FROM sensorData WHERE timestamp > DATE('now', '+1 days')");
-                        }
-                    }
-                    else
-                    {
-                        qWarning() << "Cannot open database... Error:" << dbFile.lastError();
-                    }
+                    qWarning() << "Database journal_mode is" << journalMode << "(expected 'wal') !!!";
                 }
             }
-            else
+
+            // Migration(s) ////////////////////////////////////////////////////
+
+            // Migrate old data tables instead of creating new empty tables
+            // Must be done before the creation...
+
+            migrateDatabase();
+
+            // Check if our tables exists //////////////////////////////////////
+
+            createDatabase();
+
+            // Sanitize database ///////////////////////////////////////////////
+
+            int maxDays = SettingsManager::getInstance()->getDataRetentionDays();
+            if (maxDays < 30) maxDays = 30;
+
+            // Delete everything xx days old
+            QSqlQuery sanitizePastData1("DELETE FROM plantData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
+            QSqlQuery sanitizePastData2("DELETE FROM thermoData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
+            QSqlQuery sanitizePastData3("DELETE FROM sensorData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");
+
+            // Basic check to see if the device clock is correctly set
+            if (QDate::currentDate().year() >= 2026)
             {
-                qWarning() << "Cannot create nor open dbDirectory...";
+                // Delete everything that's in the future
+                QSqlQuery sanitizeFuruteData1("DELETE FROM plantData WHERE timestamp > DATE('now', '+1 days')");
+                QSqlQuery sanitizeFuruteData2("DELETE FROM thermoData WHERE timestamp > DATE('now', '+1 days')");
+                QSqlQuery sanitizeFuruteData3("DELETE FROM sensorData WHERE timestamp > DATE('now', '+1 days')");
             }
         }
         else
         {
-            qWarning() << "Cannot find QStandardPaths::AppDataLocation directory...";
+            qWarning() << "Cannot open database... Error:" << dbFile.lastError();
         }
-    }
-    else
-    {
-        qWarning() << "> SQLite is NOT available";
-        m_dbInternalAvailable = false;
     }
 
     return m_dbInternalOpen;
@@ -205,71 +219,69 @@ bool DatabaseManager::openDatabase_sqlite()
 
 bool DatabaseManager::openDatabase_mysql()
 {
-    if (QSqlDatabase::isDriverAvailable("QMYSQL"))
+    if (!QSqlDatabase::isDriverAvailable("QMYSQL"))
     {
-        m_dbExternalAvailable = true;
+        qWarning() << "> MySQL is NOT available";
+        return false;
+    }
 
-        if (m_dbExternalOpen)
+    m_dbExternalAvailable = true;
+
+    if (m_dbExternalOpen)
+    {
+        closeDatabase();
+    }
+
+    SettingsManager *sm = SettingsManager::getInstance();
+
+    if (sm->getMySQL())
+    {
+        QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+        db.setHostName(sm->getMysqlHost());
+        db.setPort(sm->getMysqlPort());
+        db.setDatabaseName(sm->getMysqlName());
+        db.setUserName(sm->getMysqlUser());
+        db.setPassword(sm->getMysqlPassword());
+
+        if (db.isOpen())
         {
-            closeDatabase();
+            m_dbExternalOpen = true;
         }
-
-        SettingsManager *sm = SettingsManager::getInstance();
-
-        if (sm->getMySQL())
+        else
         {
-            QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-            db.setHostName(sm->getMysqlHost());
-            db.setPort(sm->getMysqlPort());
-            db.setDatabaseName(sm->getMysqlName());
-            db.setUserName(sm->getMysqlUser());
-            db.setPassword(sm->getMysqlPassword());
-
-            if (db.isOpen())
+            if (db.open())
             {
+                if (db.isOpenError())
+                {
+                    qWarning() << "Error while opening database:" << db.lastError();
+                }
+
                 m_dbExternalOpen = true;
+
+                // Migration(s) ////////////////////////////////////////////////
+
+                // Must be done before the creation, so we migrate old data tables
+                // instead of creating new empty tables
+
+                migrateDatabase();
+
+                // Check if our tables exists //////////////////////////////////
+
+                createDatabase();
+
+                // Delete everything that's in the future //////////////////////
+
+                // TODO
+
+                // Sanitize database ///////////////////////////////////////////
+
+                // We don't sanetize MySQL databases
             }
             else
             {
-                if (db.open())
-                {
-                    if (db.isOpenError())
-                    {
-                        qWarning() << "Error while opening database:" << db.lastError();
-                    }
-
-                    m_dbExternalOpen = true;
-
-                    // Migrations ///////////////////////////////////////////////////
-
-                    // Must be done before the creation, so we migrate old data tables
-                    // instead of creating new empty tables
-
-                    migrateDatabase();
-
-                    // Check if our tables exists //////////////////////////////////
-
-                    createDatabase();
-
-                    // Delete everything that's in the future //////////////////////
-
-                    // TODO
-
-                    // Sanitize database ///////////////////////////////////////////
-
-                    // We don't sanetize MySQL databases
-                }
-                else
-                {
-                    qWarning() << "Cannot open database... Error:" << db.lastError();
-                }
+                qWarning() << "Cannot open database... Error:" << db.lastError();
             }
         }
-    }
-    else
-    {
-        qDebug() << "> MySQL is NOT available";
-        m_dbExternalAvailable = false;
     }
 
     return m_dbExternalOpen;
