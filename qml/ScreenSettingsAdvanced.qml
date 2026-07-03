@@ -43,7 +43,7 @@ Loader {
 
         function loadScreen() {
             //console.log("SettingsAdvanced // loadScreen()")
-            //logArea.text = utilsLog.getLog()
+            //logArea.text = UtilsLog.getRawString()
         }
 
         function backAction() {
@@ -343,45 +343,49 @@ Loader {
                         spacing: Theme.componentMargin / 2
 
                         ButtonFlat {
-                            text: "show logs"
+                            text: "show/hide logs"
 
-                            onPressed: {
-                                logFrame.visible
+                            onClicked: {
+                                logFrame.visible = !logFrame.visible
+                                if (logFrame.visible) logArea.text = UtilsLog.getRawString()
                             }
+                        }
+
+                        ButtonFlat {
+                            text: "refresh"
+                            onClicked: logArea.text = UtilsLog.getRawString()
                         }
 
                         ButtonFlat {
                             color: Theme.colorWarning
 
-                            text: "reset log"
+                            text: "clear log"
                             onPressAndHold: {
-                                utilsLog.clearLog()
-                                logArea.text = utilsLog.getLog()
+                                UtilsLog.clearLog()
+                                logArea.text = UtilsLog.getRawString()
                             }
                         }
                     }
 
-                    Rectangle {
+                    Item {
                         id: logFrame
                         anchors.left: parent.left
                         anchors.right: parent.right
                         height: 640
-                        anchors.margins: 12
 
-                        visible: false
-                        color: Theme.colorBackground
-                        border.width: 1
-                        border.color: Theme.colorSeparator
+                        visible: true
 
                         ScrollView {
                             anchors.fill: parent
                             ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
                             ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
-                            TextArea {
+                            TextAreaThemed {
                                 id: logArea
-                                anchors.fill: parent
-                                anchors.margins: 6
+
+                                anchors.left: parent.left
+                                anchors.right: parent.right
+                                height: 640
 
                                 readOnly: true
                                 selectByMouse: false

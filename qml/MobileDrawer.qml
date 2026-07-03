@@ -260,6 +260,8 @@ DrawerThemed {
 
             visible: (screenOrientation === Qt.PortraitOrientation)
 
+            ////////
+
             DrawerItem {
                 highlighted: (appContent.state === "PlantBrowser")
                 text: qsTr("Plant browser")
@@ -283,6 +285,8 @@ DrawerThemed {
                     appDrawer.close()
                 }
             }
+
+            ////////
         }
 
         ////////////////

@@ -31,10 +31,7 @@
 
 /* ************************************************************************** */
 
-//! Non-deduced parameter helper (std::type_identity is C++20; this works in C++17).
-//! Used so that a single argument drives template deduction while the others
-//! convert implicitly, allowing mixed-type calls like clamp(myUint, 0, 200)
-//! without explicit casts.
+//! Non-deduced parameter helper (std::type_identity is C++20; this works in C++17)
 template<typename T> struct utils_identity { using type = T; };
 template<typename T> using utils_identity_t = typename utils_identity<T>::type;
 
