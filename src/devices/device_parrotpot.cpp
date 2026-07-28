@@ -34,6 +34,26 @@
 
 /* ************************************************************************** */
 
+/*!
+ * \brief Extract the version number from a Parrot firmware revision string.
+ * \param value: the raw "firmware revision string" characteristic content.
+ * \return The version number, or an empty string if the format is unknown.
+ *
+ * The firmware revision string is formatted as "xxx_yyy-<version>".
+ */
+static QString parseFirmwareRevision(const QByteArray &value)
+{
+    const QList<QByteArray> parts = value.split('_');
+    if (parts.size() < 2) return QString();
+
+    const QList<QByteArray> subparts = parts.at(1).split('-');
+    if (subparts.size() < 2) return QString();
+
+    return QString::fromLatin1(subparts.at(1));
+}
+
+/* ************************************************************************** */
+
 DeviceParrotPot::DeviceParrotPot(const QString &deviceAddr, const QString &deviceName, QObject *parent):
     DevicePlantSensor(deviceAddr, deviceName, parent)
 {
@@ -264,12 +284,14 @@ void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceS
         QLowEnergyCharacteristic cfw = serviceInfos->characteristic(uuid_fw);
         if (cfw.value().size() > 0)
         {
-            QString fw = cfw.value().split('_')[1].split('-')[1];
-            setFirmware(fw);
-
-            if (m_deviceFirmware.size() == 6)
+            QString fw = parseFirmwareRevision(cfw.value());
+            if (!fw.isEmpty())
             {
-                if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+                setFirmware(fw);
+
+                QVersionNumber fw_version = QVersionNumber::fromString(m_deviceFirmware);
+                if (!fw_version.isNull() &&
+                    fw_version >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
                 {
                     m_firmware_uptodate = true;
                     Q_EMIT firmwareUpdated();
@@ -319,7 +341,8 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
         }
 
-        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
+            m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
         {
             const quint8 *rawData = nullptr;
             uint32_t rawValue = 0;
@@ -403,9 +426,9 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
 
             /////////
 
-            if (m_soilTemperature > -10.f && m_soilTemperature < 100.f &&
-                m_temperature > -10.f && m_temperature < 100.f &&
-                m_luminosityLux >= 0 && m_luminosityLux < 200000)
+            if (m_soilTemperature < -10.f || m_soilTemperature > 100.f ||
+                m_temperature < -10.f || m_temperature > 100.f ||
+                m_luminosityLux < 0 || m_luminosityLux > 200000)
             {
                 // Sometimes, Parrot devices send obviously wrong data over BLE
                 // Maybe the sensor is warming up?
@@ -516,12 +539,14 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
     // Read firmware version
     if (c.uuid().toString() == "00002a26-0000-1000-8000-00805f9b34fb")
     {
-        QString fw = value.split('_')[1].split('-')[1];
-        setFirmware(fw);
-
-        if (m_deviceFirmware.size() == 6)
+        QString fw = parseFirmwareRevision(value);
+        if (!fw.isEmpty())
         {
-            if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
+            setFirmware(fw);
+
+            QVersionNumber fw_version = QVersionNumber::fromString(m_deviceFirmware);
+            if (!fw_version.isNull() &&
+                fw_version >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
             {
                 m_firmware_uptodate = true;
                 Q_EMIT firmwareUpdated();

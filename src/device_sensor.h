@@ -313,7 +313,7 @@ protected:
     int m_history_sessionRead = -1;
 
     // device clock
-    int64_t m_device_lastmove = -1;
+    int64_t m_device_lastmove = -1;     //!< Unix timestamp of the last detected move
 
     // graphs data
     QList <QObject *> m_chartData_history_month;

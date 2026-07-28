@@ -232,7 +232,7 @@ bool DeviceSensor::getSqlDeviceInfos()
             Q_EMIT firmwareUpdated();
         }
     }
-    else if ((m_deviceName.startsWith("Flower power")) && (m_deviceFirmware.size() == 5))
+    else if (m_deviceName.startsWith("Flower power") && !QVersionNumber::fromString(m_deviceFirmware).isNull())
     {
         if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_FLOWERPOWER))
         {
@@ -264,7 +264,7 @@ bool DeviceSensor::getSqlDeviceInfos()
             Q_EMIT firmwareUpdated();
         }
     }
-    else if ((m_deviceName.startsWith("Parrot pot")) && (m_deviceFirmware.size() == 6))
+    else if (m_deviceName.startsWith("Parrot pot") && !QVersionNumber::fromString(m_deviceFirmware).isNull())
     {
         if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
         {
@@ -1421,7 +1421,7 @@ QDateTime DeviceSensor::getLastMove() const
 {
     if (m_device_lastmove > 0)
     {
-        return QDateTime::fromSecsSinceEpoch(QDateTime::currentSecsSinceEpoch() - m_device_lastmove);
+        return QDateTime::fromSecsSinceEpoch(m_device_lastmove);
     }
 
     return QDateTime();
@@ -1429,7 +1429,9 @@ QDateTime DeviceSensor::getLastMove() const
 
 float DeviceSensor::getLastMove_days() const
 {
-    float days = (m_device_lastmove / 3600.f / 24.f);
+    if (m_device_lastmove <= 0) return 0.f;
+
+    float days = (QDateTime::currentSecsSinceEpoch() - m_device_lastmove) / 3600.f / 24.f;
     if (days < 0.f) days = 0.f;
 
     return days;
