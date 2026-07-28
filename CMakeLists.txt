@@ -100,13 +100,8 @@ set(SOURCES
     assets/plants.qrc
 )
 
-if(ANDROID)
-    set(SOURCES_ANDROID
-        src/AndroidService.cpp src/AndroidService.h
-    )
-endif()
+if(NOT IOS AND NOT ANDROID) # Desktop
 
-if(NOT IOS AND NOT ANDROID)
     # Desktop app icons
     if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
         set(app_icon_windows "${PROJECT_SOURCE_DIR}/assets/windows/${PROJECT_NAME}.rc")
@@ -125,6 +120,16 @@ if(NOT IOS AND NOT ANDROID)
         src/SystrayManager.cpp src/SystrayManager.h
         src/MenubarManager.cpp src/MenubarManager.h
     )
+
+else() # Mobile
+
+    if(ANDROID)
+        # Android daemon
+        set(SOURCES_ANDROID
+            src/AndroidService.cpp src/AndroidService.h
+        )
+    endif()
+
 endif()
 
 qt_add_executable(${PROJECT_NAME}
@@ -307,7 +312,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE thirdparty/)
 # Qt official hacks...
 set(QML_IMPORT_PATH
     "${CMAKE_BINARY_DIR}/thirdparty/"
+    "${CMAKE_BINARY_DIR}/thirdparty/AppUtils/"
     "${CMAKE_BINARY_DIR}/thirdparty/MobileUI/"
+    "${CMAKE_BINARY_DIR}/thirdparty/MobileSharing/"
     "${CMAKE_BINARY_DIR}/thirdparty/ComponentLibrary/"
     CACHE STRING "QML Modules import paths" FORCE)
 

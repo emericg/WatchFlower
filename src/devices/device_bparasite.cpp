@@ -22,7 +22,6 @@
 #include "device_bparasite.h"
 
 #include <cstdint>
-#include <cmath>
 
 #include <QBluetoothUuid>
 #include <QLowEnergyService>

@@ -28,8 +28,8 @@
 #include <QObject>
 #include <QString>
 
-class QJSEngine;
 class QQmlEngine;
+class QJSEngine;
 
 /* ************************************************************************** */
 

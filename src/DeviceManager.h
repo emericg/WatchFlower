@@ -244,6 +244,10 @@ public:
     Q_INVOKABLE bool requestLocationPermission();
     void requestLocationPermission_results(const QPermission &permission);
 
+    //! Background location is only required for background BLE scanning on Android 10-11 (API 29-30)
+    Q_INVOKABLE bool checkLocationPermission_background();
+    Q_INVOKABLE bool requestLocationPermission_background();
+
     // Scanning management
     static int getLastRun_min();
     Q_INVOKABLE int getLastRun();

@@ -340,7 +340,7 @@ Item {
 
                     onClicked: {
                         UtilsOS.vibrate(25)
-                        UtilsOS.getMobileBackgroundLocationPermission()
+                        deviceManager.requestLocationPermission_background()
                         refreshPermissions.start()
                     }
                 }

@@ -693,6 +693,40 @@ void DeviceManager::requestLocationPermission_results(const QPermission &permiss
     }
 }
 
+bool DeviceManager::checkLocationPermission_background()
+{
+#if defined(Q_OS_ANDROID)
+    const int sdk = UtilsApp::getInstance()->getAndroidSdkVersion();
+    if (sdk >= 29 && sdk <= 30)
+    {
+        const bool granted = UtilsOS::checkMobileBackgroundLocationPermission();
+        setLocationPermission_background(granted);
+        return granted;
+    }
+#endif
+
+    // Android 9: no background-location permission exists
+    // Android 12+: background BLE scanning uses BLUETOOTH_SCAN (neverForLocation)
+    setLocationPermission_background(true);
+    return true;
+}
+
+bool DeviceManager::requestLocationPermission_background()
+{
+#if defined(Q_OS_ANDROID)
+    const int sdk = UtilsApp::getInstance()->getAndroidSdkVersion();
+    if (sdk >= 29 && sdk <= 30)
+    {
+        const bool granted = UtilsOS::getMobileBackgroundLocationPermission();
+        setLocationPermission_background(granted);
+        return granted;
+    }
+#endif
+
+    setLocationPermission_background(true);
+    return true;
+}
+
 void DeviceManager::setBluetoothPermission(bool perm)
 {
     if (m_blePermission != perm)
@@ -752,11 +786,6 @@ void DeviceManager::bluetoothStatusChanged()
         if (m_devices_model->hasDevices())
         {
             refreshDevices_listen();
-        }
-        else
-        {
-            // start scanning?
-            //scanDevices_start();
         }
     }
     else

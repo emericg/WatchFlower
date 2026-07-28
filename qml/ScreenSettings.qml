@@ -43,7 +43,7 @@ Loader {
             id: popupBackgroundUpdates
 
             onClosed: {
-                SettingsManager.systray = UtilsOS.checkMobileBackgroundLocationPermission()
+                SettingsManager.systray = deviceManager.checkLocationPermission_background()
                 switch_worker.checked = SettingsManager.systray
             }
         }
