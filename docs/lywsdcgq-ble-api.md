@@ -34,16 +34,6 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
-
-The name advertised by the devices is `MJ_HT_V1`.  
-
-TODO
-
-## Historical data
-
-TODO
-
 ## Advertisement data
 
 There seems to be two kind of advertisement data broadcasted.  
@@ -62,6 +52,16 @@ Check out the [MiBeacon](mibeacon-ble-api.md) protocol page to get more informat
 | Bytes | Type      | Value             | Description       |
 | ----- | --------- | ----------------- | ----------------- |
 | 00-05 | bytes     |                   | ?                 |
+
+## Services and characteristics
+
+The name advertised by the devices is `MJ_HT_V1`.  
+
+> TODO
+
+## Historical data
+
+> TODO
 
 ## Reference
 

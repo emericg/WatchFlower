@@ -39,7 +39,7 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
+## Services and characteristics
 
 The name advertised by the devices (CGG1) is `ClearGrass Temp and RH`.  
 The name advertised by the devices (CGG1-M) is `Qingping Temp and RH M`.  
@@ -141,7 +141,7 @@ Check out the [Qingping](qingping-ble-api.md) protocol page to get more informat
 
 ## Reference
 
-[1] -  
+[1] TODO
 
 ## License
 

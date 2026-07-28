@@ -36,7 +36,11 @@ This means that the data is represented with the most significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
+## Advertisement data
+
+There seems to be no advertisement data broadcasted.  
+
+## Services and characteristics
 
 The name advertised by the devices is `WP6003#XXXXXXXXXXXX`, WP6003# followed by the MAC address of the device.  
 
@@ -64,7 +68,7 @@ First of all you need to register to get notification on the RX characteristic.
 
 ##### Set device time
 
-Writing 7 bytes (`0xaaYYMMDDhhmmss`) to the TX handle will set the device time.  
+Writing 7 bytes (`0xaaYYMMDDhhmmss`) to the TX characteristic will set the device time.  
 
 | Bytes | Type      | Value             | Description           |
 | ----- | --------- | ----------------- | --------------------- |
@@ -78,7 +82,7 @@ Writing 7 bytes (`0xaaYYMMDDhhmmss`) to the TX handle will set the device time.
 
 ##### Read entries
 
-Writing 1 byte (`0xab`) to the TX handle will make the device send back a data packet on RX.  
+Writing 1 byte (`0xab`) to the TX characteristic will make the device send back a data packet on RX.  
 
 The response is as follow:
 
@@ -97,13 +101,9 @@ The response is as follow:
 
 The sensor needs a couple of minutes to warm up and send valid data (VOC and HCHO will read 16383 in the mean time) and about an hour to provide accurate and stable readings.
 
-## Advertisement data
-
-There seems to be no advertisement data broadcasted.  
-
 ## Reference
 
-[1] -
+[1] TODO
 
 ## License
 

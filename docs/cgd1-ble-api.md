@@ -35,16 +35,6 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
-
-The name advertised by the devices is `Qingping Alarm Clock`.  
-
-TODO
-
-## Historical data
-
-TODO
-
 ## Advertisement data
 
 ##### UUID `0xFDCD` 17 bytes messages
@@ -53,9 +43,19 @@ CGD1 broadcast temperature, humidity, and battery over `service data` with the `
 
 Check out the [Qingping](qingping-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
+## Services and characteristics
+
+The name advertised by the devices is `Qingping Alarm Clock`.  
+
+> TODO
+
+## Historical data
+
+> TODO
+
 ## Reference
 
-[1] -  
+[1] TODO
 
 ## License
 

@@ -43,22 +43,23 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
-
-The name advertised by the device is `TY` for HHCCJCY10.  
-
-TODO
-
 ## Advertisement data
 
 Tuya Flower Care broadcast `service data` with 16 bits service UUID `0xFD50`.  
 
 ##### UUID `0xFD50` 9 bytes messages
 
+> TODO
+
+## Services and characteristics
+
+The name advertised by the device is `TY` for HHCCJCY10.  
+
+> TODO
 
 ## Reference
 
-[0]  
+[1] TODO
 
 ## License
 

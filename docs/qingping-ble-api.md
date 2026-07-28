@@ -128,7 +128,7 @@ Example with a CGP1W advertisement message:
 
 ## Reference
 
-[1] -  
+[1] TODO
 
 ## License
 

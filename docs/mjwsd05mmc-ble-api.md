@@ -29,23 +29,23 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
+## Advertisement data
+
+> TODO
+
+## Services and characteristics
 
 The name advertised by the devices is `unknown`.  
 
-TODO
+> TODO
 
 ## Historical data
 
-TODO
-
-## Advertisement data
-
-TODO
+> TODO
 
 ## Reference
 
-[1] -
+[1] TODO
 
 ## License
 

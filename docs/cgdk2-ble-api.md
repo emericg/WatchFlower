@@ -34,7 +34,7 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
+## Services and characteristics
 
 The name advertised by the devices is `Qingping Temp RH Lite`.  
 
@@ -46,9 +46,9 @@ The name advertised by the devices is `Qingping Temp RH Lite`.
 
 ##### Data service (UUID 22210000-554a-4546-5542-46534450464d)
 
-| Characteristic UUID                  | Handle | Access      | Description                     |
-| ------------------------------------ | ------ | ----------- | ------------------------------- |
-| 00000100-0000-1000-8000-00805f9b34fb | -      | notify      | real time data                  |
+| Characteristic UUID                  | Access      | Description                     |
+| ------------------------------------ | ----------- | ------------------------------- |
+| 00000100-0000-1000-8000-00805f9b34fb | notify      | real time data                  |
 
 #### Communication with the device
 
@@ -64,7 +64,7 @@ The device will send back 7 bytes data packets:
 
 ## Historical data
 
-TODO
+> TODO
 
 ## Advertisement data
 
@@ -85,7 +85,7 @@ Check out the [Qingping](qingping-ble-api.md) protocol page to get more informat
 
 ## Reference
 
-[1] -  
+[1] TODO
 
 ## License
 

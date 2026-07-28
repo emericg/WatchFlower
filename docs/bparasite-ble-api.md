@@ -28,6 +28,10 @@ b-parasite can broadcast advertisement data, depending on the firmware used.
 
 Check out the [BtHome](bthome-ble-api.md) protocol page to get more information on advertisement data for this device.  
 
+## Services and characteristics
+
+> TODO
+
 ## Reference
 
 [1] https://github.com/rbaron/b-parasite  

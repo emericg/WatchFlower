@@ -32,23 +32,23 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
+## Services and characteristics
 
 The name advertised by the devices is `MHO-C401`.  
 
-TODO
+> TODO
 
 ## Historical data
 
-TODO
+> TODO
 
 ## Advertisement data
 
-TODO
+> TODO
 
 ## Reference
 
-[1] -
+[1] TODO
 
 ## License
 

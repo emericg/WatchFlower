@@ -42,41 +42,41 @@ This means that the data is represented with the least significant byte first.
 
 To understand multi-byte integer representation, you can read the [endianness](https://en.wikipedia.org/wiki/Endianness) Wikipedia page.
 
-## Services, characteristics and handles
+## Services and characteristics
 
 The name advertised by the device is `ropot`.  
 
 ##### Generic access (UUID 00001800-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                         |
-| ------------------------------------ | ------ | ----------- | ----------------------------------- |
-| 00002a00-0000-1000-8000-00805f9b34fb | 0x03   | read        | device name                         |
+| Characteristic UUID                  | Access      | Description                         |
+| ------------------------------------ | ----------- | ----------------------------------- |
+| 00002a00-0000-1000-8000-00805f9b34fb | read        | device name                         |
 
 ##### Root service (UUID 0000fe95-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                         |
-| ------------------------------------ | ------ | ----------- | ----------------------------------- |
-| -                                    | -      | -           | used for device discovery           |
+| Characteristic UUID                  | Access      | Description                         |
+| ------------------------------------ | ----------- | ----------------------------------- |
+| -                                    | -           | used for device discovery           |
 
 ##### Data service (UUID 00001204-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                         |
-| ------------------------------------ | ------ | ----------- | ----------------------------------- |
-| 00001a00-0000-1000-8000-00805f9b34fb | 0x33   | write       | device mode change (send command)   |
-| 00001a01-0000-1000-8000-00805f9b34fb | 0x35   | read        | real-time sensor values             |
-| 00001a02-0000-1000-8000-00805f9b34fb | 0x38   | read        | firmware version and battery level  |
+| Characteristic UUID                  | Access      | Description                         |
+| ------------------------------------ | ----------- | ----------------------------------- |
+| 00001a00-0000-1000-8000-00805f9b34fb | write       | device mode change (data control)   |
+| 00001a01-0000-1000-8000-00805f9b34fb | read        | real-time sensor values (data)      |
+| 00001a02-0000-1000-8000-00805f9b34fb | read        | firmware version and battery level  |
 
 ##### History service (UUID 00001206-0000-1000-8000-00805f9b34fb)
 
-| Characteristic UUID                  | Handle | Access      | Description                         |
-| ------------------------------------ | ------ | ----------- | ----------------------------------- |
-| 00001a10-0000-1000-8000-00805f9b34fb | 0x3e   | r/w/notify  | device mode change (send command)   |
-| 00001a11-0000-1000-8000-00805f9b34fb | 0x3c   | read        | historical sensor values            |
-| 00001a12-0000-1000-8000-00805f9b34fb | 0x41   | read        | device time                         |
+| Characteristic UUID                  | Access      | Description                              |
+| ------------------------------------ | ----------- | ---------------------------------------- |
+| 00001a10-0000-1000-8000-00805f9b34fb | r/w/notify  | device mode change (history control)     |
+| 00001a11-0000-1000-8000-00805f9b34fb | read        | historical sensor values (history data)  |
+| 00001a12-0000-1000-8000-00805f9b34fb | read        | device time                              |
 
 #### Device name
 
-A read request to the `0x03` handle will return n bytes of data, for example `0x466c6f7765722063617265` corresponding to the device name.  
+A read request to the `device name` characteristic will return n bytes of data, for example `0x466c6f7765722063617265` corresponding to the device name.  
 The RoPot does identify itself as a Flower care here.
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 |
@@ -89,7 +89,7 @@ The RoPot does identify itself as a Flower care here.
 
 #### Firmware and battery
 
-A read request to the `0x38` handle will return 7 bytes of data, for example `0x6314312e312e35`.
+A read request to the `firmware version and battery level` characteristic will return 7 bytes of data, for example `0x6314312e312e35`.
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 |
 | -------- | -- | -- | -- | -- | -- | -- | -- |
@@ -106,8 +106,8 @@ They are all control characters in the ASCII table.
 #### Real-time data
 
 In order to read the sensor values you need to change its mode.  
-This can be done by writing 2 bytes (`0xa01f`) to the mode change handle (`0x33`).  
-After writing them you can read the actual sensor values from the data handle (`0x35`).  
+This can be done by writing 2 bytes (`0xa01f`) to the `data control` characteristic.  
+After writing them you can read the actual sensor values from the `data` characteristic.  
 
 A read request will return 10 bytes of data, for example `0xea0000ab00000015b200`.
 
@@ -125,11 +125,11 @@ A read request will return 10 bytes of data, for example `0xea0000ab00000015b200
 #### Historical data
 
 The device stores historical data when not connected that can be later synchronized.  
-As with reading real-time sensor information, we need to change the device mode by writing 3 bytes (`0xa00000`) to the history control handle (`0x3e`).  
+As with reading real-time sensor information, we need to change the device mode by writing 3 bytes (`0xa00000`) to the `history control` characteristic.  
 
 ##### Device time
 
-A read request to the `0x3831` handle will return 4 bytes of data, for example `0x09ef2000`.
+A read request to the `device time` characteristic will return 4 bytes of data, for example `0x09ef2000`.
 
 | Position | 00 | 01 | 02 | 03 |
 | -------- | -- | -- | -- | -- |
@@ -144,7 +144,7 @@ We use this method while determining the datetime of historical entries.
 
 ###### Entry count
 
-The next step is to get information about the stored history by reading from the history data handle (`0x3531`).  
+The next step is to get information about the stored history by reading from the `history data` characteristic.  
 This will return 16 bytes of data, for example `0x2b007b04ba130800c815080000000000`.  
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 |
@@ -159,12 +159,12 @@ This will return 16 bytes of data, for example `0x2b007b04ba130800c8150800000000
 ##### Read entry
 
 Next we need to read each historical entry individually.  
-To do so we need to calculate it's address, write it to the history control handle (`0x3331`) and then read the entry from the history data handle (`0x3c`).  
+To do so we need to calculate it's address, write it to the `history control` characteristic and then read the entry from the `history data` characteristic.  
 
 The address for each individual entry is computed by adding two bytes representing the entry index to `0xa1`.  
 Entry `0`'s address will be `0xa10000`, entry `1`'s address `0xa10100`, entry `16`'s address `0xa11000`, and so on...  
 
-After writing the address of the entry to be read, be can do so by requesting the payload from the history read handle (`0x3531`).  
+After writing the address of the entry to be read, be can do so by requesting the payload from the `history data` characteristic.  
 This will return 16 bytes of data, for example `0x70e72000eb00005a00000015b3000000`.  
 
 | Position | 00 | 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 | 13 | 14 | 15 |
@@ -182,7 +182,7 @@ This will return 16 bytes of data, for example `0x70e72000eb00005a00000015b30000
 ##### Clear entries
 
 Once all entries have been read, they can be wiped from the device by marking the process as `successful`.  
-This can be achieved by writing 3 bytes (`0xa20000`) to the history control handle (`0x3e`).  
+This can be achieved by writing 3 bytes (`0xa20000`) to the `history control` characteristic.  
 
 ## Advertisement data
 
