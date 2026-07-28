@@ -84,7 +84,7 @@ Item {
 
     Item { // chart area
         id: chartArea
-        width: parent.width - (singleColumn ? 8 : 24)
+        width: parent.width - (Theme.singleColumn ? 8 : 24)
 
         anchors.top: titleArea.bottom
         anchors.bottom: parent.bottom

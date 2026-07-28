@@ -64,7 +64,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: !wideMode
+            compact: !Theme.wideMode
             iconColor: Theme.colorActionbarContent
             backgroundColor: Theme.colorActionbarHighlight
             onClicked: confirmDeleteDevice.open()
@@ -75,11 +75,11 @@ Rectangle {
 
         ButtonCompactable {
             id: buttonSync
-            height: !wideMode ? 36 : 34
+            height: !Theme.wideMode ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
             visible: deviceManager.bluetooth
 
-            compact: !wideMode
+            compact: !Theme.wideMode
             iconColor: Theme.colorActionbarContent
             backgroundColor: Theme.colorActionbarHighlight
             onClicked: screenDeviceList.syncSelectedDevice()
@@ -90,11 +90,11 @@ Rectangle {
 
         ButtonCompactable {
             id: buttonRefresh
-            height: !wideMode ? 36 : 34
+            height: !Theme.wideMode ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
             visible: deviceManager.bluetooth
 
-            compact: !wideMode
+            compact: !Theme.wideMode
             iconColor: Theme.colorActionbarContent
             backgroundColor: Theme.colorActionbarHighlight
             onClicked: screenDeviceList.updateSelectedDevice()

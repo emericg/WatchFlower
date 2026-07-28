@@ -30,7 +30,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        enabled: !singleColumn
+        enabled: !Theme.singleColumn
         onClicked: device.selected = !device.selected
     }
 
@@ -107,7 +107,7 @@ Item {
 
         IconSvg {
             anchors.verticalCenter: parent.verticalCenter
-            visible: !singleColumn
+            visible: !Theme.singleColumn
 
             width: 20
             height: 20

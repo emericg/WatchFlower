@@ -24,7 +24,7 @@ Flickable {
 
     // 1: single column (single column view or portrait tablet)
     // 2: wide mode (wide view)
-    property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+    property int uiMode: (Theme.singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
     property int flow_width: (flow.width - flow.spacing)
     property int flow_divider: Math.round(flow_width / 512)

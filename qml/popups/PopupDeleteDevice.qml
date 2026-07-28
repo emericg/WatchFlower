@@ -99,7 +99,7 @@ Popup {
                 anchors.right: parent.right
                 spacing: Theme.componentMargin
 
-                property int btnSize: singleColumn ? width : ((width-spacing) / 2)
+                property int btnSize: Theme.singleColumn ? width : ((width-spacing) / 2)
 
                 ButtonClear {
                     width: parent.btnSize

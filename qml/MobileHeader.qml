@@ -11,18 +11,18 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: headerFullHeight
+    height: (headerHeight + Math.max(screenPaddingStatusbar, screenPaddingTop) - (headerCompact ? 12 : 0))
     color: Theme.colorHeader
     clip: true
     z: 10
 
-    property int headerFullHeight: headerHeight + Math.max(screenPaddingStatusbar, screenPaddingTop) - (headerUnicolor ? 12 : 0)
-
-    property bool headerUnicolor: (Theme.colorHeader === Theme.colorStatusbar)
+    ////////////////////////////////////////////////////////////////////////////
 
     property int headerHeight: 56 // vertical
 
     property int headerPosition: 56 // horizontal
+
+    property bool headerCompact: true // appWindow.headerUnicolor
 
     property string headerTitle: UtilsApp.appName()
 
@@ -76,7 +76,7 @@ Rectangle {
 
         height: Math.max(screenPaddingStatusbar, screenPaddingTop)
         color: Theme.colorStatusbar
-        visible: !appHeader.headerUnicolor
+        visible: !appHeader.headerCompact
     }
 
     Item {
@@ -85,7 +85,7 @@ Rectangle {
         anchors.right: parent.right
         anchors.rightMargin: screenPaddingRight
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: appHeader.headerUnicolor ? -4 : 0
+        anchors.bottomMargin: appHeader.headerCompact ? -4 : 0
 
         height: appHeader.headerHeight
 

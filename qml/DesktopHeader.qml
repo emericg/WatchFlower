@@ -14,15 +14,17 @@ Rectangle {
     clip: false
     z: 10
 
+    ////////////////////////////////////////////////////////////////////////////
+
     property int headerHeight: isHdpi ? 58 : 64
 
     property int headerPosition: 64 // horizontal
 
+    property bool headerCompact: Theme.singleColumn
+
     property string headerTitle: "WatchFlower"
 
     property string headerSubTitle: (selectedDevice && selectedDevice.deviceModel)
-
-    property bool headerCompact: singleColumn
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -150,7 +152,7 @@ Rectangle {
         anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
 
-        visible: wideMode
+        visible: Theme.wideMode
 
         Text { // header title
             Layout.alignment: Qt.AlignVCenter
@@ -314,7 +316,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (!singleColumn &&
+            visible: (!Theme.singleColumn &&
                       (buttonThermoChart.visible || buttonWatering.visible ||
                        buttonCalibrate.visible || buttonReboot.visible ||
                        buttonLed.visible))
@@ -366,7 +368,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (!singleColumn && buttonRefreshHistory.visible)
+            visible: (!Theme.singleColumn && buttonRefreshHistory.visible)
         }
 
         ////////////
@@ -422,7 +424,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (!singleColumn && menuDevice.visible &&
+            visible: (!Theme.singleColumn && menuDevice.visible &&
                       (buttonRefreshHistory.visible ||
                        buttonRefreshRealtime.visible ||
                        buttonRefreshData.visible))

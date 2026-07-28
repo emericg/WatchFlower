@@ -6,7 +6,7 @@ Rectangle {
     id: itemLoadData
     anchors.centerIn: parent
 
-    width: singleColumn ? (parent.width*0.26) : (parent.height*0.26)
+    width: Theme.singleColumn ? (parent.width*0.26) : (parent.height*0.26)
     height: width
     radius: width
     color: Theme.colorForeground

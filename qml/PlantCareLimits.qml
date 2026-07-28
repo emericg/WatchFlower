@@ -523,7 +523,7 @@ Flickable {
                     anchors.left: parent.left
                     spacing: isPhone ? 12 : 16
 
-                    property int www: singleColumn ? ((parent.width - spacing) / 2) : 256
+                    property int www: Theme.singleColumn ? ((parent.width - spacing) / 2) : 256
                     property int hhh: Math.min(www, 140)
 
                     Rectangle {

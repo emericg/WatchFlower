@@ -7,7 +7,7 @@ Rectangle {
     anchors.centerIn: parent
     anchors.verticalCenterOffset: -(appHeader.height/3)
 
-    width: singleColumn ? (parent.width*0.4) : (parent.height*0.33)
+    width: Theme.singleColumn ? (parent.width*0.4) : (parent.height*0.33)
     height: width
     radius: width
     color: Theme.colorForeground

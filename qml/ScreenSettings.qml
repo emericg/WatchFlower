@@ -146,7 +146,7 @@ Loader {
 
                         Rectangle {
                             id: rectangleSnow
-                            width: wideWideMode ? 80 : 32
+                            width: Theme.wideWideMode ? 80 : 32
                             height: 32
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -157,7 +157,7 @@ Loader {
 
                             Text {
                                 anchors.centerIn: parent
-                                visible: wideWideMode
+                                visible: Theme.wideWideMode
                                 text: qsTr("snow")
                                 textFormat: Text.PlainText
                                 color: (SettingsManager.appTheme === "THEME_SNOW") ? Theme.colorSubText : "#ccc"
@@ -171,7 +171,7 @@ Loader {
                         }
                         Rectangle {
                             id: rectangleRain
-                            width: wideWideMode ? 80 : 32
+                            width: Theme.wideWideMode ? 80 : 32
                             height: 32
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -182,7 +182,7 @@ Loader {
 
                             Text {
                                 anchors.centerIn: parent
-                                visible: wideWideMode
+                                visible: Theme.wideWideMode
                                 text: qsTr("rain")
                                 textFormat: Text.PlainText
                                 color: "white"
@@ -196,7 +196,7 @@ Loader {
                         }
                         Rectangle {
                             id: rectangleGreen
-                            width: wideWideMode ? 80 : 32
+                            width: Theme.wideWideMode ? 80 : 32
                             height: 32
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -207,7 +207,7 @@ Loader {
 
                             Text {
                                 anchors.centerIn: parent
-                                visible: wideWideMode
+                                visible: Theme.wideWideMode
                                 text: qsTr("plant")
                                 textFormat: Text.PlainText
                                 color: "white"
@@ -221,7 +221,7 @@ Loader {
                         }
                         Rectangle {
                             id: rectangleDay
-                            width: wideWideMode ? 80 : 32
+                            width: Theme.wideWideMode ? 80 : 32
                             height: 32
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -232,7 +232,7 @@ Loader {
 
                             Text {
                                 anchors.centerIn: parent
-                                visible: wideWideMode
+                                visible: Theme.wideWideMode
                                 text: qsTr("day")
                                 textFormat: Text.PlainText
                                 color: "white"
@@ -246,7 +246,7 @@ Loader {
                         }
                         Rectangle {
                             id: rectangleNight
-                            width: wideWideMode ? 80 : 32
+                            width: Theme.wideWideMode ? 80 : 32
                             height: 32
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -257,7 +257,7 @@ Loader {
 
                             Text {
                                 anchors.centerIn: parent
-                                visible: wideWideMode
+                                visible: Theme.wideWideMode
                                 text: qsTr("night")
                                 textFormat: Text.PlainText
                                 color: (SettingsManager.appTheme === "THEME_NIGHT") ? Theme.colorPrimary : "#ececec"

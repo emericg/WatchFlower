@@ -100,13 +100,13 @@ Item {
 
             property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)
             property int cellWidthTarget: {
-                if (singleColumn) return devicesView.width
-                if (isTablet) return (bigWidget ? 350 : 280)
+                if (Theme.singleColumn) return devicesView.width
+                if (Theme.isTablet) return (bigWidget ? 350 : 280)
                 return (bigWidget ? 440 : 320)
             }
             property int cellWidth: (devicesView.width / cellColumnsTarget)
             property int cellHeight: {
-                if (isPhone) return 100
+                if (Theme.isPhone) return 100
                 if (bigWidget) return 144
                 return 112
             }

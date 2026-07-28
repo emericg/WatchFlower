@@ -8,7 +8,7 @@ Rectangle {
     anchors.centerIn: parent
     anchors.verticalCenterOffset: -40
 
-    width: singleColumn ? (parent.width*0.5) : (parent.height*0.4)
+    width: Theme.singleColumn ? (parent.width*0.5) : (parent.height*0.4)
     height: width
     radius: width
     color: Theme.colorForeground

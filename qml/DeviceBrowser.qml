@@ -28,7 +28,7 @@ Item {
         anchors.fill: parent
 
         active: (appContent.state === "DeviceBrowser")
-        sourceComponent: singleColumn ? componentDeviceBrowser_mobile : componentDeviceBrowser_desktop
+        sourceComponent: Theme.singleColumn ? componentDeviceBrowser_mobile : componentDeviceBrowser_desktop
         asynchronous: true
     }
 

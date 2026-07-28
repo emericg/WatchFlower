@@ -111,7 +111,7 @@ Item {
             color: Theme.colorText
             font.pixelSize: 24
             //font.capitalization: Font.Capitalize
-            horizontalAlignment: wideMode ? Text.AlignLeft : Text.AlignHCenter
+            horizontalAlignment: Theme.wideMode ? Text.AlignLeft : Text.AlignHCenter
         }
 
         Row {

@@ -298,7 +298,7 @@ Loader {
 
             // 1: single column (single column view or portrait tablet)
             // 2: wide mode (wide view)
-            property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+            property int uiMode: (Theme.singleColumn || (Theme.isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
             contentWidth: (uiMode === 1) ? -1 : plantScreen.width
             contentHeight: (uiMode === 1) ? plantScreen.height : -1
@@ -406,7 +406,7 @@ Loader {
             z: 5
             height: 52
             color: Theme.colorForeground
-            visible: (singleColumn &&
+            visible: (Theme.singleColumn &&
                       appContent.state === "PlantBrowser" &&
                       screenPlantBrowser.entryPoint === "DevicePlantSensor" &&
                       isPlantClicked())
