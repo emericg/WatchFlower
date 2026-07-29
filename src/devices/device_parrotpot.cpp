@@ -349,13 +349,16 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             uint32_t rawValueCal;
 
             /////////
-/*
+
             QBluetoothUuid lx(QStringLiteral("39e1fa01-84a8-11e2-afba-0002a5d5c51b"));
             QLowEnergyCharacteristic chlx = serviceLive->characteristic(lx);
 
             rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
             rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-*/
+            // sensor output is linear in illuminance, and reads ~3 with the sensor obstructed
+            m_luminosityLux = static_cast<int>(std::lround(22.06 * rawValue - 73.5));
+            if (m_luminosityLux < 0) m_luminosityLux = 0;
+
             /////////
 
             QBluetoothUuid sf(QStringLiteral("39e1fa02-84a8-11e2-afba-0002a5d5c51b"));
@@ -417,13 +420,14 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
             m_temperature = std::round(*((float*)&rawValueCal));
 */
-            QBluetoothUuid dli_calibrated(QStringLiteral("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight?
+/*
+            QBluetoothUuid dli_calibrated(QStringLiteral("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight? // unusable, give bad values
             QLowEnergyCharacteristic chdlic = serviceLive->characteristic(dli_calibrated);
 
             rawData = reinterpret_cast<const quint8 *>(chdlic.value().constData());
             rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
             m_luminosityLux = std::round(*((float*)&rawValueCal)) * 11.574 * 53.93 * 10.0;
-
+*/
             /////////
 
             if (m_soilTemperature < -10.f || m_soilTemperature > 100.f ||
@@ -434,23 +438,27 @@ void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceSt
                 // Maybe the sensor is warming up?
                 qWarning() << "Parrot sensor values error";
             }
-
-            m_lastUpdate = QDateTime::currentDateTime();
-
-            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
-            {
-                refreshRealtime(); // TODO // ask for new values?
-            }
             else
             {
-                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                                m_soilMoisture, m_soilConductivity, m_soilTemperature, m_watertank_level,
-                                                m_temperature, -99.f, m_luminosityLux);
+                m_lastUpdate = QDateTime::currentDateTime();
 
-                refreshDataFinished(status);
+                if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+                {
+                    refreshRealtime(); // TODO // ask for new values?
+                }
+                else
+                {
+                    bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                                    m_soilMoisture, m_soilConductivity, m_soilTemperature, m_watertank_level,
+                                                    m_temperature, -99.f, m_luminosityLux);
 
-                deviceDisconnect();
+                    refreshDataFinished(status);
+
+                    deviceDisconnect();
+                }
             }
+
+            /////////
 /*
             qDebug() << "* DeviceParrotPot update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;

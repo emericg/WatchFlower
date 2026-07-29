@@ -337,7 +337,11 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
 
                 rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
                 rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-                m_luminosityLux = std::round(1000.0 * 0.08640000000000001 * (192773.17000000001 * std::pow(rawValue, -1.0606619)));
+
+                // The sensor gives a daily light integral, in mol/m²/day
+                double dli = 0.08640000000000001 * (192773.17000000001 * std::pow(rawValue, -1.0606619));
+                // DLI * 1e6/86400 is the mean PPFD (µmol/m²/s), then PPF to lux for the daylight spectrum
+                m_luminosityLux = std::round(dli * 11.574 * 53.93);
 
                 /////////
 
@@ -415,23 +419,27 @@ void DeviceFlowerPower::serviceDetailsDiscovered_live(QLowEnergyService::Service
                 // Maybe the sensor is warming up?
                 qWarning() << "Parrot sensor values error";
             }
-
-            m_lastUpdate = QDateTime::currentDateTime();
-
-            if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
-            {
-                refreshRealtime(); // TODO // ask for new values?
-            }
             else
             {
-                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                                m_soilMoisture, m_soilConductivity, m_soilTemperature, -99.f,
-                                                m_temperature, -99.f, m_luminosityLux);
+                m_lastUpdate = QDateTime::currentDateTime();
 
-                refreshDataFinished(status);
+                if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+                {
+                    refreshRealtime(); // TODO // ask for new values?
+                }
+                else
+                {
+                    bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                                    m_soilMoisture, m_soilConductivity, m_soilTemperature, -99.f,
+                                                    m_temperature, -99.f, m_luminosityLux);
 
-                deviceDisconnect();
+                    refreshDataFinished(status);
+
+                    deviceDisconnect();
+                }
             }
+
+            /////////
 /*
             qDebug() << "* DeviceFlowerPower update:" << getAddress();
             qDebug() << "- m_firmware:" << m_deviceFirmware;
