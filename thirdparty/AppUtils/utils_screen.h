@@ -29,6 +29,7 @@
 #include <QVariantMap>
 #include <QScreen>
 
+class QWindow;
 class QQuickWindow;
 class QQmlEngine;
 class QJSEngine;
@@ -48,7 +49,9 @@ class UtilsScreen: public QObject
     Q_PROPERTY(int screenHeight READ getScreenHeight NOTIFY screenChanged)
     Q_PROPERTY(int screenDepth READ getScreenDepth NOTIFY screenChanged)
     Q_PROPERTY(double screenRefreshRate READ getScreenRefreshRate NOTIFY screenChanged)
-    Q_PROPERTY(int screenDpi READ getScreenDpi NOTIFY screenChanged)
+    Q_PROPERTY(int screenDpiLogical READ getScreenDpiLogical NOTIFY screenChanged)
+    Q_PROPERTY(int screenDpiPhysical READ getScreenDpiPhysical NOTIFY screenChanged)
+    Q_PROPERTY(int screenDpi READ getScreenDpiPhysical NOTIFY screenChanged)
     Q_PROPERTY(double screenPar READ getScreenPar NOTIFY screenChanged)
     Q_PROPERTY(double screenSize READ getScreenSize_inch NOTIFY screenChanged)
     Q_PROPERTY(double screenDar READ getScreenDar NOTIFY screenChanged)
@@ -59,7 +62,8 @@ class UtilsScreen: public QObject
     int m_screenDepth = -1;
     double m_screenRefreshRate = -1.0;
 
-    int m_screenDpi = -1;
+    int m_screenDpiPhysical = -1;
+    int m_screenDpiLogical = -1;
     double m_screenPar = -1.0;
     double m_screenSizeInch = -1.0;
 
@@ -73,15 +77,19 @@ class UtilsScreen: public QObject
     int getScreenDepth() { return m_screenDepth; }
     double getScreenRefreshRate() { return m_screenRefreshRate; }
 
-    int getScreenDpi() { return m_screenDpi; }
+    int getScreenDpiPhysical() { return m_screenDpiPhysical; }
+    int getScreenDpiLogical() { return m_screenDpiLogical; }
     double getScreenPar() { return m_screenPar; }
     double getScreenSize_inch() { return m_screenSizeInch; }
 
     double getScreenDar() { return m_screenDar; }
     QString getScreenDarStr() { return m_screenDarStr; }
 
-    // Actual screen
-    const QScreen *m_scr = nullptr;
+    // Screen tracked
+    QWindow *m_win = nullptr;
+    QScreen *m_scr = nullptr;
+
+    void setScreen(QScreen *scr);
 
     // Singleton
     explicit UtilsScreen(QObject *parent = nullptr);
@@ -90,12 +98,26 @@ Q_SIGNALS:
     void screenChanged();
 
 public slots:
-    void getScreenInfos(const QScreen *scr);
+    void getScreenInfos(QScreen *scr);
 
 public:
     static UtilsScreen *getInstance();
     static UtilsScreen *create(QQmlEngine *engine, QJSEngine *scriptEngine);
 
+    /*!
+     * \brief Track the display this window is shown on (updates on screen change).
+     * \param window: the application window to follow.
+     *
+     * Call once at startup, once a window is available.
+     * Until (or even if) a window is set, the primary screen is tracked.
+     * Then the window's will set it's screen, and QWindow::screenChanged will
+     * be used to inform us when the window is moved to another screen.
+     */
+    Q_INVOKABLE void setWindow(QObject *window);
+
+    /*!
+     * \brief Print screen infos on the CLI.
+     */
     Q_INVOKABLE void printScreenInfos();
 
     /*!
@@ -126,7 +148,6 @@ public:
 
     /*!
      * \brief Complex orientation locker.
-     * \note Work in progress.
      * \param orientation: see ScreenOrientation enum.
      * \param autoRotate: false to disable auto-rotation completely, true to let some degree of auto-rotation.
      *

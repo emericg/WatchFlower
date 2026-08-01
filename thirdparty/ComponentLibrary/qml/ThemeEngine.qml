@@ -6,6 +6,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     enum ThemeNames {
+        THEME_DEFAULT,
+
         // Generic mobile themes
         THEME_MOBILE_LIGHT,
         THEME_MOBILE_DARK,
@@ -47,7 +49,7 @@ Item {
     // Bind these from the calling application OR set values directly here
 
     // Theme engine
-    property string appTheme: "THEME_DEFAULT"
+    property string appTheme // "THEME_DEFAULT"
     property bool appThemeAuto: false
     property int appThemeAutoMethod: 0
 
@@ -58,6 +60,7 @@ Item {
 
     // Screen metrics
     property real screenDpi: 96
+    property real screenDpiLogical: 96
     property real screenPar: 1.0
     property real screenSize: 5.0
 
@@ -102,6 +105,22 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    // Base font size, inherited from the OS / desktop environment
+
+    readonly property real fontSizeOS: {
+        let osfont = Qt.application.font
+        //console.log("Qt.application.font > " + osfont)
+
+        var fontsize = isMobile ? 14 : 13 // default values
+        if (osfont.pixelSize > 0) fontsize = osfont.pixelSize
+        else if (osfont.pointSize > 0) fontsize = ((osfont.pointSize * screenDpiLogical) / 72.0)
+
+        if (fontsize < 11) fontsize = 11 // sanity check
+        return fontsize
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     // Theming colors, size, speeds...
 
     property bool isLight
@@ -116,7 +135,7 @@ Item {
     property color colorHeaderContent
     property color colorHeaderHighlight
 
-    // Action bar (mobile)
+    // Action bar
     property color colorActionbar
     property color colorActionbarContent
     property color colorActionbarHighlight
@@ -156,15 +175,16 @@ Item {
     readonly property int animationSlowSpeed: 333
 
     // Fonts sizes (in pixel)
-    readonly property int fontSizeHeader: isMobile ? 22 : 26
-    readonly property int fontSizeTitle: isMobile ? 24 : 28
-    readonly property int fontSizeContentVeryVerySmall: 10
-    readonly property int fontSizeContentVerySmall: 12
-    readonly property int fontSizeContentSmall: 14
-    readonly property int fontSizeContent: 16
-    readonly property int fontSizeContentBig: 18
-    readonly property int fontSizeContentVeryBig: 20
-    readonly property int fontSizeContentVeryVeryBig: 22
+
+    readonly property int fontSizeHeader: Math.round(fontSizeOS * (isMobile ? 1.40 : 1.65))
+    readonly property int fontSizeTitle: Math.round(fontSizeOS * (isMobile ? 1.55 : 1.80))
+    readonly property int fontSizeContentVeryVerySmall: Math.round(fontSizeOS - 6)
+    readonly property int fontSizeContentVerySmall: Math.round(fontSizeOS - 4)
+    readonly property int fontSizeContentSmall: Math.round(fontSizeOS - 2)
+    readonly property int fontSizeContent: Math.round(fontSizeOS)
+    readonly property int fontSizeContentBig: Math.round(fontSizeOS + 2)
+    readonly property int fontSizeContentVeryBig: Math.round(fontSizeOS + 4)
+    readonly property int fontSizeContentVeryVeryBig: Math.round(fontSizeOS + 6)
 
     // Component theming
 
@@ -179,7 +199,7 @@ Item {
     property int componentRadius: 4
     property int componentBorderWidth: 2
 
-    property int componentFontSize: isHdpi ? 14 : 15
+    property int componentFontSize: Math.round(fontSizeOS)
 
     property int componentMarginXS: isHdpi ? 4 : 8
     property int componentMarginS: isHdpi ? 8 : 12
@@ -221,7 +241,7 @@ Item {
     property string sidebarSelector // 'arrow' or 'bar'
 
     // App specific (WatchFlower)
-    property color colorDeviceWidget
+    property color colorDeviceWidget: "#fdfdfd"
     readonly property color colorLightGrey: "#a9bcb8"
     readonly property color colorLightGreen: "#09debc"
     readonly property color colorNeutralNight: "#ffb300"
@@ -262,6 +282,8 @@ Item {
     ////////////////////////////////////////////////////////////////////////////
 
     function getThemeIndex(name) {
+        if (name === "THEME_DEFAULT") return Theme.THEME_DEFAULT
+
         if (name === "THEME_MOBILE_LIGHT") return Theme.THEME_MOBILE_LIGHT
         if (name === "THEME_MOBILE_DARK") return Theme.THEME_MOBILE_DARK
 
@@ -329,17 +351,24 @@ Item {
             themeIndex = newTheme
         }
 
-        // Validate the result (or set the default)
-        if (themeIndex < 0 || themeIndex >= Theme.THEME_LAST) {
+        // Validate the result
+        if (themeIndex === Theme.THEME_DEFAULT) { // set the default
             if (isDesktop) themeIndex = Theme.THEME_DESKTOP_LIGHT
             else if (isMobile) themeIndex = Theme.THEME_MOBILE_LIGHT
+        }
+        if (themeIndex <= 0 || themeIndex >= Theme.THEME_LAST) { // or exit
+            return
         }
 
         // Handle day/night themes
         if (appThemeAuto) {
+            var needSwitch = false
             var rightnow = new Date()
+
             var hour = Qt.formatDateTime(rightnow, "hh")
-            if (hour >= 21 || hour <= 8) {
+            if (hour >= 21 || hour <= 8) needSwitch = true
+
+            if (needSwitch) {
 
                 // Simple light/dark toggle
 
@@ -441,8 +470,8 @@ Item {
             colorComponentDown          = "#e9e9e9"
             colorComponentBackground    = "white"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
         } else if (themeIndex === Theme.THEME_MOBILE_DARK) { ///////////////////
 
@@ -497,8 +526,8 @@ Item {
             colorComponentDown          = "#444"
             colorComponentBackground    = "#505050"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
         } else if (themeIndex === Theme.THEME_MATERIAL_LIGHT) { ////////////////
 
@@ -553,8 +582,8 @@ Item {
             colorComponentDown          = "#eee"
             colorComponentBackground    = "white"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
         } else if (themeIndex === Theme.THEME_MATERIAL_DARK) { /////////////////
 
@@ -609,8 +638,8 @@ Item {
             colorComponentDown          = "#444"
             colorComponentBackground    = "#505050"
 
-            componentRadius = 8
-            componentBorderWidth = 2
+            componentRadius             = 8
+            componentBorderWidth        = 2
 
         } else if (themeIndex === Theme.THEME_DESKTOP_LIGHT) { /////////////////
 
@@ -666,8 +695,8 @@ Item {
             colorComponentDown          = "#dadada"
             colorComponentBackground    = "#fcfcfc"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
             // (app)
             colorBox                    = "white"
@@ -735,8 +764,8 @@ Item {
             colorComponentDown          = "#46464f"
             colorComponentBackground    = "#363746"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
             // (app)
             colorBox                    = "#252024"
@@ -803,11 +832,11 @@ Item {
             colorComponentDown          = "#DADADA"
             colorComponentBackground    = "#FAFAFA"
 
-            componentRadius = (componentHeight / 2)
-            componentBorderWidth = 2
+            componentRadius             = (componentHeight / 2)
+            componentBorderWidth        = 2
 
             // (app)
-            colorDeviceWidget = "#fdfdfd"
+            colorDeviceWidget           = "#fdfdfd"
 
         } else if (themeIndex === Theme.THEME_PLANT) { /////////////////////////
 
@@ -862,11 +891,11 @@ Item {
             colorComponentDown          = "#D0D0D0"
             colorComponentBackground    = "#F1F1F1"
 
-            componentRadius = 4
-            componentBorderWidth = 2
+            componentRadius             = 4
+            componentBorderWidth        = 2
 
             // (app)
-            colorDeviceWidget = "#fdfdfd"
+            colorDeviceWidget           = "#fdfdfd"
 
         } else if (themeIndex === Theme.THEME_RAIN) { //////////////////////////
 
@@ -921,11 +950,11 @@ Item {
             colorComponentDown          = "#DDDDDD"
             colorComponentBackground    = "#FAFAFA"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
             // (app)
-            colorDeviceWidget = "#fdfdfd"
+            colorDeviceWidget           = "#fdfdfd"
 
         } else if (themeIndex === Theme.THEME_DAY) { ///////////////////////////
 
@@ -980,11 +1009,11 @@ Item {
             colorComponentDown          = "#DDDDDD"
             colorComponentBackground    = "#FAFAFA"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
             // (app)
-            colorDeviceWidget = "#fdfdfd"
+            colorDeviceWidget           = "#fdfdfd"
 
         } else if (themeIndex === Theme.THEME_NIGHT) { /////////////////////////
 
@@ -1039,11 +1068,11 @@ Item {
             colorComponentDown          = "#595959"
             colorComponentBackground    = "#292929"
 
-            componentRadius = 4
-            componentBorderWidth = 2
+            componentRadius             = 4
+            componentBorderWidth        = 2
 
             // (app)
-            colorDeviceWidget = "#333"
+            colorDeviceWidget           = "#333"
 
         } else if (themeIndex === Theme.THEME_LIGHT_AND_WARM) { ////////////////
 
@@ -1092,11 +1121,11 @@ Item {
             colorComponentDown          = "#E6E6E6"
             colorComponentBackground    = "#FAFAFA"
 
-            componentRadius = 6
-            componentBorderWidth = 2
+            componentRadius             = 6
+            componentBorderWidth        = 2
 
             // (app)
-            sidebarSelector = ""
+            sidebarSelector             = ""
 
         } else if (themeIndex === Theme.THEME_DARK_AND_SPOOKY) { ///////////////
 
@@ -1145,11 +1174,11 @@ Item {
             colorComponentDown          = "#7C7C7C"
             colorComponentBackground    = "#333"
 
-            componentRadius = 3
-            componentBorderWidth = 2
+            componentRadius             = 3
+            componentBorderWidth        = 2
 
             // (app)
-            sidebarSelector = ""
+            sidebarSelector             = ""
 
         } else if (themeIndex === Theme.THEME_PLAIN_AND_BORING) { //////////////
 
@@ -1198,11 +1227,11 @@ Item {
             colorComponentDown          = "#eee"
             colorComponentBackground    = "#f8f8f8"
 
-            componentRadius = 4
-            componentBorderWidth = 2
+            componentRadius             = 4
+            componentBorderWidth        = 2
 
             // (app)
-            sidebarSelector = "arrow"
+            sidebarSelector             = "arrow"
 
         } else if (themeIndex === Theme.THEME_BLOOD_AND_TEARS) { ///////////////
 
@@ -1251,11 +1280,11 @@ Item {
             colorComponentDown          = "#ddd"
             colorComponentBackground    = "white"
 
-            componentRadius = 2
-            componentBorderWidth = 2
+            componentRadius             = 2
+            componentBorderWidth        = 2
 
             // (app)
-            sidebarSelector = "bar"
+            sidebarSelector             = "bar"
 
         } else if (themeIndex === Theme.THEME_MIGHTY_KITTENS) { ////////////////
 
@@ -1304,11 +1333,11 @@ Item {
             colorComponentDown          = "#FF9ED9"
             colorComponentBackground    = "#FFF4F9"
 
-            componentRadius = (componentHeight / 2)
-            componentBorderWidth = 2
+            componentRadius             = (componentHeight / 2)
+            componentBorderWidth        = 2
 
             // (app)
-            sidebarSelector = ""
+            sidebarSelector             = ""
 
         }
 
