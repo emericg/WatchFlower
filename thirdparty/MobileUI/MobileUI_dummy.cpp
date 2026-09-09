@@ -102,11 +102,6 @@ bool MobileUIPrivate::setTorch(const bool on)
     return false;
 }
 
-void MobileUIPrivate::setIconBadgeNumber(const int number)
-{
-    Q_UNUSED(number)
-}
-
 void MobileUIPrivate::backToHomeScreen()
 {
     return;

@@ -714,13 +714,6 @@ bool MobileUIPrivate::setTorch(const bool on)
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::setIconBadgeNumber(const int number)
-{
-    Q_UNUSED(number)
-}
-
-/* ************************************************************************** */
-
 void MobileUIPrivate::backToHomeScreen()
 {
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {

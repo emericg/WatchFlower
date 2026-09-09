@@ -77,8 +77,6 @@ class MobileUI_QmlDispatcher : public QObject
 
     Q_PROPERTY(bool torchEnabled READ torchEnabled WRITE setTorchEnabled NOTIFY torchEnabledChanged)
 
-    Q_PROPERTY(int iconBadgeNumber READ iconBadgeNumber WRITE setIconBadgeNumber NOTIFY iconBadgeNumberChanged)
-
 public:
     explicit MobileUI_QmlDispatcher(QObject *parent = nullptr);
 
@@ -118,9 +116,6 @@ public:
     bool torchEnabled() const;
     void setTorchEnabled(const bool on);
 
-    int iconBadgeNumber() const;
-    void setIconBadgeNumber(const int number);
-
 Q_SIGNALS:
     void statusbarColorChanged();
     void statusbarContentColorChanged();
@@ -134,7 +129,6 @@ Q_SIGNALS:
     void screenSecureChanged();
     void screenHighRefreshRateChanged();
     void torchEnabledChanged();
-    void iconBadgeNumberChanged();
 };
 
 /* ************************************************************************** */

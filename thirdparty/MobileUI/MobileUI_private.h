@@ -70,8 +70,6 @@ public:
 
     bool setTorch(const bool on);
 
-    void setIconBadgeNumber(const int number);
-
     void backToHomeScreen();
 };
 

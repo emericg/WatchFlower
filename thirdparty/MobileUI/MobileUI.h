@@ -101,8 +101,6 @@ class MobileUI : public QObject
 
     Q_PROPERTY(bool torchEnabled READ getTorchEnabled WRITE setTorchEnabled NOTIFY torchUpdated)
 
-    Q_PROPERTY(int iconBadgeNumber READ getIconBadgeNumber WRITE setIconBadgeNumber NOTIFY iconBadgeUpdated)
-
 Q_SIGNALS:
     void devicethemeUpdated();  //!< Emitted when the device OS theme (light/dark mode) changes.
     void statusbarUpdated();    //!< Emitted when a status bar color or theme is set.
@@ -111,7 +109,6 @@ Q_SIGNALS:
     void safeAreaUpdated();     //!< Emitted when the system bar heights or the screen safe areas are changed (by or rotation or some other reason).
     void screenUpdated();       //!< Emitted when a screen related property (always-on, orientation, brightness, refresh rate) is set.
     void torchUpdated();        //!< Emitted when the torch (camera flash LED) state changes.
-    void iconBadgeUpdated();    //!< Emitted when the application icon badge number changes.
 
 public:
     /*!
@@ -556,27 +553,6 @@ public:
      */
     Q_INVOKABLE void backToHomeScreen();
 
-    // App icon badge //////////////////////////////////////////////////////////
-
-    /*!
-     * \brief Get the number currently shown on the application icon badge.
-     * \return the badge number (0 means no badge).
-     */
-    int getIconBadgeNumber() const { return m_iconBadgeNumber; }
-
-    /*!
-     * \brief Set the number shown on the application icon badge.
-     * \param number: the badge number (0 or a negative value clears the badge).
-     * \note iOS only.
-     *
-     * On iOS, showing a badge requires the user to have granted the badge
-     * notification authorization.
-     *
-     * Android has no standard launcher badge API (badges are tied to notifications
-     * and are launcher specific), so this will do nothing.
-     */
-    Q_INVOKABLE void setIconBadgeNumber(const int number);
-
     // Color helpers ///////////////////////////////////////////////////////////
 
     /*!
@@ -647,9 +623,6 @@ private:
 
     // On-screen keyboard height
     int m_keyboardHeight = 0;
-
-    // Application icon badge number
-    int m_iconBadgeNumber = 0;
 
     //! Connect to screen orientation, window visibility and theme changes.
     void connectSignals();

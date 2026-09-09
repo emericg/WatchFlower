@@ -1,6 +1,6 @@
 # MobileUI
 
-MobileUI allows QML applications to interact with mobile specific features, like Android and iOS `status bar` and Android `navigation bar`.
+MobileUI allows Qt / QML applications to interact with mobile specific features, like Android and iOS `status bar` and Android `navigation bar`, set screen brightness/orientation, haptic feedbacks...
 
 You can see it in action in the [MobileUI demo](https://github.com/emericg/MobileUI_demo).
 
@@ -32,7 +32,6 @@ You can see it in action in the [MobileUI demo](https://github.com/emericg/Mobil
 - Android high screen refresh rate toggle
 - Android "secure screen" helper
 - Android "back button" helper
-- iOS application icon badge number
 
 
 ## Screenshots
@@ -113,7 +112,6 @@ Window {
         screenSecure: false
         screenHighRefreshRate: true
         torchEnabled: false
-        iconBadgeNumber: 0
 
         // Read-only values (safe areas, device theme, bar heights) stay on the MobileUI singleton
 
@@ -149,6 +147,31 @@ int main() {
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
+}
+```
+
+
+### Quickstart
+
+TLDR
+
+- Include `MobileUI`
+- Use a regular `Window` and not an ApplicationWindow
+- Set `flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint`
+- Use the `MobileUI_dispatcher` and just set statusbarContentColor and navbarContentColor,
+
+```qml
+import QtQuick
+import MobileUI
+
+// Use a regular Window and not an ApplicationWindow, or you'll get Qt's inferior safe area implementation!
+Window {
+    flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint
+
+    MobileUI_dispatcher {
+        statusbarContentColor: "grey"
+        navbarContentColor: "grey"
+    }
 }
 ```
 
@@ -490,21 +513,6 @@ MobileUI.torchEnabled = true
 `torchEnabled` reflects the state actually applied: on a device without a rear flash the request is silently ignored and the property stays `false`.
 
 On Android no permission is required, the `CAMERA` permission is *not* needed to use `setTorchMode()`.
-### Application icon badge
-
-> [!NOTE]
-> **iOS only.**
-
-Set the number shown on the application icon badge.
-
-```qml
-MobileUI.iconBadgeNumber = 3 
-MobileUI.iconBadgeNumber = 0 // clear the badge
-```
-
-> On iOS, the `badge notification` authorization must be granted by the user for the badges to show.
-
-> Android has no standard launcher badge API (badges are tied to notifications and are launcher specific) so this will do nothing.
 
 ### Back to home screen
 
@@ -554,12 +562,12 @@ get a light grey depending on your device. It's bad if you're coming from a whit
 - All in all, window modes, geometry, rotation and many smaller things are just buggy on Qt for Android, and often subtly broken depending on which Qt version is used. Using only Qt 6.8 and up helps a lot...
 
 
-## Licensing
+## License
 
 This project is based on [qtstatusbar](https://github.com/jpnurmi/qtstatusbar) by jpnurmi.
 
-This project is licensed under the [MIT license](LICENSE).
+This project is licensed under the [MIT license](LICENSE.md).
 
-> Copyright (c) 2016 J-P Nurmi (jpnurmi)  
+> Copyright (c) 2016 J-P Nurmi (jpnurmi)
 
-> Copyright (c) 2026 Emeric Grange (emeric.grange@gmail.com)  
+> Copyright (c) 2026 Emeric Grange <emeric.grange@gmail.com>

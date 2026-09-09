@@ -301,18 +301,6 @@ bool MobileUIPrivate::setTorch(const bool on)
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::setIconBadgeNumber(const int number)
-{
-    // UIApplication must be touched on the main thread.
-    // Showing the badge requires the badge notification authorization to have been granted.
-    // Note: applicationIconBadgeNumber is deprecated since iOS 17.
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [UIApplication sharedApplication].applicationIconBadgeNumber = (number > 0) ? number : 0;
-    });
-}
-
-/* ************************************************************************** */
-
 void MobileUIPrivate::backToHomeScreen()
 {
     return;

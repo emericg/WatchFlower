@@ -49,9 +49,6 @@ MobileUI_QmlDispatcher::MobileUI_QmlDispatcher(QObject *parent) : QObject(parent
     connect(mui, &MobileUI::torchUpdated, this, [this]() {
         Q_EMIT torchEnabledChanged();
     });
-    connect(mui, &MobileUI::iconBadgeUpdated, this, [this]() {
-        Q_EMIT iconBadgeNumberChanged();
-    });
 }
 
 /* ************************************************************************** */
@@ -180,18 +177,6 @@ bool MobileUI_QmlDispatcher::torchEnabled() const
 void MobileUI_QmlDispatcher::setTorchEnabled(const bool on)
 {
     MobileUI::getInstance()->setTorchEnabled(on);
-}
-
-/* ************************************************************************** */
-
-int MobileUI_QmlDispatcher::iconBadgeNumber() const
-{
-    return MobileUI::getInstance()->getIconBadgeNumber();
-}
-
-void MobileUI_QmlDispatcher::setIconBadgeNumber(const int number)
-{
-    MobileUI::getInstance()->setIconBadgeNumber(number);
 }
 
 /* ************************************************************************** */
