@@ -30,6 +30,7 @@ Window {
     Binding { target: Theme; property: "appWidth";               value: appWindow.width }
     Binding { target: Theme; property: "appHeight";              value: appWindow.height }
     Binding { target: Theme; property: "screenOrientation";      value: Screen.primaryOrientation }
+    Binding { target: Theme; property: "screenDpiLogical";       value: UtilsScreen.screenDpiLogical }
     Binding { target: Theme; property: "screenDpi";              value: UtilsScreen.screenDpi }
     Binding { target: Theme; property: "screenPar";              value: UtilsScreen.screenPar }
     Binding { target: Theme; property: "screenSize";             value: UtilsScreen.screenSize }
@@ -161,8 +162,8 @@ Window {
                 case Qt.ApplicationActive:
                     //console.log("Qt.ApplicationActive")
 
-                    // Update sun position
-                    if (sunAndMoon && SettingsManager.sunandmoon) {
+                    // Update sun/moon positions
+                    if (SettingsManager.sunandmoon) {
                         sunAndMoon.update()
                     }
 
@@ -542,9 +543,9 @@ Window {
 
     Timer {
         id: disconnectTimer
-        interval: 33
         running: false
         repeat: true
+        interval: 100
         onTriggered: {
             if (!deviceManager.areDevicesConnected()) {
                 appWindow.close()

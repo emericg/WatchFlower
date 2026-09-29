@@ -48,7 +48,7 @@ Item {
             Text {
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                text: qsTr("Bluetooth permission(s) missing…")
+                text: qsTr("Bluetooth permission(s) missing...")
                 textFormat: Text.PlainText
                 font.pixelSize: Theme.fontSizeContentBig
                 color: Theme.colorText

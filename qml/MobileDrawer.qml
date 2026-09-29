@@ -87,7 +87,7 @@ DrawerThemed {
 
                 ////////
 
-                DrawerItem {
+                DrawerItem_menu {
                     highlighted: (appContent.state === "DeviceList")
                     text: qsTr("Sensors")
                     source: "qrc:/assets/gfx/logos/watchflower_tray_dark.svg"
@@ -98,7 +98,7 @@ DrawerThemed {
                     }
                 }
 
-                DrawerItem {
+                DrawerItem_menu {
                     highlighted: (appContent.state === "ScreenSettings" || appContent.state === "ScreenSettingsAdvanced")
                     text: qsTr("Settings")
                     source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
@@ -109,7 +109,7 @@ DrawerThemed {
                     }
                 }
 
-                DrawerItem {
+                DrawerItem_menu {
                     highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
                     text: qsTr("About")
                     source: "qrc:/IconLibrary/material-icons/duotone/info.svg"
@@ -126,7 +126,7 @@ DrawerThemed {
 
                 ////////
 
-                DrawerItem {
+                DrawerItem_menu {
                     source: "qrc:/IconLibrary/material-symbols/sort.svg"
                     text: {
                         var txt = qsTr("Order by:") + " "
@@ -180,7 +180,7 @@ DrawerThemed {
 
                 ////////
 
-                DrawerButton {
+                DrawerItem_button {
                     text: qsTr("Refresh sensor data")
 
                     source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
@@ -201,7 +201,7 @@ DrawerThemed {
                     }
                 }
 
-                DrawerButton {
+                DrawerItem_button {
                     text: qsTr("Sync sensors history")
 
                     source: "qrc:/IconLibrary/material-symbols/merge_type.svg"
@@ -223,7 +223,7 @@ DrawerThemed {
                     }
                 }
 
-                DrawerButton {
+                DrawerItem_button {
                     text: qsTr("Search for new sensors")
 
                     source: "qrc:/IconLibrary/material-symbols/search.svg"
@@ -262,7 +262,7 @@ DrawerThemed {
 
             ////////
 
-            DrawerItem {
+            DrawerItem_menu {
                 highlighted: (appContent.state === "PlantBrowser")
                 text: qsTr("Plant browser")
                 source: "qrc:/IconLibrary/material-symbols/sensors/local_florist.svg"
@@ -273,7 +273,7 @@ DrawerThemed {
                 }
             }
 
-            DrawerItem {
+            DrawerItem_menu {
                 highlighted: (appContent.state === "DeviceBrowser")
                 text: qsTr("Device browser")
                 source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"

@@ -5,6 +5,7 @@ import ComponentLibrary
 
 Rectangle {
     id: appHeader
+
     anchors.top: parent.top
     anchors.left: parent.left
     anchors.right: parent.right
@@ -163,6 +164,7 @@ Rectangle {
             color: Theme.colorHeaderContent
             elide: Text.ElideRight
         }
+
         Text { // separator
             Layout.alignment: Qt.AlignVCenter
 
@@ -711,4 +713,6 @@ Rectangle {
         opacity: 0.33
         color: Theme.colorHeaderHighlight
     }
+
+    ////////////////////////////////////////////////////////////////////////////
 }

@@ -11,7 +11,13 @@ Item {
     ////////////////
 
     BannerProgressButton {
-        height: isPhone ? 44 : 48
+        anchors.left: parent.left
+        anchors.leftMargin: Theme.componentMarginS
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.componentMarginS
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.componentMarginS
+        //height: isPhone ? 44 : 48
 
         opacity: (connecting || syncing) ? 1 : 0
         Behavior on opacity { NumberAnimation { duration: 133 } }

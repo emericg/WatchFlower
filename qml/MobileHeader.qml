@@ -22,7 +22,9 @@ Rectangle {
 
     property int headerPosition: 56 // horizontal
 
-    property bool headerCompact: true // appWindow.headerUnicolor
+    property bool headerUnicolor: (Theme.colorHeader === Theme.colorStatusbar)
+
+    property bool headerCompact: true // headerUnicolor
 
     property string headerTitle: UtilsApp.appName()
 
@@ -44,6 +46,7 @@ Rectangle {
     signal deviceRebootButtonClicked()
     signal deviceCalibrateButtonClicked()
     signal deviceWateringButtonClicked()
+    signal deviceWateringSettingsButtonClicked()
     signal deviceLedButtonClicked()
     signal deviceRefreshButtonClicked()
     signal deviceRefreshRealtimeButtonClicked()

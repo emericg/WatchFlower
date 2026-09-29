@@ -585,9 +585,9 @@ ApplicationWindow {
 
     Timer {
         id: disconnectTimer
-        interval: 33
         running: false
         repeat: true
+        interval: 100
         onTriggered: {
             if (!deviceManager.areDevicesConnected()) {
                 appWindow.close()
