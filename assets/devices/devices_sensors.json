@@ -360,6 +360,94 @@
       ["PM2.5", "0 → 500 µg/m³"],
       ["PM10", "0 → 500 µg/m³"]
     ]
+  },
+  {
+    "name_ble": "Aranet4",
+    "model": "Aranet4",
+    "manufacturer": "SAF Tehnika",
+    "ID": ["Aranet4"],
+    "year": 2019,
+    "battery": "2 x AA",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "0 → 50 °C (± 0.3 °C)"],
+      ["Humidity", "0 → 85% RH (± 3% RH)"],
+      ["Pressure", "260 → 1260 hPa (± 1 hPa)"],
+      ["CO2", "0 → 9999 ppm"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "Aranet2",
+    "model": "Aranet2",
+    "manufacturer": "SAF Tehnika",
+    "ID": ["Aranet2"],
+    "year": 2022,
+    "battery": "1 x AA",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "0 → 50 °C (± 0.3 °C)"],
+      ["Humidity", "0 → 85% RH (± 3% RH)"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "Aranet Radiation",
+    "model": "Aranet Radiation",
+    "manufacturer": "SAF Tehnika",
+    "ID": ["Aranet Radiation"],
+    "year": 2023,
+    "battery": "2 x AA",
+    "screen": "EInk",
+    "sensors": [
+      ["Radiation", "0.01 → 100 µSv/h"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "Aranet Radon",
+    "model": "Aranet Radon",
+    "manufacturer": "SAF Tehnika",
+    "ID": ["AranetRn1"],
+    "year": 2024,
+    "battery": "2 x AA",
+    "screen": "EInk",
+    "sensors": [
+      ["Pressure", "260 → 1260 hPa"]
+      ["Radon", ""]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
+  },
+  {
+    "name_ble": "Aranet Radon+",
+    "model": "Aranet Radon+",
+    "manufacturer": "SAF Tehnika",
+    "ID": ["AranetRn+"],
+    "year": 2024,
+    "battery": "2 x AA",
+    "screen": "EInk",
+    "sensors": [
+      ["Temperature", "0 → 50 °C"],
+      ["Humidity", "0 → 85% RH"],
+      ["Pressure", "260 → 1260 hPa"]
+      ["Radon", "Bq/m³"]
+    ],
+    "capabilities": [
+      ["realtime", "unsupported"],
+      ["history", "unsupported"]
+    ]
   }
   ]
 }

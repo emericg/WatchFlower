@@ -293,6 +293,47 @@ Supported devices
 | PM10                                 | 0 → 500 µg/m³                         |
 | BLE API                              | [link](cgdn1-ble-api.md)              |
 
+| Aranet4                              | SAF Tehnika                           |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | Aranet4                               |
+| <img src="aranet4.svg" width="256">                                         ||
+| Screen                               | E-Ink                                 |
+| Battery                              | 2 x AA                                |
+| Temperature                          | 0 → 50 °C                             |
+| Humidity                             | 0 → 85% RH                            |
+| Pressure                             | 260 → 1260 hPa                        |
+| CO2                                  | 0 → 9999 ppm                          |
+| BLE API                              | [link](aranet4-ble-api.md)            |
+
+| Aranet2                              | SAF Tehnika                           |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | Aranet2                               |
+| Screen                               | E-Ink                                 |
+| Battery                              | 1 x AA                                |
+| Temperature                          | 0 → 50 °C                             |
+| Humidity                             | 0 → 85% RH                            |
+| BLE API                              | [link](aranet2-ble-api.md)            |
+
+| Aranet Radiation                     | SAF Tehnika                           |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | Aranet☢                               |
+| Screen                               | E-Ink                                 |
+| Battery                              | 2 x AA                                |
+| Radiation dose rate                  | nSv/h                                 |
+| Radiation dose total                 | nSv                                   |
+| BLE API                              | [link](aranet-radiation-ble-api.md)   |
+
+| Aranet Radon                         | SAF Tehnika                           |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | AranetRn1, AranetRn+                  |
+| Screen                               | E-Ink                                 |
+| Battery                              | 2 x AA                                |
+| Radon concentration                  | Bq/m³                                 |
+| Temperature                          | 0 → 50 °C (`AranetRn+` only)          |
+| Humidity                             | 0 → 85% RH (`AranetRn+` only)         |
+| Pressure                             | hPa                                   |
+| BLE API                              | [link](aranetrn-ble-api.md)           |
+
 
 # Other sensors
 
