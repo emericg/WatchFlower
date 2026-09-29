@@ -186,7 +186,6 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/popups/PopupBackgroundUpdates.qml
         qml/popups/PopupBlacklistDevice.qml
         qml/popups/PopupCalibration.qml
-        qml/popups/PopupDate.qml
         qml/popups/PopupDeleteData.qml
         qml/popups/PopupDeleteDevice.qml
         qml/charts/ChartHistory.qml

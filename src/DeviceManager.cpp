@@ -258,7 +258,7 @@ bool DeviceManager::areDevicesConnected() const
 {
     for (auto d: std::as_const(m_devices_model->m_devices))
     {
-        if (d && d->isConnected())
+        if (d && (d->getStatus() >= DeviceUtils::DEVICE_DISCONNECTING))
         {
             return true;
         }

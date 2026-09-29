@@ -1344,7 +1344,7 @@ void Device::setFirmware(const QString &firmware)
     if (!firmware.isEmpty() && m_deviceFirmware != firmware)
     {
         m_deviceFirmware = firmware;
-        Q_EMIT deviceUpdated();
+        Q_EMIT firmwareUpdated();
 
         if (m_dbInternal || m_dbExternal)
         {

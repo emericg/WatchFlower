@@ -217,7 +217,7 @@ Item {
 
                 function open() {
                     currentDateTime = new Date() // to reset date
-                    datePicker.openDate(currentDateTime)
+                    datePicker.loadDate(currentDateTime)
 
                     entry = null
                     entryType = JournalUtils.JOURNAL_WATER
@@ -228,7 +228,7 @@ Item {
 
                 function edit(eee) {
                     currentDateTime = eee.date
-                    datePicker.openDate(currentDateTime)
+                    datePicker.loadDate(currentDateTime)
 
                     entry = eee
                     entryType = eee.type
@@ -268,17 +268,16 @@ Item {
 
                     Item {
                         width: (uiMode === 2) ? rowrowrow.width : ((rowrowrow.width * 0.4) - (rowrowrow.spacing / 2))
-                        height: (uiMode === 2) ? 320 : rowrowrow.height
+                        height: (uiMode === 2) ? datePicker.height : rowrowrow.height
                         visible: (uiMode !== 1)
 
                         DatePicker {
                             id: datePicker
-                            anchors.fill: parent
+                            anchors.top: parent.top
+                            anchors.left: parent.left
+                            anchors.right: parent.right
 
-                            onUpdateDate: (newdate) => {
-                                //console.log("onUpdateDate(" + newdate + ")")
-                                entryEditor.currentDateTime = newdate
-                            }
+                            onSelectedDateChanged: entryEditor.currentDateTime = selectedDate
                         }
                     }
 
