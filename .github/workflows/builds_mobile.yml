@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "6.0"
-  QT_VERSION: "6.11.1"
+  QT_VERSION: "6.10.3"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -32,21 +32,21 @@ jobs:
     steps:
       # Checkout repository (and submodules)
       - name: Checkout repository (and submodules)
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: recursive
 
       # Java environment (already installed in 'ubuntu-24.04')
       #- name: Setup Java environment
-      #  uses: actions/setup-java@v4
+      #  uses: actions/setup-java@v6
       #  with:
       #    distribution: 'temurin'
       #    java-version: '17'
 
-      # Android environment
+      # Setup Android environment (SDK / NDK / tools)
       - name: Setup Android environment
-        uses: android-actions/setup-android@v3
-      - name: Install Android SDK / NDK / tools
+        uses: android-actions/setup-android@v4
+      - name: Setup Android environment (sdkmanager)
         run: |
              sdkmanager "platforms;android-36"
              sdkmanager "ndk;28.2.13676358"
@@ -57,16 +57,16 @@ jobs:
         uses: jurplel/install-qt-action@v4
         with:
           version: ${{ env.QT_VERSION }}
-          host: 'linux'
+          host: 'all_os'
           target: 'android'
           arch: 'android_arm64_v8a'
           modules: qtconnectivity qtcharts qtpositioning
           extra: '--autodesktop'
 
       # Install dependencies (from package manager)
-      - name: Install dependencies (from package manager)
-        run: |
-             sudo apt-get install cmake ninja-build -y;
+      #- name: Install dependencies (from package manager)
+      #  run: |
+      #       sudo apt-get install cmake ninja-build -y;
 
       # Setup env
       - name: Setup env
@@ -103,7 +103,7 @@ jobs:
     steps:
       # Checkout repository (and submodules)
       - name: Checkout repository (and submodules)
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           submodules: recursive
 

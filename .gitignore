@@ -1,25 +1,14 @@
 # Binaries and build artifacts
-build/*
-bin/*
 contribs/*
 appdir/*
+build/*
+bin/*
 
-# QtCreator temporary project files
-.qtcreator/*
-WatchFlower.config
-WatchFlower.creator*
-WatchFlower.files
-WatchFlower.includes
-WatchFlower.pro.*
-
-# Qt Quick Compiler
+# QtQuick Compiler
 qrc_resources.cpp
 qmlcache_loader.cpp
 qml_*qml.cpp
-
-# QMake temporary project files
-Makefile
-.qmake.stash
+.qmlls.ini
 
 # CMake temporary project files
 CMakeLists.txt.user
@@ -27,7 +16,7 @@ CMakeLists.txt.user
 # XCode related
 Debug/*
 Release/*
-WatchFlower.xcodeproj/*
+*.xcodeproj/*
 asset_catalog_compiler.Info.plist
 
 # Others
