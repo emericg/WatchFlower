@@ -91,7 +91,7 @@ T.Button {
             rotation: control.sourceRotation
 
             color: control.hovered ? control.colorIconHighlight : control.colorIcon
-            Behavior on color { ColorAnimation { duration: Theme.animationFastSpeed } }
+            Behavior on color { ColorAnimation { duration: Theme.animationSpeedFast } }
 
             source: control.source
 
@@ -124,7 +124,7 @@ T.Button {
             opacity: control.enabled ? 1 : 0.66
 
             color: control.hovered ? control.colorIconHighlight : control.colorIcon
-            Behavior on color { ColorAnimation { duration: Theme.animationFastSpeed } }
+            Behavior on color { ColorAnimation { duration: Theme.animationSpeedFast } }
 
             text: control.text
             textFormat: Text.PlainText
@@ -143,6 +143,7 @@ T.Button {
         active: control.tooltipText !== "" && control.hovered
 
         sourceComponent: ToolTipFlat {
+            height: parent.height
             visible: control.hovered
             text: control.tooltipText
             textColor: control.colorIcon

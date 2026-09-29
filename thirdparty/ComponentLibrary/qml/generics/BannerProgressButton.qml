@@ -22,7 +22,7 @@ T.Control {
                              implicitContentHeight + topPadding + bottomPadding)
 
     //opacity: enabled ? 1 : 0.66
-    Behavior on opacity { OpacityAnimator { duration: Theme.animationMediumSpeed } }
+    Behavior on opacity { OpacityAnimator { duration: Theme.animationSpeedMedium } }
 
     font.pixelSize: Theme.fontSizeContentBig
     font.bold: false
@@ -37,7 +37,7 @@ T.Control {
     property color colorContent: "white"
 
     // icon
-    property url source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
+    property url source: "qrc:/ComponentLibraryAssets/icons/autorenew.svg"
     property int sourceSize: UtilsNumber.alignTo(height * 0.5, 2)
     property int sourceRotation: 0
 
@@ -95,7 +95,7 @@ T.Control {
                 rotation: control.sourceRotation
 
                 opacity: 1
-                Behavior on opacity { OpacityAnimator { duration: Theme.animationMediumSpeed } }
+                Behavior on opacity { OpacityAnimator { duration: Theme.animationSpeedMedium } }
 
                 SequentialAnimation on opacity {
                     running: (control.animationRunning &&
@@ -146,7 +146,7 @@ T.Control {
                 color: Qt.rgba(control.colorContent.r, control.colorContent.g, control.colorContent.b, 0.1)
 
                 Rectangle { // progress bar
-                    width: control.width * (Math.max(0, Math.min(control.progress, 100)) / 100)
+                    width: parent.width * (Math.max(0, Math.min(control.progress, 100)) / 100)
                     height: parent.height
                     color: control.colorContent
                 }

@@ -35,7 +35,7 @@ public:
     MobileUIPrivate() = default;
     ~MobileUIPrivate() = default;
 
-    int getDeviceTheme();
+    int getDeviceTheme() const;
 
     void setColor_statusbar(const QColor &color);
     void setTheme_statusbar(const MobileUI::Theme theme);
@@ -51,11 +51,11 @@ public:
      * backend and it's Android main thread usage).
      */
     void getSafeAreaMetrics(int &statusbarHeight, int &navbarHeight,
-                            int &top, int &left, int &right, int &bottom);
+                            int &top, int &left, int &right, int &bottom) const;
 
-    int getKeyboardHeight();
+    int getKeyboardHeight() const;
 
-    int getScreenBrightness();
+    int getScreenBrightness() const;
     void setScreenBrightness(const int value);
 
     void setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation);
@@ -64,7 +64,7 @@ public:
 
     void setScreenSecure(const bool on);
 
-    void setHighRefreshRate(const bool value);
+    void setScreenHighRefreshRate(const bool value);
 
     void triggerHapticFeedback(const MobileUI::HapticFeedback type);
 

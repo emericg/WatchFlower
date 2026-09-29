@@ -71,7 +71,7 @@ Item {
 
             color: control.colorHighlight
             opacity: (parent.containsMouse || parent.pressed) ? 0.333 : 0
-            Behavior on opacity { NumberAnimation { duration: Theme.animationFastSpeed } }
+            Behavior on opacity { NumberAnimation { duration: Theme.animationSpeedFast } }
         }
         Rectangle {
             anchors.centerIn: parent

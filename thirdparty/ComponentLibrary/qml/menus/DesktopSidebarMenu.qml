@@ -22,7 +22,7 @@ ButtonImpl {
     source: "qrc:/IconLibrary/material-symbols/menu.svg"
     sourceSize: 20
 
-    flat: false
+    flat: true
 
     property color color: checked ? Theme.colorPrimary : Theme.colorSidebarContent
     colorBackground: Qt.rgba(color.r, color.g, color.b, checked ? 0.2 : 1)

@@ -56,7 +56,7 @@ T.Button {
                 return control.backgroundVisible ? 0.75 : 0
             }
         }
-        Behavior on opacity { NumberAnimation { duration: Theme.animationSlowSpeed } }
+        Behavior on opacity { NumberAnimation { duration: Theme.animationSpeedSlow } }
 
         Rectangle { // border
             anchors.fill: parent
@@ -80,7 +80,7 @@ T.Button {
 
             rotation: control.sourceRotation
             opacity: control.enabled ? 1 : 0.66
-            Behavior on opacity { NumberAnimation { duration: Theme.animationSlowSpeed } }
+            Behavior on opacity { NumberAnimation { duration: Theme.animationSpeedSlow } }
 
             source: control.source
             color: {

@@ -84,6 +84,9 @@
 #define SCREEN_ORIENTATION_SENSOR_PORTRAIT      7
 #define SCREEN_ORIENTATION_REVERSE_LANDSCAPE    8
 #define SCREEN_ORIENTATION_REVERSE_PORTRAIT     9
+#define SCREEN_ORIENTATION_USER_LANDSCAPE      11
+#define SCREEN_ORIENTATION_USER_PORTRAIT       12
+#define SCREEN_ORIENTATION_LOCKED              14
 
 // Screen brightness
 #define BRIGHTNESS_OVERRIDE_NONE               -1
@@ -160,7 +163,7 @@ static int pxToDip(int px)
 
 static int insetField(const QJniObject &insets, const char *insetType, const char *side)
 {
-    //if (QNativeInterface::QAndroidApplication::sdkVersion() < 30) return 0;
+    if (QNativeInterface::QAndroidApplication::sdkVersion() < 30) return 0;
     if (!insets.isValid()) return 0;
 
     // Modern system bar height, via WindowInsets.Type // Call from Android thread!
@@ -200,7 +203,7 @@ static int dimenHeight(const char *name, int fallbackValue)
 
 /* ************************************************************************** */
 
-int MobileUIPrivate::getDeviceTheme()
+int MobileUIPrivate::getDeviceTheme() const
 {
     return QNativeInterface::QAndroidApplication::runOnAndroidMainThread([] {
             QJniObject activity = QNativeInterface::QAndroidApplication::context();
@@ -249,7 +252,7 @@ void MobileUIPrivate::setTheme_statusbar(const MobileUI::Theme theme)
                                        appearance, APPEARANCE_LIGHT_STATUS_BARS);
             }
         }
-        else if (QNativeInterface::QAndroidApplication::sdkVersion() < 30)
+        else // if (QNativeInterface::QAndroidApplication::sdkVersion() >= 23)
         {
             // setSystemUiVisibility // Added in API level 23 // Deprecated in API level 30
 
@@ -317,7 +320,7 @@ void MobileUIPrivate::setTheme_navbar(const MobileUI::Theme theme)
                                        appearance, APPEARANCE_LIGHT_NAVIGATION_BARS);
             }
         }
-        else if (QNativeInterface::QAndroidApplication::sdkVersion() < 30)
+        else // if (QNativeInterface::QAndroidApplication::sdkVersion() >= 23)
         {
             // getSystemUiVisibility // Added in API level 23 // Deprecated in API level 30
 
@@ -337,7 +340,7 @@ void MobileUIPrivate::setTheme_navbar(const MobileUI::Theme theme)
 /* ************************************************************************** */
 
 void MobileUIPrivate::getSafeAreaMetrics(int &statusbarHeight, int &navbarHeight,
-                                         int &top, int &left, int &right, int &bottom)
+                                         int &top, int &left, int &right, int &bottom) const
 {
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([&]() -> void {
         QJniObject insets = getAndroidRootWindowInsets(); // called just once
@@ -389,7 +392,7 @@ void MobileUIPrivate::getSafeAreaMetrics(int &statusbarHeight, int &navbarHeight
 
 /* ************************************************************************** */
 
-int MobileUIPrivate::getKeyboardHeight()
+int MobileUIPrivate::getKeyboardHeight() const
 {
     return QNativeInterface::QAndroidApplication::runOnAndroidMainThread([]() -> int {
             // WindowInsets.Type.ime() // Added in API level 30
@@ -406,7 +409,7 @@ int MobileUIPrivate::getKeyboardHeight()
 
 /* ************************************************************************** */
 
-int MobileUIPrivate::getScreenBrightness()
+int MobileUIPrivate::getScreenBrightness() const
 {
     return QNativeInterface::QAndroidApplication::runOnAndroidMainThread([] {
             // If a brightness override has been set for the current app window, use it.
@@ -461,7 +464,8 @@ void MobileUIPrivate::setScreenLockOrientation(const MobileUI::ScreenLockOrienta
 {
     int value = SCREEN_ORIENTATION_UNSPECIFIED;
 
-    if (orientation == MobileUI::Portrait) value = SCREEN_ORIENTATION_PORTRAIT;
+    if (orientation == MobileUI::Locked) value = SCREEN_ORIENTATION_LOCKED;
+    else if (orientation == MobileUI::Portrait) value = SCREEN_ORIENTATION_PORTRAIT;
     else if (orientation == MobileUI::Portrait_upsidedown) value = SCREEN_ORIENTATION_REVERSE_PORTRAIT;
     else if (orientation == MobileUI::Portrait_sensor) value = SCREEN_ORIENTATION_SENSOR_PORTRAIT;
     else if (orientation == MobileUI::Landscape_left) value = SCREEN_ORIENTATION_LANDSCAPE;
@@ -503,7 +507,7 @@ void MobileUIPrivate::setScreenSecure(const bool on)
     });
 }
 
-void MobileUIPrivate::setHighRefreshRate(const bool value)
+void MobileUIPrivate::setScreenHighRefreshRate(const bool value)
 {
     QNativeInterface::QAndroidApplication::runOnAndroidMainThread([=]() {
         QJniObject window = getAndroidWindow();
@@ -704,12 +708,15 @@ bool MobileUIPrivate::setTorch(const bool on)
 
     if (!torchCameraId.isValid()) return false;
 
-    cameraManager.callMethod<void>("setTorchMode", "(Ljava/lang/String;Z)V", torchCameraId.object<jstring>(), on);
+    // void setTorchMode() doesn't returns operation status, but may throw CameraAccessException, which we treat that as a failure.
+    // we call it through raw JNI, because QJniObject::callMethod() clears any pending exception internally before we can inspect it.
 
-    // setTorchMode() may throw CameraAccessException; treat that as a failure.
+    jclass cameraManagerClass = env->GetObjectClass(cameraManager.object());
+    jmethodID setTorchMode = env->GetMethodID(cameraManagerClass, "setTorchMode", "(Ljava/lang/String;Z)V");
+    env->CallVoidMethod(cameraManager.object(), setTorchMode, torchCameraId.object<jstring>(), on);
     if (env.checkAndClearExceptions()) return false;
 
-    return on;
+    return true;
 }
 
 /* ************************************************************************** */

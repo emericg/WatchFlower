@@ -159,12 +159,12 @@ void MobileUI_QmlDispatcher::setScreenSecure(const bool on)
 
 bool MobileUI_QmlDispatcher::screenHighRefreshRate() const
 {
-    return MobileUI::getInstance()->getHighRefreshRate();
+    return MobileUI::getInstance()->getScreenHighRefreshRate();
 }
 
 void MobileUI_QmlDispatcher::setScreenHighRefreshRate(const bool on)
 {
-    MobileUI::getInstance()->setHighRefreshRate(on);
+    MobileUI::getInstance()->setScreenHighRefreshRate(on);
 }
 
 /* ************************************************************************** */

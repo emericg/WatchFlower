@@ -107,7 +107,7 @@ Window {
 
         // Also covers the screen and device settings!
         screenAlwaysOn: true
-        screenLockedOrientation: MobileUI.Portrait
+        screenLockOrientation: MobileUI.Portrait
         screenBrightness: 80
         screenSecure: false
         screenHighRefreshRate: true
@@ -153,7 +153,7 @@ int main() {
 
 ### Quickstart
 
-TLDR
+> TLDR
 
 - Include `MobileUI`
 - Use a regular `Window` and not an ApplicationWindow
@@ -399,28 +399,30 @@ MobileUI.screenBrightness = -1
 This will force the device screen orientation into one of the available values.  
 This cannot be used to read the actual device orientation.  
 
-Either call `setScreenLockOrientation(MobileUI.ScreenLockOrientation)` or set `screenLockedOrientation: MobileUI.ScreenLockOrientation` (in QML).
+Either call `setScreenLockOrientation(MobileUI.ScreenLockOrientation)` or set `screenLockOrientation: MobileUI.ScreenLockOrientation` (in QML).
 
 ```qml
 MobileUI.setScreenLockOrientation(MobileUI.Landscape_left)
-MobileUI.screenLockedOrientation = MobileUI.Landscape_right
+MobileUI.screenLockOrientation = MobileUI.Landscape_right
 ```
 
 Available orientations:
 
 > Unlocked
 
+> Locked // in the orientation in use when the lock is set
+
 > Portrait
 
 > Portrait_upsidedown
 
-> Portrait_sensor // on iOS, falls back to a fixed Portrait
+> Portrait_sensor // sensor driven (but many devices won't do upside-down)
 
 > Landscape_left
 
 > Landscape_right
 
-> Landscape_sensor // on iOS, allows both landscape orientations
+> Landscape_sensor // sensor driven
 
 ### Lock screensaver
 

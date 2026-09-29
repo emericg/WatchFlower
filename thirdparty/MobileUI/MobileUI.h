@@ -62,6 +62,8 @@ class MobileUIPrivate;
  *
  * You can use it without worries on desktop platforms, a dummy backend is used so
  * no code is runned, setters are ignored, getters return neutral/default values...
+ *
+ * \note Thread affinity: MobileUI must be used from the GUI (main) thread ONLY.
  */
 class MobileUI : public QObject
 {
@@ -72,7 +74,7 @@ class MobileUI : public QObject
     Q_PROPERTY(bool isPhone READ isDevicePhone CONSTANT)
     Q_PROPERTY(bool isTablet READ isDeviceTablet CONSTANT)
 
-    Q_PROPERTY(Theme deviceTheme READ getDeviceTheme NOTIFY devicethemeUpdated)
+    Q_PROPERTY(Theme deviceTheme READ getDeviceTheme NOTIFY deviceThemeUpdated)
 
     Q_PROPERTY(QColor statusbarColor READ getStatusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
     Q_PROPERTY(QColor statusbarContentColor READ getStatusbarContentColor WRITE setStatusbarContentColor NOTIFY statusbarUpdated)
@@ -97,12 +99,12 @@ class MobileUI : public QObject
     Q_PROPERTY(int screenBrightness READ getScreenBrightness WRITE setScreenBrightness NOTIFY screenUpdated)
     Q_PROPERTY(bool screenAlwaysOn READ getScreenAlwaysOn WRITE setScreenAlwaysOn NOTIFY screenUpdated)
     Q_PROPERTY(bool screenSecure READ getScreenSecure WRITE setScreenSecure NOTIFY screenUpdated)
-    Q_PROPERTY(bool screenHighRefreshRate READ getHighRefreshRate WRITE setHighRefreshRate NOTIFY screenUpdated)
+    Q_PROPERTY(bool screenHighRefreshRate READ getScreenHighRefreshRate WRITE setScreenHighRefreshRate NOTIFY screenUpdated)
 
     Q_PROPERTY(bool torchEnabled READ getTorchEnabled WRITE setTorchEnabled NOTIFY torchUpdated)
 
 Q_SIGNALS:
-    void devicethemeUpdated();  //!< Emitted when the device OS theme (light/dark mode) changes.
+    void deviceThemeUpdated();  //!< Emitted when the device OS theme (light/dark mode) changes.
     void statusbarUpdated();    //!< Emitted when a status bar color or theme is set.
     void navbarUpdated();       //!< Emitted when a navigation bar color or theme is set.
     void keyboardUpdated();     //!< Emitted when the on-screen keyboard height changes (shown, hidden or resized).
@@ -133,7 +135,7 @@ public:
     enum Theme {
         Auto  = -1, //!< Derive the bar theme from its reference color, or leave it to the OS if none is set.
         Light =  0, //!< Light application theme, usually light background and dark texts.
-        Dark  =  1  //!< Dark application theme, usually dark background and light texts.
+        Dark  =  1, //!< Dark application theme, usually dark background and light texts.
     };
     Q_ENUM(Theme)
 
@@ -381,25 +383,26 @@ public:
     /*!
      * \brief Screen orientations that can be locked through setScreenLockOrientation().
      *
-     * The values are bit flags, so a sensor mode is conceptually the union of
-     * its two fixed orientations. These are used to *lock* the orientation;
+     * These are used to *lock* the orientation,
      * they cannot be used to read the device's current physical orientation.
      */
     enum ScreenLockOrientation {
-        Unlocked = 0,                       //!< Orientation is unlocked; the OS decides freely.
+        Unlocked            = 0,    //!< Orientation is unlocked; the OS decides freely.
+        Locked              = 1,    //!< Locked in the orientation in use when the lock is set.
 
-        Portrait            = (1 << 0),     //!< Locked to portrait, right side up.
-        Portrait_upsidedown = (1 << 1),     //!< Locked to portrait, upside down.
-        Portrait_sensor     = (1 << 2),     //!< Both portrait orientations, sensor driven (Android only; falls back to Portrait on iOS).
+        Portrait            = 2,    //!< Locked to portrait.
+        Portrait_upsidedown = 3,    //!< Locked to portrait, upside down.
+        Portrait_sensor     = 4,    //!< Both portrait orientations, sensor driven (but many devices won't do upside-down).
 
-        Landscape_left      = (1 << 3),     //!< Locked to landscape left.
-        Landscape_right     = (1 << 4),     //!< Locked to landscape right.
-        Landscape_sensor    = (1 << 5),     //!< Both landscape orientations, sensor driven (Android only; falls back to Landscape on iOS).
+        Landscape_left      = 5,    //!< Locked to landscape left.
+        Landscape_right     = 6,    //!< Locked to landscape right.
+        Landscape_sensor    = 7,    //!< Both landscape orientations, sensor driven.
     };
     Q_ENUM(ScreenLockOrientation)
 
     /*!
      * \brief Get orientation lock (if set).
+     * \note Read the screen lock, NOT the screen orientation.
      * \return See MobileUI::ScreenLockOrientation enum.
      */
     MobileUI::ScreenLockOrientation getScreenLockOrientation() const;
@@ -407,9 +410,11 @@ public:
     /*!
      * \brief Lock (or unlock) the screen orientation.
      * \param orientation: see MobileUI::ScreenLockOrientation enum.
-     * \note - On iOS the sensor modes are approximated: Landscape_sensor allows both landscape orientations,
-     *         while Portrait_sensor falls back to a fixed Portrait.
-     *       - Forcing orientation is also not allowed on iPads.
+     * \note - On iOS, Face ID iPhones never rotate upside-down, so Portrait_sensor behaves like Portrait there.
+     *       - On iOS, the orientations must also be allowed by the application Info.plist.
+     *       - On iPads with multitasking enabled the lock is ignored, unless UIRequiresFullScreen is set.
+     *       - On Android 16+, apps targeting API level 36 have the lock ignored on large screens
+     *         (smallest width of 600dp or more, like tablets and unfolded foldables).
      *
      * You can also achieve similar functionality through application manifest or plist:
      * - https://developer.android.com/guide/topics/manifest/activity-element.html#screen
@@ -418,12 +423,22 @@ public:
     Q_INVOKABLE void setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation);
 
     /*!
+     * \brief Re-apply the screen orientation lock.
+     *
+     * An orientation lock set before the window is available would be ignored but recorded as set on iOS,
+     * so re-apply it with other refresh*() calls from the MobileUI() constructor initial singleShot timer.
+     *
+     * You don't usually need to call this function manually, but you can.
+     */
+    Q_INVOKABLE void refreshScreenOrientation();
+
+    /*!
      * \brief Get screen brightness set for the current app (on Android) or system wide (on iOS).
      * \return screen brightness, from 0 to 100, or -1 when unavailable.
      *
      * If brightness has not been set for the current app, this function will return the OS wide brightness level.
      */
-    int getScreenBrightness();
+    int getScreenBrightness() const;
 
     /*!
      * \brief Set screen brightness for the current app (on Android) or system wide (on iOS).
@@ -471,7 +486,7 @@ public:
      * \brief Tell whether a high screen refresh rate has been requested.
      * \return true if the high refresh rate request is active.
      */
-    bool getHighRefreshRate() const { return m_screenHighRefreshRate; }
+    bool getScreenHighRefreshRate() const { return m_screenHighRefreshRate; }
 
     /*!
      * \brief Request (or release) the highest screen refresh rate available.
@@ -484,7 +499,7 @@ public:
      * On iOS you cant opt into ProMotion (120 Hz) at run time, you need an Info.plist key instead:
      * "CADisableMinimumFrameDurationOnPhone" key (set to true)
      */
-    Q_INVOKABLE void setHighRefreshRate(const bool value);
+    Q_INVOKABLE void setScreenHighRefreshRate(const bool value);
 
     // Haptic feedbacks ////////////////////////////////////////////////////////
 
@@ -560,17 +575,17 @@ public:
      * \param color: the color to evaluate.
      * \return the perceived luminance (Rec. 601), normalized to the [0.0 ; 1.0] range.
      */
-    static double colorLuminance(const QColor &color);
+    Q_INVOKABLE static double colorLuminance(const QColor &color);
 
     /*!
      * \brief Tell whether a color is perceived as "light" using the Android cutoff.
      * \param color: the color to evaluate.
      * \return true if the color is light enough to warrant dark foreground icons.
      *
-     * Uses the luminance cutoff (~0.66) that matches Android's own behavior;
+     * Uses the luminance cutoff (0.8) that matches Android's own behavior;
      * this is the rule MobileUI uses internally to auto-derive a bar theme.
      */
-    static bool isColorLight_android(const QColor &color);
+    Q_INVOKABLE static bool isColorLight_android(const QColor &color);
 
     /*!
      * \brief Tell whether a color is perceived as "light" using the HyperOS cutoff.
@@ -581,7 +596,7 @@ public:
      * bar background's perceived brightness, around a ~0.5 luminance cutoff.
      * Use this to predict which foreground those ROMs will pick.
      */
-    static bool isColorLight_hyperos(const QColor &color);
+    Q_INVOKABLE static bool isColorLight_hyperos(const QColor &color);
 
 private:
     // Device types

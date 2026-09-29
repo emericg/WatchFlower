@@ -31,7 +31,7 @@ Loader {
         Rectangle { // button minimize
             width: 26; height: 26; radius: 26;
             color: mouseAreaMin.containsMouse ? "#66aaaaaa" : "#33aaaaaa"
-            Behavior on color { ColorAnimation { duration: Theme.animationMediumSpeed; easing.type: Easing.InOutCirc; } }
+            Behavior on color { ColorAnimation { duration: Theme.animationSpeedMedium; easing.type: Easing.InOutCirc; } }
 
             Rectangle {
                 width: 10; height: 2;
@@ -55,7 +55,7 @@ Loader {
         Rectangle { // button maximize
             width: 26; height: 26; radius: 26;
             color: mouseAreaMax.containsMouse ? "#66aaaaaa" : "#33aaaaaa"
-            Behavior on color { ColorAnimation { duration: Theme.animationMediumSpeed; easing.type: Easing.InOutCirc; } }
+            Behavior on color { ColorAnimation { duration: Theme.animationSpeedMedium; easing.type: Easing.InOutCirc; } }
 
             Rectangle {
                 width: 10; height: 10;
@@ -84,7 +84,7 @@ Loader {
         Rectangle { // button close
             width: 26; height: 26; radius: 26;
             color: mouseAreaClose.containsMouse ? "red" : "#33aaaaaa"
-            Behavior on color { ColorAnimation { duration: Theme.animationMediumSpeed; easing.type: Easing.InOutCirc; } }
+            Behavior on color { ColorAnimation { duration: Theme.animationSpeedMedium; easing.type: Easing.InOutCirc; } }
 
             Rectangle {
                 width: 13; height: 2; radius: 2;

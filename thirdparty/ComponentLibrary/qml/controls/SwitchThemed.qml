@@ -49,7 +49,7 @@ T.Switch {
 
         Rectangle {
             x: control.checked ? (parent.width - width) : 0
-            Behavior on x { NumberAnimation { duration: Theme.animationFastSpeed } }
+            Behavior on x { NumberAnimation { duration: Theme.animationSpeedFast } }
             width: 24
             height: width
             radius: (width / 2)
@@ -65,7 +65,7 @@ T.Switch {
                 color: parent.color
                 opacity: (control.enabled && control.checkable && (control.pressed || control.hovered || control.visualFocus)) ?
                              (control.checked ? 0.16 : 0.32) : 0
-                Behavior on opacity { NumberAnimation { duration: Theme.animationFastSpeed } }
+                Behavior on opacity { NumberAnimation { duration: Theme.animationSpeedFast } }
             }
         }
     }
@@ -75,11 +75,11 @@ T.Switch {
         rightPadding: control.mirrored ? control.indicator.width + control.spacing : 0
 
         opacity: control.enabled ? 1 : 0.66
+        color: control.checked ? control.colorText : control.colorSubText
 
         text: control.text
         textFormat: Text.PlainText
         font: control.font
-        color: control.checked ? control.colorText : control.colorSubText
         elide: Text.ElideRight
         verticalAlignment: Text.AlignVCenter
     }

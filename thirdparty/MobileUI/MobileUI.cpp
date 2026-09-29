@@ -27,6 +27,7 @@
 #include <QGuiApplication>
 #include <QStyleHints>
 #include <QInputMethod>
+#include <QMetaEnum>
 #include <QQmlEngine>
 #include <QScreen>
 #include <QWindow>
@@ -84,7 +85,8 @@ MobileUI::MobileUI(QObject *parent) : QObject(parent)
     }
 
     // The application window doesn't exist yet when this object is created from QML,
-    // so we defer the signal hookup and the first safe area computation until the event loop is running.
+    // so we defer the signal hookup and the first safe area computation (and mostly
+    // everything else too) until the event loop is running.
     QTimer::singleShot(0, this, [this]() {
         // connectSignals() must be called only ONCE
         connectSignals();
@@ -92,6 +94,7 @@ MobileUI::MobileUI(QObject *parent) : QObject(parent)
         refreshSystemBars();
         refreshSafeAreas();
         refreshDeviceTheme();
+        refreshScreenOrientation();
     });
 #endif
 }
@@ -163,11 +166,9 @@ void MobileUI::refreshDeviceTheme()
     if (theme != m_osTheme)
     {
         m_osTheme = theme;
-        Q_EMIT devicethemeUpdated();
+        Q_EMIT deviceThemeUpdated();
     }
 }
-
-/* ************************************************************************** */
 
 void MobileUI::refreshSystemBars()
 {
@@ -180,6 +181,14 @@ void MobileUI::refreshSystemBars()
     else if (m_statusbarThemeSet > MobileUI::Auto) d->setTheme_statusbar(m_statusbarThemeSet);
     if (m_navbarTheme > MobileUI::Auto) d->setTheme_navbar(m_navbarTheme);
     else if (m_navbarThemeSet > MobileUI::Auto) d->setTheme_navbar(m_navbarThemeSet);
+}
+
+void MobileUI::refreshScreenOrientation()
+{
+    if (m_screenOrientation != MobileUI::Unlocked)
+    {
+        d->setScreenLockOrientation(m_screenOrientation);
+    }
 }
 
 /* ************************************************************************** */
@@ -236,6 +245,12 @@ MobileUI::Theme MobileUI::getStatusbarThemeSet() const
 
 void MobileUI::setStatusbarTheme(const MobileUI::Theme theme)
 {
+    if (!QMetaEnum::fromType<MobileUI::Theme>().valueToKey(theme))
+    {
+        qWarning() << "MobileUI::setStatusbarTheme() ignoring unknown theme:" << theme;
+        return;
+    }
+
     bool changed = (theme != m_statusbarTheme);
     if (!changed) changed = (theme != m_statusbarThemeSet);
 
@@ -274,7 +289,7 @@ void MobileUI::setStatusbarTheme_fromColor(const QColor &color)
 {
     if (m_statusbarTheme != MobileUI::Auto) return;
 
-   MobileUI::Theme theme = deriveStatusbarTheme(color);
+    const MobileUI::Theme theme = deriveStatusbarTheme(color);
 
     if (theme > MobileUI::Auto && theme != m_statusbarThemeSet)
     {
@@ -362,6 +377,12 @@ MobileUI::Theme MobileUI::getNavbarThemeSet() const
 
 void MobileUI::setNavbarTheme(const MobileUI::Theme theme)
 {
+    if (!QMetaEnum::fromType<MobileUI::Theme>().valueToKey(theme))
+    {
+        qWarning() << "MobileUI::setNavbarTheme() ignoring unknown theme:" << theme;
+        return;
+    }
+
     bool changed = (theme != m_navbarTheme);
     if (!changed) changed = (theme != m_navbarThemeSet);
 
@@ -515,7 +536,7 @@ void MobileUI::refreshKeyboardHeight()
 
 /* ************************************************************************** */
 
-int MobileUI::getScreenBrightness()
+int MobileUI::getScreenBrightness() const
 {
     return d->getScreenBrightness();
 }
@@ -540,9 +561,15 @@ MobileUI::ScreenLockOrientation MobileUI::getScreenLockOrientation() const
 
 void MobileUI::setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation)
 {
+    if (!QMetaEnum::fromType<MobileUI::ScreenLockOrientation>().valueToKey(orientation))
+    {
+        qWarning() << "MobileUI::setScreenLockOrientation() ignoring unknown orientation:" << orientation;
+        return;
+    }
+
     const bool changed = (orientation != m_screenOrientation);
 
-    // We re-apply, the OS might have changed that on its own
+    // We re-apply anyway, the OS might have changed that on its own
     m_screenOrientation = orientation;
     d->setScreenLockOrientation(orientation);
 
@@ -573,12 +600,12 @@ void MobileUI::setScreenAlwaysOn(const bool value)
 
 /* ************************************************************************** */
 
-void MobileUI::setHighRefreshRate(const bool value)
+void MobileUI::setScreenHighRefreshRate(const bool value)
 {
     const bool changed = (value != m_screenHighRefreshRate);
 
     m_screenHighRefreshRate = value;
-    d->setHighRefreshRate(value);
+    d->setScreenHighRefreshRate(value);
 
     if (changed) Q_EMIT screenUpdated();
 }
@@ -610,13 +637,13 @@ void MobileUI::vibrate(const MobileUI::HapticFeedback type)
 
 void MobileUI::setTorchEnabled(const bool on)
 {
-    // setTorch() returns the resulting state, which may differ from the request
-    const bool result = d->setTorch(on);
-
-    if (result != m_torchEnabled)
+    if (d->setTorch(on))
     {
-        m_torchEnabled = result;
-        Q_EMIT torchUpdated();
+        if (on != m_torchEnabled)
+        {
+            m_torchEnabled = on;
+            Q_EMIT torchUpdated();
+        }
     }
 }
 

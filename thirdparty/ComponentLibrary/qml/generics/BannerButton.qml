@@ -22,7 +22,7 @@ T.Control {
                              implicitContentHeight + topPadding + bottomPadding)
 
     //opacity: enabled ? 1 : 0.66
-    Behavior on opacity { OpacityAnimator { duration: Theme.animationMediumSpeed } }
+    Behavior on opacity { OpacityAnimator { duration: Theme.animationSpeedMedium } }
 
     font.pixelSize: Theme.fontSizeContent
     font.bold: false
@@ -37,7 +37,7 @@ T.Control {
     property color colorContent: "white"
 
     // icon
-    property url source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
+    property url source: "qrc:/ComponentLibraryAssets/icons/autorenew.svg"
     property int sourceSize: UtilsNumber.alignTo(height * 0.5, 2)
     property int sourceRotation: 0
 
@@ -91,7 +91,7 @@ T.Control {
             rotation: control.sourceRotation
 
                 opacity: 1
-                Behavior on opacity { OpacityAnimator { duration: Theme.animationMediumSpeed } }
+                Behavior on opacity { OpacityAnimator { duration: Theme.animationSpeedMedium } }
 
                 SequentialAnimation on opacity {
                     running: (control.animationRunning &&

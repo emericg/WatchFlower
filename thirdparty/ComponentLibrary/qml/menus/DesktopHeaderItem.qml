@@ -44,7 +44,7 @@ T.Button {
             if (control.hovered) return 0.5
             return 0
         }
-        Behavior on opacity { OpacityAnimator { duration: Theme.animationMediumSpeed } }
+        Behavior on opacity { OpacityAnimator { duration: Theme.animationSpeedMedium } }
 
         RippleThemed {
             anchors.fill: parent

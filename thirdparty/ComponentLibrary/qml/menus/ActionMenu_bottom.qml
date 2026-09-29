@@ -55,8 +55,8 @@ T.Popup {
 
     ////////////////
 
-    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: Theme.animationMediumSpeed; } }
-    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.66; duration: Theme.animationMediumSpeed; } }
+    enter: Transition { NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; duration: Theme.animationSpeedMedium; } }
+    exit: Transition { NumberAnimation { property: "opacity"; from: 1.0; to: 0.66; duration: Theme.animationSpeedMedium; } }
 
     ////////////////
 
@@ -78,7 +78,7 @@ T.Popup {
         anchors.bottom: parent.bottom
 
         height: actionMenu.opening ? actionMenu.actualHeight : 0
-        Behavior on height { NumberAnimation { duration: 233 } }
+        Behavior on height { NumberAnimation { duration: Theme.animationSpeedMedium } }
 
         color: Theme.colorComponentBackground
 
