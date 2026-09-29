@@ -215,12 +215,20 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "bk";
             } else if (device->getName() == "Qingping Temp RH Barometer") {
                 return "bl";
+            } else if (device->getName() == "Aranet2") {
+                return "bm";
+            } else if (device->getName().startsWith("Aranet Radon")) {
+                return "bn";
             } else if (device->getName() == "ATC") {
                 return "bz";
             } else if (device->getName().startsWith("6003#")) { //// air quality
                 return "ca";
             } else if (device->getName() == "CGDN1") {
                 return "cb";
+            } else if (device->getName() == "Aranet4") {
+                return "cc";
+            } else if (device->getName() == "Aranet Radiation") {
+                return "cy";
             } else if (device->getName() == "JQJCY01YM") {
                 return "cd";
             } else if (device->getName() == "AirQualityMonitor") {

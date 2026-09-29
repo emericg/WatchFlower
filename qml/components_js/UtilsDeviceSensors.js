@@ -23,11 +23,15 @@ function isDeviceSupported(deviceName) {
         deviceName === "Qingping Alarm Clock" || deviceName === "Qingping Temp RH Barometer" ||
         deviceName === "Qingping Air Monitor Lite" ||
         deviceName === "WP6003" || deviceName === "JQJCY01YM" || deviceName === "AirQualityMonitor" ||
+        deviceName === "Aranet Radiation" ||
+        deviceName === "Aranet Radon" || deviceName === "Aranet Radon+" ||
         deviceName === "GeigerCounter")
         return true
 
     if (deviceName.startsWith("Flower power") || deviceName.startsWith("Parrot pot") ||
-        deviceName.startsWith("6003#"))
+        deviceName.startsWith("6003#") ||
+        deviceName.startsWith("Aranet2") || deviceName.startsWith("Aranet4") ||
+        deviceName.startsWith("Aranet\u2622") || deviceName.startsWith("AranetRn"))
         return true
 
     return false
@@ -60,6 +64,7 @@ function getDeviceImage(deviceName) {
     if (deviceName === "WP6003") return "qrc:/devices/wp6003.svg"
     if (deviceName === "JQJCY01YM") return "qrc:/devices/jqjcy01ym.svg"
     if (deviceName === "Qingping Air Monitor Lite") return "qrc:/devices/cgdn1.svg"
+    if (deviceName === "Aranet4") return "qrc:/devices/aranet4.svg"
 
     return ""
 }
@@ -91,7 +96,9 @@ function getDeviceIcon(device, devicePlanted) {
             src = "qrc:/IconLibrary/material-symbols/crop_16_9.svg"
         } else if (deviceName === "LYWSD03MMC" ||
                    deviceName === "MHO-C401" ||
-                   deviceName === "XMWSDJO4MMC") {
+                   deviceName === "XMWSDJO4MMC" ||
+                   deviceName === "Aranet2" ||
+                   deviceName.startsWith("Aranet Radon")) {
             src = "qrc:/IconLibrary/material-symbols/crop_square.svg"
         } else if (deviceName === "Qingping Alarm Clock" ||
                    deviceName === "Qingping Temp RH Barometer") {
@@ -100,8 +107,12 @@ function getDeviceIcon(device, devicePlanted) {
             src = "qrc:/IconLibrary/material-symbols/hardware/settings_remote.svg"
         }
     } else if (device.isEnvironmentalSensor) {
-        if (deviceName === "GeigerCounter") {
+        if (deviceName === "GeigerCounter" || deviceName === "Aranet Radiation") {
             src = "qrc:/assets/gfx/icons/nuclear_icon.svg"
+        } else if (deviceName === "Aranet4" ||
+                   deviceName === "Qingping Air Monitor Lite" ||
+                   deviceName === "JQJCY01YM") {
+            src = "qrc:/IconLibrary/material-symbols/crop_square.svg"
         } else {
             src = "qrc:/IconLibrary/material-symbols/hardware/settings_remote.svg"
         }

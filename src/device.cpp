@@ -76,6 +76,11 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
         else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
+        else if (m_deviceName.startsWith("Aranet2")) m_deviceName = "Aranet2"; // ex: Aranet2 278F8
+        else if (m_deviceName.startsWith("Aranet4")) m_deviceName = "Aranet4"; // ex: Aranet4 07C8B
+        else if (m_deviceName.startsWith(QStringLiteral("Aranet\u2622"))) m_deviceName = "Aranet Radiation"; // radioactive sign, ex: "Aranet[U+2622] 27DB3"
+        else if (m_deviceName.startsWith("AranetRn+")) m_deviceName = "Aranet Radon+"; // ex: AranetRn+ 298C9
+        else if (m_deviceName.startsWith("AranetRn")) m_deviceName = "Aranet Radon"; // ex: AranetRn1 298C9
         else if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
             m_deviceAddressMAC = m_deviceName.last(12);
             for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
@@ -129,6 +134,11 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
         if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
         else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
         else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
+        else if (m_deviceName.startsWith("Aranet2")) m_deviceName = "Aranet2"; // ex: Aranet2 278F8
+        else if (m_deviceName.startsWith("Aranet4")) m_deviceName = "Aranet4"; // ex: Aranet4 07C8B
+        else if (m_deviceName.startsWith(QStringLiteral("Aranet\u2622"))) m_deviceName = "Aranet Radiation"; // radioactive sign, ex: "Aranet[U+2622] 27DB3"
+        else if (m_deviceName.startsWith("AranetRn+")) m_deviceName = "Aranet Radon+"; // ex: AranetRn+ 298C9
+        else if (m_deviceName.startsWith("AranetRn")) m_deviceName = "Aranet Radon"; // ex: AranetRn1 298C9
         else if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
             m_deviceAddressMAC = m_deviceName.last(12);
             for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');

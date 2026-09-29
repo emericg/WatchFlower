@@ -39,6 +39,10 @@
 #include "devices/device_hygrotemp_square.h"
 #include "devices/device_hygrotemp_lywsdcgq.h"
 #include "devices/device_thermobeacon.h"
+#include "devices/device_aranet2.h"
+#include "devices/device_aranet4.h"
+#include "devices/device_aranet_radiation.h"
+#include "devices/device_aranet_radon.h"
 #include "devices/device_cgdn1.h"
 #include "devices/device_jqjcy01ym.h"
 #include "devices/device_wp6003.h"
@@ -180,9 +184,17 @@ DeviceManager::DeviceManager(bool daemon)
                 d = new DeviceHygrotempCGP1W(deviceAddr, deviceName, this);
             else if (deviceName == "ATC")
                 d = new DeviceHygrotempATC(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Aranet2"))
+                d = new DeviceAranet2(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Aranet Radon"))
+                d = new DeviceAranetRadon(deviceAddr, deviceName, this);
 
             else if (deviceName.startsWith("WP6003"))
                 d = new DeviceWP6003(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Aranet4"))
+                d = new DeviceAranet4(deviceAddr, deviceName, this);
+            else if (deviceName == "Aranet Radiation")
+                d = new DeviceAranetRadiation(deviceAddr, deviceName, this);
             else if (deviceName == "Qingping Air Monitor Lite")
                 d = new DeviceCGDN1(deviceAddr, deviceName, this);
             else if (deviceName == "JQJCY01YM")
@@ -1853,7 +1865,11 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         info.name() == "Qingping Alarm Clock" ||
         info.name() == "Qingping Air Monitor Lite" ||
         info.name().startsWith("ATC_") ||
+        info.name().startsWith("Aranet2") ||
+        info.name().startsWith("AranetRn") ||
         info.name().startsWith("6003#") ||
+        info.name().startsWith("Aranet4") ||
+        info.name().startsWith(QStringLiteral("Aranet\u2622")) || // radioactive sign
         info.name() == "JQJCY01YM" ||
         info.name() == "AirQualityMonitor" ||
         info.name() == "GeigerCounter")
@@ -1893,9 +1909,17 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             d = new DeviceHygrotempCGP1W(info, this);
         else if (info.name().startsWith("ATC_"))
             d = new DeviceHygrotempATC(info, this);
+        else if (info.name().startsWith("Aranet2"))
+            d = new DeviceAranet2(info, this);
+        else if (info.name().startsWith("AranetRn"))
+            d = new DeviceAranetRadon(info, this);
 
         else if (info.name().startsWith("6003#"))
             d = new DeviceWP6003(info, this);
+        else if (info.name().startsWith("Aranet4"))
+            d = new DeviceAranet4(info, this);
+        else if (info.name().startsWith(QStringLiteral("Aranet\u2622")))
+            d = new DeviceAranetRadiation(info, this);
         else if (info.name() == "Qingping Air Monitor Lite")
             d = new DeviceCGDN1(info, this);
         else if (info.name() == "JQJCY01YM")
