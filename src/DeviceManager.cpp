@@ -111,6 +111,9 @@ DeviceManager::DeviceManager(bool daemon)
         if (sm->getOrderBy() == "waterlevel") orderby_waterlevel();
         if (sm->getOrderBy() == "model") orderby_model();
         if (sm->getOrderBy() == "insideoutside") orderby_insideoutside();
+#if !defined(Q_OS_MACOS) && !defined(Q_OS_IOS)
+        if (sm->getOrderBy() == "address") orderby_address();
+#endif
     }
 
     // BLE init
@@ -2129,6 +2132,11 @@ void DeviceManager::orderby_model()
 void DeviceManager::orderby_name()
 {
     orderby(DeviceModel::DeviceNameRole, Qt::AscendingOrder);
+}
+
+void DeviceManager::orderby_address()
+{
+    orderby(DeviceModel::DeviceAddressRole, Qt::AscendingOrder);
 }
 
 void DeviceManager::orderby_location()

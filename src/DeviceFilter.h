@@ -79,6 +79,8 @@ public:
         // hw device
         DeviceModelRole = Qt::UserRole+1,
         DeviceNameRole,
+        DeviceManufacturerRole,
+        DeviceAddressRole,
         DeviceRssiRole,
         // user set
         ManualIndexRole,

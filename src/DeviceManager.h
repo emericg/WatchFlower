@@ -307,6 +307,7 @@ public:
     Q_INVOKABLE void orderby_manual();
     Q_INVOKABLE void orderby_model();
     Q_INVOKABLE void orderby_name();
+    Q_INVOKABLE void orderby_address();
     Q_INVOKABLE void orderby_location();
     Q_INVOKABLE void orderby_waterlevel();
     Q_INVOKABLE void orderby_plant();

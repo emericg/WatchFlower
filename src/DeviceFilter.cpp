@@ -22,6 +22,7 @@
 #include "DeviceFilter.h"
 #include "device.h"
 #include "device_sensor.h"
+#include "device_plantsensor.h"
 
 #include <cstdlib>
 #include <cmath>
@@ -59,16 +60,9 @@ bool DeviceFilter::filterAcceptsRow(int sourceRow, const QModelIndex &sourcePare
     Q_UNUSED(sourceParent)
 
     bool accepted = true;
-/*
-    QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 
-    if (!m_acceptedTypes.empty())
-    {
-        int type = sourceModel()->data(index, ShotModel::DeviceModelRole).toInt();
-        if (!m_acceptedTypes.contains(type))
-            accepted = false;
-    }
-*/
+    // we do not filter
+
     return accepted;
 }
 
@@ -124,8 +118,13 @@ QHash <int, QByteArray> DeviceModel::roleNames() const
 {
     QHash <int, QByteArray> roles;
 
+    //roles[Default] = "default";
+
     roles[DeviceModelRole] = "model";
     roles[DeviceNameRole] = "name";
+
+    roles[DeviceManufacturerRole] = "manufacturer";
+    roles[DeviceAddressRole] = "address";
     roles[DeviceRssiRole] = "rssi";
 
     roles[AssociatedLocationRole] = "location";
@@ -235,13 +234,21 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "ce";
             } else if (device->getName() == "GeigerCounter") {
                 return "cz";
-            } else {
+            } else { /// or else
                 return "zzz";
             }
         }
         if (role == DeviceNameRole)
         {
             return device->getName();
+        }
+        if (role == DeviceManufacturerRole)
+        {
+            return device->getManufacturer();
+        }
+        if (role == DeviceAddressRole)
+        {
+            return device->getAddressMAC();
         }
         if (role == DeviceRssiRole)
         {
@@ -250,36 +257,40 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
         // user set
         if (role == AssociatedLocationRole)
         {
-            if (device->getLocationName().isEmpty())
-                return "zzz";
-            else
+            if (!device->getLocationName().isEmpty())
                 return device->getLocationName().toLower();
+            else
+                return "zzz";
         }
         if (role == AssociatedNameRole)
         {
-            if (device->getAssociatedName().isEmpty())
-                return "zzz";
-            else
+            if (!device->getAssociatedName().isEmpty())
                 return device->getAssociatedName();
+            else
+                return "zzz";
         }
         // plant sensors
         if (role == PlantNameRole)
         {
-            if (device->getAssociatedName().isEmpty())
-                return "zzz";
-            else
+            DevicePlantSensor *plantsensor = dynamic_cast<DevicePlantSensor *>(device);
+            if (plantsensor && !plantsensor->getPlantNameDisplay().isEmpty()) {
+                return plantsensor->getPlantNameDisplay();
+            }
+            if (!device->getAssociatedName().isEmpty()) {
                 return device->getAssociatedName();
+            }
+            return "zzz";
         }
         if (role == SoilMoistureRole)
         {
             DeviceSensor *sensor = dynamic_cast<DeviceSensor *>(device);
-            if (sensor && sensor->hasSoilMoistureSensor())
+            if (sensor && sensor->hasSoilMoistureSensor()) {
                 if (sensor->getHumidity() > -1)
                     return sensor->getHumidity();
                 else
                     return 99;
-            else
-                return 199;
+            }
+            return 199;
         }
         if (role == InsideOutsideRole)
         {

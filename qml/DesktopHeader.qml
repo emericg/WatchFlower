@@ -518,6 +518,8 @@ Rectangle {
                     txt += qsTr("sensor model")
                 } else if (SettingsManager.orderBy === "location") {
                     txt += qsTr("location")
+                } else if (SettingsManager.orderBy === "address") {
+                    txt += qsTr("device address")
                 }
                 buttonSort.tooltipText = txt
             }
@@ -529,8 +531,11 @@ Rectangle {
                 function onAppLanguageChanged() { buttonSort.setText() }
             }
 
+            readonly property int sortmodeMax: (Qt.platform.os === "osx" || Qt.platform.os === "ios") ? 3 : 4
             property int sortmode: {
-                if (SettingsManager.orderBy === "waterlevel") {
+                if (SettingsManager.orderBy === "address") {
+                    return 4
+                } else if (SettingsManager.orderBy === "waterlevel") {
                     return 3
                 } else if (SettingsManager.orderBy === "plant") {
                     return 2
@@ -543,7 +548,7 @@ Rectangle {
 
             onClicked: {
                 sortmode++
-                if (sortmode > 3) sortmode = 0
+                if (sortmode > sortmodeMax) sortmode = 0
 
                 if (sortmode === 0) {
                     SettingsManager.orderBy = "location"
@@ -557,6 +562,9 @@ Rectangle {
                 } else if (sortmode === 3) {
                     SettingsManager.orderBy = "waterlevel"
                     deviceManager.orderby_waterlevel()
+                } else if (sortmode === 4) {
+                    SettingsManager.orderBy = "address"
+                    deviceManager.orderby_address()
                 }
             }
         }
