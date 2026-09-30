@@ -58,7 +58,7 @@ Item {
         anchors.rightMargin: halfmargin
         anchors.bottomMargin: listWidget ? 1 : halfmargin
 /*
-        ScrollBar.vertical: ScrollBar {
+        ScrollBar.vertical: ScrollBarThemed {
             anchors.right: parent.right
             anchors.rightMargin: -halfmargin
             policy: ScrollBar.AsNeeded

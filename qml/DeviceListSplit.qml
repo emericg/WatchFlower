@@ -56,7 +56,7 @@ Item {
         contentWidth: -1
         contentHeight: devicesView.height
 /*
-        ScrollBar.vertical: ScrollBar {
+        ScrollBar.vertical: ScrollBarThemed {
             anchors.right: parent.right
             anchors.rightMargin: -halfmargin
             policy: ScrollBar.AsNeeded

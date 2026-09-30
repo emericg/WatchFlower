@@ -139,8 +139,11 @@ T.Button {
     ////////////////
 
     Loader {
+        id: tooltipLoader
         anchors.fill: control
-        active: control.tooltipText !== "" && control.hovered
+
+        property bool tooltipShown: false
+        active: control.tooltipText !== "" && (control.hovered || tooltipLoader.tooltipShown)
 
         sourceComponent: ToolTipFlat {
             height: parent.height
@@ -149,6 +152,9 @@ T.Button {
             textColor: control.colorIcon
             tooltipPosition: control.tooltipPosition
             backgroundColor: control.colorBackground
+
+            onAboutToShow: tooltipLoader.tooltipShown = true
+            onClosed: tooltipLoader.tooltipShown = false
         }
     }
 

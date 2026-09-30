@@ -560,6 +560,7 @@ Loader {
                     source: "qrc:/IconLibrary/material-symbols/android.svg"
 
                     visible: (Qt.platform.os === "android")
+                    headerPosition: contentColumn.padText
 
                     ButtonWireframe {
                         anchors.right: parent.right
@@ -882,6 +883,7 @@ Loader {
                 ListTitle {
                     text: qsTr("Bluetooth")
                     source: "qrc:/IconLibrary/material-symbols/bluetooth.svg"
+                    headerPosition: contentColumn.padText
                 }
 
                 ////////
@@ -1112,6 +1114,7 @@ Loader {
                 ListTitle {
                     text: qsTr("Plant sensors")
                     source: "qrc:/IconLibrary/material-symbols/sensors/local_florist.svg"
+                    headerPosition: contentColumn.padText
                 }
 
                 ////////////////
@@ -1307,6 +1310,7 @@ Loader {
                 ListTitle {
                     text: qsTr("Thermometers")
                     source: "qrc:/assets/gfx/icons/thermometer_big-24px.svg"
+                    headerPosition: contentColumn.padText
                 }
 
                 ////////////////
@@ -1424,6 +1428,7 @@ Loader {
                 ListTitle {
                     text: qsTr("My location")
                     source: "qrc:/IconLibrary/material-symbols/language.svg"
+                    headerPosition: contentColumn.padText
                 }
 
                 ////////////////
@@ -1753,6 +1758,7 @@ Loader {
                     text: qsTr("Data archiving")
                     source: "qrc:/IconLibrary/material-symbols/archive.svg"
                     visible: deviceManager.hasDevices
+                    headerPosition: contentColumn.padText
                 }
 
                 ////////////////

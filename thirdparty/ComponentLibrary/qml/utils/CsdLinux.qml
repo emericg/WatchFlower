@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Window
 
 import ComponentLibrary
@@ -18,7 +17,7 @@ Loader {
     height: active ? 26 : 0
 
     property bool appThemeCSD: false
-    property ApplicationWindow windowInstance: null
+    property Window windowInstance: null
 
     active: (windowInstance && appThemeCSD && Qt.platform.os !== "windows" && Qt.platform.os !== "osx")
     asynchronous: true
@@ -71,7 +70,7 @@ Loader {
 
                 hoverEnabled: true
                 onClicked: {
-                    if (csdLinuxLoader.windowInstance.visibility === ApplicationWindow.Maximized)
+                    if (csdLinuxLoader.windowInstance.visibility === Window.Maximized)
                         csdLinuxLoader.windowInstance.showNormal()
                     else
                         csdLinuxLoader.windowInstance.showMaximized()

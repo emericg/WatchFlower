@@ -203,7 +203,7 @@ Loader {
                 bottomMargin: 0
                 spacing: 0
 
-                ScrollBar.vertical: ScrollBar {
+                ScrollBar.vertical: ScrollBarThemed {
                     visible: true
                     anchors.right: parent.right
                     anchors.rightMargin: 0

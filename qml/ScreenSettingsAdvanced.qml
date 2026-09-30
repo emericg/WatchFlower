@@ -375,17 +375,16 @@ Loader {
 
                         visible: true
 
-                        ScrollView {
+                        Flickable {
                             anchors.fill: parent
-                            ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-                            ScrollBar.vertical.policy: ScrollBar.AsNeeded
+                            clip: true
 
-                            TextAreaThemed {
+                            contentWidth: -1
+                            boundsBehavior: Flickable.StopAtBounds
+                            ScrollBar.vertical: ScrollBarThemed { policy: ScrollBar.AsNeeded }
+
+                            TextArea.flickable: TextAreaThemed {
                                 id: logArea
-
-                                anchors.left: parent.left
-                                anchors.right: parent.right
-                                height: 640
 
                                 readOnly: true
                                 selectByMouse: false

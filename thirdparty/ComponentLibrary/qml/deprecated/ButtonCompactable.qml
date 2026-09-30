@@ -184,8 +184,11 @@ T.Button {
     ////////////////
 
     Loader {
+        id: tooltipLoader
         anchors.fill: control
-        active: control.tooltipText && control.hovered && control.compactInternal
+
+        property bool tooltipShown: false
+        active: control.tooltipText && (control.hovered || tooltipLoader.tooltipShown) && control.compactInternal
 
         sourceComponent: ToolTipFlat {
             visible: mouseArea.containsMouse
@@ -193,6 +196,9 @@ T.Button {
             textColor: control.textColor
             tooltipPosition: control.tooltipPosition
             backgroundColor: control.backgroundColor
+
+            onAboutToShow: tooltipLoader.tooltipShown = true
+            onClosed: tooltipLoader.tooltipShown = false
         }
     }
 
