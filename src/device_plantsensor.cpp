@@ -34,8 +34,8 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QDateTimeAxis>
+#include <QLineSeries>
+#include <QDateTimeAxis>
 
 /* ************************************************************************** */
 
@@ -538,7 +538,7 @@ void DevicePlantSensor::getChartData_plantAIO(const int maxDays, QDateTimeAxis *
             return;
         }
 
-        axis->setFormat("dd MMM");
+        axis->setLabelFormat("dd MMM");
         axis->setMax(QDateTime::currentDateTime());
         bool minSet = false;
         bool minmaxChanged = false;

@@ -29,8 +29,8 @@
 #include <QObject>
 #include <QString>
 #include <QByteArray>
-#include <QtCharts/QLineSeries>
-#include <QtCharts/QDateTimeAxis>
+#include <QLineSeries>
+#include <QDateTimeAxis>
 
 /* ************************************************************************** */
 

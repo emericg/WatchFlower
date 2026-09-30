@@ -60,7 +60,7 @@ jobs:
           host: 'all_os'
           target: 'android'
           arch: 'android_arm64_v8a'
-          modules: qtconnectivity qtcharts qtpositioning
+          modules: qtconnectivity qtpositioning qtgraphs qtquick3d qtshadertools
           extra: '--autodesktop'
 
       # Install dependencies (from package manager)
@@ -114,7 +114,7 @@ jobs:
           version: ${{ env.QT_VERSION }}
           host: 'mac'
           target: 'ios'
-          modules: qtconnectivity qtcharts qtpositioning
+          modules: qtconnectivity qtpositioning qtgraphs qtquick3d qtshadertools
           extra: '--autodesktop'
 
       # Install dependencies (from package manager)

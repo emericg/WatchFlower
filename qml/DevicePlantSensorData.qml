@@ -35,7 +35,7 @@ Item {
 
     function loadGraph() {
         if (graphLoader.status !== Loader.Ready) {
-            graphLoader.source = "charts/ChartPlantDataAio.qml"
+            graphLoader.source = "charts/ChartPlantDataAio_qtgraphs.qml"
         } else {
             dataChart.loadGraph()
             dataChart.updateGraph()

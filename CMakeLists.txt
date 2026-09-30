@@ -34,8 +34,8 @@ message(STATUS "[PROJECT] CMAKE_CURRENT_SOURCE_DIR  = ${CMAKE_CURRENT_SOURCE_DIR
 
 ################################################################################
 
-find_package(Qt6 REQUIRED COMPONENTS Core Gui Svg Qml Quick QuickControls2)
-find_package(Qt6 REQUIRED COMPONENTS Sql Bluetooth Network Positioning Charts Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Svg Gui Widgets Qml Quick QuickControls2 Graphs)
+find_package(Qt6 REQUIRED COMPONENTS Sql Bluetooth Network Positioning)
 find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 qt_standard_project_setup(REQUIRES 6.8
@@ -189,7 +189,7 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/popups/PopupDeleteData.qml
         qml/popups/PopupDeleteDevice.qml
         qml/charts/ChartHistory.qml
-        qml/charts/ChartPlantDataAio.qml
+        qml/charts/ChartPlantDataAio_qtgraphs.qml
         qml/charts/ChartThermometerMinMax.qml
         qml/charts/ChartThermometerMinMaxBar.qml
         qml/charts/ChartEnvironmentalVoc.qml
@@ -261,7 +261,11 @@ add_other_files(${PROJECT_NAME}
 ################################################################################
 
 # SingleApplication
-set(QAPPLICATION_CLASS QApplication)
+if(IOS OR ANDROID)
+    set(QAPPLICATION_CLASS QGuiApplication)
+else()
+    set(QAPPLICATION_CLASS QApplication)
+endif()
 add_subdirectory(thirdparty/SingleApplication)
 target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication)
 
@@ -298,11 +302,11 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
+    Qt6::Graphs
     Qt6::Sql
     Qt6::Network
     Qt6::Bluetooth
     Qt6::Positioning
-    Qt6::Charts
 )
 
 if(NOT IOS AND NOT ANDROID)

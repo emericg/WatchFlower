@@ -241,7 +241,7 @@ Loader {
         function loadGraph() {
             //console.log("DeviceThermometer // loadGraph() >> " + currentDevice)
 
-            var reload = !(SettingsManager.graphThermometer === "lines" && graphLoader.source === "charts/ChartPlantDataAio.qml") ||
+            var reload = !(SettingsManager.graphThermometer === "lines" && graphLoader.source === "charts/ChartPlantDataAio_qtgraphs.qml") ||
                          !(SettingsManager.graphThermometer === "minmax" && graphLoader.source === "charts/ChartThermometerMinMax.qml")
 
             if (reload) {
@@ -251,7 +251,7 @@ Loader {
 
             if (graphLoader.status !== Loader.Ready) {
                 if (SettingsManager.graphThermometer === "lines") {
-                    graphLoader.source = "charts/ChartPlantDataAio.qml"
+                    graphLoader.source = "charts/ChartPlantDataAio_qtgraphs.qml"
                 } else {
                     graphLoader.source = "charts/ChartThermometerMinMax.qml"
                 }

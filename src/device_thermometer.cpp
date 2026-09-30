@@ -270,7 +270,7 @@ void DeviceThermometer::getChartData_thermometerAIO(int maxDays, QDateTimeAxis *
             return;
         }
 
-        axis->setFormat("dd MMM");
+        axis->setLabelFormat("dd MMM");
         axis->setMax(QDateTime::currentDateTime());
         bool minSet = false;
         bool minmaxChanged = false;
