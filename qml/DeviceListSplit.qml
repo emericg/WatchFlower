@@ -43,9 +43,7 @@ Item {
         selectionList = []
         selectionCount = 0
 
-        for (var i = 0; i < DeviceManager.deviceCount; i++) {
-            DeviceManager.getDeviceByProxyIndex(i, 0).selected = false
-        }
+        DeviceManager.clearDeviceSelection()
     }
 
     ////////////////////////////////////////////////////////////////////////////
