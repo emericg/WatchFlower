@@ -41,9 +41,12 @@ Item {
         selectionCount = Qt.binding(function() { return loaderDeviceList.item.selectionCount })
     }
 
+    readonly property string noMatchText: qsTr("No sensors match your search")
+
     Connections {
         target: DeviceManager
         function onBluetoothChanged() { checkBluetoothStatus() }
+        function onFilterChanged() { if (isSelected()) exitSelectionMode() }
     }
 
     function checkBluetoothStatus() {
@@ -127,6 +130,14 @@ Item {
 
         ActionbarBluetooth {
             id: actionbarBluetoothStatus
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
+
+        ////////
+
+        ActionbarFilter {
+            id: actionbarFilter
             anchors.left: parent.left
             anchors.right: parent.right
         }
