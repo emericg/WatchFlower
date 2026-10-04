@@ -111,6 +111,28 @@ Item {
 
         ////////
 
+        header: Item {
+            width: devicesView.width
+            height: (devicesView.count === 0 && deviceManager.filterActive) ? noMatchMessage.height : 0
+            visible: (height > 0)
+
+            Text {
+                id: noMatchMessage
+                width: parent.width
+
+                topPadding: Theme.componentMargin
+                bottomPadding: Theme.componentMargin
+                text: screenDeviceList.noMatchText
+                textFormat: Text.PlainText
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeContent
+                color: Theme.colorSubText
+            }
+        }
+
+        ////////
+
         footer: Flow {
             id: toolsView
             anchors.left: parent.left

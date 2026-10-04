@@ -115,9 +115,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: deviceManager.devicePlantCount
+                visible: plantRepeater.count
 
-                text: qsTr("Plant sensor(s)", "", deviceManager.devicePlantCount)
+                text: qsTr("Plant sensor(s)", "", plantRepeater.count)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -125,8 +125,10 @@ Item {
                 id: devicesPlantView
                 anchors.left: parent.left
                 anchors.right: parent.right
+                visible: plantRepeater.count
 
                 Repeater {
+                    id: plantRepeater
                     model: deviceManager.devicesPlantList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
@@ -141,9 +143,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: deviceManager.deviceThermoCount
+                visible: thermoRepeater.count
 
-                text: qsTr("Thermometer(s)", "", deviceManager.deviceThermoCount)
+                text: qsTr("Thermometer(s)", "", thermoRepeater.count)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -151,8 +153,10 @@ Item {
                 id: devicesThermoView
                 anchors.left: parent.left
                 anchors.right: parent.right
+                visible: thermoRepeater.count
 
                 Repeater {
+                    id: thermoRepeater
                     model: deviceManager.devicesThermoList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
@@ -167,9 +171,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: deviceManager.deviceEnvCount
+                visible: envRepeater.count
 
-                text: qsTr("Environmental sensor(s)", "", deviceManager.deviceEnvCount)
+                text: qsTr("Environmental sensor(s)", "", envRepeater.count)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -177,8 +181,10 @@ Item {
                 id: devicesEnvView
                 anchors.left: parent.left
                 anchors.right: parent.right
+                visible: envRepeater.count
 
                 Repeater {
+                    id: envRepeater
                     model: deviceManager.devicesEnvList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
@@ -186,6 +192,23 @@ Item {
                         listMode: devicesView.listWidget
                     }
                 }
+            }
+
+            ////////
+
+            Text {
+                width: devicesView.width
+                visible: (plantRepeater.count + thermoRepeater.count + envRepeater.count === 0 &&
+                          deviceManager.filterActive)
+
+                topPadding: Theme.componentMargin
+                bottomPadding: Theme.componentMargin
+                text: screenDeviceList.noMatchText
+                textFormat: Text.PlainText
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeContent
+                color: Theme.colorSubText
             }
 
             ////////
