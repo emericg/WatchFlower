@@ -89,28 +89,21 @@ Item {
     }
 
     function updateSelectedDevice() {
-        for (var i = 0; i < deviceManager.deviceCount; i++) {
-            if (deviceManager.getDeviceByProxyIndex(i).selected) {
-                deviceManager.updateDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
-            }
+        var devicesAddr = deviceManager.getSelectedDeviceAddresses()
+        for (var i = 0; i < devicesAddr.length; i++) {
+            deviceManager.updateDevice(devicesAddr[i])
         }
         exitSelectionMode()
     }
     function syncSelectedDevice() {
-        for (var i = 0; i < deviceManager.deviceCount; i++) {
-            if (deviceManager.getDeviceByProxyIndex(i).selected) {
-                deviceManager.syncDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
-            }
+        var devicesAddr = deviceManager.getSelectedDeviceAddresses()
+        for (var i = 0; i < devicesAddr.length; i++) {
+            deviceManager.syncDevice(devicesAddr[i])
         }
         exitSelectionMode()
     }
     function removeSelectedDevice() {
-        var devicesAddr = []
-        for (var i = 0; i < deviceManager.deviceCount; i++) {
-            if (deviceManager.getDeviceByProxyIndex(i).selected) {
-                devicesAddr.push(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
-            }
-        }
+        var devicesAddr = deviceManager.getSelectedDeviceAddresses()
         for (var count = 0; count < devicesAddr.length; count++) {
             deviceManager.removeDevice(devicesAddr[count])
         }

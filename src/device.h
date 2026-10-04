@@ -126,6 +126,8 @@ class Device: public QObject
 
     Q_PROPERTY(bool selected READ isSelected WRITE setSelected NOTIFY selectionUpdated)
     bool selected = false;
+
+public:
     bool isSelected() const { return selected; }
     void setSelected(bool value) { selected = value; Q_EMIT selectionUpdated(); }
 

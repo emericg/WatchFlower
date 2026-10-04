@@ -288,6 +288,9 @@ public:
     Q_INVOKABLE void disconnectDevices() const;
     Q_INVOKABLE void disconnectAndExit() const;
 
+    Q_INVOKABLE void clearDeviceSelection();
+    Q_INVOKABLE QStringList getSelectedDeviceAddresses() const;
+
     int getDeviceCount() const { return m_devices_model->getDeviceCount(); }
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
     DeviceFilter *getDevicesNearby() const { return m_devices_nearby_filter; }

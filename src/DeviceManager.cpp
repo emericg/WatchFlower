@@ -286,6 +286,28 @@ void DeviceManager::disconnectAndExit() const
     }
 }
 
+void DeviceManager::clearDeviceSelection()
+{
+    for (auto d: std::as_const(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        if (dd && dd->isSelected()) dd->setSelected(false);
+    }
+}
+
+QStringList DeviceManager::getSelectedDeviceAddresses() const
+{
+    QStringList addresses;
+
+    for (auto d: std::as_const(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        if (dd && dd->isSelected()) addresses += dd->getAddress();
+    }
+
+    return addresses;
+}
+
 /* ************************************************************************** */
 /* ************************************************************************** */
 
@@ -1352,10 +1374,9 @@ void DeviceManager::refreshDevices_check()
         listenDevices_start();
 
         // Start active refresh (if needed)
-        for (int i = 0; i < m_devices_model->rowCount(); i++)
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
-            QModelIndex e = m_devices_filter->index(i, 0);
-            Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+            Device *dd = qobject_cast<Device*>(d);
 
             if (dd)
             {
@@ -1568,10 +1589,9 @@ void DeviceManager::syncDevices_check()
         m_devices_syncing.clear();
 
         // Start sync (if necessary)
-        for (int i = 0; i < m_devices_model->rowCount(); i++)
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
-            QModelIndex e = m_devices_filter->index(i, 0);
-            Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+            Device *dd = qobject_cast<Device*>(d);
 
             if (dd)
             {
