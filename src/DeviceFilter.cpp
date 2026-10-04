@@ -51,25 +51,75 @@ void DeviceFilter::invalidatefilter()
 #endif
 }
 
+void DeviceFilter::setFilters(const QString &text, const QString &location, bool noLocationOnly)
+{
+    const QString t = foldForSearch(text.trimmed());
+    const QString l = foldForSearch(location.trimmed());
+
+    if (t == m_filterText && l == m_filterLocation && noLocationOnly == m_filterNoLocation) return;
+
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    beginFilterChange();
+    m_filterText = t;
+    m_filterLocation = l;
+    m_filterNoLocation = noLocationOnly;
+    endFilterChange(Direction::Rows);
+#else
+    m_filterText = t;
+    m_filterLocation = l;
+    m_filterNoLocation = noLocationOnly;
+    invalidateFilter();
+#endif
+}
+
+/*!
+ * \brief Make a string comparable regardless of case and diacritics ("Bucătărie" -> "bucatarie").
+ */
+QString DeviceFilter::foldForSearch(const QString &str)
+{
+    const QString decomposed = str.normalized(QString::NormalizationForm_KD);
+
+    QString folded;
+    folded.reserve(decomposed.size());
+    for (const QChar c: decomposed)
+    {
+        if (c.category() != QChar::Mark_NonSpacing) folded += c;
+    }
+
+    return folded.toCaseFolded();
+}
+
 /* ************************************************************************** */
 
 bool DeviceFilter::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const
 {
-    Q_UNUSED(sourceRow)
-    Q_UNUSED(sourceParent)
+    if (m_filterText.isEmpty() && m_filterLocation.isEmpty() && !m_filterNoLocation) return true;
 
-    bool accepted = true;
-/*
     QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+    Device *device = qvariant_cast<Device *>(sourceModel()->data(index, DeviceModel::PointerRole));
+    if (!device) return true;
 
-    if (!m_acceptedTypes.empty())
+    const QString location = foldForSearch(device->getLocationName().trimmed());
+
+    if (m_filterNoLocation)
     {
-        int type = sourceModel()->data(index, ShotModel::DeviceModelRole).toInt();
-        if (!m_acceptedTypes.contains(type))
-            accepted = false;
+        if (!location.isEmpty()) return false;
     }
-*/
-    return accepted;
+    else if (!m_filterLocation.isEmpty())
+    {
+        if (location != m_filterLocation) return false;
+    }
+
+    if (!m_filterText.isEmpty())
+    {
+        return foldForSearch(device->getAssociatedName()).contains(m_filterText) ||
+               location.contains(m_filterText) ||
+               foldForSearch(device->getName()).contains(m_filterText) ||
+               foldForSearch(device->getModel()).contains(m_filterText) ||
+               foldForSearch(device->getAddress()).contains(m_filterText);
+    }
+
+    return true;
 }
 
 /* ************************************************************************** */
