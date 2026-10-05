@@ -27,6 +27,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QUrl>
 
 class QJSEngine;
 class QQmlEngine;
@@ -61,6 +62,10 @@ class DatabaseManager: public QObject
     bool migrate_v1v2();
     bool migrate_v2v3();
 
+    bool attachBackup(const QString &backupPath);
+    void detachBackup();
+    bool writeBackupInfo(const QString &backupPath);
+
     // Singleton
     static DatabaseManager *instance;
     DatabaseManager();
@@ -75,7 +80,7 @@ public:
 
     Q_INVOKABLE QString getDatabaseDirectory();
     Q_INVOKABLE void resetDatabase();
-    Q_INVOKABLE bool saveDatabase();
+    Q_INVOKABLE QString saveDatabase(const QUrl &fileUrl = QUrl());
     Q_INVOKABLE bool restoreDatabase();
 };
 

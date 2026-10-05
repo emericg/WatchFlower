@@ -21,9 +21,11 @@
 
 #include "DatabaseManager.h"
 #include "SettingsManager.h"
+#include "utils_app.h"
 
 #include <QDir>
 #include <QFile>
+#include <QFileInfo>
 #include <QString>
 #include <QDateTime>
 #include <QStandardPaths>
@@ -79,20 +81,141 @@ QString DatabaseManager::getDatabaseDirectory()
     return QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
 }
 
-bool DatabaseManager::saveDatabase()
+QString DatabaseManager::saveDatabase(const QUrl &fileUrl)
 {
-    // database dir
-    QString internalPath = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-    QDir internalDir(internalPath);
-    if (!internalDir.exists()) return false;
+    if (!m_dbInternalOpen) return QString();
 
-    // save dir
-    QString externalPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/WatchFlower";
-    QDir externalDir(externalPath);
-    if (!externalDir.exists()) externalDir.mkpath(externalPath);
+    QString backupPath;
 
-    return QFile::copy(internalPath + "/data.db",
-                       externalPath + "/watchflower_database_" + QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss")+ ".db");
+    if (fileUrl.isEmpty())
+    {
+        // No destination: create the backup in our cache, for the share sheet (mobile)
+        QString exportPath = QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/export";
+        QDir exportDir(exportPath);
+        if (!exportDir.exists()) exportDir.mkpath(exportPath);
+
+        // Only keep the latest backup around
+        const QStringList oldBackups = exportDir.entryList({"watchflower_backup_*.db"}, QDir::Files);
+        for (const QString &oldBackup: oldBackups) exportDir.remove(oldBackup);
+
+        backupPath = exportPath + "/watchflower_backup_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".db";
+    }
+    else if (fileUrl.isLocalFile())
+    {
+        backupPath = fileUrl.toLocalFile();
+
+        // Never replace the live database itself
+        const QString livePath = QFileInfo(QSqlDatabase::database().databaseName()).canonicalFilePath();
+        if (QFileInfo(backupPath).canonicalFilePath() == livePath)
+        {
+            qWarning() << "DatabaseManager::saveDatabase() cannot overwrite the live database";
+            return QString();
+        }
+    }
+    else
+    {
+        qWarning() << "DatabaseManager::saveDatabase() unsupported destination:" << fileUrl;
+        return QString();
+    }
+
+    // Write a consistent copy of the live database next to the destination, then replace it
+    QString partPath = backupPath + ".part";
+    QFile::remove(partPath);
+
+    bool status = false;
+
+    QSqlQuery vacuum;
+    vacuum.prepare("VACUUM INTO :path");
+    vacuum.bindValue(":path", partPath);
+    if (vacuum.exec())
+    {
+        status = writeBackupInfo(partPath);
+    }
+    else
+    {
+        qWarning() << "> vacuum.exec() ERROR"
+                   << vacuum.lastError().type() << ":" << vacuum.lastError().text();
+    }
+
+    if (status)
+    {
+        QFile::remove(backupPath);
+        status = QFile::rename(partPath, backupPath);
+    }
+
+    if (!status)
+    {
+        QFile::remove(partPath);
+        return QString();
+    }
+
+    return backupPath;
+}
+
+bool DatabaseManager::attachBackup(const QString &backupPath)
+{
+    QSqlQuery attach;
+    attach.prepare("ATTACH DATABASE :path AS backup");
+    attach.bindValue(":path", backupPath);
+    if (!attach.exec())
+    {
+        qWarning() << "> attach.exec() ERROR"
+                   << attach.lastError().type() << ":" << attach.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+void DatabaseManager::detachBackup()
+{
+    // Every query using the attached database must be finished (out of scope) by now
+    QSqlQuery detach;
+    if (!detach.exec("DETACH DATABASE backup"))
+    {
+        qWarning() << "> detach.exec() ERROR"
+                   << detach.lastError().type() << ":" << detach.lastError().text();
+    }
+}
+
+bool DatabaseManager::writeBackupInfo(const QString &backupPath)
+{
+    // Add the backup tables to the new copy only, never to the live database
+    if (!attachBackup(backupPath)) return false;
+
+    bool status = false;
+    {
+        QSqlQuery writeBackup;
+        status = writeBackup.exec("CREATE TABLE backup.backupInfo (createdAt DATETIME, appVersion VARCHAR(16))") &&
+                 writeBackup.exec("CREATE TABLE backup.backupSettings (key VARCHAR(64) PRIMARY KEY, value VARCHAR(255))");
+
+        if (status)
+        {
+            writeBackup.prepare("INSERT INTO backup.backupInfo (createdAt, appVersion) VALUES (:createdAt, :appVersion)");
+            writeBackup.bindValue(":createdAt", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+            writeBackup.bindValue(":appVersion", UtilsApp::appVersion());
+            status = writeBackup.exec();
+        }
+
+        const QVariantMap settings = SettingsManager::getInstance()->getBackupSettings();
+        for (auto it = settings.cbegin(); status && it != settings.cend(); ++it)
+        {
+            writeBackup.prepare("INSERT INTO backup.backupSettings (key, value) VALUES (:key, :value)");
+            writeBackup.bindValue(":key", it.key());
+            writeBackup.bindValue(":value", it.value().toString());
+            status = writeBackup.exec();
+        }
+
+        if (!status)
+        {
+            qWarning() << "> writeBackup.exec() ERROR"
+                       << writeBackup.lastError().type() << ":" << writeBackup.lastError().text();
+        }
+    }
+
+    detachBackup();
+
+    return status;
 }
 
 bool DatabaseManager::restoreDatabase()
