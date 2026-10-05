@@ -218,9 +218,236 @@ bool DatabaseManager::writeBackupInfo(const QString &backupPath)
     return status;
 }
 
-bool DatabaseManager::restoreDatabase()
+QVariantMap DatabaseManager::readBackup(const QUrl &fileUrl)
 {
-    return false;
+    QVariantMap infos;
+    infos.insert("ok", false);
+
+    discardBackup();
+
+    // Work on our own copy: SQLite can't open content:// URLs (Android) directly
+    const QString sourcePath = fileUrl.isLocalFile() ? fileUrl.toLocalFile() : fileUrl.toString();
+    const QString restorePath = getRestorePath();
+    QDir().mkpath(QFileInfo(restorePath).absolutePath());
+
+    if (!m_dbInternalOpen || sourcePath.isEmpty() || !QFile::copy(sourcePath, restorePath))
+    {
+        qWarning() << "DatabaseManager::readBackup() cannot copy" << fileUrl;
+        infos.insert("error", "unreadable");
+        return infos;
+    }
+    QFile::setPermissions(restorePath, QFileDevice::ReadOwner | QFileDevice::WriteOwner);
+
+    QString error = "invalid";
+
+    if (attachBackup(restorePath))
+    {
+        {
+            QSqlQuery readInfos;
+            if (readInfos.exec("PRAGMA backup.quick_check") && readInfos.next() &&
+                readInfos.value(0).toString() == "ok" &&
+                backupTableExists("version") && backupTableExists("devices"))
+            {
+                int dbVersion = 0;
+                if (readInfos.exec("SELECT dbVersion FROM backup.version") && readInfos.next())
+                {
+                    dbVersion = readInfos.value(0).toInt();
+                }
+
+                if (dbVersion > s_dbCurrentVersion) error = "newer";
+                else if (dbVersion > 0 && dbVersion < s_dbCurrentVersion) error = "older";
+                else if (dbVersion == s_dbCurrentVersion)
+                {
+                    error.clear();
+
+                    if (readInfos.exec("SELECT COUNT(*) FROM backup.devices") && readInfos.next())
+                    {
+                        infos.insert("devices", readInfos.value(0).toInt());
+                    }
+
+                    QDateTime firstDate, lastDate;
+                    const QStringList dataTables = {"plantData", "thermoData", "sensorData"};
+                    for (const QString &table: dataTables)
+                    {
+                        if (backupTableExists(table) &&
+                            readInfos.exec("SELECT MIN(datetime(timestamp)), MAX(datetime(timestamp)) FROM backup.\"" + table + "\"") &&
+                            readInfos.next() && !readInfos.isNull(0))
+                        {
+                            QDateTime first = QDateTime::fromString(readInfos.value(0).toString(), "yyyy-MM-dd hh:mm:ss");
+                            QDateTime last = QDateTime::fromString(readInfos.value(1).toString(), "yyyy-MM-dd hh:mm:ss");
+                            if (first.isValid() && (!firstDate.isValid() || first < firstDate)) firstDate = first;
+                            if (last.isValid() && (!lastDate.isValid() || last > lastDate)) lastDate = last;
+                        }
+                    }
+                    if (firstDate.isValid()) infos.insert("firstDate", firstDate);
+                    if (lastDate.isValid()) infos.insert("lastDate", lastDate);
+
+                    if (backupTableExists("backupInfo") &&
+                        readInfos.exec("SELECT createdAt, appVersion FROM backup.backupInfo") && readInfos.next())
+                    {
+                        QDateTime createdAt = QDateTime::fromString(readInfos.value(0).toString(), "yyyy-MM-dd hh:mm:ss");
+                        if (createdAt.isValid()) infos.insert("createdAt", createdAt);
+                        infos.insert("appVersion", readInfos.value(1).toString());
+                    }
+
+                    bool hasSettings = false;
+                    if (backupTableExists("backupSettings") &&
+                        readInfos.exec("SELECT COUNT(*) FROM backup.backupSettings") && readInfos.next())
+                    {
+                        hasSettings = (readInfos.value(0).toInt() > 0);
+                    }
+                    infos.insert("hasSettings", hasSettings);
+                }
+            }
+        }
+        detachBackup();
+    }
+
+    if (error.isEmpty())
+    {
+        infos.insert("ok", true);
+    }
+    else
+    {
+        infos.insert("error", error);
+        discardBackup();
+    }
+
+    return infos;
+}
+
+bool DatabaseManager::restoreDatabase(bool data, bool settings)
+{
+    if (!m_dbInternalOpen || !QFile::exists(getRestorePath()) || !attachBackup(getRestorePath()))
+    {
+        discardBackup();
+        return false;
+    }
+
+    bool status = true;
+
+    if (data)
+    {
+        // Parents first when inserting, last when deleting
+        const QStringList tables = {
+            "devices", "devicesBlacklist",
+            "plantData", "plantLimits", "plantBias",
+            "thermoData", "thermoLimits", "thermoBias",
+            "sensorData",
+            "plants", "plantJournal",
+        };
+
+        Q_EMIT databaseAboutToBeRestored();
+        {
+            // Replace everything in one transaction: on any error, nothing changes.
+            // IMMEDIATE takes the write lock now (waiting for other processes up to the busy timeout).
+            QSqlQuery restore;
+            status = restore.exec("BEGIN IMMEDIATE");
+
+            for (auto it = tables.crbegin(); status && it != tables.crend(); ++it)
+            {
+                status = restore.exec("DELETE FROM main.\"" + *it + "\"");
+            }
+
+            for (const QString &table: tables)
+            {
+                if (!status) break;
+                if (!backupTableExists(table)) continue;
+
+                // Match columns by name: migrated databases don't have them in the same order
+                const QString columns = getCommonColumns(table).join(", ");
+                if (columns.isEmpty()) continue;
+
+                status = restore.exec("INSERT INTO main.\"" + table + "\" (" + columns + ") "
+                                      "SELECT " + columns + " FROM backup.\"" + table + "\"");
+            }
+
+            if (status)
+            {
+                status = restore.exec("COMMIT");
+            }
+
+            if (!status)
+            {
+                qWarning() << "> restore.exec() ERROR"
+                           << restore.lastError().type() << ":" << restore.lastError().text();
+                QSqlQuery rollback("ROLLBACK");
+            }
+        }
+    }
+
+    if (status && settings && backupTableExists("backupSettings"))
+    {
+        QVariantMap values;
+        {
+            QSqlQuery readSettings;
+            if (readSettings.exec("SELECT key, value FROM backup.backupSettings"))
+            {
+                while (readSettings.next())
+                {
+                    values.insert(readSettings.value(0).toString(), readSettings.value(1));
+                }
+            }
+        }
+        SettingsManager::getInstance()->setBackupSettings(values);
+    }
+
+    detachBackup();
+    discardBackup();
+
+    if (data)
+    {
+        // Committed or rolled back: either way, the devices can be loaded again
+        // (only once the backup is detached, so nothing can touch it anymore)
+        Q_EMIT databaseRestored();
+    }
+
+    return status;
+}
+
+void DatabaseManager::discardBackup()
+{
+    QFile::remove(getRestorePath());
+}
+
+QString DatabaseManager::getRestorePath() const
+{
+    // In the cache: the OS may reclaim it, and the Android service never touches it
+    return QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + "/restore.db";
+}
+
+bool DatabaseManager::backupTableExists(const QString &tableName)
+{
+    // Only real tables count: a crafted backup could have views with our table names
+    QSqlQuery checkTable;
+    checkTable.prepare("SELECT name FROM backup.sqlite_master WHERE type = 'table' AND name = :name");
+    checkTable.bindValue(":name", tableName);
+
+    return (checkTable.exec() && checkTable.next());
+}
+
+QStringList DatabaseManager::getCommonColumns(const QString &tableName)
+{
+    QStringList backupColumns;
+    QStringList commonColumns;
+
+    QSqlQuery columns;
+    if (columns.exec("PRAGMA backup.table_info(\"" + tableName + "\")"))
+    {
+        while (columns.next()) backupColumns << columns.value(1).toString();
+    }
+
+    // Only use our own column names (never names coming from the backup file)
+    if (columns.exec("PRAGMA main.table_info(\"" + tableName + "\")"))
+    {
+        while (columns.next())
+        {
+            const QString column = columns.value(1).toString();
+            if (backupColumns.contains(column, Qt::CaseInsensitive)) commonColumns << "\"" + column + "\"";
+        }
+    }
+
+    return commonColumns;
 }
 
 /* ************************************************************************** */
