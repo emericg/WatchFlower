@@ -187,6 +187,7 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/charts/ChartEnvironmentalVoc.qml
         qml/charts/ChartEnvironmentalVocBar.qml
         qml/components/ActionbarBluetooth.qml
+        qml/components/ActionbarFilter.qml
         qml/components/ActionbarSelection.qml
         qml/components/ActionbarSync.qml
         qml/components/ActionMenuFixed.qml

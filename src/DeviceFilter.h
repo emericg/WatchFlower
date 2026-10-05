@@ -38,6 +38,10 @@ class DeviceFilter : public QSortFilterProxyModel
 {
     Q_OBJECT
 
+    QString m_filterText;
+    QString m_filterLocation;
+    bool m_filterNoLocation = false;
+
 protected:
     bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
     bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
@@ -47,6 +51,9 @@ public:
     ~DeviceFilter();
 
     void invalidatefilter();
+    void setFilters(const QString &text, const QString &location, bool noLocationOnly);
+
+    static QString foldForSearch(const QString &str);
 };
 
 /* ************************************************************************** */

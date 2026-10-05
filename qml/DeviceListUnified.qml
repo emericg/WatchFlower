@@ -42,9 +42,7 @@ Item {
         selectionList = []
         selectionCount = 0
 
-        for (var i = 0; i < devicesView.count; i++) {
-            deviceManager.getDeviceByProxyIndex(i).selected = false
-        }
+        deviceManager.clearDeviceSelection()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -109,6 +107,28 @@ Item {
             width: devicesView.cellWidth
             height: devicesView.cellHeight
             listMode: devicesView.listWidget
+        }
+
+        ////////
+
+        header: Item {
+            width: devicesView.width
+            height: (devicesView.count === 0 && deviceManager.filterActive) ? noMatchMessage.height : 0
+            visible: (height > 0)
+
+            Text {
+                id: noMatchMessage
+                width: parent.width
+
+                topPadding: Theme.componentMargin
+                bottomPadding: Theme.componentMargin
+                text: screenDeviceList.noMatchText
+                textFormat: Text.PlainText
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeContent
+                color: Theme.colorSubText
+            }
         }
 
         ////////

@@ -195,6 +195,8 @@ DeviceManager::DeviceManager(bool daemon)
             {
                 connect(d, &Device::deviceIsUpdated, this, &DeviceManager::refreshDevices_finished);
                 connect(d, &Device::deviceIsSynced, this, &DeviceManager::syncDevices_finished);
+                connect(d, &Device::settingsUpdated, this, &DeviceManager::deviceSettingsChanged);
+                connect(d, &Device::deviceUpdated, this, &DeviceManager::deviceInfosChanged);
 
                 m_devices_model->addDevice(d);
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
@@ -213,6 +215,8 @@ DeviceManager::DeviceManager(bool daemon)
                 }
             }
         }
+
+        updateLocationNames();
     }
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
@@ -284,6 +288,28 @@ void DeviceManager::disconnectAndExit() const
             timeout--;
         }
     }
+}
+
+void DeviceManager::clearDeviceSelection()
+{
+    for (auto d: std::as_const(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        if (dd && dd->isSelected()) dd->setSelected(false);
+    }
+}
+
+QStringList DeviceManager::getSelectedDeviceAddresses() const
+{
+    QStringList addresses;
+
+    for (auto d: std::as_const(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        if (dd && dd->isSelected()) addresses += dd->getAddress();
+    }
+
+    return addresses;
 }
 
 /* ************************************************************************** */
@@ -1352,10 +1378,9 @@ void DeviceManager::refreshDevices_check()
         listenDevices_start();
 
         // Start active refresh (if needed)
-        for (int i = 0; i < m_devices_model->rowCount(); i++)
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
-            QModelIndex e = m_devices_filter->index(i, 0);
-            Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+            Device *dd = qobject_cast<Device*>(d);
 
             if (dd)
             {
@@ -1568,10 +1593,9 @@ void DeviceManager::syncDevices_check()
         m_devices_syncing.clear();
 
         // Start sync (if necessary)
-        for (int i = 0; i < m_devices_model->rowCount(); i++)
+        for (auto d: std::as_const(m_devices_model->m_devices))
         {
-            QModelIndex e = m_devices_filter->index(i, 0);
-            Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+            Device *dd = qobject_cast<Device*>(d);
 
             if (dd)
             {
@@ -1927,12 +1951,18 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
             }
         }
 
+        // Keep the location list and filters in sync with the device settings
+        connect(d, &Device::settingsUpdated, this, &DeviceManager::deviceSettingsChanged);
+        connect(d, &Device::deviceUpdated, this, &DeviceManager::deviceInfosChanged);
+
         // Add it to the UI
         m_devices_model->addDevice(d);
 
         if (d->isPlantSensor()) m_devicesPlant_model->addDevice(d);
         else if (d->isThermometer()) m_devicesThermo_model->addDevice(d);
         else if (d->isEnvironmentalSensor()) m_devicesEnv_model->addDevice(d);
+
+        updateLocationNames();
 
         Q_EMIT devicesListUpdated();
 
@@ -1957,6 +1987,8 @@ void DeviceManager::removeDevice(const QString &address)
             // Make sure its not being used
             disconnect(dd, &Device::deviceIsUpdated, this, &DeviceManager::refreshDevices_finished);
             disconnect(dd, &Device::deviceIsSynced, this, &DeviceManager::syncDevices_finished);
+            disconnect(dd, &Device::settingsUpdated, this, &DeviceManager::deviceSettingsChanged);
+            disconnect(dd, &Device::deviceUpdated, this, &DeviceManager::deviceInfosChanged);
             dd->refreshStop();
             refreshDevices_finished(dd);
 
@@ -1984,6 +2016,10 @@ void DeviceManager::removeDevice(const QString &address)
             break;
         }
     }
+
+    // Keep the location list in sync, and don't leave a filter active on an empty list
+    updateLocationNames();
+    if (!m_devices_model->hasDevices()) resetFilters();
 }
 
 void DeviceManager::removeDeviceData(const QString &address)
@@ -2018,7 +2054,123 @@ void DeviceManager::invalidate()
 void DeviceManager::invalidateFilter()
 {
     m_devices_filter->invalidatefilter();
+
+    if (m_devicesPlant_filter) m_devicesPlant_filter->invalidatefilter();
+    if (m_devicesThermo_filter) m_devicesThermo_filter->invalidatefilter();
+    if (m_devicesEnv_filter) m_devicesEnv_filter->invalidatefilter();
 }
+
+/* ************************************************************************** */
+
+void DeviceManager::setFilterText(const QString &text)
+{
+    if (text == m_filterText) return;
+
+    clearDeviceSelection();
+    m_filterText = text;
+    applyFilters();
+    Q_EMIT filterChanged();
+}
+
+void DeviceManager::setFilterLocation(const QString &location, bool noLocationOnly)
+{
+    if (location == m_filterLocation && noLocationOnly == m_filterNoLocation) return;
+
+    clearDeviceSelection();
+    m_filterLocation = location;
+    m_filterNoLocation = noLocationOnly;
+    applyFilters();
+    Q_EMIT filterChanged();
+}
+
+void DeviceManager::resetFilters()
+{
+    if (m_filterText.isEmpty() && m_filterLocation.isEmpty() && !m_filterNoLocation) return;
+
+    clearDeviceSelection();
+    m_filterText.clear();
+    m_filterLocation.clear();
+    m_filterNoLocation = false;
+    applyFilters();
+    Q_EMIT filterChanged();
+}
+
+bool DeviceManager::isFilterActive() const
+{
+    return !m_filterText.trimmed().isEmpty() || !m_filterLocation.isEmpty() || m_filterNoLocation;
+}
+
+void DeviceManager::applyFilters()
+{
+    m_devices_filter->setFilters(m_filterText, m_filterLocation, m_filterNoLocation);
+
+    if (m_devicesPlant_filter) m_devicesPlant_filter->setFilters(m_filterText, m_filterLocation, m_filterNoLocation);
+    if (m_devicesThermo_filter) m_devicesThermo_filter->setFilters(m_filterText, m_filterLocation, m_filterNoLocation);
+    if (m_devicesEnv_filter) m_devicesEnv_filter->setFilters(m_filterText, m_filterLocation, m_filterNoLocation);
+}
+
+/*!
+ * \brief Rebuild the list of unique location names (case and diacritics insensitive, sorted).
+ * \return true if the location filter had to be reset (and the filters were re-applied).
+ */
+bool DeviceManager::updateLocationNames()
+{
+    QMap <QString, QString> locations; // folded name -> first spelling seen
+
+    for (auto d: std::as_const(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        if (!dd) continue;
+
+        const QString name = dd->getLocationName().trimmed();
+        if (name.isEmpty()) continue;
+
+        const QString key = DeviceFilter::foldForSearch(name);
+        if (!locations.contains(key)) locations.insert(key, name);
+    }
+
+    const QStringList names = locations.values();
+    if (names != m_locationNames)
+    {
+        m_locationNames = names;
+        Q_EMIT locationNamesChanged();
+    }
+
+    if (!m_filterLocation.isEmpty())
+    {
+        const QString key = DeviceFilter::foldForSearch(m_filterLocation.trimmed());
+
+        if (!locations.contains(key))
+        {
+            // The selected location doesn't exist anymore
+            setFilterLocation(QString(), false);
+            return true;
+        }
+        if (locations.value(key) != m_filterLocation)
+        {
+            // Same location, different spelling: follow the spelling shown in the list
+            m_filterLocation = locations.value(key);
+            Q_EMIT filterChanged();
+        }
+    }
+
+    return false;
+}
+
+void DeviceManager::deviceSettingsChanged()
+{
+    // A device location or name may have changed
+    bool reapplied = updateLocationNames();
+    if (!reapplied && isFilterActive()) invalidateFilter();
+}
+
+void DeviceManager::deviceInfosChanged()
+{
+    // A device model or name may have changed (only matters for the text search)
+    if (!m_filterText.trimmed().isEmpty()) invalidateFilter();
+}
+
+/* ************************************************************************** */
 
 QVariant DeviceManager::getDeviceByProxyIndex(const int index, const DeviceUtils::DeviceType deviceType) const
 {

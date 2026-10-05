@@ -161,6 +161,24 @@
     </message>
 </context>
 <context>
+    <name>ActionbarFilter</name>
+    <message>
+        <location filename="../qml/components/ActionbarFilter.qml" line="26"/>
+        <source>All locations</source>
+        <translation type="unfinished">Todas las ubicaciones</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ActionbarFilter.qml" line="27"/>
+        <source>No location set</source>
+        <translation type="unfinished">Sin ubicación</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ActionbarFilter.qml" line="90"/>
+        <source>Search sensors</source>
+        <translation type="unfinished">Buscar sensores</translation>
+    </message>
+</context>
+<context>
     <name>ActionbarSelection</name>
     <message numerus="yes">
         <location filename="../qml/components/ActionbarSelection.qml" line="48"/>
@@ -617,6 +635,11 @@
     <message>
         <source>Bluetooth disabled...</source>
         <translation type="vanished">Bluetooth desactivado...</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceList.qml" line="45"/>
+        <source>No sensors match your search</source>
+        <translation type="unfinished">Ningún sensor coincide con la búsqueda</translation>
     </message>
 </context>
 <context>

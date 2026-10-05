@@ -197,6 +197,24 @@
     </message>
 </context>
 <context>
+    <name>ActionbarFilter</name>
+    <message>
+        <location filename="../qml/components/ActionbarFilter.qml" line="26"/>
+        <source>All locations</source>
+        <translation type="unfinished">Alle placeringer</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ActionbarFilter.qml" line="27"/>
+        <source>No location set</source>
+        <translation type="unfinished">Ingen placering angivet</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ActionbarFilter.qml" line="90"/>
+        <source>Search sensors</source>
+        <translation type="unfinished">Søg efter sensorer</translation>
+    </message>
+</context>
+<context>
     <name>ActionbarSelection</name>
     <message numerus="yes">
         <location filename="../qml/components/ActionbarSelection.qml" line="48"/>
@@ -679,6 +697,11 @@
     <message>
         <source>Delete</source>
         <translation type="vanished">Slet</translation>
+    </message>
+    <message>
+        <location filename="../qml/DeviceList.qml" line="45"/>
+        <source>No sensors match your search</source>
+        <translation type="unfinished">Ingen sensorer matcher søgningen</translation>
     </message>
 </context>
 <context>
