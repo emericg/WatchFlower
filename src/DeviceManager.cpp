@@ -151,6 +151,39 @@ DeviceManager::DeviceManager(bool daemon, QObject *parent) : QObject(parent)
         m_dbExternal = db->hasDatabaseExternal();
     }
 
+    loadDevices();
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+    // Configure update timer (only started on desktop)
+    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceManager::refreshDevices_check);
+    m_updateTimer.setInterval(30*60*1000); // every 30m
+    m_updateTimer.start();
+#endif
+
+#if defined(Q_OS_ANDROID)
+    // Configure the end of cycle disconnection timeout (daemon only)
+    m_backgroundDisconnectTimer.setSingleShot(true);
+    m_backgroundDisconnectTimer.setInterval(ble_disconnect_timeout_background*1000);
+    connect(&m_backgroundDisconnectTimer, &QTimer::timeout, this, [this]() { backgroundScanningCheckFinished(true); });
+#endif
+}
+
+DeviceManager::~DeviceManager()
+{
+    delete m_bluetoothAdapter;
+    delete m_bluetoothDiscoveryAgent;
+
+    delete m_devices_nearby_filter;
+    delete m_devices_nearby_model;
+
+    delete m_devices_filter;
+    delete m_devices_model;
+}
+
+/* ************************************************************************** */
+
+void DeviceManager::loadDevices()
+{
     if (m_dbInternal || m_dbExternal)
     {
         // Load device blacklist
@@ -275,32 +308,6 @@ DeviceManager::DeviceManager(bool daemon, QObject *parent) : QObject(parent)
             }
         }
     }
-
-#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-    // Configure update timer (only started on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceManager::refreshDevices_check);
-    m_updateTimer.setInterval(30*60*1000); // every 30m
-    m_updateTimer.start();
-#endif
-
-#if defined(Q_OS_ANDROID)
-    // Configure the end of cycle disconnection timeout (daemon only)
-    m_backgroundDisconnectTimer.setSingleShot(true);
-    m_backgroundDisconnectTimer.setInterval(ble_disconnect_timeout_background*1000);
-    connect(&m_backgroundDisconnectTimer, &QTimer::timeout, this, [this]() { backgroundScanningCheckFinished(true); });
-#endif
-}
-
-DeviceManager::~DeviceManager()
-{
-    delete m_bluetoothAdapter;
-    delete m_bluetoothDiscoveryAgent;
-
-    delete m_devices_nearby_filter;
-    delete m_devices_nearby_model;
-
-    delete m_devices_filter;
-    delete m_devices_model;
 }
 
 /* ************************************************************************** */
