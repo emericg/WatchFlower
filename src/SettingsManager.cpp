@@ -24,6 +24,7 @@
 
 #include <QCoreApplication>
 #include <QSettings>
+#include <QMetaProperty>
 #include <QLocale>
 #include <QDebug>
 
@@ -87,6 +88,50 @@ bool SettingsManager::saveSettings()
 bool SettingsManager::restoreSettings()
 {
     return false;
+}
+
+/* ************************************************************************** */
+
+// Settings saved into (and restored from) database backups: only the portable ones.
+// Not included: OS permission dependent (notifications, systray, bluetoothControl),
+// not persisted (updateIntervalBackground/Env), machine specific (window, CSD, minimized,
+// bluetoothSimUpdates, appUnits) and secrets (mysql*, mqtt*).
+static const char *const s_backupSettings[] = {
+    "appTheme", "appThemeAuto", "appLanguage", "tempUnit",
+    "notif_battery", "notif_water", "notif_subzero", "notif_env",
+    "bluetoothLimitScanningRange", "updateIntervalPlant", "updateIntervalThermo",
+    "graphHistory", "graphThermometer", "graphAioDays", "graphAioShowDots",
+    "bigIndicator", "dynaScale", "splitView", "orderBy",
+    "latitude", "longitude", "sunandmoon",
+};
+
+QVariantMap SettingsManager::getBackupSettings() const
+{
+    QVariantMap values;
+
+    for (const char *name: s_backupSettings)
+    {
+        values.insert(QString::fromLatin1(name), property(name).toString());
+    }
+
+    return values;
+}
+
+void SettingsManager::setBackupSettings(const QVariantMap &values)
+{
+    for (const char *name: s_backupSettings)
+    {
+        const QString key = QString::fromLatin1(name);
+        if (!values.contains(key)) continue;
+
+        // Use the property setters, so each setting is saved and its change signal emitted
+        const QMetaProperty prop = metaObject()->property(metaObject()->indexOfProperty(name));
+        QVariant value = values.value(key);
+        if (prop.isValid() && value.convert(prop.metaType()))
+        {
+            prop.write(this, value);
+        }
+    }
 }
 
 /* ************************************************************************** */
