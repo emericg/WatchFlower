@@ -121,6 +121,35 @@ DeviceManager::DeviceManager(bool daemon)
         m_dbExternal = db->hasDatabaseExternal();
     }
 
+    loadDevices();
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+    // Configure update timer (only started on desktop)
+    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceManager::refreshDevices_check);
+    m_updateTimer.setInterval(30*60*1000); // every 30m
+    m_updateTimer.start();
+#endif
+}
+
+DeviceManager::~DeviceManager()
+{
+    qDeleteAll(m_bluetoothAdapters);
+    m_bluetoothAdapters.clear();
+
+    delete m_bluetoothAdapter;
+    delete m_bluetoothDiscoveryAgent;
+
+    delete m_devices_nearby_filter;
+    delete m_devices_nearby_model;
+
+    delete m_devices_filter;
+    delete m_devices_model;
+}
+
+/* ************************************************************************** */
+
+void DeviceManager::loadDevices()
+{
     if (m_dbInternal || m_dbExternal)
     {
         // Load device blacklist
@@ -214,28 +243,6 @@ DeviceManager::DeviceManager(bool daemon)
             }
         }
     }
-
-#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-    // Configure update timer (only started on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceManager::refreshDevices_check);
-    m_updateTimer.setInterval(30*60*1000); // every 30m
-    m_updateTimer.start();
-#endif
-}
-
-DeviceManager::~DeviceManager()
-{
-    qDeleteAll(m_bluetoothAdapters);
-    m_bluetoothAdapters.clear();
-
-    delete m_bluetoothAdapter;
-    delete m_bluetoothDiscoveryAgent;
-
-    delete m_devices_nearby_filter;
-    delete m_devices_nearby_model;
-
-    delete m_devices_filter;
-    delete m_devices_model;
 }
 
 /* ************************************************************************** */
