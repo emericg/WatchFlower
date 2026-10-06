@@ -120,7 +120,10 @@ QString DatabaseManager::saveDatabase(const QUrl &fileUrl)
 
     // Write a consistent copy of the live database next to the destination, then replace it
     QString partPath = backupPath + ".part";
-    QFile::remove(partPath);
+    for (const QString &suffix: {"", "-wal", "-shm", "-journal"})
+    {
+        QFile::remove(partPath + suffix);
+    }
 
     bool status = false;
 
@@ -145,7 +148,10 @@ QString DatabaseManager::saveDatabase(const QUrl &fileUrl)
 
     if (!status)
     {
-        QFile::remove(partPath);
+        for (const QString &suffix: {"", "-wal", "-shm", "-journal"})
+        {
+            QFile::remove(partPath + suffix);
+        }
         return QString();
     }
 
