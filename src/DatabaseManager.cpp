@@ -121,6 +121,7 @@ QString DatabaseManager::saveDatabase(const QUrl &fileUrl)
     // Write a consistent copy of the live database next to the destination, then replace it
     QString partPath = backupPath + ".part";
     QFile::remove(partPath);
+    QFile::remove(partPath + "-journal");
 
     bool status = false;
 
@@ -146,6 +147,7 @@ QString DatabaseManager::saveDatabase(const QUrl &fileUrl)
     if (!status)
     {
         QFile::remove(partPath);
+        QFile::remove(partPath + "-journal");
         return QString();
     }
 
