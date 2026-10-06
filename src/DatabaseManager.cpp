@@ -95,10 +95,10 @@ QString DatabaseManager::saveDatabase(const QUrl &fileUrl)
         if (!exportDir.exists()) exportDir.mkpath(exportPath);
 
         // Only keep the latest backup around
-        const QStringList oldBackups = exportDir.entryList({"watchflower_backup_*.db"}, QDir::Files);
+        const QStringList oldBackups = exportDir.entryList({"watchflower_backup_*.db*"}, QDir::Files);
         for (const QString &oldBackup: oldBackups) exportDir.remove(oldBackup);
 
-        backupPath = exportPath + "/watchflower_backup_" + QDateTime::currentDateTime().toString("yyyy-MM-dd") + ".db";
+        backupPath = exportPath + "/watchflower_backup_" + QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".db";
     }
     else if (fileUrl.isLocalFile())
     {
