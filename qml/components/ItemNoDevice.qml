@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import ComponentLibrary
+import WatchFlower
 
 Item {
     id: itemNoDevice
@@ -82,6 +83,20 @@ Item {
                         }
                     }
                 }
+            }
+
+            ////
+
+            ButtonClear {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.5)
+                visible: DatabaseManager.hasDatabaseInternal()
+
+                text: qsTr("Restore a backup")
+                color: Theme.colorPrimary
+
+                onClicked: popupRestoreBackup.openFile()
             }
 
             ////
