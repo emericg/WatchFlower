@@ -337,6 +337,9 @@ ApplicationWindow {
     PopupDeleteData {
         id: popupDeleteData
     }
+    PopupRestoreBackup {
+        id: popupRestoreBackup
+    }
 
     DesktopHeader {
         id: appHeader

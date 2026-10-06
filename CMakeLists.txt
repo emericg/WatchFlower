@@ -194,6 +194,7 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/popups/PopupCalibration.qml
         qml/popups/PopupDeleteData.qml
         qml/popups/PopupDeleteDevice.qml
+        qml/popups/PopupRestoreBackup.qml
         qml/charts/ChartHistory.qml
         qml/charts/ChartPlantDataAio_qtgraphs.qml
         qml/charts/ChartThermometerMinMax.qml
