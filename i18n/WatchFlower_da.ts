@@ -1426,6 +1426,11 @@
         <source>Please &lt;b&gt;enable Bluetooth&lt;/b&gt; on your device in order to use the application.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../qml/components/ItemNoBluetooth.qml" line="124"/>
+        <source>Restore a backup</source>
+        <translation type="unfinished">Gendan en sikkerhedskopi</translation>
+    </message>
 </context>
 <context>
     <name>ItemNoData</name>
@@ -1471,6 +1476,11 @@
         <location filename="../qml/components/ItemNoDevice.qml" line="108"/>
         <source>Please keep your device &lt;b&gt;close&lt;/b&gt; to the sensors you want to scan.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoDevice.qml" line="96"/>
+        <source>Restore a backup</source>
+        <translation type="unfinished">Gendan en sikkerhedskopi</translation>
     </message>
 </context>
 <context>
@@ -1541,6 +1551,11 @@
         <location filename="../qml/components/ItemNoPermissions.qml" line="208"/>
         <source>Official information</source>
         <translation type="unfinished">Officielle dokumentation</translation>
+    </message>
+    <message>
+        <location filename="../qml/components/ItemNoPermissions.qml" line="234"/>
+        <source>Restore a backup</source>
+        <translation type="unfinished">Gendan en sikkerhedskopi</translation>
     </message>
 </context>
 <context>
@@ -2576,6 +2591,107 @@
     </message>
 </context>
 <context>
+    <name>PopupRestoreBackup</name>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="56"/>
+        <source>Could not read this file.</source>
+        <translation type="unfinished">Filen kunne ikke læses.</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="57"/>
+        <source>This backup was made by a newer version of WatchFlower. Update the app and try again.</source>
+        <translation type="unfinished">Denne sikkerhedskopi er lavet med en nyere version af WatchFlower. Opdater appen, og prøv igen.</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="58"/>
+        <source>This backup is from an older version of WatchFlower and can&apos;t be restored.</source>
+        <translation type="unfinished">Denne sikkerhedskopi er fra en ældre version af WatchFlower og kan ikke gendannes.</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="59"/>
+        <source>This is not a WatchFlower backup.</source>
+        <translation type="unfinished">Dette er ikke en WatchFlower-sikkerhedskopi.</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="92"/>
+        <source>Restore failed. Your current data was not changed.</source>
+        <translation type="unfinished">Gendannelsen mislykkedes. Dine nuværende data er ikke ændret.</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="104"/>
+        <source>Open backup</source>
+        <translation type="unfinished">Åbn sikkerhedskopi</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="109"/>
+        <source>WatchFlower backup (*.db)</source>
+        <translation type="unfinished">WatchFlower-sikkerhedskopi (*.db)</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="109"/>
+        <source>All files (*)</source>
+        <translation type="unfinished">Alle filer (*)</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="169"/>
+        <source>Restore this backup?</source>
+        <translation type="unfinished">Gendan denne sikkerhedskopi?</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="190"/>
+        <source>Created on %1 with WatchFlower %2</source>
+        <translation type="unfinished">Oprettet %1 med WatchFlower %2</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="202"/>
+        <source>%n sensor(s)</source>
+        <translation type="unfinished">
+            <numerusform>%n sensor</numerusform>
+            <numerusform>%n sensorer</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="214"/>
+        <source>History from %1 to %2</source>
+        <translation type="unfinished">Historik fra %1 til %2</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="234"/>
+        <source>Sensors, plants and history</source>
+        <translation type="unfinished">Sensorer, planter og historik</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="239"/>
+        <source>App settings</source>
+        <translation type="unfinished">Appindstillinger</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="251"/>
+        <source>Your current sensors, plants and history will be replaced.</source>
+        <translation type="unfinished">Dine nuværende sensorer, planter og historik bliver erstattet.</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="263"/>
+        <source>Restoring…</source>
+        <translation type="unfinished">Gendanner…</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="287"/>
+        <source>Cancel</source>
+        <translation type="unfinished">Annuller</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="298"/>
+        <source>Restore</source>
+        <translation type="unfinished">Gendan</translation>
+    </message>
+    <message>
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="311"/>
+        <source>Close</source>
+        <translation type="unfinished">Luk</translation>
+    </message>
+</context>
+<context>
     <name>ScreenAbout</name>
     <message>
         <location filename="../qml/ScreenAbout.qml" line="93"/>
@@ -2974,6 +3090,56 @@
         <location filename="../qml/ScreenSettings.qml" line="1727"/>
         <source>Export file</source>
         <translation type="unfinished">Eksporter fil</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1859"/>
+        <source>Backup</source>
+        <translation type="unfinished">Sikkerhedskopi</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1879"/>
+        <source>Save all your sensors, plants, history and settings into one file, to move them to another phone or computer.</source>
+        <translation type="unfinished">Gem alle dine sensorer, planter, historik og indstillinger i én fil, så du kan flytte dem til en anden telefon eller computer.</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1907"/>
+        <source>Back up</source>
+        <translation type="unfinished">Sikkerhedskopiér</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1920"/>
+        <source>Backing up…</source>
+        <translation type="unfinished">Sikkerhedskopierer…</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1933"/>
+        <source>Save backup</source>
+        <translation type="unfinished">Gem sikkerhedskopi</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1935"/>
+        <source>Backup saved</source>
+        <translation type="unfinished">Sikkerhedskopi gemt</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1939"/>
+        <source>Backup failed</source>
+        <translation type="unfinished">Sikkerhedskopiering mislykkedes</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1950"/>
+        <source>Restore</source>
+        <translation type="unfinished">Gendan</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1960"/>
+        <source>WatchFlower backup (*.db)</source>
+        <translation type="unfinished">WatchFlower-sikkerhedskopi (*.db)</translation>
+    </message>
+    <message>
+        <location filename="../qml/ScreenSettings.qml" line="1960"/>
+        <source>All files (*)</source>
+        <translation type="unfinished">Alle filer (*)</translation>
     </message>
 </context>
 <context>
