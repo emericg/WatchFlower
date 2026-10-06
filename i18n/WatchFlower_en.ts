@@ -87,4 +87,15 @@
         </translation>
     </message>
 </context>
+<context>
+    <name>PopupRestoreBackup</name>
+    <message numerus="yes">
+        <location filename="../qml/popups/PopupRestoreBackup.qml" line="202"/>
+        <source>%n sensor(s)</source>
+        <translation type="unfinished">
+            <numerusform>%n sensor</numerusform>
+            <numerusform>%n sensors</numerusform>
+        </translation>
+    </message>
+</context>
 </TS>
