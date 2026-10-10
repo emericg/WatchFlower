@@ -179,6 +179,9 @@ class DeviceManager: public QObject
     QTimer m_updateTimer;
     void setUpdateTimer(int updateIntervalMin = 0);
 
+    void loadDevices();
+    void unloadDevices();
+
 Q_SIGNALS:
     void bluetoothChanged();
     void hostModeChanged();

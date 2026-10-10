@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 
 import ComponentLibrary
+import WatchFlower
 
 Item {
     id: itemNoBluetooth
@@ -111,6 +112,19 @@ Item {
                 wrapMode: Text.WordWrap
                 horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
             }
+        }
+
+        ////
+
+        ButtonClear {
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            visible: DatabaseManager.hasDatabaseInternal()
+
+            text: qsTr("Restore a backup")
+            color: Theme.colorPrimary
+
+            onClicked: popupRestoreBackup.openFile()
         }
 
         ////

@@ -119,8 +119,48 @@ DeviceManager::DeviceManager(bool daemon)
     {
         m_dbInternal = db->hasDatabaseInternal();
         m_dbExternal = db->hasDatabaseExternal();
+
+        if (!m_daemonMode)
+        {
+            // Reload our devices when a backup is restored
+            connect(db, &DatabaseManager::databaseAboutToBeRestored, this, &DeviceManager::unloadDevices);
+            connect(db, &DatabaseManager::databaseRestored, this, [this]() {
+                loadDevices();
+                Q_EMIT devicesListUpdated();
+                Q_EMIT devicesBlacklistUpdated();
+            });
+        }
     }
 
+    loadDevices();
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
+    // Configure update timer (only started on desktop)
+    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceManager::refreshDevices_check);
+    m_updateTimer.setInterval(30*60*1000); // every 30m
+    m_updateTimer.start();
+#endif
+}
+
+DeviceManager::~DeviceManager()
+{
+    qDeleteAll(m_bluetoothAdapters);
+    m_bluetoothAdapters.clear();
+
+    delete m_bluetoothAdapter;
+    delete m_bluetoothDiscoveryAgent;
+
+    delete m_devices_nearby_filter;
+    delete m_devices_nearby_model;
+
+    delete m_devices_filter;
+    delete m_devices_model;
+}
+
+/* ************************************************************************** */
+
+void DeviceManager::loadDevices()
+{
     if (m_dbInternal || m_dbExternal)
     {
         // Load device blacklist
@@ -214,28 +254,49 @@ DeviceManager::DeviceManager(bool daemon)
             }
         }
     }
-
-#if defined(Q_OS_LINUX) || defined(Q_OS_MACOS) || defined(Q_OS_WINDOWS)
-    // Configure update timer (only started on desktop)
-    connect(&m_updateTimer, &QTimer::timeout, this, &DeviceManager::refreshDevices_check);
-    m_updateTimer.setInterval(30*60*1000); // every 30m
-    m_updateTimer.start();
-#endif
 }
 
-DeviceManager::~DeviceManager()
+void DeviceManager::unloadDevices()
 {
-    qDeleteAll(m_bluetoothAdapters);
-    m_bluetoothAdapters.clear();
+    // Make sure no device is in use
+    scanDevices_stop();
+    refreshDevices_stop();
+    syncDevices_stop();
 
-    delete m_bluetoothAdapter;
-    delete m_bluetoothDiscoveryAgent;
+    // syncDevices_stop() only acts while devices are queued: nothing may point to our devices anymore
+    m_devices_updating_queue.clear();
+    m_devices_updating.clear();
+    m_devices_syncing_queue.clear();
+    m_devices_syncing.clear();
+    if (m_updating)
+    {
+        m_updating = false;
+        Q_EMIT updatingChanged();
+    }
+    if (m_syncing)
+    {
+        m_syncing = false;
+        Q_EMIT syncingChanged();
+    }
 
-    delete m_devices_nearby_filter;
-    delete m_devices_nearby_model;
+    const QList <Device *> devices = m_devices_model->m_devices;
+    for (Device *d: devices)
+    {
+        disconnect(d, &Device::deviceIsUpdated, this, &DeviceManager::refreshDevices_finished);
+        disconnect(d, &Device::deviceIsSynced, this, &DeviceManager::syncDevices_finished);
+        d->refreshStop();
 
-    delete m_devices_filter;
-    delete m_devices_model;
+        if (d->isPlantSensor()) m_devicesPlant_model->removeDevice(d, false);
+        else if (d->isThermometer()) m_devicesThermo_model->removeDevice(d, false);
+        else if (d->isEnvironmentalSensor()) m_devicesEnv_model->removeDevice(d, false);
+
+        m_devices_model->removeDevice(d, true);
+    }
+
+    m_devices_blacklist.clear();
+
+    Q_EMIT devicesListUpdated();
+    Q_EMIT devicesBlacklistUpdated();
 }
 
 /* ************************************************************************** */

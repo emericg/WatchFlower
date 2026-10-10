@@ -28,6 +28,7 @@
 #include <QObject>
 #include <QString>
 #include <QSize>
+#include <QVariantMap>
 
 class QJSEngine;
 class QQmlEngine;
@@ -358,6 +359,10 @@ public:
     Q_INVOKABLE bool saveSettings();
     Q_INVOKABLE bool restoreSettings();
     void reloadSettings();
+
+    // Backups
+    QVariantMap getBackupSettings() const;
+    void setBackupSettings(const QVariantMap &values);
 };
 
 /* ************************************************************************** */

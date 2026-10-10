@@ -1,5 +1,7 @@
+import QtCore
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Dialogs
 import QtPositioning
 
 import ComponentLibrary
@@ -1847,6 +1849,120 @@ Loader {
                         onClicked: {
                             var file = deviceManager.exportDataOpen()
                             utilsShare.sendFile(file, qsTr("Export file"), "text/csv", 0)
+                        }
+                    }
+                }
+
+                ////////////////
+
+                ListTitle {
+                    text: qsTr("Backup")
+                    source: "qrc:/IconLibrary/material-symbols/save.svg"
+                    visible: DatabaseManager.hasDatabaseInternal()
+                }
+
+                ////////////////
+
+                Column {
+                    anchors.left: parent.left
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
+                    anchors.right: parent.right
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
+
+                    topPadding: 8
+                    visible: DatabaseManager.hasDatabaseInternal()
+
+                    Text {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+
+                        text: qsTr("Save all your sensors, plants, history and settings into one file, to move them to another phone or computer.")
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        color: Theme.colorSubText
+                        font.pixelSize: Theme.fontSizeContentSmall
+                        verticalAlignment: Text.AlignBottom
+                    }
+                }
+
+                ////////
+
+                Row { // element_backup
+                    anchors.left: parent.left
+                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
+                    anchors.right: parent.right
+                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
+
+                    height: Theme.componentHeightXL
+                    spacing: Theme.componentMargin
+                    visible: DatabaseManager.hasDatabaseInternal()
+
+                    ButtonFlat {
+                        id: backupButton
+                        height: 36
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        property url backupUrl // empty: back up to the cache, then share it (mobile)
+
+                        text: qsTr("Back up")
+                        onClicked: {
+                            if (isMobile) {
+                                startBackup("")
+                            } else {
+                                backupFileDialog.selectedFile = backupFileDialog.currentFolder + "/watchflower_backup_" +
+                                                                Qt.formatDate(new Date(), "yyyy-MM-dd") + ".db"
+                                backupFileDialog.open()
+                            }
+                        }
+
+                        function startBackup(fileUrl) {
+                            backupUrl = fileUrl
+                            text = qsTr("Backing up…")
+                            backupTimer.start() // let the label be drawn first, as the backup blocks the UI
+                        }
+
+                        Timer {
+                            id: backupTimer
+                            interval: 100
+                            repeat: false
+                            onTriggered: {
+                                var file = DatabaseManager.saveDatabase(backupButton.backupUrl)
+                                if (file.length > 0) {
+                                    if (isMobile) {
+                                        backupButton.text = qsTr("Back up")
+                                        utilsShare.sendFile(file, qsTr("Save backup"), "application/octet-stream", 0)
+                                    } else {
+                                        backupButton.text = qsTr("Backup saved")
+                                        backupButton.color = Theme.colorPrimary
+                                    }
+                                } else {
+                                    backupButton.text = qsTr("Backup failed")
+                                    backupButton.color = Theme.colorWarning
+                                }
+                            }
+                        }
+                    }
+
+                    ButtonFlat {
+                        height: 36
+                        anchors.verticalCenter: parent.verticalCenter
+
+                        text: qsTr("Restore")
+                        onClicked: popupRestoreBackup.openFile()
+                    }
+
+                    FileDialog {
+                        id: backupFileDialog
+                        title: qsTr("Save backup")
+                        fileMode: FileDialog.SaveFile
+                        defaultSuffix: "db"
+                        nameFilters: [qsTr("WatchFlower backup (*.db)"), qsTr("All files (*)")]
+                        currentFolder: StandardPaths.writableLocation(StandardPaths.DocumentsLocation)
+                        onAccepted: {
+                            // Qt's own (non-native) dialog doesn't add the default suffix
+                            var file = selectedFile.toString()
+                            if (!/\.[^\/.]+$/.test(file)) file += ".db"
+                            backupButton.startBackup(file)
                         }
                     }
                 }
