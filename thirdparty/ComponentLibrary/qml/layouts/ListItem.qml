@@ -16,7 +16,8 @@ T.ItemDelegate {
     spacing: Theme.componentMargin
     verticalPadding: 0
 
-    property int headerPosition: 64
+    // settings
+    property int headerPosition: Theme.isMobile ? 56 : 64
 
     // icon
     property url source

@@ -90,14 +90,9 @@ AndroidShareUtils::AndroidShareUtils(QObject *parent) : PlatformShareUtils(paren
         nativesRegistered = true;
     }
 
-    QJniObject jni = QJniObject("io/emeric/mobilesharing/QShareUtils");
-
-    if (jni.isValid())
-    {
-        qDebug() << "Init Activity of AndroidShareUtils";
-        jni.callMethod<void>("setActivity", "(Landroid/app/Activity;)V",
-                             QNativeInterface::QAndroidApplication::context().object());
-    }
+    QJniObject::callStaticMethod<void>("io/emeric/mobilesharing/QShareUtils",
+                                       "setActivity", "(Landroid/app/Activity;)V",
+                                       QNativeInterface::QAndroidApplication::context().object());
 }
 
 AndroidShareUtils *AndroidShareUtils::getInstance()
@@ -350,9 +345,12 @@ void AndroidShareUtils::checkPendingIntents(const QString &workingDirPath)
     if (activity.isValid())
     {
         // Receiving requires QShareActivity (it overrides onNewIntent/onActivityResult and exposes checkPendingIntents).
+        // The class may be absent entirely (MOBILESHARING_FEATURE_RECEIVE disabled, so QShareActivity.java was not deployed):
+        // in that case findClass() returns null and we must bail out, otherwise we would fall
+        // through and call checkPendingIntents() on a plain QtActivity that has no such method (JNI error).
         QJniEnvironment env;
         jclass shareActivityClass = env.findClass("io/emeric/mobilesharing/QShareActivity");
-        if (shareActivityClass && !env->IsInstanceOf(activity.object(), shareActivityClass))
+        if (!shareActivityClass || !env->IsInstanceOf(activity.object(), shareActivityClass))
         {
             //qWarning() << "MobileSharing: the running Activity is not a QShareActivity, incoming files will NOT be received."
             return;

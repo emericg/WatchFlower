@@ -40,19 +40,19 @@ class IosShareUtils : public PlatformShareUtils
     Q_OBJECT
 
 public:
-    explicit IosShareUtils(QObject *parent = 0);
+    explicit IosShareUtils(QObject *parent = nullptr);
 
-    bool checkMimeTypeView(const QString &mimeType);
+    bool checkMimeTypeView(const QString &mimeType) override;
 
-    void sendText(const QString &text, const QString &subject, const QUrl &url);
+    void sendText(const QString &text, const QString &subject, const QUrl &url) override;
 
-    void sendFile(const QString &filePath, const QString &title, const QString &mimeType, int requestId, bool move);
-    void sendFiles(const QStringList &filePaths, const QString &title, const QString &mimeType, int requestId, bool move);
-    void viewFile(const QString &filePath, const QString &title, const QString &mimeType, int requestId);
-    void viewFiles(const QStringList &filePaths, const QString &title, const QString &mimeType, int requestId);
+    void sendFile(const QString &filePath, const QString &title, const QString &mimeType, int requestId, bool move) override;
+    void sendFiles(const QStringList &filePaths, const QString &title, const QString &mimeType, int requestId, bool move) override;
+    void viewFile(const QString &filePath, const QString &title, const QString &mimeType, int requestId) override;
+    void viewFiles(const QStringList &filePaths, const QString &title, const QString &mimeType, int requestId) override;
 
-    void saveFile(const QString &filePath, const QString &suggestedName, const QString &mimeType, int requestId);
-    void openFile();
+    void saveFile(const QString &filePath, const QString &suggestedName, const QString &mimeType, int requestId) override;
+    void openFile() override;
 
     /*!
      * \brief Called by the export-picker delegate once a saveFile() flow finished.

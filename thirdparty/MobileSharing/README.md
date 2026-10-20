@@ -1,6 +1,6 @@
 # MobileSharing
 
-MobileSharing allows QML applications to interact with mobile specific sharing features.
+MobileSharing allows Qt / QML mobile applications to easily share, receive, open & save files...
 
 You can see it in action in the [MobileSharing demo](https://github.com/emericg/MobileSharing_demo).
 
@@ -16,10 +16,13 @@ You can see it in action in the [MobileSharing demo](https://github.com/emericg/
 
 ## Features
 
-- Handle the Android/iOS specific features about sending / recieving files, links, text between apps.
+- Handle the Android & iOS specific features for sending & recieving files / links / text between apps!
 - Minimal disruption on the host project using it! Build it, link it, use it.
-- Send files, texts, links...
-- Receive files, texts, links...
+
+- Send files / texts / links...
+- Receive files / texts / links...
+- Easily set up an Android DocumentProvider
+- Bypass Qt broken open & save functionnalities on Android and iOS
 
 
 ## Quick start
@@ -294,8 +297,8 @@ Also inspired by:
 
 ## License
 
-This project is licensed under the [MIT license](LICENSE).
+This project is licensed under the [MIT license](LICENSE.md).
 
-> Copyright (c) 2017 Ekkehard Gentz (ekke)  
+> Copyright (c) 2017 Ekkehard Gentz (ekke)
 
-> Copyright (c) 2026 Emeric Grange (emeric.grange@gmail.com)  
+> Copyright (c) 2026 Emeric Grange <emeric.grange@gmail.com>

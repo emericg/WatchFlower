@@ -41,7 +41,7 @@ Item {
             control.clicked()
         }
         onPressAndHold: {
-            if (isMobile) {
+            if (Theme.isMobile) {
                 actionMenu_bottom_loader.active = true
                 actionMenu_bottom_loader.item.open()
             }
@@ -65,7 +65,7 @@ Item {
                 anchors.bottom: parent.bottom
 
                 //width: cardImage.width + rowrowrow.leftMargin*2
-                width: cardImage.width + (isMobile ? 20 : 32)
+                width: cardImage.width + (Theme.isMobile ? 20 : 32)
                 color: Theme.isLight ? "#f6f6f6" : "#3a3a3a"
             }
 
@@ -112,10 +112,10 @@ Item {
 
             source: "qrc:/IconLibrary/material-symbols/more_vert.svg"
 
-            visible: isDesktop
+            visible: Theme.isDesktop
 
             onClicked: {
-                if (isMobile) {
+                if (Theme.isMobile) {
                     actionMenu_bottom_loader.active = true
                     actionMenu_bottom_loader.item.open()
                 } else {
@@ -130,8 +130,8 @@ Item {
         RowLayout {
             id: rowrowrow
             anchors.fill: background
-            anchors.leftMargin: (isMobile ? 20 : 32) / 2
-            anchors.rightMargin: (isMobile ? 20 : 32) / 2
+            anchors.leftMargin: (Theme.isMobile ? 20 : 32) / 2
+            anchors.rightMargin: (Theme.isMobile ? 20 : 32) / 2
             spacing: 32
             clip: true
 
@@ -140,7 +140,7 @@ Item {
             Image {
                 id: cardImage
                 Layout.maximumWidth: Layout.maximumHeight * 0.66
-                Layout.maximumHeight: background.height - (isMobile ? 20 : 32)
+                Layout.maximumHeight: background.height - (Theme.isMobile ? 20 : 32)
                 Layout.alignment: Qt.AlignVCenter
 
                 rotation: 0
@@ -148,7 +148,7 @@ Item {
 
                 source: control.source
                 //sourceSize: Qt.size(width*mmm, height*mmm)
-                //property int mmm: isMobile ? 2 : 1
+                //property int mmm: Theme.isMobile ? 2 : 1
             }
 
             ////

@@ -43,12 +43,9 @@ DocumentProvider::DocumentProvider(QObject *parent) : QObject(parent)
 #if defined(Q_OS_ANDROID)
     // Make sure the Java side knows the Activity (idempotent; AndroidShareUtils also sets it, but
     // this keeps the feature self-sufficient regardless of construction order).
-    QJniObject jni("io/emeric/mobilesharing/QShareUtils");
-    if (jni.isValid())
-    {
-        jni.callMethod<void>("setActivity", "(Landroid/app/Activity;)V",
-                             QNativeInterface::QAndroidApplication::context().object());
-    }
+    QJniObject::callStaticMethod<void>("io/emeric/mobilesharing/QShareUtils",
+                                       "setActivity", "(Landroid/app/Activity;)V",
+                                       QNativeInterface::QAndroidApplication::context().object());
 
     // The provider keeps serving across app exits/reboots from its own persisted state, so seed our
     // in-memory state from it: otherwise 'enabled' would read false on a fresh launch while the

@@ -29,7 +29,7 @@ T.Button {
     // settings
     flat: true
     checkable: false
-    hoverEnabled: isDesktop
+    hoverEnabled: Theme.isDesktop
     focusPolicy: Qt.NoFocus
 
     // layout

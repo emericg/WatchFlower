@@ -52,11 +52,11 @@ public class QShareUtils
     // store the app main activity
     private static Activity m_activity = null;
 
-    protected QShareUtils() {
-       //Log.d("QShareUtils", "QShareUtils()");
+    private QShareUtils() {
+        //Log.d("QShareUtils", "QShareUtils()");
     }
 
-    public void setActivity(Activity activity) {
+    public static void setActivity(Activity activity) {
         m_activity = activity;
         if (m_activity == null) {
             Log.d("QShareUtils", "Activity is null");
@@ -368,8 +368,8 @@ public class QShareUtils
     }
 
     // Enable/disable the DocumentsProvider and point it at an app-owned directory. Persists the
-    // config and pokes SAF so any open picker refreshes its list of roots. 'writable' is plumbed
-    // for the future read/write wave; the provider currently serves read-only regardless.
+    // config and pokes SAF so any open picker refreshes its list of roots. 'writable' is honored
+    // by QShareDocumentProvider (the C++ side currently always passes false).
     // Returns false if the activity/context is missing or the directory could not be created.
     public static boolean setDocumentProvider(boolean enabled, String rootDirPath, boolean writable, String title) {
         if (m_activity == null) return false;

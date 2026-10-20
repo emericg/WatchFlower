@@ -53,7 +53,7 @@ Q_SIGNALS:
     void fileSaved(int requestCode);
 
 public:
-    PlatformShareUtils(QObject *parent = nullptr) : QObject(parent) { };
+    PlatformShareUtils(QObject *parent = nullptr) : QObject(parent) { }
     virtual ~PlatformShareUtils() = default;
 
     virtual void checkPendingIntents(const QString &workingDirPath) { }

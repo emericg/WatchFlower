@@ -1,7 +1,8 @@
-MIT License
+### MIT License
 
-Copyright (c) 2017 Ekkehard Gentz (ekke)
-Copyright (c) 2026 Emeric Grange
+> Copyright © 2017 Ekkehard Gentz (ekke)
+
+> Copyright © 2026 Emeric Grange
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

@@ -85,7 +85,6 @@ public:
      */
     void onSaveResult(int requestCode, bool success, bool canceled);
 
-public slots:
     /*!
      * \brief Called from JNI (QShareActivity) once the incoming file has been copied into our cache subdir.
      * \param filePath: Path to our copy of the file we just receive.

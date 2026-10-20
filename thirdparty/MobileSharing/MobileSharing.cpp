@@ -114,8 +114,7 @@ MobileSharing::MobileSharing(QObject *parent) : QObject(parent)
 
     if (qApp->applicationState() == Qt::ApplicationActive)
     {
-        QMetaObject::invokeMethod(this, "onApplicationStateChanged", Qt::QueuedConnection,
-                                  Q_ARG(Qt::ApplicationState, Qt::ApplicationActive));
+        QMetaObject::invokeMethod(this, &MobileSharing::onApplicationStateChanged, Qt::QueuedConnection, Qt::ApplicationActive);
     }
 }
 

@@ -8,6 +8,14 @@ set(QT_NO_PRIVATE_MODULE_WARNING ON)
 
 ################################################################################
 
+set(ANDROID_DEPLOY_PATH "AUTO" CACHE STRING "Path to deploy Android resources into (AUTO / OFF / path)")
+
+option(ANDROID_DEPLOY_SEND "Send/save files. Always on."                        ON)
+option(ANDROID_DEPLOY_RECEIVE "Receive files."                                  ON)
+option(ANDROID_DEPLOY_DOCUMENTPROVIDER "Android SAF DocumentsProvider support." ON)
+
+################################################################################
+
 # Generic dependencies
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml)
 set(CORE_LIBRARIES Qt::Core Qt::Gui Qt::Qml)
@@ -20,8 +28,7 @@ set(CORE_SOURCES
 
 # OS specific sources & dependencies
 if (ANDROID)
-    set(PLATFORM_SOURCES
-        MobileSharing_android.cpp MobileSharing_android.h)
+    set(PLATFORM_SOURCES MobileSharing_android.cpp MobileSharing_android.h)
 
     if(Qt6Gui_VERSION VERSION_GREATER_EQUAL 6.10.0)
         find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
@@ -32,8 +39,7 @@ if (ANDROID)
     endif()
 elseif (IOS)
     enable_language(OBJCXX)
-    set(PLATFORM_SOURCES
-        MobileSharing_ios.mm)
+    set(PLATFORM_SOURCES MobileSharing_ios.mm)
 
     set(PLATFORM_LIBRARIES
         "-framework UIKit"
@@ -70,52 +76,60 @@ endif()
 
 ################################################################################
 
-# On Android the module owns its Java sources and FileProvider resources.
-# We copy these files into QT_ANDROID_PACKAGE_SOURCE_DIR at configure time.
-# We do not overwrite the filepaths.xml, because the parent application is free to use its own.
 if (ANDROID)
-    # If by any chance QT_ANDROID_PACKAGE_SOURCE_DIR exists as a variable (?) we use it
-    if (NOT DEFINED MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR AND DEFINED QT_ANDROID_PACKAGE_SOURCE_DIR)
-        set(MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR "${QT_ANDROID_PACKAGE_SOURCE_DIR}")
-    endif()
+    # On Android the module owns its Java sources and FileProvider resources.
+    # We copy these files into QT_ANDROID_PACKAGE_SOURCE_DIR at configure time.
+    # We do not overwrite the filepaths.xml, because the parent application is free to use its own.
 
-    # If by any chance the directory "${CMAKE_SOURCE_DIR}/platforms/android/" exists, we use it
-    if (NOT DEFINED MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR AND EXISTS "${CMAKE_SOURCE_DIR}/platforms/android")
-        set(MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/platforms/android")
-    endif()
+    if (ANDROID_DEPLOY_PATH AND NOT ANDROID_DEPLOY_PATH STREQUAL "OFF")
 
-    if (DEFINED MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR)
-        file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/android/src"
-             DESTINATION "${MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR}")
-
-        if (NOT EXISTS "${MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR}/res/xml/filepaths.xml")
-            file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/android/res"
-                 DESTINATION "${MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR}")
+        if (ANDROID_DEPLOY_PATH STREQUAL "AUTO")
+            # If by any chance QT_ANDROID_PACKAGE_SOURCE_DIR exists as a variable, or if
+            # one of the following directories exists (platforms/android/, assets/android/, android/)
+            if (DEFINED QT_ANDROID_PACKAGE_SOURCE_DIR)
+                set(ANDROID_DEPLOY_PATH "${QT_ANDROID_PACKAGE_SOURCE_DIR}")
+            elseif (EXISTS "${CMAKE_SOURCE_DIR}/platforms/android")
+                set(ANDROID_DEPLOY_PATH "${CMAKE_SOURCE_DIR}/platforms/android")
+            elseif (EXISTS "${CMAKE_SOURCE_DIR}/assets/android")
+                set(ANDROID_DEPLOY_PATH "${CMAKE_SOURCE_DIR}/assets/android")
+            elseif (EXISTS "${CMAKE_SOURCE_DIR}/android")
+                set(ANDROID_DEPLOY_PATH "${CMAKE_SOURCE_DIR}/android")
+            else()
+                message(WARNING "MobileSharing > ANDROID_DEPLOY_PATH is not set!")
+            endif()
         endif()
 
-        message(STATUS "MobileSharing > Deployed Android Java/res into ${MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR}")
+        if (EXISTS "${ANDROID_DEPLOY_PATH}")
+            # Select which Java/res resources to deploy, per enabled feature:
+            # - QShareUtils.java (Sending/viewing/saving files + outgoing FileProvider)
+            # - QShareActivity.java (Receiving files with incoming SEND/VIEW intents)
+            # - QShareDocumentProvider.java (Sharing a directory with SAF DocumentsProvider)
+            # - res/xml/filepaths.xml (always deployed, but never overwritten, the parent app is free to use its own)
 
-        # Build-time re-deploy, to iterate on the module's Java/res WITHOUT a CMake
-        # reconfigure (the file(COPY) above only runs at configure time). Invoke on
-        # demand with:  cmake --build <dir> --target MobileSharing_deploy_android
-        # In Debug builds it is also added to ALL, so it re-copies on every build.
-        set(_mobilesharing_deploy_all "")
-        if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-            set(_mobilesharing_deploy_all ALL)
+            set(_mobilesharing_resources "src/io/emeric/mobilesharing/QShareUtils.java")
+            if (ANDROID_DEPLOY_RECEIVE)
+                list(APPEND _mobilesharing_resources "src/io/emeric/mobilesharing/QShareActivity.java")
+            endif()
+            if (ANDROID_DEPLOY_DOCUMENTPROVIDER)
+                list(APPEND _mobilesharing_resources "src/io/emeric/mobilesharing/QShareDocumentProvider.java")
+            endif()
+            if (NOT EXISTS "${ANDROID_DEPLOY_PATH}/res/xml/filepaths.xml")
+                list(APPEND _mobilesharing_resources "res/xml/filepaths.xml")
+            endif()
+
+            # Configure-time deploy: copy each selected resource, preserving its subpath
+            foreach(_ms_res IN LISTS _mobilesharing_resources)
+                get_filename_component(_ms_res_subdir "${_ms_res}" DIRECTORY)
+                file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/android/${_ms_res}"
+                     DESTINATION "${ANDROID_DEPLOY_PATH}/${_ms_res_subdir}")
+            endforeach()
+
+            message(STATUS "MobileSharing > Deployed Android resources into ${ANDROID_DEPLOY_PATH}: ${_mobilesharing_resources}")
+            unset(_mobilesharing_resources)
+
+        else()
+            message(WARNING "MobileSharing > ANDROID_DEPLOY_PATH ${ANDROID_DEPLOY_PATH} does not exist!")
         endif()
-        add_custom_target(MobileSharing_deploy_android ${_mobilesharing_deploy_all}
-            COMMAND ${CMAKE_COMMAND} -E copy_directory
-                    "${CMAKE_CURRENT_SOURCE_DIR}/android/src"
-                    "${MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR}/src"
-            COMMAND ${CMAKE_COMMAND} -E copy_directory
-                    "${CMAKE_CURRENT_SOURCE_DIR}/android/res"
-                    "${MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR}/res"
-            COMMENT "MobileSharing > Re-deploying Android Java/res (dev)"
-            VERBATIM)
-        unset(_mobilesharing_deploy_all)
-    else()
-        message(WARNING "MobileSharing > MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR is not set, "
-                        "please provide the same path than your application's QT_ANDROID_PACKAGE_SOURCE_DIR before add_subdirectory(MobileSharing).")
     endif()
 endif()
 

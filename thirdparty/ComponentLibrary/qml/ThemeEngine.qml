@@ -608,11 +608,11 @@ QtObject {
             colorForeground             = "#f5f4f3"
 
             colorPrimary                = "#6640d8" // purple
-            colorSecondary              = "#ffeb00"
+            colorSecondary              = "#8040d8"
             //colorPrimary                = "#ffc900" // yellow
             //colorSecondary              = "#ffeb00"
             //colorPrimary                = "#27ba72" // green
-            //colorSecondary              = "#ffeb00"
+            //colorSecondary              = "#27baa2"
 
             colorSuccess                = colorGreen
             colorWarning                = colorOrange
