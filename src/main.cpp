@@ -92,7 +92,12 @@ int main(int argc, char *argv[])
         DatabaseManager *db = DatabaseManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
         DeviceManager *dm = new DeviceManager();
-        if (!sm || !db || !nm || !dm) return EXIT_FAILURE;
+        if (!sm || !db || !nm || !dm)
+        {
+            qWarning() << "Cannot init app components!";
+            delete sm; delete db; delete nm; delete dm;
+            return EXIT_FAILURE;
+        }
 
         if (dm->areDevicesAvailable())
         {
@@ -167,13 +172,14 @@ int main(int argc, char *argv[])
     }
 
     // Plant database
-    PlantDatabase *pdb = PlantDatabase::getInstance();
+    PlantDatabase::getInstance();
 
     // Init generic utils
     UtilsLanguage *utilsLanguage = UtilsLanguage::getInstance();
     if (!utilsLanguage)
     {
         qWarning() << "Cannot init generic utils!";
+        delete utilsLanguage;
         return EXIT_FAILURE;
     }
 

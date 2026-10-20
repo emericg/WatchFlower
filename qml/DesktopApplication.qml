@@ -581,7 +581,29 @@ ApplicationWindow {
         ]
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    // Exit ////////////////////////////////////////////////////////////////////
+
+    BannerButton {
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.componentMarginXL
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.componentMarginXL
+
+        visible: disconnectTimer.running
+        opacity: disconnectTimer.running ? 1 : 0
+
+        animation: "fade"
+        animationRunning: visible
+
+        text: qsTr("Disconnecting devices... Please Wait...")
+        textButton: qsTr("Exit now")
+
+        source: "qrc:/IconLibrary/material-icons/duotone/bluetooth_connected.svg"
+
+        onClicked: {
+            UtilsApp.appExit()
+        }
+    }
 
     Timer {
         id: disconnectTimer
@@ -597,10 +619,11 @@ ApplicationWindow {
     onClosing: (close) => {
         //console.log("onClosing(" + close + ")")
 
-        // macOS hide in dock
+        // macOS minimize to dock
         if (SettingsManager.systray || Qt.platform.os === "osx") {
-            close.accepted = false
             appWindow.hide()
+
+            close.accepted = false
             return
         }
 
@@ -608,6 +631,7 @@ ApplicationWindow {
         if (deviceManager.areDevicesConnected()) {
             deviceManager.disconnectDevices()
             disconnectTimer.start()
+
             close.accepted = false
             return
         }

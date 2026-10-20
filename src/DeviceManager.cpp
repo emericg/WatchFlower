@@ -175,22 +175,6 @@ DeviceManager::DeviceManager(bool daemon)
 
             else if (deviceName == "ThermoBeacon")
                 d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
-            else if (deviceName.startsWith("Ruuvi ") && deviceModel == "Ruuvi Air")
-                d = new DeviceRuuviAir(deviceAddr, deviceName, this);
-            else if (deviceName.startsWith("Ruuvi "))
-                d = new DeviceRuuviTag(deviceAddr, deviceName, this);
-            else if (DeviceGoveeHygrometer::isGoveeHygrometer(deviceName))
-                d = new DeviceGoveeHygrometer(deviceAddr, deviceName, this);
-            else if (DeviceGoveeAirQuality::isGoveeAirQuality(deviceName))
-                d = new DeviceGoveeAirQuality(deviceAddr, deviceName, this);
-            else if (DeviceSwitchBotHygrometer::isSwitchBotHygrometer(deviceName, deviceModel))
-                d = new DeviceSwitchBotHygrometer(deviceAddr, deviceName, this);
-            else if (DeviceSwitchBotAirQuality::isSwitchBotAirQuality(deviceName, deviceModel))
-                d = new DeviceSwitchBotAirQuality(deviceAddr, deviceName, this);
-            else if (DeviceInkbirdHygrometer::isInkbirdHygrometer(deviceName))
-                d = new DeviceInkbirdHygrometer(deviceAddr, deviceName, this);
-            else if (DeviceInkbirdAirQuality::isInkbirdAirQuality(deviceName))
-                d = new DeviceInkbirdAirQuality(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
                 d = new DeviceHygrotempLYWSDCGQ(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02" || deviceName == "MHO-C303")
@@ -212,6 +196,23 @@ DeviceManager::DeviceManager(bool daemon)
                 d = new DeviceAranet2(deviceAddr, deviceName, this);
             else if (deviceName.startsWith("Aranet Radon"))
                 d = new DeviceAranetRadon(deviceAddr, deviceName, this);
+
+            else if (deviceName.startsWith("Ruuvi ") && deviceModel == "Ruuvi Air")
+                d = new DeviceRuuviAir(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Ruuvi "))
+                d = new DeviceRuuviTag(deviceAddr, deviceName, this);
+            else if (DeviceGoveeHygrometer::isGoveeHygrometer(deviceName))
+                d = new DeviceGoveeHygrometer(deviceAddr, deviceName, this);
+            else if (DeviceGoveeAirQuality::isGoveeAirQuality(deviceName))
+                d = new DeviceGoveeAirQuality(deviceAddr, deviceName, this);
+            else if (DeviceSwitchBotHygrometer::isSwitchBotHygrometer(deviceName, deviceModel))
+                d = new DeviceSwitchBotHygrometer(deviceAddr, deviceName, this);
+            else if (DeviceSwitchBotAirQuality::isSwitchBotAirQuality(deviceName, deviceModel))
+                d = new DeviceSwitchBotAirQuality(deviceAddr, deviceName, this);
+            else if (DeviceInkbirdHygrometer::isInkbirdHygrometer(deviceName))
+                d = new DeviceInkbirdHygrometer(deviceAddr, deviceName, this);
+            else if (DeviceInkbirdAirQuality::isInkbirdAirQuality(deviceName))
+                d = new DeviceInkbirdAirQuality(deviceAddr, deviceName, this);
 
             else if (deviceName.startsWith("WP6003"))
                 d = new DeviceWP6003(deviceAddr, deviceName, this);
@@ -262,9 +263,6 @@ DeviceManager::DeviceManager(bool daemon)
 
 DeviceManager::~DeviceManager()
 {
-    qDeleteAll(m_bluetoothAdapters);
-    m_bluetoothAdapters.clear();
-
     delete m_bluetoothAdapter;
     delete m_bluetoothDiscoveryAgent;
 
@@ -418,6 +416,8 @@ bool DeviceManager::enableBluetooth(bool enforceUserPermissionCheck)
     // Select an adapter (if none currently selected)
     if (!m_bluetoothAdapter)
     {
+        //qDebug() << "DeviceManager::enableBluetooth() creating new adapter";
+
         // Correspond to the "first available" or "default" Bluetooth adapter
         m_bluetoothAdapter = new QBluetoothLocalDevice();
         if (m_bluetoothAdapter)
@@ -1880,6 +1880,14 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         info.name() == "HiGrow" ||
         info.name() == "bparasite" ||
         info.name() == "ThermoBeacon" ||
+        DeviceRuuviTag::isRuuviTag(info) ||
+        DeviceRuuviAir::isRuuviAir(info) ||
+        DeviceGoveeHygrometer::isGoveeHygrometer(info.name()) ||
+        DeviceGoveeAirQuality::isGoveeAirQuality(info.name()) ||
+        DeviceSwitchBotHygrometer::isSwitchBotHygrometer(info) ||
+        DeviceSwitchBotAirQuality::isSwitchBotAirQuality(info) ||
+        DeviceInkbirdHygrometer::isInkbirdHygrometer(info) ||
+        DeviceInkbirdAirQuality::isInkbirdAirQuality(info.name()) ||
         info.name() == "MJ_HT_V1" ||
         info.name() == "LYWSD02" || info.name() == "MHO-C303" ||
         info.name() == "LYWSD03MMC" || info.name() == "MHO-C401" ||
@@ -1917,6 +1925,22 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
 
         else if (info.name() == "ThermoBeacon")
             d = new DeviceThermoBeacon(info, this);
+        else if (DeviceRuuviTag::isRuuviTag(info))
+            d = new DeviceRuuviTag(info, this);
+        else if (DeviceRuuviAir::isRuuviAir(info))
+            d = new DeviceRuuviAir(info, this);
+        else if (DeviceGoveeHygrometer::isGoveeHygrometer(info.name()))
+            d = new DeviceGoveeHygrometer(info, this);
+        else if (DeviceGoveeAirQuality::isGoveeAirQuality(info.name()))
+            d = new DeviceGoveeAirQuality(info, this);
+        else if (DeviceSwitchBotHygrometer::isSwitchBotHygrometer(info))
+            d = new DeviceSwitchBotHygrometer(info, this);
+        else if (DeviceSwitchBotAirQuality::isSwitchBotAirQuality(info))
+            d = new DeviceSwitchBotAirQuality(info, this);
+        else if (DeviceInkbirdHygrometer::isInkbirdHygrometer(info))
+            d = new DeviceInkbirdHygrometer(info, this);
+        else if (DeviceInkbirdAirQuality::isInkbirdAirQuality(info.name()))
+            d = new DeviceInkbirdAirQuality(info, this);
         else if (info.name() == "MJ_HT_V1")
             d = new DeviceHygrotempLYWSDCGQ(info, this);
         else if (info.name() == "LYWSD02" || info.name() == "MHO-C303")

@@ -107,8 +107,6 @@ class DeviceManager: public QObject
     QBluetoothDeviceDiscoveryAgent *m_bluetoothDiscoveryAgent = nullptr;
     QBluetoothLocalDevice::HostMode m_bluetoothHostMode = QBluetoothLocalDevice::HostPoweredOff;
 
-    QList <QObject *> m_bluetoothAdapters;
-
     ////
 
     QList <QString> m_devices_blacklist;
@@ -151,16 +149,6 @@ class DeviceManager: public QObject
 
     bool m_syncing = false;
     bool isSyncing() const;
-
-    bool hasBluetoothAdapter() const { return m_bleAdapter; }
-    bool hasBluetoothEnabled() const { return m_bleEnabled; }
-    bool hasBluetoothPermissions() const;
-    bool hasBluetooth() const;
-
-    bool hasPermissionBluetooth() const { return m_blePermission; }
-    bool hasPermissionLocationForeground() const { return m_locPermission_foreground; }
-    bool hasPermissionLocationBackground() const { return m_locPermission_background; }
-    bool hasGpsEnabled() const { return m_gpsEnabled; }
 
     void setBluetoothPermission(bool perm);
     void setLocationPermission_foreground(bool perm);
@@ -225,10 +213,16 @@ public:
 
     bool isDaemon() const { return m_daemonMode; }
 
-    // Adapters management
-    Q_INVOKABLE bool areAdaptersAvailable() const { return m_bluetoothAdapters.size(); }
-    QVariant getAdapters() const { return QVariant::fromValue(m_bluetoothAdapters); }
-    int getAdaptersCount() const { return m_bluetoothAdapters.size(); }
+    // Permissions
+    bool hasBluetoothAdapter() const { return m_bleAdapter; }
+    bool hasBluetoothEnabled() const { return m_bleEnabled; }
+    bool hasBluetoothPermissions() const;
+    bool hasBluetooth() const;
+
+    bool hasPermissionBluetooth() const { return m_blePermission; }
+    bool hasPermissionLocationForeground() const { return m_locPermission_foreground; }
+    bool hasPermissionLocationBackground() const { return m_locPermission_background; }
+    bool hasGpsEnabled() const { return m_gpsEnabled; }
 
     // Bluetooth management
     Q_INVOKABLE bool checkBluetooth();

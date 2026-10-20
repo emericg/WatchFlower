@@ -19,6 +19,13 @@ Release/*
 *.xcodeproj/*
 asset_catalog_compiler.Info.plist
 
+# MobileSharing auto deployed files
+platforms/android/src/io/emeric/mobilesharing/*
+
+# IDE related
+.qtcreator
+.vscode
+
 # Others
 stash/*
 .DS_Store

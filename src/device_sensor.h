@@ -357,6 +357,14 @@ protected:
     bool parseBeaconQingping(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
     bool parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
 
+    /*!
+     * \brief Replace the content of a Qt Graphs line series with (time, value) pairs.
+     * \param series: the series to fill.
+     * \param time: x values (ms since epoch).
+     * \param values: y values, extra entries without a matching time are ignored.
+     */
+    static void fillLineSeries(QLineSeries *series, const QVariantList &time, const QVariantList &values);
+
 public:
     DeviceSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);

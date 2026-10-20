@@ -1449,3 +1449,18 @@ float DeviceSensor::getLastMove_days() const
 
 /* ************************************************************************** */
 /* ************************************************************************** */
+
+void DeviceSensor::fillLineSeries(QLineSeries *series, const QVariantList &time, const QVariantList &values)
+{
+    if (!series) return;
+
+    QList<QPointF> points;
+    points.reserve(values.size());
+    for (qsizetype i = 0; i < values.size() && i < time.size(); i++)
+    {
+        points.append(QPointF(time.at(i).toReal(), values.at(i).toReal()));
+    }
+    series->replace(points);
+}
+
+/* ************************************************************************** */
