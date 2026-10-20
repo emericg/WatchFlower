@@ -116,10 +116,10 @@ if [[ $create_package = true ]] ; then
   mkdir -p bin/usr/share/pixmaps/
   mkdir -p bin/usr/share/icons/hicolor/scalable/apps/
   mv bin/$APP_NAME bin/usr/bin/$APP_NAME
-  cp assets/linux/$APP_NAME_LOWERCASE.appdata.xml bin/usr/share/appdata/$APP_NAME_LOWERCASE.appdata.xml
-  cp assets/linux/$APP_NAME_LOWERCASE.desktop bin/usr/share/applications/$APP_NAME_LOWERCASE.desktop
-  cp assets/linux/$APP_NAME_LOWERCASE.svg bin/usr/share/pixmaps/$APP_NAME_LOWERCASE.svg
-  cp assets/linux/$APP_NAME_LOWERCASE.svg  bin/usr/share/icons/hicolor/scalable/apps/$APP_NAME_LOWERCASE.svg
+  cp platforms/linux/$APP_NAME_LOWERCASE.appdata.xml bin/usr/share/appdata/$APP_NAME_LOWERCASE.appdata.xml
+  cp platforms/linux/$APP_NAME_LOWERCASE.desktop bin/usr/share/applications/$APP_NAME_LOWERCASE.desktop
+  cp platforms/linux/$APP_NAME_LOWERCASE.svg bin/usr/share/pixmaps/$APP_NAME_LOWERCASE.svg
+  cp platforms/linux/$APP_NAME_LOWERCASE.svg  bin/usr/share/icons/hicolor/scalable/apps/$APP_NAME_LOWERCASE.svg
 
   echo '---- Running AppImage packager'
   ./contribs/deploy/linuxdeploy-x86_64.AppImage --appdir bin --plugin qt --output appimage

@@ -29,7 +29,7 @@ public class WatchFlowerBootServiceBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Intent startServiceIntent = new Intent(context, WatchFlowerAndroidService.class);
-        context.startService(startServiceIntent);
+        // Single entry point owns the foreground/background launch decision
+        WatchFlowerAndroidService.serviceStart(context);
     }
 }

@@ -108,9 +108,9 @@ if(NOT IOS AND NOT ANDROID) # Desktop
 
     # Desktop app icons
     if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-        set(app_icon_windows "${PROJECT_SOURCE_DIR}/assets/windows/${PROJECT_NAME}.rc")
+        set(app_icon_windows "${PROJECT_SOURCE_DIR}/platforms/windows/${PROJECT_NAME}.rc")
     elseif(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-        set(app_icon_macos "${PROJECT_SOURCE_DIR}/assets/macos/${PROJECT_NAME}.icns")
+        set(app_icon_macos "${PROJECT_SOURCE_DIR}/platforms/macos/${PROJECT_NAME}.icns")
     endif()
 
     # Desktop only source files
@@ -261,11 +261,6 @@ add_other_files(${PROJECT_NAME}
 ################################################################################
 
 # SingleApplication
-if(IOS OR ANDROID)
-    set(QAPPLICATION_CLASS QGuiApplication)
-else()
-    set(QAPPLICATION_CLASS QApplication)
-endif()
 add_subdirectory(thirdparty/SingleApplication)
 target_link_libraries(${PROJECT_NAME} PRIVATE SingleApplication)
 
@@ -343,10 +338,10 @@ include(GNUInstallDirs)
 
 ## Linux
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.desktop DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications/)
-    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/appdata/)
-    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.svg DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pixmaps/)
-    install(FILES ${PROJECT_SOURCE_DIR}/assets/linux/${PROJECT_NAME}.svg DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps/)
+    install(FILES ${PROJECT_SOURCE_DIR}/platforms/linux/${PROJECT_NAME}.desktop DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications/)
+    install(FILES ${PROJECT_SOURCE_DIR}/platforms/linux/${PROJECT_NAME}.appdata.xml DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/appdata/)
+    install(FILES ${PROJECT_SOURCE_DIR}/platforms/linux/${PROJECT_NAME}.svg DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/pixmaps/)
+    install(FILES ${PROJECT_SOURCE_DIR}/platforms/linux/${PROJECT_NAME}.svg DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps/)
     install(FILES ${PROJECT_SOURCE_DIR}/LICENSE.md DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/licenses/${PROJECT_NAME}/)
 endif()
 
@@ -355,18 +350,20 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     #set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
     set(CMAKE_OSX_DEPLOYMENT_TARGET "12.0")
 
-    set(app_icon_macos "${PROJECT_SOURCE_DIR}/assets/macos/${PROJECT_NAME}.icns")
+    # Icons
+    set(app_icon_macos "${PROJECT_SOURCE_DIR}/platforms/macos/${PROJECT_NAME}.icns")
     set_source_files_properties(${app_icon_macos} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     set_target_properties(${PROJECT_NAME} PROPERTIES
         MACOSX_BUNDLE ON
-        MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/assets/macos/Info.plist"
+        MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/platforms/macos/Info.plist"
         # New Xcode attributes (???)
-        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "io.emeric.watchflower"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "com.emeric.watchflower.ios"
         XCODE_ATTRIBUTE_PRODUCT_NAME                        ${PROJECT_NAME}
         XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-        XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS             "${PROJECT_SOURCE_DIR}/assets/macos/${PROJECT_NAME}.entitlements"
+        XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS             "${PROJECT_SOURCE_DIR}/platforms/macos/${PROJECT_NAME}.entitlements"
+        XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT[variant=Release] "dwarf-with-dsym"
     )
 endif()
 
@@ -382,12 +379,21 @@ endif()
 ## Android
 if(CMAKE_SYSTEM_NAME STREQUAL "Android")
     set_target_properties(${PROJECT_NAME} PROPERTIES
+        QT_ANDROID_PACKAGE_NAME "com.emeric.watchflower"
         #QT_ANDROID_ABIS "armeabi-v7a;arm64-v8a;x86;x86_64"
         #QT_ANDROID_BUILD_ALL_ABIS ON
         QT_ANDROID_MIN_SDK_VERSION 28
         QT_ANDROID_TARGET_SDK_VERSION 36
-        QT_ANDROID_PACKAGE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/assets/android/"
+        QT_ANDROID_COMPILE_SDK_VERSION 36
+        QT_ANDROID_SDK_BUILD_TOOLS_REVISION 36.1.0
+        QT_ANDROID_PACKAGE_SOURCE_DIR "${PROJECT_SOURCE_DIR}/platforms/android/"
     )
+
+    # Android NDK check (selected by the Qt Creator kit, or ANDROID_NDK_ROOT on the CI)
+    set(ANDROID_NDK_VERSION_EXPECTED 28.2)
+    if(CMAKE_ANDROID_NDK_VERSION AND NOT CMAKE_ANDROID_NDK_VERSION VERSION_EQUAL ANDROID_NDK_VERSION_EXPECTED)
+        message(WARNING "Android NDK ${ANDROID_NDK_VERSION_EXPECTED} expected, building with NDK ${CMAKE_ANDROID_NDK_VERSION}")
+    endif()
 
     # Support 16 KB page sizes / pre NDK28
     target_link_options(${PROJECT_NAME} PRIVATE "-Wl,-z,max-page-size=16384")
@@ -396,23 +402,34 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Android")
     #target_compile_definitions(${PROJECT_NAME} PRIVATE QT_CONNECTIVITY_PATCHED)
 
     # Android background service
+    set(QT_NO_PRIVATE_MODULE_WARNING ON)
     find_package(Qt6 REQUIRED COMPONENTS CorePrivate)
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt::CorePrivate)
+
+    # Qt plugins deployed into the APK
+    qt_import_plugins(${PROJECT_NAME}
+        INCLUDE_BY_TYPE imageformats Qt::QSvgPlugin
+        INCLUDE_BY_TYPE position Qt::QGeoPositionInfoSourceFactoryAndroidPlugin
+        EXCLUDE_BY_TYPE iconengines networkinformation tls platforminputcontexts qmltooling
+    )
 endif()
 
 ## iOS
 if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
-    set(app_icon_ios "${PROJECT_SOURCE_DIR}/assets/ios/Images.xcassets")
+    set(CMAKE_OSX_DEPLOYMENT_TARGET "16.0")
+
+    # Icons
+    set(app_icon_ios "${PROJECT_SOURCE_DIR}/platforms/ios/Images.xcassets")
     target_sources(${PROJECT_NAME} PRIVATE ${app_icon_ios})
     set_source_files_properties(${app_icon_ios} PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     set_target_properties(${PROJECT_NAME} PROPERTIES
         MACOSX_BUNDLE ON
-        MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/assets/ios/Info.plist"
+        MACOSX_BUNDLE_INFO_PLIST "${PROJECT_SOURCE_DIR}/platforms/ios/Info.plist"
         # Qt
-        QT_IOS_LAUNCH_SCREEN "${PROJECT_SOURCE_DIR}/assets/ios/LaunchScreen.storyboard"
+        QT_IOS_LAUNCH_SCREEN "${PROJECT_SOURCE_DIR}/platforms/ios/LaunchScreen.storyboard"
         # New Xcode attributes (???)
-        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "io.emeric.watchflower"
+        XCODE_ATTRIBUTE_PRODUCT_BUNDLE_IDENTIFIER           "com.emeric.watchflower.ios"
         XCODE_ATTRIBUTE_PRODUCT_NAME                        ${PROJECT_NAME}
         XCODE_ATTRIBUTE_CURRENT_PROJECT_VERSION             ${PROJECT_VERSION}
         XCODE_ATTRIBUTE_MARKETING_VERSION                   ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
@@ -420,6 +437,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
         XCODE_ATTRIBUTE_TARGETED_DEVICE_FAMILY              "1,2" # iPhone,iPad
         XCODE_ATTRIBUTE_ASSETCATALOG_COMPILER_APPICON_NAME  "AppIcon"
         XCODE_ATTRIBUTE_GCC_GENERATE_DEBUGGING_SYMBOLS      "YES"
+        XCODE_ATTRIBUTE_DEBUG_INFORMATION_FORMAT[variant=Release] "dwarf-with-dsym"
     )
 endif()
 

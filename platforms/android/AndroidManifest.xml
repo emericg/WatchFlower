@@ -72,7 +72,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:process=":qt_service" android:name=".WatchFlowerAndroidService">
+        <service android:process=":qt_service" android:name=".WatchFlowerAndroidService" android:foregroundServiceType="connectedDevice">
             <meta-data android:name="android.app.background_running" android:value="true" />
             <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --" />
             <meta-data android:name="android.app.arguments" android:value="--service" />

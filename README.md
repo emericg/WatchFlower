@@ -1,4 +1,4 @@
-# ![WatchFlower](assets/android/res/drawable-xxxhdpi/splashicon.png)
+# ![WatchFlower](platforms/android/res/drawable-xxxhdpi/splashicon.png)
 
 [![GitHub release](https://img.shields.io/github/release/emericg/WatchFlower.svg?style=flat-square)](https://github.com/emericg/WatchFlower/releases)
 [![GitHub action](https://img.shields.io/github/actions/workflow/status/emericg/WatchFlower/builds_desktop.yml?style=flat-square)](https://github.com/emericg/WatchFlower/actions)
@@ -116,7 +116,7 @@ You will need a C++17 compiler and Qt 6.8+ with the following 'additional librai
 
 For macOS and iOS builds, you'll need Xcode (15+) installed.  
 For Windows builds, you'll need MSVC (2022) installed. Bluetooth won't work with MinGW.  
-For Android builds, you'll need the appropriates JDK (17) SDK (28+) and NDK (28+). You can customize Android build environment using the `assets/android/gradle.properties` file.  
+For Android builds, you'll need the appropriates JDK (17) SDK (28+) and NDK (28+).  
 
 #### Building WatchFlower
 

@@ -46,6 +46,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QQuickWindow>
+#include <QQuickStyle>
 #include <QSurfaceFormat>
 
 #if defined(Q_OS_ANDROID)
@@ -187,6 +188,9 @@ int main(int argc, char *argv[])
 
     // Translate the application
     utilsLanguage->loadLanguage(sm->getAppLanguage());
+
+    // Force the QtQuick Controls style (the only one deployed on Android)
+    QQuickStyle::setStyle("Basic");
 
     // Start the application
     QQmlApplicationEngine engine;

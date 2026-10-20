@@ -15,7 +15,7 @@ on:
 env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "6.0"
-  QT_VERSION: "6.10.3"
+  QT_VERSION: "6.12.0"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -151,7 +151,7 @@ jobs:
           MACOS_CERTIFICATE_NAME: ${{ secrets.MACOS_CERTIFICATE_NAME }}
         run: |
           /usr/bin/codesign --deep --force --options runtime \
-            --entitlements "assets/macos/${{ env.APP_NAME }}.entitlements" \
+            --entitlements "platforms/macos/${{ env.APP_NAME }}.entitlements" \
             --sign "${{ secrets.MACOS_CERTIFICATE_NAME }}" \
             bin/${{ env.APP_NAME }}.app
 

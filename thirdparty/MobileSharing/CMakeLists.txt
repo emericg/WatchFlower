@@ -79,9 +79,9 @@ if (ANDROID)
         set(MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR "${QT_ANDROID_PACKAGE_SOURCE_DIR}")
     endif()
 
-    # If by any chance the directory "${CMAKE_SOURCE_DIR}/assets/android/" exists, we use it
-    if (NOT DEFINED MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR AND EXISTS "${CMAKE_SOURCE_DIR}/assets/android")
-        set(MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/assets/android")
+    # If by any chance the directory "${CMAKE_SOURCE_DIR}/platforms/android/" exists, we use it
+    if (NOT DEFINED MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR AND EXISTS "${CMAKE_SOURCE_DIR}/platforms/android")
+        set(MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_SOURCE_DIR}/platforms/android")
     endif()
 
     if (DEFINED MOBILESHARING_ANDROID_PACKAGE_SOURCE_DIR)

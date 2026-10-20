@@ -1,0 +1,161 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        //noinspection AndroidGradlePluginVersion
+        //classpath 'com.android.tools.build:gradle:8.10.1' // works with Qt 6.10+ // Java 17
+        classpath 'com.android.tools.build:gradle:8.6.1' // works with Qt 6.8+ // Java 17
+    }
+}
+
+repositories {
+    google()
+    mavenCentral()
+}
+
+apply plugin: 'com.android.application'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+    implementation 'androidx.core:core:1.13.1'
+}
+
+def getTimestampStr() { return new Date().format('yyyyMMddHHmmss') }
+def timestampInt = (int)(new Date().getTime() / 1000 / 1)
+
+// Unused Qt libs and QML plugins are removed from res/values/libs.xml and excluded from the package
+// C++ plugins are included/excluded with qt_import_plugins() in CMakeLists.txt
+// Never list a library that a kept library links against, the QtLoader would fail at startup...
+def qtLibsUnused = [
+    // Controls styles
+    'QuickControls2Fusion', 'QuickControls2FusionStyleImpl',
+    'QuickControls2Imagine', 'QuickControls2ImagineStyleImpl',
+    'QuickControls2Universal', 'QuickControls2UniversalStyleImpl',
+    'QuickControls2FluentWinUI3', 'QuickControls2FluentWinUI3StyleImpl',
+    'QuickControls2Material', // (MaterialStyleImpl) is used for its Ripple component
+    // QtQuick.Dialogs
+    'QuickDialogs2', 'QuickDialogs2QuickImpl', 'QuickDialogs2Utils',
+    // QtLocation
+    'Location',
+    // labs modules
+    'LabsFolderListModel', 'LabsAnimation',
+]
+def qtQmlPluginsUnused = [
+    // Controls styles
+    'QtQuick_Controls_Fusion',
+    'QtQuick_Controls_Imagine',
+    'QtQuick_Controls_Universal',
+    'QtQuick_Controls_FluentWinUI3',
+    'QtQuick_Controls_Material_qtquickcontrols2materialstyleplugin',
+    // QtQuick.Dialogs
+    'QtQuick_Dialogs',
+    // QtLocation
+    'QtLocation',
+    // labs modules
+    'Qt_labs_folderlistmodel', 'Qt_labs_animation',
+]
+
+// Chart backends, choose the one to clean out
+//qtLibsUnused += ['Graphs', 'Graphs2DImpl', 'Quick3D', 'Quick3DRuntimeRender', 'Quick3DUtils', 'ShaderTools']
+//qtQmlPluginsUnused += ['QtGraphs', 'QtGraphs2D', 'QtQuick3D']
+qtLibsUnused += ['Charts', 'ChartsQml', 'OpenGLWidgets']
+qtQmlPluginsUnused += ['QtCharts']
+qtLibsUnused += ['CanvasPainter', 'Canvas2D']
+qtQmlPluginsUnused += ['QtCanvas2D']
+qtLibsUnused += ['Widgets'] // linked by QtCharts and Canvas2D
+
+def filterQtLibs = tasks.register('filterQtLibs') {
+    doLast {
+        def libsXml = file('res/values/libs.xml')
+        if (!libsXml.exists()) return
+
+        def text = libsXml.getText('UTF-8')
+        def filtered = text.readLines().findAll { line ->
+            !qtLibsUnused.any { lib -> line.contains(";Qt6${lib}_") }
+        }.join('\n') + '\n'
+        if (filtered != text) libsXml.write(filtered, 'UTF-8')
+    }
+}
+
+android {
+   /*******************************************************
+    * The following variables:
+    * - androidBuildToolsVersion
+    * - androidCompileSdkVersion
+    * - androidNdkVersion
+    * - qtMinSdkVersion
+    * - qtTargetSdkVersion
+    * - qtAndroidDir - holds the path to qt android files needed to build any Qt app
+    *
+    * are written into gradle.properties by androiddeployqt,
+    * from the QT_ANDROID_* target properties set in CMakeLists.txt.
+    *******************************************************/
+
+    namespace = androidPackageName
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
+    ndkVersion androidNdkVersion
+
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = [qtAndroidDir + '/src', 'src']
+            res.srcDirs = [qtAndroidDir + '/res', 'res']
+            assets.srcDirs = ['assets']
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    lint {
+        abortOnError false
+    }
+
+    // Do not compress Qt binary resources file
+    androidResources {
+        noCompress += 'rcc'
+    }
+
+    defaultConfig {
+        resConfig "en"
+        minSdk qtMinSdkVersion.toInteger()
+        targetSdk qtTargetSdkVersion.toInteger()
+        ndk.abiFilters = qtTargetAbiList.split(",")
+
+        namespace 'com.emeric.watchflower'
+        versionName '6.0'
+        versionCode timestampInt
+        manifestPlaceholders = [versionName: versionName, versionCode: versionCode]
+    }
+
+    buildTypes {
+        release {
+            // R8 shrinking of the Java code (resources are looked up by name from Qt, keep them all)
+            minifyEnabled true
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    packaging {
+        jniLibs {
+            // Exclude unused Qt libraries and QML plugins
+            excludes += qtLibsUnused.collect { lib -> "**/libQt6${lib}_*" }
+            excludes += qtQmlPluginsUnused.collect { module -> "**/libqml_${module}_*" }
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.incremental = true
+    options.compilerArgs += ['-Xlint:all']
+}
+
+tasks.named('preBuild') { dependsOn filterQtLibs }
