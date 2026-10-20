@@ -52,8 +52,7 @@ QString DeviceSwitchBotHelpers::modelFromServiceData(const QByteArray &svd)
     {
         for (const int pos: { int(svd.size()) - 4, int(svd.size()) - 5 })
         {
-            uint32_t id = 0;
-            for (int i = 0; i < 4; i++) id = (id << 8) | static_cast<uint8_t>(svd.at(pos + i));
+            const uint32_t id = DeviceUtils::readBE(svd, pos, 4);
             if (id == 0x001053B0 || id == 0x011053B0) return model_weather_station;
         }
     }
@@ -127,7 +126,7 @@ void DeviceSwitchBotHelpers::parse(const QString &model, const QByteArray &svd, 
 
     if (model == model_meter_pro_co2 && mfd.size() >= 15)
     {
-        const int co2 = (static_cast<uint8_t>(mfd.at(13)) << 8) | static_cast<uint8_t>(mfd.at(14));
+        const int co2 = static_cast<int>(DeviceUtils::readBE(mfd, 13, 2));
         if (co2 <= 9999) v.co2 = co2;
     }
 }

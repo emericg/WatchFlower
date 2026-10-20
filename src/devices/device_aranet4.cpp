@@ -212,9 +212,9 @@ void DeviceAranet4::parseCurrentReadings(const QByteArray &value)
 
     const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-    uint16_t co2 = static_cast<uint16_t>(data[0] + (data[1] << 8));
-    uint16_t temp = static_cast<uint16_t>(data[2] + (data[3] << 8));
-    uint16_t pres = static_cast<uint16_t>(data[4] + (data[5] << 8));
+    uint16_t co2 = static_cast<uint16_t>(DeviceUtils::readLE(data, 0, 2));
+    uint16_t temp = static_cast<uint16_t>(DeviceUtils::readLE(data, 2, 2));
+    uint16_t pres = static_cast<uint16_t>(DeviceUtils::readLE(data, 4, 2));
 
     // Readings taken while the sensor is warming up, or while it is being calibrated,
     // are flagged as out of range: bit 15 for CO2 and pressure, bit 14 for temperature
@@ -235,8 +235,8 @@ void DeviceAranet4::parseCurrentReadings(const QByteArray &value)
     int64_t ago = 0;
     if (value.size() >= 13)
     {
-        uint16_t interval = static_cast<uint16_t>(data[9] + (data[10] << 8));
-        ago = static_cast<uint16_t>(data[11] + (data[12] << 8));
+        uint16_t interval = static_cast<uint16_t>(DeviceUtils::readLE(data, 9, 2));
+        ago = static_cast<uint16_t>(DeviceUtils::readLE(data, 11, 2));
 
         if (ago > interval) ago = 0; // out of sync, use current time instead
     }

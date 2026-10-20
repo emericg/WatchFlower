@@ -34,21 +34,13 @@
 
 /* ************************************************************************** */
 
-static uint32_t readUint32LE(const quint8 *d)
-{
-    return static_cast<uint32_t>(d[0]) |
-           (static_cast<uint32_t>(d[1]) << 8) |
-           (static_cast<uint32_t>(d[2]) << 16) |
-           (static_cast<uint32_t>(d[3]) << 24);
-}
-
 /*!
  * \brief Read a radon concentration average.
  * \return Bq/m³, or -1 while the average is still being computed (value >= 0xFF000000).
  */
 static int64_t readAverage(const quint8 *d)
 {
-    uint32_t avg = readUint32LE(d);
+    uint32_t avg = DeviceUtils::readLE(d, 0, 4);
     if (avg >= 0xFF000000) return -1;
 
     return avg;
@@ -247,9 +239,9 @@ void DeviceAranetRadon::parseCurrentReadings(const QByteArray &value)
         return;
     }
 
-    uint16_t temp = static_cast<uint16_t>(data[7] + (data[8] << 8));
-    uint16_t pres = static_cast<uint16_t>(data[9] + (data[10] << 8));
-    uint16_t humi = static_cast<uint16_t>(data[11] + (data[12] << 8));
+    uint16_t temp = static_cast<uint16_t>(DeviceUtils::readLE(data, 7, 2));
+    uint16_t pres = static_cast<uint16_t>(DeviceUtils::readLE(data, 9, 2));
+    uint16_t humi = static_cast<uint16_t>(DeviceUtils::readLE(data, 11, 2));
 
     // Readings taken while the sensor is warming up, or while it is in an error state,
     // are flagged as out of range: bit 14 for temperature, bit 15 for pressure and humidity
@@ -270,7 +262,7 @@ void DeviceAranetRadon::parseCurrentReadings(const QByteArray &value)
     }
 
     // 0x1F00 general error / 0x1F01 no data / 0x1F02 high humidity in the sensor chamber
-    uint32_t radon = readUint32LE(data + 13);
+    uint32_t radon = DeviceUtils::readLE(data, 13, 4);
     m_radon = (radon >= 0x1F00) ? -1 : radon;
     m_radon_24h = readAverage(data + 22);
     m_radon_7d = readAverage(data + 30);

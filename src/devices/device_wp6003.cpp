@@ -201,10 +201,10 @@ void DeviceWP6003::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteA
             QDate d(2000 + data[1], data[2], data[3]);
             QTime t(data[4], data[5]);
 
-            int16_t temp = static_cast<int16_t>((data[6] << 8) + data[7]);
-            uint16_t voc = static_cast<uint16_t>((data[10] << 8) + data[11]);
-            uint16_t hcho = static_cast<uint16_t>((data[12] << 8) + data[13]);
-            uint16_t co2 = static_cast<uint16_t>((data[16] << 8) + data[17]);
+            int16_t temp = static_cast<int16_t>(DeviceUtils::readBE(data, 6, 2));
+            uint16_t voc = static_cast<uint16_t>(DeviceUtils::readBE(data, 10, 2));
+            uint16_t hcho = static_cast<uint16_t>(DeviceUtils::readBE(data, 12, 2));
+            uint16_t co2 = static_cast<uint16_t>(DeviceUtils::readBE(data, 16, 2));
 
             // still preheating?
             if (voc < 16383 && hcho < 16383)

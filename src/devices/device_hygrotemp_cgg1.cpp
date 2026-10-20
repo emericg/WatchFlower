@@ -232,8 +232,8 @@ void DeviceHygrotempCGG1::bleReadNotify(const QLowEnergyCharacteristic &c, const
 
         if (value.size() == 6)
         {
-            m_temperature = static_cast<int16_t>(data[2] + (data[3] << 8)) / 10.f;
-            m_humidity = static_cast<int16_t>(data[4] + (data[5] << 8)) / 10;
+            m_temperature = static_cast<int16_t>(DeviceUtils::readLE(data, 2, 2)) / 10.f;
+            m_humidity = static_cast<int16_t>(DeviceUtils::readLE(data, 4, 2)) / 10;
 
             m_lastUpdate = QDateTime::currentDateTime();
             addDatabaseRecord_hygrometer(m_lastUpdate.toSecsSinceEpoch(), m_temperature, m_humidity);

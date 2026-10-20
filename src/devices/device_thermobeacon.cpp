@@ -243,7 +243,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
         // Parse entry count ///////////////////////////////////////////////////
         if (data[0] == 01)
         {
-            m_history_entryCount = static_cast<int16_t>(data[1] + (data[2] << 8));
+            m_history_entryCount = static_cast<int16_t>(DeviceUtils::readLE(data, 1, 2));
 
             if (m_device_time < 0)
             {
@@ -329,12 +329,12 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
         // Parse entries ///////////////////////////////////////////////////////
         if (data[0] == 07)
         {
-            float temp1 = static_cast<int16_t>(data[6] + (data[7] << 8)) / 16.0;
-            //float temp2 = static_cast<int16_t>(data[8] + (data[9] << 8)) / 16.0;
-            float temp3 = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.0;
-            float hygro1 = static_cast<int16_t>(data[12] + (data[13] << 8)) / 16.0;
-            //float hygro2 = static_cast<int16_t>(data[14] + (data[15] << 8)) / 16.0;
-            float hygro3 = static_cast<int16_t>(data[16] + (data[17] << 8)) / 16.0;
+            float temp1 = static_cast<int16_t>(DeviceUtils::readLE(data, 6, 2)) / 16.0;
+            //float temp2 = static_cast<int16_t>(DeviceUtils::readLE(data, 8, 2)) / 16.0;
+            float temp3 = static_cast<int16_t>(DeviceUtils::readLE(data, 10, 2)) / 16.0;
+            float hygro1 = static_cast<int16_t>(DeviceUtils::readLE(data, 12, 2)) / 16.0;
+            //float hygro2 = static_cast<int16_t>(DeviceUtils::readLE(data, 14, 2)) / 16.0;
+            float hygro3 = static_cast<int16_t>(DeviceUtils::readLE(data, 16, 2)) / 16.0;
 
             if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
             {
@@ -424,10 +424,10 @@ void DeviceThermoBeacon::parseAdvertisementData(const uint16_t adv_mode,
     {
         const quint8 *data = reinterpret_cast<const quint8 *>(ba.constData());
 
-        int battv = static_cast<uint16_t>(data[8] + (data[9] << 8));
-        float temp = static_cast<int16_t>(data[10] + (data[11] << 8)) / 16.f;
-        float humi = std::round(static_cast<uint16_t>(data[12] + (data[13] << 8)) / 16.f);
-        m_device_time = static_cast<int32_t>(data[13] + (data[14] << 8) + (data[15] << 16) + (data[16] << 24)) / 256;
+        int battv = static_cast<uint16_t>(DeviceUtils::readLE(data, 8, 2));
+        float temp = static_cast<int16_t>(DeviceUtils::readLE(data, 10, 2)) / 16.f;
+        float humi = std::round(static_cast<uint16_t>(DeviceUtils::readLE(data, 12, 2)) / 16.f);
+        m_device_time = DeviceUtils::readLE(data, 14, 4);
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
         if (temp != m_temperature)

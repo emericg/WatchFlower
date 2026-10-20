@@ -211,12 +211,12 @@ void DeviceEsp32HiGrow::bleReadNotify(const QLowEnergyCharacteristic &c, const Q
         if (value.size() == 16)
         {
             m_soilMoisture = data[0];
-            m_soilConductivity = static_cast<uint16_t>(data[1] + (data[2] << 8));
-            //m_soilTemperature = static_cast<uint16_t>(data[3] + (data[4] << 8));
-            m_temperature = static_cast<uint16_t>(data[5] + (data[6] << 8)) / 10.f;
+            m_soilConductivity = static_cast<uint16_t>(DeviceUtils::readLE(data, 1, 2));
+            //m_soilTemperature = static_cast<uint16_t>(DeviceUtils::readLE(data, 3, 2));
+            m_temperature = static_cast<uint16_t>(DeviceUtils::readLE(data, 5, 2)) / 10.f;
             m_humidity = data[7];
-            m_luminosityLux = static_cast<uint32_t>(data[8] + (data[9] << 8) + (data[10] << 16));
-            //m_pressure = static_cast<uint16_t>(data[11] + (data[12] << 8));
+            m_luminosityLux = static_cast<uint32_t>(DeviceUtils::readLE(data, 8, 3));
+            //m_pressure = static_cast<uint16_t>(DeviceUtils::readLE(data, 11, 2));
 
             m_lastUpdate = QDateTime::currentDateTime();
 

@@ -144,8 +144,8 @@ bool DeviceRuuviTag::parseRawV1(const QByteArray &ba)
     if (data[2] & 0x80) temp = -temp;
 
     const float humi = data[1] / 2.f;
-    const float pres = (static_cast<uint16_t>((data[4] << 8) | data[5]) + 50000) / 100.f;
-    const int battv = static_cast<uint16_t>((data[12] << 8) | data[13]);
+    const float pres = (static_cast<uint16_t>(DeviceUtils::readBE(data, 4, 2)) + 50000) / 100.f;
+    const int battv = static_cast<uint16_t>(DeviceUtils::readBE(data, 12, 2));
 
     setValues(temp, humi, pres, battv);
     return true;
@@ -163,10 +163,10 @@ bool DeviceRuuviTag::parseRawV2(const QByteArray &ba)
     }
 
     // Invalid values are the smallest signed or the largest unsigned value, mapped to -99
-    const int16_t temp_raw = static_cast<int16_t>((data[1] << 8) | data[2]);
-    const uint16_t humi_raw = static_cast<uint16_t>((data[3] << 8) | data[4]);
-    const uint16_t pres_raw = static_cast<uint16_t>((data[5] << 8) | data[6]);
-    const uint16_t power = static_cast<uint16_t>((data[13] << 8) | data[14]);
+    const int16_t temp_raw = static_cast<int16_t>(DeviceUtils::readBE(data, 1, 2));
+    const uint16_t humi_raw = static_cast<uint16_t>(DeviceUtils::readBE(data, 3, 2));
+    const uint16_t pres_raw = static_cast<uint16_t>(DeviceUtils::readBE(data, 5, 2));
+    const uint16_t power = static_cast<uint16_t>(DeviceUtils::readBE(data, 13, 2));
 
     const float temp = (temp_raw != INT16_MIN) ? temp_raw * 0.005f : -99.f;
     const float humi = (humi_raw != 0xFFFF) ? humi_raw * 0.0025f : -99.f;

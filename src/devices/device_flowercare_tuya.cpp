@@ -141,9 +141,9 @@ void DeviceFlowerCare_tuya::parseAdvertisementData(const uint16_t adv_mode,
         setBattery(batt);
 
         moist = static_cast<int>(data[0]);
-        temp = static_cast<int16_t>(data[2] + (data[1] << 8)) / 10.f;
-        lumi = static_cast<int16_t>(data[3] + (data[4] << 8) + (data[5] << 16));
-        fert = static_cast<int16_t>(data[8] + (data[7] << 8));
+        temp = static_cast<int16_t>(DeviceUtils::readBE(data, 1, 2)) / 10.f;
+        lumi = static_cast<int>(DeviceUtils::readLE(ba, 3, 3));
+        fert = static_cast<int16_t>(DeviceUtils::readBE(data, 7, 2));
 
         if (areValuesValid(moist, fert, -99.f, -99.f, temp, -99.f, lumi))
         {

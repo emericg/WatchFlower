@@ -104,8 +104,8 @@ bool DeviceGoveeHelpers::parse(const QString &model, const uint16_t id, QByteArr
 
     // Little endian temperature (int16, 0.01 °C), humidity (uint16, 0.01 %), battery (uint8, %)
     auto littleEndian = [&](int pos) {
-        const float temperature = static_cast<int16_t>(data[pos] | (data[pos + 1] << 8)) / 100.f;
-        const float humidity = static_cast<uint16_t>(data[pos + 2] | (data[pos + 3] << 8)) / 100.f;
+        const float temperature = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 100.f;
+        const float humidity = static_cast<uint16_t>(DeviceUtils::readLE(data, pos + 2, 2)) / 100.f;
         if (isValid(temperature, humidity))
         {
             v.temperature = temperature;
@@ -166,7 +166,7 @@ bool DeviceGoveeHelpers::parse(const QString &model, const uint16_t id, QByteArr
             if (data[7] != 0) return true;
 
             unpackTemperatureHumidity(ba, 2, v);
-            v.co2 = static_cast<uint16_t>((data[5] << 8) | data[6]);
+            v.co2 = static_cast<uint16_t>(DeviceUtils::readBE(data, 5, 2));
             return true;
         }
     }

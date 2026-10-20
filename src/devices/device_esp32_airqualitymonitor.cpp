@@ -207,11 +207,11 @@ void DeviceEsp32AirQualityMonitor::bleReadNotify(const QLowEnergyCharacteristic 
 
         if (value.size() == 16)
         {
-            m_temperature = static_cast<uint16_t>(data[0] + (data[1] << 8)) / 10.f;
+            m_temperature = static_cast<uint16_t>(DeviceUtils::readLE(data, 0, 2)) / 10.f;
             m_humidity = data[2];
-            m_pressure = static_cast<uint16_t>(data[3] + (data[4] << 8));
-            m_voc = static_cast<uint16_t>(data[5] + (data[6] << 8));
-            m_co2 = static_cast<uint16_t>(data[7] + (data[8] << 8));
+            m_pressure = static_cast<uint16_t>(DeviceUtils::readLE(data, 3, 2));
+            m_voc = static_cast<uint16_t>(DeviceUtils::readLE(data, 5, 2));
+            m_co2 = static_cast<uint16_t>(DeviceUtils::readLE(data, 7, 2));
 
             m_lastUpdate = QDateTime::currentDateTime();
 

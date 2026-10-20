@@ -162,12 +162,9 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
             QLowEnergyCharacteristic cha = serviceData->characteristic(a);
             //serviceData->readCharacteristic(cha); // trigger a new time read, not necessary
 
-            const qint8 *timedata = reinterpret_cast<const qint8 *>(cha.value().constData());
-            int8_t timezone_read = timedata[4]; Q_UNUSED(timezone_read)
-            int32_t epoch_read = timedata[0];
-            epoch_read += (timedata[1] << 8);
-            epoch_read += (timedata[2] << 16);
-            epoch_read += (timedata[3] << 24);
+            const QByteArray timedata = cha.value();
+            int8_t timezone_read = static_cast<int8_t>(timedata.at(4)); Q_UNUSED(timezone_read)
+            int32_t epoch_read = static_cast<int32_t>(DeviceUtils::readLE(timedata, 0, 4));
 /*
             QDateTime time_read;
             time_read.setSecsSinceEpoch(epoch_read);
@@ -268,10 +265,7 @@ void DeviceHygrotempClock::bleReadDone(const QLowEnergyCharacteristic &c, const 
             const qint8 *data = reinterpret_cast<const qint8 *>(value.constData());
 
             qint8 timezone_read = data[4];
-            int32_t epoch_read = data[0];
-            epoch_read += (data[1] << 8);
-            epoch_read += (data[2] << 16);
-            epoch_read += (data[3] << 24);
+            int32_t epoch_read = static_cast<int32_t>(DeviceUtils::readLE(value, 0, 4));
 
             QDateTime time_read;
             time_read.setSecsSinceEpoch(epoch_read);
@@ -294,7 +288,7 @@ void DeviceHygrotempClock::bleReadNotify(const QLowEnergyCharacteristic &c, cons
         {
             const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
 
-            m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 100.f;
+            m_temperature = static_cast<int16_t>(DeviceUtils::readLE(data, 0, 2)) / 100.f;
             m_humidity = data[2];
 
             m_lastUpdate = QDateTime::currentDateTime();

@@ -261,10 +261,10 @@ void DeviceHygrotempSquare::bleReadNotify(const QLowEnergyCharacteristic &c, con
 
         if (value.size() == 5)
         {
-            m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 100.f;
+            m_temperature = static_cast<int16_t>(DeviceUtils::readLE(data, 0, 2)) / 100.f;
             m_humidity = data[2];
 
-            float voltage = static_cast<int16_t>(data[3] + (data[4] << 8)) / 1000.f;
+            float voltage = static_cast<int16_t>(DeviceUtils::readLE(data, 3, 2)) / 1000.f;
             //qDebug() << " voltage:" << voltage;
 
             int battery = static_cast<int>((voltage - 2.1f) * 100.f);

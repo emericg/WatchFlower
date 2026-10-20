@@ -150,7 +150,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
     if (adv_mode == DeviceUtils::BLE_ADV_SERVICEDATA && adv_id == 0xFE95 && data_size >= 12)
     {
         // Frame control
-        uint16_t framecontrol = static_cast<uint16_t>(data[0] + (data[1] << 8));
+        uint16_t framecontrol = static_cast<uint16_t>(DeviceUtils::readLE(data, 0, 2));
 
         bool isEncrypted = (framecontrol & 0x0008);
         bool hasMAC = (framecontrol & 0x0010);
@@ -174,7 +174,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
         //qDebug() << "- version      :" << version;
 
         // Product ID
-        uint16_t productid = static_cast<uint16_t>(data[2] + (data[3] << 8));
+        uint16_t productid = static_cast<uint16_t>(DeviceUtils::readLE(data, 2, 2));
 
         // Frame counter
         uint8_t framecounter = static_cast<uint8_t>(data[4]);
@@ -211,7 +211,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             // IO capability field?
             if (capability & 0x20)
             {
-                capability_io = static_cast<int>(data[pos] + (data[pos+1] << 8));
+                capability_io = static_cast<int>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
             }
         }
@@ -238,7 +238,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
 
         if (hasObject)
         {
-            int payload_data_type = static_cast<int>(data[pos] + (data[pos+1] << 8));
+            int payload_data_type = static_cast<int>(DeviceUtils::readLE(data, pos, 2));
             int payload_data_size = static_cast<int>(data[pos+2]);
             pos += 3;
 
@@ -249,7 +249,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             }
             else if (payload_data_type == mi_soil_moisture)
             {
-                moist = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
+                moist = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (moist >= 0 && moist <= 100)
                 {
@@ -266,7 +266,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             }
             else if (payload_data_type == mi_soil_conductivity)
             {
-                fert = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
+                fert = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (fert >= 0 && fert < 20000)
                 {
@@ -283,7 +283,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             }
             else if (payload_data_type == mi_temperature_humidity)
             {
-                temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                temp = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (temp > -30.f && temp < 100.f)
                 {
@@ -294,7 +294,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
                         status = true;
                     }
                 }
-                humi = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                humi = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (humi >= 0.f && humi <= 100.f)
                 {
@@ -308,7 +308,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             }
             else if (payload_data_type == mi_temperature)
             {
-                temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                temp = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (temp > -30.f && temp < 100.f)
                 {
@@ -322,7 +322,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             }
             else if (payload_data_type == mi_humidity)
             {
-                humi = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                humi = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (humi >= 0.f && humi <= 100.f)
                 {
@@ -336,7 +336,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             }
             else if (payload_data_type == mi_luminosity)
             {
-                lumi = static_cast<int32_t>(data[pos] + (data[pos+1] << 8) + (data[pos+2] << 16));
+                lumi = static_cast<int32_t>(DeviceUtils::readLE(data, pos, 3));
                 pos += 3;
                 if (lumi >= 0 && lumi < 150000)
                 {
@@ -350,7 +350,7 @@ bool DeviceSensor::parseBeaconXiaomi(const uint16_t adv_mode, const uint16_t adv
             }
             else if (payload_data_type == mi_formaldehyde)
             {
-                hcho = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                hcho = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (hcho >= 0.f && hcho <= 100.f)
                 {
@@ -452,7 +452,7 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             }
             else if (payload_data_type == qp_temperature_humidity)
             {
-                temp = static_cast<int32_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                temp = static_cast<int32_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (temp > -30.f && temp < 100.f)
                 {
@@ -463,7 +463,7 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
                         status = true;
                     }
                 }
-                humi = static_cast<int32_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                humi = static_cast<int32_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (humi >= 0.f && humi <= 100.f)
                 {
@@ -477,7 +477,7 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             }
             else if (payload_data_type == qp_air_pressure)
             {
-                pres = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                pres = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (pres >= 0 && pres <= 2000)
                 {
@@ -491,7 +491,7 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             }
             else if (payload_data_type == qp_particulate_matter)
             {
-                pm25 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
+                pm25 = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (pm25 >= 0 && pm25 <= 1000)
                 {
@@ -502,7 +502,7 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
                         status = true;
                     }
                 }
-                pm10 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
+                pm10 = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (pm10 >= 0 && pm10 <= 1000)
                 {
@@ -516,7 +516,7 @@ bool DeviceSensor::parseBeaconQingping(const uint16_t adv_mode, const uint16_t a
             }
             else if (payload_data_type == qp_co2)
             {
-                co2 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
+                co2 = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (co2 >= 0 && co2 <= 9999)
                 {
@@ -648,7 +648,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_temperature_sint16)
             {
-                temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 10.f;
+                temp = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 10.f;
                 pos += 2;
                 if (temp > -30.f && temp < 100.f)
                 {
@@ -662,7 +662,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_temperature_p_sint16)
             {
-                temp = static_cast<int16_t>(data[pos] + (data[pos+1] << 8)) / 100.f;
+                temp = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2)) / 100.f;
                 pos += 2;
                 if (temp > -30.f && temp < 100.f)
                 {
@@ -689,7 +689,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_humidity_uint16)
             {
-                humi = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8)) / 100.f;
+                humi = static_cast<uint16_t>(DeviceUtils::readLE(data, pos, 2)) / 100.f;
                 pos += 2;
                 if (humi >= 0.f && humi <= 100.f)
                 {
@@ -703,7 +703,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_illuminance_uint24)
             {
-                lumi = static_cast<uint32_t>(data[pos] + (data[pos+1] << 8) + (data[pos+2] << 16)) / 100.f;
+                lumi = static_cast<uint32_t>(DeviceUtils::readLE(data, pos, 3)) / 100.f;
                 pos += 3;
                 if (lumi >= 0 && lumi < 150000)
                 {
@@ -717,7 +717,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_moisture_uint16)
             {
-                moist = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8)) / 100.f;
+                moist = static_cast<uint16_t>(DeviceUtils::readLE(data, pos, 2)) / 100.f;
                 pos += 2;
                 if (moist >= 0 && moist <= 100)
                 {
@@ -744,7 +744,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_pressure_uint24)
             {
-                pres = static_cast<uint32_t>(data[pos] + (data[pos+1] << 8) + (data[pos+2] << 16)) / 100.f;
+                pres = static_cast<uint32_t>(DeviceUtils::readLE(data, pos, 3)) / 100.f;
                 pos += 3;
                 if (pres >= 0 && pres <= 2000)
                 {
@@ -758,7 +758,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_tvoc_uint16)
             {
-                voc = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8));
+                voc = static_cast<uint16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (voc >= 0 && voc <= 9999)
                 {
@@ -772,7 +772,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_co2_uint16)
             {
-                co2 = static_cast<int16_t>(data[pos] + (data[pos+1] << 8));
+                co2 = static_cast<int16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (co2 >= 0 && co2 <= 9999)
                 {
@@ -786,7 +786,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_pm25_uint16)
             {
-                pm25 = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8));
+                pm25 = static_cast<uint16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (pm25 >= 0 && pm25 <= 1000)
                 {
@@ -800,7 +800,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_pm10_uint16)
             {
-                pm10 = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8));
+                pm10 = static_cast<uint16_t>(DeviceUtils::readLE(data, pos, 2));
                 pos += 2;
                 if (pm10 >= 0 && pm10 <= 1000)
                 {
@@ -814,7 +814,7 @@ bool DeviceSensor::parseBeaconBtHome(const uint16_t adv_mode, const uint16_t adv
             }
             else if (object_type == bth_voltage_p_uint16)
             {
-                float voltage = static_cast<uint16_t>(data[pos] + (data[pos+1] << 8)) / 1000.f;
+                float voltage = static_cast<uint16_t>(DeviceUtils::readLE(data, pos, 2)) / 1000.f;
                 pos += 2;
                 Q_UNUSED(voltage)
             }

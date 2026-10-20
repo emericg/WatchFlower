@@ -418,7 +418,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
         if (m_history_entryCount < 0)
         {
             // Parse entry count
-            m_history_entryCount = static_cast<int16_t>(data[0] + (data[1] << 8));
+            m_history_entryCount = static_cast<int16_t>(DeviceUtils::readLE(data, 0, 2));
 /*
             qDebug() << "* DeviceRopot history sync  > " << getAddress();
             qDebug() << "- device_time  :" << m_device_time << "(" << (m_device_time / 3600.0 / 24.0) << "day)";
@@ -474,11 +474,11 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
         else
         {
             // Parse entry
-            int64_t tmcd = (data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
+            int64_t tmcd = DeviceUtils::readLE(data, 0, 4);
             m_lastHistorySync.setSecsSinceEpoch(m_device_wall_time + tmcd);
 
             int soil_moisture = data[11];
-            int soil_conductivity = data[12] + (data[13] << 8) + (data[14] << 16) + (data[15] << 24);
+            int soil_conductivity = DeviceUtils::readLE(data, 12, 4);
 
             addDatabaseRecord_history(m_device_wall_time + tmcd, soil_moisture, soil_conductivity);
 /*
@@ -514,7 +514,7 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
     if (c.uuid().toString() == "{00001a12-0000-1000-8000-00805f9b34fb}")
     {
         // Device time
-        m_device_time = static_cast<int32_t>(data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24));
+        m_device_time = static_cast<int32_t>(DeviceUtils::readLE(data, 0, 4));
         m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
 
         //qDebug() << "* DeviceRopot clock:" << m_device_time;
@@ -532,9 +532,9 @@ void DeviceRopot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArra
             if (data[0] == 0xAA && data[1] == 0xBB)
                 return;
 
-            m_temperature = static_cast<int16_t>(data[0] + (data[1] << 8)) / 10.f;
+            m_temperature = static_cast<int16_t>(DeviceUtils::readLE(data, 0, 2)) / 10.f;
             m_soilMoisture = data[7];
-            m_soilConductivity = data[8] + (data[9] << 8);
+            m_soilConductivity = DeviceUtils::readLE(data, 8, 2);
 
             m_lastUpdate = QDateTime::currentDateTime();
 

@@ -52,7 +52,7 @@ bool DeviceInkbirdHelpers::parseHygrometer(const QString &name, const uint16_t i
 
     if (ba.size() == size_th)
     {
-        const uint16_t humidity = static_cast<uint16_t>(data[0] | (data[1] << 8));
+        const uint16_t humidity = static_cast<uint16_t>(DeviceUtils::readLE(data, 0, 2));
         v.noHumiditySensor = (name.toLower() == "tps") && (humidity == 0x0000 || humidity == 0xFFFF);
         if (!v.noHumiditySensor && humidity > 10000) return false;
         if (data[5] > 100) return false;
@@ -64,11 +64,11 @@ bool DeviceInkbirdHelpers::parseHygrometer(const QString &name, const uint16_t i
     }
     if (ba.size() == size_ith)
     {
-        const uint16_t humidity = static_cast<uint16_t>(data[6] | (data[7] << 8));
+        const uint16_t humidity = static_cast<uint16_t>(DeviceUtils::readLE(data, 6, 2));
         if (humidity > 1000 || data[8] > 100) return false;
 
         // 0 means no humidity sensor (IBS-P02B)
-        v.temperature = static_cast<int16_t>(data[4] | (data[5] << 8)) / 10.f;
+        v.temperature = static_cast<int16_t>(DeviceUtils::readLE(data, 4, 2)) / 10.f;
         if (humidity != 0) v.humidity = humidity / 10.f;
         v.battery = data[8];
         return true;
@@ -285,10 +285,10 @@ void DeviceInkbirdAirQuality::parseAdvertisementData(const uint16_t adv_mode,
     const uint8_t *data = reinterpret_cast<const uint8_t *>(ba.constData());
 
     // Byte 7 bit 1: the temperature is in °F
-    float temperature = static_cast<int16_t>((data[8] << 8) | data[9]) / 10.f;
+    float temperature = static_cast<int16_t>(DeviceUtils::readBE(data, 8, 2)) / 10.f;
     if (data[7] & 0x02) temperature = (temperature - 32.f) * 5.f / 9.f;
-    const float humidity = static_cast<uint16_t>((data[10] << 8) | data[11]) / 10.f;
-    const float co2 = static_cast<uint16_t>((data[12] << 8) | data[13]);
+    const float humidity = static_cast<uint16_t>(DeviceUtils::readBE(data, 10, 2)) / 10.f;
+    const float co2 = static_cast<uint16_t>(DeviceUtils::readBE(data, 12, 2));
     if (humidity > 100.f || co2 > DeviceInkbirdHelpers::co2_max) return;
 
     if (temperature != m_temperature || humidity != m_humidity || co2 != m_co2)

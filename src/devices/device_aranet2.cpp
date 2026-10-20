@@ -205,11 +205,11 @@ void DeviceAranet2::parseCurrentReadings(const QByteArray &value)
         return;
     }
 
-    uint16_t interval = static_cast<uint16_t>(data[2] + (data[3] << 8));
-    int64_t ago = static_cast<uint16_t>(data[4] + (data[5] << 8));
+    uint16_t interval = static_cast<uint16_t>(DeviceUtils::readLE(data, 2, 2));
+    int64_t ago = static_cast<uint16_t>(DeviceUtils::readLE(data, 4, 2));
 
-    uint16_t temp = static_cast<uint16_t>(data[7] + (data[8] << 8));
-    uint16_t humi = static_cast<uint16_t>(data[9] + (data[10] << 8));
+    uint16_t temp = static_cast<uint16_t>(DeviceUtils::readLE(data, 7, 2));
+    uint16_t humi = static_cast<uint16_t>(DeviceUtils::readLE(data, 9, 2));
 
     // Readings taken while the sensor is warming up, or while it is in an error state,
     // are flagged as out of range: bit 14 for temperature, bit 15 for humidity

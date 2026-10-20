@@ -78,6 +78,34 @@ public:
         return v;
     }
 
+    /*!
+     * \brief Read a big endian unsigned integer from a raw buffer.
+     * \param data: the buffer to read from, not bounds checked.
+     * \param pos: the position of the first (most significant) byte.
+     * \param size: the number of bytes to read, from 1 to 4.
+     * \return the decoded value.
+     */
+    static uint32_t readBE(const uint8_t *data, int pos, int size)
+    {
+        uint32_t v = 0;
+        for (int i = 0; i < size; i++) v = (v << 8) | data[pos + i];
+        return v;
+    }
+
+    /*!
+     * \brief Read a little endian unsigned integer from a raw buffer.
+     * \param data: the buffer to read from, not bounds checked.
+     * \param pos: the position of the first (least significant) byte.
+     * \param size: the number of bytes to read, from 1 to 4.
+     * \return the decoded value.
+     */
+    static uint32_t readLE(const uint8_t *data, int pos, int size)
+    {
+        uint32_t v = 0;
+        for (int i = size - 1; i >= 0; i--) v = (v << 8) | data[pos + i];
+        return v;
+    }
+
     enum BluetoothMode {
         DEVICE_BLE_UNKNOWN          = 0,
 

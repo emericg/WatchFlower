@@ -206,13 +206,10 @@ void DeviceAranetRadiation::parseCurrentReadings(const QByteArray &value)
         return;
     }
 
-    uint16_t interval = static_cast<uint16_t>(data[2] + (data[3] << 8));
-    int64_t ago = static_cast<uint16_t>(data[4] + (data[5] << 8));
+    uint16_t interval = static_cast<uint16_t>(DeviceUtils::readLE(data, 2, 2));
+    int64_t ago = static_cast<uint16_t>(DeviceUtils::readLE(data, 4, 2));
 
-    uint32_t rate = static_cast<uint32_t>(data[7]) |
-                    (static_cast<uint32_t>(data[8]) << 8) |
-                    (static_cast<uint32_t>(data[9]) << 16) |
-                    (static_cast<uint32_t>(data[10]) << 24);
+    uint32_t rate = DeviceUtils::readLE(data, 7, 4);
 
     m_radiationTotal = 0;
     m_radiationDuration = 0;
