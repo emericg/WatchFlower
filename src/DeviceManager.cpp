@@ -1094,7 +1094,7 @@ void DeviceManager::setLastRun()
     }
 }
 
-int DeviceManager::getLastRun_s()
+int DeviceManager::getLastRun_min()
 {
     int mins = -1;
 
@@ -1108,7 +1108,8 @@ int DeviceManager::getLastRun_s()
             QDateTime lastRun = getLastRun.value(0).toDateTime();
             if (lastRun.isValid())
             {
-                mins = static_cast<int>(std::floor(lastRun.secsTo(QDateTime::currentDateTime()) / 60.0));
+                const int secs = static_cast<int>(lastRun.secsTo(QDateTime::currentDateTime()));
+                mins = static_cast<int>(std::ceil(secs / 60.0));
             }
         }
     }

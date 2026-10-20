@@ -362,6 +362,8 @@ public:
     DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~DeviceSensor();
 
+    void reloadCachedData() override;
+
     Q_INVOKABLE bool hasDataNamed(const QString &dataName, int days = 31) const;
     Q_INVOKABLE int countDataNamed(const QString &dataName, int days = 31) const;
     Q_INVOKABLE int historydaysDataNamed(const QString &dataName, int days = 31) const;

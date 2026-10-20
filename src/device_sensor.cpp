@@ -509,6 +509,16 @@ bool DeviceSensor::setSqlPlantLimits()
 
 /* ************************************************************************** */
 
+void DeviceSensor::reloadCachedData()
+{
+    // Reload the last 12h of data from the database into the GUI
+    if (isPlantSensor()) getSqlPlantData(12*60);
+    else if (isThermometer()) getSqlThermoData(12*60);
+    else if (isEnvironmentalSensor()) getSqlSensorData(12*60);
+}
+
+/* ************************************************************************** */
+
 bool DeviceSensor::getSqlPlantData(int minutes)
 {
     //qDebug() << "DeviceSensor::getSqlPlantData(" << m_deviceAddress << ")";

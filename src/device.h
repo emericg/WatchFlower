@@ -287,6 +287,9 @@ public:
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     virtual ~Device();
 
+    //! Reload the device's cached data from the database, if a change happenned out of the app
+    virtual void reloadCachedData() {}
+
     void setName(const QString &name);
     virtual void setDeviceClass(const int major, const int minor, const int service);
     virtual void setCoreConfiguration(const int bleconf);

@@ -324,8 +324,10 @@ void DatabaseManager::resetDatabase()
         m_dbInternalOpen = false;
         m_dbExternalOpen = false;
 
-        // remove db file
+        // remove db file, and its WAL journal files
         QFile::remove(dbName);
+        QFile::remove(dbName + "-wal");
+        QFile::remove(dbName + "-shm");
     }
 }
 
@@ -360,6 +362,8 @@ bool DatabaseManager::tableExists(const QString &tableName)
 
     return result;
 }
+
+/* ************************************************************************** */
 
 void DatabaseManager::createDatabase()
 {
