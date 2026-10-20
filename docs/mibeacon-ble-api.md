@@ -16,7 +16,8 @@ To understand multi-byte integer representation, you can read the [endianness](h
 
 MiBeacon protocol usually broadcast 12-20 bytes `service data` messages, over `0xFE95` 16 bits service UUID.  
 
-Only one measurement is sent per advertisement message. Allegedly it supports multiple measurement per message, but it remains to be confirmed.  
+Most devices send only one measurement per advertisement message.  
+The object field is a list though, the specification allows several objects per message (each object data up to 10 bytes).  
 
 #### Example data
 
@@ -44,24 +45,30 @@ Only one measurement is sent per advertisement message. Allegedly it supports mu
 
 #### Protocol
 
-| Bytes | Type      | Value             | Description                          |
-| ----- | --------- | ----------------- | ------------------------------------ |
-| 00-01 | uint16_le | 0x2051            | Frame control                        |
-| 02-03 | uint16_le | 0x0098            | Product ID                           |
-| 04    | uint8     |                   | Frame count                          |
-| 05-10 | bytes     | C4:7C:8D:66:XX:XX | MAC address (if MAC is set)          |
-| 11    | uint8     |                   | Capability (if Capability is set)    |
-| 12-13 | uint16_le |                   | I/O (if I/O from Capability is set)  |
-| 14-15 | uint16_le | 0x1004            | Type of measurement                  |
-| 16+   | bytes     |                   | Payload                              |
+Fields after the frame count are optional, so their position depends on the frame control and capability bits.  
+Byte positions below are given for a packet containing every optional field.  
+
+| Bytes | Type      | Value             | Description                                                  |
+| ----- | --------- | ----------------- | ------------------------------------------------------------ |
+| 00-01 | uint16_le | 0x2051            | Frame control                                                |
+| 02-03 | uint16_le | 0x0098            | Product ID                                                   |
+| 04    | uint8     |                   | Frame count                                                  |
+| 05-10 | bytes     | C4:7C:8D:66:XX:XX | MAC address, reversed (if frame control MAC bit is set)      |
+| 11    | uint8     |                   | Capability (if frame control Capability bit is set)          |
+| 12-13 | uint16_le |                   | I/O capability (if capability I/O bit is set)                |
+| 14+   | bytes     |                   | Object(s) (if frame control Object bit is set)               |
+| -     | bytes     |                   | Random number / extended counter, 3 bytes (if encrypted, v5) |
+| -     | bytes     |                   | Message integrity check (MIC), 4 bytes (if encrypted, v5)    |
+
+Encrypted objects (version 5) use AES-CCM, the random number and the frame count form the anti-replay counter.  
 
 #### Frame control field
 
 | Bit     | Name               | Description                                                    |
 | ------- | ------------------ | -------------------------------------------------------------- |
-| 0       | Reserved           | ?                                                              |
-| 1       | Reserved           | ?                                                              |
-| 2       | Reserved           | ?                                                              |
+| 0       | Reserved           | Unused                                                         |
+| 1       | Reserved           | Unused                                                         |
+| 2       | Reserved           | Unused                                                         |
 | 3       | Encrypted          | 0: Data is not encrypted; 1: Data is encrypted                 |
 | 4       | MAC Include        | 0: Does not include the MAC address; 1: Includes a fixed MAC address (the MAC address is included for iOS to recognize this device and connect) |
 | 5       | Capability Include | 0: Does not include Capability byte; 1: Includes Capability byte. Before the device is bound, this bit is forced to 1 |
@@ -99,7 +106,7 @@ Only one measurement is sent per advertisement message. Allegedly it supports mu
 | 1     | Centralized | ?                                                          |
 | 2     | Encryptable | ?                                                          |
 | 3 ~ 4 | BondAbility | 0: No binding, 1: Front binding, 2: Back binding, 3: Combo |
-| 5     | I/O         | 1: Contains the I/O Capability field                       |
+| 5     | I/O         | 1: Contains the I/O Capability field (v5 high security)    |
 | 6 ~ 7 | Reserved    |                                                            |
 
 #### IO Capability field
@@ -120,37 +127,68 @@ Only one measurement is sent per advertisement message. Allegedly it supports mu
 
 ###### BLE Object format
 
-| Field           | Length | Description         |
-| --------------- | ------ | ------------------- |
-| Object ID       | 2      | Type of measurement |
-| Object Data Len | 1      | Data length         |
-| Object Data     | N      | Data                |
+| Field           | Length | Description                   |
+| --------------- | ------ | ----------------------------- |
+| Object ID       | 2      | Type of measurement (uint16_le) |
+| Object Data Len | 1      | Data length                   |
+| Object Data     | N      | Data (up to 10 bytes)         |
+
+Object IDs are written as uint16 values (ex: 0x1004), and sent in little endian (ex: `04 10`).  
 
 ###### BLE Object data
 
-| Object ID | Property              | Data type | Factor | Example | Result | Unit  |
-| --------- | --------------------- | --------- | ------ | ------- | ------ | ----- |
-| 0x0410    | temperature           | int16_le  | 0.1    |         |        | °C    |
-| 0x0610    | humidity              | uint16_le | 0.1    |         |        | % RH  |
-| 0x0710    | luminosity            | uint24_le | 1      |         |        | lux   |
-| 0x0810    | soil moisture         | uint8     | 1      |         |        | %     |
-| 0x0910    | soil conductivity     | uint16_le | 1      |         |        | µS/cm |
-| 0x0a10    | battery level         | uint8     | 1      |         |        | %     |
-| 0x0d10    | temperature + humidity| int16_le + uint16_le | 0.1 + 0.1 | | | °C + % RH |
-| 0x1010    | formaldehyde (hcho)   | uint16_le | 0.1    |         |        | µg/m³ |
+| Object ID | Property              | Data type | Factor | Example | Result     | Unit  |
+| --------- | --------------------- | --------- | ------ | ------- | ---------- | ----- |
+| 0x1004    | temperature           | int16_le  | 0.1    | `1A 01` | 28.2       | °C    |
+| 0x1006    | humidity              | uint16_le | 0.1    | `5A 01` | 34.6       | % RH  |
+| 0x1007    | luminosity            | uint24_le | 1      |         |            | lux   |
+| 0x1008    | soil moisture         | uint8     | 1      |         |            | %     |
+| 0x1009    | soil conductivity     | uint16_le | 1      |         |            | µS/cm |
+| 0x100A    | battery level         | uint8     | 1      |         |            | %     |
+| 0x100D    | temperature + humidity| int16_le + uint16_le | 0.1 + 0.1 | | | °C + % RH |
+| 0x1010    | formaldehyde (hcho)   | uint16_le | 0.01   | `10 00` | 0.16       | mg/m³ |
+| 0x1017    | no motion duration    | uint32_le | 1      |         |            | s     |
+| 0x101A    | weight                | uint16_le | 1      |         |            | g     |
 
-| Object ID | Property          | Data type | Description                                                |
-| --------- | ----------------- | --------- | ---------------------------------------------------------- |
-| 0x0210    | sleep state       | uint8     | No sleep (0x00), Asleep (0x01)                             |
-| 0x0310    | RSSI              | uint8     | Signal strength (in dB)                                    |
-| 0x0e10    | lock state        | uint8     | Lock state (bitfield)                                      |
-| 0x0f10    | door state        | uint8     | Open door (0x00), Close door (0x01), Exception (0xFF)      |
-| 0x1110    | bind state        | uint8     | Unbound (0x00), Bound (0x01)                               |
-| 0x1210    | switch state      | uint8     | Off (0x00), On (0x01)                                      |
-| 0x1310    | consumables remaining | uint8 | Consumables remaining in %, range is 0-100                 |
-| 0x1410    | water immersion state | uint8 | Submerged (0x01), Not submerged (0x00)                     |
-| 0x1510    | smoke state       | uint8     | Normal (0x00), Fire alarm (0x01), Equipment failure (0x02) |
-| 0x1610    | gas state         | uint8     | Leak (0x01), No leak (0x00)                                |
+| Object ID | Property              | Data type | Description                                                         |
+| --------- | --------------------- | --------- | ------------------------------------------------------------------- |
+| 0x1001    | button                | 3 bytes   | Button index (0-9), then type: single click (0x00), double click (0x01), long press (0x02), triple click (0x03) |
+| 0x1002    | sleep state           | uint8     | No sleep (0x00), Asleep (0x01)                                      |
+| 0x1003    | RSSI                  | uint8     | Signal strength (in dBm)                                            |
+| 0x100E    | lock state            | uint8     | Lock state (bitfield)                                               |
+| 0x100F    | door state            | uint8     | Open door (0x00), Close door (0x01), Exception (0xFF)               |
+| 0x1011    | bind state            | uint8     | Unbound (0x00), Bound (0x01)                                        |
+| 0x1012    | switch state          | uint8     | Off (0x00), On (0x01)                                               |
+| 0x1013    | consumables remaining | uint8     | Consumables remaining in %, range is 0-100                          |
+| 0x1014    | water immersion state | uint8     | Submerged (0x01), Not submerged (0x00)                              |
+| 0x1015    | smoke state           | uint8     | Normal (0x00), Fire alarm (0x01), Equipment failure (0x02)          |
+| 0x1016    | gas state             | uint8     | Leak (0x01), No leak (0x00)                                         |
+| 0x1018    | light intensity       | uint8     | Weak (0x00), Strong (0x01)                                          |
+| 0x1019    | door sensor           | uint8     | Open (0x00), Closed (0x01), Not closed timeout (0x02), Reset (0x03) |
+| 0x101B    | no motion             | uint8     | Moving (0x00), Not moving (0x01)                                    |
+| 0x101C    | smart pillow          | uint8     | Off pillow (0x00), On pillow (0x01)                                 |
+
+###### BLE Object events
+
+| Object ID | Event                 | Length | Description                                                         |
+| --------- | --------------------- | ------ | ------------------------------------------------------------------- |
+| 0x0001    | connection            | 0      | Device connected                                                    |
+| 0x0002    | easy pairing          | 2      | Object ID of the device being paired                                |
+| 0x0003    | proximity             | 0      | Device is near                                                      |
+| 0x0004    | distance              | 0      | Device is far away                                                  |
+| 0x0006    | fingerprint           | 5      | Match success (0x00), failure (0x01), timeout (0x02), low quality (0x03), insufficient area (0x04), dry skin (0x05), wet skin (0x06) |
+| 0x0007    | door                  | 1      | Open (0x00), Closed (0x01), Not closed timeout (0x02), Knocked (0x03), Pried (0x04), Stuck (0x05) |
+| 0x0008    | armed                 | 5      | Enabled (0x01), Disabled (0x00), optional UTC timestamp             |
+| 0x0009    | gesture               | 2      | Shake (0x0001), Flip 90° (0x0002), Flip 180° (0x0003), Rotation (0x0004), Tap (0x0005), Nudge (0x0006) |
+| 0x000A    | body temperature      | 2      | int16_le, factor 0.01, °C                                           |
+| 0x000B    | lock                  | 9      | Operation method and action, key / exception ID, UTC timestamp      |
+| 0x000C    | flooding              | 1      | Alarm triggered (0x01), Alarm released (0x00)                       |
+| 0x000D    | smoke                 | 1      | Normal (0x00), Fire alarm (0x01), Equipment failure (0x02), Self-check (0x03), Analog alarm (0x04) |
+| 0x000E    | gas                   | 1      | Normal (0x00), Leak (0x01), Failure (0x02), Sensor expired (0x03), Preheating (0x04), Self-check (0x05), Analog alarm (0x06) |
+| 0x000F    | motion with light     | 3      | Someone is moving, uint24_le light intensity (lux, 0-120000)        |
+| 0x0010    | toothbrush            | 2-3    | Start (0x00), End (0x01), optional score (0-100)                    |
+| 0x0011    | cat eye               | 1      | Someone present (0x00), Passing (0x01), Doorbell (0x02), Message (0x03), Damage (0x04), Duress (0x05), Abnormal (0x06) |
+| 0x0012    | weighing              | 3      | uint16_le weight (g), then type: current (0x00), decrease (0x01), increase (0x02) |
 
 ## Other
 
@@ -220,24 +258,31 @@ Only one measurement is sent per advertisement message. Allegedly it supports mu
 ###### Type of measurement
 
 ```
-0x0210 = sleep state
-0x0310 = RSSI
-0x0410 = temperature
-0x0610 = humidity
-0x0710 = luminosity
-0x0810 = soil moisture
-0x0910 = soil conductivity
-0x0a10 = battery level
-0x0d10 = temperature + humidity
-0x0e10 = lock state
-0x0f10 = door state
+0x1001 = button
+0x1002 = sleep state
+0x1003 = RSSI
+0x1004 = temperature
+0x1006 = humidity
+0x1007 = luminosity
+0x1008 = soil moisture
+0x1009 = soil conductivity
+0x100A = battery level
+0x100D = temperature + humidity
+0x100E = lock state
+0x100F = door state
 0x1010 = formaldehyde (hcho)
-0x1110 = bind state
-0x1210 = switch state
-0x1310 = consumables remaining
-0x1410 = water immersion state
-0x1510 = smoke state
-0x1610 = gas state
+0x1011 = bind state
+0x1012 = switch state
+0x1013 = consumables remaining
+0x1014 = water immersion state
+0x1015 = smoke state
+0x1016 = gas state
+0x1017 = no motion duration
+0x1018 = light intensity
+0x1019 = door sensor
+0x101A = weight
+0x101B = no motion
+0x101C = smart pillow
 ```
 
 ## Reference

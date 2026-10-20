@@ -44,12 +44,6 @@ class DeviceAranet2: public DeviceThermometer
 {
     Q_OBJECT
 
-public:
-    DeviceAranet2(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
-    DeviceAranet2(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceAranet2();
-
-private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
@@ -62,6 +56,11 @@ private:
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
 
     void parseCurrentReadings(const QByteArray &value);
+
+public:
+    DeviceAranet2(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
+    DeviceAranet2(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceAranet2();
 };
 
 /* ************************************************************************** */

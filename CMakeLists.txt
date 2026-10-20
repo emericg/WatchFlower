@@ -85,6 +85,11 @@ set(SOURCES
     src/devices/device_hygrotemp_lywsdcgq.cpp src/devices/device_hygrotemp_lywsdcgq.h
     src/devices/device_hygrotemp_square.cpp src/devices/device_hygrotemp_square.h
     src/devices/device_thermobeacon.cpp src/devices/device_thermobeacon.h
+    src/devices/device_ruuvitag.cpp src/devices/device_ruuvitag.h
+    src/devices/device_ruuviair.cpp src/devices/device_ruuviair.h
+    src/devices/device_govee.cpp src/devices/device_govee.h
+    src/devices/device_switchbot.cpp src/devices/device_switchbot.h
+    src/devices/device_inkbird.cpp src/devices/device_inkbird.h
     src/devices/device_aranet2.cpp src/devices/device_aranet2.h
     src/devices/device_aranet4.cpp src/devices/device_aranet4.h
     src/devices/device_aranet_radiation.cpp src/devices/device_aranet_radiation.h

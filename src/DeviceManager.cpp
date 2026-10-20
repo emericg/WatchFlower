@@ -39,6 +39,11 @@
 #include "devices/device_hygrotemp_square.h"
 #include "devices/device_hygrotemp_lywsdcgq.h"
 #include "devices/device_thermobeacon.h"
+#include "devices/device_ruuvitag.h"
+#include "devices/device_ruuviair.h"
+#include "devices/device_govee.h"
+#include "devices/device_switchbot.h"
+#include "devices/device_inkbird.h"
 #include "devices/device_aranet2.h"
 #include "devices/device_aranet4.h"
 #include "devices/device_aranet_radiation.h"
@@ -148,7 +153,7 @@ DeviceManager::DeviceManager(bool daemon)
         while (queryDevices.next())
         {
             QString deviceName = queryDevices.value(0).toString();
-            //QString deviceModel = queryDevices.value(1).toString();
+            QString deviceModel = queryDevices.value(1).toString();
             QString deviceAddr = queryDevices.value(2).toString();
 
             Device *d = nullptr;
@@ -170,6 +175,22 @@ DeviceManager::DeviceManager(bool daemon)
 
             else if (deviceName == "ThermoBeacon")
                 d = new DeviceThermoBeacon(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Ruuvi ") && deviceModel == "Ruuvi Air")
+                d = new DeviceRuuviAir(deviceAddr, deviceName, this);
+            else if (deviceName.startsWith("Ruuvi "))
+                d = new DeviceRuuviTag(deviceAddr, deviceName, this);
+            else if (DeviceGoveeHygrometer::isGoveeHygrometer(deviceName))
+                d = new DeviceGoveeHygrometer(deviceAddr, deviceName, this);
+            else if (DeviceGoveeAirQuality::isGoveeAirQuality(deviceName))
+                d = new DeviceGoveeAirQuality(deviceAddr, deviceName, this);
+            else if (DeviceSwitchBotHygrometer::isSwitchBotHygrometer(deviceName, deviceModel))
+                d = new DeviceSwitchBotHygrometer(deviceAddr, deviceName, this);
+            else if (DeviceSwitchBotAirQuality::isSwitchBotAirQuality(deviceName, deviceModel))
+                d = new DeviceSwitchBotAirQuality(deviceAddr, deviceName, this);
+            else if (DeviceInkbirdHygrometer::isInkbirdHygrometer(deviceName))
+                d = new DeviceInkbirdHygrometer(deviceAddr, deviceName, this);
+            else if (DeviceInkbirdAirQuality::isInkbirdAirQuality(deviceName))
+                d = new DeviceInkbirdAirQuality(deviceAddr, deviceName, this);
             else if (deviceName == "MJ_HT_V1")
                 d = new DeviceHygrotempLYWSDCGQ(deviceAddr, deviceName, this);
             else if (deviceName == "LYWSD02" || deviceName == "MHO-C303")

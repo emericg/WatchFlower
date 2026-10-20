@@ -25,6 +25,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QByteArray>
 #include <QDateTime>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
@@ -47,6 +48,34 @@ public:
         qRegisterMetaType<DeviceUtils::BluetoothAdvertisementMode>("DeviceUtils::BluetoothAdvertisementMode");
 
         qmlRegisterType<DeviceUtils>("DeviceUtils", 1, 0, "DeviceUtils");
+    }
+
+    /*!
+     * \brief Read a big endian unsigned integer from a byte array.
+     * \param ba: the byte array to read from.
+     * \param pos: the position of the first (most significant) byte.
+     * \param size: the number of bytes to read, from 1 to 4.
+     * \return the decoded value.
+     */
+    static uint32_t readBE(const QByteArray &ba, int pos, int size)
+    {
+        uint32_t v = 0;
+        for (int i = 0; i < size; i++) v = (v << 8) | static_cast<uint8_t>(ba.at(pos + i));
+        return v;
+    }
+
+    /*!
+     * \brief Read a little endian unsigned integer from a byte array.
+     * \param ba: the byte array to read from.
+     * \param pos: the position of the first (least significant) byte.
+     * \param size: the number of bytes to read, from 1 to 4.
+     * \return the decoded value.
+     */
+    static uint32_t readLE(const QByteArray &ba, int pos, int size)
+    {
+        uint32_t v = 0;
+        for (int i = size - 1; i >= 0; i--) v = (v << 8) | static_cast<uint8_t>(ba.at(pos + i));
+        return v;
     }
 
     enum BluetoothMode {

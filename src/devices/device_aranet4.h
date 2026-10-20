@@ -44,14 +44,6 @@ class DeviceAranet4: public DeviceEnvironmental
 {
     Q_OBJECT
 
-public:
-    DeviceAranet4(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
-    DeviceAranet4(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
-    ~DeviceAranet4();
-
-    Q_INVOKABLE bool hasData() const;
-
-private:
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
@@ -70,6 +62,13 @@ private:
     bool addDatabaseRecord(const int64_t timestamp,
                            const float temperature, const float humidity,
                            const float pressure, const float co2);
+
+public:
+    DeviceAranet4(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
+    DeviceAranet4(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
+    ~DeviceAranet4();
+
+    Q_INVOKABLE bool hasData() const;
 };
 
 /* ************************************************************************** */

@@ -31,7 +31,8 @@ function isDeviceSupported(deviceName) {
     if (deviceName.startsWith("Flower power") || deviceName.startsWith("Parrot pot") ||
         deviceName.startsWith("6003#") ||
         deviceName.startsWith("Aranet2") || deviceName.startsWith("Aranet4") ||
-        deviceName.startsWith("Aranet\u2622") || deviceName.startsWith("AranetRn"))
+        deviceName.startsWith("Aranet\u2622") || deviceName.startsWith("AranetRn") ||
+        deviceName.startsWith("Ruuvi "))
         return true
 
     return false
@@ -89,7 +90,8 @@ function getDeviceIcon(device, devicePlanted) {
         if (deviceName === "ThermoBeacon" ||
             deviceName === "MJ_HT_V1" ||
             deviceName === "ClearGrass Temp & RH" || deviceName === "Qingping Temp & RH M" ||
-            deviceName === "Qingping Temp RH Lite") {
+            deviceName === "Qingping Temp RH Lite" ||
+            deviceName.startsWith("Ruuvi ")) {
             src = "qrc:/IconLibrary/material-symbols/circle.svg"
         } else if (deviceName === "LYWSD02" ||
                    deviceName === "MHO-C303") {
@@ -111,7 +113,8 @@ function getDeviceIcon(device, devicePlanted) {
             src = "qrc:/assets/gfx/icons/nuclear_icon.svg"
         } else if (deviceName === "Aranet4" ||
                    deviceName === "Qingping Air Monitor Lite" ||
-                   deviceName === "JQJCY01YM") {
+                   deviceName === "JQJCY01YM" ||
+                   deviceName.startsWith("Ruuvi ")) {
             src = "qrc:/IconLibrary/material-symbols/crop_square.svg"
         } else {
             src = "qrc:/IconLibrary/material-symbols/hardware/settings_remote.svg"

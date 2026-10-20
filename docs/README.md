@@ -254,8 +254,85 @@ Supported devices
 | Humidity                             | 0 → 99% RH (± 5% RH)                  |
 | BLE API                              | [link](thermobeacon-ble-api.md)       |
 
+| RuuviTag                             | Ruuvi Innovations                     |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | RuuviTag / RuuviTag Pro               |
+| Screen                               | N/A                                   |
+| Battery                              | 1 x CR2477                            |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓                                     |
+| Pressure                             | ✓                                     |
+| BLE API                              | [link](ruuvitag-ble-api.md)           |
+
+| Govee hygrometers                    | Govee                                 |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | H5072 / H5074 / H5075 / H5129         |
+|                                      | H5051 / H5052 / H5071                 |
+|                                      | H5100 → H5105 / H5108 / H5110         |
+|                                      | H5174 / H5177 / H5178 / H5179 / GV5179 |
+|                                      | H5112                                 |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓                                     |
+| BLE API                              | [link](govee-ble-api.md)              |
+
+| SwitchBot hygrometers                | SwitchBot (Woan Technology)           |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | Meter / Meter Plus / Meter Pro        |
+|                                      | Indoor/Outdoor Thermo-Hygrometer      |
+|                                      | Weather Station                       |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓                                     |
+| BLE API                              | [link](switchbot-ble-api.md)          |
+
+| Inkbird hygrometers                  | Inkbird                               |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | IBS-TH / IBS-TH2                      |
+|                                      | ITH-11-B / ITH-13-B / ITH-21-B        |
+|                                      | IBS-P01B / IBS-P02B                   |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓ (not IBS-P01B / IBS-P02B)           |
+| BLE API                              | [link](inkbird-ble-api.md)            |
+
 
 # Environmental sensors
+
+| Ruuvi Air                            | Ruuvi Innovations                     |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | Ruuvi Air                             |
+| Screen                               | N/A                                   |
+| Battery                              | N/A (USB powered)                     |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓                                     |
+| Pressure                             | ✓                                     |
+| CO2                                  | ✓                                     |
+| PM1.0 / PM2.5 / PM10                 | ✓                                     |
+| Luminosity                           | ✓                                     |
+| BLE API                              | [link](ruuviair-ble-api.md)           |
+
+| Govee air quality monitors           | Govee                                 |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | H5106 / H5140                         |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓                                     |
+| PM2.5                                | ✓ (H5106)                             |
+| CO2                                  | ✓ (H5140)                             |
+| BLE API                              | [link](govee-ble-api.md)              |
+
+| SwitchBot Meter Pro CO2              | SwitchBot (Woan Technology)           |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | Meter Pro CO2                         |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓                                     |
+| CO2                                  | ✓                                     |
+| BLE API                              | [link](switchbot-ble-api.md)          |
+
+| Inkbird IAM-T2                       | Inkbird                               |
+| ------------------------------------ | ------------------------------------- |
+| ID                                   | IAM-T2                                |
+| Temperature                          | ✓                                     |
+| Humidity                             | ✓                                     |
+| CO2                                  | ✓                                     |
+| BLE API                              | [link](inkbird-ble-api.md)            |
 
 | Air Box WP6003                       | VSON technology                       |
 | ------------------------------------ | ------------------------------------- |

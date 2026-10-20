@@ -59,9 +59,9 @@ They are `manufacturer data` with company identifier `0x0010`.
 | 01-01 | byte      | 00                |                  | 0x80 if button pressed  |
 | 02-07 | bytes     | XX:XX:00:00:2A:D7 |                  | mac address             |
 | 08-09 | int16_le  | 0x18e = 398       | 398/16 = 24.875° | max temperature (°C)    |
-| 10-13 | int32_le  | 0x001f7a3d        |                  | device time for max (s) |
+| 10-13 | uint32_le | 0x001f7a3d        | 2062909 s        | uptime at max (s)       |
 | 14-15 | int16_le  | 0x14e = 334       | 334/16 = 20.875° | min temperature (°C)    |
-| 16-19 | int32_le  | 0x0006800a        |                  | device time for min (s) |
+| 16-19 | uint32_le | 0x0006800a        | 425994 s         | uptime at min (s)       |
 
 ##### 18 bytes message (with hygrometer data)
 
@@ -76,7 +76,7 @@ They are `manufacturer data` with company identifier `0x0010`.
 | 08-09 | int16_le  | 3005              | 3005/1000 = 3.005V    | battery voltage       |
 | 10-11 | int16_le  | 360               | 360/16 = 22.5°        | temperature (°C)      |
 | 12-13 | int16_le  | 652               | 652/16 = 40.75%       | humidity (%RH)        |
-| 14-17 | int32_le  | 5881372           | 5881372/256 = 22974   | device time (s)       |
+| 14-17 | uint32_le | 5881372           | 5881372 s = 68.1 days | uptime (s)            |
 
 ## Services and characteristics
 

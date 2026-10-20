@@ -214,6 +214,16 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "bk";
             } else if (device->getName() == "Qingping Temp RH Barometer") {
                 return "bl";
+            } else if (device->getName().startsWith("Ruuvi ") && device->getModel() == "Ruuvi Air") {
+                return "cf";
+            } else if (device->getName().startsWith("Ruuvi ")) {
+                return "bo";
+            } else if (device->getManufacturer() == "Govee" && device->isThermometer()) {
+                return "bp";
+            } else if (device->getManufacturer() == "SwitchBot" && device->isThermometer()) {
+                return "bq";
+            } else if (device->getManufacturer() == "Inkbird" && device->isThermometer()) {
+                return "br";
             } else if (device->getName() == "Aranet2") {
                 return "bm";
             } else if (device->getName().startsWith("Aranet Radon")) {
@@ -232,6 +242,12 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
                 return "cd";
             } else if (device->getName() == "AirQualityMonitor") {
                 return "ce";
+            } else if (device->getManufacturer() == "Govee" && device->isEnvironmentalSensor()) {
+                return "cg";
+            } else if (device->getManufacturer() == "SwitchBot" && device->isEnvironmentalSensor()) {
+                return "ch";
+            } else if (device->getManufacturer() == "Inkbird" && device->isEnvironmentalSensor()) {
+                return "ci";
             } else if (device->getName() == "GeigerCounter") {
                 return "cz";
             } else { /// or else
