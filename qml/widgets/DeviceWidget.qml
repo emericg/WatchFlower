@@ -151,6 +151,46 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    function deviceAction(mouseButton, mouseModifiers) {
+        if (mouseButton === Qt.LeftButton) {
+            // multi selection
+            if ((mouseModifiers & Qt.ControlModifier) ||
+                (deviceList.selectionMode)) {
+                if (!boxDevice.selected) {
+                    deviceList.selectDevice(index, boxDevice.deviceType)
+                } else {
+                    deviceList.deselectDevice(index, boxDevice.deviceType)
+                }
+                return
+            }
+
+            // regular click
+            selectedDevice = boxDevice
+            if (boxDevice.isPlantSensor) {
+                screenDevicePlantSensor.loadDevice(boxDevice)
+                appContent.state = "DevicePlantSensor"
+            } else if (boxDevice.isThermometer) {
+                screenDeviceThermometer.loadDevice(boxDevice)
+                appContent.state = "DeviceThermometer"
+            } else if (boxDevice.isEnvironmentalSensor) {
+                screenDeviceEnvironmental.loadDevice(boxDevice)
+                appContent.state = "DeviceEnvironmental"
+            }
+        }
+
+        if (mouseButton === Qt.MiddleButton) {
+            // multi selection
+            if (!boxDevice.selected) {
+                deviceList.selectDevice(index, boxDevice.deviceType)
+            } else {
+                deviceList.deselectDevice(index, boxDevice.deviceType)
+            }
+            return
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
+
     Item {
         anchors.fill: parent
         anchors.topMargin: deviceWidget.listMode ? 0 : deviceWidget.halfmargin
@@ -236,51 +276,7 @@ Item {
             ////
 
             onClicked: (mouse) => {
-                if (mouse.button === Qt.LeftButton) {
-                    // multi selection
-                    if ((mouse.modifiers & Qt.ControlModifier) ||
-                        (deviceList.selectionMode)) {
-                        if (!boxDevice.selected) {
-                            deviceList.selectDevice(index, boxDevice.deviceType)
-                        } else {
-                            deviceList.deselectDevice(index, boxDevice.deviceType)
-                        }
-                        return
-                    }
-
-                    // regular click
-                    selectedDevice = boxDevice
-                    if (boxDevice.isPlantSensor) {
-                        screenDevicePlantSensor.loadDevice(boxDevice)
-                        appContent.state = "DevicePlantSensor"
-                    } else if (boxDevice.isThermometer) {
-                        screenDeviceThermometer.loadDevice(boxDevice)
-                        appContent.state = "DeviceThermometer"
-                    } else if (boxDevice.isEnvironmentalSensor) {
-                        screenDeviceEnvironmental.loadDevice(boxDevice)
-                        appContent.state = "DeviceEnvironmental"
-                    }
-                }
-
-                if (mouse.button === Qt.MiddleButton) {
-                    // multi selection
-                    if (!boxDevice.selected) {
-                        deviceList.selectDevice(index, boxDevice.deviceType)
-                    } else {
-                        deviceList.deselectDevice(index, boxDevice.deviceType)
-                    }
-                    return
-                }
-            }
-
-            onPressAndHold: {
-                // multi selection
-                if (!boxDevice.selected) {
-                    UtilsOS.hapticFeedback()
-                    deviceList.selectDevice(index, boxDevice.deviceType)
-                } else {
-                    deviceList.deselectDevice(index, boxDevice.deviceType)
-                }
+                deviceWidget.deviceAction(mouse.button, mouse.modifiers)
             }
 
             ////
@@ -435,6 +431,8 @@ Item {
                                 Theme.colorBlue : Theme.colorBlue
                     tooltipText: (boxDevice.soilMoisture > boxDevice.soilMoisture_limitMax) ?
                                      qsTr("Too much water!") : qsTr("Not enough water!")
+
+                    onClicked: deviceWidget.deviceAction(Qt.LeftButton, Qt.NoModifier)
                 }
             }
 
@@ -458,6 +456,8 @@ Item {
                     }
                     tooltipText: (boxDevice.temperatureC > 38) ? qsTr("Heat warning!")
                                                                : qsTr("Freeze warning!")
+
+                    onClicked: deviceWidget.deviceAction(Qt.LeftButton, Qt.NoModifier)
                 }
             }
 
@@ -488,6 +488,8 @@ Item {
                         }
                     }
                     tooltipText: qsTr("Low air quality!")
+
+                    onClicked: deviceWidget.deviceAction(Qt.LeftButton, Qt.NoModifier)
                 }
             }
 
@@ -507,6 +509,8 @@ Item {
                             return Theme.colorYellow
                     }
                     tooltipText: qsTr("Radiation warning!")
+
+                    onClicked: deviceWidget.deviceAction(Qt.LeftButton, Qt.NoModifier)
                 }
             }
 
@@ -521,6 +525,7 @@ Item {
                     source: "qrc:/IconLibrary/material-symbols/warning.svg"
                     color: Theme.colorYellow
                     tooltipText: qsTr("Warning!")
+                    onClicked: deviceWidget.deviceAction(Qt.LeftButton, Qt.NoModifier)
                 }
             }
         }

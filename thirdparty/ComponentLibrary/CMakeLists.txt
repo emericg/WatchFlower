@@ -225,7 +225,7 @@ list(APPEND MODULE_QML_FILES # DEPRECATED
     #qml/deprecated/RoundButtonText.qml
 )
 list(APPEND MODULE_QML_FILES # WIP
-    #qml/wip/FileInputArea_complex.qml
+    #
 )
 
 list(APPEND MODULE_JS_FILES

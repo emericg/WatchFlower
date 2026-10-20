@@ -1,6 +1,7 @@
 import QtQuick
 
 import ComponentLibrary
+import MobileUI
 import AppUtils
 
 Item {
@@ -9,22 +10,31 @@ Item {
     anchors.right: parent.right
     anchors.bottom: parent.bottom
 
-    property int hhh: (appWindow.isPhone ? 36 : 48)
-    property int hhi: (hhh * 0.5)
+    property int hhh: (Theme.isPhone ? 48 : 48)
+    property int hhi: (Theme.isPhone ? 26 : (hhh * 0.5))
     property int hhv: visible ? hhh : 0
+    property int www: 80
 
-    height: hhh + screenPaddingNavbar + screenPaddingBottom
+    height: hhh + Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
 
-    visible: (isTablet && (appContent.state === "DeviceList" ||
-                           appContent.state === "DevicePlantSensor" ||
-                           appContent.state === "DeviceBrowser" ||
-                           appContent.state === "PlantBrowser" ||
-                           appContent.state === "ScreenSettings" ||
-                           appContent.state === "ScreenSettingsAdvanced" ||
-                           appContent.state === "ScreenAbout" ||
-                           appContent.state === "ScreenAboutPermissions")) ||
-             (isPhone && screenOrientation === Qt.PortraitOrientation &&
-                          (appContent.state === "DevicePlantSensor"))
+    visible: (Theme.isTablet &&
+                (appContent.state === "DeviceList" ||
+                 appContent.state === "DevicePlantSensor" ||
+                 appContent.state === "DeviceThermometer" ||
+                 appContent.state === "DeviceEnvironmental" ||
+                 appContent.state === "DeviceBrowser" ||
+                 appContent.state === "PlantBrowser" ||
+                 appContent.state === "ScreenSettings" ||
+                 appContent.state === "ScreenSettingsAdvanced" ||
+                 appContent.state === "ScreenAbout" ||
+                 appContent.state === "ScreenAboutPermissions")) ||
+             (Theme.isPhone && Theme.screenOrientation === Qt.PortraitOrientation &&
+                (appContent.state === "DevicePlantSensor"))
+                 //appContent.state === "DeviceThermometer" ||
+                 //appContent.state === "DeviceEnvironmental"))
+
+    // prevent clicks below this area
+    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -32,21 +42,17 @@ Item {
         anchors.fill: parent
 
         opacity: 0.95
-        color: appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
+        color: Theme.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
 
-        Rectangle {
+        Rectangle { // separator
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
-            height: 2
-            opacity: 0.33
-            visible: !appWindow.isPhone
+            height: Theme.isPhone ? 1 : 2
+            opacity: Theme.isPhone ? 0.24 : 0.33
             color: Theme.colorTabletmenuContent
         }
     }
-
-    // prevent clicks below this area
-    MouseArea { anchors.fill: parent; acceptedButtons: Qt.AllButtons; }
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -55,45 +61,86 @@ Item {
     signal devicePlantButtonClicked()
     signal deviceSettingsButtonClicked()
 
+    property bool menuDeviceData_plant_highlighted: false
+    property bool menuDeviceHistory_plant_highlighted: false
+    property bool menuDevicePlant_plant_highlighted: false
+    property bool menuDeviceSettings_plant_highlighted: false
+
+    property bool menuDeviceData_thermo_highlighted: false
+    property bool menuDeviceSettings_thermo_highlighted: false
+
+    property bool menuDeviceData_env_highlighted: false
+    property bool menuDeviceSettings_env_highlighted: false
+
+    function resetActiveDeviceView() {
+        if (appContent.state === "DevicePlantSensor") {
+            menuDeviceData_plant_highlighted = true
+            menuDeviceHistory_plant_highlighted = false
+            menuDevicePlant_plant_highlighted = false
+            menuDeviceSettings_plant_highlighted = false
+        } else if (appContent.state === "DeviceThermometer") {
+            menuDeviceData_thermo_highlighted = true
+            menuDeviceSettings_thermo_highlighted = false
+        } else if (appContent.state === "DeviceEnvironmental") {
+            menuDeviceData_env_highlighted = true
+            menuDeviceSettings_env_highlighted = false
+        }
+    }
+
     function setActiveDeviceData() {
-        menuDeviceData.highlighted = true
-        menuDeviceHistory.highlighted = false
-        menuDevicePlant.highlighted = false
-        menuDeviceSettings.highlighted = false
+        if (appContent.state === "DevicePlantSensor") {
+            menuDeviceData_plant_highlighted = true
+            menuDeviceHistory_plant_highlighted = false
+            menuDevicePlant_plant_highlighted = false
+            menuDeviceSettings_plant_highlighted = false
+        } else if (appContent.state === "DeviceThermometer") {
+            menuDeviceData_thermo_highlighted = true
+            menuDeviceSettings_thermo_highlighted = false
+        } else if (appContent.state === "DeviceEnvironmental") {
+            menuDeviceData_env_highlighted = true
+            menuDeviceSettings_env_highlighted = false
+        }
     }
     function setActiveDeviceHistory() {
-        menuDeviceData.highlighted = false
-        menuDeviceHistory.highlighted = true
-        menuDevicePlant.highlighted = false
-        menuDeviceSettings.highlighted = false
+        menuDeviceData_plant_highlighted = false
+        menuDeviceHistory_plant_highlighted = true
+        menuDevicePlant_plant_highlighted = false
+        menuDeviceSettings_plant_highlighted = false
     }
     function setActiveDevicePlant() {
-        menuDeviceData.highlighted = false
-        menuDeviceHistory.highlighted = false
-        menuDevicePlant.highlighted = true
-        menuDeviceSettings.highlighted = false
+        menuDeviceData_plant_highlighted = false
+        menuDeviceHistory_plant_highlighted = false
+        menuDevicePlant_plant_highlighted = true
+        menuDeviceSettings_plant_highlighted = false
     }
     function setActiveDeviceSettings() {
-        menuDeviceData.highlighted = false
-        menuDeviceHistory.highlighted = false
-        menuDevicePlant.highlighted = false
-        menuDeviceSettings.highlighted = true
+        if (appContent.state === "DevicePlantSensor") {
+            menuDeviceData_plant_highlighted = false
+            menuDeviceHistory_plant_highlighted = false
+            menuDevicePlant_plant_highlighted = false
+            menuDeviceSettings_plant_highlighted = true
+        } else if (appContent.state === "DeviceThermometer") {
+            menuDeviceData_thermo_highlighted = false
+            menuDeviceSettings_thermo_highlighted = true
+        } else if (appContent.state === "DeviceEnvironmental") {
+            menuDeviceData_env_highlighted = false
+            menuDeviceSettings_env_highlighted = true
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Item { // menu area
+    Loader { // main menu (tablet)
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-
         height: mobileMenu.hhh
 
-        ////////////////////////
+        asynchronous: true
+        active: (Theme.isTablet)
 
-        Row { // main menu
-            anchors.centerIn: parent
-            spacing: (!appWindow.wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
+        sourceComponent: Item {
+            anchors.fill: parent
 
             visible: (appContent.state === "DeviceList" ||
                       appContent.state === "DeviceBrowser" ||
@@ -103,158 +150,376 @@ Item {
                       appContent.state === "ScreenAbout" ||
                       appContent.state === "ScreenAboutPermissions")
 
-            MobileMenuItem_horizontal {
-                id: menuMainView
-                height: mobileMenu.hhh
+            Row {
+                anchors.centerIn: parent
 
-                text: qsTr("Sensors")
-                source: "qrc:/assets/gfx/logos/watchflower_tray_monochrome.svg"
-                sourceSize: mobileMenu.hhi
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
+                spacing: (!Theme.wideMode || (Theme.isPhone && UtilsScreen.screenSize < 5.0)) ? -10 : 20
 
-                highlighted: (appContent.state === "DeviceList")
-                onClicked: screenDeviceList.loadScreen()
-            }
-            MobileMenuItem_horizontal {
-                id: menuPlantBrowser
-                height: mobileMenu.hhh
+                visible: (appContent.state === "DeviceList" ||
+                          appContent.state === "DeviceBrowser" ||
+                          appContent.state === "PlantBrowser" ||
+                          appContent.state === "ScreenSettings" ||
+                          appContent.state === "ScreenSettingsAdvanced" ||
+                          appContent.state === "ScreenAbout" ||
+                          appContent.state === "ScreenAboutPermissions")
 
-                text: qsTr("Plant browser")
-                source: "qrc:/IconLibrary/material-symbols/sensors/local_florist.svg"
-                sourceSize: mobileMenu.hhi
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
+                MobileMenuItem_horizontal { // menuMainView
+                    height: mobileMenu.hhh
 
-                visible: (screenOrientation === Qt.LandscapeOrientation)
-                highlighted: (appContent.state === "PlantBrowser")
-                onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
-            }
-            MobileMenuItem_horizontal {
-                id: menuDeviceBrowser
-                height: mobileMenu.hhh
+                    text: qsTr("Sensors")
+                    source: "qrc:/assets/gfx/logos/watchflower_tray_monochrome.svg"
+                    sourceSize: mobileMenu.hhi
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
 
-                text: qsTr("Device browser")
-                source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
-                sourceSize: mobileMenu.hhi
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
+                    highlighted: (appContent.state === "DeviceList")
+                    onClicked: screenDeviceList.loadScreen()
+                }
+                MobileMenuItem_horizontal { // menuPlantBrowser
+                    height: mobileMenu.hhh
 
-                visible: (screenOrientation === Qt.LandscapeOrientation)
-                enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
-                highlighted: (appContent.state === "DeviceBrowser")
-                onClicked: screenDeviceBrowser.loadScreen()
-            }
-            MobileMenuItem_horizontal {
-                id: menuSettings
-                height: mobileMenu.hhh
+                    text: qsTr("Plant browser")
+                    source: "qrc:/IconLibrary/material-symbols/sensors/local_florist.svg"
+                    sourceSize: mobileMenu.hhi
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
 
-                text: qsTr("Settings")
-                source: "qrc:/IconLibrary/material-symbols/settings.svg"
-                sourceSize: mobileMenu.hhi
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
+                    visible: (screenOrientation === Qt.LandscapeOrientation)
+                    highlighted: (appContent.state === "PlantBrowser")
+                    onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
+                }
+                MobileMenuItem_horizontal { // menuDeviceBrowser
+                    height: mobileMenu.hhh
 
-                highlighted: (appContent.state === "ScreenSettings" || appContent.state === "ScreenSettingsAdvanced")
-                onClicked: screenSettings.loadScreen()
-            }
-            MobileMenuItem_horizontal {
-                id: menuAbout
-                height: mobileMenu.hhh
+                    text: qsTr("Device browser")
+                    source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
+                    sourceSize: mobileMenu.hhi
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
 
-                text: qsTr("About")
-                source: "qrc:/IconLibrary/material-symbols/info-fill.svg"
-                sourceSize: mobileMenu.hhi
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
+                    visible: (screenOrientation === Qt.LandscapeOrientation)
+                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
+                    highlighted: (appContent.state === "DeviceBrowser")
+                    onClicked: screenDeviceBrowser.loadScreen()
+                }
+                MobileMenuItem_horizontal { // menuSettings
+                    height: mobileMenu.hhh
 
-                highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
-                onClicked: screenAbout.loadScreen()
-            }
-        }
+                    text: qsTr("Settings")
+                    source: "qrc:/IconLibrary/material-symbols/settings.svg"
+                    sourceSize: mobileMenu.hhi
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
 
-        ////////////////////////
+                    highlighted: (appContent.state === "ScreenSettings" || appContent.state === "ScreenSettingsAdvanced")
+                    onClicked: screenSettings.loadScreen()
+                }
+                MobileMenuItem_horizontal { // menuAbout
+                    height: mobileMenu.hhh
 
-        Row { // plant care submenu
-            anchors.centerIn: parent
-            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -10 : 20
+                    text: qsTr("About")
+                    source: "qrc:/IconLibrary/material-symbols/info.svg"
+                    sourceSize: mobileMenu.hhi
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
 
-            visible: (appContent.state === "DevicePlantSensor")
-
-            MobileMenuItem_horizontal {
-                id: menuDeviceData
-                height: mobileMenu.hhh
-
-                text: qsTr("Data")
-                source: "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg"
-                sourceSize: mobileMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                onClicked: mobileMenu.deviceDataButtonClicked()
-            }
-            MobileMenuItem_horizontal {
-                id: menuDeviceHistory
-                height: mobileMenu.hhh
-
-                text: qsTr("History")
-                source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
-                sourceSize: mobileMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                onClicked: mobileMenu.deviceHistoryButtonClicked()
-            }
-            MobileMenuItem_horizontal {
-                id: menuDevicePlant
-                height: mobileMenu.hhh
-
-                text: qsTr("Plant")
-                source: "qrc:/assets/gfx/icons/duotone-plant_care-24px.svg"
-                sourceSize: mobileMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                onClicked: mobileMenu.devicePlantButtonClicked()
-            }
-            MobileMenuItem_horizontal {
-                id: menuDeviceSettings
-                height: mobileMenu.hhh
-
-                text: qsTr("Sensor")
-                source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
-                sourceSize: mobileMenu.hhi
-
-                colorContent: Theme.colorTabletmenuContent
-                colorHighlight: Theme.colorTabletmenuHighlight
-
-                onClicked: mobileMenu.deviceSettingsButtonClicked()
+                    highlighted: (appContent.state === "ScreenAbout" || appContent.state === "ScreenAboutPermissions")
+                    onClicked: screenAbout.loadScreen()
+                }
             }
         }
-
-        ////////////////////////
-
-        Row { // thermometer submenu
-            anchors.centerIn: parent
-            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
-
-            visible: (appContent.state === "DeviceThermometer")
-        }
-
-        ////////////////////////
-
-        Row { // environmental submenu
-            anchors.centerIn: parent
-            spacing: (!wideMode || (isPhone && utilsScreen.screenSize < 5.0)) ? -12 : 24
-
-            visible: (appContent.state === "DeviceEnvironmental")
-        }
-
-        ////////////////////////
     }
 
+    ////////////////////////////////////////////////////////////////////////////
+
+    Loader { // plant care submenu (phone)
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mobileMenu.hhh
+
+        asynchronous: true
+        active: (Theme.isPhone && appContent.state === "DevicePlantSensor")
+
+        sourceComponent: Item {
+            anchors.fill: parent
+
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 8
+                spacing: 0
+
+                MobileMenuItem_vertical {
+                    width: mobileMenu.www
+
+                    text: qsTr("Data")
+                    source: "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceData_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceDataButtonClicked()
+                }
+                MobileMenuItem_vertical {
+                    width: mobileMenu.www
+
+                    text: qsTr("History")
+                    source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceHistory_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceHistoryButtonClicked()
+                }
+                MobileMenuItem_vertical {
+                    width: mobileMenu.www
+
+                    text: qsTr("Plant")
+                    source: "qrc:/assets/gfx/icons/duotone-plant_care-24px.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDevicePlant_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.devicePlantButtonClicked()
+                }
+                MobileMenuItem_vertical {
+                    width: mobileMenu.www
+
+                    text: qsTr("Sensor")
+                    source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceSettings_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceSettingsButtonClicked()
+                }
+            }
+        }
+    }
+
+    ////////////////////////
+
+    Loader { // plant care submenu (tablet)
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mobileMenu.hhh
+
+        asynchronous: true
+        active: (Theme.isTablet && appContent.state === "DevicePlantSensor")
+
+        sourceComponent: Item {
+            anchors.fill: parent
+
+            Row {
+                anchors.centerIn: parent
+                spacing: 20
+
+                MobileMenuItem_horizontal {
+                    height: mobileMenu.hhh
+
+                    text: qsTr("Data")
+                    source: "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceData_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceDataButtonClicked()
+                }
+                MobileMenuItem_horizontal {
+                    height: mobileMenu.hhh
+
+                    text: qsTr("History")
+                    source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceHistory_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceHistoryButtonClicked()
+                }
+                MobileMenuItem_horizontal {
+                    height: mobileMenu.hhh
+
+                    text: qsTr("Plant")
+                    source: "qrc:/assets/gfx/icons/duotone-plant_care-24px.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDevicePlant_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.devicePlantButtonClicked()
+                }
+                MobileMenuItem_horizontal {
+                    height: mobileMenu.hhh
+
+                    text: qsTr("Sensor")
+                    source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceSettings_plant_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceSettingsButtonClicked()
+                }
+            }
+        }
+    }
+
+    ////////////////////////
+
+    Loader { // thermometer submenu (phone)
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mobileMenu.hhh
+
+        asynchronous: true
+        active: (Theme.isPhone && appContent.state === "DeviceThermometer")
+
+        sourceComponent: Item {
+            anchors.fill: parent
+
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 8
+
+                MobileMenuItem_vertical {
+                    width: mobileMenu.www
+                    height: mobileMenu.hhh
+
+                    text: qsTr("Data")
+                    source: "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceData_thermo_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceDataButtonClicked()
+                }
+                MobileMenuItem_vertical {
+                    width: mobileMenu.www
+                    height: mobileMenu.hhh
+
+                    text: qsTr("Sensor")
+                    source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceSettings_thermo_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceSettingsButtonClicked()
+                }
+            }
+        }
+    }
+
+    ////////////////////////
+
+    Loader { // thermometer submenu (tablet)
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mobileMenu.hhh
+
+        asynchronous: true
+        active: (Theme.isTablet && appContent.state === "DeviceThermometer")
+
+        sourceComponent: Item {
+            anchors.fill: parent
+
+            Row {
+                anchors.centerIn: parent
+                spacing: 20
+
+                MobileMenuItem_horizontal {
+                    height: mobileMenu.hhh
+
+                    text: qsTr("Data")
+                    source: "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceData_thermo_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceDataButtonClicked()
+                }
+                MobileMenuItem_horizontal {
+                    height: mobileMenu.hhh
+
+                    text: qsTr("Sensor")
+                    source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
+                    sourceSize: mobileMenu.hhi
+                    highlighted: mobileMenu.menuDeviceSettings_thermo_highlighted
+
+                    colorContent: Theme.colorTabletmenuContent
+                    colorHighlight: Theme.colorTabletmenuHighlight
+
+                    onClicked: mobileMenu.deviceSettingsButtonClicked()
+                }
+            }
+        }
+    }
+
+    ////////////////////////
+/*
+    Loader { // environmental submenu (phone)
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mobileMenu.hhh
+
+        asynchronous: true
+        active: (Theme.isPhone && appContent.state === "DeviceEnvironmental")
+
+        sourceComponent: Item {
+            anchors.fill: parent
+
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.verticalCenterOffset: 8
+            }
+        }
+    }
+
+    ////////////////////////
+
+    Loader { // environmental submenu (tablet)
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: mobileMenu.hhh
+
+        asynchronous: true
+        active: (Theme.isTablet && appContent.state === "DeviceEnvironmental")
+
+        sourceComponent: Item {
+            anchors.fill: parent
+
+            Row {
+                anchors.centerIn: parent
+            }
+        }
+    }
+*/
     ////////////////////////////////////////////////////////////////////////////
 }

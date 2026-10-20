@@ -31,6 +31,8 @@ Loader {
 
         // change screen
         appContent.state = "DevicePlantSensor"
+        // reset mobile menu
+        mobileMenu.setActiveDeviceData()
     }
 
     function backAction() {

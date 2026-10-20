@@ -32,6 +32,8 @@ Loader {
 
         // change screen
         appContent.state = "DeviceEnvironmental"
+        // reset mobile menu
+        mobileMenu.setActiveDeviceData()
     }
 
     function backAction() {
@@ -114,9 +116,19 @@ Loader {
                 appHeader.setActiveDeviceSettings()
                 swipeBox.currentIndex = 1
             }
+        }
+
+        Connections {
+            target: mobileMenu
+
             // mobile only
-            function onRightMenuClicked() {
-                //
+            function onDeviceDataButtonClicked() {
+                appHeader.setActiveDeviceData()
+                swipeBox.currentIndex = 0
+            }
+            function onDeviceSettingsButtonClicked() {
+                appHeader.setActiveDeviceSettings()
+                swipeBox.currentIndex = 1
             }
         }
 

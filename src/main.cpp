@@ -199,8 +199,6 @@ int main(int argc, char *argv[])
     engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
-    engine_context->setContextProperty("utilsLanguage", utilsLanguage);
-
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
     engine_context->setContextProperty("qtConnectivityPatched", qtConnectivityPatched);
 
