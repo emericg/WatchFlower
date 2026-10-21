@@ -6,7 +6,7 @@ Item {
     id: control
 
     width: 144
-    height: isPhone ? 62 : 72 // (width / 2)
+    height: Theme.isPhone ? 62 : 72 // (width / 2)
 
     property string title: ""
     property string legend: ""
@@ -16,7 +16,7 @@ Item {
     property real limit_high
     property int precision: 1
 
-    property string color: {
+    property color color: {
         if (limit_mid && limit_high) {
             if (value > limit_high)
                 return Theme.colorError
@@ -32,7 +32,7 @@ Item {
 
     MouseArea {
         anchors.fill: parent
-        onPressAndHold: sensorSelection()
+        onPressAndHold: control.sensorSelection()
     }
 
     ////////
@@ -78,7 +78,7 @@ Item {
             text: (control.value > -99) ? control.value.toFixed(control.precision) : "?"
             color: Theme.colorSubText
             font.bold: false
-            font.pixelSize: isPhone ? 24 : 26
+            font.pixelSize: Theme.isPhone ? 24 : 26
         }
     }
 

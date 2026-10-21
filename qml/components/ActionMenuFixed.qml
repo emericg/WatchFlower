@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls.impl
 import QtQuick.Templates as T
 
 import ComponentLibrary
@@ -17,7 +16,7 @@ T.Popup {
 
     modal: true
     dim: true
-    focus: appWindow.isMobile
+    focus: Theme.isMobile
     closePolicy: T.Popup.CloseOnEscape | T.Popup.CloseOnPressOutside
     parent: T.Overlay.overlay
 
@@ -32,7 +31,7 @@ T.Popup {
 
     property int actualHeight: {
         if (typeof mobileMenu !== "undefined" && mobileMenu.height)
-            return contentColumn.height + appWindow.screenPaddingNavbar + appWindow.screenPaddingBottom
+            return contentColumn.height + Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
         return contentColumn.height
     }
 
@@ -87,9 +86,9 @@ T.Popup {
             anchors.top: parent.top
             anchors.topMargin: 0
             anchors.left: parent.left
-            anchors.leftMargin: appWindow.screenPaddingLeft
+            anchors.leftMargin: Theme.screenPaddingLeft
             anchors.right: parent.right
-            anchors.rightMargin: appWindow.screenPaddingRight
+            anchors.rightMargin: Theme.screenPaddingRight
 
             topPadding: Theme.componentMargin
             bottomPadding: 4

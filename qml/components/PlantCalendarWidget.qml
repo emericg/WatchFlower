@@ -12,7 +12,7 @@ Column {
     property int hhh: 18
     property int rrr: 18
 
-    property var colorBackground: Theme.colorForeground
+    property color colorBackground: Theme.colorForeground
 
     property var plant: null
 

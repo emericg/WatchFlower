@@ -56,14 +56,14 @@ Loader {
             contentWidth: -1
             contentHeight: contentColumn.height
 
-            boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+            boundsBehavior: Theme.isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
             Component.onCompleted: {
                 //console.log("> (default) flick maximum velocity: " + maximumFlickVelocity)
                 //console.log("> (default) flick deceleration: " + flickDeceleration)
 
-                if (isDesktop) {
+                if (Theme.isDesktop) {
                     // mouse wheel or trackpad
                     maximumFlickVelocity = 6500
                     flickDeceleration = 5000
@@ -80,18 +80,18 @@ Loader {
                 id: contentColumn
 
                 anchors.left: parent.left
-                anchors.leftMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
+                anchors.leftMargin: ((Theme.singleColumn || Theme.isPhone) ? 0 : parent.width * 0.12)
                 anchors.right: parent.right
-                anchors.rightMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
+                anchors.rightMargin: ((Theme.singleColumn || Theme.isPhone) ? 0 : parent.width * 0.12)
 
                 topPadding: 16
                 bottomPadding: 16
                 spacing: 8
 
-                property int paddingLeft: (singleColumn ? 0 : 16)
-                property int paddingRight: (singleColumn ? 0 : 16)
+                property int paddingLeft: (Theme.singleColumn ? 0 : 16)
+                property int paddingRight: (Theme.singleColumn ? 0 : 16)
 
-                property int padIcon: singleColumn ? Theme.componentMarginL : Theme.componentMarginL
+                property int padIcon: Theme.singleColumn ? Theme.componentMarginL : Theme.componentMarginL
                 property int padText: appHeader.headerPosition
 
                 ////////////////
@@ -327,7 +327,7 @@ Loader {
                     anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
-                    bottomPadding: isDesktop ? 6 : 6
+                    bottomPadding: Theme.isDesktop ? 6 : 6
 
                     property bool osSupport: (Qt.platform.os !== "linux")
                     property string osName: {
@@ -406,7 +406,7 @@ Loader {
                     anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: -12
-                    bottomPadding: isDesktop ? 12 : 6
+                    bottomPadding: Theme.isDesktop ? 12 : 6
 
                     text: SettingsManager.splitView ?
                               qsTr("Devices will be split into categories (plant sensors, thermometers, air quality monitors)") :
@@ -419,7 +419,7 @@ Loader {
 
                 ////////
 
-                ListSeparator { visible: isDesktop }
+                ListSeparator { visible: Theme.isDesktop }
 
                 ////////
 
@@ -502,7 +502,7 @@ Loader {
 
                 ////////
 
-                ListSeparator { visible: isDesktop }
+                ListSeparator { visible: Theme.isDesktop }
 
                 ////////
 
@@ -513,7 +513,7 @@ Loader {
                     anchors.rightMargin: contentColumn.paddingRight
                     height: Theme.componentHeightXL
 
-                    visible: isDesktop
+                    visible: Theme.isDesktop
 
                     IconSvg {
                         anchors.left: parent.left
@@ -622,7 +622,7 @@ Loader {
 
                         checked: SettingsManager.systray
                         onClicked: {
-                            if (isMobile) {
+                            if (Theme.isMobile) {
                                 if (checked) {
                                     checked = false
                                     popupBackgroundUpdates.open()
@@ -659,7 +659,7 @@ Loader {
 
                     topPadding: -12
                     bottomPadding: element_notifications.visible ? 0 : 12
-                    visible: (element_worker.visible && isDesktop)
+                    visible: (element_worker.visible && Theme.isDesktop)
 
                     text: SettingsManager.systray ?
                               qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
@@ -1040,7 +1040,7 @@ Loader {
                         id: text_bluetoothSimUpdate
                         anchors.left: parent.left
                         anchors.leftMargin: contentColumn.padText
-                        anchors.right: isDesktop ? undefined : spinBox_bluetoothSimUpdate.left
+                        anchors.right: Theme.isDesktop ? undefined : spinBox_bluetoothSimUpdate.left
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
@@ -1060,7 +1060,7 @@ Loader {
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
-                        visible: isDesktop
+                        visible: Theme.isDesktop
                         z: 1
 
                         from: 1
@@ -1078,7 +1078,7 @@ Loader {
                         anchors.rightMargin: Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
-                        visible: isMobile
+                        visible: Theme.isMobile
                         width: 128
                         height: 36
                         z: 1
@@ -1167,7 +1167,7 @@ Loader {
                         to: 24
                         stepSize: 1
                         editable: false
-                        wheelEnabled: isDesktop
+                        wheelEnabled: Theme.isDesktop
 
                         value: (SettingsManager.updateIntervalPlant / 60)
                         onValueModified: SettingsManager.updateIntervalPlant = (value * 60)
@@ -1268,7 +1268,7 @@ Loader {
                             anchors.verticalCenterOffset: -8
 
                             visible: !SettingsManager.bigIndicator
-                            width: singleColumn ? parent.width : element_plant_indicators_selector.width
+                            width: Theme.singleColumn ? parent.width : element_plant_indicators_selector.width
 
                             animated: false
                             legend: qsTr("preview")
@@ -1289,7 +1289,7 @@ Loader {
                             anchors.verticalCenterOffset: -8
 
                             visible: SettingsManager.bigIndicator
-                            width: singleColumn ? parent.width : element_plant_indicators_selector.width
+                            width: Theme.singleColumn ? parent.width : element_plant_indicators_selector.width
 
                             animated: false
                             legend: qsTr("preview")
@@ -1362,7 +1362,7 @@ Loader {
                         to: 24
                         stepSize: 1
                         editable: false
-                        wheelEnabled: isDesktop
+                        wheelEnabled: Theme.isDesktop
 
                         value: (SettingsManager.updateIntervalThermo / 60)
                         onValueModified: SettingsManager.updateIntervalThermo = (value * 60)
@@ -1787,7 +1787,7 @@ Loader {
                         anchors.left: parent.left
                         anchors.right: parent.right
 
-                        visible: isDesktop
+                        visible: Theme.isDesktop
 
                         text: qsTr("Saved in your documents, under the 'WatchFlower' directory.")
                         textFormat: Text.PlainText
@@ -1814,7 +1814,7 @@ Loader {
                         height: 36
                         anchors.verticalCenter: parent.verticalCenter
 
-                        visible: isDesktop
+                        visible: Theme.isDesktop
 
                         text: qsTr("Export data")
                         onClicked: {
@@ -1822,7 +1822,7 @@ Loader {
                                 text = qsTr("Exported")
                                 primaryColor = Theme.colorPrimary
                                 fullColor = true
-                                if (isDesktop) openFolderButton.visible = true
+                                if (Theme.isDesktop) openFolderButton.visible = true
                             } else {
                                 text = qsTr("Export data")
                                 primaryColor = Theme.colorWarning
@@ -1848,7 +1848,7 @@ Loader {
                         height: 36
                         anchors.verticalCenter: parent.verticalCenter
 
-                        visible: isMobile
+                        visible: Theme.isMobile
 
                         text: qsTr("Export file")
                         onClicked: {

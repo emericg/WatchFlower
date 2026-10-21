@@ -48,7 +48,7 @@ Rectangle {
         color: Theme.colorActionbarContent
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
-        font.bold: isDesktop ? true : false
+        font.bold: Theme.isDesktop ? true : false
         font.pixelSize: Theme.componentFontSize
     }
 

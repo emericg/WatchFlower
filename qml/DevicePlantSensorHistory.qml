@@ -172,9 +172,9 @@ Item {
         //console.log("height: " + graphGrid.height)
 
         // grid geometry
-        if (isMobile) {
-            if (isPhone) {
-                if (screenOrientation === Qt.PortraitOrientation) {
+        if (Theme.isMobile) {
+            if (Theme.isPhone) {
+                if (Theme.screenOrientation === Qt.PortraitOrientation) {
                     graphGrid.columns = 1
                     subHeader.visible = true
                     subHeader.height = 48
@@ -184,8 +184,8 @@ Item {
                     subHeader.height = 0
                 }
             }
-            if (isTablet) {
-                if (screenOrientation === Qt.PortraitOrientation || width < 480) {
+            if (Theme.isTablet) {
+                if (Theme.screenOrientation === Qt.PortraitOrientation || width < 480) {
                     graphGrid.columns = 1
                 } else {
                     graphGrid.columns = 2
@@ -245,7 +245,7 @@ Item {
         anchors.right: parent.right
 
         z: 5
-        height: isPhone ? 48 : 52
+        height: Theme.isPhone ? 48 : 52
         color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
         Text {
@@ -256,7 +256,7 @@ Item {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (!isPhone && graphGrid.width >= 575)
+            visible: (!Theme.isPhone && graphGrid.width >= 575)
 
             text: {
                 if (currentDevice.devicePlantName.length)
@@ -265,7 +265,7 @@ Item {
             }
             color: Theme.colorText
             font.pixelSize: 24
-            horizontalAlignment: wideMode ? Text.AlignLeft : Text.AlignHCenter
+            horizontalAlignment: Theme.wideMode ? Text.AlignLeft : Text.AlignHCenter
         }
 
         Item {
@@ -284,7 +284,7 @@ Item {
 
             ButtonClear {
                 width: 100
-                height: isPhone ? 32 : 36
+                height: Theme.isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
                 colorBackground: (SettingsManager.graphHistory === "monthly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
@@ -303,7 +303,7 @@ Item {
 
             ButtonClear {
                 width: 100
-                height: isPhone ? 32 : 36
+                height: Theme.isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
                 colorBackground: (SettingsManager.graphHistory === "weekly") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
@@ -322,7 +322,7 @@ Item {
 
             ButtonClear {
                 width: 100
-                height: isPhone ? 32 : 36
+                height: Theme.isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
                 colorBackground: (SettingsManager.graphHistory === "daily") ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
@@ -345,7 +345,7 @@ Item {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            visible: (isDesktop && !headerUnicolor)
+            visible: (Theme.isDesktop && !headerUnicolor)
             height: 2
             opacity: 0.5
             color: Theme.colorSeparator
@@ -360,7 +360,7 @@ Item {
 
         z: 4
         clip: true
-        height: (singleColumn && selectors.visible) ? 40 : 0
+        height: (Theme.singleColumn && selectors.visible) ? 40 : 0
         Behavior on height { NumberAnimation { duration: 133 } }
 
         Rectangle {
@@ -380,7 +380,7 @@ Item {
 
     Row {
         id: selectors
-        parent: singleColumn ? selectorsContainerTwo : selectorsContainerOne
+        parent: Theme.singleColumn ? selectorsContainerTwo : selectorsContainerOne
 
         anchors.centerIn: parent
         visible: false
@@ -388,7 +388,7 @@ Item {
         SpinBoxHistory {
             id: selector_month
             width: buttonPanel.width
-            height: isPhone ? 32 : 36
+            height: Theme.isPhone ? 32 : 36
             visible: (SettingsManager.graphHistory === "monthly")
 
             from: -2
@@ -401,7 +401,7 @@ Item {
         SpinBoxHistory {
             id: selector_week
             width: buttonPanel.width
-            height: isPhone ? 32 : 36
+            height: Theme.isPhone ? 32 : 36
             visible: (SettingsManager.graphHistory === "weekly")
 
             from: -3
@@ -414,7 +414,7 @@ Item {
         SpinBoxHistory {
             id: selector_day
             width: buttonPanel.width
-            height: isPhone ? 32 : 36
+            height: Theme.isPhone ? 32 : 36
             visible: (SettingsManager.graphHistory === "daily")
 
             from: -6

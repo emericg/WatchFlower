@@ -44,7 +44,7 @@ Loader {
 
             height: contentHeader.height - contentFlickable.contentY
             color: contentHeader.color
-            visible: singleColumn
+            visible: Theme.singleColumn
         }
 
         ////////////////
@@ -56,33 +56,33 @@ Loader {
             contentWidth: -1
             contentHeight: contentColumn.height
 
-            boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+            boundsBehavior: Theme.isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
             Column {
                 id: contentColumn
 
                 anchors.left: parent.left
-                anchors.leftMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
+                anchors.leftMargin: ((Theme.singleColumn || Theme.isPhone) ? 0 : parent.width * 0.12)
                 anchors.right: parent.right
-                anchors.rightMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
+                anchors.rightMargin: ((Theme.singleColumn || Theme.isPhone) ? 0 : parent.width * 0.12)
 
                 ////////////////
 
-                Item { width: 16; height: 16; visible: !(singleColumn || isPhone); }
+                Item { width: 16; height: 16; visible: !(Theme.singleColumn || Theme.isPhone); }
 
                 Rectangle { // header area
                     id: contentHeader
                     anchors.left: parent.left
-                    anchors.leftMargin: -screenPaddingLeft
+                    anchors.leftMargin: -Theme.screenPaddingLeft
                     anchors.right: parent.right
-                    anchors.rightMargin: -screenPaddingRight
+                    anchors.rightMargin: -Theme.screenPaddingRight
 
                     height: 112
-                    radius: (singleColumn || isPhone) ? 0 : 8
+                    radius: (Theme.singleColumn || Theme.isPhone) ? 0 : 8
                     color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
-                    border.width: (singleColumn || isPhone) ? 0 : Theme.componentBorderWidth
+                    border.width: (Theme.singleColumn || Theme.isPhone) ? 0 : Theme.componentBorderWidth
                     border.color: Theme.colorSeparator
 
                     property int availableWidth: (contentHeader.width - rowTitle.width)
@@ -92,7 +92,7 @@ Loader {
                     Row {
                         id: rowTitle
                         anchors.left: parent.left
-                        anchors.leftMargin: screenPaddingLeft + Theme.componentMargin
+                        anchors.leftMargin: Theme.screenPaddingLeft + Theme.componentMargin
                         anchors.verticalCenter: parent.verticalCenter
 
                         z: 2
@@ -136,7 +136,7 @@ Loader {
 
                     Row { // desktop buttons row
                         anchors.right: parent.right
-                        anchors.rightMargin: screenPaddingRight + Theme.componentMarginL
+                        anchors.rightMargin: Theme.screenPaddingRight + Theme.componentMarginL
                         anchors.verticalCenter: parent.verticalCenter
 
                         visible: (contentHeader.availableWidth > 560)
@@ -144,7 +144,7 @@ Loader {
 
                         ButtonSolid {
                             visible: (width*3 < contentHeader.availableWidth)
-                            width: isPhone ? 150 : 160
+                            width: Theme.isPhone ? 150 : 160
                             height: 40
 
                             text: qsTr("WEBSITE")
@@ -158,7 +158,7 @@ Loader {
 
                         ButtonSolid {
                             visible: (width*2 < contentHeader.availableWidth)
-                            width: isPhone ? 150 : 160
+                            width: Theme.isPhone ? 150 : 160
                             height: 40
 
                             text: qsTr("SUPPORT")
@@ -172,7 +172,7 @@ Loader {
 
                         ButtonSolid {
                             visible: (width*1 < contentHeader.availableWidth)
-                            width: isPhone ? 150 : 160
+                            width: Theme.isPhone ? 150 : 160
                             height: 40
 
                             text: qsTr("GitHub")
@@ -188,7 +188,7 @@ Loader {
                     ////////
                 }
 
-                Item { width: 16; height: 16; visible: !(singleColumn || isPhone); }
+                Item { width: 16; height: 16; visible: !(Theme.singleColumn || Theme.isPhone); }
 
                 ////////////////
 
@@ -249,7 +249,7 @@ Loader {
 */
                 ////////////////
 
-                Item { width: 16; height: 16; visible: (!singleColumn && isPhone); }
+                Item { width: 16; height: 16; visible: (!Theme.singleColumn && Theme.isPhone); }
 
                 ListItem { // description
                     anchors.left: parent.left

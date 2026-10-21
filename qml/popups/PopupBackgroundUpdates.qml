@@ -10,10 +10,10 @@ Popup {
 
     x: Theme.singleColumn ? 0 : (appWindow.width / 2) - (width / 2)
     y: Theme.singleColumn ? (appWindow.height - height)
-                    : ((appWindow.height / 2) - (height / 2))
+                          : ((appWindow.height / 2) - (height / 2))
 
     width: Theme.singleColumn ? appWindow.width : 720
-    height: columnContent.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
+    height: columnContent.height + padding*2 + Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
     padding: Theme.componentMarginXL
     margins: 0
 
@@ -28,7 +28,7 @@ Popup {
     property bool locPerm: false
 
     onAboutToShow: {
-         locPerm = deviceManager.checkLocationPermission_background()
+        locPerm = deviceManager.checkLocationPermission_background()
     }
 
     ////////////////////////////////////////////////////////////////////////////

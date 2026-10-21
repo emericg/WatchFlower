@@ -10,7 +10,7 @@ Grid {
 
     // 1: single column (single column view or portrait tablet)
     // 2: wide mode (wide view)
-    property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+    property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
     rows: 3
     columns: (uiMode === 1) ? 1 : 3
@@ -183,22 +183,22 @@ Grid {
     Flickable { ////////////////////////////////////////////////////////////////
         id: col1
         width: plantScreen.www1
-        height: (uiMode === 1) ? columnPlant.height + Theme.componentMargin : plantScreen.parentHeight
+        height: (plantScreen.uiMode === 1) ? columnPlant.height + Theme.componentMargin : plantScreen.parentHeight
         contentWidth: columnPlant.width
         contentHeight: columnPlant.height + Theme.componentMargin
-        interactive: (uiMode !== 1)
+        interactive: (plantScreen.uiMode !== 1)
 
         Column {
             id: columnPlant
             width: plantScreen.www1
             spacing: Theme.componentMarginL
 
-            topPadding: (uiMode === 1) ? -plantScreen.padding : 0
+            topPadding: (plantScreen.uiMode === 1) ? -plantScreen.padding : 0
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -Theme.componentMargin : -2
-                anchors.rightMargin: singleColumn ? -Theme.componentMargin : -2
-                visible: (uiMode === 2)
+                anchors.leftMargin: Theme.singleColumn ? -Theme.componentMargin : -2
+                anchors.rightMargin: Theme.singleColumn ? -Theme.componentMargin : -2
+                visible: (plantScreen.uiMode === 2)
 
                 text: qsTr("Plant infos")
             }
@@ -206,9 +206,9 @@ Grid {
             Image {
                 id: plantPicture
                 anchors.left: parent.left
-                anchors.leftMargin: (uiMode === 1) ? -plantScreen.padding : 0
+                anchors.leftMargin: (plantScreen.uiMode === 1) ? -plantScreen.padding : 0
                 anchors.right: parent.right
-                anchors.rightMargin: (uiMode === 1) ? -plantScreen.padding : 0
+                anchors.rightMargin: (plantScreen.uiMode === 1) ? -plantScreen.padding : 0
                 height: width * 0.75
 
                 source: "file:/home/emeric/Dev/perso/WatchFlower/stash/plants_db/aloe.jpg"
@@ -926,10 +926,10 @@ Grid {
     Flickable { ////////////////////////////////////////////////////////////////
         id: col2
         width: plantScreen.www2
-        height: (uiMode === 1) ? columnCare.height + Theme.componentMargin : plantScreen.parentHeight
+        height: (plantScreen.uiMode === 1) ? columnCare.height + Theme.componentMargin : plantScreen.parentHeight
         contentWidth: columnCare.width
         contentHeight: columnCare.height + Theme.componentMargin
-        interactive: (uiMode !== 1)
+        interactive: (plantScreen.uiMode !== 1)
 
         Column {
             id: columnCare
@@ -937,8 +937,8 @@ Grid {
             spacing: Theme.componentMargin
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -Theme.componentMargin : -2
-                anchors.rightMargin: singleColumn ? -Theme.componentMargin : -2
+                anchors.leftMargin: Theme.singleColumn ? -Theme.componentMargin : -2
+                anchors.rightMargin: Theme.singleColumn ? -Theme.componentMargin : -2
 
                 text: qsTr("Plant care")
             }
@@ -1304,10 +1304,10 @@ Grid {
     Flickable { ////////////////////////////////////////////////////////////////
         id: col3
         width: plantScreen.www2
-        height: (uiMode === 1) ? columnLimits.height + Theme.componentMargin : plantScreen.parentHeight
+        height: (plantScreen.uiMode === 1) ? columnLimits.height + Theme.componentMargin : plantScreen.parentHeight
         contentWidth: columnLimits.width
         contentHeight: columnLimits.height + Theme.componentMargin
-        interactive: (uiMode !== 1)
+        interactive: (plantScreen.uiMode !== 1)
 
         Column {
             id: columnLimits
@@ -1315,8 +1315,8 @@ Grid {
             spacing: Theme.componentMarginL
 
             ListTitle {
-                anchors.leftMargin: singleColumn ? -Theme.componentMargin : -2
-                anchors.rightMargin: singleColumn ? -Theme.componentMargin : -2
+                anchors.leftMargin: Theme.singleColumn ? -Theme.componentMargin : -2
+                anchors.rightMargin: Theme.singleColumn ? -Theme.componentMargin : -2
 
                 text: qsTr("Sensor metrics")
             }
@@ -1341,7 +1341,7 @@ Grid {
                     anchors.left: imageHygro.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: imageHygro.verticalCenter
-                    anchors.verticalCenterOffset: isDesktop ? 1 : 0
+                    anchors.verticalCenterOffset: Theme.isDesktop ? 1 : 0
 
                     text: qsTr("Soil moisture")
                     textFormat: Text.PlainText
@@ -1394,7 +1394,7 @@ Grid {
                     anchors.left: imageCondu.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: imageCondu.verticalCenter
-                    anchors.verticalCenterOffset: isDesktop ? 1 : 0
+                    anchors.verticalCenterOffset: Theme.isDesktop ? 1 : 0
 
                     text: qsTr("Soil conductivity")
                     textFormat: Text.PlainText
@@ -1446,7 +1446,7 @@ Grid {
                     anchors.left: imageSoilPH.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: imageSoilPH.verticalCenter
-                    anchors.verticalCenterOffset: isDesktop ? 1 : 0
+                    anchors.verticalCenterOffset: Theme.isDesktop ? 1 : 0
 
                     text: qsTr("Soil PH")
                     textFormat: Text.PlainText
@@ -1534,7 +1534,7 @@ Grid {
                     anchors.left: imageTemp.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: imageTemp.verticalCenter
-                    anchors.verticalCenterOffset: isDesktop ? 1 : 0
+                    anchors.verticalCenterOffset: Theme.isDesktop ? 1 : 0
 
                     text: qsTr("Temperature")
                     textFormat: Text.PlainText
@@ -1588,7 +1588,7 @@ Grid {
                     anchors.left: imageHygro2.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: imageHygro2.verticalCenter
-                    anchors.verticalCenterOffset: isDesktop ? 1 : 0
+                    anchors.verticalCenterOffset: Theme.isDesktop ? 1 : 0
 
                     text: qsTr("Humidity")
                     textFormat: Text.PlainText
@@ -1640,7 +1640,7 @@ Grid {
                     anchors.left: imageLumi.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: imageLumi.verticalCenter
-                    anchors.verticalCenterOffset: isDesktop ? 1 : 0
+                    anchors.verticalCenterOffset: Theme.isDesktop ? 1 : 0
 
                     text: qsTr("Luminosity") +  " (lux)"
                     textFormat: Text.PlainText
@@ -1739,7 +1739,7 @@ Grid {
                     anchors.left: imageLumiMmol.right
                     anchors.leftMargin: 8
                     anchors.verticalCenter: imageLumiMmol.verticalCenter
-                    anchors.verticalCenterOffset: isDesktop ? 1 : 0
+                    anchors.verticalCenterOffset: Theme.isDesktop ? 1 : 0
 
                     text: qsTr("Luminosity")+ " (mmol)"
                     textFormat: Text.PlainText

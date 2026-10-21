@@ -14,7 +14,7 @@ Item {
     property int limitMax: 1000
 
     property string legend: "AQI"
-    property string color: Theme.colorIcon
+    property color color: Theme.colorIcon
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +29,7 @@ Item {
 
             animation: false
 
-            arcWidth: (isMobile ? 7 : 10)
+            arcWidth: (Theme.isMobile ? 7 : 10)
             arcBegin: 0
             arcEnd: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) - 2.5
             arcOffset: 225
@@ -44,7 +44,7 @@ Item {
 
             animation: false
 
-            arcWidth: (isMobile ? 7 : 10)
+            arcWidth: (Theme.isMobile ? 7 : 10)
             arcBegin: ((indicatorAirQuality.limitMin/indicatorAirQuality.valueMax) * 270) + 2.5
             arcEnd: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) - 2.5
             arcOffset: 225
@@ -59,7 +59,7 @@ Item {
 
             animation: false
 
-            arcWidth: (isMobile ? 7 : 10)
+            arcWidth: (Theme.isMobile ? 7 : 10)
             arcBegin: ((indicatorAirQuality.limitMax/indicatorAirQuality.valueMax) * 270) + 2.5
             arcEnd: 270
             arcOffset: 225
@@ -75,13 +75,13 @@ Item {
     ProgressCircle { // actual indicator
         id: indicator
         anchors.fill: parent
-        anchors.margins: (isMobile ? 11 : 16)
+        anchors.margins: (Theme.isMobile ? 11 : 16)
 
         arcOffset: 225
         arcBegin: 0
         arcEnd: 270
 
-        arcWidth: isMobile ? 12 : 18
+        arcWidth: Theme.isMobile ? 12 : 18
         arcColor: indicatorAirQuality.color
         arcCap: "round"
 
@@ -145,7 +145,7 @@ Item {
 
             text: (indicatorAirQuality.value > -99) ? indicatorAirQuality.value : "?"
             color: indicatorAirQuality.color
-            font.pixelSize: isMobile ? 20 : 24
+            font.pixelSize: Theme.isMobile ? 20 : 24
             font.bold: true
         }
         Text {
@@ -153,7 +153,7 @@ Item {
 
             text: indicatorAirQuality.legend
             color: indicatorAirQuality.color
-            font.pixelSize: isMobile ? 20 : 24
+            font.pixelSize: Theme.isMobile ? 20 : 24
             font.bold: false
         }
     }

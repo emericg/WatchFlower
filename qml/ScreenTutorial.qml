@@ -51,11 +51,11 @@ Rectangle {
             SwipeView {
                 id: tutorialPages
                 anchors.fill: parent
-                anchors.leftMargin: appWindow.screenPaddingLeft
-                anchors.rightMargin: appWindow.screenPaddingRight
+                anchors.leftMargin: Theme.screenPaddingLeft
+                anchors.rightMargin: Theme.screenPaddingRight
                 anchors.bottomMargin: 56
 
-                property int margins: isPhone ? 24 : 40
+                property int margins: Theme.isPhone ? 24 : 40
 
                 currentIndex: 0
                 onCurrentIndexChanged: {
@@ -215,7 +215,7 @@ Rectangle {
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
+                            font.pixelSize: Theme.singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.8 : 0.4)
@@ -265,7 +265,7 @@ Rectangle {
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
+                            font.pixelSize: Theme.singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.666 : 0.3)
@@ -287,7 +287,7 @@ Rectangle {
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
+                            font.pixelSize: Theme.singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         IconSvg {
                             width: tutorialPages.width * (tutorialPages.height > tutorialPages.width ? 0.666 : 0.3)
@@ -309,7 +309,7 @@ Rectangle {
                             color: Theme.colorHeaderContent
                             wrapMode: Text.WrapAtWordBoundaryOrAnywhere
                             horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
+                            font.pixelSize: Theme.singleColumn ? Theme.fontSizeContent : Theme.fontSizeContentBig
                         }
                         ButtonFlat {
                             anchors.horizontalCenter: parent.horizontalCenter
@@ -346,7 +346,7 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: isDesktop
+                    hoverEnabled: Theme.isDesktop
                     onEntered: parent.opacity = 1
                     onExited: parent.opacity = 0.8
                     onCanceled: parent.opacity = 0.8
@@ -381,7 +381,7 @@ Rectangle {
 
                 MouseArea {
                     anchors.fill: parent
-                    hoverEnabled: isDesktop
+                    hoverEnabled: Theme.isDesktop
                     onEntered: parent.opacity = 1
                     onExited: parent.opacity = 0.8
                     onCanceled: parent.opacity = 0.8

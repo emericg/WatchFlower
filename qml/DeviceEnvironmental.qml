@@ -54,7 +54,7 @@ Loader {
 
         // 1: single column (single column view or portrait tablet)
         // 2: wide mode (wide view)
-        property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+        property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
         property bool isAirMonitor: false
         property bool isWeatherStation: false
@@ -181,7 +181,7 @@ Loader {
             }
 
             if (swipeBox.currentIndex === 1) { // settings
-                if (isMobile) {
+                if (Theme.isMobile) {
                     swipeBox.currentIndex = 0
                     return
                 }
@@ -470,8 +470,8 @@ Loader {
             Rectangle {
                 id: headerBox
 
-                property int dimboxw: Math.min(deviceEnvironmental.width * 0.4, isPhone ? 320 : 600)
-                property int dimboxh: Math.max(deviceEnvironmental.height * 0.333, isPhone ? 180 : 256)
+                property int dimboxw: Math.min(deviceEnvironmental.width * 0.4, Theme.isPhone ? 320 : 600)
+                property int dimboxh: Math.max(deviceEnvironmental.height * 0.333, Theme.isPhone ? 180 : 256)
 
                 width: (itemDeviceEnvironmental.uiMode === 1) ? parent.width : dimboxw
                 height: (itemDeviceEnvironmental.uiMode === 1) ? dimboxh : parent.height
@@ -492,13 +492,13 @@ Loader {
 
                     IconSvg {
                         id: indicatorDisconnected
-                        width: isMobile ? 96 : 128
-                        height: isMobile ? 96 : 128
+                        width: Theme.isMobile ? 96 : 128
+                        height: Theme.isMobile ? 96 : 128
                         anchors.centerIn: parent
 
                         visible: (currentDevice && !currentDevice.hasDataToday)
                         source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
-                        color: cccc
+                        color: itemDeviceEnvironmental.cccc
                     }
 
                     ////////////////
@@ -514,15 +514,15 @@ Loader {
                                    primary === "co" || primary === "co2" ||
                                    primary === "pm1" || primary === "pm25" || primary === "pm10"))
 
-                        color: cccc
+                        color: itemDeviceEnvironmental.cccc
                     }
 
                     ////////////////
 
                     Column {
                         id: indicatorHygrometer
-                        width: isMobile ? 96 : 128
-                        height: isMobile ? 96 : 128
+                        width: Theme.isMobile ? 96 : 128
+                        height: Theme.isMobile ? 96 : 128
                         anchors.centerIn: parent
                         spacing: 2
 
@@ -534,16 +534,16 @@ Loader {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             font.bold: false
-                            font.pixelSize: isPhone ? 44 : 48
-                            color: cccc
+                            font.pixelSize: Theme.isPhone ? 44 : 48
+                            color: itemDeviceEnvironmental.cccc
                         }
                         Text {
                             id: sensorHygro
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             font.bold: false
-                            font.pixelSize: isPhone ? 22 : 24
-                            color: cccc
+                            font.pixelSize: Theme.isPhone ? 22 : 24
+                            color: itemDeviceEnvironmental.cccc
                             opacity: 0.8
                         }
 
@@ -554,16 +554,16 @@ Loader {
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             font.bold: false
-                            font.pixelSize: isPhone ? 19 : 20
-                            color: cccc
+                            font.pixelSize: Theme.isPhone ? 19 : 20
+                            color: itemDeviceEnvironmental.cccc
                         }
                         Text {
                             id: dewPoint
                             anchors.horizontalCenter: parent.horizontalCenter
 
                             font.bold: false
-                            font.pixelSize: isPhone ? 18 : 19
-                            color: cccc
+                            font.pixelSize: Theme.isPhone ? 18 : 19
+                            color: itemDeviceEnvironmental.cccc
                             opacity: 0.8
                         }
                     }
@@ -572,12 +572,12 @@ Loader {
 
                     IconSvg {
                         id: indicatorRadioactivity
-                        width: isMobile ? 128 : 160
-                        height: isMobile ? 128 : 160
+                        width: Theme.isMobile ? 128 : 160
+                        height: Theme.isMobile ? 128 : 160
                         anchors.centerIn: parent
 
                         visible: (currentDevice && currentDevice.hasDataToday && primary === "radioactivity")
-                        color: cccc
+                        color: itemDeviceEnvironmental.cccc
                         source: "qrc:/assets/gfx/icons/nuclear_icon_big.svg"
 
                         property real minOpacity: 0.5
@@ -600,8 +600,8 @@ Loader {
 
                     IconSvg {
                         id: imageBattery
-                        width: isPhone ? 20 : 24
-                        height: isPhone ? 32 : 36
+                        width: Theme.isPhone ? 20 : 24
+                        height: Theme.isPhone ? 32 : 36
                         rotation: 90
                         anchors.top: {
                             if (indicatorAirQuality.visible) return indicatorAirQuality.bottom
@@ -640,7 +640,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/IconLibrary/material-icons/duotone/schedule.svg"
-                        color: cccc
+                        color: itemDeviceEnvironmental.cccc
                     }
                     Text {
                         id: textStatus
@@ -649,7 +649,7 @@ Loader {
 
                         text: qsTr("Loading...")
                         textFormat: Text.PlainText
-                        color: cccc
+                        color: itemDeviceEnvironmental.cccc
                         font.bold: false
                         font.pixelSize: 17
                         elide: Text.ElideRight
@@ -675,9 +675,9 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
-                        color: cccc
+                        color: itemDeviceEnvironmental.cccc
 
-                        opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
+                        opacity: (Theme.isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
                         Behavior on opacity { OpacityAnimator { duration: 133 } }
                     }
                     TextInput {
@@ -730,7 +730,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: !singleColumn
+                    visible: !Theme.singleColumn
                     width: 2
                     opacity: 0.33
                     color: Theme.colorHeaderHighlight
@@ -740,7 +740,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: singleColumn
+                    visible: Theme.singleColumn
                     height: 2
                     opacity: 0.33
                     color: Theme.colorHeaderHighlight
@@ -753,19 +753,19 @@ Loader {
                 id: swipeBox
 
                 width: {
-                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return parent.width
-                    return singleColumn ? parent.width : (parent.width - headerBox.width)
+                    if (Theme.isTablet && Theme.screenOrientation == Qt.PortraitOrientation) return parent.width
+                    return Theme.singleColumn ? parent.width : (parent.width - headerBox.width)
                 }
                 height: {
-                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return (parent.height - headerBox.height)
-                    return singleColumn ? (parent.height - headerBox.height) : parent.height
+                    if (Theme.isTablet && Theme.screenOrientation == Qt.PortraitOrientation) return (parent.height - headerBox.height)
+                    return Theme.singleColumn ? (parent.height - headerBox.height) : parent.height
                 }
 
                 interactive: false
 
                 currentIndex: 0
                 onCurrentIndexChanged: {
-                    if (isDesktop) {
+                    if (Theme.isDesktop) {
                         if (swipeBox.currentIndex === 0)
                             appHeader.setActiveDeviceData()
                         else if (swipeBox.currentIndex === 1)
@@ -836,7 +836,7 @@ Loader {
                                         //console.log("--- airFlow cellWidth: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 96 : 140
+                                    property int wwwTarget: Theme.isPhone ? 96 : 140
                                     property int wwwMax: 240
                                     property int www: wwwTarget
 
@@ -1107,7 +1107,7 @@ Loader {
                                         //console.log("--- weatherFlow cellWidth: " + www)
                                     }
 
-                                    property int wwwTarget: isPhone ? 92 : 128
+                                    property int wwwTarget: Theme.isPhone ? 92 : 128
                                     property int wwwMax: 240
                                     property int www: wwwTarget
 
@@ -1238,8 +1238,8 @@ Loader {
                                     id: graphLoader
 
                                     anchors.fill: parent
-                                    //anchors.leftMargin: appWindow.screenPaddingLeft
-                                    //anchors.rightMargin: appWindow.screenPaddingRight
+                                    //anchors.leftMargin: Theme.screenPaddingLeft
+                                    //anchors.rightMargin: Theme.screenPaddingRight
 
                                     opacity: 0
                                     Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }

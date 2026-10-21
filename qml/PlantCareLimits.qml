@@ -117,7 +117,7 @@ Flickable {
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: isMobile ? 22 : 20
+                hhh: Theme.isMobile ? 22 : 20
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -195,7 +195,7 @@ Flickable {
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: isMobile ? 22 : 20
+                hhh: Theme.isMobile ? 22 : 20
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -271,7 +271,7 @@ Flickable {
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: isMobile ? 22 : 20
+                hhh: Theme.isMobile ? 22 : 20
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -367,7 +367,7 @@ Flickable {
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: isMobile ? 22 : 20
+                hhh: Theme.isMobile ? 22 : 20
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -508,7 +508,7 @@ Flickable {
 
                 ButtonFlat {
                     anchors.left: parent.left
-                    width: singleColumn ? parent.width : rowButtons.width
+                    width: Theme.singleColumn ? parent.width : rowButtons.width
 
                     visible: currentDevice.hasPlant
 
@@ -521,7 +521,7 @@ Flickable {
                 Row {
                     id: rowButtons
                     anchors.left: parent.left
-                    spacing: isPhone ? 12 : 16
+                    spacing: Theme.isPhone ? 12 : 16
 
                     property int www: Theme.singleColumn ? ((parent.width - spacing) / 2) : 256
                     property int hhh: Math.min(www, 140)

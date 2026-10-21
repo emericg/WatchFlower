@@ -12,7 +12,7 @@ Item {
     property int daysAvailable: 0
     property int daysMax: 30
 
-    property int widgetWidthTarget: (isPhone ? 48 : 64)
+    property int widgetWidthTarget: (Theme.isPhone ? 48 : 64)
     property int widgetWidth: 48
 
     function loadGraph() {

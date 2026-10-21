@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 
 import ComponentLibrary
 import JournalUtils
@@ -10,7 +9,7 @@ Item {
     // 1: single column (single column view)
     // 2: single column, with calendar unfolded (portrait tablet)
     // 3: wide mode (wide view)
-    property int uiMode: (singleColumn) ? 1 : ((isTablet && screenOrientation === Qt.PortraitOrientation) ? 2 : 3)
+    property int uiMode: Theme.singleColumn ? 1 : ((Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation) ? 2 : 3)
 
     function load() {
         journalEntries.active = true
@@ -59,8 +58,8 @@ Item {
             visible: currentDevice.hasJournal
             enabled: currentDevice.hasJournal
 
-            topMargin: isPhone ? 8 : 12
-            bottomMargin: isPhone ? 8 : 12
+            topMargin: Theme.isPhone ? 8 : 12
+            bottomMargin: Theme.isPhone ? 8 : 12
             spacing: 16
 
             property int entrySelected: -1
@@ -85,7 +84,7 @@ Item {
                     height: 40
                     anchors.top: parent.top
                     anchors.left: parent.left
-                    anchors.leftMargin: singleColumn ? 0 : 112
+                    anchors.leftMargin: Theme.singleColumn ? 0 : 112
 
                     source: "qrc:/assets/gfx/icons/pot_flower-24px.svg"
                     iconColor: "white"
@@ -137,7 +136,7 @@ Item {
                     width: 40
                     height: 40
                     anchors.left: parent.left
-                    anchors.leftMargin: singleColumn ? 0 : 112
+                    anchors.leftMargin: Theme.singleColumn ? 0 : 112
                     anchors.bottom: parent.bottom
 
                     source: "qrc:/IconLibrary/material-symbols/add.svg"
@@ -368,7 +367,7 @@ Item {
                             id: entryComment
                             anchors.left: parent.left
                             anchors.right: parent.right
-                            height: isPhone ? 128 : 160
+                            height: Theme.isPhone ? 128 : 160
 
                             colorBackground: Theme.colorBackground
                             placeholderText: qsTr("Add a comment")

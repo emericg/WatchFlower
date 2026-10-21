@@ -7,12 +7,12 @@ import ComponentLibrary
 Popup {
     id: popupDeleteDevice
 
-    x: singleColumn ? 0 : (appWindow.width / 2) - (width / 2)
-    y: singleColumn ? (appWindow.height - height)
-                    : ((appWindow.height / 2) - (height / 2))
+    x: Theme.singleColumn ? 0 : (appWindow.width / 2) - (width / 2)
+    y: Theme.singleColumn ? (appWindow.height - height)
+                          : ((appWindow.height / 2) - (height / 2))
 
-    width: singleColumn ? appWindow.width : 720
-    height: columnContent.height + padding*2 + screenPaddingNavbar + screenPaddingBottom
+    width: Theme.singleColumn ? appWindow.width : 720
+    height: columnContent.height + padding*2 + Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
     padding: Theme.componentMarginXL
     margins: 0
 
@@ -37,18 +37,18 @@ Popup {
     background: Rectangle {
         color: Theme.colorBackground
         border.color: Theme.colorSeparator
-        border.width: singleColumn ? 0 : Theme.componentBorderWidth
-        radius: singleColumn ? 0 : Theme.componentRadius
+        border.width: Theme.singleColumn ? 0 : Theme.componentBorderWidth
+        radius: Theme.singleColumn ? 0 : Theme.componentRadius
 
         Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             height: Theme.componentBorderWidth
-            visible: singleColumn
+            visible: Theme.singleColumn
             color: Theme.colorSeparator
         }
 
-        layer.enabled: !singleColumn
+        layer.enabled: !Theme.singleColumn
         layer.effect: MultiEffect { // shadow
             autoPaddingEnabled: true
             blurMax: 48

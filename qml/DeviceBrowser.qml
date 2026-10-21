@@ -143,8 +143,8 @@ Item {
 
         Item {
             anchors.fill: parent
-            anchors.leftMargin: appWindow.screenPaddingLeft
-            anchors.rightMargin: appWindow.screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
 
             ////////
 

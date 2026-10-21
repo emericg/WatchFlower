@@ -11,7 +11,7 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: (headerHeight + Math.max(screenPaddingStatusbar, screenPaddingTop) - (headerCompact ? 12 : 0))
+    height: (headerHeight + Math.max(Theme.screenPaddingStatusbar, Theme.screenPaddingTop) - (headerCompact ? 12 : 0))
     color: Theme.colorHeader
     clip: true
     z: 10
@@ -77,16 +77,16 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: Math.max(screenPaddingStatusbar, screenPaddingTop)
+        height: Math.max(Theme.screenPaddingStatusbar, Theme.screenPaddingTop)
         color: Theme.colorStatusbar
         visible: !appHeader.headerCompact
     }
 
     Item {
         anchors.left: parent.left
-        anchors.leftMargin: screenPaddingLeft
+        anchors.leftMargin: Theme.screenPaddingLeft
         anchors.right: parent.right
-        anchors.rightMargin: screenPaddingRight
+        anchors.rightMargin: Theme.screenPaddingRight
         anchors.bottom: parent.bottom
         anchors.bottomMargin: appHeader.headerCompact ? -4 : 0
 
@@ -99,7 +99,7 @@ Rectangle {
             height: appHeader.headerHeight
 
             visible: true
-            onClicked: leftMenuClicked()
+            onClicked: appHeader.leftMenuClicked()
 
             RippleThemed {
                 anchors.fill: parent
@@ -116,8 +116,8 @@ Rectangle {
                 height: (appHeader.headerHeight / 2)
 
                 source: {
-                    if (leftMenuMode === "drawer") return "qrc:/IconLibrary/material-symbols/menu.svg"
-                    if (leftMenuMode === "close") return "qrc:/IconLibrary/material-symbols/close.svg"
+                    if (appHeader.leftMenuMode === "drawer") return "qrc:/IconLibrary/material-symbols/menu.svg"
+                    if (appHeader.leftMenuMode === "close") return "qrc:/IconLibrary/material-symbols/close.svg"
                     return "qrc:/IconLibrary/material-symbols/arrow_back.svg"
                 }
                 color: Theme.colorHeaderContent

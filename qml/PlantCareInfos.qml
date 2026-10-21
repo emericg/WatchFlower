@@ -53,17 +53,17 @@ Item {
             id: itemPlantViewer
 
             anchors.fill: parent
-            anchors.leftMargin: appWindow.screenPaddingLeft
-            anchors.rightMargin: appWindow.screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
 
             contentWidth: (uiMode === 1) ? -1 : plantScreen.width
             contentHeight: (uiMode === 1) ? plantScreen.height : -1
 
             // 1: single column (single column view or portrait tablet)
             // 2: wide mode (wide view or landscape tablet)
-            property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+            property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
-            boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+            boundsBehavior: Theme.isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
             function setPlant() {

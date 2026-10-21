@@ -58,16 +58,16 @@ Loader {
             contentWidth: -1
             contentHeight: contentColumn.height
 
-            boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+            boundsBehavior: Theme.isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
             Column {
                 id: contentColumn
 
                 anchors.left: parent.left
-                anchors.leftMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
+                anchors.leftMargin: ((Theme.singleColumn || Theme.isPhone) ? 0 : parent.width * 0.12)
                 anchors.right: parent.right
-                anchors.rightMargin: ((singleColumn || isPhone) ? 0 : parent.width * 0.12)
+                anchors.rightMargin: ((Theme.singleColumn || Theme.isPhone) ? 0 : parent.width * 0.12)
 
                 topPadding: Theme.componentMargin
                 bottomPadding: Theme.componentMargin
@@ -153,7 +153,7 @@ Loader {
                     text: "Remote database"
                     source: "qrc:/IconLibrary/material-symbols/storage.svg"
 
-                    visible: isDesktop
+                    visible: Theme.isDesktop
                 }
 
                 ////////////////
@@ -165,7 +165,7 @@ Loader {
                     anchors.rightMargin: Theme.componentMargin + 8
                     spacing: Theme.componentMargin / 2
 
-                    visible: isDesktop
+                    visible: Theme.isDesktop
 
                     SwitchThemed {
                         id: switch_mysql
@@ -197,7 +197,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.componentMargin + 8
 
-                    active: isDesktop && SettingsManager.mysql
+                    active: Theme.isDesktop && SettingsManager.mysql
                     asynchronous: true
                     sourceComponent: dbSettingsScalable
                 }
@@ -229,7 +229,7 @@ Loader {
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
 
-                            visible: isDesktop
+                            visible: Theme.isDesktop
                             text: "open"
                             onClicked: UtilsApp.openWith(parent.text)
                         }
@@ -240,7 +240,7 @@ Loader {
                         anchors.right: parent.right
                         spacing: Theme.componentMargin / 2
 
-                        enabled: false // isDesktop
+                        enabled: false // Theme.isDesktop
 
                         ButtonFlat {
                             text: "save"
@@ -283,7 +283,7 @@ Loader {
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
 
-                            visible: isDesktop
+                            visible: Theme.isDesktop
                             text: "open"
                             onClicked: UtilsApp.openWith(parent.text)
                         }
@@ -410,10 +410,10 @@ Loader {
                 anchors.right: parent.right
 
                 rows: 4
-                columns: singleColumn ? 1 : 2
+                columns: Theme.singleColumn ? 1 : 2
                 spacing: 12
 
-                property int sz: singleColumn ? width : Math.min((width / 2), 512) - 4
+                property int sz: Theme.singleColumn ? width : Math.min((width / 2), 512) - 4
 
                 TextFieldThemed {
                     id: tf_database_host

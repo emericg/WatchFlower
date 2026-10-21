@@ -10,7 +10,7 @@ Item {
     // 1: single column (single column view or portrait tablet)
     // 2: wide mode, two main rows (wide view)
     // 3: wide mode, two main columns (wide view, phones)
-    property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : (isPhone ? 3 : 2)
+    property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : (Theme.isPhone ? 3 : 2)
 
     property var dataIndicators: indicatorsLoader.item
     property var dataChart: graphLoader.item
@@ -158,7 +158,7 @@ Item {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            visible: (isDesktop && !headerUnicolor)
+            visible: (Theme.isDesktop && !headerUnicolor)
             height: 2
             opacity: 0.5
             color: Theme.colorSeparator
@@ -170,14 +170,14 @@ Item {
     Grid {
         id: contentGrid_lvl1
         anchors.fill: parent
-        columns: (uiMode === 3) ? 2 : 1
+        columns: (devicePlantSensorData.uiMode === 3) ? 2 : 1
         rows: 2
         spacing: 0
 
         Grid {
             id: contentGrid_lvl2
             width: (contentGrid_lvl1.width / contentGrid_lvl1.columns)
-            columns: (uiMode === 2) ? 3 : 1
+            columns: (devicePlantSensorData.uiMode === 2) ? 3 : 1
             rows: 3
             spacing: 0
 
@@ -203,7 +203,7 @@ Item {
                         height: 32
                         anchors.left: parent.left
 
-                        visible: isDesktop
+                        visible: Theme.isDesktop
 
                         text: currentDevice ? currentDevice.deviceName : ""
                         color: Theme.colorText
@@ -291,7 +291,7 @@ Item {
                             source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                             color: Theme.colorSubText
 
-                            opacity: (isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 0.9 : 0
+                            opacity: (Theme.isMobile || !textInputPlant.text || textInputPlant.focus || textInputPlantArea.containsMouse) ? 0.9 : 0
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
                     }
@@ -362,7 +362,7 @@ Item {
                             source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                             color: Theme.colorSubText
 
-                            opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
+                            opacity: (Theme.isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
                             Behavior on opacity { OpacityAnimator { duration: 133 } }
                         }
                     }

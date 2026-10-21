@@ -54,7 +54,7 @@ Loader {
 
         // 1: single column (single column view or portrait tablet)
         // 2: wide mode (wide view)
-        property int uiMode: (singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+        property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
         property alias thermoChart: graphLoader.item
 
@@ -296,7 +296,7 @@ Loader {
             }
 
             if (swipeBox.currentIndex === 1) { // settings
-                if (isMobile) {
+                if (Theme.isMobile) {
                     swipeBox.currentIndex = 0
                     return
                 }
@@ -321,8 +321,8 @@ Loader {
             Rectangle {
                 id: headerBox
 
-                property int dimboxw: Math.min(deviceThermometer.width * 0.4, isPhone ? 320 : 600)
-                property int dimboxh: Math.max(deviceThermometer.height * 0.333, isPhone ? 180 : 256)
+                property int dimboxw: Math.min(deviceThermometer.width * 0.4, Theme.isPhone ? 320 : 600)
+                property int dimboxh: Math.max(deviceThermometer.height * 0.333, Theme.isPhone ? 180 : 256)
 
                 width: (itemDeviceThermometer.uiMode === 1) ? parent.width : dimboxw
                 height: (itemDeviceThermometer.uiMode === 1) ? dimboxh : parent.height
@@ -340,11 +340,11 @@ Loader {
 
                     IconSvg {
                         id: sensorDisconnected
-                        width: isMobile ? 96 : 128
-                        height: isMobile ? 96 : 128
+                        width: Theme.isMobile ? 96 : 128
+                        height: Theme.isMobile ? 96 : 128
                         anchors.horizontalCenter: parent.horizontalCenter
                         source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
-                        color: cccc
+                        color: itemDeviceThermometer.cccc
                     }
 
                     Text {
@@ -352,16 +352,16 @@ Loader {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         font.bold: false
-                        font.pixelSize: isPhone ? 44 : 48
-                        color: cccc
+                        font.pixelSize: Theme.isPhone ? 44 : 48
+                        color: itemDeviceThermometer.cccc
                     }
                     Text {
                         id: sensorHygro
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         font.bold: false
-                        font.pixelSize: isPhone ? 22 : 24
-                        color: cccc
+                        font.pixelSize: Theme.isPhone ? 22 : 24
+                        color: itemDeviceThermometer.cccc
                         opacity: 0.8
                     }
 
@@ -372,16 +372,16 @@ Loader {
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         font.bold: false
-                        font.pixelSize: isPhone ? 19 : 20
-                        color: cccc
+                        font.pixelSize: Theme.isPhone ? 19 : 20
+                        color: itemDeviceThermometer.cccc
                     }
                     Text {
                         id: dewPoint
                         anchors.horizontalCenter: parent.horizontalCenter
 
                         font.bold: false
-                        font.pixelSize: isPhone ? 18 : 19
-                        color: cccc
+                        font.pixelSize: Theme.isPhone ? 18 : 19
+                        color: itemDeviceThermometer.cccc
                         opacity: 0.8
                     }
 
@@ -389,14 +389,14 @@ Loader {
                         id: imageBattery
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        width: isPhone ? 20 : 24
-                        height: isPhone ? 32 : 36
+                        width: Theme.isPhone ? 20 : 24
+                        height: Theme.isPhone ? 32 : 36
                         rotation: 90
 
                         visible: (currentDevice.hasBattery && currentDevice.deviceBattery >= 0)
                         source: UtilsDeviceSensors.getDeviceBatteryIcon(currentDevice.deviceBattery)
                         fillMode: Image.PreserveAspectCrop
-                        color: cccc
+                        color: itemDeviceThermometer.cccc
                     }
                 }
 
@@ -458,7 +458,7 @@ Loader {
                         source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                         color: cccc
 
-                        opacity: (isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
+                        opacity: (Theme.isMobile || !textInputLocation.text || textInputLocation.focus || textInputLocationArea.containsMouse) ? 0.9 : 0
                         Behavior on opacity { OpacityAnimator { duration: 133 } }
                     }
                     TextInput {
@@ -500,7 +500,7 @@ Loader {
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
-                        color: cccc
+                        color: itemDeviceThermometer.cccc
                     }
                 }
 
@@ -511,7 +511,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: !singleColumn
+                    visible: !Theme.singleColumn
                     width: 2
                     opacity: 0.33
                     color: Theme.colorHeaderHighlight
@@ -521,7 +521,7 @@ Loader {
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
 
-                    visible: singleColumn
+                    visible: Theme.singleColumn
                     height: 2
                     opacity: 0.33
                     color: Theme.colorHeaderHighlight
@@ -534,19 +534,19 @@ Loader {
                 id: swipeBox
 
                 width: {
-                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return parent.width
-                    return singleColumn ? parent.width : (parent.width - headerBox.width)
+                    if (Theme.isTablet && Theme.screenOrientation == Qt.PortraitOrientation) return parent.width
+                    return Theme.singleColumn ? parent.width : (parent.width - headerBox.width)
                 }
                 height: {
-                    if (isTablet && screenOrientation == Qt.PortraitOrientation) return (parent.height - headerBox.height)
-                    return singleColumn ? (parent.height - headerBox.height) : parent.height
+                    if (Theme.isTablet && Theme.screenOrientation == Qt.PortraitOrientation) return (parent.height - headerBox.height)
+                    return Theme.singleColumn ? (parent.height - headerBox.height) : parent.height
                 }
 
                 interactive: false
 
                 currentIndex: 0
                 onCurrentIndexChanged: {
-                    if (isDesktop) {
+                    if (Theme.isDesktop) {
                         if (swipeBox.currentIndex === 0)
                             appHeader.setActiveDeviceData()
                         else if (swipeBox.currentIndex === 1)
@@ -571,8 +571,8 @@ Loader {
                         id: graphLoader
 
                         anchors.fill: parent
-                        //anchors.leftMargin: appWindow.screenPaddingLeft
-                        //anchors.rightMargin: appWindow.screenPaddingRight
+                        //anchors.leftMargin: Theme.screenPaddingLeft
+                        //anchors.rightMargin: Theme.screenPaddingRight
 
                         opacity: 0
                         Behavior on opacity { OpacityAnimator { duration: (graphLoader.status === Loader.Ready) ? 200 : 0 } }

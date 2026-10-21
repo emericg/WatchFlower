@@ -43,9 +43,9 @@ Item {
         if (!currentDevice.isPlantSensor) return
 
         // grid geometry
-        if (isMobile) {
-            if (isPhone) {
-                if (screenOrientation === Qt.PortraitOrientation) {
+        if (Theme.isMobile) {
+            if (Theme.isPhone) {
+                if (Theme.screenOrientation === Qt.PortraitOrientation) {
                     subHeader.visible = true
                     subHeader.height = 48
                 } else {
@@ -53,7 +53,7 @@ Item {
                     subHeader.height = 0
                 }
             }
-            else if (isTablet) {
+            else if (Theme.isTablet) {
                 if (devicePlantSensorCare.width < 575) {
                     buttonPanel.anchors.rightMargin = 0
                     buttonPanel.anchors.right = undefined
@@ -90,7 +90,7 @@ Item {
         anchors.right: parent.right
 
         z: 5
-        height: isPhone ? 48 : 52
+        height: Theme.isPhone ? 48 : 52
         color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
         Text {
@@ -101,7 +101,7 @@ Item {
             anchors.rightMargin: 16
             anchors.verticalCenter: parent.verticalCenter
 
-            visible: (!isPhone && devicePlantSensorCare.width >= 575)
+            visible: (!Theme.isPhone && devicePlantSensorCare.width >= 575)
 
             text: {
                 if (currentDevice.devicePlantName.length)
@@ -122,7 +122,7 @@ Item {
 
             ButtonClear {
                 width: 100
-                height: isPhone ? 32 : 36
+                height: Theme.isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
                 colorBackground: plantInfos.visible ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
@@ -139,7 +139,7 @@ Item {
 
             ButtonClear {
                 width: 100
-                height: isPhone ? 32 : 36
+                height: Theme.isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
                 colorBackground: plantLimits.visible ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
@@ -155,7 +155,7 @@ Item {
 
             ButtonClear {
                 width: 100
-                height: isPhone ? 32 : 36
+                height: Theme.isPhone ? 32 : 36
 
                 color: Theme.colorPrimary
                 colorBackground: plantJournal.visible ? color : Qt.rgba(color.r, color.g, color.b, 0.2)
@@ -176,7 +176,7 @@ Item {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            visible: (isDesktop && !headerUnicolor)
+            visible: (Theme.isDesktop && !headerUnicolor)
             height: 2
             opacity: 0.5
             color: Theme.colorSeparator

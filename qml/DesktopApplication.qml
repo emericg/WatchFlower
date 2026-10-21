@@ -11,13 +11,6 @@ ApplicationWindow {
     flags: Qt.Window
     color: Theme.colorBackground
 
-    // Helpers
-    property bool isHdpi: (UtilsScreen.screenDpi >= 128 || UtilsScreen.screenPar >= 2.0)
-    property bool isDesktop: true
-    property bool isMobile: false
-    property bool isPhone: false
-    property bool isTablet: false
-
     // Setup ThemeEngine
     Binding { target: Theme; property: "appTheme";               value: SettingsManager.appTheme }
     Binding { target: Theme; property: "appThemeAuto";           value: SettingsManager.appThemeAuto }
@@ -32,20 +25,20 @@ ApplicationWindow {
 
     // Desktop stuff ///////////////////////////////////////////////////////////
 
-    minimumWidth: isHdpi ? 400 : 480
-    minimumHeight: isHdpi ? 480 : 560
+    minimumWidth: Theme.isHdpi ? 400 : 480
+    minimumHeight: Theme.isHdpi ? 480 : 560
 
     width: {
         if (SettingsManager.initialSize.width > 0)
             return SettingsManager.initialSize.width
         else
-            return isHdpi ? 800 : 1280
+            return Theme.isHdpi ? 800 : 1280
     }
     height: {
         if (SettingsManager.initialSize.height > 0)
             return SettingsManager.initialSize.height
         else
-            return isHdpi ? 560 : 720
+            return Theme.isHdpi ? 560 : 720
     }
     x: SettingsManager.initialPosition.width
     y: SettingsManager.initialPosition.height
@@ -71,13 +64,6 @@ ApplicationWindow {
 
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
-
-    property int screenPaddingStatusbar: 0
-    property int screenPaddingNavbar: 0
-    property int screenPaddingTop: 0
-    property int screenPaddingLeft: 0
-    property int screenPaddingRight: 0
-    property int screenPaddingBottom: 0
 
     Item { // compatibility
         id: mobileMenu
@@ -340,22 +326,6 @@ ApplicationWindow {
     // UI sizes ////////////////////////////////////////////////////////////////
 
     property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
-
-    property bool singleColumn: {
-        if (isMobile) {
-            if (screenOrientation === Qt.PortraitOrientation ||
-                (isTablet && width < 480)) { // can be a 2/3 split screen on tablet
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return (appWindow.width < appWindow.height)
-        }
-    }
-
-    property bool wideMode: (isDesktop && width >= 560) || (isTablet && width >= 480)
-    property bool wideWideMode: (width >= 640)
 
     // QML /////////////////////////////////////////////////////////////////////
 

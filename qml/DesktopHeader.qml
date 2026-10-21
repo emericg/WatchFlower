@@ -17,7 +17,7 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property int headerHeight: isHdpi ? 58 : 64
+    property int headerHeight: Theme.isHdpi ? 58 : 64
 
     property int headerPosition: 64 // horizontal
 
@@ -39,6 +39,7 @@ Rectangle {
     signal deviceRebootButtonClicked()
     signal deviceCalibrateButtonClicked()
     signal deviceWateringButtonClicked()
+    signal deviceWateringSettingsButtonClicked()
     signal deviceLedButtonClicked()
     signal deviceRefreshButtonClicked()
     signal deviceRefreshRealtimeButtonClicked()
@@ -120,9 +121,9 @@ Rectangle {
 
         onPressed: buttonBack.width = 28
         onReleased: buttonBack.width = 32
-        onClicked: backButtonClicked()
+        onClicked: appHeader.backButtonClicked()
 
-        enabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.svg" || wideMode)
+        enabled: (buttonBack.source !== "qrc:/assets/gfx/logos/watchflower_monochrome.svg" || Theme.wideMode)
         visible: enabled
 
         Rectangle {
@@ -148,7 +149,7 @@ Rectangle {
 
     RowLayout {
         anchors.left: parent.left
-        anchors.leftMargin: headerPosition
+        anchors.leftMargin: appHeader.headerPosition
         anchors.right: menus.left
         anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
@@ -158,7 +159,7 @@ Rectangle {
         Text { // header title
             Layout.alignment: Qt.AlignVCenter
 
-            text: headerTitle
+            text: appHeader.headerTitle
             font.bold: true
             font.pixelSize: Theme.fontSizeHeader
             color: Theme.colorHeaderContent
@@ -168,7 +169,7 @@ Rectangle {
         Text { // separator
             Layout.alignment: Qt.AlignVCenter
 
-            visible: headerSubTitle.length &&
+            visible: appHeader.headerSubTitle.length &&
                      (appContent.state === "DevicePlantSensor" ||
                       appContent.state === "DeviceThermometer" ||
                       appContent.state === "DeviceEnvironmental")
@@ -184,12 +185,12 @@ Rectangle {
             Layout.fillWidth: true
             Layout.alignment: Qt.AlignVCenter
 
-            visible: headerSubTitle.length &&
+            visible: appHeader.headerSubTitle.length &&
                      (appContent.state === "DevicePlantSensor" ||
                       appContent.state === "DeviceThermometer" ||
                       appContent.state === "DeviceEnvironmental")
 
-            text: headerSubTitle
+            text: appHeader.headerSubTitle
             textFormat: Text.PlainText
             font.pixelSize: Theme.fontSizeHeader
             color: Theme.colorHeaderContent
@@ -207,7 +208,7 @@ Rectangle {
         anchors.bottom: parent.bottom
 
         visible: true
-        spacing: isHdpi ? 8 : 12
+        spacing: Theme.isHdpi ? 8 : 12
 
         // DEVICE ACTIONS //////////
 
@@ -216,7 +217,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (appContent.state === "DeviceThermometer")
 
             source: (SettingsManager.graphThermometer === "lines") ? "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg" : "qrc:/IconLibrary/material-symbols/timeline.svg";
@@ -237,7 +238,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasWaterTank) &&
                       (appContent.state === "DevicePlantSensor"))
@@ -255,7 +256,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasCalibration) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -268,14 +269,14 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceCalibrateButtonClicked()
+            onClicked: appHeader.deviceCalibrateButtonClicked()
         }
         ButtonCompactable {
             id: buttonReboot
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasReboot) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -288,14 +289,14 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceRebootButtonClicked()
+            onClicked: appHeader.deviceRebootButtonClicked()
         }
         ButtonCompactable {
             id: buttonLed
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasLED) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -308,7 +309,7 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceLedButtonClicked()
+            onClicked: appHeader.deviceLedButtonClicked()
         }
 
         ////////////
@@ -331,7 +332,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasHistory) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -344,14 +345,14 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceRefreshHistoryButtonClicked()
+            onClicked: appHeader.deviceRefreshHistoryButtonClicked()
         }
         ButtonCompactable {
             id: buttonClearHistory
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: buttonRefreshHistory.visible
 
             source: "qrc:/IconLibrary/material-icons/duotone/date_clear.svg"
@@ -360,7 +361,7 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceClearButtonClicked()
+            onClicked: appHeader.deviceClearButtonClicked()
         }
 
         ////////////
@@ -380,7 +381,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasRealTime) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -393,14 +394,14 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceRefreshRealtimeButtonClicked()
+            onClicked: appHeader.deviceRefreshRealtimeButtonClicked()
         }
         ButtonCompactable {
             id: buttonRefreshData
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasBluetoothConnection) &&
                       (appContent.state === "DevicePlantSensor" ||
@@ -413,7 +414,7 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceRefreshButtonClicked()
+            onClicked: appHeader.deviceRefreshButtonClicked()
 
             animation: "rotate"
             animationRunning: selectedDevice ? selectedDevice.updating : false
@@ -444,9 +445,9 @@ Rectangle {
 
             DesktopHeaderItem {
                 id: menuDeviceData
-                height: headerHeight
+                height: appHeader.headerHeight
 
-                text: headerCompact ? "" : qsTr("Data")
+                text: appHeader.headerCompact ? "" : qsTr("Data")
                 source: "qrc:/IconLibrary/material-icons/duotone/insert_chart.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -455,11 +456,11 @@ Rectangle {
             }
             DesktopHeaderItem {
                 id: menuDeviceHistory
-                height: headerHeight
+                height: appHeader.headerHeight
 
                 visible: (appContent.state === "DevicePlantSensor")
 
-                text: headerCompact ? "" : qsTr("History")
+                text: appHeader.headerCompact ? "" : qsTr("History")
                 source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
@@ -468,27 +469,27 @@ Rectangle {
             }
             DesktopHeaderItem {
                 id: menuDevicePlant
-                height: headerHeight
+                height: appHeader.headerHeight
 
                 visible: (appContent.state === "DevicePlantSensor")
 
-                text: headerCompact ? "" : qsTr("Plant")
+                text: appHeader.headerCompact ? "" : qsTr("Plant")
                 source: "qrc:/assets/gfx/icons/duotone-plant_care-24px.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
-                onClicked: devicePlantButtonClicked()
+                onClicked: appHeader.devicePlantButtonClicked()
             }
             DesktopHeaderItem {
                 id: menuDeviceSettings
-                height: headerHeight
+                height: appHeader.headerHeight
 
-                text: headerCompact ? "" : qsTr("Sensor")
+                text: appHeader.headerCompact ? "" : qsTr("Sensor")
                 source: "qrc:/IconLibrary/material-icons/duotone/memory.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
-                onClicked: deviceSettingsButtonClicked()
+                onClicked: appHeader.deviceSettingsButtonClicked()
             }
         }
 
@@ -499,7 +500,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (appContent.state === "DeviceList")
             enabled: visible
 
@@ -582,7 +583,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: (!deviceManager.syncing)
 
@@ -593,7 +594,7 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: scanButtonClicked()
+            onClicked: appHeader.scanButtonClicked()
 
             animation: "fade"
             animationRunning: deviceManager.scanning
@@ -603,7 +604,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: (!deviceManager.scanning)
 
@@ -614,7 +615,7 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: syncButtonClicked()
+            onClicked: appHeader.syncButtonClicked()
 
             animation: "fade"
             animationRunning: deviceManager.syncing
@@ -624,7 +625,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            compact: headerCompact
+            compact: appHeader.headerCompact
             visible: (deviceManager.bluetooth && menuMain.visible)
             enabled: (!deviceManager.syncing)
 
@@ -635,7 +636,7 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: refreshButtonClicked()
+            onClicked: appHeader.refreshButtonClicked()
 
             animation: {
                 if (deviceManager.updating && deviceManager.listening) return "both"
@@ -668,39 +669,39 @@ Rectangle {
 
             DesktopHeaderItem {
                 id: menuPlants
-                height: headerHeight
+                height: appHeader.headerHeight
 
-                text: headerCompact ? "" : qsTr("Sensor list")
+                text: appHeader.headerCompact ? "" : qsTr("Sensor list")
                 source: "qrc:/assets/gfx/logos/watchflower_tray_monochrome.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
                 highlighted: (appContent.state === "DeviceList")
-                onClicked: plantsButtonClicked()
+                onClicked: appHeader.plantsButtonClicked()
             }
             DesktopHeaderItem {
                 id: menuSettings
-                height: headerHeight
+                height: appHeader.headerHeight
 
-                text: headerCompact ? "" : qsTr("Settings")
+                text: appHeader.headerCompact ? "" : qsTr("Settings")
                 source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
                 highlighted: (appContent.state === "ScreenSettings")
-                onClicked: settingsButtonClicked()
+                onClicked: appHeader.settingsButtonClicked()
             }
             DesktopHeaderItem {
                 id: menuAbout
-                height: headerHeight
+                height: appHeader.headerHeight
 
                 source: "qrc:/IconLibrary/material-icons/duotone/info.svg"
                 colorContent: Theme.colorHeaderContent
                 colorHighlight: Theme.colorHeaderHighlight
 
-                text: headerCompact ? "" : qsTr("About")
+                text: appHeader.headerCompact ? "" : qsTr("About")
                 highlighted: (appContent.state === "ScreenAbout")
-                onClicked: aboutButtonClicked()
+                onClicked: appHeader.aboutButtonClicked()
             }
         }
     }

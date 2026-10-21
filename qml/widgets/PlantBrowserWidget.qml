@@ -8,7 +8,7 @@ Item {
     implicitWidth: 480
     implicitHeight: 128
 
-    property bool hugeMode: (!isHdpi || (isTablet && width >= 480))
+    property bool hugeMode: (!Theme.isHdpi || (Theme.isTablet && width >= 480))
     property bool listMode: false
 
     property int margin: Theme.componentMargin

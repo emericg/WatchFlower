@@ -107,7 +107,7 @@ Item {
     Text {
         id: dayoftheweek
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: isPhone ? 10 : 12
+        anchors.bottomMargin: Theme.isPhone ? 10 : 12
         anchors.horizontalCenter: parent.horizontalCenter
 
         text: modelData.day

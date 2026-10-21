@@ -46,7 +46,7 @@ Window {
     Binding { target: MobileUI; property: "navbarColor"; value: "transparent" }
     Binding { target: MobileUI; property: "navbarContentColor"; value: {
             if (appContent.state === "ScreenTutorial") return Theme.colorHeader
-            // if(mobileMenu.visible) return appWindow.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
+            // if(mobileMenu.visible) return Theme.isTablet ? Theme.colorTabletmenu : Theme.colorBackground
             return Theme.colorBackground
         }
     }
@@ -209,9 +209,9 @@ Window {
     property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
 
     property bool singleColumn: {
-        if (isMobile) {
-            if ((isPhone && screenOrientation === Qt.PortraitOrientation) ||
-                (isTablet && width < 512)) { // can be a 2/3 split screen on tablet
+        if (Theme.isMobile) {
+            if ((Theme.isPhone && Theme.screenOrientation === Qt.PortraitOrientation) ||
+                (Theme.isTablet && width < 512)) { // can be a 2/3 split screen on tablet
                 return true
             } else {
                 return false
@@ -221,7 +221,7 @@ Window {
         }
     }
 
-    property bool wideMode: (isDesktop && width >= 560) || (isTablet && width >= 480)
+    property bool wideMode: (Theme.isDesktop && width >= 560) || (Theme.isTablet && width >= 480)
     property bool wideWideMode: (width >= 640)
 
     // QML /////////////////////////////////////////////////////////////////////
@@ -242,7 +242,7 @@ Window {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
+        anchors.bottomMargin: Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
 
         focus: true
         Keys.onBackPressed: {
@@ -291,8 +291,8 @@ Window {
 
         DeviceList {
             id: screenDeviceList
-            anchors.leftMargin: screenPaddingLeft
-            anchors.rightMargin: screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         DevicePlantSensor {
@@ -310,26 +310,26 @@ Window {
 
         ScreenSettings {
             id: screenSettings
-            anchors.leftMargin: screenPaddingLeft
-            anchors.rightMargin: screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         ScreenSettingsAdvanced {
             id: screenSettingsAdvanced
-            anchors.leftMargin: screenPaddingLeft
-            anchors.rightMargin: screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         ScreenAbout {
             id: screenAbout
-            anchors.leftMargin: screenPaddingLeft
-            anchors.rightMargin: screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
         MobilePermissions {
             id: screenAboutPermissions
-            anchors.leftMargin: screenPaddingLeft
-            anchors.rightMargin: screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
             anchors.bottomMargin: mobileMenu.hhv
         }
 
@@ -549,10 +549,10 @@ Window {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        height: screenPaddingNavbar
+        height: Theme.screenPaddingNavbar
 
         visible: (!mobileMenu.visible || appContent.state === "ScreenTutorial")
-        opacity: appWindow.isTablet ? 0.5 : 0.95
+        opacity: Theme.isTablet ? 0.5 : 0.95
 
         color: {
             if (appContent.state === "ScreenTutorial") return Theme.colorHeader

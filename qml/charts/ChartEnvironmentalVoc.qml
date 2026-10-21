@@ -11,7 +11,7 @@ Item {
     property int daysTarget: 30
     property int daysVisible: 0
     property int daysAvailable: 0
-    property int daysMax: (isPhone ? 30 : 90)
+    property int daysMax: (Theme.isPhone ? 30 : 90)
 
     property int widgetWidthTarget: 20
     property int widgetWidth: 20
@@ -39,19 +39,19 @@ Item {
 
         if (currentDevice.primary === "voc" ||
             currentDevice.primary === "hcho") {
-            limitMin = 500
-            limitMax = 1000
-            graphMax = 1500
+            chartEnvironmentalVoc.limitMin = 500
+            chartEnvironmentalVoc.limitMax = 1000
+            chartEnvironmentalVoc.graphMax = 1500
         } else if (currentDevice.primary === "co2") {
-            limitMin = 1000
-            limitMax = 2000
-            graphMax = 2000
+            chartEnvironmentalVoc.limitMin = 1000
+            chartEnvironmentalVoc.limitMax = 2000
+            chartEnvironmentalVoc.graphMax = 2000
         } else if (currentDevice.primary === "pm1" ||
                    currentDevice.primary === "pm25" ||
                    currentDevice.primary === "pm10") {
-            limitMin = 250
-            limitMax = 750
-            graphMax = 1000
+            chartEnvironmentalVoc.limitMin = 250
+            chartEnvironmentalVoc.limitMax = 750
+            chartEnvironmentalVoc.graphMax = 1000
         }
 
         if (currentDevice.hasPM25Sensor || currentDevice.hasPM10Sensor) {
@@ -111,14 +111,14 @@ Item {
                 color: Theme.colorSeparator
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: (parent.height * (limitMin / graphMax))
+                anchors.bottomMargin: (parent.height * (chartEnvironmentalVoc.limitMin / chartEnvironmentalVoc.graphMax))
 
                 Shape {
                     anchors.verticalCenter: parent.verticalCenter
                     opacity: 1
                     ShapePath {
                         strokeColor: Theme.colorSeparator
-                        strokeWidth: isPhone ? 1 : 2
+                        strokeWidth: Theme.isPhone ? 1 : 2
                         strokeStyle: ShapePath.DashLine
                         dashPattern: [ 1, 4 ]
                         startX: 0
@@ -132,14 +132,14 @@ Item {
                 color: Theme.colorSeparator
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
-                anchors.bottomMargin: (parent.height * (limitMax / graphMax))
+                anchors.bottomMargin: (parent.height * (chartEnvironmentalVoc.limitMax / chartEnvironmentalVoc.graphMax))
 
                 Shape {
                     anchors.verticalCenter: parent.verticalCenter
                     opacity: 1
                     ShapePath {
                         strokeColor: Theme.colorSeparator
-                        strokeWidth: isPhone ? 1 : 2
+                        strokeWidth: Theme.isPhone ? 1 : 2
                         strokeStyle: ShapePath.DashLine
                         dashPattern: [ 1, 4 ]
                         startX: 0
@@ -190,7 +190,7 @@ Item {
 
             model: currentDevice.aioEnvData
             delegate: ChartEnvironmentalVocBar {
-                width: widgetWidth
+                width: chartEnvironmentalVoc.widgetWidth
                 height: ListView.view.height
 
                 graphMin: chartEnvironmentalVoc.graphMin

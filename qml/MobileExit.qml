@@ -10,7 +10,7 @@ Rectangle {
     anchors.right: parent.right
     anchors.rightMargin: Theme.componentMarginL
     anchors.bottom: parent.bottom
-    anchors.bottomMargin: Theme.componentMarginL + screenPaddingNavbar + screenPaddingBottom
+    anchors.bottomMargin: Theme.componentMarginL + Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
 
     height: Theme.componentHeightL
     radius: Theme.componentRadius

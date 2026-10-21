@@ -67,7 +67,7 @@ Item {
             //console.log("> (default) flick maximum velocity: " + maximumFlickVelocity)
             //console.log("> (default) flick deceleration: " + flickDeceleration)
 
-            if (isDesktop) {
+            if (Theme.isDesktop) {
                 // mouse wheel or trackpad
                 maximumFlickVelocity = 6500
                 flickDeceleration = 5000
@@ -95,7 +95,7 @@ Item {
 
             property int halfmargin: (Theme.componentMargin / 2)
 
-            property bool bigWidget: (!isHdpi || (isTablet && width >= 480))
+            property bool bigWidget: (!Theme.isHdpi || (Theme.isTablet && width >= 480))
             property bool listWidget: (cellColumnsTarget === 1)
 
             property int cellColumnsTarget: Math.trunc(devicesView.width / cellWidthTarget)

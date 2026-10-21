@@ -61,7 +61,7 @@ Item {
                 spacing: Theme.componentMargin
 
                 ButtonFlat {
-                    //width: ((isDesktop || isTablet) && !singleColumn) ? 256 : undefined
+                    //width: ((Theme.isDesktop || Theme.isTablet) && !Theme.singleColumn) ? 256 : undefined
 
                     text: qsTr("Request permission(s)")
                     sourceSize: 24
@@ -204,7 +204,7 @@ Item {
             spacing: Theme.componentMargin
 
             ButtonFlat {
-                //width: ((isDesktop || isTablet) && !singleColumn) ? 256 : undefined
+                //width: ((Theme.isDesktop || Theme.isTablet) && !Theme.singleColumn) ? 256 : undefined
 
                 text: qsTr("Official information")
                 color: Theme.colorSubText

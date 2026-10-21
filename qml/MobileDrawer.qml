@@ -23,7 +23,7 @@ DrawerThemed {
                 anchors.right: parent.right
                 anchors.rightMargin: -1
 
-                height: Math.max(screenPaddingTop, screenPaddingStatusbar)
+                height: Math.max(Theme.screenPaddingTop, Theme.screenPaddingStatusbar)
                 color: Theme.colorStatusbar // to be able to read statusbar content
             }
 
@@ -265,7 +265,7 @@ DrawerThemed {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
+            anchors.bottomMargin: Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
 
             visible: (screenOrientation === Qt.PortraitOrientation)
 

@@ -6,7 +6,7 @@ Rectangle {
     id: control
 
     width: duo ? sz*2 : sz
-    height: contentColumn.height + (isDesktop ? 24 : 22)
+    height: contentColumn.height + (Theme.isDesktop ? 24 : 22)
     radius: 4
 
     property string title: ""
@@ -31,20 +31,20 @@ Rectangle {
 
     MouseArea {
         anchors.fill: parent
-        onPressAndHold: sensorSelection()
+        onPressAndHold: control.sensorSelection()
     }
 
     ////////
 
     IconSvg {
         anchors.right: parent.right
-        anchors.rightMargin: isDesktop ? 6 : 4
+        anchors.rightMargin: Theme.isDesktop ? 6 : 4
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: isDesktop ? 6 : 4
-        width: isDesktop ? 48 : 32
-        height: isDesktop ? 48 : 32
+        anchors.bottomMargin: Theme.isDesktop ? 6 : 4
+        width: Theme.isDesktop ? 48 : 32
+        height: Theme.isDesktop ? 48 : 32
 
-        source: icon
+        source: control.icon
         color: Theme.colorIcon
         opacity: 0.1
     }
@@ -54,12 +54,12 @@ Rectangle {
     Column {
         id: contentColumn
         anchors.left: parent.left
-        anchors.leftMargin: isDesktop ? 12 : 10
+        anchors.leftMargin: Theme.isDesktop ? 12 : 10
         anchors.right: parent.right
-        anchors.rightMargin: isDesktop ? 6 : 4
+        anchors.rightMargin: Theme.isDesktop ? 6 : 4
         anchors.verticalCenter: parent.verticalCenter
         anchors.verticalCenterOffset: 2
-        spacing: isDesktop ? 4 : 0
+        spacing: Theme.isDesktop ? 4 : 0
 
         Text {
             anchors.left: parent.left
@@ -69,7 +69,7 @@ Rectangle {
             wrapMode: Text.WordWrap
             color: Theme.colorSubText
             font.bold: true
-            font.pixelSize: isDesktop ? Theme.fontSizeContentVerySmall+1 : Theme.fontSizeContentVerySmall
+            font.pixelSize: Theme.isDesktop ? Theme.fontSizeContentVerySmall+1 : Theme.fontSizeContentVerySmall
             font.capitalization: Font.AllUppercase
         }
 
@@ -86,13 +86,13 @@ Rectangle {
                 font.bold: false
                 font.pixelSize: {
                     if (control.value >= 10000)
-                        return isDesktop ? 20 : 18
+                        return Theme.isDesktop ? 20 : 18
                     else if (control.value >= 1000)
-                        return isDesktop ? 22 : 20
+                        return Theme.isDesktop ? 22 : 20
                     else if (control.precision > 1)
-                        return isDesktop ? 24 : 22
+                        return Theme.isDesktop ? 24 : 22
                     else
-                        return isDesktop ? 26 : 24
+                        return Theme.isDesktop ? 26 : 24
                 }
 
                 Text {
@@ -105,7 +105,7 @@ Rectangle {
                     textFormat: Text.PlainText
                     color: Theme.colorSubText
                     font.bold: false
-                    font.pixelSize: isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
+                    font.pixelSize: Theme.isDesktop ? Theme.fontSizeContent : Theme.fontSizeContentSmall
                 }
             }
         }

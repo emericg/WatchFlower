@@ -108,7 +108,7 @@ Loader {
 
         function focusSearchBox() {
             // Search focus is set on desktop
-            if (isDesktop) {
+            if (Theme.isDesktop) {
                 plantSearchBox.focus = true
             }
         }
@@ -196,8 +196,8 @@ Loader {
                 id: plantList
 
                 anchors.fill: parent
-                anchors.leftMargin: appWindow.screenPaddingLeft
-                anchors.rightMargin: appWindow.screenPaddingRight
+                anchors.leftMargin: Theme.screenPaddingLeft
+                anchors.rightMargin: Theme.screenPaddingRight
 
                 topMargin: plantSearchArea.height
                 bottomMargin: 0
@@ -214,7 +214,7 @@ Loader {
                     //console.log("> (default) flick maximum velocity: " + maximumFlickVelocity)
                     //console.log("> (default) flick deceleration: " + flickDeceleration)
 
-                    if (isDesktop) {
+                    if (Theme.isDesktop) {
                         // mouse wheel or trackpad
                         maximumFlickVelocity = 6500
                         flickDeceleration = 5000
@@ -288,8 +288,8 @@ Loader {
             id: itemPlantViewer
 
             anchors.fill: parent
-            anchors.leftMargin: appWindow.screenPaddingLeft
-            anchors.rightMargin: appWindow.screenPaddingRight
+            anchors.leftMargin: Theme.screenPaddingLeft
+            anchors.rightMargin: Theme.screenPaddingRight
 
             topMargin: plantSelector_desktop.visible ? plantSelector_desktop.height : 0
             bottomMargin: plantSelector_mobile.visible ? plantSelector_mobile.height : 0
@@ -303,7 +303,7 @@ Loader {
             contentWidth: (uiMode === 1) ? -1 : plantScreen.width
             contentHeight: (uiMode === 1) ? plantScreen.height : -1
 
-            boundsBehavior: isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
+            boundsBehavior: Theme.isDesktop ? Flickable.OvershootBounds : Flickable.DragAndOvershootBounds
             ScrollBar.vertical: ScrollBar { visible: false }
 
             function setPlant() {
@@ -333,7 +333,7 @@ Loader {
             height: 52
             color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
 
-            visible: (!singleColumn &&
+            visible: (!Theme.singleColumn &&
                       appContent.state === "PlantBrowser" &&
                       screenPlantBrowser.entryPoint === "DevicePlantSensor" &&
                       isPlantClicked())
@@ -388,7 +388,7 @@ Loader {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: (isDesktop && !headerUnicolor)
+                visible: (Theme.isDesktop && !headerUnicolor)
                 height: 2
                 opacity: 0.5
                 color: Theme.colorSeparator

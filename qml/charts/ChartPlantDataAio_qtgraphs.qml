@@ -268,7 +268,7 @@ Item {
         acceptedButtons: (Qt.LeftButton | Qt.RightButton)
 
         onClicked: (mouse) => {
-            if (isMobile) {
+            if (Theme.isMobile) {
                 if (mouse.button === Qt.LeftButton) {
                     lastMouseMap = mouse
                     aioGraph.moveIndicator(mouse, false)
@@ -280,7 +280,7 @@ Item {
         }
 
         onPressed: (mouse) => {
-            if (isDesktop) {
+            if (Theme.isDesktop) {
                 if (mouse.button === Qt.LeftButton) {
                     lastMouseMap = mouse
                     aioGraph.moveIndicator(mouse, false)
@@ -293,7 +293,7 @@ Item {
         onReleased: (mouse) => {
             if (typeof (plantSensorPages) !== "undefined") {
                 // Re-enable page swipe after we dragged the indicator
-                plantSensorPages.interactive = isPhone
+                plantSensorPages.interactive = Theme.isPhone
             }
 
             if (mouse.button !== Qt.RightButton) {
@@ -302,7 +302,7 @@ Item {
         }
 
         onPositionChanged: (mouse) => {
-            if (isDesktop || verticalIndicator.visible) {
+            if (Theme.isDesktop || verticalIndicator.visible) {
 
                 if (typeof (plantSensorPages) !== "undefined") {
                     // Disable page swipe while we drag the indicator
@@ -430,8 +430,8 @@ Item {
         Behavior on x { NumberAnimation { id: vanim; duration: 0; easing.type: Easing.InOutCubic; } }
 
         onXChanged: {
-            if (isPhone) return // verticalIndicator default to middle
-            if (isTablet) return // verticalIndicator default to middle
+            if (Theme.isPhone) return // verticalIndicator default to middle
+            if (Theme.isTablet) return // verticalIndicator default to middle
 
             var direction = "middle"
             if (verticalIndicator.x > dateIndicator.width + 48)
@@ -463,7 +463,7 @@ Item {
     Grid {
         id: indicators
         anchors.top: legend_area_overlay.top
-        anchors.topMargin: isPhone ? 12 : 20
+        anchors.topMargin: Theme.isPhone ? 12 : 20
         anchors.leftMargin: 12
         anchors.rightMargin: 12
         anchors.horizontalCenter: parent.horizontalCenter
@@ -567,7 +567,7 @@ Item {
         }
 
         Row { // line 3
-            spacing: isPhone ? 12 : 8
+            spacing: Theme.isPhone ? 12 : 8
             layoutDirection: (indicators.state === "reanchoredright") ? Qt.RightToLeft : Qt.LeftToRight
 
             RoundButtonIcon {

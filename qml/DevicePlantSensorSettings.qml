@@ -24,7 +24,7 @@ Flickable {
 
     // 1: single column (single column view or portrait tablet)
     // 2: wide mode (wide view)
-    property int uiMode: (Theme.singleColumn || (isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+    property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
     property int flow_width: (flow.width - flow.spacing)
     property int flow_divider: Math.round(flow_width / 512)
@@ -819,7 +819,7 @@ Flickable {
                                 source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                                 color: Theme.colorSubText
 
-                                opacity: (isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputMacAddrArea.containsMouse) ? 0.9 : 0
+                                opacity: (Theme.isMobile || !textInputMacAddr.text || textInputMacAddr.focus || textInputMacAddrArea.containsMouse) ? 0.9 : 0
                                 Behavior on opacity { OpacityAnimator { duration: 133 } }
                             }
                         }

@@ -18,7 +18,7 @@ Item {
 
         IconSvg { // magnifying glass icon
             anchors.horizontalCenter: parent.horizontalCenter
-            width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.66)
+            width: (Theme.isDesktop || Theme.isTablet || (Theme.isPhone && Theme.screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.66)
             height: width
 
             source: "qrc:/IconLibrary/material-symbols/search.svg"
@@ -48,7 +48,7 @@ Item {
             ButtonFlat {
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                width: (isDesktop || isTablet || (isPhone && screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.5)
+                width: (Theme.isDesktop || Theme.isTablet || (Theme.isPhone && Theme.screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.5)
 
                 text: deviceManager.scanning ? qsTr("Scanning...") : qsTr("Launch detection")
                 color: Theme.colorPrimary

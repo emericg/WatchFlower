@@ -1,7 +1,6 @@
 import QtQuick
 
 import ComponentLibrary
-import AppUtils
 import DeviceUtils
 
 Item {
@@ -15,8 +14,8 @@ Item {
                             ((boxDevice.soilMoisture > 0 || boxDevice.soilConductivity > 0) ||
                              (boxDevice.hasDataNamed("soilMoisture") || boxDevice.hasDataNamed("soilConductivity")))
 
-    property bool wideMode: ((width >= 380) || (appWindow.isTablet && width >= 480))
-    property bool hugeMode: (!appWindow.isHdpi || (appWindow.isTablet && width >= 480))
+    property bool wideMode: ((width >= 380) || (Theme.isTablet && width >= 480))
+    property bool hugeMode: (!Theme.isHdpi || (Theme.isTablet && width >= 480))
     property bool listMode: false
 
     property int margin: Theme.componentMargin
@@ -626,8 +625,8 @@ Item {
             id: rectangleSensors
             height: rowRight.height
 
-            spacing: appWindow.isPhone ? 7 : 8
-            property int sensorWidth: appWindow.isPhone ? 9 : (deviceWidget.hugeMode ? 12 : 10)
+            spacing: Theme.isPhone ? 7 : 8
+            property int sensorWidth: Theme.isPhone ? 9 : (deviceWidget.hugeMode ? 12 : 10)
             property int sensorRadius: deviceWidget.hugeMode ? 3 : 2
 
             function initData() { }
@@ -966,9 +965,9 @@ Item {
             ProgressArc {
                 id: gaugeValue
                 anchors.fill: parent
-                anchors.margins: appWindow.isPhone ? 0 : 2
+                anchors.margins: Theme.isPhone ? 0 : 2
 
-                arcWidth: appWindow.isPhone ? 8 : (deviceWidget.hugeMode ? 10 : 8)
+                arcWidth: Theme.isPhone ? 8 : (deviceWidget.hugeMode ? 10 : 8)
                 arcSpan: 270
                 arcCap: "round"
 

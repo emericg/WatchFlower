@@ -31,22 +31,22 @@ RangeSlider {
     }
 
     first.handle: Rectangle {
-        x: control.leftPadding + (first.visualPosition * (control.availableWidth - width))
+        x: control.leftPadding + (control.first.visualPosition * (control.availableWidth - width))
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         width: 4
         height: 20
         //radius: (width / 2)
-        color: first.pressed ? "#ed5565" : "#ed5565"
-        border.color: first.pressed ? "#ed5565" : "#ed5565"
+        color: control.first.pressed ? "#ed5565" : "#ed5565"
+        border.color: control.first.pressed ? "#ed5565" : "#ed5565"
     }
 
     second.handle: Rectangle {
-        x: control.leftPadding + (second.visualPosition * (control.availableWidth - width))
+        x: control.leftPadding + (control.second.visualPosition * (control.availableWidth - width))
         y: control.topPadding + (control.availableHeight / 2) - (height / 2)
         width: 4
         height: 20
         //radius: (width / 2)
-        color: second.pressed ? "#ed5565" : "#ed5565"
-        border.color: second.pressed ? "#ed5565" : "#ed5565"
+        color: control.second.pressed ? "#ed5565" : "#ed5565"
+        border.color: control.second.pressed ? "#ed5565" : "#ed5565"
     }
 }

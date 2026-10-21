@@ -18,23 +18,23 @@ Item {
     Row {
         id: rowheader
         anchors.left: parent.left
-        anchors.leftMargin: singleColumn ? 8 : 12
+        anchors.leftMargin: Theme.singleColumn ? 8 : 12
 
-        layoutDirection: singleColumn ? Qt.RightToLeft : Qt.LeftToRight
+        layoutDirection: Theme.singleColumn ? Qt.RightToLeft : Qt.LeftToRight
         spacing: 12
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
-            width: singleColumn ? 56 : 96
+            width: Theme.singleColumn ? 56 : 96
             height: 24
 
-            text: modelData.date.toLocaleString(Qt.locale(), singleColumn ? "dd MMM" : "dd MMMM")
+            text: modelData.date.toLocaleString(Qt.locale(), Theme.singleColumn ? "dd MMM" : "dd MMMM")
             wrapMode: Text.WordWrap
-            horizontalAlignment: singleColumn ? Text.AlignLeft : Text.AlignRight
+            horizontalAlignment: Theme.singleColumn ? Text.AlignLeft : Text.AlignRight
             verticalAlignment: Text.AlignVCenter
             color: Theme.colorSubText
             font.bold: false
-            font.pixelSize: isPhone ? Theme.fontSizeContent : Theme.fontSizeContentBig
+            font.pixelSize: Theme.isPhone ? Theme.fontSizeContent : Theme.fontSizeContentBig
         }
 
         Rectangle {

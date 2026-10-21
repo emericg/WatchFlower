@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 import QtQuick.Shapes
 
 import ComponentLibrary
@@ -10,7 +9,7 @@ Item {
     property string title: ""
     property string suffix: ""
     property int floatprecision: 0
-    property string color: Theme.colorBlue
+    property color color: Theme.colorBlue
     property bool animated: true
 
     property real valueMin: limitMin - (25 * ((limitMax-limitMin) / 50))
@@ -42,13 +41,13 @@ Item {
     Row {
         id: titleArea
         anchors.top: chartHistory.top
-        anchors.topMargin: singleColumn ? 6 : 12
+        anchors.topMargin: Theme.singleColumn ? 6 : 12
         anchors.left: chartArea.left
-        anchors.leftMargin: singleColumn ? 2 : 3
+        anchors.leftMargin: Theme.singleColumn ? 2 : 3
         spacing: 12
 
         Text { // textTitle
-            text: title
+            text: chartHistory.title
             color: Theme.colorText
             font.bold: true
             font.pixelSize: Theme.fontSizeContentSmall
@@ -61,13 +60,13 @@ Item {
                 var txt = ""
                 if (graphGrid.barSelectionIndex >= 0) {
                     if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value > -99) {
-                        txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(floatprecision)
-                        txt += suffix.replace("<br>", "")
+                        txt = graphRepeater.itemAt(graphGrid.barSelectionIndex).value.toFixed(chartHistory.floatprecision)
+                        txt += chartHistory.suffix.replace("<br>", "")
                     }
                     if (graphRepeater.itemAt(graphGrid.barSelectionIndex).value_max > -99 &&
                         graphRepeater.itemAt(graphGrid.barSelectionIndex).value_max !== graphRepeater.itemAt(graphGrid.barSelectionIndex).value) {
-                        txt += "  (max " + graphRepeater.itemAt(graphGrid.barSelectionIndex).value_max.toFixed(floatprecision)
-                        txt += suffix.replace("<br>", "")
+                        txt += "  (max " + graphRepeater.itemAt(graphGrid.barSelectionIndex).value_max.toFixed(chartHistory.floatprecision)
+                        txt += chartHistory.suffix.replace("<br>", "")
                         txt += ")"
                     }
                 }
@@ -75,7 +74,7 @@ Item {
             }
             color: Theme.colorIcon
             font.bold: false
-            font.pixelSize: singleColumn ? Theme.fontSizeContentSmall - 1 : Theme.fontSizeContentSmall
+            font.pixelSize: Theme.singleColumn ? Theme.fontSizeContentSmall - 1 : Theme.fontSizeContentSmall
             verticalAlignment: Text.AlignBottom
         }
     }
@@ -88,7 +87,7 @@ Item {
 
         anchors.top: titleArea.bottom
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: isPhone ? 12 : 24
+        anchors.bottomMargin: Theme.isPhone ? 12 : 24
         anchors.right: parent.right
         anchors.rightMargin: 4
 
@@ -96,14 +95,14 @@ Item {
 
         Shape {
             id: legendMaxBar
-            y: parent.height - (UtilsNumber.normalize(limitMax, valueMin, valueMax) * parent.height)
+            y: parent.height - (UtilsNumber.normalize(chartHistory.limitMax, chartHistory.valueMin, chartHistory.valueMax) * parent.height)
             z: graphRow.z+1
             opacity: 0.33
-            visible: (limitMax > valueMin && limitMax < valueMax)
+            visible: (chartHistory.limitMax > chartHistory.valueMin && chartHistory.limitMax < chartHistory.valueMax)
 
             ShapePath {
                 strokeColor: Theme.colorSubText
-                strokeWidth: singleColumn ? 1 : 2
+                strokeWidth: Theme.singleColumn ? 1 : 2
                 strokeStyle: ShapePath.DashLine
                 dashPattern: [ 1, 4 ]
                 startX: 0
@@ -112,27 +111,27 @@ Item {
             }
             Text {
                 anchors.right: parent.left
-                anchors.rightMargin: singleColumn ? -contentWidth : 0
+                anchors.rightMargin: Theme.singleColumn ? -contentWidth : 0
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: singleColumn ? +6 : 0
+                anchors.verticalCenterOffset: Theme.singleColumn ? +6 : 0
 
                 text: qsTr("max", "short for maximum")
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: 11
-                rotation: singleColumn ? 0 : -90
+                rotation: Theme.singleColumn ? 0 : -90
             }
         }
         Shape {
             id: legendMinBar
-            y: parent.height - (UtilsNumber.normalize(limitMin, valueMin, valueMax) * parent.height)
+            y: parent.height - (UtilsNumber.normalize(chartHistory.limitMin, chartHistory.valueMin, chartHistory.valueMax) * parent.height)
             z: graphRow.z+1
             opacity: 0.33
-            visible: (limitMin > valueMin && limitMin < valueMax)
+            visible: (chartHistory.limitMin > chartHistory.valueMin && chartHistory.limitMin < chartHistory.valueMax)
 
             ShapePath {
                 strokeColor: Theme.colorSubText
-                strokeWidth: singleColumn ? 1 : 2
+                strokeWidth: Theme.singleColumn ? 1 : 2
                 strokeStyle: ShapePath.DashLine
                 dashPattern: [ 1, 4 ]
                 startX: 0
@@ -141,15 +140,15 @@ Item {
             }
             Text {
                 anchors.right: parent.left
-                anchors.rightMargin: singleColumn ? -contentWidth : 0
+                anchors.rightMargin: Theme.singleColumn ? -contentWidth : 0
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: singleColumn ? -6 : 0
+                anchors.verticalCenterOffset: Theme.singleColumn ? -6 : 0
 
                 text: qsTr("min", "short for minimum")
                 textFormat: Text.PlainText
                 color: Theme.colorSubText
                 font.pixelSize: 11
-                rotation: singleColumn ? 0 : -90
+                rotation: Theme.singleColumn ? 0 : -90
             }
         }
 
@@ -164,20 +163,20 @@ Item {
 
             property real barWidth: ((width - ((barCount-1) * spacing)) / (barCount))
             property int barHeight: height
-            property int barRadius: singleColumn ? 2 : 4
+            property int barRadius: Theme.singleColumn ? 2 : 4
             property int barSpacing: {
-                if (hhh === ChartHistory.Span.Daily) return 1
-                if (hhh === ChartHistory.Span.Weekly) return 4
-                if (hhh === ChartHistory.Span.Monthly) return 1
+                if (chartHistory.hhh === ChartHistory.Span.Daily) return 1
+                if (chartHistory.hhh === ChartHistory.Span.Weekly) return 4
+                if (chartHistory.hhh === ChartHistory.Span.Monthly) return 1
             }
 
             Repeater {
                 id: graphRepeater
 
                 model: {
-                    if (hhh === ChartHistory.Span.Daily) return currentDevice.aioHistoryData_day
-                    if (hhh === ChartHistory.Span.Weekly) return currentDevice.aioHistoryData_week
-                    if (hhh === ChartHistory.Span.Monthly) return currentDevice.aioHistoryData_month
+                    if (chartHistory.hhh === ChartHistory.Span.Daily) return currentDevice.aioHistoryData_day
+                    if (chartHistory.hhh === ChartHistory.Span.Weekly) return currentDevice.aioHistoryData_week
+                    if (chartHistory.hhh === ChartHistory.Span.Monthly) return currentDevice.aioHistoryData_month
                     return null
                 }
 
@@ -187,19 +186,19 @@ Item {
                     height: graphRow.barHeight
 
                     property real value: {
-                        if (ddd === ChartHistory.Data.SoilMoisture) return modelData.soilMoisture
-                        if (ddd === ChartHistory.Data.SoilConductivity) return modelData.soilConductivity
-                        if (ddd === ChartHistory.Data.SoilTemperature) return modelData.soilTemperature
-                        if (ddd === ChartHistory.Data.SoilPH) return modelData.soilPH
-                        if (ddd === ChartHistory.Data.Temperature) return modelData.temperature
-                        if (ddd === ChartHistory.Data.Humidity) return modelData.humidity
-                        if (ddd === ChartHistory.Data.LuminosityLux) return modelData.luminosityLux
-                        if (ddd === ChartHistory.Data.LuminosityMmol) return modelData.luminosityMmol
+                        if (chartHistory.ddd === ChartHistory.Data.SoilMoisture) return modelData.soilMoisture
+                        if (chartHistory.ddd === ChartHistory.Data.SoilConductivity) return modelData.soilConductivity
+                        if (chartHistory.ddd === ChartHistory.Data.SoilTemperature) return modelData.soilTemperature
+                        if (chartHistory.ddd === ChartHistory.Data.SoilPH) return modelData.soilPH
+                        if (chartHistory.ddd === ChartHistory.Data.Temperature) return modelData.temperature
+                        if (chartHistory.ddd === ChartHistory.Data.Humidity) return modelData.humidity
+                        if (chartHistory.ddd === ChartHistory.Data.LuminosityLux) return modelData.luminosityLux
+                        if (chartHistory.ddd === ChartHistory.Data.LuminosityMmol) return modelData.luminosityMmol
                         return -99
                     }
                     property real value_max: {
-                        if (ddd === ChartHistory.Data.Temperature) return modelData.temperatureMax
-                        if (ddd === ChartHistory.Data.LuminosityLux) return modelData.luminosityLuxMax
+                        if (chartHistory.ddd === ChartHistory.Data.Temperature) return modelData.temperatureMax
+                        if (chartHistory.ddd === ChartHistory.Data.LuminosityLux) return modelData.luminosityLuxMax
                         return -99
                     }
 
@@ -208,7 +207,7 @@ Item {
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            if (hhh === ChartHistory.Span.Daily) {
+                            if (chartHistory.hhh === ChartHistory.Span.Daily) {
                                 if (graphGrid.barSelectionHours === modelData.hour) {
                                     graphGrid.barSelectionHours = -1
                                     graphGrid.barSelectionIndex = -1
@@ -235,13 +234,13 @@ Item {
                         anchors.fill: parent
 
                         color: {
-                            if (hhh === ChartHistory.Span.Daily) {
+                            if (chartHistory.hhh === ChartHistory.Span.Daily) {
                                 return (graphGrid.barSelectionHours === modelData.hour) ? "#fcea32" : Theme.colorForeground
                             } else {
                                 return (graphGrid.barSelectionDays === modelData.day) ? "#fcea32" : Theme.colorForeground
                             }
                         }
-                        Behavior on color { ColorAnimation { duration: animated ? 133 : 0 } }
+                        Behavior on color { ColorAnimation { duration: chartHistory.animated ? 133 : 0 } }
 
                         border.width: (graphRow.barSpacing / 2)
                         border.color: Theme.colorBackground
@@ -254,13 +253,13 @@ Item {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        height: UtilsNumber.normalize(value_max, valueMin, valueMax) * parent.height
+                        height: UtilsNumber.normalize(graphBar.value_max, chartHistory.valueMin, chartHistory.valueMax) * parent.height
 
                         border.width: (graphRow.barSpacing / 2)
                         border.color: Theme.colorBackground
 
                         clip: false
-                        visible: (value_max > -80 && value_max > value+1)
+                        visible: (graphBar.value_max > -80 && graphBar.value_max > graphBar.value+1)
                         radius: graphRow.barRadius
                         color: chartHistory.color
                         opacity: 0.33
@@ -271,33 +270,33 @@ Item {
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        height: UtilsNumber.normalize(value, valueMin, valueMax) * parent.height
+                        height: UtilsNumber.normalize(graphBar.value, chartHistory.valueMin, chartHistory.valueMax) * parent.height
 
                         border.width: (graphRow.barSpacing / 2)
                         border.color: Theme.colorBackground
 
                         clip: false
-                        visible: (value > -80)
+                        visible: (graphBar.value > -80)
                         radius: graphRow.barRadius
                         color: chartHistory.color
 
                         Loader {
                             id: legendLoader
-                            anchors.top: (hhh === ChartHistory.Span.Weekly) ? undefined : parent.top
-                            anchors.bottom: (hhh === ChartHistory.Span.Weekly) ? parent.bottom : undefined
+                            anchors.top: (chartHistory.hhh === ChartHistory.Span.Weekly) ? undefined : parent.top
+                            anchors.bottom: (chartHistory.hhh === ChartHistory.Span.Weekly) ? parent.bottom : undefined
                             anchors.horizontalCenter: parent.horizontalCenter
 
-                            active: (value > -80)
+                            active: (graphBar.value > -80)
                             asynchronous: true
 
                             sourceComponent: {
-                                if (hhh === ChartHistory.Span.Weekly)
+                                if (chartHistory.hhh === ChartHistory.Span.Weekly)
                                     return legendHorizontal
-                                if (hhh !== ChartHistory.Span.Weekly && !isPhone)
+                                if (chartHistory.hhh !== ChartHistory.Span.Weekly && !Theme.isPhone)
                                     return legendVertical
                             }
 
-                            property real _value: value
+                            property real _value: graphBar.value
                             property int _barHeight: graphBarFg.height
                         }
                     }
@@ -321,7 +320,7 @@ Item {
                         asynchronous: true
                         sourceComponent: legendImage
 
-                        property real _value: value
+                        property real _value: graphBar.value
                     }
 */
                     ////
@@ -357,23 +356,23 @@ Item {
                     Text { // bottom legend
                         id: legendBottom
                         anchors.top: parent.bottom
-                        anchors.topMargin: isPhone ? 3 : 6
+                        anchors.topMargin: Theme.isPhone ? 3 : 6
                         anchors.horizontalCenter: parent.horizontalCenter
 
-                        rotation: (hhh === ChartHistory.Span.Weekly) ? 0 : -40
+                        rotation: (chartHistory.hhh === ChartHistory.Span.Weekly) ? 0 : -40
                         visible: true
                         text: {
-                            if (hhh === ChartHistory.Span.Monthly) {
+                            if (chartHistory.hhh === ChartHistory.Span.Monthly) {
                                 return modelData.day
-                            } else if (hhh === ChartHistory.Span.Weekly) {
+                            } else if (chartHistory.hhh === ChartHistory.Span.Weekly) {
                                 return modelData.datetime.toLocaleString(Qt.locale(), "ddd")
-                            } else if (hhh === ChartHistory.Span.Daily) {
+                            } else if (chartHistory.hhh === ChartHistory.Span.Daily) {
                                 return modelData.datetime.toLocaleString(Qt.locale(), "HH")
                             }
                         }
                         color: Theme.colorSubText
                         opacity: 0.66
-                        font.pixelSize: (hhh === ChartHistory.Span.Weekly) ? (isPhone ? 10 : 12) : (isPhone ? 8 : 10)
+                        font.pixelSize: (chartHistory.hhh === ChartHistory.Span.Weekly) ? (Theme.isPhone ? 10 : 12) : (Theme.isPhone ? 8 : 10)
                         font.bold: false
                         horizontalAlignment: Text.AlignHCenter
                     }
@@ -392,7 +391,7 @@ Item {
             //anchors.top: parent.top // at the top
             //anchors.topMargin: 8
             anchors.bottom: parent.bottom // at the bottom
-            anchors.bottomMargin: isPhone ? 4 : 8
+            anchors.bottomMargin: Theme.isPhone ? 4 : 8
             anchors.horizontalCenter: parent.horizontalCenter
 
             property real value: _value
@@ -401,10 +400,10 @@ Item {
             visible: (barHeight > contentHeight+8)
 
             text: {
-                if (ddd === ChartHistory.Data.Temperature || ddd === ChartHistory.Data.SoilTemperature)
+                if (chartHistory.ddd === ChartHistory.Data.Temperature || chartHistory.ddd === ChartHistory.Data.SoilTemperature)
                     if (SettingsManager.tempUnit === "F")
-                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix
-                return value.toFixed(floatprecision) + suffix
+                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(chartHistory.floatprecision) + chartHistory.suffix
+                return value.toFixed(chartHistory.floatprecision) + chartHistory.suffix
             }
             color: "white"
             font.bold: true
@@ -432,10 +431,10 @@ Item {
             rotation: 90
             color: "white"
             text: {
-                if (ddd === ChartHistory.Data.Temperature || ddd === ChartHistory.Data.SoilTemperature)
+                if (chartHistory.ddd === ChartHistory.Data.Temperature || chartHistory.ddd === ChartHistory.Data.SoilTemperature)
                     if (SettingsManager.tempUnit === "F")
-                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(floatprecision) + suffix.replace("<br>", "")
-                return value.toFixed(floatprecision) + suffix.replace("<br>", "")
+                        return UtilsNumber.tempCelsiusToFahrenheit(value).toFixed(chartHistory.floatprecision) + chartHistory.suffix.replace("<br>", "")
+                return value.toFixed(chartHistory.floatprecision) + chartHistory.suffix.replace("<br>", "")
             }
             font.bold: true
             font.pixelSize: Theme.fontSizeContentVeryVerySmall

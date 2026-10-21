@@ -205,7 +205,7 @@ Loader {
 
             plantSensorPages.disableAnimation()
             plantSensorPages.currentIndex = 0
-            plantSensorPages.interactive = isPhone
+            plantSensorPages.interactive = Theme.isPhone
             plantSensorPages.enableAnimation()
 
             plantSensorData.loadData()
@@ -232,11 +232,11 @@ Loader {
                 id: plantSensorPages
                 anchors.fill: parent
 
-                interactive: isPhone
+                interactive: Theme.isPhone
 
                 currentIndex: 0
                 onCurrentIndexChanged: {
-                    if (isDesktop) {
+                    if (Theme.isDesktop) {
                         if (plantSensorPages.currentIndex === 0)
                             appHeader.setActiveDeviceData()
                         else if (plantSensorPages.currentIndex === 1)
