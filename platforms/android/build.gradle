@@ -6,6 +6,7 @@ buildscript {
 
     dependencies {
         //noinspection AndroidGradlePluginVersion
+        //classpath 'com.android.tools.build:gradle:9.2.1' // works with Qt 6.12+ // Java 21
         //classpath 'com.android.tools.build:gradle:8.10.1' // works with Qt 6.10+ // Java 17
         classpath 'com.android.tools.build:gradle:8.6.1' // works with Qt 6.8+ // Java 17
     }
@@ -146,6 +147,8 @@ android {
 
     packaging {
         jniLibs {
+            useLegacyPackaging true // keep this for Qt 6.8 support
+
             // Exclude unused Qt libraries and QML plugins
             excludes += qtLibsUnused.collect { lib -> "**/libQt6${lib}_*" }
             excludes += qtQmlPluginsUnused.collect { module -> "**/libqml_${module}_*" }

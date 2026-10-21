@@ -16,6 +16,7 @@ env:
   APP_NAME: "WatchFlower"
   APP_VERSION: "6.0"
   QT_VERSION: "6.12.0"
+  QT_VERSION_WIN: "6.10.3"
 
 #-------------------------------------------------------------------------------
 # Workflow jobs
@@ -199,7 +200,7 @@ jobs:
         with:
           arch: x86_64
 
-      # Install NSIS (already installed in 'windows-2022')
+      # Install NSIS (preinstalled on 'windows-2022', missing on 'windows-11-arm')
       #- name: Install NSIS
       #  run: |
       #       Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
@@ -210,7 +211,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v4
         with:
-          version: ${{ env.QT_VERSION }}
+          version: ${{ env.QT_VERSION_WIN }}
           modules: qtconnectivity qtpositioning qtgraphs qtquick3d qtshadertools
           arch: 'win64_msvc2022_64'
 

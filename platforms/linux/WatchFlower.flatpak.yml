@@ -32,6 +32,7 @@ cleanup:
   - /src
   - '*.a'
   - '*.la'
+
 modules:
   - name: qt-base
     buildsystem: cmake-ninja
