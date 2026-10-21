@@ -363,8 +363,10 @@ public:
     bool isWorking() const;             //!< Is currently working? doing/trying something?
     bool isUpdating() const;            //!< Is currently being updated?
     bool isErrored() const;             //!< Has emitted a BLE error
+    bool isBleControllerIdle() const;   //!< Has no BLE connection ongoing (connecting, connected or disconnecting)
 
     QDateTime getLastUpdate() const;
+    QDateTime getLastUpdateDb() const;  //!< Timestamp of the last record written to the database
     QString getLastUpdateString() const;
     int getLastUpdateInt() const;
     int getLastUpdateDbInt() const;

@@ -879,6 +879,11 @@ bool Device::isErrored() const
     return (getLastErrorInt() >= 0 && getLastErrorInt() <= 5);
 }
 
+bool Device::isBleControllerIdle() const
+{
+    return (!m_bleController || m_bleController->state() == QLowEnergyController::UnconnectedState);
+}
+
 /* ************************************************************************** */
 
 QDateTime Device::getDeviceUptime() const
@@ -907,6 +912,11 @@ float Device::getDeviceUptime_days() const
 QDateTime Device::getLastUpdate() const
 {
     return m_lastUpdate;
+}
+
+QDateTime Device::getLastUpdateDb() const
+{
+    return m_lastUpdateDatabase;
 }
 
 QDateTime Device::getLastHistorySync() const

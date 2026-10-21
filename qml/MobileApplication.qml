@@ -143,6 +143,17 @@ Window {
         }
     }
 
+    // Foreground heartbeat for the background service (the service considers it stale after 90s)
+    Timer {
+        id: serviceHeartbeatTimer
+        interval: 30000
+        repeat: true
+        running: (Qt.platform.os === "android" &&
+                  Qt.application.state !== Qt.ApplicationSuspended &&
+                  Qt.application.state !== Qt.ApplicationHidden)
+        onTriggered: AndroidServiceLink.setBackgroundServiceAppState(true)
+    }
+
     Connections {
         target: Qt.application
         function onStateChanged() {
@@ -150,10 +161,12 @@ Window {
                 case Qt.ApplicationSuspended:
                     //console.log("Qt.ApplicationSuspended")
                     deviceManager.refreshDevices_stop()
+                    if (Qt.platform.os === "android") AndroidServiceLink.setBackgroundServiceAppState(false)
                     break
                 case Qt.ApplicationHidden:
                     //console.log("Qt.ApplicationHidden")
                     deviceManager.refreshDevices_stop()
+                    if (Qt.platform.os === "android") AndroidServiceLink.setBackgroundServiceAppState(false)
                     break
                 case Qt.ApplicationInactive:
                     //console.log("Qt.ApplicationInactive")
@@ -161,6 +174,14 @@ Window {
 
                 case Qt.ApplicationActive:
                     //console.log("Qt.ApplicationActive")
+
+                    if (Qt.platform.os === "android")  {
+                        // Tell the background service to stand down while we are active
+                        AndroidServiceLink.setBackgroundServiceAppState(true)
+
+                        // Re-check whether the background service is online (updates the drawer indicator)
+                        AndroidServiceLink.checkServiceState()
+                    }
 
                     // Update sun/moon positions
                     if (SettingsManager.sunandmoon) {

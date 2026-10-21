@@ -25,6 +25,7 @@
 #include "MenubarManager.h"
 #include "NotificationManager.h"
 #include "DeviceManager.h"
+#include "AndroidServiceLink.h"
 #include "PlantDatabase.h"
 #include "PlantUtils.h"
 #include "Journal.h"
@@ -116,13 +117,19 @@ int main(int argc, char *argv[])
         app.setOrganizationName("WatchFlower");
         app.setOrganizationDomain("WatchFlower");
 
+        //UtilsLog::getInstance()->setEnabled(true);
+
         SettingsManager *sm = SettingsManager::getInstance();
         if (sm && sm->getSysTray())
         {
             AndroidService *as = new AndroidService(&app);
             if (!as) return EXIT_FAILURE;
 
-            return app.exec();
+            // Run the service event loop; when it returns the service is
+            // stopping, so delete the object to run its (logging) destructor.
+            int ret = app.exec();
+            delete as;
+            return ret;
         }
 
         return EXIT_SUCCESS;
@@ -157,11 +164,18 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-    app.setWindowIcon(QIcon(":/assets/gfx/logos/watchflower.svg"));
+    //UtilsLog::getInstance()->setEnabled(false);
+    // App-side endpoint for the background service communication
+    AndroidServiceLink *asc = new AndroidServiceLink(dm, &app);
 
+#if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+
+#else // !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+
+    app.setWindowIcon(QIcon(":/assets/gfx/logos/watchflower.svg"));
     SystrayManager *st = SystrayManager::getInstance();
     MenubarManager *mb = MenubarManager::getInstance();
+
 #endif
 
     // Sun and Moon
@@ -203,6 +217,7 @@ int main(int argc, char *argv[])
     QQmlContext *engine_context = engine.rootContext();
 
     engine_context->setContextProperty("deviceManager", dm);
+    engine_context->setContextProperty("AndroidServiceLink", asc);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));
@@ -251,6 +266,13 @@ int main(int argc, char *argv[])
 
 #if defined(Q_OS_ANDROID)
     QNativeInterface::QAndroidApplication::hideSplashScreen(333);
+
+    // Listen for "data updated" notifications from the background service
+    AndroidService::registerActivityReceiver();
+
+    // Ask whether the background service is already running
+    asc->checkServiceState();
+
     if (sm->getSysTray()) AndroidService::service_start();
 #endif
 

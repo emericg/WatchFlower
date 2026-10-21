@@ -81,6 +81,8 @@
 #if defined(Q_OS_ANDROID)
 #include "utils_app.h"
 #include "utils_os.h"
+#include "utils_log.h"
+#include "NotificationManager.h"
 #endif
 
 /* ************************************************************************** */
@@ -233,6 +235,12 @@ DeviceManager::DeviceManager(bool daemon)
             {
                 connect(d, &Device::deviceIsUpdated, this, &DeviceManager::refreshDevices_finished);
                 connect(d, &Device::deviceIsSynced, this, &DeviceManager::syncDevices_finished);
+#if defined(Q_OS_ANDROID)
+                if (m_daemonMode)
+                {
+                    connect(d, &Device::disconnected, this, [this]() { backgroundScanningCheckFinished(); });
+                }
+#endif
 
                 m_devices_model->addDevice(d);
                 //qDebug() << "* Device added (from database): " << deviceName << "/" << deviceAddr;
@@ -259,6 +267,13 @@ DeviceManager::DeviceManager(bool daemon)
     m_updateTimer.setInterval(30*60*1000); // every 30m
     m_updateTimer.start();
 #endif
+
+#if defined(Q_OS_ANDROID)
+    // Configure the end of cycle disconnection timeout (daemon only)
+    m_backgroundDisconnectTimer.setSingleShot(true);
+    m_backgroundDisconnectTimer.setInterval(ble_disconnect_timeout_background*1000);
+    connect(&m_backgroundDisconnectTimer, &QTimer::timeout, this, [this]() { backgroundScanningCheckFinished(true); });
+#endif
 }
 
 DeviceManager::~DeviceManager()
@@ -272,6 +287,76 @@ DeviceManager::~DeviceManager()
     delete m_devices_filter;
     delete m_devices_model;
 }
+
+/* ************************************************************************** */
+/* ************************************************************************** */
+
+void DeviceManager::reloadDatabaseData()
+{
+    //qDebug() << "DeviceManager::reloadDatabaseData()";
+
+    for (auto d: std::as_const(m_devices_model->m_devices))
+    {
+        Device *dd = qobject_cast<Device *>(d);
+        if (dd) dd->reloadCachedData();
+    }
+}
+
+#if defined(Q_OS_ANDROID)
+
+void DeviceManager::backgroundScanningCheckFinished(bool force)
+{
+    if (!m_daemonMode || !m_backgroundCycleRunning) return;
+
+    // Use our own state flags, the discovery agent isActive() can lag behind stop()
+    const bool discoveryDone = !m_listening && !m_scanning && !m_scanning_nearby;
+    const bool updatesDone = m_devices_updating.empty() && m_devices_updating_queue.empty();
+
+    if (discoveryDone && updatesDone)
+    {
+        bool disconnectionsDone = true;
+        for (auto d: std::as_const(m_devices_model->m_devices))
+        {
+            Device *dd = qobject_cast<Device *>(d);
+            if (dd && !dd->isBleControllerIdle())
+            {
+                disconnectionsDone = false;
+                break;
+            }
+        }
+
+        if (!disconnectionsDone && !force)
+        {
+            // Devices notify us once disconnected, the timer bounds the wait
+            if (!m_backgroundDisconnectTimer.isActive()) m_backgroundDisconnectTimer.start();
+            return;
+        }
+        if (!disconnectionsDone)
+        {
+            //UtilsLog::getInstance()->pushLog("(daemon) devices still disconnecting after timeout, finishing anyway", UtilsLog::Warning);
+        }
+
+        m_backgroundDisconnectTimer.stop();
+        m_backgroundCycleRunning = false;
+
+        bool dataUpdated = false;
+        for (auto d: std::as_const(m_devices_model->m_devices))
+        {
+            Device *dd = qobject_cast<Device *>(d);
+            if (dd && dd->getLastUpdateDb() != m_backgroundCycleLastDb.value(dd))
+            {
+                dataUpdated = true;
+                break;
+            }
+        }
+        m_backgroundCycleLastDb.clear();
+
+        //UtilsLog::getInstance()->pushLog("(daemon) background work cycle finished (discovery + updates idle)", UtilsLog::Info);
+        Q_EMIT backgroundScanningFinished(dataUpdated);
+    }
+}
+
+#endif // Q_OS_ANDROID
 
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -1058,6 +1143,20 @@ void DeviceManager::deviceDiscoveryFinished()
         Q_EMIT scanningNearbyChanged();
     }
 
+    // The daemon listens only once per background cycle (no re-arming)
+    if (m_daemonMode)
+    {
+        if (m_listening)
+        {
+            m_listening = false;
+            Q_EMIT listeningChanged();
+        }
+#if defined(Q_OS_ANDROID)
+        refreshDevices_backgroundConnect();
+#endif
+        return;
+    }
+
     if (m_listening)
     {
         //m_listening = false;
@@ -1088,6 +1187,10 @@ void DeviceManager::deviceDiscoveryStopped()
         m_listening = false;
         Q_EMIT listeningChanged();
     }
+
+#if defined(Q_OS_ANDROID)
+    backgroundScanningCheckFinished();
+#endif
 }
 
 /* ************************************************************************** */
@@ -1104,7 +1207,16 @@ void DeviceManager::setLastRun()
         {
             if (setLastRun.numRowsAffected() == 0)
             {
-                // addLastRun?
+                // No row to update yet, insert one
+                QSqlQuery addLastRun;
+                addLastRun.prepare("INSERT INTO lastRun (lastRun) VALUES (:run)");
+                addLastRun.bindValue(":run", QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss"));
+
+                if (!addLastRun.exec())
+                {
+                    qWarning() << "> addLastRun.exec() ERROR"
+                               << addLastRun.lastError().type() << ":" << addLastRun.lastError().text();
+                }
             }
         }
         else
@@ -1236,8 +1348,9 @@ void DeviceManager::listenDevices_start()
     //qDebug() << "DeviceManager::listenDevices_start()";
 
 #if defined(Q_OS_ANDROID)
-    // An Android service won't be able to scan/listen in the background without the associated permission
-    if (m_daemonMode && !m_locPermission_background) return;
+    // Up to Android 11, the background service can't scan without the background location permission
+    if (m_daemonMode && !m_locPermission_background &&
+        UtilsApp::getInstance()->getAndroidSdkVersion() <= 30) return;
 #endif
 
     if (hasBluetooth())
@@ -1350,29 +1463,67 @@ void DeviceManager::refreshDevices_background()
 {
     //qDebug() << "DeviceManager::refreshDevices_background()";
 
-#if defined(Q_OS_ANDROID) && defined(QT_CONNECTIVITY_PATCHED)
-    if (m_locPermission_background)
+#if defined(Q_OS_ANDROID)
+    m_backgroundCycleRunning = true;
+
+    m_backgroundCycleLastDb.clear();
+    for (auto d: std::as_const(m_devices_model->m_devices))
     {
-        /// Background refresh (using passive scanning)
-        /// If patched QtConnectivity AND android.permission.ACCESS_BACKGROUND_LOCATION
-
-        //UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_background(WITH permission)");
-
-        refreshDevices_listen();
+        Device *dd = qobject_cast<Device *>(d);
+        if (dd) m_backgroundCycleLastDb.insert(dd, dd->getLastUpdateDb());
+    }
+#endif
+/*
+    UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_background: hasBluetooth=" + QString::number(hasBluetooth()) +
+                                     " adapter=" + QString::number(m_bleAdapter) +
+                                     " enabled=" + QString::number(m_bleEnabled) +
+                                     " blePerm=" + QString::number(m_blePermission) +
+                                     " locFg=" + QString::number(m_locPermission_foreground), UtilsLog::Info);
+*/
+    if (!hasBluetooth())
+    {
+        //UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_background: no Bluetooth (adapter/enabled/permission), cannot scan", UtilsLog::Warning);
+#if defined(Q_OS_ANDROID)
+        backgroundScanningCheckFinished();
+#endif
         return;
     }
-#endif // Q_OS_ANDROID && QT_CONNECTIVITY_PATCHED
 
-    if (m_locPermission_foreground)
-    {
-        /// Background refresh (using active connections)
+    // Passive refresh first
+    //UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_background: passive listen", UtilsLog::Info);
+    refreshDevices_listen();
 
-        //UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_background(WITHOUT permission)");
+#if defined(Q_OS_ANDROID)
+    // Active refresh right away if the passive refresh could not start
+    if (!m_listening) refreshDevices_backgroundConnect();
 
-        refreshDevices_check();
-        return;
-    }
+    backgroundScanningCheckFinished();
+#endif
 }
+
+#if defined(Q_OS_ANDROID)
+
+void DeviceManager::refreshDevices_backgroundConnect()
+{
+    if (!m_daemonMode || !m_backgroundCycleRunning) return;
+
+    //UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_background: active connect", UtilsLog::Info);
+
+    if (checkBluetooth() && m_devices_model->hasDevices())
+    {
+        refreshDevices_queueOutdated();
+
+        if (!m_devices_updating_queue.isEmpty())
+        {
+            // Update lastRun
+            setLastRun();
+        }
+    }
+
+    refreshDevices_continue();
+}
+
+#endif // Q_OS_ANDROID
 
 void DeviceManager::refreshDevices_listen()
 {
@@ -1406,11 +1557,19 @@ void DeviceManager::refreshDevices_check()
     {
         // Here we can:             // > do nothing, and queue another refresh
         //refreshDevices_stop();    // > (or) cancel current refresh
+        //if (m_daemonMode) UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_check: already busy (updating/scanning), skipping", UtilsLog::Info);
         return;                     // > (or) bail
     }
 
     // Make sure we have Bluetooth and devices
-    if (checkBluetooth() && m_devices_model->hasDevices())
+    const bool bt = checkBluetooth();
+    const bool hasDev = m_devices_model->hasDevices();
+/*
+    if (m_daemonMode)
+        UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_check: bluetooth=" + QString::number(bt) +
+                                         " hasDevices=" + QString::number(hasDev), UtilsLog::Info);
+*/
+    if (bt && hasDev)
     {
         m_devices_updating_queue.clear();
         m_devices_updating.clear();
@@ -1419,28 +1578,13 @@ void DeviceManager::refreshDevices_check()
         listenDevices_start();
 
         // Start active refresh (if needed)
-        for (int i = 0; i < m_devices_model->rowCount(); i++)
-        {
-            QModelIndex e = m_devices_filter->index(i, 0);
-            Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
-
-            if (dd)
-            {
-                if (!dd->isEnabled()) continue;
-                if (!dd->hasBluetoothConnection()) continue;
-
-                // old or no data: go for refresh
-                if (dd->needsUpdateDb())
-                {
-                    if (!m_devices_updating_queue.contains(dd) && !m_devices_updating.contains(dd))
-                    {
-                        m_devices_updating_queue.push_back(dd);
-                        dd->refreshQueued();
-                    }
-                }
-            }
-        }
-
+        refreshDevices_queueOutdated();
+/*
+        if (m_daemonMode)
+            UtilsLog::getInstance()->pushLog("(daemon) refreshDevices_check: " +
+                                             QString::number(m_devices_updating_queue.size()) +
+                                             " device(s) queued for update", UtilsLog::Info);
+*/
         if (!m_devices_updating_queue.isEmpty())
         {
             // Update lastRun
@@ -1448,6 +1592,31 @@ void DeviceManager::refreshDevices_check()
         }
 
         refreshDevices_continue();
+    }
+}
+
+void DeviceManager::refreshDevices_queueOutdated()
+{
+    for (int i = 0; i < m_devices_model->rowCount(); i++)
+    {
+        QModelIndex e = m_devices_filter->index(i, 0);
+        Device *dd = qvariant_cast<Device *>(m_devices_filter->data(e, DeviceModel::PointerRole));
+
+        if (dd)
+        {
+            if (!dd->isEnabled()) continue;
+            if (!dd->hasBluetoothConnection()) continue;
+
+            // old or no data: go for refresh
+            if (dd->needsUpdateDb())
+            {
+                if (!m_devices_updating_queue.contains(dd) && !m_devices_updating.contains(dd))
+                {
+                    m_devices_updating_queue.push_back(dd);
+                    dd->refreshQueued();
+                }
+            }
+        }
     }
 }
 
@@ -1537,6 +1706,10 @@ void DeviceManager::refreshDevices_continue()
             m_updating = false;
             Q_EMIT updatingChanged();
         }
+
+#if defined(Q_OS_ANDROID)
+        backgroundScanningCheckFinished();
+#endif
     }
 }
 
@@ -1580,16 +1753,20 @@ void DeviceManager::refreshDevices_stop()
         Q_EMIT updatingChanged();
     }
 
-    if (!m_devices_updating_queue.empty())
-    {
-        for (auto d: std::as_const(m_devices_updating))
-        {
-            Device *dd = qobject_cast<Device*>(d);
-            if (dd) dd->refreshStop();
-        }
-    }
+    // Stopping a device may call back into refreshDevices_finished(), so work on a copy
+    const QList <QObject *> updating = m_devices_updating;
     m_devices_updating.clear();
     m_devices_updating_queue.clear();
+
+    for (auto d: updating)
+    {
+        Device *dd = qobject_cast<Device*>(d);
+        if (dd) dd->refreshStop();
+    }
+
+#if defined(Q_OS_ANDROID)
+    backgroundScanningCheckFinished();
+#endif
 }
 
 /* ************************************************************************** */

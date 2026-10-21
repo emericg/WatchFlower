@@ -435,26 +435,18 @@ void SettingsManager::setSysTray(const bool value)
 {
     if (m_systrayEnabled != value)
     {
-#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
-        bool trayEnable_saved = m_systrayEnabled;
-#endif
         m_systrayEnabled = value;
         writeSettings();
+        Q_EMIT systrayChanged();
 
 #if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+        // Desktop: install/remove the system tray to match the new setting.
+        // (Android reacts to systrayChanged() in AndroidServiceLink instead.)
         SystrayManager *st = SystrayManager::getInstance();
         if (st)
         {
-            if (trayEnable_saved == true && m_systrayEnabled == false)
-            {
-                st->removeSystray();
-                Q_EMIT systrayChanged();
-            }
-            else if (trayEnable_saved == false && m_systrayEnabled == true)
-            {
-                st->installSystray();
-                Q_EMIT systrayChanged();
-            }
+            if (m_systrayEnabled) st->installSystray();
+            else st->removeSystray();
         }
 #endif
     }

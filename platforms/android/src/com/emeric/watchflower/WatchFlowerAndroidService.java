@@ -45,7 +45,7 @@ public class WatchFlowerAndroidService extends QtService {
     private static final String CHANNEL_NAME = "Background service";
     private static final int NOTIFICATION_ID = 1;
 
-    // Persisted background service toggle, written by the app (AndroidServiceCom)
+    // Persisted background service toggle, written by the app (AndroidServiceLink)
     private static final String PREFS_NAME = "WatchFlower";
     private static final String KEY_SERVICE_ENABLED = "service_enabled";
 

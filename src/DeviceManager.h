@@ -28,6 +28,8 @@
 #include <QObject>
 #include <QVariant>
 #include <QList>
+#include <QHash>
+#include <QDateTime>
 #include <QTimer>
 
 #include <QBluetoothLocalDevice>
@@ -87,11 +89,42 @@ class DeviceManager: public QObject
     static const int ble_listening_duration = 0;
     static const int ble_listening_duration_nearby = 0;
     static const int ble_listening_duration_background = 60;
+    static const int ble_disconnect_timeout_background = 30; //!< (daemon) maximum wait for the devices to disconnect (in seconds)
 
     bool m_dbInternal = false;  //!< do we have an internal SQLite database?
     bool m_dbExternal = false;  //!< do we have a remote MySQL database?
 
     bool m_daemonMode = false;  //!< did we start without an UI?
+
+#if defined(Q_OS_ANDROID) // Android background service related
+    bool m_backgroundCycleRunning = false; //!< (daemon) is a background refresh cycle running?
+    QTimer m_backgroundDisconnectTimer; //!< (daemon) bounds the wait for the devices to disconnect
+    QHash <const QObject *, QDateTime> m_backgroundCycleLastDb; //!< (daemon) devices last database write, at cycle start
+
+    /*!
+     * \brief (daemon) Emit backgroundScanningFinished() once discovery, device updates and device disconnections are idle.
+     * \param force: do not wait for the devices that are still disconnecting.
+     *
+     * Called from every point where either can complete. Emits once per cycle.
+     * Devices still disconnecting are waited for, up to ble_disconnect_timeout_background seconds,
+     * so the DeviceManager (and its devices) are not destroyed while a BLE connection is closing.
+     * Reports whether any device wrote new data to the database during the cycle.
+     */
+    void backgroundScanningCheckFinished(bool force = false);
+
+    /*!
+     * \brief (daemon) Active refresh of the devices that are still outdated.
+     *
+     * Second phase of a background refresh cycle, once the passive refresh is done.
+     * Does nothing if the cycle has been stopped.
+     */
+    void refreshDevices_backgroundConnect();
+#endif
+
+    /*!
+     * \brief Queue enabled, connectable, devices with outdated data for an active refresh.
+     */
+    void refreshDevices_queueOutdated();
 
     ////
 
@@ -145,7 +178,6 @@ class DeviceManager: public QObject
     bool isScanningNearby() const { return m_scanning_nearby; }
 
     bool m_updating = false;
-    bool isUpdating() const;
 
     bool m_syncing = false;
     bool isSyncing() const;
@@ -172,8 +204,6 @@ Q_SIGNALS:
     void hostModeChanged();
     void permissionsChanged();
 
-    void adaptersListUpdated();
-
     void devicesListUpdated();
     void devicesNearbyUpdated();
     void devicesBlacklistUpdated();
@@ -184,6 +214,8 @@ Q_SIGNALS:
     void scanningNearbyChanged();
     void updatingChanged();
     void syncingChanged();
+
+    void backgroundScanningFinished(bool dataUpdated);
 
 private slots:
     // QBluetoothLocalDevice related
@@ -212,6 +244,22 @@ public:
     ~DeviceManager();
 
     bool isDaemon() const { return m_daemonMode; }
+
+    bool isUpdating() const;
+
+    /*!
+     * \brief Is any BLE activity ongoing? (scanning, listening, updating or syncing)
+     *
+     * The DeviceManager must not be deleted while busy.
+     */
+    bool isBusy() const { return (m_updating || m_listening || m_scanning || m_scanning_nearby || m_syncing); }
+
+    /*!
+     * \brief Reload every device data from the database.
+     *
+     * Used after the Android background service wrote new data.
+     */
+    Q_INVOKABLE void reloadDatabaseData();
 
     // Permissions
     bool hasBluetoothAdapter() const { return m_bleAdapter; }
@@ -255,7 +303,13 @@ public:
     Q_INVOKABLE void listenDevices_start();
     Q_INVOKABLE void listenDevices_stop();
 
-    Q_INVOKABLE void refreshDevices_background();   //!< Refresh devices on the Android background service
+    /*!
+     * \brief Refresh devices from the Android background service.
+     *
+     * Passive refresh (listening to advertisements) first,
+     * then active refresh of the devices that are still outdated.
+     */
+    Q_INVOKABLE void refreshDevices_background();
     Q_INVOKABLE void refreshDevices_listen();       //!< Refresh devices with data >xh old (as they appear nearby)
 
     Q_INVOKABLE void refreshDevices_check();        //!< Refresh devices with data >xh old (if necessary)

@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Controls
 
 import ComponentLibrary
+import AppUtils
 
 DrawerThemed {
     contentItem: Item {
@@ -267,6 +268,41 @@ DrawerThemed {
             anchors.bottomMargin: screenPaddingNavbar + screenPaddingBottom
 
             visible: (screenOrientation === Qt.PortraitOrientation)
+
+            ////////
+
+            DrawerItem_button {
+                visible: (Qt.platform.os === "android")
+
+                // The service is enabled, but can't start without the Bluetooth permission
+                property bool needsPermission: (SettingsManager.systray &&
+                                                !AndroidServiceLink.serviceOnline &&
+                                                !deviceManager.permissionBluetooth)
+
+                highlighted: AndroidServiceLink.serviceOnline
+                text: {
+                    if (AndroidServiceLink.serviceOnline) return qsTr("Service active")
+                    if (needsPermission) return qsTr("Service needs permission")
+                    return qsTr("Service stopped")
+                }
+                source: AndroidServiceLink.serviceOnline ? "qrc:/IconLibrary/material-symbols/check_circle-fill.svg"
+                                                        : "qrc:/IconLibrary/material-symbols/cancel_circle.svg"
+                sourceColor: {
+                    if (AndroidServiceLink.serviceOnline) return Theme.colorSuccess
+                    if (needsPermission) return Theme.colorWarning
+                    return Theme.colorSubText
+                }
+
+                onClicked: {
+                    if (needsPermission) {
+                        deviceManager.requestBluetoothPermissions()
+                        appDrawer.close()
+                    } else if (UtilsApp.hasAndroidAutostartSettings()) {
+                        UtilsApp.openAndroidAutostartSettings("com.emeric.watchflower")
+                        appDrawer.close()
+                    }
+                }
+            }
 
             ////////
 

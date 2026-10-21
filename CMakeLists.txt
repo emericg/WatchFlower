@@ -57,6 +57,7 @@ set(SOURCES
     src/Plant.cpp src/Plant.h src/PlantUtils.h
     src/Journal.cpp src/Journal.h
     src/DeviceManager.cpp src/DeviceManager.h
+    src/AndroidServiceLink.cpp src/AndroidServiceLink.h
     src/DeviceManager_advertisement.cpp
     src/DeviceManager_nearby.cpp
     src/DeviceManager_export.cpp

@@ -116,6 +116,31 @@ public class ActivityUtils {
     }
 
     ////////////////////////////////////////////////////////////////////////////
+    // Unregister, once the native side is going away
+
+    public static void unregisterServiceBroadcastReceiver(Context context) {
+        if (serviceReceiver == null) return;
+
+        try {
+            context.unregisterReceiver(serviceReceiver);
+        } catch (IllegalArgumentException e) {
+            Log.w(TAG, "serviceReceiver was not registered", e);
+        }
+        serviceReceiver = null;
+    }
+
+    public static void unregisterActivityBroadcastReceiver(Context context) {
+        if (activityReceiver == null) return;
+
+        try {
+            context.unregisterReceiver(activityReceiver);
+        } catch (IllegalArgumentException e) {
+            Log.w(TAG, "activityReceiver was not registered", e);
+        }
+        activityReceiver = null;
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
     // Senders
 
     public static void sendAppState(Context context, boolean foreground) {
