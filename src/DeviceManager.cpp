@@ -59,6 +59,8 @@
 #include <chrono>
 
 #include <QCoreApplication>
+#include <QQmlEngine>
+#include <QJSEngine>
 #include <QDateTime>
 #include <QList>
 #include <QDebug>
@@ -87,7 +89,20 @@
 
 /* ************************************************************************** */
 
-DeviceManager::DeviceManager(bool daemon)
+DeviceManager *DeviceManager::getInstance()
+{
+    static DeviceManager *instance = new DeviceManager(false, QCoreApplication::instance());
+    return instance;
+}
+
+DeviceManager *DeviceManager::create(QQmlEngine *, QJSEngine *)
+{
+    DeviceManager *instance = getInstance();
+    QJSEngine::setObjectOwnership(instance, QJSEngine::CppOwnership);
+    return instance;
+}
+
+DeviceManager::DeviceManager(bool daemon, QObject *parent) : QObject(parent)
 {
     m_daemonMode = daemon;
 

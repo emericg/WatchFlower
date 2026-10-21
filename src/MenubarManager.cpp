@@ -69,15 +69,15 @@ MenubarManager::~MenubarManager()
 
 /* ************************************************************************** */
 
-void MenubarManager::setupMenubar(QQuickWindow *view, DeviceManager *dm)
+void MenubarManager::setupMenubar(QQuickWindow *view)
 {
+    DeviceManager *dm = DeviceManager::getInstance();
     if (!view || !dm)
     {
         qWarning() << "MenubarManager::initSettings() no QQuickWindow or DeviceManager passed";
         return;
     }
 
-    m_saved_devicemanager = dm;
     m_saved_view = view;
 
     QMenuBar *menuBar = new QMenuBar(nullptr);
@@ -132,12 +132,12 @@ void MenubarManager::sensorList()
 
 void MenubarManager::sensorScan()
 {
-    m_saved_devicemanager->scanDevices_start();
+    DeviceManager::getInstance()->scanDevices_start();
 }
 
 void MenubarManager::sensorRefresh()
 {
-    m_saved_devicemanager->refreshDevices_start();
+    DeviceManager::getInstance()->refreshDevices_start();
 }
 
 void MenubarManager::settings()

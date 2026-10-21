@@ -11,7 +11,7 @@ Item {
 
     function loadScreen() {
         // start nearby scanning
-        deviceManager.scanNearby_start()
+        DeviceManager.scanNearby_start()
 
         // change screen
         appContent.state = "DeviceBrowser"
@@ -46,8 +46,8 @@ Item {
                 if (areDeviceClicked()) {
                     //
                 } else {
-                    deviceManager.scanNearby_stop()
-                    deviceManager.listenDevices_start()
+                    DeviceManager.scanNearby_stop()
+                    DeviceManager.listenDevices_start()
                     screenDeviceList.loadScreen()
                 }
             }
@@ -72,7 +72,7 @@ Item {
                 topMargin: 6
                 bottomMargin: 6
 
-                model: deviceManager.devicesNearby
+                model: DeviceManager.devicesNearby
                 delegate: DeviceNearbyWidget {
                     width: ListView.view.width
                 }
@@ -152,8 +152,8 @@ Item {
                 if (areDeviceClicked()) {
                     //
                 } else {
-                    deviceManager.scanNearby_stop()
-                    deviceManager.listenDevices_start()
+                    DeviceManager.scanNearby_stop()
+                    DeviceManager.listenDevices_start()
                     screenDeviceList.loadScreen()
                 }
             }
@@ -178,7 +178,7 @@ Item {
                 topMargin: 8
                 bottomMargin: 8
 
-                model: deviceManager.devicesNearby
+                model: DeviceManager.devicesNearby
                 delegate: DeviceNearbyWidget {
                     width: ListView.view.width
                 }
@@ -309,7 +309,7 @@ Item {
                     ParallelAnimation {
                         alwaysRunToEnd: true
                         loops: Animation.Infinite
-                        running: (appContent.state === "DeviceBrowser" && deviceManager.listening)
+                        running: (appContent.state === "DeviceBrowser" && DeviceManager.listening)
                         NumberAnimation { target: ra; property: "width"; from: 0; to: radar.width*3; duration: 2500; }
                         NumberAnimation { target: ra; property: "opacity"; from: 0.85; to: 0; duration: 2500; }
                     }
@@ -340,7 +340,7 @@ Item {
                     anchors.fill: parent
                     anchors.margins: 24
 
-                    model: deviceManager.devicesNearby
+                    model: DeviceManager.devicesNearby
                     delegate: Rectangle {
                         property var boxDevice: pointer
 

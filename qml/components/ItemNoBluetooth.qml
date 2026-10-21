@@ -48,7 +48,7 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 text: {
-                    if (deviceManager.bluetoothAdapter && !deviceManager.bluetoothEnabled) {
+                    if (DeviceManager.bluetoothAdapter && !DeviceManager.bluetoothEnabled) {
                         return qsTr("Bluetooth is disabled...")
                     }
                     return qsTr("Bluetooth adapter not found...")
@@ -64,19 +64,19 @@ Item {
                 anchors.horizontalCenter: parent.horizontalCenter
 
                 text: {
-                    if (deviceManager.bluetoothAdapter &&!deviceManager.bluetoothEnabled) {
+                    if (DeviceManager.bluetoothAdapter &&!DeviceManager.bluetoothEnabled) {
                         if (Qt.platform.os === "android") return qsTr("Enable")
                     }
                     return qsTr("Retry")
                 }
                 onClicked: {
-                    if (deviceManager.bluetoothAdapter &&!deviceManager.bluetoothEnabled) {
+                    if (DeviceManager.bluetoothAdapter &&!DeviceManager.bluetoothEnabled) {
                         if (Qt.platform.os === "android") {
-                            deviceManager.enableBluetooth()
+                            DeviceManager.enableBluetooth()
                             return
                         }
                     }
-                    deviceManager.checkBluetooth()
+                    DeviceManager.checkBluetooth()
                 }
             }
 
@@ -90,7 +90,7 @@ Item {
             width: singleColumn ? (itemNoBluetooth.width*0.85) : undefined
             spacing: Theme.componentMargin
 
-            visible: !deviceManager.bluetoothEnabled
+            visible: !DeviceManager.bluetoothEnabled
 
             IconSvg {
                 Layout.preferredWidth: 20

@@ -196,11 +196,11 @@ Rectangle {
                     width: 24; height: 24;
 
                     source: {
-                        if (deviceManager.scanning)
+                        if (DeviceManager.scanning)
                             return "qrc:/IconLibrary/material-symbols/search.svg"
-                        else if (deviceManager.syncing)
+                        else if (DeviceManager.syncing)
                             return "qrc:/assets/gfx/icons/duotone-date_all-24px.svg"
-                        else if (deviceManager.listening)
+                        else if (DeviceManager.listening)
                             return "qrc:/IconLibrary/material-symbols/autorenew.svg"
                         else
                             return "qrc:/IconLibrary/material-symbols/autorenew.svg"
@@ -215,14 +215,14 @@ Rectangle {
                         duration: 2000
                         loops: Animation.Infinite
                         easing.type: Easing.Linear
-                        running: (deviceManager.updating && !deviceManager.scanning && !deviceManager.syncing)
+                        running: (DeviceManager.updating && !DeviceManager.scanning && !DeviceManager.syncing)
                         alwaysRunToEnd: true
                         onStarted: workingIndicator.opacity = 1
                         onStopped: workingIndicator.opacity = 0
                     }
                     SequentialAnimation on opacity { // scanAnimation (fade)
                         loops: Animation.Infinite
-                        running: (deviceManager.scanning || deviceManager.listening || deviceManager.syncing)
+                        running: (DeviceManager.scanning || DeviceManager.listening || DeviceManager.syncing)
                         onStopped: workingIndicator.opacity = 0
                         PropertyAnimation { to: 1; duration: 750; }
                         PropertyAnimation { to: 0.33; duration: 750; }
@@ -236,7 +236,7 @@ Rectangle {
                 width: appHeader.headerHeight
                 height: appHeader.headerHeight
 
-                visible: (deviceManager.bluetooth &&
+                visible: (DeviceManager.bluetooth &&
                           ((appContent.state === "DevicePlantSensor" && selectedDevice.hasBluetoothConnection) ||
                            appContent.state === "DeviceThermometer" ||
                            appContent.state === "DeviceEnvironmental"))

@@ -131,32 +131,32 @@ ApplicationWindow {
         }
         function onDeviceRefreshButtonClicked() {
             if (selectedDevice) {
-                deviceManager.updateDevice(selectedDevice.deviceAddress)
+                DeviceManager.updateDevice(selectedDevice.deviceAddress)
             }
         }
         function onRefreshButtonClicked() {
-            if (!deviceManager.scanning) {
-                if (deviceManager.updating) {
-                    deviceManager.refreshDevices_stop()
+            if (!DeviceManager.scanning) {
+                if (DeviceManager.updating) {
+                    DeviceManager.refreshDevices_stop()
                 } else {
-                    deviceManager.refreshDevices_start()
+                    DeviceManager.refreshDevices_start()
                 }
             }
         }
         function onSyncButtonClicked() {
-            if (!deviceManager.scanning) {
-                if (deviceManager.syncing) {
-                    deviceManager.syncDevices_stop()
+            if (!DeviceManager.scanning) {
+                if (DeviceManager.syncing) {
+                    DeviceManager.syncDevices_stop()
                 } else {
-                    deviceManager.syncDevices_start()
+                    DeviceManager.syncDevices_start()
                 }
             }
         }
         function onScanButtonClicked() {
-            if (deviceManager.scanning) {
-                deviceManager.scanDevices_stop()
+            if (DeviceManager.scanning) {
+                DeviceManager.scanDevices_stop()
             } else {
-                deviceManager.scanDevices_start()
+                DeviceManager.scanDevices_start()
             }
         }
 
@@ -200,10 +200,10 @@ ApplicationWindow {
 
                     if (appContent.state === "DeviceBrowser") {
                         // Restart the device browser
-                        deviceManager.scanNearby_start()
+                        DeviceManager.scanNearby_start()
                     } else {
                         // Listen for nearby devices
-                        deviceManager.refreshDevices_listen()
+                        DeviceManager.refreshDevices_listen()
                     }
 
                     break
@@ -228,7 +228,7 @@ ApplicationWindow {
          }
 
          if (visibility === Window.Hidden) {
-             deviceManager.disconnectDevices()
+             DeviceManager.disconnectDevices()
          }
     }
 
@@ -304,11 +304,11 @@ ApplicationWindow {
     }
     Shortcut {
         sequences: [StandardKey.Refresh]
-        onActivated: deviceManager.refreshDevices_check()
+        onActivated: DeviceManager.refreshDevices_check()
     }
     Shortcut {
         sequence: "Ctrl+F5"
-        onActivated: deviceManager.refreshDevices_start()
+        onActivated: DeviceManager.refreshDevices_start()
     }
     Shortcut {
         sequence: StandardKey.Preferences
@@ -395,7 +395,7 @@ ApplicationWindow {
 
         // Start on the device list or tutorial?
         Component.onCompleted: {
-            if (deviceManager.areDevicesAvailable()) {
+            if (DeviceManager.areDevicesAvailable()) {
                 screenDeviceList.loadScreen()
             } else {
                 screenTutorial.loadScreen()
@@ -581,7 +581,7 @@ ApplicationWindow {
         repeat: true
         interval: 100
         onTriggered: {
-            if (!deviceManager.areDevicesConnected()) {
+            if (!DeviceManager.areDevicesConnected()) {
                 appWindow.close()
             }
         }
@@ -598,8 +598,8 @@ ApplicationWindow {
         }
 
         // If BLE devices are still connected, disconnect them first
-        if (deviceManager.areDevicesConnected()) {
-            deviceManager.disconnectDevices()
+        if (DeviceManager.areDevicesConnected()) {
+            DeviceManager.disconnectDevices()
             disconnectTimer.start()
 
             close.accepted = false

@@ -138,7 +138,7 @@ Window {
         }
         function onDeviceRefreshButtonClicked() {
             if (selectedDevice) {
-                deviceManager.updateDevice(selectedDevice.deviceAddress)
+                DeviceManager.updateDevice(appWindow.selectedDevice.deviceAddress)
             }
         }
     }
@@ -160,12 +160,12 @@ Window {
             switch (Qt.application.state) {
                 case Qt.ApplicationSuspended:
                     //console.log("Qt.ApplicationSuspended")
-                    deviceManager.refreshDevices_stop()
+                    DeviceManager.refreshDevices_stop()
                     if (Qt.platform.os === "android") AndroidServiceLink.setBackgroundServiceAppState(false)
                     break
                 case Qt.ApplicationHidden:
                     //console.log("Qt.ApplicationHidden")
-                    deviceManager.refreshDevices_stop()
+                    DeviceManager.refreshDevices_stop()
                     if (Qt.platform.os === "android") AndroidServiceLink.setBackgroundServiceAppState(false)
                     break
                 case Qt.ApplicationInactive:
@@ -193,10 +193,10 @@ Window {
 
                     if (appContent.state === "DeviceBrowser") {
                         // Restart the device browser
-                        deviceManager.scanNearby_start()
+                        DeviceManager.scanNearby_start()
                     } else {
                         // Listen for nearby devices
-                        deviceManager.refreshDevices_listen()
+                        DeviceManager.refreshDevices_listen()
                     }
 
                     break
@@ -344,7 +344,7 @@ Window {
 
         Component.onCompleted: {
             // Start on the device list or tutorial?
-            if (deviceManager.areDevicesAvailable()) {
+            if (DeviceManager.areDevicesAvailable()) {
                 screenDeviceList.loadScreen()
             } else {
                 screenTutorial.loadScreen()
@@ -568,7 +568,7 @@ Window {
         repeat: true
         interval: 100
         onTriggered: {
-            if (!deviceManager.areDevicesConnected()) {
+            if (!DeviceManager.areDevicesConnected()) {
                 appWindow.close()
             }
         }
@@ -577,8 +577,8 @@ Window {
         //console.log("onClosing(" + close + ")")
 
         // If BLE devices are still connected, disconnect them first
-        if (deviceManager.areDevicesConnected()) {
-            deviceManager.disconnectDevices()
+        if (DeviceManager.areDevicesConnected()) {
+            DeviceManager.disconnectDevices()
             disconnectTimer.start()
             close.accepted = false
             return

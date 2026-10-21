@@ -26,13 +26,13 @@ Item {
     property bool splitView: SettingsManager.splitView
     onSplitViewChanged: loadList()
 
-    property bool deviceAvailable: deviceManager.hasDevices
+    property bool deviceAvailable: DeviceManager.hasDevices
     onDeviceAvailableChanged: loadList()
 
     function loadList() {
         exitSelectionMode()
 
-        if (splitView && deviceManager.deviceCount > 1) {
+        if (splitView && DeviceManager.deviceCount > 1) {
             loaderDeviceList.source = "DeviceListSplit.qml"
         } else {
             loaderDeviceList.source = "DeviceListUnified.qml"
@@ -42,20 +42,20 @@ Item {
     }
 
     Connections {
-        target: deviceManager
+        target: DeviceManager
         function onBluetoothChanged() { checkBluetoothStatus() }
     }
 
     function checkBluetoothStatus() {
-        if (deviceManager.hasDevices) {
+        if (DeviceManager.hasDevices) {
             // The device list is shown
             loaderItemStatus.source = ""
 
-            if (!deviceManager.bluetoothPermissions) {
+            if (!DeviceManager.bluetoothPermissions) {
                 actionbarBluetoothStatus.setPermissionWarning()
-            } else if (!deviceManager.bluetoothAdapter) {
+            } else if (!DeviceManager.bluetoothAdapter) {
                 actionbarBluetoothStatus.setAdapterWarning()
-            } else if (!deviceManager.bluetoothEnabled) {
+            } else if (!DeviceManager.bluetoothEnabled) {
                 actionbarBluetoothStatus.setBluetoothWarning()
             } else {
                 actionbarBluetoothStatus.hide()
@@ -64,9 +64,9 @@ Item {
             // The sensor list is not populated
             actionbarBluetoothStatus.hide()
 
-            if (!deviceManager.bluetoothPermissions) {
+            if (!DeviceManager.bluetoothPermissions) {
                 loaderItemStatus.source = "components/ItemNoPermissions.qml"
-            } else if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
+            } else if (!DeviceManager.bluetoothAdapter || !DeviceManager.bluetoothEnabled) {
                 loaderItemStatus.source = "components/ItemNoBluetooth.qml"
             } else {
                 loaderItemStatus.source = "components/ItemNoDevice.qml"
@@ -88,30 +88,30 @@ Item {
     }
 
     function updateSelectedDevice() {
-        for (var i = 0; i < deviceManager.deviceCount; i++) {
-            if (deviceManager.getDeviceByProxyIndex(i).selected) {
-                deviceManager.updateDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
+        for (var i = 0; i < DeviceManager.deviceCount; i++) {
+            if (DeviceManager.getDeviceByProxyIndex(i).selected) {
+                DeviceManager.updateDevice(DeviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
         }
         exitSelectionMode()
     }
     function syncSelectedDevice() {
-        for (var i = 0; i < deviceManager.deviceCount; i++) {
-            if (deviceManager.getDeviceByProxyIndex(i).selected) {
-                deviceManager.syncDevice(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
+        for (var i = 0; i < DeviceManager.deviceCount; i++) {
+            if (DeviceManager.getDeviceByProxyIndex(i).selected) {
+                DeviceManager.syncDevice(DeviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
         }
         exitSelectionMode()
     }
     function removeSelectedDevice() {
         var devicesAddr = []
-        for (var i = 0; i < deviceManager.deviceCount; i++) {
-            if (deviceManager.getDeviceByProxyIndex(i).selected) {
-                devicesAddr.push(deviceManager.getDeviceByProxyIndex(i).deviceAddress)
+        for (var i = 0; i < DeviceManager.deviceCount; i++) {
+            if (DeviceManager.getDeviceByProxyIndex(i).selected) {
+                devicesAddr.push(DeviceManager.getDeviceByProxyIndex(i).deviceAddress)
             }
         }
         for (var count = 0; count < devicesAddr.length; count++) {
-            deviceManager.removeDevice(devicesAddr[count])
+            DeviceManager.removeDevice(devicesAddr[count])
         }
         exitSelectionMode()
     }
@@ -156,7 +156,7 @@ Item {
         anchors.fill: parent
         anchors.topMargin: rowbar.height
 
-        visible: deviceManager.hasDevices
+        visible: DeviceManager.hasDevices
         asynchronous: false
     }
 
@@ -166,7 +166,7 @@ Item {
         id: loaderItemStatus
         anchors.fill: parent
 
-        visible: !deviceManager.hasDevices
+        visible: !DeviceManager.hasDevices
         asynchronous: true
     }
 

@@ -11,12 +11,12 @@ Item {
 
     property var device: pointer
     property bool deviceSupported: UtilsDeviceSensors.isDeviceSupported(device.deviceName)
-    property bool deviceBlacklisted: deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
+    property bool deviceBlacklisted: DeviceManager.isBleDeviceBlacklisted(device.deviceAddress)
 
     Connections {
-        target: deviceManager
+        target: DeviceManager
         function onDevicesBlacklistUpdated() {
-            deviceNearbyWidget.deviceBlacklisted = deviceManager.isBleDeviceBlacklisted(device.deviceAddress)
+            deviceNearbyWidget.deviceBlacklisted = DeviceManager.isBleDeviceBlacklisted(device.deviceAddress)
         }
     }
 

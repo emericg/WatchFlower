@@ -198,7 +198,7 @@ Item {
                     colorHighlight: Theme.colorTabletmenuHighlight
 
                     visible: (screenOrientation === Qt.LandscapeOrientation)
-                    enabled: (deviceManager.bluetooth && deviceManager.bluetoothPermissions)
+                    enabled: (DeviceManager.bluetooth && DeviceManager.bluetoothPermissions)
                     highlighted: (appContent.state === "DeviceBrowser")
                     onClicked: screenDeviceBrowser.loadScreen()
                 }

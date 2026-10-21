@@ -22,29 +22,29 @@ Item {
     }
     function selectDevice(index, type) {
         // make sure it's not already selected
-        if (deviceManager.getDeviceByProxyIndex(index, type).selected) return
+        if (DeviceManager.getDeviceByProxyIndex(index, type).selected) return
 
         // then add
         selectionMode = true
         selectionList.push(index)
         selectionCount++
 
-        deviceManager.getDeviceByProxyIndex(index, type).selected = true
+        DeviceManager.getDeviceByProxyIndex(index, type).selected = true
     }
     function deselectDevice(index, type) {
         var i = selectionList.indexOf(index)
         if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
         if (selectionList.length <= 0 || selectionCount <= 0) { exitSelectionMode() }
 
-        deviceManager.getDeviceByProxyIndex(index, type).selected = false
+        DeviceManager.getDeviceByProxyIndex(index, type).selected = false
     }
     function exitSelectionMode() {
         selectionMode = false
         selectionList = []
         selectionCount = 0
 
-        for (var i = 0; i < deviceManager.deviceCount; i++) {
-            deviceManager.getDeviceByProxyIndex(i, 0).selected = false
+        for (var i = 0; i < DeviceManager.deviceCount; i++) {
+            DeviceManager.getDeviceByProxyIndex(i, 0).selected = false
         }
     }
 
@@ -116,9 +116,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: deviceManager.devicePlantCount
+                visible: DeviceManager.devicePlantCount
 
-                text: qsTr("Plant sensor(s)", "", deviceManager.devicePlantCount)
+                text: qsTr("Plant sensor(s)", "", DeviceManager.devicePlantCount)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -128,7 +128,7 @@ Item {
                 anchors.right: parent.right
 
                 Repeater {
-                    model: deviceManager.devicesPlantList
+                    model: DeviceManager.devicesPlantList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight
@@ -142,9 +142,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: deviceManager.deviceThermoCount
+                visible: DeviceManager.deviceThermoCount
 
-                text: qsTr("Thermometer(s)", "", deviceManager.deviceThermoCount)
+                text: qsTr("Thermometer(s)", "", DeviceManager.deviceThermoCount)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -154,7 +154,7 @@ Item {
                 anchors.right: parent.right
 
                 Repeater {
-                    model: deviceManager.devicesThermoList
+                    model: DeviceManager.devicesThermoList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight
@@ -168,9 +168,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: deviceManager.deviceEnvCount
+                visible: DeviceManager.deviceEnvCount
 
-                text: qsTr("Environmental sensor(s)", "", deviceManager.deviceEnvCount)
+                text: qsTr("Environmental sensor(s)", "", DeviceManager.deviceEnvCount)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -180,7 +180,7 @@ Item {
                 anchors.right: parent.right
 
                 Repeater {
-                    model: deviceManager.devicesEnvList
+                    model: DeviceManager.devicesEnvList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
                         height: devicesView.cellHeight

@@ -77,7 +77,7 @@ Rectangle {
             id: buttonSync
             height: !Theme.wideMode ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
-            visible: deviceManager.bluetooth
+            visible: DeviceManager.bluetooth
 
             compact: !Theme.wideMode
             iconColor: Theme.colorActionbarContent
@@ -92,7 +92,7 @@ Rectangle {
             id: buttonRefresh
             height: !Theme.wideMode ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
-            visible: deviceManager.bluetooth
+            visible: DeviceManager.bluetooth
 
             compact: !Theme.wideMode
             iconColor: Theme.colorActionbarContent

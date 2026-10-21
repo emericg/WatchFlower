@@ -38,8 +38,7 @@ AndroidServiceLink *AndroidServiceLink::instance = nullptr;
 QMutex AndroidServiceLink::instanceMutex;
 #endif
 
-AndroidServiceLink::AndroidServiceLink(DeviceManager *deviceManager, QObject *parent)
-    : QObject(parent), m_deviceManager(deviceManager)
+AndroidServiceLink::AndroidServiceLink(QObject *parent) : QObject(parent)
 {
 #if defined(Q_OS_ANDROID)
     {
@@ -58,9 +57,10 @@ AndroidServiceLink::AndroidServiceLink(DeviceManager *deviceManager, QObject *pa
         connect(sm, &SettingsManager::systrayChanged, this, &AndroidServiceLink::onServiceEnabledChanged);
     }
 
-    if (m_deviceManager)
+    DeviceManager *dm = DeviceManager::getInstance();
+    if (dm)
     {
-        connect(m_deviceManager, &DeviceManager::permissionsChanged, this, &AndroidServiceLink::onPermissionsChanged);
+        connect(dm, &DeviceManager::permissionsChanged, this, &AndroidServiceLink::onPermissionsChanged);
     }
 #endif
 }
@@ -118,7 +118,8 @@ void AndroidServiceLink::onPermissionsChanged()
 {
     SettingsManager *sm = SettingsManager::getInstance();
     if (!sm || !sm->getSysTray()) return;
-    if (!m_deviceManager || !m_deviceManager->hasPermissionBluetooth()) return;
+    DeviceManager *dm = DeviceManager::getInstance();
+    if (!dm || !dm->hasPermissionBluetooth()) return;
     if (m_serviceOnline) return;
 
     // The service announces itself once started
@@ -157,7 +158,8 @@ void AndroidServiceLink::replyAppState()
 
 void AndroidServiceLink::onDataUpdated()
 {
-    if (m_deviceManager) m_deviceManager->reloadDatabaseData();
+    DeviceManager *dm = DeviceManager::getInstance();
+    if (dm) dm->reloadDatabaseData();
 }
 
 void AndroidServiceLink::setServiceOnline(bool online)

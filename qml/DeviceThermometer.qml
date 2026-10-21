@@ -141,7 +141,7 @@ Loader {
                     swipeBox.currentIndex++
             } else if (event.key === Qt.Key_F5) {
                 event.accepted = true
-                deviceManager.updateDevice(currentDevice.deviceAddress)
+                DeviceManager.updateDevice(currentDevice.deviceAddress)
             } else if (event.key === Qt.Key_Backspace) {
                 event.accepted = true
                 backAction()

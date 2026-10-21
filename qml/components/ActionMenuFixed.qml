@@ -130,7 +130,7 @@ T.Popup {
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasBluetoothConnection))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasBluetoothConnection))
 
                 text: qsTr("Update data")
                 source: "qrc:/IconLibrary/material-symbols/refresh.svg"
@@ -148,7 +148,7 @@ T.Popup {
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasRealTime))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasRealTime))
 
                 text: qsTr("Real time data")
                 source: "qrc:/IconLibrary/material-icons/duotone/update.svg"
@@ -174,7 +174,7 @@ T.Popup {
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
 
                 text: qsTr("Update history")
                 source: "qrc:/IconLibrary/material-icons/duotone/date_range.svg"
@@ -193,7 +193,7 @@ T.Popup {
                 text: qsTr("Clear history")
                 source: "qrc:/IconLibrary/material-icons/duotone/date_clear.svg"
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasHistory))
 
                 onClicked: {
                     deviceClearButtonClicked()
@@ -216,7 +216,7 @@ T.Popup {
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasLED))
 
                 text: qsTr("Blink LED")
                 source: "qrc:/IconLibrary/material-icons/duotone/emoji_objects.svg"
@@ -234,7 +234,7 @@ T.Popup {
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasWaterTank))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasWaterTank))
 
                 text: qsTr("Watering")
                 source: "qrc:/IconLibrary/material-icons/duotone/local_drink.svg"
@@ -252,7 +252,7 @@ T.Popup {
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasCalibration))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasCalibration))
 
                 text: qsTr("Calibrate sensor")
                 source: "qrc:/IconLibrary/material-icons/duotone/model_training.svg"
@@ -309,7 +309,7 @@ T.Popup {
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection
-                visible: (deviceManager.bluetooth && (selectedDevice && selectedDevice.hasReboot))
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasReboot))
 
                 text: qsTr("Reboot sensor")
                 source: "qrc:/IconLibrary/material-symbols/refresh.svg"

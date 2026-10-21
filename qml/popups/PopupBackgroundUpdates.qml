@@ -28,7 +28,7 @@ Popup {
     property bool locPerm: false
 
     onAboutToShow: {
-        locPerm = deviceManager.checkLocationPermission_background()
+        locPerm = DeviceManager.checkLocationPermission_background()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ Popup {
                         source: "qrc:/IconLibrary/material-symbols/check.svg"
 
                         onClicked: {
-                            deviceManager.requestLocationPermission_background()
+                            DeviceManager.requestLocationPermission_background()
                             popupBackgroundUpdates.locPerm = true
                         }
                     }

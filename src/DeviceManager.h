@@ -25,6 +25,8 @@
 
 #include "DeviceFilter.h"
 
+#include <QtQml/qqmlregistration.h>
+
 #include <QObject>
 #include <QVariant>
 #include <QList>
@@ -38,6 +40,8 @@
 class QBluetoothDeviceInfo;
 class QLowEnergyController;
 class QPermission;
+class QQmlEngine;
+class QJSEngine;
 
 /* ************************************************************************** */
 
@@ -47,6 +51,8 @@ class QPermission;
 class DeviceManager: public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     ////////
 
@@ -240,7 +246,15 @@ private slots:
     void bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
 
 public:
-    DeviceManager(bool daemon = false);
+    static DeviceManager *getInstance();
+    static DeviceManager *create(QQmlEngine *, QJSEngine *);
+
+    /*!
+     * \brief The application itself must use getInstance(), but the Android background service still creates a standalone DeviceManager.
+     * \param daemon: background mode, used by the Android service for its short-lived refresh cycles.
+     * \param parent: QObject parent.
+     */
+    explicit DeviceManager(bool daemon = false, QObject *parent = nullptr);
     ~DeviceManager();
 
     bool isDaemon() const { return m_daemonMode; }

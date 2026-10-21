@@ -62,20 +62,20 @@ Rectangle {
         color: Theme.colorActionbarHighlight
 
         text: {
-            if (!deviceManager.bluetoothPermissions) return qsTr("Request")
+            if (!DeviceManager.bluetoothPermissions) return qsTr("Request")
             if (Qt.platform.os === "android") {
-                if (!deviceManager.bluetoothEnabled) return qsTr("Enable")
+                if (!DeviceManager.bluetoothEnabled) return qsTr("Enable")
             }
             return qsTr("Retry")
         }
         onClicked: {
-            if (!deviceManager.bluetoothPermissions) {
-                deviceManager.requestBluetoothPermissions()
+            if (!DeviceManager.bluetoothPermissions) {
+                DeviceManager.requestBluetoothPermissions()
             }
-            if (!deviceManager.bluetoothEnabled) {
-                deviceManager.enableBluetooth(SettingsManager.bluetoothControl)
+            if (!DeviceManager.bluetoothEnabled) {
+                DeviceManager.enableBluetooth(SettingsManager.bluetoothControl)
             }
-            deviceManager.checkBluetooth()
+            DeviceManager.checkBluetooth()
         }
     }
 

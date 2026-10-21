@@ -30,7 +30,7 @@ Popup {
     property bool deviceIsBlacklisted: false
 
     onAboutToShow: {
-        deviceIsBlacklisted = deviceManager.isBleDeviceBlacklisted(deviceAddress)
+        deviceIsBlacklisted = DeviceManager.isBleDeviceBlacklisted(deviceAddress)
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -188,9 +188,9 @@ Popup {
 
                     onClicked: {
                         if (deviceIsBlacklisted)
-                            deviceManager.whitelistBleDevice(deviceAddress)
+                            DeviceManager.whitelistBleDevice(deviceAddress)
                         else
-                            deviceManager.blacklistBleDevice(deviceAddress)
+                            DeviceManager.blacklistBleDevice(deviceAddress)
 
                         popupBlacklistDevice.close()
                     }

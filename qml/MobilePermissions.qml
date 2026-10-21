@@ -14,7 +14,7 @@ Item {
 
     function loadScreen() {
         // refresh permissions
-        deviceManager.checkBluetoothPermissions()
+        DeviceManager.checkBluetoothPermissions()
         notifButton.validperm = UtilsOS.checkMobileNotificationPermission()
 
         // change screen
@@ -35,7 +35,7 @@ Item {
         interval: 333
         repeat: false
         onTriggered: {
-            deviceManager.checkBluetoothPermissions()
+            DeviceManager.checkBluetoothPermissions()
             notifButton.validperm = UtilsOS.checkMobileNotificationPermission()
         }
     }
@@ -186,7 +186,7 @@ Item {
                     width: 32
                     height: 32
 
-                    property bool validperm: deviceManager.permissionBluetooth
+                    property bool validperm: DeviceManager.permissionBluetooth
 
                     source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
@@ -249,7 +249,7 @@ Item {
                     width: 32
                     height: 32
 
-                    property bool validperm: deviceManager.permissionLocationForeground
+                    property bool validperm: DeviceManager.permissionLocationForeground
 
                     source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
@@ -331,7 +331,7 @@ Item {
                     width: 32
                     height: 32
 
-                    property bool validperm: deviceManager.permissionLocationBackground
+                    property bool validperm: DeviceManager.permissionLocationBackground
 
                     source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"
@@ -340,7 +340,7 @@ Item {
 
                     onClicked: {
                         UtilsOS.vibrate(25)
-                        deviceManager.requestLocationPermission_background()
+                        DeviceManager.requestLocationPermission_background()
                         refreshPermissions.start()
                     }
                 }
@@ -396,7 +396,7 @@ Item {
                     width: 32
                     height: 32
 
-                    property bool validperm: deviceManager.gpsEnabled
+                    property bool validperm: DeviceManager.gpsEnabled
 
                     source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
                     iconColor: (validperm) ? "white" : "white"

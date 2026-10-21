@@ -28,7 +28,7 @@ Item {
             SequentialAnimation on opacity {
                 id: scanAnimation
                 loops: Animation.Infinite
-                running: deviceManager.scanning
+                running: DeviceManager.scanning
                 alwaysRunToEnd: true
 
                 PropertyAnimation { to: 0.33; duration: 750; }
@@ -50,18 +50,18 @@ Item {
 
                 width: (Theme.isDesktop || Theme.isTablet || (Theme.isPhone && Theme.screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.5)
 
-                text: deviceManager.scanning ? qsTr("Scanning...") : qsTr("Launch detection")
+                text: DeviceManager.scanning ? qsTr("Scanning...") : qsTr("Launch detection")
                 color: Theme.colorPrimary
 
                 onClicked: {
                     // Just to be sure...
-                    if (!deviceManager.bluetoothPermissions) {
+                    if (!DeviceManager.bluetoothPermissions) {
                         // Ask permission
                         UtilsOS.getMobileBleLocationPermission()
                     }
-                    if (!deviceManager.bluetoothAdapter || !deviceManager.bluetoothEnabled) {
+                    if (!DeviceManager.bluetoothAdapter || !DeviceManager.bluetoothEnabled) {
                         // Enable
-                        deviceManager.enableBluetooth(true)
+                        DeviceManager.enableBluetooth(true)
                     }
 
                     // Now we scan...
@@ -74,11 +74,11 @@ Item {
                     running: false
                     repeat: false
                     onTriggered: {
-                        if (!deviceManager.updating) {
-                            if (deviceManager.scanning) {
-                                deviceManager.scanDevices_stop()
+                        if (!DeviceManager.updating) {
+                            if (DeviceManager.scanning) {
+                                DeviceManager.scanDevices_stop()
                             } else {
-                                deviceManager.scanDevices_start()
+                                DeviceManager.scanDevices_start()
                             }
                         }
                     }
@@ -92,7 +92,7 @@ Item {
                 width: singleColumn ? (itemNoDevice.width*0.85) : undefined
                 spacing: Theme.componentMargin
 
-                //visible: !deviceManager.bluetoothEnabled
+                //visible: !DeviceManager.bluetoothEnabled
 
                 IconSvg {
                     Layout.preferredWidth: 20

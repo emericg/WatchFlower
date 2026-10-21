@@ -92,7 +92,7 @@ int main(int argc, char *argv[])
         SettingsManager *sm = SettingsManager::getInstance();
         DatabaseManager *db = DatabaseManager::getInstance();
         NotificationManager *nm = NotificationManager::getInstance();
-        DeviceManager *dm = new DeviceManager();
+        DeviceManager *dm = DeviceManager::getInstance();
         if (!sm || !db || !nm || !dm)
         {
             qWarning() << "Cannot init app components!";
@@ -157,7 +157,7 @@ int main(int argc, char *argv[])
     SettingsManager *sm = SettingsManager::getInstance();
     DatabaseManager *db = DatabaseManager::getInstance();
     NotificationManager *nm = NotificationManager::getInstance();
-    DeviceManager *dm = new DeviceManager;
+    DeviceManager *dm = DeviceManager::getInstance();
     if (!sm || !db || !nm || !dm)
     {
         qWarning() << "Cannot init app components!";
@@ -165,8 +165,9 @@ int main(int argc, char *argv[])
     }
 
     //UtilsLog::getInstance()->setEnabled(false);
+
     // App-side endpoint for the background service communication
-    AndroidServiceLink *asc = new AndroidServiceLink(dm, &app);
+    AndroidServiceLink *asc = new AndroidServiceLink(&app);
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 
@@ -216,7 +217,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
 
-    engine_context->setContextProperty("deviceManager", dm);
     engine_context->setContextProperty("AndroidServiceLink", asc);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
@@ -253,7 +253,7 @@ int main(int argc, char *argv[])
     if (sm->getSysTray()) st->installSystray();
 
     // Menu bar
-    mb->setupMenubar(window, dm);
+    mb->setupMenubar(window);
 
 #if defined(Q_OS_MACOS)
     // macOS dock

@@ -43,7 +43,7 @@ Loader {
             id: popupBackgroundUpdates
 
             onClosed: {
-                SettingsManager.systray = deviceManager.checkLocationPermission_background()
+                SettingsManager.systray = DeviceManager.checkLocationPermission_background()
                 switch_worker.checked = SettingsManager.systray
             }
         }
@@ -1757,7 +1757,7 @@ Loader {
                 ListTitle {
                     text: qsTr("Data archiving")
                     source: "qrc:/IconLibrary/material-symbols/archive.svg"
-                    visible: deviceManager.hasDevices
+                    visible: DeviceManager.hasDevices
                     headerPosition: contentColumn.padText
                 }
 
@@ -1770,7 +1770,7 @@ Loader {
                     anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
 
                     topPadding: 8
-                    visible: deviceManager.hasDevices
+                    visible: DeviceManager.hasDevices
 
                     Text {
                         anchors.left: parent.left
@@ -1808,7 +1808,7 @@ Loader {
 
                     height: Theme.componentHeightXL
                     spacing: Theme.componentMargin
-                    visible: deviceManager.hasDevices
+                    visible: DeviceManager.hasDevices
 
                     ButtonFlat {
                         height: 36
@@ -1818,7 +1818,7 @@ Loader {
 
                         text: qsTr("Export data")
                         onClicked: {
-                            if (deviceManager.exportDataSave()) {
+                            if (DeviceManager.exportDataSave()) {
                                 text = qsTr("Exported")
                                 primaryColor = Theme.colorPrimary
                                 fullColor = true
@@ -1840,7 +1840,7 @@ Loader {
 
                         text: qsTr("Open folder")
                         onClicked: {
-                            UtilsApp.openWith(deviceManager.exportDataFolder())
+                            UtilsApp.openWith(DeviceManager.exportDataFolder())
                         }
                     }
 
@@ -1852,7 +1852,7 @@ Loader {
 
                         text: qsTr("Export file")
                         onClicked: {
-                            var file = deviceManager.exportDataOpen()
+                            var file = DeviceManager.exportDataOpen()
                             MobileSharing.sendFile(file, qsTr("Export file"), "text/csv", 0)
                         }
                     }

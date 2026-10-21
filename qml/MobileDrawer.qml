@@ -166,19 +166,19 @@ DrawerThemed {
 
                         if (sortmode === 0) {
                             SettingsManager.orderBy = "location"
-                            deviceManager.orderby_location()
+                            DeviceManager.orderby_location()
                         } else if (sortmode === 1) {
                             SettingsManager.orderBy = "model"
-                            deviceManager.orderby_model()
+                            DeviceManager.orderby_model()
                         } else if (sortmode === 2) {
                             SettingsManager.orderBy = "plant"
-                            deviceManager.orderby_plant()
+                            DeviceManager.orderby_plant()
                         } else if (sortmode === 3) {
                             SettingsManager.orderBy = "waterlevel"
-                            deviceManager.orderby_waterlevel()
+                            DeviceManager.orderby_waterlevel()
                         } else if (sortmode === 4) {
                             SettingsManager.orderBy = "address"
-                            deviceManager.orderby_address()
+                            DeviceManager.orderby_address()
                         }
                     }
                 }
@@ -193,17 +193,17 @@ DrawerThemed {
                     text: qsTr("Refresh sensor data")
 
                     source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
-                    iconAnimation: deviceManager.updating ? "rotate" : "fade"
-                    iconAnimated: (deviceManager.updating || deviceManager.listening)
+                    iconAnimation: DeviceManager.updating ? "rotate" : "fade"
+                    iconAnimated: (DeviceManager.updating || DeviceManager.listening)
 
-                    enabled: (deviceManager.bluetooth && !deviceManager.scanning && deviceManager.hasDevices)
+                    enabled: (DeviceManager.bluetooth && !DeviceManager.scanning && DeviceManager.hasDevices)
 
                     onClicked: {
-                        if (!deviceManager.scanning) {
-                            if (deviceManager.updating) {
-                                deviceManager.refreshDevices_stop()
+                        if (!DeviceManager.scanning) {
+                            if (DeviceManager.updating) {
+                                DeviceManager.refreshDevices_stop()
                             } else {
-                                deviceManager.refreshDevices_start()
+                                DeviceManager.refreshDevices_start()
                             }
                             appDrawer.close()
                         }
@@ -216,16 +216,16 @@ DrawerThemed {
                     source: "qrc:/IconLibrary/material-symbols/merge_type.svg"
                     sourceRotation: 180
                     iconAnimation: "fade"
-                    iconAnimated: deviceManager.syncing
+                    iconAnimated: DeviceManager.syncing
 
-                    enabled: (deviceManager.bluetooth && !deviceManager.scanning && deviceManager.hasDevices)
+                    enabled: (DeviceManager.bluetooth && !DeviceManager.scanning && DeviceManager.hasDevices)
 
                     onClicked: {
-                        if (!deviceManager.scanning) {
-                            if (deviceManager.syncing) {
-                                deviceManager.syncDevices_stop()
+                        if (!DeviceManager.scanning) {
+                            if (DeviceManager.syncing) {
+                                DeviceManager.syncDevices_stop()
                             } else {
-                                deviceManager.syncDevices_start()
+                                DeviceManager.syncDevices_start()
                             }
                             appDrawer.close()
                         }
@@ -237,15 +237,15 @@ DrawerThemed {
 
                     source: "qrc:/IconLibrary/material-symbols/search.svg"
                     iconAnimation: "fade"
-                    iconAnimated: deviceManager.scanning
+                    iconAnimated: DeviceManager.scanning
 
-                    enabled: deviceManager.bluetooth
+                    enabled: DeviceManager.bluetooth
 
                     onClicked: {
-                        if (deviceManager.scanning) {
-                            deviceManager.scanDevices_stop()
+                        if (DeviceManager.scanning) {
+                            DeviceManager.scanDevices_stop()
                         } else {
-                            deviceManager.scanDevices_start()
+                            DeviceManager.scanDevices_start()
                         }
                         appDrawer.close()
                     }
@@ -277,7 +277,7 @@ DrawerThemed {
                 // The service is enabled, but can't start without the Bluetooth permission
                 property bool needsPermission: (SettingsManager.systray &&
                                                 !AndroidServiceLink.serviceOnline &&
-                                                !deviceManager.permissionBluetooth)
+                                                !DeviceManager.permissionBluetooth)
 
                 highlighted: AndroidServiceLink.serviceOnline
                 text: {
@@ -295,7 +295,7 @@ DrawerThemed {
 
                 onClicked: {
                     if (needsPermission) {
-                        deviceManager.requestBluetoothPermissions()
+                        DeviceManager.requestBluetoothPermissions()
                         appDrawer.close()
                     } else if (UtilsApp.hasAndroidAutostartSettings()) {
                         UtilsApp.openAndroidAutostartSettings("com.emeric.watchflower")
@@ -322,7 +322,7 @@ DrawerThemed {
                 text: qsTr("Device browser")
                 source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
 
-                enabled: deviceManager.bluetooth
+                enabled: DeviceManager.bluetooth
 
                 onClicked: {
                     screenDeviceBrowser.loadScreen()

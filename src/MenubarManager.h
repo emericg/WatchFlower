@@ -33,7 +33,6 @@ class QJSEngine;
 class QQmlEngine;
 class QQuickWindow;
 
-class DeviceManager;
 
 /* ************************************************************************** */
 
@@ -47,7 +46,6 @@ class MenubarManager: public QObject
     QML_SINGLETON
 
     QQuickWindow *m_saved_view = nullptr;
-    DeviceManager *m_saved_devicemanager = nullptr;
 
     QMenu *m_menuSensors = nullptr;
     QAction *m_actionSensorList = nullptr;
@@ -77,7 +75,7 @@ public:
     static MenubarManager *getInstance();
     static MenubarManager *create(QQmlEngine *, QJSEngine *);
 
-    void setupMenubar(QQuickWindow *view, DeviceManager *dm);
+    void setupMenubar(QQuickWindow *view);
 
 private slots:
     void sensorList();

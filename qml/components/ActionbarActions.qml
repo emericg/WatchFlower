@@ -30,7 +30,7 @@ Rectangle {
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter
 
-            enabled: (deviceManager.bluetooth && !deviceManager.syncing)
+            enabled: (DeviceManager.bluetooth && !DeviceManager.syncing)
 
             text: qsTr("Refresh sensor data")
             tooltipText: text
@@ -42,19 +42,19 @@ Rectangle {
             onClicked: refreshButtonClicked()
 
             animation: {
-                if (deviceManager.updating && deviceManager.listening) return "both"
-                if (deviceManager.updating) return "rotate"
-                if (deviceManager.listening) return "fade"
+                if (DeviceManager.updating && DeviceManager.listening) return "both"
+                if (DeviceManager.updating) return "rotate"
+                if (DeviceManager.listening) return "fade"
                 return ""
             }
-            animationRunning: (deviceManager.updating || deviceManager.listening)
+            animationRunning: (DeviceManager.updating || DeviceManager.listening)
         }
         ButtonCompactable {
             id: buttonSyncAll
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            enabled: (deviceManager.bluetooth && !deviceManager.scanning)
+            enabled: (DeviceManager.bluetooth && !DeviceManager.scanning)
 
             text: qsTr("Sync sensors history")
             tooltipText: text
@@ -66,14 +66,14 @@ Rectangle {
             onClicked: syncButtonClicked()
 
             animation: "fade"
-            animationRunning: deviceManager.syncing
+            animationRunning: DeviceManager.syncing
         }
         ButtonCompactable {
             id: buttonScan
             height: 36
             anchors.verticalCenter: parent.verticalCenter
 
-            enabled: (deviceManager.bluetooth && !deviceManager.syncing)
+            enabled: (DeviceManager.bluetooth && !DeviceManager.syncing)
 
             text: qsTr("Search for new sensors")
             tooltipText: text
@@ -85,7 +85,7 @@ Rectangle {
             onClicked: scanButtonClicked()
 
             animation: "fade"
-            animationRunning: deviceManager.scanning
+            animationRunning: DeviceManager.scanning
         }
     }
 
@@ -144,16 +144,16 @@ Rectangle {
 
                 if (sortmode === 0) {
                     settingsManager.orderBy = "location"
-                    deviceManager.orderby_location()
+                    DeviceManager.orderby_location()
                 } else if (sortmode === 1) {
                     settingsManager.orderBy = "model"
-                    deviceManager.orderby_model()
+                    DeviceManager.orderby_model()
                 } else if (sortmode === 2) {
                     settingsManager.orderBy = "plant"
-                    deviceManager.orderby_plant()
+                    DeviceManager.orderby_plant()
                 } else if (sortmode === 3) {
                     settingsManager.orderBy = "waterlevel"
-                    deviceManager.orderby_waterlevel()
+                    DeviceManager.orderby_waterlevel()
                 }
             }
         }

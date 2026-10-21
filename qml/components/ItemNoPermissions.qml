@@ -68,7 +68,7 @@ Item {
                     source: "qrc:/IconLibrary/material-icons/duotone/touch_app.svg"
 
                     onClicked: {
-                        deviceManager.requestBluetoothPermissions()
+                        DeviceManager.requestBluetoothPermissions()
                     }
                 }
             }
@@ -143,7 +143,7 @@ Item {
             width: singleColumn ? (itemNoPermissions.width*0.85) : undefined
             spacing: Theme.componentMargin
 
-            visible: (Qt.platform.os === "android" && !deviceManager.gpsEnabled)
+            visible: (Qt.platform.os === "android" && !DeviceManager.gpsEnabled)
 
             IconSvg {
                 Layout.preferredWidth: 20

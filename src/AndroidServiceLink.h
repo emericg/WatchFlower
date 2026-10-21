@@ -30,8 +30,6 @@
 
 #include <functional>
 
-class DeviceManager;
-
 /* ************************************************************************** */
 
 /*!
@@ -58,8 +56,7 @@ class AndroidServiceLink: public QObject
     QTimer m_pingTimer;
 #endif
 
-    DeviceManager *m_deviceManager = nullptr; //!< Back-ref, to reload device data after the service writes new data
-    bool m_serviceOnline = false;             //!< True once the background service has answered our ping
+    bool m_serviceOnline = false; //!< True once the background service has answered our ping
 
 Q_SIGNALS:
     void serviceOnlineChanged();
@@ -80,7 +77,7 @@ private slots:
 #endif
 
 public:
-    explicit AndroidServiceLink(DeviceManager *deviceManager, QObject *parent = nullptr);
+    explicit AndroidServiceLink(QObject *parent = nullptr);
     ~AndroidServiceLink();
 
 #if defined(Q_OS_ANDROID)

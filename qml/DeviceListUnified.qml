@@ -21,21 +21,21 @@ Item {
     }
     function selectDevice(index, type) {
         // make sure it's not already selected
-        if (deviceManager.getDeviceByProxyIndex(index).selected) return
+        if (DeviceManager.getDeviceByProxyIndex(index).selected) return
 
         // then add
         selectionMode = true
         selectionList.push(index)
         selectionCount++
 
-        deviceManager.getDeviceByProxyIndex(index).selected = true
+        DeviceManager.getDeviceByProxyIndex(index).selected = true
     }
     function deselectDevice(index, type) {
         var i = selectionList.indexOf(index)
         if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
         if (selectionList.length <= 0 || selectionCount <= 0) { exitSelectionMode() }
 
-        deviceManager.getDeviceByProxyIndex(index).selected = false
+        DeviceManager.getDeviceByProxyIndex(index).selected = false
     }
     function exitSelectionMode() {
         selectionMode = false
@@ -43,7 +43,7 @@ Item {
         selectionCount = 0
 
         for (var i = 0; i < devicesView.count; i++) {
-            deviceManager.getDeviceByProxyIndex(i).selected = false
+            DeviceManager.getDeviceByProxyIndex(i).selected = false
         }
     }
 
@@ -104,7 +104,7 @@ Item {
 
         ////////
 
-        model: deviceManager.devicesList
+        model: DeviceManager.devicesList
         delegate: DeviceWidget {
             width: devicesView.cellWidth
             height: devicesView.cellHeight

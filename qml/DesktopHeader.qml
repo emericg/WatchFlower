@@ -239,7 +239,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth &&
+            visible: (DeviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasWaterTank) &&
                       (appContent.state === "DevicePlantSensor"))
 
@@ -257,7 +257,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth &&
+            visible: (DeviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasCalibration) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
@@ -277,7 +277,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth &&
+            visible: (DeviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasReboot) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
@@ -297,7 +297,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth &&
+            visible: (DeviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasLED) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
@@ -333,7 +333,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth &&
+            visible: (DeviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasHistory) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
@@ -382,7 +382,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth &&
+            visible: (DeviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasRealTime) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
@@ -402,7 +402,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth &&
+            visible: (DeviceManager.bluetooth &&
                       (selectedDevice && selectedDevice.hasBluetoothConnection) &&
                       (appContent.state === "DevicePlantSensor" ||
                        appContent.state === "DeviceThermometer" ||
@@ -553,19 +553,19 @@ Rectangle {
 
                 if (sortmode === 0) {
                     SettingsManager.orderBy = "location"
-                    deviceManager.orderby_location()
+                    DeviceManager.orderby_location()
                 } else if (sortmode === 1) {
                     SettingsManager.orderBy = "model"
-                    deviceManager.orderby_model()
+                    DeviceManager.orderby_model()
                 } else if (sortmode === 2) {
                     SettingsManager.orderBy = "plant"
-                    deviceManager.orderby_plant()
+                    DeviceManager.orderby_plant()
                 } else if (sortmode === 3) {
                     SettingsManager.orderBy = "waterlevel"
-                    deviceManager.orderby_waterlevel()
+                    DeviceManager.orderby_waterlevel()
                 } else if (sortmode === 4) {
                     SettingsManager.orderBy = "address"
-                    deviceManager.orderby_address()
+                    DeviceManager.orderby_address()
                 }
             }
         }
@@ -575,7 +575,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (deviceManager.bluetooth && appContent.state === "DeviceList")
+            visible: (DeviceManager.bluetooth && appContent.state === "DeviceList")
         }
 
         ButtonCompactable {
@@ -584,8 +584,8 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: (!deviceManager.syncing)
+            visible: (DeviceManager.bluetooth && menuMain.visible)
+            enabled: (!DeviceManager.syncing)
 
             text: qsTr("Scan")
             tooltipText: qsTr("Scan for new sensors")
@@ -597,7 +597,7 @@ Rectangle {
             onClicked: appHeader.scanButtonClicked()
 
             animation: "fade"
-            animationRunning: deviceManager.scanning
+            animationRunning: DeviceManager.scanning
         }
         ButtonCompactable {
             id: buttonSyncAll
@@ -605,8 +605,8 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: (!deviceManager.scanning)
+            visible: (DeviceManager.bluetooth && menuMain.visible)
+            enabled: (!DeviceManager.scanning)
 
             text: qsTr("Sync history")
             tooltipText: qsTr("Sync sensors history")
@@ -618,7 +618,7 @@ Rectangle {
             onClicked: appHeader.syncButtonClicked()
 
             animation: "fade"
-            animationRunning: deviceManager.syncing
+            animationRunning: DeviceManager.syncing
         }
         ButtonCompactable {
             id: buttonRefreshAll
@@ -626,8 +626,8 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
 
             compact: appHeader.headerCompact
-            visible: (deviceManager.bluetooth && menuMain.visible)
-            enabled: (!deviceManager.syncing)
+            visible: (DeviceManager.bluetooth && menuMain.visible)
+            enabled: (!DeviceManager.syncing)
 
             text: qsTr("Refresh data")
             tooltipText: qsTr("Refresh sensor data")
@@ -639,12 +639,12 @@ Rectangle {
             onClicked: appHeader.refreshButtonClicked()
 
             animation: {
-                if (deviceManager.updating && deviceManager.listening) return "both"
-                if (deviceManager.updating) return "rotate"
-                if (deviceManager.listening) return "fade"
+                if (DeviceManager.updating && DeviceManager.listening) return "both"
+                if (DeviceManager.updating) return "rotate"
+                if (DeviceManager.listening) return "fade"
                 return ""
             }
-            animationRunning: (deviceManager.updating || deviceManager.listening)
+            animationRunning: (DeviceManager.updating || DeviceManager.listening)
         }
 
         Rectangle { // separator
@@ -652,7 +652,7 @@ Rectangle {
             height: 40
             width: Theme.componentBorderWidth
             color: Theme.colorHeaderHighlight
-            visible: (deviceManager.bluetooth && menuMain.visible)
+            visible: (DeviceManager.bluetooth && menuMain.visible)
         }
 
         // MAIN MENU //////////
