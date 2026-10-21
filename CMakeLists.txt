@@ -235,6 +235,7 @@ qt_add_qml_module(${PROJECT_NAME}
         src/NotificationManager.cpp src/NotificationManager.h
         src/SettingsManager.cpp src/SettingsManager.cpp
         src/DeviceManager.cpp src/DeviceManager.h
+        src/AndroidServiceLink.cpp src/AndroidServiceLink.h
         src/PlantDatabase.cpp src/PlantDatabase.h
         ${SOURCES_DESKTOP_QML}
 )

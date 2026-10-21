@@ -167,7 +167,7 @@ int main(int argc, char *argv[])
     //UtilsLog::getInstance()->setEnabled(false);
 
     // App-side endpoint for the background service communication
-    AndroidServiceLink *asc = new AndroidServiceLink(&app);
+    AndroidServiceLink *asc = AndroidServiceLink::getInstance();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
 
@@ -217,7 +217,6 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     QQmlContext *engine_context = engine.rootContext();
 
-    engine_context->setContextProperty("AndroidServiceLink", asc);
     engine_context->setContextProperty("sunAndMoon", &sam);
 
     engine_context->setContextProperty("startMinimized", (start_minimized || sm->getMinimized()));

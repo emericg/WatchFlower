@@ -22,6 +22,10 @@
 #include "AndroidServiceLink.h"
 #include "DeviceManager.h"
 
+#include <QCoreApplication>
+#include <QQmlEngine>
+#include <QJSEngine>
+
 #if defined(Q_OS_ANDROID)
 #include "AndroidService.h"
 #include "SettingsManager.h"
@@ -37,6 +41,19 @@
 AndroidServiceLink *AndroidServiceLink::instance = nullptr;
 QMutex AndroidServiceLink::instanceMutex;
 #endif
+
+AndroidServiceLink *AndroidServiceLink::getInstance()
+{
+    static AndroidServiceLink *singleton = new AndroidServiceLink(QCoreApplication::instance());
+    return singleton;
+}
+
+AndroidServiceLink *AndroidServiceLink::create(QQmlEngine *, QJSEngine *)
+{
+    AndroidServiceLink *singleton = getInstance();
+    QJSEngine::setObjectOwnership(singleton, QJSEngine::CppOwnership);
+    return singleton;
+}
 
 AndroidServiceLink::AndroidServiceLink(QObject *parent) : QObject(parent)
 {

@@ -23,12 +23,17 @@
 #define ANDROID_SERVICE_LINK_H
 /* ************************************************************************** */
 
+#include <QtQml/qqmlregistration.h>
+
 #include <QtGlobal>
 #include <QObject>
 #include <QTimer>
 #include <QMutex>
 
 #include <functional>
+
+class QQmlEngine;
+class QJSEngine;
 
 /* ************************************************************************** */
 
@@ -44,6 +49,8 @@
 class AndroidServiceLink: public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
+    QML_SINGLETON
 
     Q_PROPERTY(bool serviceOnline READ isServiceOnline NOTIFY serviceOnlineChanged)
 
@@ -57,6 +64,9 @@ class AndroidServiceLink: public QObject
 #endif
 
     bool m_serviceOnline = false; //!< True once the background service has answered our ping
+
+    // Singleton
+    explicit AndroidServiceLink(QObject *parent = nullptr);
 
 Q_SIGNALS:
     void serviceOnlineChanged();
@@ -77,7 +87,9 @@ private slots:
 #endif
 
 public:
-    explicit AndroidServiceLink(QObject *parent = nullptr);
+    static AndroidServiceLink *getInstance();
+    static AndroidServiceLink *create(QQmlEngine *, QJSEngine *);
+
     ~AndroidServiceLink();
 
 #if defined(Q_OS_ANDROID)
