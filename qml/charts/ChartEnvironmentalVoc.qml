@@ -180,9 +180,11 @@ Item {
             snapMode: ListView.SnapToItem
 
             ScrollBar.horizontal: ScrollBarThemed {
-                anchors.top: parent.bottom
+                leftPadding: 0
+                rightPadding: 0
+                bottomPadding: 0
                 height: 4
-                radius: 2
+                radius: 8
 
                 colorMoving: Theme.colorSecondary
                 policy: ScrollBar.AsNeeded

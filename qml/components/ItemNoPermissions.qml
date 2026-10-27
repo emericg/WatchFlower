@@ -25,7 +25,7 @@ Item {
             Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                width: singleColumn ? (itemNoPermissions.width*0.5) : (itemNoPermissions.height*0.4)
+                width: Theme.singleColumn ? (itemNoPermissions.width*0.5) : (itemNoPermissions.height*0.4)
                 height: width
                 radius: width
                 color: Theme.colorForeground
@@ -80,7 +80,7 @@ Item {
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: singleColumn ? (itemNoPermissions.width*0.85) : undefined
+            width: Theme.singleColumn ? (itemNoPermissions.width*0.85) : undefined
             spacing: Theme.componentMargin
 
             visible: false // (Qt.platform.os === "android" || Qt.platform.os === "ios" || Qt.platform.os === "osx")
@@ -94,7 +94,7 @@ Item {
                 color: Theme.colorWarning
             }
             Text {
-                Layout.fillWidth: singleColumn
+                Layout.fillWidth: Theme.singleColumn
                 Layout.alignment: Qt.AlignVCenter
 
                 text: qsTr("Authorization to use Bluetooth is <b>required</b> to connect to the sensors.")
@@ -102,7 +102,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
                 color: Theme.colorSubText
                 wrapMode: Text.WordWrap
-                horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                horizontalAlignment: Theme.singleColumn ? Text.AlignJustify : Text.AlignHCenter
             }
         }
 
@@ -110,7 +110,7 @@ Item {
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: singleColumn ? (itemNoPermissions.width*0.85) : undefined
+            width: Theme.singleColumn ? (itemNoPermissions.width*0.85) : undefined
             spacing: Theme.componentMargin
 
             visible: (Qt.platform.os === "android")
@@ -132,7 +132,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
                 color: Theme.colorSubText
                 wrapMode: Text.WordWrap
-                horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                horizontalAlignment: Theme.singleColumn ? Text.AlignJustify : Text.AlignHCenter
             }
         }
 
@@ -140,7 +140,7 @@ Item {
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: singleColumn ? (itemNoPermissions.width*0.85) : undefined
+            width: Theme.singleColumn ? (itemNoPermissions.width*0.85) : undefined
             spacing: Theme.componentMargin
 
             visible: (Qt.platform.os === "android" && !DeviceManager.gpsEnabled)
@@ -155,7 +155,7 @@ Item {
             }
 
             Text {
-                Layout.fillWidth: singleColumn
+                Layout.fillWidth: Theme.singleColumn
                 Layout.alignment: Qt.AlignVCenter
 
                 text: qsTr("Some Android devices also require the actual <b>GPS to be turned on</b>.")
@@ -163,7 +163,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
                 color: Theme.colorSubText
                 wrapMode: Text.WordWrap
-                horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                horizontalAlignment: Theme.singleColumn ? Text.AlignJustify : Text.AlignHCenter
             }
         }
 
@@ -171,7 +171,7 @@ Item {
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: singleColumn ? (itemNoPermissions.width*0.85) : undefined
+            width: Theme.singleColumn ? (itemNoPermissions.width*0.85) : undefined
             spacing: Theme.componentMargin
 
             visible: (Qt.platform.os === "android")
@@ -185,7 +185,7 @@ Item {
                 color: Theme.colorSubText
             }
             Text {
-                Layout.fillWidth: singleColumn
+                Layout.fillWidth: Theme.singleColumn
                 Layout.alignment: Qt.AlignVCenter
 
                 text: qsTr("The application is neither using nor storing your location. Sorry for the inconvenience.")
@@ -193,7 +193,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
                 color: Theme.colorSubText
                 wrapMode: Text.WordWrap
-                horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                horizontalAlignment: Theme.singleColumn ? Text.AlignJustify : Text.AlignHCenter
             }
         }
 

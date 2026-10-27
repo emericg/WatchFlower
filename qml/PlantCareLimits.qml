@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 
 import ComponentLibrary
 
@@ -85,11 +84,12 @@ Flickable {
 
             IconSvg {
                 id: imageHygro
-                width: 24
-                height: 24
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 8
+
+                width: 24
+                height: 24
 
                 color: Theme.colorText
                 source: "qrc:/IconLibrary/material-icons/duotone/water_mid.svg"
@@ -110,14 +110,13 @@ Flickable {
             RangeSliderValueSolid {
                 id: rangeSlider_hygro
                 anchors.top: imageHygro.bottom
-                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 36
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: Theme.isMobile ? 22 : 20
+                hhh: 22
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -162,11 +161,12 @@ Flickable {
 
             IconSvg {
                 id: imageCondu
-                width: 24
-                height: 24
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 8
+
+                width: 24
+                height: 24
 
                 rotation: 90
                 color: Theme.colorText
@@ -188,14 +188,13 @@ Flickable {
             RangeSliderValueSolid {
                 id: rangeSlider_condu
                 anchors.top: imageCondu.bottom
-                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 36
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: Theme.isMobile ? 22 : 20
+                hhh: 22
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -240,17 +239,17 @@ Flickable {
                 id: imageTemp
                 anchors.top: parent.top
                 anchors.left: parent.left
-                anchors.leftMargin: 4
+                anchors.leftMargin: 8
 
-                width: 32
-                height: 32
+                width: 24
+                height: 24
 
                 color: Theme.colorText
                 source: "qrc:/IconLibrary/material-symbols/sensors/thermometer-fill.svg"
             }
             Text {
                 anchors.left: imageTemp.right
-                anchors.leftMargin: 4
+                anchors.leftMargin: 8
                 anchors.verticalCenter: imageTemp.verticalCenter
 
                 text: qsTr("Temperature")
@@ -264,14 +263,13 @@ Flickable {
             RangeSliderValueSolid {
                 id: rangeSlider_temp
                 anchors.top: imageTemp.bottom
-                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 36
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: Theme.isMobile ? 22 : 20
+                hhh: 22
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -335,11 +333,11 @@ Flickable {
 
             IconSvg {
                 id: imageLumi
-                width: 24
-                height: 24
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 8
+                width: 24
+                height: 24
 
                 color: Theme.colorText
                 source: "qrc:/IconLibrary/material-icons/duotone/wb_sunny.svg"
@@ -360,14 +358,13 @@ Flickable {
             RangeSliderValueSolid {
                 id: rangeSlider_lumi
                 anchors.top: imageLumi.bottom
-                anchors.topMargin: -2
                 anchors.left: parent.left
                 anchors.leftMargin: 36
                 anchors.right: parent.right
                 anchors.rightMargin: Theme.componentMargin
 
                 height: 32
-                hhh: Theme.isMobile ? 22 : 20
+                hhh: 22
 
                 colorBackground: Theme.colorYellow
                 colorForeground: Theme.colorGreen
@@ -475,11 +472,12 @@ Flickable {
 
             IconSvg {
                 id: imageOther
-                width: 24
-                height: 24
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.leftMargin: 8
+
+                width: 24
+                height: 24
 
                 color: Theme.colorText
                 source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"

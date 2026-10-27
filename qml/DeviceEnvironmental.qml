@@ -773,6 +773,10 @@ Loader {
                     }
                 }
 
+                onWidthChanged: {
+                    if (Theme.isDesktop) swipeBox.contentItem.positionViewAtIndex(swipeBox.currentIndex, ListView.Beginning)
+                }
+
                 function enableAnimation() {
                     contentItem.highlightMoveDuration = 333
                 }

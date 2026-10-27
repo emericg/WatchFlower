@@ -163,7 +163,7 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
             //serviceData->readCharacteristic(cha); // trigger a new time read, not necessary
 
             const QByteArray timedata = cha.value();
-            int8_t timezone_read = static_cast<int8_t>(timedata.at(4)); Q_UNUSED(timezone_read)
+            int8_t timezone_read = static_cast<int8_t>(timedata.at(4));
             int32_t epoch_read = static_cast<int32_t>(DeviceUtils::readLE(timedata, 0, 4));
 /*
             QDateTime time_read;
@@ -181,7 +181,8 @@ void DeviceHygrotempClock::serviceDetailsDiscovered_data(QLowEnergyService::Serv
 */
             // Note: the device doesn't update its "Time" characteristic value often
             // So we don't use a single minute mismatch, but 5, to avoid reseting clock everytime
-            if (std::abs(epoch_read - epoch_now) > 5*60)
+            // A timezone offset mismatch (ex: daylight saving time change) also triggers an update
+            if (std::abs(epoch_read - epoch_now) > 5*60 || timezone_read != offset_now)
             {
                 //qDebug() << "CLOCK TIME NEEDS AN UPDATE (diff: " << std::abs(epoch_read - epoch_now);
 

@@ -247,7 +247,7 @@ Item {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 8
+                anchors.verticalCenterOffset: 6
                 spacing: 0
 
                 MobileMenuItem_vertical {
@@ -397,7 +397,7 @@ Item {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 8
+                anchors.verticalCenterOffset: 6
 
                 MobileMenuItem_vertical {
                     width: mobileMenu.www
@@ -496,7 +496,7 @@ Item {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 8
+                anchors.verticalCenterOffset: 6
             }
         }
     }

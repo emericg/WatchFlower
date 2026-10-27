@@ -27,30 +27,75 @@ Flickable {
     property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
     property int flow_width: (flow.width - flow.spacing)
-    property int flow_divider: Math.round(flow_width / 512)
+    property int flow_divider: (uiMode === 1) ? 1 : Math.max(1, Math.round(flow_width / 512))
     property int www: ((flow_width - (flow.spacing * flow_divider)) / flow_divider)
+
+    /*!
+     * \brief Compute the smallest column height that lets Flow.TopToBottom fit the items into a given number of columns.
+     * \param heights: heights of the visible items, in layout order.
+     * \param spacing: spacing between two items of the same column.
+     * \param columns: maximum number of columns.
+     * \return The minimal column height (without paddings).
+     *
+     * Mimics the Flow wrapping rule (an item goes to the next column if it overflows the current one),
+     * starting from the lower bound and growing by the smallest overflow until the items fit.
+     */
+    function computeColumnHeight(heights, spacing, columns) {
+        let total = -spacing
+        let colHeight = 0
+        for (const h of heights) {
+            total += h + spacing
+            colHeight = Math.max(colHeight, h)
+        }
+        colHeight = Math.max(colHeight, total / columns)
+
+        for (;;) {
+            let cols = 1
+            let used = 0
+            let bump = Infinity
+            for (const h of heights) {
+                if (used > 0 && used + h > colHeight) {
+                    bump = Math.min(bump, used + h - colHeight)
+                    cols++
+                    used = 0
+                }
+                used += h + spacing
+            }
+            if (cols <= columns) return colHeight
+            colHeight += bump
+        }
+    }
 
     Flow {
         id: flow
         anchors.left: parent.left
         anchors.right: parent.right
 
-        property int maxheight: 2*topPadding + 3*spacing + itemDevice.height + itemDeviceInfos.height +
-                                itemDeviceConnection.height + itemDeviceSensors.height + itemDeviceSettings.height
+        // Single column: one item per row, height driven by the Flow itself.
+        // Wide mode: column flow, tall enough to fit every visible item into flow_divider columns.
+        height: {
+            if (plantSensorSettings.uiMode === 1) return implicitHeight
 
-        height: (uiMode === 1) ? maxheight : plantSensorSettings.height
+            const heights = []
+            for (const item of [itemDevice, itemDeviceInfos, itemDeviceConnection, itemDeviceSensors, itemDeviceSettings]) {
+                if (item.visible) heights.push(item.height)
+            }
+            const colHeight = plantSensorSettings.computeColumnHeight(heights, spacing, plantSensorSettings.flow_divider)
+
+            return Math.max(plantSensorSettings.height, Math.ceil(topPadding + bottomPadding + colHeight) + 1)
+        }
 
         topPadding: Theme.componentMargin + 4
         padding: Theme.componentMargin
         spacing: Theme.componentMargin
 
-        flow: Flow.TopToBottom
+        flow: (plantSensorSettings.uiMode === 1) ? Flow.LeftToRight : Flow.TopToBottom
 
         ////////////////////////////////
 
         //FrameThemed {
         //    id: itemDevice
-        //    width: www
+        //    width: plantSensorSettings.www
         //    ColumnLayout {
         //        id: itemDeviceContent
         //        anchors.fill: parent
@@ -58,7 +103,7 @@ Flickable {
 
         Rectangle {
             id: itemDevice
-            width: www
+            width: plantSensorSettings.www
             height: itemDeviceContent.height + 24
 
             radius: Theme.componentRadius
@@ -317,7 +362,7 @@ Flickable {
 
         FrameThemed {
             id: itemDeviceInfos
-            width: www
+            width: plantSensorSettings.www
 
             visible: currentDevice.deviceInfos
 
@@ -468,7 +513,7 @@ Flickable {
 
         FrameThemed {
             id: itemDeviceConnection
-            width: www
+            width: plantSensorSettings.www
 
             visible: currentDevice.deviceInfos && currentDevice.deviceInfos.deviceNeedsOfficialApp
 
@@ -516,7 +561,7 @@ Flickable {
 
         FrameThemed {
             id: itemDeviceSensors
-            width: www
+            width: plantSensorSettings.www
 
             visible: currentDevice.deviceInfos
 
@@ -623,7 +668,7 @@ Flickable {
 
         FrameThemed {
             id: itemDeviceSettings
-            width: www
+            width: plantSensorSettings.www
 
             ColumnLayout {
                 anchors.fill: parent

@@ -89,7 +89,7 @@ Item {
 
             RowLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: singleColumn ? (itemNoDevice.width*0.85) : undefined
+                width: Theme.singleColumn ? (itemNoDevice.width*0.85) : undefined
                 spacing: Theme.componentMargin
 
                 //visible: !DeviceManager.bluetoothEnabled
@@ -103,7 +103,7 @@ Item {
                     color: Theme.colorSubText
                 }
                 Text {
-                    Layout.fillWidth: singleColumn
+                    Layout.fillWidth: Theme.singleColumn
                     Layout.alignment: Qt.AlignVCenter
 
                     text: qsTr("Please keep your device <b>close</b> to the sensors you want to scan.")
@@ -111,7 +111,7 @@ Item {
                     font.pixelSize: Theme.fontSizeContentSmall
                     color: Theme.colorSubText
                     wrapMode: Text.WordWrap
-                    horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                    horizontalAlignment: Theme.singleColumn ? Text.AlignJustify : Text.AlignHCenter
                 }
             }
 

@@ -422,7 +422,7 @@
     "battery": "2 x AA",
     "screen": "EInk",
     "sensors": [
-      ["Pressure", "260 → 1260 hPa"]
+      ["Pressure", "260 → 1260 hPa"],
       ["Radon", ""]
     ],
     "capabilities": [
@@ -441,7 +441,7 @@
     "sensors": [
       ["Temperature", "0 → 50 °C"],
       ["Humidity", "0 → 85% RH"],
-      ["Pressure", "260 → 1260 hPa"]
+      ["Pressure", "260 → 1260 hPa"],
       ["Radon", "Bq/m³"]
     ],
     "capabilities": [

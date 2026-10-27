@@ -24,7 +24,7 @@ Item {
             Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                width: singleColumn ? (itemNoBluetooth.width*0.5) : (itemNoBluetooth.height*0.4)
+                width: Theme.singleColumn ? (itemNoBluetooth.width*0.5) : (itemNoBluetooth.height*0.4)
                 height: width
                 radius: width
                 color: Theme.colorForeground
@@ -87,7 +87,7 @@ Item {
 
         RowLayout {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: singleColumn ? (itemNoBluetooth.width*0.85) : undefined
+            width: Theme.singleColumn ? (itemNoBluetooth.width*0.85) : undefined
             spacing: Theme.componentMargin
 
             visible: !DeviceManager.bluetoothEnabled
@@ -101,7 +101,7 @@ Item {
                 color: Theme.colorWarning
             }
             Text {
-                Layout.fillWidth: singleColumn
+                Layout.fillWidth: Theme.singleColumn
                 Layout.alignment: Qt.AlignVCenter
 
                 text: qsTr("Please <b>enable Bluetooth</b> on your device in order to use the application.")
@@ -109,7 +109,7 @@ Item {
                 font.pixelSize: Theme.fontSizeContentSmall
                 color: Theme.colorSubText
                 wrapMode: Text.WordWrap
-                horizontalAlignment: singleColumn ? Text.AlignJustify : Text.AlignHCenter
+                horizontalAlignment: Theme.singleColumn ? Text.AlignJustify : Text.AlignHCenter
             }
         }
 

@@ -257,6 +257,10 @@ Loader {
                     }
                 }
 
+                onWidthChanged: {
+                    if (Theme.isDesktop) plantSensorPages.contentItem.positionViewAtIndex(plantSensorPages.currentIndex, ListView.Beginning)
+                }
+
                 function enableAnimation() {
                     contentItem.highlightMoveDuration = 333
                 }

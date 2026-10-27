@@ -16,13 +16,6 @@ Window {
     color: Theme.colorBackground
     visible: true
 
-    // Helpers
-    property bool isHdpi: (UtilsScreen.screenDpi >= 128 || UtilsScreen.screenPar >= 2.0)
-    property bool isDesktop: (Qt.platform.os !== "android" && Qt.platform.os !== "ios")
-    property bool isMobile: (Qt.platform.os === "android" || Qt.platform.os === "ios")
-    property bool isPhone: ((Qt.platform.os === "android" || Qt.platform.os === "ios") && (UtilsScreen.screenSize < 7.0))
-    property bool isTablet: ((Qt.platform.os === "android" || Qt.platform.os === "ios") && (UtilsScreen.screenSize >= 7.0))
-
     // Setup ThemeEngine
     Binding { target: Theme; property: "appTheme";               value: SettingsManager.appTheme }
     Binding { target: Theme; property: "appThemeAuto";           value: SettingsManager.appThemeAuto }
@@ -58,14 +51,6 @@ Window {
     property int screenOrientation: Screen.primaryOrientation
     property int screenOrientationFull: Screen.orientation
 
-    property int screenPaddingStatusbar: MobileUI.statusbarHeight
-    property int screenPaddingNavbar: MobileUI.navbarHeight
-
-    property int screenPaddingTop: MobileUI.safeAreaTop
-    property int screenPaddingLeft: MobileUI.safeAreaLeft
-    property int screenPaddingRight: MobileUI.safeAreaRight
-    property int screenPaddingBottom: MobileUI.safeAreaBottom
-
     MobileHeader {
         id: appHeader
     }
@@ -100,44 +85,44 @@ Window {
         }
 
         function onDeviceLedButtonClicked() {
-            if (selectedDevice) {
-                selectedDevice.actionLedBlink()
+            if (appWindow.selectedDevice) {
+                appWindow.selectedDevice.actionLedBlink()
             }
         }
         function onDeviceWateringButtonClicked() {
-            if (selectedDevice) {
-                selectedDevice.actionWatering()
+            if (appWindow.selectedDevice) {
+                appWindow.selectedDevice.actionWatering()
             }
         }
         function onDeviceCalibrateButtonClicked() {
-            if (selectedDevice) {
+            if (appWindow.selectedDevice) {
                 popupCalibration.open()
             }
         }
         function onDeviceRebootButtonClicked() {
-            if (selectedDevice) {
-                selectedDevice.actionReboot()
+            if (appWindow.selectedDevice) {
+                appWindow.selectedDevice.actionReboot()
             }
         }
 
         function onDeviceClearButtonClicked() {
-            if (selectedDevice) {
+            if (appWindow.selectedDevice) {
                 popupDeleteData.open()
             }
         }
         function onDeviceRefreshHistoryButtonClicked() {
-            if (selectedDevice) {
-                selectedDevice.refreshStartHistory()
+            if (appWindow.selectedDevice) {
+                appWindow.selectedDevice.refreshStartHistory()
             }
         }
 
         function onDeviceRefreshRealtimeButtonClicked() {
-            if (selectedDevice) {
-                selectedDevice.refreshStartRealtime()
+            if (appWindow.selectedDevice) {
+                appWindow.selectedDevice.refreshStartRealtime()
             }
         }
         function onDeviceRefreshButtonClicked() {
-            if (selectedDevice) {
+            if (appWindow.selectedDevice) {
                 DeviceManager.updateDevice(appWindow.selectedDevice.deviceAddress)
             }
         }
@@ -207,22 +192,6 @@ Window {
     // UI sizes ////////////////////////////////////////////////////////////////
 
     property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
-
-    property bool singleColumn: {
-        if (Theme.isMobile) {
-            if ((Theme.isPhone && Theme.screenOrientation === Qt.PortraitOrientation) ||
-                (Theme.isTablet && width < 512)) { // can be a 2/3 split screen on tablet
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return (appWindow.width < appWindow.height)
-        }
-    }
-
-    property bool wideMode: (Theme.isDesktop && width >= 560) || (Theme.isTablet && width >= 480)
-    property bool wideWideMode: (width >= 640)
 
     // QML /////////////////////////////////////////////////////////////////////
 

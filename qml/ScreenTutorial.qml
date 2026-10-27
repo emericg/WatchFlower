@@ -63,6 +63,10 @@ Rectangle {
                     else if (currentIndex > count-1) exit()
                 }
 
+                onWidthChanged: {
+                    if (Theme.isDesktop) tutorialPages.contentItem.positionViewAtIndex(tutorialPages.currentIndex, ListView.Beginning)
+                }
+
                 function enableAnimation() {
                     contentItem.highlightMoveDuration = 333
                 }
