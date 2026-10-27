@@ -21,7 +21,7 @@
  * SOFTWARE.
  */
 
-#include "MobileUI_private.h"
+#include "MobileUI_ios.h"
 
 #include <QGuiApplication>
 #include <QScreen>
@@ -70,6 +70,12 @@ static UIWindow *activeKeyWindow()
     return activeWindowScene().keyWindow;
 }
 
+// Returns the screen of the active scene (replaces the deprecated [UIScreen mainScreen]).
+static UIScreen *activeScreen()
+{
+    return activeWindowScene().screen;
+}
+
 /* ************************************************************************** */
 
 static UIStatusBarStyle statusBarStyle(const MobileUI::Theme theme)
@@ -99,93 +105,137 @@ static void updatePreferredStatusBarStyle(const MobileUI::Theme theme)
 
 /* ************************************************************************** */
 
-int MobileUIPrivate::getDeviceTheme() const
+IosMobileUI::IosMobileUI(QObject *parent) : PlatformMobileUI(parent)
 {
-    UIWindow *keyWindow = activeKeyWindow();
-    if (keyWindow.rootViewController.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark)
+    connect(qApp, &QGuiApplication::applicationStateChanged, this, &IosMobileUI::applyBrightnessForState);
+}
+
+/* ************************************************************************** */
+
+void IosMobileUI::refreshDeviceTheme()
+{
+    // The window scene traits follow the system appearance (unlike a window or view controller,
+    // they are not affected by an overrideUserInterfaceStyle), and exist before any key window.
+    UIWindowScene *windowScene = activeWindowScene();
+    if (!windowScene) return;
+
+    switch (windowScene.traitCollection.userInterfaceStyle)
     {
-        return MobileUI::Theme::Dark;
+    case UIUserInterfaceStyleDark: Q_EMIT deviceThemeUpdated(MobileUI::Theme::Dark); break;
+    case UIUserInterfaceStyleLight: Q_EMIT deviceThemeUpdated(MobileUI::Theme::Light); break;
+    default: break;
     }
-
-    return MobileUI::Theme::Light;
 }
 
-void MobileUIPrivate::setColor_statusbar(const QColor &color)
-{
-    // iOS has no separate status bar background color; only the icon style
-    // (light/dark content) can be controlled, through setTheme_statusbar().
-    Q_UNUSED(color)
-}
-
-void MobileUIPrivate::setTheme_statusbar(const MobileUI::Theme theme)
+void IosMobileUI::setTheme_statusbar(const MobileUI::Theme theme)
 {
     updatePreferredStatusBarStyle(theme);
 }
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::setColor_navbar(const QColor &color)
+void IosMobileUI::refreshSafeAreaMetrics()
 {
-    Q_UNUSED(color)
-}
+    MobileUI::SafeAreaMetrics metrics;
 
-void MobileUIPrivate::setTheme_navbar(const MobileUI::Theme theme)
-{
-    Q_UNUSED(theme)
-}
+    // iOS without "maximized geometry" has no available safe areas
+#if QT_VERSION >= QT_VERSION_CHECK(6, 9, 0)
+    const bool maximizedHint = (m_window && (m_window->flags() & Qt::ExpandedClientAreaHint));
+#else
+    const bool maximizedHint = (m_window && (m_window->flags() & Qt::MaximizeUsingFullscreenGeometryHint));
+#endif
 
-/* ************************************************************************** */
-
-void MobileUIPrivate::getSafeAreaMetrics(int &statusbarHeight, int &navbarHeight,
-                                         int &top, int &left, int &right, int &bottom) const
-{
-    statusbarHeight = navbarHeight = 0;
+    if (!maximizedHint)
+    {
+        Q_EMIT safeAreaMetricsUpdated(metrics);
+        return;
+    }
 
     UIWindowScene *windowScene = activeWindowScene();
     if (windowScene)
     {
         CGSize statusBarSize = windowScene.statusBarManager.statusBarFrame.size;
-        statusbarHeight = static_cast<int>(std::lround(MIN(statusBarSize.width, statusBarSize.height)));
+        metrics.statusbarHeight = static_cast<int>(std::lround(MIN(statusBarSize.width, statusBarSize.height)));
     }
-
-    top = left = right = bottom = 0;
 
     UIWindow *keyWindow = windowScene.keyWindow;
     if (keyWindow)
     {
         UIEdgeInsets insets = keyWindow.safeAreaInsets;
-        top = static_cast<int>(std::lround(insets.top));
-        left = static_cast<int>(std::lround(insets.left));
-        right = static_cast<int>(std::lround(insets.right));
-        bottom = static_cast<int>(std::lround(insets.bottom));
+        metrics.top = static_cast<int>(std::lround(insets.top));
+        metrics.left = static_cast<int>(std::lround(insets.left));
+        metrics.right = static_cast<int>(std::lround(insets.right));
+        metrics.bottom = static_cast<int>(std::lround(insets.bottom));
+    }
+
+    Q_EMIT safeAreaMetricsUpdated(metrics);
+}
+
+/* ************************************************************************** */
+
+void IosMobileUI::refreshScreenBrightness()
+{
+    // While the application brightness is applied, the system brightness is the one saved before
+    double brightness = m_brightnessSystem;
+    if (brightness < 0.0)
+    {
+        UIScreen *screen = activeScreen();
+        if (!screen) return;
+        brightness = screen.brightness;
+    }
+
+    Q_EMIT screenBrightnessUpdated(static_cast<int>(std::lround(brightness * 100.0)));
+}
+
+/* ************************************************************************** */
+
+void IosMobileUI::setScreenBrightness(const int value)
+{
+    // iOS brightness is system-wide with no per-app override to release,
+    // so a negative value restores the system brightness saved before the first change.
+    UIScreen *screen = activeScreen();
+
+    if (value < 0)
+    {
+        if (screen && m_brightnessApp >= 0.0 && m_brightnessSystem >= 0.0)
+        {
+            screen.brightness = m_brightnessSystem;
+        }
+        m_brightnessApp = -1.0;
+        m_brightnessSystem = -1.0;
+        return;
+    }
+
+    const float brightness = value / 100.f; // brightness is 0.0 to 1.0
+
+    // Without a screen yet, the system brightness is saved when the application becomes active
+    if (screen && m_brightnessSystem < 0.0) m_brightnessSystem = screen.brightness;
+    m_brightnessApp = brightness;
+
+    // While not active, the brightness is applied when the application becomes active again
+    if (screen && QGuiApplication::applicationState() == Qt::ApplicationActive)
+    {
+        screen.brightness = brightness;
     }
 }
 
-/* ************************************************************************** */
-
-int MobileUIPrivate::getKeyboardHeight() const
+void IosMobileUI::applyBrightnessForState(Qt::ApplicationState state)
 {
-    return -1;
-}
+    if (m_brightnessApp < 0.0) return;
 
-int MobileUIPrivate::getScreenBrightness() const
-{
-    return static_cast<int>(std::lround([UIScreen mainScreen].brightness * 100.f));
-}
+    UIScreen *screen = activeScreen();
+    if (!screen) return;
 
-/* ************************************************************************** */
-
-void MobileUIPrivate::setScreenBrightness(const int value)
-{
-    // iOS brightness is system-wide with no per-app override to release,
-    // so a negative value is a no-op (there is nothing to hand back).
-    if (value < 0) return;
-
-    float brightness = value / 100.f; // brightness is 0.0 to 1.0
-    if (brightness < 0.0f) brightness = 0.0f;
-    if (brightness > 1.0f) brightness = 1.0f;
-
-    [UIScreen mainScreen].brightness = brightness;
+    if (state == Qt::ApplicationActive)
+    {
+        // The user may have changed the system brightness meanwhile
+        m_brightnessSystem = screen.brightness;
+        screen.brightness = m_brightnessApp;
+    }
+    else if (m_brightnessSystem >= 0.0)
+    {
+        screen.brightness = m_brightnessSystem;
+    }
 }
 
 /* ************************************************************************** */
@@ -227,7 +277,7 @@ static void installOrientationHook(UIViewController *viewController)
     class_replaceMethod(cls, sel, hook, method_getTypeEncoding(method));
 }
 
-void MobileUIPrivate::setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation)
+void IosMobileUI::setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation)
 {
     UIWindowScene *windowScene = activeWindowScene();
     UIViewController *rootVC = windowScene.keyWindow.rootViewController;
@@ -278,25 +328,18 @@ void MobileUIPrivate::setScreenLockOrientation(const MobileUI::ScreenLockOrienta
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::setScreenAlwaysOn(const bool on)
+void IosMobileUI::setScreenAlwaysOn(const bool on)
 {
-    if (on)
-    {
-        [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
-    }
-    else
-    {
-        [[UIApplication sharedApplication] setIdleTimerDisabled: NO];
-    }
+    [[UIApplication sharedApplication] setIdleTimerDisabled:(on ? YES : NO)];
 }
 
-void MobileUIPrivate::setScreenHighRefreshRate(const bool value)
+void IosMobileUI::setScreenHighRefreshRate(const bool value)
 {
     qDebug() << "iOS has no runtime refresh-rate switch. Use the application Info.plist instead.";
     Q_UNUSED(value)
 }
 
-void MobileUIPrivate::setScreenSecure(const bool on)
+void IosMobileUI::setScreenSecure(const bool on)
 {
     qWarning() << "iOS has no FLAG_SECURE implementation.";
     Q_UNUSED(on)
@@ -304,7 +347,7 @@ void MobileUIPrivate::setScreenSecure(const bool on)
 
 /* ************************************************************************** */
 
-void MobileUIPrivate::triggerHapticFeedback(const MobileUI::HapticFeedback type)
+void IosMobileUI::triggerHapticFeedback(const MobileUI::HapticFeedback type)
 {
     switch (type)
     {
@@ -312,7 +355,6 @@ void MobileUIPrivate::triggerHapticFeedback(const MobileUI::HapticFeedback type)
         {
             UISelectionFeedbackGenerator *generator = [[UISelectionFeedbackGenerator alloc] init];
             [generator selectionChanged];
-            generator = nil;
         } break;
 
         case MobileUI::HapticLight:
@@ -325,7 +367,6 @@ void MobileUIPrivate::triggerHapticFeedback(const MobileUI::HapticFeedback type)
 
             UIImpactFeedbackGenerator *generator = [[UIImpactFeedbackGenerator alloc] initWithStyle:style];
             [generator impactOccurred];
-            generator = nil;
         } break;
 
         case MobileUI::HapticSuccess:
@@ -338,14 +379,21 @@ void MobileUIPrivate::triggerHapticFeedback(const MobileUI::HapticFeedback type)
 
             UINotificationFeedbackGenerator *generator = [[UINotificationFeedbackGenerator alloc] init];
             [generator notificationOccurred:notif];
-            generator = nil;
         } break;
     }
 }
 
 /* ************************************************************************** */
 
-bool MobileUIPrivate::setTorch(const bool on)
+int IosMobileUI::getTorch() const
+{
+    AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    if (!device || !device.hasTorch) return 0;
+
+    return device.torchActive ? 1 : 0;
+}
+
+bool IosMobileUI::setTorch(const bool on)
 {
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
     if (!device || !device.hasTorch || !device.isTorchAvailable) return false;
@@ -357,13 +405,6 @@ bool MobileUIPrivate::setTorch(const bool on)
     [device unlockForConfiguration];
 
     return true;
-}
-
-/* ************************************************************************** */
-
-void MobileUIPrivate::backToHomeScreen()
-{
-    return;
 }
 
 /* ************************************************************************** */

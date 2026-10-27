@@ -61,21 +61,21 @@ class MobileUI_QmlDispatcher : public QObject
     Q_OBJECT
     QML_NAMED_ELEMENT(MobileUI_dispatcher)
 
-    Q_PROPERTY(QColor statusbarColor READ statusbarColor WRITE setStatusbarColor NOTIFY statusbarColorChanged)
-    Q_PROPERTY(QColor statusbarContentColor READ statusbarContentColor WRITE setStatusbarContentColor NOTIFY statusbarContentColorChanged)
-    Q_PROPERTY(MobileUI::Theme statusbarTheme READ statusbarTheme WRITE setStatusbarTheme NOTIFY statusbarThemeChanged)
+    Q_PROPERTY(QColor statusbarColor READ statusbarColor WRITE setStatusbarColor NOTIFY statusbarColorChanged FINAL)
+    Q_PROPERTY(QColor statusbarContentColor READ statusbarContentColor WRITE setStatusbarContentColor NOTIFY statusbarContentColorChanged FINAL)
+    Q_PROPERTY(MobileUI::Theme statusbarTheme READ statusbarTheme WRITE setStatusbarTheme NOTIFY statusbarThemeChanged FINAL)
 
-    Q_PROPERTY(QColor navbarColor READ navbarColor WRITE setNavbarColor NOTIFY navbarColorChanged)
-    Q_PROPERTY(QColor navbarContentColor READ navbarContentColor WRITE setNavbarContentColor NOTIFY navbarContentColorChanged)
-    Q_PROPERTY(MobileUI::Theme navbarTheme READ navbarTheme WRITE setNavbarTheme NOTIFY navbarThemeChanged)
+    Q_PROPERTY(QColor navbarColor READ navbarColor WRITE setNavbarColor NOTIFY navbarColorChanged FINAL)
+    Q_PROPERTY(QColor navbarContentColor READ navbarContentColor WRITE setNavbarContentColor NOTIFY navbarContentColorChanged FINAL)
+    Q_PROPERTY(MobileUI::Theme navbarTheme READ navbarTheme WRITE setNavbarTheme NOTIFY navbarThemeChanged FINAL)
 
-    Q_PROPERTY(MobileUI::ScreenLockOrientation screenLockOrientation READ screenLockOrientation WRITE setScreenLockOrientation NOTIFY screenLockOrientationChanged)
-    Q_PROPERTY(int screenBrightness READ screenBrightness WRITE setScreenBrightness NOTIFY screenBrightnessChanged)
-    Q_PROPERTY(bool screenAlwaysOn READ screenAlwaysOn WRITE setScreenAlwaysOn NOTIFY screenAlwaysOnChanged)
-    Q_PROPERTY(bool screenSecure READ screenSecure WRITE setScreenSecure NOTIFY screenSecureChanged)
-    Q_PROPERTY(bool screenHighRefreshRate READ screenHighRefreshRate WRITE setScreenHighRefreshRate NOTIFY screenHighRefreshRateChanged)
+    Q_PROPERTY(MobileUI::ScreenLockOrientation screenLockOrientation READ screenLockOrientation WRITE setScreenLockOrientation NOTIFY screenLockOrientationChanged FINAL)
+    Q_PROPERTY(int screenBrightness READ screenBrightness WRITE setScreenBrightness NOTIFY screenBrightnessChanged FINAL)
+    Q_PROPERTY(bool screenAlwaysOn READ screenAlwaysOn WRITE setScreenAlwaysOn NOTIFY screenAlwaysOnChanged FINAL)
+    Q_PROPERTY(bool screenSecure READ screenSecure WRITE setScreenSecure NOTIFY screenSecureChanged FINAL)
+    Q_PROPERTY(bool screenHighRefreshRate READ screenHighRefreshRate WRITE setScreenHighRefreshRate NOTIFY screenHighRefreshRateChanged FINAL)
 
-    Q_PROPERTY(bool torchEnabled READ torchEnabled WRITE setTorchEnabled NOTIFY torchEnabledChanged)
+    Q_PROPERTY(bool torchEnabled READ torchEnabled WRITE setTorchEnabled NOTIFY torchEnabledChanged FINAL)
 
 public:
     explicit MobileUI_QmlDispatcher(QObject *parent = nullptr);

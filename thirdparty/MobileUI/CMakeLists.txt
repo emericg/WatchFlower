@@ -14,13 +14,11 @@ set(CORE_SOURCES
 
 # OS specific sources & dependencies
 if(ANDROID)
-    set(PLATFORM_SOURCES MobileUI_android.cpp)
+    set(PLATFORM_SOURCES MobileUI_android.cpp MobileUI_android.h)
 elseif(IOS)
     enable_language(OBJCXX)
-    set(PLATFORM_SOURCES MobileUI_ios.mm)
+    set(PLATFORM_SOURCES MobileUI_ios.mm MobileUI_ios.h)
     set(PLATFORM_LIBRARIES "-framework UIKit" "-framework AVFoundation")
-else()
-    set(PLATFORM_SOURCES MobileUI_dummy.cpp)
 endif()
 
 ################################################################################

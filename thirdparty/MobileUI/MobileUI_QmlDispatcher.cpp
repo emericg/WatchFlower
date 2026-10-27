@@ -41,14 +41,12 @@ MobileUI_QmlDispatcher::MobileUI_QmlDispatcher(QObject *parent) : QObject(parent
     });
     connect(mui, &MobileUI::screenUpdated, this, [this]() {
         Q_EMIT screenLockOrientationChanged();
-        Q_EMIT screenBrightnessChanged();
         Q_EMIT screenAlwaysOnChanged();
         Q_EMIT screenSecureChanged();
         Q_EMIT screenHighRefreshRateChanged();
     });
-    connect(mui, &MobileUI::torchUpdated, this, [this]() {
-        Q_EMIT torchEnabledChanged();
-    });
+    connect(mui, &MobileUI::brightnessUpdated, this, [this]() { Q_EMIT screenBrightnessChanged(); });
+    connect(mui, &MobileUI::torchUpdated, this, [this]() { Q_EMIT torchEnabledChanged(); });
 }
 
 /* ************************************************************************** */

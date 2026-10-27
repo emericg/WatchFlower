@@ -29,12 +29,15 @@
 #include <QObject>
 #include <QColor>
 #include <QTimer>
+#include <QList>
 
-#include <memory>
+#include <tuple>
 
 class QQmlEngine;
 class QJSEngine;
-class MobileUIPrivate;
+class QScreen;
+
+class PlatformMobileUI;
 
 /* ************************************************************************** */
 
@@ -62,6 +65,7 @@ class MobileUIPrivate;
  *
  * You can use it without worries on desktop platforms, a dummy backend is used so
  * no code is runned, setters are ignored, getters return neutral/default values...
+ * Except for the device theme, which follows the color scheme reported by Qt.
  *
  * \note Thread affinity: MobileUI must be used from the GUI (main) thread ONLY.
  */
@@ -71,46 +75,49 @@ class MobileUI : public QObject
     QML_ELEMENT
     QML_SINGLETON
 
-    Q_PROPERTY(bool isPhone READ isDevicePhone CONSTANT)
-    Q_PROPERTY(bool isTablet READ isDeviceTablet CONSTANT)
+    Q_PROPERTY(bool isPhone READ isDevicePhone CONSTANT FINAL)
+    Q_PROPERTY(bool isTablet READ isDeviceTablet CONSTANT FINAL)
 
-    Q_PROPERTY(Theme deviceTheme READ getDeviceTheme NOTIFY deviceThemeUpdated)
+    Q_PROPERTY(Theme deviceTheme READ getDeviceTheme NOTIFY deviceThemeUpdated FINAL)
 
-    Q_PROPERTY(QColor statusbarColor READ getStatusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated)
-    Q_PROPERTY(QColor statusbarContentColor READ getStatusbarContentColor WRITE setStatusbarContentColor NOTIFY statusbarUpdated)
-    Q_PROPERTY(Theme statusbarTheme READ getStatusbarTheme WRITE setStatusbarTheme NOTIFY statusbarUpdated)
-    Q_PROPERTY(Theme statusbarThemeSet READ getStatusbarThemeSet NOTIFY statusbarUpdated)
+    Q_PROPERTY(bool systemBarColorsSupported READ getSystemBarColorsSupported CONSTANT FINAL)
 
-    Q_PROPERTY(QColor navbarColor READ getNavbarColor WRITE setNavbarColor NOTIFY navbarUpdated)
-    Q_PROPERTY(QColor navbarContentColor READ getNavbarContentColor WRITE setNavbarContentColor NOTIFY navbarUpdated)
-    Q_PROPERTY(Theme navbarTheme READ getNavbarTheme WRITE setNavbarTheme NOTIFY navbarUpdated)
-    Q_PROPERTY(Theme navbarThemeSet READ getNavbarThemeSet NOTIFY navbarUpdated)
+    Q_PROPERTY(QColor statusbarColor READ getStatusbarColor WRITE setStatusbarColor NOTIFY statusbarUpdated FINAL)
+    Q_PROPERTY(QColor statusbarContentColor READ getStatusbarContentColor WRITE setStatusbarContentColor NOTIFY statusbarUpdated FINAL)
+    Q_PROPERTY(Theme statusbarTheme READ getStatusbarTheme WRITE setStatusbarTheme NOTIFY statusbarUpdated FINAL)
+    Q_PROPERTY(Theme statusbarThemeSet READ getStatusbarThemeSet NOTIFY statusbarUpdated FINAL)
 
-    Q_PROPERTY(int statusbarHeight READ getStatusbarHeight NOTIFY safeAreaUpdated)
-    Q_PROPERTY(int navbarHeight READ getNavbarHeight NOTIFY safeAreaUpdated)
-    Q_PROPERTY(int keyboardHeight READ getKeyboardHeight NOTIFY keyboardUpdated)
+    Q_PROPERTY(QColor navbarColor READ getNavbarColor WRITE setNavbarColor NOTIFY navbarUpdated FINAL)
+    Q_PROPERTY(QColor navbarContentColor READ getNavbarContentColor WRITE setNavbarContentColor NOTIFY navbarUpdated FINAL)
+    Q_PROPERTY(Theme navbarTheme READ getNavbarTheme WRITE setNavbarTheme NOTIFY navbarUpdated FINAL)
+    Q_PROPERTY(Theme navbarThemeSet READ getNavbarThemeSet NOTIFY navbarUpdated FINAL)
 
-    Q_PROPERTY(int safeAreaTop READ getSafeAreaTop NOTIFY safeAreaUpdated)
-    Q_PROPERTY(int safeAreaLeft READ getSafeAreaLeft NOTIFY safeAreaUpdated)
-    Q_PROPERTY(int safeAreaRight READ getSafeAreaRight NOTIFY safeAreaUpdated)
-    Q_PROPERTY(int safeAreaBottom READ getSafeAreaBottom NOTIFY safeAreaUpdated)
+    Q_PROPERTY(int statusbarHeight READ getStatusbarHeight NOTIFY safeAreaUpdated FINAL)
+    Q_PROPERTY(int navbarHeight READ getNavbarHeight NOTIFY safeAreaUpdated FINAL)
+    Q_PROPERTY(int keyboardHeight READ getKeyboardHeight NOTIFY keyboardUpdated FINAL)
 
-    Q_PROPERTY(ScreenLockOrientation screenLockOrientation READ getScreenLockOrientation WRITE setScreenLockOrientation NOTIFY screenUpdated)
-    Q_PROPERTY(int screenBrightness READ getScreenBrightness WRITE setScreenBrightness NOTIFY screenUpdated)
-    Q_PROPERTY(bool screenAlwaysOn READ getScreenAlwaysOn WRITE setScreenAlwaysOn NOTIFY screenUpdated)
-    Q_PROPERTY(bool screenSecure READ getScreenSecure WRITE setScreenSecure NOTIFY screenUpdated)
-    Q_PROPERTY(bool screenHighRefreshRate READ getScreenHighRefreshRate WRITE setScreenHighRefreshRate NOTIFY screenUpdated)
+    Q_PROPERTY(int safeAreaTop READ getSafeAreaTop NOTIFY safeAreaUpdated FINAL)
+    Q_PROPERTY(int safeAreaLeft READ getSafeAreaLeft NOTIFY safeAreaUpdated FINAL)
+    Q_PROPERTY(int safeAreaRight READ getSafeAreaRight NOTIFY safeAreaUpdated FINAL)
+    Q_PROPERTY(int safeAreaBottom READ getSafeAreaBottom NOTIFY safeAreaUpdated FINAL)
 
-    Q_PROPERTY(bool torchEnabled READ getTorchEnabled WRITE setTorchEnabled NOTIFY torchUpdated)
+    Q_PROPERTY(ScreenLockOrientation screenLockOrientation READ getScreenLockOrientation WRITE setScreenLockOrientation NOTIFY screenUpdated FINAL)
+    Q_PROPERTY(int screenBrightness READ getScreenBrightness WRITE setScreenBrightness NOTIFY brightnessUpdated FINAL)
+    Q_PROPERTY(bool screenAlwaysOn READ getScreenAlwaysOn WRITE setScreenAlwaysOn NOTIFY screenUpdated FINAL)
+    Q_PROPERTY(bool screenSecure READ getScreenSecure WRITE setScreenSecure NOTIFY screenUpdated FINAL)
+    Q_PROPERTY(bool screenHighRefreshRate READ getScreenHighRefreshRate WRITE setScreenHighRefreshRate NOTIFY screenUpdated FINAL)
+
+    Q_PROPERTY(bool torchEnabled READ getTorchEnabled WRITE setTorchEnabled NOTIFY torchUpdated FINAL)
 
 Q_SIGNALS:
-    void deviceThemeUpdated();  //!< Emitted when the device OS theme (light/dark mode) changes.
-    void statusbarUpdated();    //!< Emitted when a status bar color or theme is set.
-    void navbarUpdated();       //!< Emitted when a navigation bar color or theme is set.
-    void keyboardUpdated();     //!< Emitted when the on-screen keyboard height changes (shown, hidden or resized).
-    void safeAreaUpdated();     //!< Emitted when the system bar heights or the screen safe areas are changed (by or rotation or some other reason).
-    void screenUpdated();       //!< Emitted when a screen related property (always-on, orientation, brightness, refresh rate) is set.
-    void torchUpdated();        //!< Emitted when the torch (camera flash LED) state changes.
+    void deviceThemeUpdated();      //!< Emitted when the device OS theme (light/dark mode) changes.
+    void statusbarUpdated();        //!< Emitted when a status bar color or theme is set.
+    void navbarUpdated();           //!< Emitted when a navigation bar color or theme is set.
+    void keyboardUpdated();         //!< Emitted when the on-screen keyboard height changes (shown, hidden or resized).
+    void safeAreaUpdated();         //!< Emitted when the system bar heights or the screen safe areas are changed (by a rotation or some other reason).
+    void screenUpdated();           //!< Emitted when a screen related property (always-on, orientation, secure, refresh rate) is set.
+    void brightnessUpdated();       //!< Emitted when the screen brightness is set.
+    void torchUpdated();            //!< Emitted when the torch (camera flash LED) state changes.
 
 public:
     /*!
@@ -133,7 +140,7 @@ public:
     // Enums ///////////////////////////////////////////////////////////////////
 
     enum Theme {
-        Auto  = -1, //!< Derive the bar theme from its reference color, or leave it to the OS if none is set.
+        Auto  = -1, //!< Derive the bar theme from its reference color, or follow the device theme if none is set.
         Light =  0, //!< Light application theme, usually light background and dark texts.
         Dark  =  1, //!< Dark application theme, usually dark background and light texts.
     };
@@ -147,7 +154,9 @@ public:
      * This is the main entry point, called automatically whenever the screen orientation,
      * window visibility or OS theme changes, so the exposed properties stay up to date on their own.
      *
-     * You don't usually need to call this function manually, but you can.
+     * You don't usually need to call this function manually, except after a change MobileUI
+     * can't observe, like a window flags change (ex: Qt::MaximizeUsingFullscreenGeometryHint).
+     * On desktop platforms, this is a no-op.
      */
     Q_INVOKABLE void refreshMobileUI();
 
@@ -177,16 +186,29 @@ public:
 
     /*!
      * \brief Get the theme currently in effect on this device.
-     * \return see MobileUI::Theme enum.
+     * \return MobileUI::Light or MobileUI::Dark, or MobileUI::Auto while unknown (not read / reported by the OS yet).
+     *
+     * The device theme is read asynchronously on mobile platforms, so it is MobileUI::Auto until the first read completes.
      */
     MobileUI::Theme getDeviceTheme() const { return m_osTheme; }
 
-    /*!
-     * \brief Read the (actual) device theme from the backend.
-     */
-    Q_INVOKABLE void refreshDeviceTheme();
-
     // System bars /////////////////////////////////////////////////////////////
+
+    /*!
+     * \brief Tell whether the system bar background colors can be set.
+     * \return true if setStatusbarColor() and setNavbarColor() have a visible effect.
+     *
+     * - On Android, false when edge-to-edge is enforced: on Android 15+ for applications
+     *   targeting API level 35+, unless opted out (Android 15 only, see the
+     *   windowOptOutEdgeToEdgeEnforcement theme attribute, ignored when targeting API level 36+).
+     * - On iOS, always false (iOS has no notion of system bar colors).
+     * - On desktop platforms, always false.
+     *
+     * When false, the application should paint its own content behind the system bars,
+     * and use setStatusbarContentColor() / setNavbarContentColor() to drive their themes.
+     * The value is computed once at startup.
+     */
+    bool getSystemBarColorsSupported() const { return m_systemBarColorsSupported; }
 
     // Status bar
 
@@ -196,20 +218,24 @@ public:
      * \note Android only (iOS has no notion of a status bar color).
      * \note This is the value previously passed to setStatusbarColor(), not a value read back from the OS.
      */
-    QColor getStatusbarColor() const;
+    QColor getStatusbarColor() const { return m_statusbar.color; }
 
     /*!
      * \brief Set the status bar background color.
      * \param color: the desired status bar color ("transparent" is ok, invalid colors are ignored).
      * \note Android only (iOS has no notion of a status bar color).
+     * \note Ignored when getSystemBarColorsSupported() is false (ex: Android 15+ with edge-to-edge enforced),
+     *       paint behind the bar instead, and use setStatusbarContentColor() to drive its theme.
      *
      * When the color is opaque and the status bar theme is set to Auto, a matching
      * Light/Dark theme is derived automatically from the color perceived luminance.
+     * A translucent color is applied, but not used to derive the theme,
+     * use setStatusbarContentColor() with the color the bar is actually shown over.
      */
     void setStatusbarColor(const QColor &color);
 
     //! Get the color used to derive the statusbarTheme (when theme is Auto).
-    QColor getStatusbarContentColor() const;
+    QColor getStatusbarContentColor() const { return m_statusbar.contentColor; }
 
     /*!
      * \brief Set a reference color used to derive the status bar theme, when in Auto mode.
@@ -223,27 +249,26 @@ public:
      * When the color is opaque and the status bar theme is set to Auto, a matching
      * Light/Dark theme is derived automatically from the color perceived luminance.
      *
-     * When an invalid color is set, the content color is cleared, and Auto derivation
-     * falls back to statusbarColor, and if that's not set the theme is cleared too,
-     * and the theme control will be back to the OS.
+     * When an invalid or translucent color is set, Auto derivation falls back to statusbarColor,
+     * and if that's not usable either, to the device theme. An invalid color also clears the content color.
      */
     void setStatusbarContentColor(const QColor &color);
 
     //! Get the current status bar theme we set manually.
-    MobileUI::Theme getStatusbarTheme() const;
+    MobileUI::Theme getStatusbarTheme() const { return m_statusbar.theme; }
 
     //! Get the current status bar theme, set manually or derived automatically.
-    MobileUI::Theme getStatusbarThemeSet() const;
+    MobileUI::Theme getStatusbarThemeSet() const { return m_statusbar.themeSet; }
 
     /*!
      * \brief Set the status bar foreground theme (icons/text contrast).
      * \param theme: see MobileUI::Theme enum (Light, Dark, or Auto).
      *
-     * If Auto, the theme is derived from the reference color if available,
-     * or next time a color is set.
+     * If Auto, the theme is derived from the reference color (content color first, then bar color),
+     * or follows the device theme if none is usable.
      *
      * The OS may reset the theme on visibility/orientation changes, so MobileUI
-     * will re-applies it automatically.
+     * re-applies it automatically.
      */
     void setStatusbarTheme(const MobileUI::Theme theme);
 
@@ -256,20 +281,24 @@ public:
      *
      * This is the value previously passed to setNavbarColor(), not a value read back from the OS.
      */
-    QColor getNavbarColor() const;
+    QColor getNavbarColor() const { return m_navbar.color; }
 
     /*!
      * \brief Set the navigation bar background color.
      * \param color: the desired navigation bar color ("transparent" is ok, invalid colors are ignored).
      * \note Android only (iOS has no navigation bar).
+     * \note Ignored when getSystemBarColorsSupported() is false (ex: Android 15+ with edge-to-edge enforced),
+     *       paint behind the bar instead, and use setNavbarContentColor() to drive its theme.
      *
      * When the color is opaque and the navigation bar theme is set to Auto, a matching
      * Light/Dark theme is derived automatically from the color perceived luminance.
+     * A translucent color is applied, but not used to derive the theme,
+     * use setNavbarContentColor() with the color the bar is actually shown over.
      */
     void setNavbarColor(const QColor &color);
 
     //! Get the color used to derive the navbarTheme (when theme is Auto).
-    QColor getNavbarContentColor() const;
+    QColor getNavbarContentColor() const { return m_navbar.contentColor; }
 
     /*!
      * \brief Set a reference color used to derive the navigation bar theme, when in Auto mode.
@@ -284,99 +313,98 @@ public:
      * When the color is opaque and the navigation bar theme is set to Auto, a matching
      * Light/Dark theme is derived automatically from the color perceived luminance.
      *
-     * When an invalid color is set, the content color is cleared, and Auto derivation
-     * falls back to navbarColor, and if that's not set the theme is cleared too,
-     * and the theme control will be back to the OS.
+     * When an invalid or translucent color is set, Auto derivation falls back to navbarColor,
+     * and if that's not usable either, to the device theme. An invalid color also clears the content color.
      */
     void setNavbarContentColor(const QColor &color);
 
     //! Get the current navigation bar theme we set manually.
-    MobileUI::Theme getNavbarTheme() const;
+    MobileUI::Theme getNavbarTheme() const { return m_navbar.theme; }
 
     //! Get the current navigation bar theme, set manually or derived automatically.
-    MobileUI::Theme getNavbarThemeSet() const;
+    MobileUI::Theme getNavbarThemeSet() const { return m_navbar.themeSet; }
 
     /*!
      * \brief Set the navigation bar foreground theme (icons contrast).
      * \param theme: see MobileUI::Theme enum (Light, Dark, or Auto).
      * \note Android only (iOS has no navigation bar).
      *
-     * If Auto, the theme is derived from the reference color if available,
-     * or next time a color is set.
+     * If Auto, the theme is derived from the reference color (content color first, then bar color),
+     * or follows the device theme if none is usable.
      *
      * The OS may reset the theme on visibility/orientation changes, so MobileUI
-     * will re-applies it automatically.
+     * re-applies it automatically.
      */
     void setNavbarTheme(const MobileUI::Theme theme);
-
-    /*!
-     * \brief Re-apply the status bar and navigation bar colors and themes.
-     *
-     * The native system bar colors and themes may be resetted by the OS (for instance
-     * when the application returns to the foreground, or on rotation, ...), so this
-     * pushes the cached colors/themes back to the platform.
-     *
-     * It is called automatically by refreshMobileUI() whenever the screen orientation,
-     * window visibility or OS theme changes, and usually does not need be called by hand.
-     */
-    Q_INVOKABLE void refreshSystemBars();
 
     // Screen safe areas ///////////////////////////////////////////////////////
 
     /*!
+     * \brief System bar sizes and screen safe area insets, in device-independent pixels.
+     */
+    struct SafeAreaMetrics
+    {
+        int statusbarHeight = 0;
+        int navbarHeight = 0;
+        int top = 0;
+        int left = 0;
+        int right = 0;
+        int bottom = 0;
+
+        bool operator==(const SafeAreaMetrics &other) const
+        {
+            return std::tie(statusbarHeight, navbarHeight, top, left, right, bottom) ==
+                   std::tie(other.statusbarHeight, other.navbarHeight, other.top, other.left, other.right, other.bottom);
+        }
+        bool operator!=(const SafeAreaMetrics &other) const { return !(*this == other); }
+    };
+
+    /*!
      * \brief Get the status bar height.
-     * \return the status bar height in pixels, or 0 when it is not visible (full screen mode).
+     * \return the status bar height in device-independent pixels, or 0 when it is not visible (full screen mode).
      *
      * The status bar is always at the top of the screen when visible.
      */
-    int getStatusbarHeight() const { return m_statusbarHeight; }
+    int getStatusbarHeight() const { return m_safeAreas.statusbarHeight; }
 
     /*!
      * \brief Get the navigation bar height.
-     * \return the navigation bar height in pixels, or 0 when it is not visible (full screen mode).
+     * \return the navigation bar height in device-independent pixels, or 0 when it is not visible (full screen mode).
      *
      * The navigation bar is usually at the bottom of the screen. When the device
      * is rotated and the bar moves to the left/right edge, this returns 0 and
      * the bar size is instead accounted for in the left/right safe areas.
      */
-    int getNavbarHeight() const { return m_navbarHeight; }
+    int getNavbarHeight() const { return m_safeAreas.navbarHeight; }
 
     /*!
      * \brief Get the top screen safe area inset.
-     * \return the top inset in pixels.
+     * \return the top inset in device-independent pixels.
      *
      * Integrates the status bar height when the status bar is visible.
      */
-    int getSafeAreaTop() const { return m_safeAreaTop; }
+    int getSafeAreaTop() const { return m_safeAreas.top; }
 
     /*!
      * \brief Get the left screen safe area inset.
-     * \return the left inset in pixels.
+     * \return the left inset in device-independent pixels.
      */
-    int getSafeAreaLeft() const { return m_safeAreaLeft; }
+    int getSafeAreaLeft() const { return m_safeAreas.left; }
 
     /*!
      * \brief Get the right screen safe area inset.
-     * \return the right inset in pixels.
+     * \return the right inset in device-independent pixels.
      */
-    int getSafeAreaRight() const { return m_safeAreaRight; }
+    int getSafeAreaRight() const { return m_safeAreas.right; }
 
     /*!
      * \brief Get the bottom screen safe area inset.
-     * \return the bottom inset in pixels.
+     * \return the bottom inset in device-independent pixels.
      *
      * Integrates the navigation bar height when the navigation bar is visible
      * at the bottom of the screen.
      */
-    int getSafeAreaBottom() const { return m_safeAreaBottom; }
-
-    /*!
-     * \brief Recompute system bar sizes and screen safe areas.
-     *
-     * It is called automatically by refreshMobileUI() whenever the screen orientation
-     * or the window visibility changes, and usually does not need be called by hand.
-     */
-    Q_INVOKABLE void refreshSafeAreas();
+    int getSafeAreaBottom() const { return m_safeAreas.bottom; }
 
     // Screen helpers //////////////////////////////////////////////////////////
 
@@ -405,7 +433,7 @@ public:
      * \note Read the screen lock, NOT the screen orientation.
      * \return See MobileUI::ScreenLockOrientation enum.
      */
-    MobileUI::ScreenLockOrientation getScreenLockOrientation() const;
+    MobileUI::ScreenLockOrientation getScreenLockOrientation() const { return m_screenOrientation; }
 
     /*!
      * \brief Lock (or unlock) the screen orientation.
@@ -423,30 +451,25 @@ public:
     Q_INVOKABLE void setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation);
 
     /*!
-     * \brief Re-apply the screen orientation lock.
-     *
-     * An orientation lock set before the window is available would be ignored but recorded as set on iOS,
-     * so re-apply it with other refresh*() calls from the MobileUI() constructor initial singleShot timer.
-     *
-     * You don't usually need to call this function manually, but you can.
-     */
-    Q_INVOKABLE void refreshScreenOrientation();
-
-    /*!
      * \brief Get screen brightness set for the current app (on Android) or system wide (on iOS).
      * \return screen brightness, from 0 to 100, or -1 when unavailable.
      *
-     * If brightness has not been set for the current app, this function will return the OS wide brightness level.
+     * Returns the last value passed to setScreenBrightness() (not read back from the OS),
+     * or if brightness has not been set by the app, the OS wide brightness level.
+     * The OS wide level is read asynchronously, at startup and when the application becomes active again,
+     * so it is -1 until the first read completes.
      */
-    int getScreenBrightness() const;
+    int getScreenBrightness() const { return (m_screenBrightness >= 0) ? m_screenBrightness : m_screenBrightnessSystem; }
 
     /*!
      * \brief Set screen brightness for the current app (on Android) or system wide (on iOS).
      * \param value: screen brightness, from 0 to 100 (values above 100 are clamped).
      *
      * Pass a negative value to release the override:
-     * - On Android the app hands brightness control back to the system
-     * - On iOS there is no per-app override, so this is a no-op.
+     * - On Android the app hands brightness control back to the system.
+     * - On iOS the brightness is system wide, so the system brightness saved before
+     *   the first change is restored. It is also restored while the app is not active,
+     *   and the app brightness is re-applied once the app is active again.
      */
     Q_INVOKABLE void setScreenBrightness(const int value);
 
@@ -454,7 +477,7 @@ public:
      * \brief Get screensaver lock (if set).
      * \return on or off.
      */
-    bool getScreenAlwaysOn() const;
+    bool getScreenAlwaysOn() const { return m_screenAlwaysOn; }
 
     /*!
      * \brief Lock screensaver.
@@ -504,11 +527,12 @@ public:
     // Haptic feedbacks ////////////////////////////////////////////////////////
 
     /*!
-     * \brief Haptic feedback styles that can be triggered through vibrate().
+     * \brief Haptic feedback styles that can be triggered through hapticFeedback().
      *
      * These mirror the iOS feedback generators (impact / notification / selection).
      * Android has no equivalent vocabulary, so each style is mapped to the closest
-     * predefined VibrationEffect (or a short one-shot vibration on older devices).
+     * system haptic feedback constant (Android 11+), or to the closest predefined
+     * VibrationEffect (or a short one-shot vibration) on older devices.
      */
     enum HapticFeedback {
         HapticSelection = 0,    //!< A light tick, for a selection moving between values.
@@ -525,9 +549,12 @@ public:
      * \brief Trigger an haptic feedback.
      * \param type: see MobileUI::HapticFeedback enum. Default is a "light" haptic feedback.
      * \note iPads don't support haptic feedbacks.
-     * \note On Android the "android.permission.VIBRATE" must be added to the manifest.
+     * \note On Android 11+ the system haptic feedback is used, honoring the user "touch feedback" setting.
+     * \note On Android 10 and older the "android.permission.VIBRATE" must be added to the manifest.
      */
     Q_INVOKABLE void hapticFeedback(const MobileUI::HapticFeedback type = MobileUI::HapticLight);
+
+    //! Alias of hapticFeedback().
     Q_INVOKABLE void vibrate(const MobileUI::HapticFeedback type = MobileUI::HapticLight);
 
     // Flash LED ///////////////////////////////////////////////////////////////
@@ -538,6 +565,10 @@ public:
      *
      * This reflects the last state MobileUI successfully applied,
      * false on devices with no flash.
+     *
+     * The state is read back when the application becomes active again, to catch changes made
+     * outside of the application (on iOS only: Android only reports the torch state through
+     * CameraManager.registerTorchCallback(), which requires a Java callback class MobileUI doesn't ship).
      */
     bool getTorchEnabled() const { return m_torchEnabled; }
 
@@ -551,7 +582,7 @@ public:
 
     /*!
      * \brief Get the height of the on-screen (virtual) keyboard.
-     * \return the keyboard height in pixels, or 0 when the keyboard is hidden.
+     * \return the keyboard height in device-independent pixels, or 0 when the keyboard is hidden.
      *
      * Useful to reserve room / scroll content into view while typing.
      * The value tracks the keyboard as it is shown, hidden or resized.
@@ -604,31 +635,35 @@ private:
     bool m_isTablet = false;
 
     // OS theme
-    MobileUI::Theme m_osTheme = MobileUI::Light;
+    MobileUI::Theme m_osTheme = MobileUI::Auto;
+
+    // System bars capabilities
+    bool m_systemBarColorsSupported = false;
+
+    /*!
+     * \brief State of a system bar (status bar or navigation bar).
+     *
+     * When theme is not Auto, themeSet always equals theme.
+     */
+    struct SystemBar
+    {
+        QColor color;                               //!< Background color, applied to the bar
+        QColor contentColor;                        //!< Used to derive a theme only, not applied to the bar
+        MobileUI::Theme theme = MobileUI::Auto;     //!< Theme set manually
+        MobileUI::Theme themeSet = MobileUI::Auto;  //!< Theme set manually or derived automatically
+    };
 
     // System bars states
-    QColor m_statusbarColor;
-    QColor m_statusbarContentColor; //!< Used to derive a theme only, not applied to the status bar
-    MobileUI::Theme m_statusbarTheme = MobileUI::Auto;
-    MobileUI::Theme m_statusbarThemeSet = MobileUI::Auto;
+    SystemBar m_statusbar;
+    SystemBar m_navbar;
 
-    QColor m_navbarColor;
-    QColor m_navbarContentColor; //!< Used to derive a theme only, not applied to the navigation bar
-    MobileUI::Theme m_navbarTheme = MobileUI::Auto;
-    MobileUI::Theme m_navbarThemeSet = MobileUI::Auto;
-
-    int m_statusbarHeight = 0;
-    int m_navbarHeight = 0;
-
-    // Screen safe areas
-    int m_safeAreaTop = 0;
-    int m_safeAreaLeft = 0;
-    int m_safeAreaRight = 0;
-    int m_safeAreaBottom = 0;
+    // System bar sizes and screen safe areas
+    MobileUI::SafeAreaMetrics m_safeAreas;
 
     // Screen states
     MobileUI::ScreenLockOrientation m_screenOrientation = MobileUI::Unlocked;
-    int m_screenBrightness = -1;
+    int m_screenBrightness = -1;        //!< Brightness set by the application, or -1 when unset.
+    int m_screenBrightnessSystem = -1;  //!< OS wide brightness last read from the backend, or -1.
     bool m_screenAlwaysOn = false;
     bool m_screenSecure = false;
     bool m_screenHighRefreshRate = false;
@@ -639,25 +674,132 @@ private:
     // On-screen keyboard height
     int m_keyboardHeight = 0;
 
-    //! Connect to screen orientation, window visibility and theme changes.
+    //! Connect to screen orientation, window and application state changes.
     void connectSignals();
 
-    //! Re-read the on-screen keyboard height from Qt's input method and notify on change.
-    void refreshKeyboardHeight();
+    //! Request the (actual) device theme from the backend, delivered asynchronously to applyDeviceTheme().
+    void refreshDeviceTheme();
 
-    //! Get a theme from a given color (when in "auto" mode only).
-    MobileUI::Theme deriveStatusbarTheme(const QColor &color) const;
-    MobileUI::Theme deriveNavbarTheme(const QColor &color) const;
+    /*!
+     * \brief Store the device theme read by the backend, and notify on change.
+     * \param theme: MobileUI::Light or MobileUI::Dark.
+     *
+     * The Auto bar themes may fall back on the device theme, so they are re-derived on change.
+     */
+    void applyDeviceTheme(MobileUI::Theme theme);
 
-    //! Get & apply a theme from a given color (when in "auto" mode only).
-    void setStatusbarTheme_fromColor(const QColor &color);
-    void setNavbarTheme_fromColor(const QColor &color);
+    //! Request the OS wide screen brightness from the backend, delivered asynchronously to applyScreenBrightness().
+    void refreshScreenBrightness();
 
-    //! When in "auto" mode, (re)derive the theme from the reference color.
-    //! Content color first if set, then the system bar color, or if neither is usable
-    //! we hand control back to the OS. The icons keep their current look until the OS changes them.
-    void setStatusbarTheme_fromColor_refresh();
-    void setNavbarTheme_fromColor_refresh();
+    /*!
+     * \brief Store the OS wide screen brightness read by the backend, and notify on change.
+     * \param value: the OS wide screen brightness, from 0 to 100.
+     */
+    void applyScreenBrightness(int value);
+
+    /*!
+     * \brief Re-apply the status bar and navigation bar colors and themes.
+     *
+     * The native system bar colors and themes may be resetted by the OS (for instance
+     * when the application returns to the foreground, or on rotation, ...), so this
+     * pushes the cached colors/themes back to the platform.
+     */
+    void refreshSystemBars();
+
+    /*!
+     * \brief Recompute system bar sizes and screen safe areas.
+     *
+     * The values may be updated asynchronously (Android), through applySafeAreas().
+     */
+    void refreshSafeAreas();
+
+    /*!
+     * \brief Re-apply the screen orientation lock.
+     *
+     * An orientation lock set before the window is available would be ignored but recorded as set on iOS,
+     * so re-apply it whenever the tracked application window changes (see refreshWindow()).
+     */
+    void refreshScreenOrientation();
+
+    /*!
+     * \brief Select the application window to track, and connect to its visibility, screen and safe area changes.
+     * \return true if the tracked window changed.
+     *
+     * When the tracked window changes, the screen orientation lock is re-applied.
+     *
+     * Prefers the focus window, then keeps the current one (there is no focus window while
+     * the application is in the background), then falls back to the first visible top-level window.
+     */
+    bool refreshWindow();
+
+    //! Connections to the tracked window signals.
+    QList<QMetaObject::Connection> m_windowConnections;
+
+    /*!
+     * \brief Connect to the orientation changes of the screen the application window is on.
+     * \param screen: the screen to track (may be nullptr).
+     */
+    void trackScreen(QScreen *screen);
+
+    //! Connection to the tracked screen orientationChanged() signal.
+    QMetaObject::Connection m_screenOrientationConnection;
+
+    //! Read the torch state back from the backend (if it can), and notify on change.
+    void refreshTorch();
+
+    /*!
+     * \brief Store the on-screen keyboard height, and notify on change.
+     * \param height: the backend height, or -1 to fall back to Qt's input method.
+     */
+    void applyKeyboardHeight(int height);
+
+    /*!
+     * \brief Store the system bar sizes and safe areas read by the backend, and notify on change.
+     * \param m: the metrics read by the backend.
+     *
+     * The system bars are ignored in full screen mode.
+     */
+    void applySafeAreas(const MobileUI::SafeAreaMetrics &m);
+
+    /*!
+     * \brief Store a system bar background color, apply it, and re-derive the bar theme.
+     * \param bar: m_statusbar or m_navbar.
+     * \param color: the new background color (invalid colors are ignored).
+     */
+    void setBarColor(SystemBar &bar, const QColor &color);
+
+    /*!
+     * \brief Store a system bar content (reference) color, and re-derive the bar theme.
+     * \param bar: m_statusbar or m_navbar.
+     * \param color: the new content color (an invalid color clears it).
+     */
+    void setBarContentColor(SystemBar &bar, const QColor &color);
+
+    /*!
+     * \brief Store a system bar theme, and apply it (or the theme derived from it, when Auto).
+     * \param bar: m_statusbar or m_navbar.
+     * \param theme: see MobileUI::Theme enum.
+     */
+    void setBarTheme(SystemBar &bar, const MobileUI::Theme theme);
+
+    /*!
+     * \brief In Auto mode, (re)derive the bar theme from its reference color.
+     * \param bar: m_statusbar or m_navbar.
+     * \return true if bar.themeSet changed (it is not applied to the platform, nor notified).
+     *
+     * Uses the content color first if usable (valid and opaque), then the bar color,
+     * and if neither is usable, falls back to the device theme.
+     */
+    bool deriveBarTheme(SystemBar &bar) const;
+
+    //! Apply the bar color to the platform backend, if set and supported.
+    void applyBarColor(const SystemBar &bar);
+
+    //! Apply the bar theme (set or derived) to the platform backend, if any.
+    void applyBarTheme(const SystemBar &bar);
+
+    //! Emit statusbarUpdated() or navbarUpdated(), depending on the bar.
+    void notifyBar(const SystemBar &bar);
 
     /*!
      * \brief Restartable retry timers re-setting the system bars / re-reading safe areas as they settle.
@@ -671,12 +813,11 @@ private:
     QTimer m_retryTimers[4];
     const int m_retryDelays[4] = {66, 256, 512, 1024};
 
-    //! Per-platform backend.
-    std::unique_ptr<MobileUIPrivate> d;
+    PlatformMobileUI *m_platform = nullptr;         //!< Per-platform backend
 
     // Singleton
     explicit MobileUI(QObject *parent = nullptr);
-    ~MobileUI() override;
+    ~MobileUI() override = default;
 };
 
 /* ************************************************************************** */

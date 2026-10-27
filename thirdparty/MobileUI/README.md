@@ -150,7 +150,6 @@ int main() {
 }
 ```
 
-
 ### Quickstart
 
 > TLDR
@@ -158,7 +157,7 @@ int main() {
 - Include `MobileUI`
 - Use a regular `Window` and not an ApplicationWindow
 - Set `flags: Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint`
-- Use the `MobileUI_dispatcher` and just set statusbarContentColor and navbarContentColor,
+- Use the `MobileUI_dispatcher` and just set statusbarContentColor and navbarContentColor
 
 ```qml
 import QtQuick
@@ -196,7 +195,7 @@ Window {
 - Available geometry is fullscreen - system bars height.
 - No (real) need to handle safe areas.
 
-That is was default mode on Android, but it has been deprecated on Android 15 (API 35). You should NOT use this mode.
+That was the default mode on Android, but it has been deprecated on Android 15 (API 35). You should NOT use this mode.
 
 #### "Regular with transparent bars" / "edge to edge" mode
 
@@ -209,10 +208,10 @@ Window {
 
 - The status bar is transparent on iOS, and you can choose the theme. Your application can draw a bar "manually" to visualize it.
 - The status bar is transparent on Android, and you can choose the theme. Your application can draw a bar "manually" to visualize it, or force a system bar color (it will be drawn above everyting).
-- The navigation bar is transparent on Android, and you can choose the theme. On Android 15+ (API 35+) forcing a navigation bar color has no effect (the call is a no-op), as that would conflict with the mandatory edge-to-edge mode. On older API levels the color is still applied through a translucent flag.
+- The navigation bar is transparent on Android, and you can choose the theme. When edge-to-edge is enforced (Android 15+ for applications targeting API 35+), forcing a navigation bar color has no effect, check `MobileUI.systemBarColorsSupported`.
 - Available geometry is the full screen, including what's behind system bars.
 
-That is the default mode on iOS. This is the mandatory default on Android 15+ (API 35+).
+That is the default mode on iOS. This is the mandatory default on Android 15+ for applications targeting API 35+.
 
 See Android best practices: https://developer.android.com/design/ui/mobile/guides/foundations/system-bars
 
@@ -233,6 +232,12 @@ Window {
 
 ### Setting colors and theme
 
+> systemBarColorsSupported
+
+Read-only, tells whether the system bar background colors (`statusbarColor` and `navbarColor`) have any visible effect.  
+It is `false` on iOS (no system bar colors), on desktop, and on Android when edge-to-edge is enforced (Android 15+ for applications targeting API 35+, unless opted out).  
+When `false`, paint your own content behind the system bars, and use `statusbarContentColor` / `navbarContentColor` to drive their themes.
+
 > statusbarColor
 
 Set the status bar color (if available).
@@ -242,7 +247,7 @@ This is a QColor, so you can use a hexadecimal value `"#fff"` or even a named co
 By default the theme is `Auto`, so setting a color also updates the derived theme (evaluated from whether the bar color is perceived as light or dark). Set an explicit theme to override that behavior.
 
 > [!IMPORTANT]
-> The status bar color is only honored up to **Android 14 (API 34)**. On **Android 15+ (API 35+)** the platform `setStatusBarColor()` is deprecated and turned into a no-op: edge-to-edge is mandatory, the bar stays transparent, and setting `statusbarColor` has no effect. Paint your own background / content behind the (now transparent) bar instead — see the "edge to edge" window mode. The icon contrast (`statusbarTheme`) keeps working on every supported version.
+> The status bar color is ignored when edge-to-edge is enforced: on **Android 15+ (API 35+)** for applications targeting API 35+, the platform `setStatusBarColor()` is deprecated and turned into a no-op (unless the application opts out with the `windowOptOutEdgeToEdgeEnforcement` theme attribute, honored when targeting API 35 only). Check `MobileUI.systemBarColorsSupported`, and when it is `false` paint your own background / content behind the (now transparent) bar instead — see the "edge to edge" window mode. The icon contrast (`statusbarTheme`) keeps working on every supported version.
 
 > statusbarContentColor
 
@@ -250,7 +255,9 @@ The "reference color" used to derive the theme while `statusbarTheme` is `Auto` 
 
 This is meant to be used in edge-to-edge mode: you can choose to use a fully transparent status bar, and paint your own content freely behind that bar, but you want the text/icon contrast to still follow that content color.
 
-When unset, derivation falls back to `statusbarColor`, and if that isn't set either, the OS will take back control of the theme.
+Only opaque colors are used to derive the theme: the contrast of a translucent color depends on what's painted underneath. When unset (or translucent), derivation falls back to `statusbarColor`, and if that isn't usable either, to the device OS theme.
+
+If you use a translucent `statusbarColor` (a scrim over your content), set `statusbarContentColor` to the color the bar is actually shown over.
 
 > statusbarTheme
 
@@ -258,7 +265,7 @@ Set the status bar theme: `MobileUI.Auto` (the default), `MobileUI.Light` or `Mo
 
 This drives the status bar foreground contrast — the clock, status icons and text. `Light` means a light bar background, so the system draws dark icons; `Dark` means a dark background, so it draws light icons.
 
-`Auto` derives the theme from the bar's reference color — `statusbarContentColor` if used, otherwise the default `statusbarColor` — and leaves the theme to the OS when no usable color is available. `Light` / `Dark` force it explicitly.
+`Auto` derives the theme from the bar's reference color — `statusbarContentColor` if usable, otherwise the default `statusbarColor` — and falls back to the device OS theme when no opaque color is available. `Light` / `Dark` force it explicitly.
 
 Unlike `statusbarColor` (Android only, and capped at API 34), the theme keeps working everywhere — on iOS, and on Android including **Android 15+ (API 35+)** in edge-to-edge mode. On Android it goes through `WindowInsetsController.setSystemBarsAppearance()` on API 30+, and the legacy `SYSTEM_UI_FLAG_LIGHT_STATUS_BAR` system-UI flag on API 28–29.
 
@@ -271,7 +278,7 @@ On iOS and Android API 28+, the theme must be set each time the window visibilit
 
 > statusbarThemeSet
 
-Read-only: the theme actually applied right now (`MobileUI.Light` or `MobileUI.Dark`). In `Auto` mode with no usable bar color, it falls back to the device OS theme as a deterministic default.
+Read-only: the theme actually applied right now (`MobileUI.Light` or `MobileUI.Dark`). In `Auto` mode with no usable bar color, it falls back to the device OS theme as a deterministic default (and stays `MobileUI.Auto`, leaving the bar untouched, while the device theme is unknown).
 
 > navbarColor
 
@@ -284,7 +291,7 @@ The color is barely visible under **gesture navigation**: the system keeps the g
 By default the theme is `Auto`, so setting a color also updates the derived theme. Set an explicit theme to override that behavior.
 
 > [!IMPORTANT]
-> The navigation bar color is only honored up to **Android 14 (API 34)**. On **Android 15+ (API 35+)** the platform `setNavigationBarColor()` is deprecated and turned into a no-op: edge-to-edge is mandatory, the bar stays transparent, and setting `navbarColor` has no effect. Paint your own background / content behind the (transparent) bar instead — see the "edge to edge" window mode. The icon contrast (`navbarTheme`) keeps working on every supported version.
+> The navigation bar color is ignored when edge-to-edge is enforced: on **Android 15+ (API 35+)** for applications targeting API 35+, the platform `setNavigationBarColor()` is deprecated and turned into a no-op (unless the application opts out, see `statusbarColor`). Check `MobileUI.systemBarColorsSupported`, and when it is `false` paint your own background / content behind the (transparent) bar instead — see the "edge to edge" window mode. The icon contrast (`navbarTheme`) keeps working on every supported version.
 
 > navbarContentColor
 
@@ -292,7 +299,9 @@ The "reference color" used to derive the theme while `navbarTheme` is `Auto`.
 
 This is meant to be used in edge-to-edge mode: you can choose to use a fully transparent navigation bar, and paint your own content freely behind that bar, but you want the text/icon contrast to still follow that content color.
 
-When unset, derivation falls back to `navbarColor`, and if that isn't set either, the OS will take back control of the theme.
+Only opaque colors are used to derive the theme: the contrast of a translucent color depends on what's painted underneath. When unset (or translucent), derivation falls back to `navbarColor`, and if that isn't usable either, to the device OS theme.
+
+If you use a translucent `navbarColor` (a scrim over your content), set `navbarContentColor` to the color the bar is actually shown over.
 
 > navbarTheme
 
@@ -300,7 +309,7 @@ Set the navigation bar theme: `MobileUI.Auto` (the default), `MobileUI.Light` or
 
 This drives the navigation bar foreground contrast — the 3-button icon color, or the gesture handle tint. `Light` means a light bar background, so the system draws dark icons; `Dark` means a dark background, so it draws light icons.
 
-`Auto` derives the theme from the bar's reference color — `navbarContentColor` if used, otherwise the default `navbarColor` — and leaves the theme to the OS when no usable color is available. `Light` / `Dark` force it explicitly.
+`Auto` derives the theme from the bar's reference color — `navbarContentColor` if usable, otherwise the default `navbarColor` — and falls back to the device OS theme when no opaque color is available. `Light` / `Dark` force it explicitly.
 
 Unlike `navbarColor`, the theme keeps working on every supported Android version, including **Android 15+ (API 35+)** in edge-to-edge mode. It goes through `WindowInsetsController.setSystemBarsAppearance()` on API 30+, and the legacy `SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR` system-UI flag on API 28–29.
 
@@ -308,13 +317,16 @@ On Android API 28+, the theme must be set each time the window visibility or ori
 
 > navbarThemeSet
 
-Read-only: the theme actually applied right now (`MobileUI.Light` or `MobileUI.Dark`). In `Auto` mode with no usable bar color, it falls back to the device OS theme as a deterministic default.
+Read-only: the theme actually applied right now (`MobileUI.Light` or `MobileUI.Dark`). In `Auto` mode with no usable bar color, it falls back to the device OS theme as a deterministic default (and stays `MobileUI.Auto`, leaving the bar untouched, while the device theme is unknown).
 
 ### Device theme
 
 > deviceTheme
 
 You can get the device OS theme by reading the deviceTheme property.
+
+It is `MobileUI.Auto` while unknown: on mobile the device theme is read asynchronously at startup,
+and on desktop it may not be reported at all. Compare against `MobileUI.Dark` / `MobileUI.Light` explicitly.
 
 MobileUI listen to the change affecting this value and will signal you when it's changed.
 
@@ -326,7 +338,7 @@ Connections {
     target: Qt.application
     function onStateChanged() {
         if (Qt.application.state === Qt.ApplicationActive) {
-            console.log("device theme (%1)".arg(MobileUI.deviceTheme ? "dark" : "light"))
+            console.log("device theme (%1)".arg(MobileUI.deviceTheme === MobileUI.Dark ? "dark" : "light"))
         }
     }
 }
@@ -379,6 +391,8 @@ Set screen brightness for the currently running application (on Android) or syst
 
 Brightness is expressed from 0 to 100. Reading it returns -1 when brightness is unavailable.
 
+Reading it returns the value set by the application, or if none is set, the OS wide brightness. The OS wide brightness is read asynchronously (at startup, and when the application becomes active again), so it is -1 until that first read completes.
+
 ```qml
 Slider {
     from: 0
@@ -388,7 +402,7 @@ Slider {
 }
 ```
 
-Set a negative value to release the override and hand brightness control back to the system. On Android this restores the OS-managed brightness; on iOS there is no per-app override so it does nothing.
+Set a negative value to release the override and hand brightness control back to the system. On Android this restores the OS-managed brightness. On iOS the brightness is system wide, so the brightness saved before the first change is restored. On iOS the system brightness is also restored while the application is not active, and the application brightness is re-applied once it is active again.
 
 ```qml
 MobileUI.screenBrightness = -1
@@ -495,11 +509,11 @@ Available feedbacks:
 
 > HapticError // an "error / task failed" notification
 
-These map directly to the iOS feedback generators (selection / impact / notification). Android has no such vocabulary, so each style is mapped to the closest predefined `VibrationEffect` (or a short one-shot vibration on older devices).
+These map directly to the iOS feedback generators (selection / impact / notification). Android has no such vocabulary, so each style is mapped to the closest system `HapticFeedbackConstants` (Android 11+, honoring the user "touch feedback" setting), or to the closest predefined `VibrationEffect` (or a short one-shot vibration) on older devices.
 
 No model of iPad includes a haptic engine. Android tablets usually have one.
 
-> On Android, the `android.permission.VIBRATE` permission must be present in the manifest.
+> On Android 10 and older, the `android.permission.VIBRATE` permission must be present in the manifest.
 
 ### Torch
 
@@ -513,6 +527,8 @@ MobileUI.torchEnabled = true
 ```
 
 `torchEnabled` reflects the state actually applied: on a device without a rear flash the request is silently ignored and the property stays `false`.
+
+On iOS the state is read back when the application becomes active again, to catch changes made outside of the application. Android has no API to read the torch state back, so changes made outside of the application (ex: from the quick settings) are not reflected.
 
 On Android no permission is required, the `CAMERA` permission is *not* needed to use `setTorchMode()`.
 
