@@ -120,16 +120,17 @@ QHash <int, QByteArray> DeviceModel::roleNames() const
 
     //roles[Default] = "default";
 
-    roles[DeviceModelRole] = "model";
-    roles[DeviceNameRole] = "name";
+    roles[DeviceModelIDRole] = "deviceModelID";
+    roles[DeviceModelRole] = "deviceModel";
+    roles[DeviceNameRole] = "deviceName";
 
     roles[DeviceManufacturerRole] = "manufacturer";
     roles[DeviceAddressRole] = "address";
     roles[DeviceRssiRole] = "rssi";
 
-    roles[AssociatedLocationRole] = "location";
-    roles[AssociatedNameRole] = "plant";
-    roles[ManualIndexRole] = "manual";
+    roles[AssociatedLocationRole] = "associatedLocation";
+    roles[AssociatedNameRole] = "associatedName";
+    roles[ManualIndexRole] = "manualIndex";
 
     roles[PlantNameRole] = "plant";
     roles[SoilMoistureRole] = "waterlevel";
@@ -271,17 +272,17 @@ QVariant DeviceModel::data(const QModelIndex &index, int role) const
             return std::abs(device->getRssi());
         }
         // user set
-        if (role == AssociatedLocationRole)
-        {
-            if (!device->getLocationName().isEmpty())
-                return device->getLocationName().toLower();
-            else
-                return "zzz";
-        }
         if (role == AssociatedNameRole)
         {
             if (!device->getAssociatedName().isEmpty())
                 return device->getAssociatedName();
+            else
+                return "zzz";
+        }
+        if (role == AssociatedLocationRole)
+        {
+            if (!device->getLocationName().isEmpty())
+                return device->getLocationName().toLower();
             else
                 return "zzz";
         }

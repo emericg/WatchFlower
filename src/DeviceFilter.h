@@ -77,15 +77,16 @@ public:
 
     enum DeviceRoles {
         // hw device
-        DeviceModelRole = Qt::UserRole+1,
+        DeviceModelIDRole = Qt::UserRole+1,
+        DeviceModelRole,
         DeviceNameRole,
         DeviceManufacturerRole,
         DeviceAddressRole,
         DeviceRssiRole,
         // user set
-        ManualIndexRole,
-        AssociatedLocationRole,
         AssociatedNameRole,
+        AssociatedLocationRole,
+        ManualIndexRole,
         // plant sensors
         PlantNameRole,
         SoilMoistureRole,

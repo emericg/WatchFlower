@@ -386,11 +386,13 @@ public:
     virtual bool needsSync() const;
 
     // Device associated data
-    QString getLocationName() const { return m_locationName; }
-    void setLocationName(const QString &name);
     QString getAssociatedName() const { return m_associatedName; }
     void setAssociatedName(const QString &name);
+    QString getLocationName() const { return m_locationName; }
+    void setLocationName(const QString &name);
+
     int getManualIndex() const { return m_manualOrderIndex; }
+
     bool isEnabled() const { return m_isEnabled; }
     void setEnabled(const bool enabled);
     bool isInside() const { return !m_isOutside; }
