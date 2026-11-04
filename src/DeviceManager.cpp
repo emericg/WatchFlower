@@ -2406,9 +2406,10 @@ void DeviceManager::applyFilters()
 
 /*!
  * \brief Rebuild the list of unique location names (case and diacritics insensitive, sorted).
- * \return true if the location filter had to be reset (and the filters were re-applied).
+ *
+ * If the selected location filter doesn't match any device anymore, it is reset.
  */
-bool DeviceManager::updateLocationNames()
+void DeviceManager::updateLocationNames()
 {
     QMap <QString, QString> locations; // folded name -> first spelling seen
 
@@ -2431,32 +2432,36 @@ bool DeviceManager::updateLocationNames()
         Q_EMIT locationNamesChanged();
     }
 
-    if (!m_filterLocation.isEmpty())
+    if (!m_filterLocation.isEmpty() &&
+        !locations.contains(DeviceFilter::foldForSearch(m_filterLocation.trimmed())))
     {
-        const QString key = DeviceFilter::foldForSearch(m_filterLocation.trimmed());
+        // The selected location doesn't exist anymore
+        setFilterLocation(QString(), false);
+    }
+}
 
-        if (!locations.contains(key))
-        {
-            // The selected location doesn't exist anymore
-            setFilterLocation(QString(), false);
-            return true;
-        }
-        if (locations.value(key) != m_filterLocation)
-        {
-            // Same location, different spelling: follow the spelling shown in the list
-            m_filterLocation = locations.value(key);
-            Q_EMIT filterChanged();
-        }
+/*!
+ * \brief Index of the selected location filter in locationNames, ignoring case and diacritics.
+ * \return -1 if no location is selected, or if it isn't in the list.
+ */
+int DeviceManager::getFilterLocationIndex() const
+{
+    if (m_filterLocation.isEmpty()) return -1;
+
+    const QString key = DeviceFilter::foldForSearch(m_filterLocation.trimmed());
+    for (int i = 0; i < m_locationNames.size(); i++)
+    {
+        if (DeviceFilter::foldForSearch(m_locationNames.at(i)) == key) return i;
     }
 
-    return false;
+    return -1;
 }
 
 void DeviceManager::deviceSettingsChanged()
 {
     // A device location or name may have changed
-    bool reapplied = updateLocationNames();
-    if (!reapplied && isFilterActive()) invalidateFilter();
+    updateLocationNames();
+    if (isFilterActive()) invalidateFilter();
 }
 
 void DeviceManager::deviceInfosChanged()

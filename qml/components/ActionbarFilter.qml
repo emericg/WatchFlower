@@ -45,7 +45,7 @@ Rectangle {
         if (DeviceManager.filterNoLocation) {
             locationCombo.currentIndex = locationModel.count - 1
         } else if (DeviceManager.filterLocation.length) {
-            locationCombo.currentIndex = DeviceManager.locationNames.indexOf(DeviceManager.filterLocation) + 1
+            locationCombo.currentIndex = DeviceManager.getFilterLocationIndex() + 1
         } else {
             locationCombo.currentIndex = 0
         }

@@ -181,7 +181,7 @@ class DeviceManager: public QObject
     QStringList m_locationNames;        //!< unique location names, sorted
 
     void applyFilters();
-    bool updateLocationNames();
+    void updateLocationNames();
 
     ////
 
@@ -413,6 +413,7 @@ public:
     Q_INVOKABLE void resetFilters();
     bool isFilterActive() const;
     QStringList getLocationNames() const { return m_locationNames; }
+    Q_INVOKABLE int getFilterLocationIndex() const;
 
     // Device data export
     Q_INVOKABLE bool exportDataSave();
