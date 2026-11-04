@@ -275,6 +275,9 @@ Item {
             onClicked: (mouse) => {
                 deviceWidget.deviceAction(mouse.button, mouse.modifiers)
             }
+            onPressAndHold: (mouse) => {
+                deviceWidget.deviceAction(Qt.MiddleButton, mouse.modifiers)
+            }
 
             ////
         }
