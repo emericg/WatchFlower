@@ -1,7 +1,8 @@
 import QtQuick
 
 import ComponentLibrary
-import AppUtils
+import MobileUI
+
 import JournalUtils
 
 Item {
@@ -111,7 +112,7 @@ Item {
         onExited: buttonrow.opacity = 0
 */
         onClicked: {
-            UtilsOS.hapticFeedback()
+            MobileUI.hapticFeedback()
 
             if (selected)
                 entriesView.entrySelected = -1

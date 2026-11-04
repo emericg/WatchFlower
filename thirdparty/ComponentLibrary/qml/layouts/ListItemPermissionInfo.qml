@@ -80,7 +80,7 @@ Column {
 
         text: qsTr("Application info")
         source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
-        onClicked: UtilsApp.openAndroidAppInfo(control.applicationID)
+        onClicked: UtilsOS.openAppInfo(control.applicationID)
     }
 
     ////////////////

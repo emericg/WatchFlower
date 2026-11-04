@@ -370,6 +370,8 @@ Flickable {
                 anchors.fill: parent
                 spacing: 12
 
+                ////////
+
                 Column {
                     Text {
                         text: qsTr("Model")
@@ -506,6 +508,8 @@ Flickable {
                         }
                     }
                 }
+
+                ////////
             }
         }
 
@@ -674,6 +678,8 @@ Flickable {
                 anchors.fill: parent
                 spacing: 12
 
+                ////////
+
                 Text {
                     text: qsTr("Settings")
                     textFormat: Text.PlainText
@@ -688,6 +694,8 @@ Flickable {
                     checked: currentDevice.deviceEnabled
                     onClicked: currentDevice.deviceEnabled = checked
                 }
+
+                ////////
 
                 Row {
                     spacing: 16
@@ -762,6 +770,8 @@ Flickable {
                         }
                     }
                 }
+
+                ////////
 
                 Column {
                     Layout.fillWidth: true
@@ -870,6 +880,8 @@ Flickable {
                         }
                     }
                 }
+
+                ////////
             }
         }
 

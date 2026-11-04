@@ -107,6 +107,7 @@ Loader {
 
         Connections {
             target: appHeader
+            enabled: (appContent.state === "DeviceEnvironmental")
 
             // desktop only
             function onDeviceDataButtonClicked() {
@@ -121,10 +122,11 @@ Loader {
 
         Connections {
             target: mobileMenu
+            enabled: (appContent.state === "DeviceEnvironmental")
 
             // mobile only
             function onDeviceDataButtonClicked() {
-                appHeader.setActiveDeviceData()
+                mobileMenu.setActiveDeviceData()
                 swipeBox.currentIndex = 0
             }
             function onDeviceSettingsButtonClicked() {
@@ -618,6 +620,8 @@ Loader {
                         fillMode: Image.PreserveAspectCrop
                         color: UtilsDeviceSensors.getDeviceBatteryColor(currentDevice.deviceBattery)
                     }
+
+                    ////////////////
                 }
 
                 ////////
@@ -631,13 +635,13 @@ Loader {
                     anchors.bottom: parent.bottom
                     anchors.bottomMargin: 8
 
-                    height: 24
+                    height: 22
                     spacing: 8
 
                     IconSvg {
                         id: imageStatus
-                        width: 24
-                        height: 24
+                        width: 22
+                        height: 22
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/IconLibrary/material-icons/duotone/schedule.svg"
@@ -652,13 +656,27 @@ Loader {
                         textFormat: Text.PlainText
                         color: itemDeviceEnvironmental.cccc
                         font.bold: false
-                        font.pixelSize: 17
+                        font.pixelSize: 16
                         elide: Text.ElideRight
                     }
                 }
 
                 ////////
 
+                MouseArea {
+                    id: textInputLocationArea
+                    anchors.fill: itemLocation
+
+                    hoverEnabled: true
+                    propagateComposedEvents: true
+
+                    onPressed: (mouse) => {
+                        if (!textInputLocation.focus) {
+                            textInputLocation.forceActiveFocus()
+                            mouse.accepted = false
+                        }
+                    }
+                }
                 Row {
                     id: itemLocation
                     anchors.bottom: parent.bottom
@@ -666,14 +684,14 @@ Loader {
                     anchors.right: parent.right
                     anchors.rightMargin: 8
 
-                    height: 24
+                    height: 22
                     spacing: 4
 
                     IconSvg {
                         id: imageEditLocation
-                        width: 20
-                        height: 20
                         anchors.verticalCenter: parent.verticalCenter
+                        width: 18
+                        height: 18
 
                         source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                         color: itemDeviceEnvironmental.cccc
@@ -684,39 +702,22 @@ Loader {
                     TextInput {
                         id: textInputLocation
                         anchors.verticalCenter: parent.verticalCenter
+                        padding: 0
 
-                        padding: 4
-                        font.pixelSize: 17
+                        font.pixelSize: 16
                         font.bold: false
-                        color: cccc
+                        color: itemDeviceEnvironmental.cccc
 
                         text: currentDevice.deviceLocationName
                         onEditingFinished: {
                             currentDevice.deviceLocationName = text
                             focus = false
                         }
-
-                        MouseArea {
-                            id: textInputLocationArea
-                            anchors.fill: parent
-                            anchors.topMargin: -4
-                            anchors.leftMargin: -24
-                            anchors.rightMargin: -4
-                            anchors.bottomMargin: -4
-
-                            hoverEnabled: true
-                            propagateComposedEvents: true
-
-                            onPressed: (mouse) => {
-                                textInputLocation.forceActiveFocus()
-                                mouse.accepted = false
-                            }
-                        }
                     }
                     IconSvg {
                         id: imageLocation
-                        width: 24
-                        height: 24
+                        width: 22
+                        height: 22
                         anchors.verticalCenter: parent.verticalCenter
 
                         source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
@@ -775,7 +776,9 @@ Loader {
                 }
 
                 onWidthChanged: {
-                    if (Theme.isDesktop) swipeBox.contentItem.positionViewAtIndex(swipeBox.currentIndex, ListView.Beginning)
+                    if (Theme.isDesktop) {
+                        swipeBox.contentItem.positionViewAtIndex(swipeBox.currentIndex, ListView.Beginning)
+                    }
                 }
 
                 function enableAnimation() {

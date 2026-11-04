@@ -115,10 +115,14 @@ Rectangle {
                 onClicked: appHeader.leftMenuClicked()
 
                 RippleThemed {
-                    anchors.fill: parent
-                    anchor: parent
+                    anchors.centerIn: parent
+                    width: rippleSize
+                    height: rippleSize
+                    clipRadius: (rippleSize / 2)
 
-                    //active: enabled && parent.containsPress
+                    property int rippleSize: appHeader.headerHeight + 8
+
+                    pressed: parent.pressed
                     color: Qt.alpha(Theme.colorHeaderHighlight, 0.33)
                 }
 
@@ -263,11 +267,14 @@ Rectangle {
                 }
 
                 RippleThemed {
-                    anchors.fill: parent
-                    anchor: parent
+                    anchors.centerIn: parent
+                    width: rippleSize
+                    height: rippleSize
+                    clipRadius: (rippleSize / 2)
+
+                    property int rippleSize: appHeader.headerHeight + 8
 
                     pressed: parent.pressed
-                    //active: enabled && parent.containsPress
                     color: Qt.alpha(Theme.colorHeaderHighlight, 0.33)
                 }
 

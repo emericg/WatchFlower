@@ -219,11 +219,9 @@ Item {
 
         RippleThemed { // click indicator
             anchors.fill: parent
-            anchor: parent
+            anchor: mousearea
             clip: true
 
-            pressed: mousearea.pressed
-            active: enabled && mousearea.containsPress
             color: Qt.rgba(Theme.colorForeground.r, Theme.colorForeground.g, Theme.colorForeground.b, 0.8)
         }
 

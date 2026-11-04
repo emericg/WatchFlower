@@ -59,6 +59,7 @@ Item {
 
         // graph visibility
         aioGraph.visible = (tempData.count > 1)
+        if (!aioGraph.visible) resetIndicator()
         showGraphDots = (SettingsManager.graphAioShowDots && tempData.count < 16)
 
         // one major tick per day: Qt Graphs' DateTimeAxis tickInterval is a
@@ -214,7 +215,7 @@ Item {
          */
         function moveIndicator(mouse, isMoving) {
             if (!mouse) return
-            if (tempData.count < 1) return
+            if (tempData.count < 2) return
 
             var pa = aioGraph.plotArea
             var minMs = axisTime.min.getTime()
@@ -265,6 +266,7 @@ Item {
         id: clickableGraphArea
         anchors.fill: aioGraph
 
+        enabled: aioGraph.visible
         acceptedButtons: (Qt.LeftButton | Qt.RightButton)
 
         onClicked: (mouse) => {
@@ -298,6 +300,13 @@ Item {
 
             if (mouse.button !== Qt.RightButton) {
                 vanim.duration = 233
+            }
+        }
+
+        onCanceled: {
+            if (typeof (plantSensorPages) !== "undefined") {
+                // Re-enable page swipe if the indicator drag was stolen
+                plantSensorPages.interactive = Theme.isPhone
             }
         }
 

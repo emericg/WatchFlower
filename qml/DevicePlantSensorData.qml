@@ -233,7 +233,7 @@ Item {
 
                         Text {
                             id: labelPlant
-                            width: (dataIndicators) ? dataIndicators.legendWidth : 80
+                            width: (devicePlantSensorData.dataIndicators) ? devicePlantSensorData.dataIndicators.legendWidth : 80
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -244,6 +244,23 @@ Item {
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                        }
+
+                        MouseArea {
+                            id: textInputPlantArea
+                            anchors.fill: imageEditPlant
+                            anchors.margins: -4
+
+                            enabled: Theme.isMobile
+                            hoverEnabled: Theme.isDesktop
+                            propagateComposedEvents: true
+
+                            onPressed: (mouse) => {
+                                if (!textInputPlant.focus) {
+                                    textInputPlant.forceActiveFocus()
+                                    mouse.accepted = false
+                                }
+                            }
                         }
 
                         TextInput {
@@ -262,28 +279,12 @@ Item {
                                 currentDevice.devicePlantName = text
                                 focus = false
                             }
-
-                            MouseArea {
-                                id: textInputPlantArea
-                                anchors.fill: parent
-                                anchors.topMargin: -4
-                                anchors.leftMargin: -4
-                                anchors.rightMargin: -24
-                                anchors.bottomMargin: -4
-
-                                hoverEnabled: true
-                                propagateComposedEvents: true
-
-                                onPressed: (mouse) => {
-                                    textInputPlant.forceActiveFocus()
-                                    mouse.accepted = false
-                                }
-                            }
                         }
 
-                        IconSvg { // imageEditPlant
-                            width: 20
-                            height: 20
+                        IconSvg {
+                            id: imageEditPlant
+                            width: 18
+                            height: 18
                             anchors.left: textInputPlant.right
                             anchors.leftMargin: 8
                             anchors.verticalCenter: textInputPlant.verticalCenter
@@ -303,7 +304,7 @@ Item {
 
                         Text {
                             id: labelLocation
-                            width: (dataIndicators) ? dataIndicators.legendWidth : 80
+                            width: (devicePlantSensorData.dataIndicators) ? devicePlantSensorData.dataIndicators.legendWidth : 80
                             anchors.left: parent.left
                             anchors.verticalCenter: parent.verticalCenter
 
@@ -314,6 +315,23 @@ Item {
                             font.capitalization: Font.AllUppercase
                             color: Theme.colorSubText
                             horizontalAlignment: Text.AlignRight
+                        }
+
+                        MouseArea {
+                            id: textInputLocationArea
+                            anchors.fill: imageEditLocation
+                            anchors.margins: -4
+
+                            enabled: Theme.isMobile
+                            hoverEnabled: Theme.isDesktop
+                            propagateComposedEvents: true
+
+                            onPressed: (mouse) => {
+                                if (!textInputLocation.focus) {
+                                    textInputLocation.forceActiveFocus()
+                                    mouse.accepted = false
+                                }
+                            }
                         }
 
                         TextInput {
@@ -332,32 +350,15 @@ Item {
                                 currentDevice.deviceLocationName = text
                                 focus = false
                             }
-
-                            MouseArea {
-                                id: textInputLocationArea
-                                anchors.fill: parent
-                                anchors.topMargin: -4
-                                anchors.leftMargin: -4
-                                anchors.rightMargin: -24
-                                anchors.bottomMargin: -4
-
-                                hoverEnabled: true
-                                propagateComposedEvents: true
-
-                                onPressed: (mouse) => {
-                                    textInputLocation.forceActiveFocus()
-                                    mouse.accepted = false
-                                }
-                            }
                         }
 
                         IconSvg {
                             id: imageEditLocation
-                            width: 20
-                            height: 20
                             anchors.left: textInputLocation.right
                             anchors.leftMargin: 8
                             anchors.verticalCenter: textInputLocation.verticalCenter
+                            width: 18
+                            height: 18
 
                             source: "qrc:/IconLibrary/material-icons/duotone/edit.svg"
                             color: Theme.colorSubText

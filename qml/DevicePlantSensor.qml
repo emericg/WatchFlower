@@ -107,45 +107,47 @@ Loader {
 
         Connections {
             target: appHeader
+            enabled: (appContent.state === "DevicePlantSensor")
 
             // desktop only
             function onDeviceDataButtonClicked() {
                 appHeader.setActiveDeviceData()
-                plantSensorPages.currentIndex = 0
+                plantSensorPages.showPage(0)
             }
             function onDeviceHistoryButtonClicked() {
                 appHeader.setActiveDeviceHistory()
-                plantSensorPages.currentIndex = 1
+                plantSensorPages.showPage(1)
             }
             function onDevicePlantButtonClicked() {
                 appHeader.setActiveDevicePlant()
-                plantSensorPages.currentIndex = 2
+                plantSensorPages.showPage(2)
             }
             function onDeviceSettingsButtonClicked() {
                 appHeader.setActiveDeviceSettings()
-                plantSensorPages.currentIndex = 3
+                plantSensorPages.showPage(3)
             }
         }
 
         Connections {
             target: mobileMenu
+            enabled: (appContent.state === "DevicePlantSensor")
 
             // mobile only
             function onDeviceDataButtonClicked() {
                 mobileMenu.setActiveDeviceData()
-                plantSensorPages.currentIndex = 0
+                plantSensorPages.showPage(0)
             }
             function onDeviceHistoryButtonClicked() {
                 mobileMenu.setActiveDeviceHistory()
-                plantSensorPages.currentIndex = 1
+                plantSensorPages.showPage(1)
             }
             function onDevicePlantButtonClicked() {
                 mobileMenu.setActiveDevicePlant()
-                plantSensorPages.currentIndex = 2
+                plantSensorPages.showPage(2)
             }
             function onDeviceSettingsButtonClicked() {
                 mobileMenu.setActiveDeviceSettings()
-                plantSensorPages.currentIndex = 3
+                plantSensorPages.showPage(3)
             }
         }
 
@@ -258,7 +260,25 @@ Loader {
                 }
 
                 onWidthChanged: {
-                    if (Theme.isDesktop) plantSensorPages.contentItem.positionViewAtIndex(plantSensorPages.currentIndex, ListView.Beginning)
+                    if (Theme.isDesktop) {
+                        plantSensorPages.contentItem.positionViewAtIndex(plantSensorPages.currentIndex, ListView.Beginning)
+                    }
+                }
+
+                /*!
+                 * \brief Switches to the given page, from a menu or header button.
+                 * \param index: the page index.
+                 *
+                 * The ListView may end up with the right currentIndex but a stale view position,
+                 * when a highlight move is interrupted by a touch interaction on the page.
+                 * Setting the same index again is then a no-op, so the view is re-positioned instead.
+                 */
+                function showPage(index) {
+                    if (plantSensorPages.currentIndex !== index) {
+                        plantSensorPages.currentIndex = index
+                    } else if (!contentItem.moving) {
+                        contentItem.positionViewAtIndex(index, ListView.Beginning)
+                    }
                 }
 
                 function enableAnimation() {
