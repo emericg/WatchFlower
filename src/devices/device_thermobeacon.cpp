@@ -351,6 +351,7 @@ void DeviceThermoBeacon::bleReadNotify(const QLowEnergyCharacteristic &c, const 
                 m_history_entryIndex += 3;
                 m_history_sessionRead += 3;
                 Q_EMIT progressUpdated();
+                setTimeoutTimer();
 
                 if (m_history_entryIndex < m_history_entryCount)
                 {

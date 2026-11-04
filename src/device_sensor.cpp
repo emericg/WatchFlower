@@ -39,17 +39,13 @@
 DeviceSensor::DeviceSensor(const QString &deviceAddr, const QString &deviceName, QObject *parent) :
     Device(deviceAddr, deviceName, parent)
 {
-    // Configure timeout timer
-    m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedOut);
+    //
 }
 
 DeviceSensor::DeviceSensor(const QBluetoothDeviceInfo &d, QObject *parent) :
     Device(d, parent)
 {
-    // Configure timeout timer
-    m_timeoutTimer.setSingleShot(true);
-    connect(&m_timeoutTimer, &QTimer::timeout, this, &DeviceSensor::actionTimedOut);
+    //
 }
 
 DeviceSensor::~DeviceSensor()

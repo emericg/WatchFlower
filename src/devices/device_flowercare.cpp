@@ -144,12 +144,9 @@ void DeviceFlowerCare::addLowEnergyService(const QBluetoothUuid &uuid)
         delete serviceData;
         serviceData = nullptr;
 
-        if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
-        {
-            serviceData = m_bleController->createServiceObject(uuid);
-            if (!serviceData)
-                qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
-        }
+        serviceData = m_bleController->createServiceObject(uuid);
+        if (!serviceData)
+            qWarning() << "Cannot create service (data) for uuid:" << uuid.toString();
     }
 
     if (uuid.toString() == "{0000fe95-0000-1000-8000-00805f9b34fb}")
@@ -544,6 +541,7 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             m_history_entryIndex--;
             m_history_sessionRead++;
             Q_EMIT progressUpdated();
+            setTimeoutTimer();
 
             if (m_history_entryIndex > 0)
             {
@@ -552,6 +550,15 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
                 nextentry.push_back(m_history_entryIndex%256);
                 nextentry.push_back(m_history_entryIndex/256);
                 serviceHistory->writeCharacteristic(chi, nextentry, QLowEnergyService::WriteWithResponse);
+            }
+            else if (serviceData && serviceData->state() == QLowEnergyService::RemoteServiceDiscovered)
+            {
+                // History is complete, also read the current values before disconnecting
+                QBluetoothUuid a(QStringLiteral("00001a00-0000-1000-8000-00805f9b34fb"));
+                QLowEnergyCharacteristic cha = serviceData->characteristic(a);
+                serviceData->writeCharacteristic(cha, QByteArray::fromHex("A01F"), QLowEnergyService::WriteWithResponse);
+
+                askForReading();
             }
             else
             {
@@ -583,7 +590,16 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
             // first read might send bad data (0x aa bb cc dd ee ff 99 88 77 66...)
             // until the first write is done
             if (data[0] == 0xAA && data[1] == 0xBB)
+            {
+                if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+                {
+                    // Don't stall a completed history sync on an invalid reading
+                    refreshHistoryFinished(true);
+
+                    deviceDisconnect();
+                }
                 return;
+            }
 
             m_temperature = static_cast<int16_t>(DeviceUtils::readLE(data, 0, 2)) / 10.f;
             m_luminosityLux = DeviceUtils::readLE(data, 3, 2);
@@ -598,6 +614,19 @@ void DeviceFlowerCare::bleReadDone(const QLowEnergyCharacteristic &c, const QByt
 
                 // Ask for a new data reading, but not too often...
                 QTimer::singleShot(1000, this, SLOT(askForReading()));
+            }
+            else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+            {
+                bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                                m_soilMoisture, m_soilConductivity, -99.f, -99.f,
+                                                m_temperature, -99.f, m_luminosityLux);
+
+                // Close the history sync first, the device action is then idle,
+                // so refreshDataFinished() only publishes the new values
+                refreshHistoryFinished(true);
+                refreshDataFinished(status);
+
+                deviceDisconnect();
             }
             else
             {

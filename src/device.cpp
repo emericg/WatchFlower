@@ -1551,8 +1551,16 @@ void Device::deviceConnected()
         UtilsScreen *utilsScreen = UtilsScreen::getInstance();
         if (utilsScreen) utilsScreen->keepScreenOn(true);
 #endif
-        // Stop timeout timer, we'll be long...
-        m_timeoutTimer.stop();
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+        {
+            // Restart timeout timer, history syncs re-arm it after each entry
+            setTimeoutTimer();
+        }
+        else
+        {
+            // Stop timeout timer, we'll be long...
+            m_timeoutTimer.stop();
+        }
     }
     else if (m_ble_action == DeviceUtils::ACTION_IDLE)
     {
