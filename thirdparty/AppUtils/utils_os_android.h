@@ -33,12 +33,6 @@
 
 /*!
  * \brief Android utils
- *
- * Qt5 needs this in the project file:
- * android { QT += androidextras }
- *
- * Qt6 needs this in the project file:
- * android { QT += core-private }
  */
 class UtilsAndroid
 {
