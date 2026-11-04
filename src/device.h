@@ -284,6 +284,17 @@ protected:
     void setFirmware(const QString &firmware);
     bool isFirmwareUpToDate() const { return m_firmware_uptodate; }
 
+private:
+    /*!
+     * \brief Normalize a raw BLE device name.
+     * \param name: raw name, from advertisement or database.
+     * \return The name stripped from any MAC address or serial suffix.
+     *
+     * Some devices embed their MAC address (or part of it) into their name.
+     * For WP6003 devices, the MAC address is also extracted into m_deviceAddressMAC.
+     */
+    QString cleanName(const QString &name);
+
 public:
     Device(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     Device(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);

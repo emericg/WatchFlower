@@ -63,29 +63,12 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
 
     m_bleDevice = QBluetoothDeviceInfo(bleAddr, deviceName, 0);
     m_deviceAddress = deviceAddr;
-    m_deviceName = deviceName;
+    m_deviceName = cleanName(deviceName);
 
     // Check address validity
     if (m_bleDevice.isValid() == false)
     {
         qWarning() << "Device() '" << getAddress() << "' is an invalid QBluetoothDeviceInfo...";
-    }
-
-    // Device name hacks // Remove MAC address from device names
-    {
-        if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
-        else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
-        else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
-        else if (m_deviceName.startsWith("Aranet2")) m_deviceName = "Aranet2"; // ex: Aranet2 278F8
-        else if (m_deviceName.startsWith("Aranet4")) m_deviceName = "Aranet4"; // ex: Aranet4 07C8B
-        else if (m_deviceName.startsWith(QStringLiteral("Aranet\u2622"))) m_deviceName = "Aranet Radiation"; // radioactive sign, ex: "Aranet[U+2622] 27DB3"
-        else if (m_deviceName.startsWith("AranetRn+")) m_deviceName = "Aranet Radon+"; // ex: AranetRn+ 298C9
-        else if (m_deviceName.startsWith("AranetRn")) m_deviceName = "Aranet Radon"; // ex: AranetRn1 298C9
-        else if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
-            m_deviceAddressMAC = m_deviceName.last(12);
-            for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
-            m_deviceName = "WP6003";
-        }
     }
 
     // Database
@@ -109,7 +92,7 @@ Device::Device(const QString &deviceAddr, const QString &deviceName, QObject *pa
 Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
 {
     m_bleDevice = d;
-    m_deviceName = m_bleDevice.name();
+    m_deviceName = cleanName(m_bleDevice.name());
 
     m_major = d.majorDeviceClass();
     m_minor = d.minorDeviceClass();
@@ -127,23 +110,6 @@ Device::Device(const QBluetoothDeviceInfo &d, QObject *parent) : QObject(parent)
     if (m_bleDevice.isValid() == false)
     {
         qWarning() << "Device() '" << getAddress() << "' is an invalid QBluetoothDeviceInfo...";
-    }
-
-    // Device name hacks // Remove MAC address from device names
-    {
-        if (m_deviceName.startsWith("Flower power")) m_deviceName = "Flower power";
-        else if (m_deviceName.startsWith("Parrot pot")) m_deviceName = "Parrot pot";
-        else if (m_deviceName.startsWith("ATC_")) m_deviceName = "ATC";
-        else if (m_deviceName.startsWith("Aranet2")) m_deviceName = "Aranet2"; // ex: Aranet2 278F8
-        else if (m_deviceName.startsWith("Aranet4")) m_deviceName = "Aranet4"; // ex: Aranet4 07C8B
-        else if (m_deviceName.startsWith(QStringLiteral("Aranet\u2622"))) m_deviceName = "Aranet Radiation"; // radioactive sign, ex: "Aranet[U+2622] 27DB3"
-        else if (m_deviceName.startsWith("AranetRn+")) m_deviceName = "Aranet Radon+"; // ex: AranetRn+ 298C9
-        else if (m_deviceName.startsWith("AranetRn")) m_deviceName = "Aranet Radon"; // ex: AranetRn1 298C9
-        else if (m_deviceName.startsWith("6003#")) { // ex: 6003#060030393FBB1
-            m_deviceAddressMAC = m_deviceName.last(12);
-            for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
-            m_deviceName = "WP6003";
-        }
     }
 
     // Database
@@ -1289,13 +1255,38 @@ bool Device::setSetting(const QString &key, QVariant value)
 
 /* ************************************************************************** */
 
+QString Device::cleanName(const QString &name)
+{
+    // Device name hacks // Remove MAC address from device names
+    if (name.startsWith("Flower power")) return "Flower power";
+    if (name.startsWith("Parrot pot")) return "Parrot pot";
+    if (name.startsWith("ATC_")) return "ATC";
+    if (name.startsWith("Aranet"))
+    {
+        if (name.startsWith("Aranet2")) return "Aranet2"; // ex: Aranet2 278F8
+        if (name.startsWith("Aranet4")) return "Aranet4"; // ex: Aranet4 07C8B
+        if (name.startsWith("AranetRn+")) return "Aranet Radon+"; // ex: AranetRn+ 298C9
+        if (name.startsWith("AranetRn")) return "Aranet Radon"; // ex: AranetRn1 298C9
+        if (name.startsWith(QStringLiteral("Aranet\u2622"))) return "Aranet Radiation"; // radioactive sign, ex: "Aranet[U+2622] 27DB3"
+    }
+    if (name.startsWith("6003#")) // ex: 6003#060030393FBB1
+    {
+        m_deviceAddressMAC = name.last(12);
+        for (int i = 2; i < m_deviceAddressMAC.size(); i+=3) m_deviceAddressMAC.insert(i, ':');
+        return "WP6003";
+    }
+
+    return name;
+}
+
 void Device::setName(const QString &name)
 {
     if (!name.isEmpty())
     {
-        if (m_deviceName != name)
+        const QString cleanedName = cleanName(name);
+        if (m_deviceName != cleanedName)
         {
-            m_deviceName = name;
+            m_deviceName = cleanedName;
             Q_EMIT deviceUpdated();
         }
     }
