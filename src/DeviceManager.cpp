@@ -2087,9 +2087,8 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
     Device *d = nullptr;
 
     // Regular WatchFlower device
-    if (info.name() == "Flower care" || info.name() == "Flower mate" ||
-        info.name() == "Grow care garden" ||
-        info.name() == "TY" ||
+    if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden" ||
+        DeviceFlowerCare_tuya::isFlowerCareTuya(info) ||
         info.name() == "ropot" ||
         info.name().startsWith("Flower power") ||
         info.name().startsWith("Parrot pot") ||
@@ -2126,7 +2125,7 @@ void DeviceManager::addBleDevice(const QBluetoothDeviceInfo &info)
         // Create the device
         if (info.name() == "Flower care" || info.name() == "Flower mate" || info.name() == "Grow care garden")
             d = new DeviceFlowerCare(info, this);
-        else if (info.name() == "TY")
+        else if (DeviceFlowerCare_tuya::isFlowerCareTuya(info))
             d = new DeviceFlowerCare_tuya(info, this);
         else if (info.name() == "ropot")
             d = new DeviceRopot(info, this);

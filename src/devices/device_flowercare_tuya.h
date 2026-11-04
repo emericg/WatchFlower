@@ -52,10 +52,22 @@ class DeviceFlowerCare_tuya: public DevicePlantSensor
 
     QLowEnergyService *serviceData = nullptr;
 
+    static constexpr uint16_t s_tuya_service_uuid = 0xFD50;
+    static constexpr qsizetype s_tuya_flowercare_payload_size = 9;
+
 public:
     DeviceFlowerCare_tuya(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceFlowerCare_tuya(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceFlowerCare_tuya();
+
+    /*!
+     * \brief Tell if an advertised device is a Tuya Flower Care.
+     * \param info: the advertised device.
+     * \return true if the device name matches, and if its service data is a Tuya Flower Care format.
+     *
+     * Tuya devices are all advertised as "TY", so the 0xFD50 service data payload size is also checked.
+     */
+    static bool isFlowerCareTuya(const QBluetoothDeviceInfo &info);
 
     void parseAdvertisementData(const uint16_t adv_mode, const uint16_t adv_id, const QByteArray &value);
 };

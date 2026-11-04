@@ -66,6 +66,16 @@ DeviceFlowerCare_tuya::~DeviceFlowerCare_tuya()
 /* ************************************************************************** */
 /* ************************************************************************** */
 
+bool DeviceFlowerCare_tuya::isFlowerCareTuya(const QBluetoothDeviceInfo &info)
+{
+    if (info.name() != "TY") return false;
+
+    const QByteArray data = info.serviceData(QBluetoothUuid(s_tuya_service_uuid));
+    return (data.size() == s_tuya_flowercare_payload_size);
+}
+
+/* ************************************************************************** */
+
 void DeviceFlowerCare_tuya::serviceScanDone()
 {
     //qDebug() << "DeviceFlowerCare_tuya::serviceScanDone(" << m_deviceAddress << ")";
