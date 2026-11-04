@@ -496,6 +496,27 @@ Rectangle {
         // MAIN MENU ACTIONS //////////
 
         ButtonCompactable {
+            id: buttonFilter
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            compact: appHeader.headerCompact
+            visible: (appContent.state === "DeviceList")
+            enabled: visible
+
+            source: "qrc:/IconLibrary/material-symbols/search.svg"
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            tooltipText: qsTr("Filter sensors")
+
+            onClicked: {
+                screenDeviceList.filterView = !screenDeviceList.filterView
+            }
+        }
+
+        ButtonCompactable {
             id: buttonSort
             height: compact ? 36 : 34
             anchors.verticalCenter: parent.verticalCenter

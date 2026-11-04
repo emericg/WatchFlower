@@ -23,6 +23,8 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
+    property bool filterView: false
+
     property bool splitView: SettingsManager.splitView
     onSplitViewChanged: loadList()
 
@@ -136,16 +138,16 @@ Item {
 
         ////////
 
-        ActionbarFilter {
-            id: actionbarFilter
+        ActionbarSelection {
+            id: actionbarSelection
             anchors.left: parent.left
             anchors.right: parent.right
         }
 
         ////////
 
-        ActionbarSelection {
-            id: actionbarSelection
+        ActionbarFilter {
+            id: actionbarFilter
             anchors.left: parent.left
             anchors.right: parent.right
         }

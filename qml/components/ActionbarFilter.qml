@@ -9,7 +9,7 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    property bool shown: DeviceManager.hasDevices
+    property bool shown: DeviceManager.hasDevices && screenDeviceList.filterView
     property bool singleRow: Theme.wideMode
 
     height: shown ? (content.height + Theme.componentMargin*2) : 0
