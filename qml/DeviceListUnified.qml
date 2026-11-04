@@ -20,22 +20,26 @@ Item {
         return (selectionList.length > 0)
     }
     function selectDevice(index, type) {
-        // make sure it's not already selected
-        if (DeviceManager.getDeviceByProxyIndex(index).selected) return
+        var device = DeviceManager.getDeviceByProxyIndex(index)
+        if (!device || device.selected) return
 
-        // then add
         selectionMode = true
-        selectionList.push(index)
-        selectionCount++
+        selectionList.push(device.deviceAddress)
+        selectionCount = selectionList.length
 
-        DeviceManager.getDeviceByProxyIndex(index).selected = true
+        device.selected = true
     }
     function deselectDevice(index, type) {
-        var i = selectionList.indexOf(index)
-        if (i > -1) { selectionList.splice(i, 1); selectionCount--; }
-        if (selectionList.length <= 0 || selectionCount <= 0) { exitSelectionMode() }
+        var device = DeviceManager.getDeviceByProxyIndex(index)
+        if (!device) return
 
-        DeviceManager.getDeviceByProxyIndex(index).selected = false
+        var i = selectionList.indexOf(device.deviceAddress)
+        if (i > -1) selectionList.splice(i, 1)
+        selectionCount = selectionList.length
+
+        device.selected = false
+
+        if (selectionList.length <= 0) exitSelectionMode()
     }
     function exitSelectionMode() {
         selectionMode = false
