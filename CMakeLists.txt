@@ -7,9 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(APP_NAME ${PROJECT_NAME})
-set(APP_VERSION ${PROJECT_VERSION})
-
 ################################################################################
 
 message(STATUS ">>> BUILDING ${PROJECT_NAME} v${PROJECT_VERSION} >>>")
@@ -314,6 +311,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
 )
 
 if(NOT IOS AND NOT ANDROID)
+    # systray support # menubar support
     target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Widgets)
 endif()
 
@@ -322,6 +320,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE thirdparty/)
 
 # Qt official hacks...
 set(QML_IMPORT_PATH
+    "${CMAKE_BINARY_DIR}/"
     "${CMAKE_BINARY_DIR}/thirdparty/"
     "${CMAKE_BINARY_DIR}/thirdparty/AppUtils/"
     "${CMAKE_BINARY_DIR}/thirdparty/MobileUI/"

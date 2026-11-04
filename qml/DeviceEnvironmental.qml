@@ -62,7 +62,8 @@ Loader {
 
         property string primary: "voc"
 
-        property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
+        //property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
+        property string cccc: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorHeaderContent : "white"
 
         property var envChart: graphLoader.item
 
@@ -812,7 +813,7 @@ Loader {
                                 height: airFlow.height + (Theme.componentMargin * 2)
 
                                 visible: isAirMonitor
-                                color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+                                color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
                                 z: 3
 
                                 Flow {
@@ -992,7 +993,7 @@ Loader {
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
 
-                                    visible: !headerUnicolor
+                                    visible: !(Theme.colorHeader === Theme.colorBackground)
                                     height: 2
                                     color: Theme.colorSeparator
                                 }
@@ -1006,7 +1007,7 @@ Loader {
                                 height: radFlow.height + (radFlow.anchors.topMargin*2)
 
                                 visible: isGeigerCounter
-                                color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+                                color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
                                 z: 3
 
                                 Flow {
@@ -1069,7 +1070,7 @@ Loader {
                                     anchors.right: parent.right
                                     anchors.bottom: parent.bottom
 
-                                    visible: !headerUnicolor
+                                    visible: !appHeader.headerUnicolor
                                     height: 2
                                     opacity: 0.5
                                     color: Theme.colorSeparator

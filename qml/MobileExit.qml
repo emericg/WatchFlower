@@ -39,7 +39,7 @@ Rectangle {
     visible: opacity
 
     opacity: exitTimer.running ? 1 : 0
-    Behavior on opacity { OpacityAnimator { duration: 233 } }
+    Behavior on opacity { OpacityAnimator { duration: Theme.animationSpeedMedium } }
 
     Text {
         anchors.centerIn: parent

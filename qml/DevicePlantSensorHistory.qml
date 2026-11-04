@@ -246,7 +246,7 @@ Item {
 
         z: 5
         height: Theme.isPhone ? 48 : 52
-        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+        color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
 
         Text {
             id: textDeviceName
@@ -345,7 +345,7 @@ Item {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            visible: (Theme.isDesktop && !headerUnicolor)
+            visible: (Theme.isDesktop && !(Theme.colorHeader === Theme.colorBackground))
             height: 2
             opacity: 0.5
             color: Theme.colorSeparator
@@ -366,7 +366,7 @@ Item {
         Rectangle {
             anchors.fill: parent
             opacity: 0.66
-            color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+            color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
         }
         Item {
             id: selectorsContainerTwo

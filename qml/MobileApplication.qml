@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Window
-import QtQuick.Controls
 
 import ComponentLibrary
 import MobileUI
@@ -45,11 +44,6 @@ Window {
     }
 
     // Mobile stuff ////////////////////////////////////////////////////////////
-
-    // 1 = Qt.PortraitOrientation, 2 = Qt.LandscapeOrientation
-    // 4 = Qt.InvertedPortraitOrientation, 8 = Qt.InvertedLandscapeOrientation
-    property int screenOrientation: Screen.primaryOrientation
-    property int screenOrientationFull: Screen.orientation
 
     MobileHeader {
         id: appHeader
@@ -188,10 +182,6 @@ Window {
             }
         }
     }
-
-    // UI sizes ////////////////////////////////////////////////////////////////
-
-    property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
 
     // QML /////////////////////////////////////////////////////////////////////
 
@@ -508,6 +498,7 @@ Window {
 
     MobileExit {
         id: mobileExit
+        enabled: true
     }
 
     MobileMenu {

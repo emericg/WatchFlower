@@ -17,15 +17,14 @@ Rectangle {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property int headerHeight: Theme.isHdpi ? 58 : 64
+    property string headerTitle: UtilsApp.appName()
+    property string headerSubTitle: (selectedDevice && selectedDevice.deviceModel)
 
+    property int headerHeight: Theme.isHdpi ? 58 : 64 // vertical
     property int headerPosition: 64 // horizontal
 
     property bool headerCompact: Theme.singleColumn
-
-    property string headerTitle: "WatchFlower"
-
-    property string headerSubTitle: (selectedDevice && selectedDevice.deviceModel)
+    property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -101,12 +100,10 @@ Rectangle {
     ////////////////////////////////////////////////////////////////////////////
 
     DragHandler {
-        // make that surface draggable // also, prevent clicks below this area
+        // Drag on the sidebar to drag the whole window // Prevent clicks below this area
         onActiveChanged: if (active) appWindow.startSystemMove()
         target: null
     }
-
-    ////////////////////////////////////////////////////////////////////////////
 
     MouseArea { // left button
         width: 44
@@ -727,14 +724,14 @@ Rectangle {
         }
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+    ////////////
 
     Rectangle { // bottom separator
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
 
-        visible: (!headerUnicolor &&
+        visible: (!appHeader.headerUnicolor &&
                   appContent.state !== "DeviceThermometer" &&
                   appContent.state !== "DeviceEnvironmental" &&
                   appContent.state !== "ScreenTutorial")

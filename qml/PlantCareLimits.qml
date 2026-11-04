@@ -44,7 +44,7 @@ Flickable {
 
             height: 40
             opacity: 0.66
-            color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+            color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
             layer.enabled: true
 
             IconSvg {

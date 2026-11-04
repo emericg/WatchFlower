@@ -298,7 +298,7 @@ Loader {
 
             // 1: single column (single column view or portrait tablet)
             // 2: wide mode (wide view)
-            property int uiMode: (Theme.singleColumn || (Theme.isTablet && screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
+            property int uiMode: (Theme.singleColumn || (Theme.isTablet && Theme.screenOrientation === Qt.PortraitOrientation)) ? 1 : 2
 
             contentWidth: (uiMode === 1) ? -1 : plantScreen.width
             contentHeight: (uiMode === 1) ? plantScreen.height : -1
@@ -331,7 +331,7 @@ Loader {
 
             z: 5
             height: 52
-            color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+            color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
 
             visible: (!Theme.singleColumn &&
                       appContent.state === "PlantBrowser" &&
@@ -388,7 +388,7 @@ Loader {
                 anchors.right: parent.right
                 anchors.bottom: parent.bottom
 
-                visible: (Theme.isDesktop && !headerUnicolor)
+                visible: (Theme.isDesktop && !(Theme.colorHeader === Theme.colorBackground))
                 height: 2
                 opacity: 0.5
                 color: Theme.colorSeparator

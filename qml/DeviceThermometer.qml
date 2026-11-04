@@ -58,7 +58,8 @@ Loader {
 
         property alias thermoChart: graphLoader.item
 
-        property string cccc: headerUnicolor ? Theme.colorHeaderContent : "white"
+        //property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
+        property string cccc: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorHeaderContent : "white"
 
         ////////
 

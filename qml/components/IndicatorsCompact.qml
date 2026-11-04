@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 
 import ComponentLibrary
 
@@ -11,7 +10,7 @@ Item {
     z: 5
 
     property string colorBackground: {
-        if (headerUnicolor) return Theme.colorHeaderHighlight
+        if (Theme.colorHeader === Theme.colorBackground) return Theme.colorHeaderHighlight
         if (uiMode === 2) return Theme.colorBackground
         return Theme.colorForeground
     }

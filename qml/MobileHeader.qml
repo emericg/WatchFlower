@@ -11,24 +11,27 @@ Rectangle {
     anchors.left: parent.left
     anchors.right: parent.right
 
-    height: (headerHeight + Math.max(Theme.screenPaddingStatusbar, Theme.screenPaddingTop) - (headerCompact ? 12 : 0))
+    height: (statusbarHeight + contentHeight)
+
     color: Theme.colorHeader
     clip: true
     z: 10
 
     ////////////////////////////////////////////////////////////////////////////
 
-    property int headerHeight: 56 // vertical
+    property string headerTitle: UtilsApp.appName()
+    property string headerSubTitle: ""
 
+    property int headerHeight: 56 // vertical
     property int headerPosition: 56 // horizontal
 
+    property bool headerCompact: headerUnicolor
     property bool headerUnicolor: (Theme.colorHeader === Theme.colorStatusbar)
 
-    property bool headerCompact: true // headerUnicolor
+    readonly property bool hideInLandscape: (Theme.isPhone && Theme.screenOrientation !== Qt.PortraitOrientation)
 
-    property string headerTitle: UtilsApp.appName()
-
-    property string headerSubTitle: ""
+    readonly property int contentHeight: hideInLandscape ? 0 : (headerHeight - (headerCompact ? 12 : 0))
+    readonly property int statusbarHeight: Math.max(Theme.screenPaddingStatusbar, Theme.screenPaddingTop)
 
     ////////////////////////////////////////////////////////////////////////////
 
@@ -77,7 +80,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        height: Math.max(Theme.screenPaddingStatusbar, Theme.screenPaddingTop)
+        height: appHeader.statusbarHeight
         color: Theme.colorStatusbar
         visible: !appHeader.headerCompact
     }
@@ -91,37 +94,49 @@ Rectangle {
         anchors.bottomMargin: appHeader.headerCompact ? -4 : 0
 
         height: appHeader.headerHeight
+        visible: !appHeader.hideInLandscape
 
         ////////////
 
-        MouseArea { // left button
-            width: appHeader.headerHeight
-            height: appHeader.headerHeight
+        Row { // left area
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
 
-            visible: true
-            onClicked: appHeader.leftMenuClicked()
+            spacing: 4
 
-            RippleThemed {
-                anchors.fill: parent
-                anchor: parent
+            ////
 
-                pressed: parent.pressed
-                //active: enabled && parent.containsPress
-                color: Qt.rgba(Theme.colorHeaderHighlight.r, Theme.colorHeaderHighlight.g, Theme.colorHeaderHighlight.b, 0.33)
-            }
+            MouseArea { // left button
+                width: appHeader.headerHeight
+                height: appHeader.headerHeight
 
-            IconSvg {
-                anchors.centerIn: parent
-                width: (appHeader.headerHeight / 2)
-                height: (appHeader.headerHeight / 2)
+                visible: true
+                onClicked: appHeader.leftMenuClicked()
 
-                source: {
-                    if (appHeader.leftMenuMode === "drawer") return "qrc:/IconLibrary/material-symbols/menu.svg"
-                    if (appHeader.leftMenuMode === "close") return "qrc:/IconLibrary/material-symbols/close.svg"
-                    return "qrc:/IconLibrary/material-symbols/arrow_back.svg"
+                RippleThemed {
+                    anchors.fill: parent
+                    anchor: parent
+
+                    //active: enabled && parent.containsPress
+                    color: Qt.alpha(Theme.colorHeaderHighlight, 0.33)
                 }
-                color: Theme.colorHeaderContent
+
+                IconSvg {
+                    anchors.centerIn: parent
+                    width: (appHeader.headerHeight / 2)
+                    height: (appHeader.headerHeight / 2)
+
+                    source: {
+                        if (appHeader.leftMenuMode === "drawer") return "qrc:/IconLibrary/material-symbols/menu.svg"
+                        if (appHeader.leftMenuMode === "close") return "qrc:/IconLibrary/material-symbols/close.svg"
+                        return "qrc:/IconLibrary/material-symbols/arrow_back.svg"
+                    }
+                    color: Theme.colorHeaderContent
+                }
             }
+
+            ////
         }
 
         RowLayout {
@@ -182,6 +197,7 @@ Rectangle {
             ////
 
             Item { // right indicator
+                anchors.verticalCenter: parent.verticalCenter
                 width: appHeader.headerHeight
                 height: appHeader.headerHeight
 
@@ -252,7 +268,7 @@ Rectangle {
 
                     pressed: parent.pressed
                     //active: enabled && parent.containsPress
-                    color: Qt.rgba(Theme.colorHeaderHighlight.r, Theme.colorHeaderHighlight.g, Theme.colorHeaderHighlight.b, 0.33)
+                    color: Qt.alpha(Theme.colorHeaderHighlight, 0.33)
                 }
 
                 IconSvg {

@@ -1,11 +1,11 @@
 import QtQuick
 
 import ComponentLibrary
-import MobileUI
 import AppUtils
 
 Item {
     id: mobileMenu
+
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
@@ -38,7 +38,7 @@ Item {
 
     ////////////////////////////////////////////////////////////////////////////
 
-    Rectangle { // background
+    Rectangle { // menubar background area
         anchors.fill: parent
 
         opacity: 0.95
@@ -49,7 +49,7 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             height: Theme.isPhone ? 1 : 2
-            opacity: Theme.isPhone ? 0.24 : 0.33
+            opacity: Theme.isPhone ? 0.12 : 0.33
             color: Theme.colorTabletmenuContent
         }
     }
@@ -184,7 +184,7 @@ Item {
                     colorContent: Theme.colorTabletmenuContent
                     colorHighlight: Theme.colorTabletmenuHighlight
 
-                    visible: (screenOrientation === Qt.LandscapeOrientation)
+                    visible: (Theme.screenOrientation === Qt.LandscapeOrientation)
                     highlighted: (appContent.state === "PlantBrowser")
                     onClicked: screenPlantBrowser.loadScreenFrom("DeviceList")
                 }
@@ -197,7 +197,7 @@ Item {
                     colorContent: Theme.colorTabletmenuContent
                     colorHighlight: Theme.colorTabletmenuHighlight
 
-                    visible: (screenOrientation === Qt.LandscapeOrientation)
+                    visible: (Theme.screenOrientation === Qt.LandscapeOrientation)
                     enabled: (DeviceManager.bluetooth && DeviceManager.bluetoothPermissions)
                     highlighted: (appContent.state === "DeviceBrowser")
                     onClicked: screenDeviceBrowser.loadScreen()
@@ -247,7 +247,7 @@ Item {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 6
+                anchors.verticalCenterOffset: 4
                 spacing: 0
 
                 MobileMenuItem_vertical {
@@ -397,7 +397,7 @@ Item {
             Row {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.verticalCenterOffset: 6
+                anchors.verticalCenterOffset: 4
 
                 MobileMenuItem_vertical {
                     width: mobileMenu.www

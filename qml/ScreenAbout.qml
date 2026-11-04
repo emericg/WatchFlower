@@ -80,7 +80,7 @@ Loader {
 
                     height: 112
                     radius: (Theme.singleColumn || Theme.isPhone) ? 0 : 8
-                    color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+                    color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
 
                     border.width: (Theme.singleColumn || Theme.isPhone) ? 0 : Theme.componentBorderWidth
                     border.color: Theme.colorSeparator

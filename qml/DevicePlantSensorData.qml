@@ -147,18 +147,18 @@ Item {
         id: subHeaderBackground
         anchors.left: parent.left
         anchors.right: parent.right
-        height: (uiMode === 1) ? itemHeader.height : contentGrid_lvl2.height
+        height: (devicePlantSensorData.uiMode === 1) ? itemHeader.height : contentGrid_lvl2.height
         //Behavior on height { NumberAnimation { duration: 133 } }
 
-        visible: (uiMode !== 3)
-        color: headerUnicolor ? Theme.colorBackground : Theme.colorForeground
+        visible: (devicePlantSensorData.uiMode !== 3)
+        color: (Theme.colorHeader === Theme.colorBackground) ? Theme.colorBackground : Theme.colorForeground
 
         Rectangle {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
 
-            visible: (Theme.isDesktop && !headerUnicolor)
+            visible: (Theme.isDesktop && !(Theme.colorHeader === Theme.colorBackground))
             height: 2
             opacity: 0.5
             color: Theme.colorSeparator
@@ -426,6 +426,8 @@ Item {
                     }
                 }
             }
+
+            ////////
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -465,5 +467,7 @@ Item {
                 }
             }
         }
+
+        ////////////////////////////////////////////////////////////////////////
     }
 }

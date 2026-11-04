@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Controls
 
 import ComponentLibrary
 import AppUtils
@@ -11,6 +10,7 @@ DrawerThemed {
 
         Column {
             id: headerColumn
+
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -33,7 +33,7 @@ DrawerThemed {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                height: 80
+                height: appHeader.hideInLandscape ? 0 : 80
                 color: Theme.colorBackground
 
                 Image {
@@ -45,6 +45,7 @@ DrawerThemed {
                     width: 40
                     height: 40
                     source: "qrc:/assets/gfx/logos/logo.svg"
+                    sourceSize: Qt.size(width*2, height*2)
                 }
                 Text {
                     id: textHeader
@@ -53,7 +54,7 @@ DrawerThemed {
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.verticalCenterOffset: 2
 
-                    text: "WatchFlower"
+                    text: UtilsApp.appName()
                     textFormat: Text.PlainText
                     color: Theme.colorText
                     font.bold: true
@@ -70,7 +71,7 @@ DrawerThemed {
             anchors.top: headerColumn.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
+            anchors.bottom: footerColumn.top
 
             contentWidth: -1
             contentHeight: contentColumn.height
@@ -80,9 +81,8 @@ DrawerThemed {
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                ////////
-
                 topPadding: -Theme.componentMargin/2
+                //bottomPadding: Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
 
                 ListSeparatorPadded { }
 
@@ -262,12 +262,13 @@ DrawerThemed {
         ////////////////
 
         Column {
+            id: footerColumn
+
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
 
-            visible: (screenOrientation === Qt.PortraitOrientation)
+            visible: (Theme.screenOrientation === Qt.PortraitOrientation)
 
             ////////
 
@@ -328,6 +329,18 @@ DrawerThemed {
                     screenDeviceBrowser.loadScreen()
                     appDrawer.close()
                 }
+            }
+
+            ////////
+
+            Rectangle { // navbar area
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.rightMargin: -1
+
+                height: Math.max(Theme.screenPaddingNavbar, Theme.screenPaddingBottom)
+                color: Theme.colorTabletmenu
+                opacity: 0.95
             }
 
             ////////

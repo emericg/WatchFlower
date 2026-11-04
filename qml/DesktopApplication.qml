@@ -62,9 +62,6 @@ ApplicationWindow {
 
     // Mobile stuff ////////////////////////////////////////////////////////////
 
-    property int screenOrientation: Screen.primaryOrientation
-    property int screenOrientationFull: Screen.orientation
-
     Item { // compatibility
         id: mobileMenu
         signal deviceDataButtonClicked()
@@ -75,10 +72,6 @@ ApplicationWindow {
     }
 
     // Events handling /////////////////////////////////////////////////////////
-
-    Component.onCompleted: {
-        //
-    }
 
     Connections {
         target: appHeader
@@ -228,8 +221,12 @@ ApplicationWindow {
          }
 
          if (visibility === Window.Hidden) {
-             DeviceManager.disconnectDevices()
-         }
+            DeviceManager.disconnectDevices()
+        }
+    }
+
+    Component.onCompleted: {
+        //
     }
 
     // User generated events handling //////////////////////////////////////////
@@ -284,23 +281,24 @@ ApplicationWindow {
     MouseArea {
         anchors.fill: parent
         z: 99
+
         acceptedButtons: (Qt.BackButton | Qt.ForwardButton)
         onClicked: (mouse) => {
             if (mouse.button === Qt.BackButton) {
-                backAction()
+                appWindow.backAction()
             } else if (mouse.button === Qt.ForwardButton) {
-                forwardAction()
+                appWindow.forwardAction()
             }
         }
     }
 
     Shortcut {
         sequences: [StandardKey.Back, StandardKey.Backspace]
-        onActivated: backAction()
+        onActivated: appWindow.backAction()
     }
     Shortcut {
         sequences: [StandardKey.Forward]
-        onActivated: forwardAction()
+        onActivated: appWindow.forwardAction()
     }
     Shortcut {
         sequences: [StandardKey.Refresh]
@@ -311,7 +309,7 @@ ApplicationWindow {
         onActivated: DeviceManager.refreshDevices_start()
     }
     Shortcut {
-        sequence: StandardKey.Preferences
+        sequences: [StandardKey.Preferences]
         onActivated: screenSettings.loadScreen()
     }
     Shortcut {
@@ -322,10 +320,6 @@ ApplicationWindow {
         sequences: [StandardKey.Quit]
         onActivated: UtilsApp.appExit()
     }
-
-    // UI sizes ////////////////////////////////////////////////////////////////
-
-    property bool headerUnicolor: (Theme.colorHeader === Theme.colorBackground)
 
     // QML /////////////////////////////////////////////////////////////////////
 
