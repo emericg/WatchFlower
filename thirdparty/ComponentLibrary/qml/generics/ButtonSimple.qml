@@ -56,10 +56,7 @@ T.Button {
             anchors.fill: parent
             anchor: control
 
-            pressed: control.pressed
-            active: control.enabled && (control.down || control.hovered || control.visualFocus)
             color: control.colorRipple
-            clip: true
         }
     }
 

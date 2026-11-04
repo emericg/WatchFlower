@@ -473,11 +473,11 @@ QtObject {
             isDark = false
 
             themeStatusbar = Theme.Light
-            colorStatusbar = "white"
+            colorStatusbar = "#684be2"
 
-            colorHeader                 = "white"
-            colorHeaderContent          = "#684be2"
-            colorHeaderHighlight        = "white"
+            colorHeader                 = "#684be2"
+            colorHeaderContent          = "white"
+            colorHeaderHighlight        = "grey"
 
             colorSidebar                = "#fafafa"
             colorSidebarContent         = "#efefef"
@@ -531,7 +531,7 @@ QtObject {
             themeStatusbar = Theme.Dark
             colorStatusbar = "#313236"
 
-            colorHeader                 = "#313236"
+            colorHeader                 = "#292929"
             colorHeaderContent          = "#ee8c21"
             colorHeaderHighlight        = "#444"
 

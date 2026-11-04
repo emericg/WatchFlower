@@ -46,6 +46,7 @@ Item {
             property int counter: 0
 
             NumberAnimation on rotation {
+                running: (typeof utilsFpsMonitor === "undefined" || !utilsFpsMonitor)
                 from: 0
                 to: 360
                 duration: 1000

@@ -32,8 +32,8 @@ Item {
         id: backgroundButton
 
         anchors.fill: parent
-        anchors.margins: (singleColumn ? 0 : Theme.componentMarginXL)
-        anchors.bottomMargin: (singleColumn ? Theme.componentMarginXL : Theme.componentMarginXL)
+        anchors.margins: (Theme.singleColumn ? 0 : Theme.componentMarginXL)
+        anchors.bottomMargin: (Theme.singleColumn ? Theme.componentMarginXL : Theme.componentMarginXL)
 
         ////////
 
@@ -52,9 +52,9 @@ Item {
         background: Rectangle {
             id: background
             radius: {
-                if (singleColumn) return 8
-                if (isDesktop) return 8
-                if (isTablet) return 12
+                if (Theme.singleColumn) return 8
+                if (Theme.isDesktop) return 8
+                if (Theme.isTablet) return 12
                 return 8
             }
             color: Theme.isLight ? "#fff" : "#444"
@@ -66,35 +66,18 @@ Item {
 
                 //width: cardImage.width + rowrowrow.leftMargin*2
                 width: cardImage.width + (Theme.isMobile ? 20 : 32)
+                topLeftRadius: background.radius
+                bottomLeftRadius: background.radius
                 color: Theme.isLight ? "#f6f6f6" : "#3a3a3a"
             }
 
             RippleThemed {
                 anchors.fill: parent
                 anchor: backgroundButton
+                clipRadius: background.radius
 
-                pressed: backgroundButton.pressed
-                active: control.enabled && (backgroundButton.down /*|| backgroundButton.hovered*/ || backgroundButton.visualFocus)
-                color: Theme.colorPrimary
-                opacity: 0.033
-            }
-
-            layer.enabled: true
-            layer.effect: MultiEffect { // clip
-                maskEnabled: true
-                maskInverted: false
-                maskThresholdMin: 0.5
-                maskSpreadAtMin: 1.0
-                maskSpreadAtMax: 0.0
-                maskSource: ShaderEffectSource {
-                    sourceItem: Rectangle {
-                        x: background.x
-                        y: background.y
-                        width: background.width
-                        height: background.height
-                        radius: background.radius
-                    }
-                }
+                hoverTint: false
+                color: Qt.alpha(Theme.colorPrimary, 0.033)
             }
         }
 
