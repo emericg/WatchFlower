@@ -198,19 +198,17 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
-            int batt = -1;
-            QString fw;
-
             QBluetoothUuid c(QStringLiteral("00001a02-0000-1000-8000-00805f9b34fb"));
             QLowEnergyCharacteristic chc = serviceData->characteristic(c);
             if (chc.value().size() > 0)
             {
-                batt = chc.value().at(0);
-                fw = chc.value().remove(0, 2);
+                int  batt = chc.value().at(0);
+                QString fw = chc.value().remove(0, 2);
                 setBatteryFirmware(batt, fw);
             }
 
-            bool need_modechange = true;
+            bool need_modechange = true; // always true for ropot
+
             if (m_deviceFirmware.size() == 5)
             {
                 if (QVersionNumber::fromString(m_deviceFirmware) >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_ROPOT))
@@ -220,7 +218,7 @@ void DeviceRopot::serviceDetailsDiscovered_data(QLowEnergyService::ServiceState 
                 }
             }
 
-            if (need_modechange) // always?
+            if (need_modechange)
             {
                 // Change device mode
                 QBluetoothUuid a(QStringLiteral("00001a00-0000-1000-8000-00805f9b34fb"));
@@ -252,7 +250,7 @@ void DeviceRopot::serviceDetailsDiscovered_handshake(QLowEnergyService::ServiceS
             QByteArray mac = QByteArray::fromHex(addr.remove(':').toLatin1());
 
             // Generate token
-            uint8_t pid[2] = {0x5d, 0x01};
+            const uint8_t pid[2] = {0x5d, 0x01};
             uint8_t magicend[4] = {0x92, 0xab, 0x54, 0xfa};
             uint8_t token1[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
             uint8_t token2[12] = {0x1, 0x22, 0x3, 0x4, 0x5, 0x6, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1};
@@ -632,9 +630,23 @@ bool DeviceRopot::addDatabaseRecord_history(const int64_t timestamp,
 
             QDateTime tmcd = QDateTime::fromSecsSinceEpoch(timestamp);
 
+            QString upsert;
+            if (m_dbInternal) // sqlite
+            {
+                upsert = " ON CONFLICT(deviceAddr, timestamp_rounded) DO UPDATE SET timestamp = excluded.timestamp,"
+                         " soilMoisture = excluded.soilMoisture,"
+                         " soilConductivity = excluded.soilConductivity";
+            }
+            else if (m_dbExternal) // mysql
+            {
+                upsert = " ON DUPLICATE KEY UPDATE timestamp = VALUES(timestamp),"
+                         " soilMoisture = VALUES(soilMoisture),"
+                         " soilConductivity = VALUES(soilConductivity)";
+            }
+
             QSqlQuery addData;
-            addData.prepare("REPLACE INTO plantData (deviceAddr, timestamp_rounded, timestamp, soilMoisture, soilConductivity)"
-                            " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :hygro, :condu)");
+            addData.prepare("INSERT INTO plantData (deviceAddr, timestamp_rounded, timestamp, soilMoisture, soilConductivity)"
+                            " VALUES (:deviceAddr, :timestamp_rounded, :timestamp, :hygro, :condu)" + upsert);
             addData.bindValue(":deviceAddr", getAddress());
             addData.bindValue(":timestamp_rounded", tmcd.toString("yyyy-MM-dd hh:00:00"));
             addData.bindValue(":timestamp", tmcd.toString("yyyy-MM-dd hh:mm:ss"));
