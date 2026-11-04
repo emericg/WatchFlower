@@ -87,6 +87,20 @@ Item {
 
             ////
 
+            ButtonClear {
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                width: (Theme.isDesktop || Theme.isTablet || (Theme.isPhone && Theme.screenOrientation === Qt.LandscapeOrientation)) ? 320 : (parent.width*0.5)
+                visible: DatabaseManager.hasDatabaseInternal()
+
+                text: qsTr("Restore a backup")
+                color: Theme.colorPrimary
+
+                onClicked: popupRestoreBackup.openFile()
+            }
+
+            ////
+
             RowLayout {
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: Theme.singleColumn ? (itemNoDevice.width*0.85) : undefined

@@ -203,6 +203,9 @@ Window {
     PopupDeleteData {
         id: popupDeleteData
     }
+    PopupRestoreBackup {
+        id: popupRestoreBackup
+    }
 
     FocusScope {
         id: appContent

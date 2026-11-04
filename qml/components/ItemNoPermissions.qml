@@ -225,5 +225,18 @@ Item {
         }
 
         ////
+
+        ButtonClear {
+            anchors.horizontalCenter: parent.horizontalCenter
+
+            visible: DatabaseManager.hasDatabaseInternal()
+
+            text: qsTr("Restore a backup")
+            color: Theme.colorPrimary
+
+            onClicked: popupRestoreBackup.openFile()
+        }
+
+        ////
     }
 }

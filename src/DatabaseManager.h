@@ -27,6 +27,8 @@
 
 #include <QObject>
 #include <QString>
+#include <QUrl>
+#include <QVariantMap>
 
 class QQmlEngine;
 class QJSEngine;
@@ -42,6 +44,8 @@ class DatabaseManager: public QObject
     QML_ELEMENT
     QML_SINGLETON
 
+    // Backups are only restored at this exact version: when bumping it,
+    // migrate the staged backup (restore.db) before restoreDatabase() copies it
     const static int s_dbCurrentVersion = 3;
 
     bool m_dbInternalAvailable = false;
@@ -61,8 +65,19 @@ class DatabaseManager: public QObject
     bool migrate_v1v2();
     bool migrate_v2v3();
 
+    bool attachBackup(const QString &backupPath);
+    void detachBackup();
+    bool backupTableExists(const QString &tableName);
+    QStringList getCommonColumns(const QString &tableName);
+    QString getRestorePath() const;
+    bool writeBackupInfo(const QString &backupPath);
+
     // Singleton
     explicit DatabaseManager(QObject *parent = nullptr);
+
+Q_SIGNALS:
+    void databaseAboutToBeRestored();
+    void databaseRestored();
 
 public:
     static DatabaseManager *getInstance();
@@ -73,8 +88,10 @@ public:
 
     Q_INVOKABLE QString getDatabaseDirectory();
     Q_INVOKABLE void resetDatabase();
-    Q_INVOKABLE bool saveDatabase();
-    Q_INVOKABLE bool restoreDatabase();
+    Q_INVOKABLE QString saveDatabase(const QUrl &fileUrl = QUrl());
+    Q_INVOKABLE QVariantMap readBackup(const QUrl &fileUrl);
+    Q_INVOKABLE bool restoreDatabase(bool data, bool settings);
+    Q_INVOKABLE void discardBackup();
 };
 
 /* ************************************************************************** */
