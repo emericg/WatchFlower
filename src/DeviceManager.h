@@ -68,6 +68,12 @@ class DeviceManager: public QObject
     Q_PROPERTY(DeviceFilter *devicesEnvList READ getDevicesEnvFiltered NOTIFY devicesListUpdated)
     Q_PROPERTY(int deviceEnvCount READ getDeviceEnvCount NOTIFY devicesListUpdated)
 
+    Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterChanged)
+    Q_PROPERTY(QString filterLocation READ getFilterLocation NOTIFY filterChanged)
+    Q_PROPERTY(bool filterNoLocation READ isFilterNoLocation NOTIFY filterChanged)
+    Q_PROPERTY(bool filterActive READ isFilterActive NOTIFY filterChanged)
+    Q_PROPERTY(QStringList locationNames READ getLocationNames NOTIFY locationNamesChanged)
+
     ////////
 
     Q_PROPERTY(bool advertising READ isAdvertising NOTIFY advertisingChanged)
@@ -169,6 +175,14 @@ class DeviceManager: public QObject
     QList <QObject *> m_devices_syncing_queue;
     QList <QObject *> m_devices_syncing;
 
+    QString m_filterText;               //!< free text search, as typed by the user
+    QString m_filterLocation;           //!< selected location name (empty: all locations)
+    bool m_filterNoLocation = false;    //!< only show devices without a location name
+    QStringList m_locationNames;        //!< unique location names, sorted
+
+    void applyFilters();
+    bool updateLocationNames();
+
     ////
 
     bool m_advertising = false;
@@ -223,6 +237,9 @@ Q_SIGNALS:
 
     void backgroundScanningFinished(bool dataUpdated);
 
+    void filterChanged();
+    void locationNamesChanged();
+
 private slots:
     // QBluetoothLocalDevice related
     void bluetoothHostModeStateChanged(QBluetoothLocalDevice::HostMode);
@@ -244,6 +261,9 @@ private slots:
     void addBleDevice(const QBluetoothDeviceInfo &info);
     void bleDevice_discovered(const QBluetoothDeviceInfo &info);
     void bleDevice_updated(const QBluetoothDeviceInfo &info, QBluetoothDeviceInfo::Fields updatedFields);
+
+    void deviceSettingsChanged();
+    void deviceInfosChanged();
 
 public:
     static DeviceManager *getInstance();
@@ -354,6 +374,9 @@ public:
     Q_INVOKABLE void disconnectDevices() const;
     Q_INVOKABLE void disconnectAndExit() const;
 
+    Q_INVOKABLE void clearDeviceSelection();
+    Q_INVOKABLE QStringList getSelectedDeviceAddresses() const;
+
     int getDeviceCount() const { return m_devices_model->getDeviceCount(); }
     DeviceFilter *getDevicesFiltered() const { return m_devices_filter; }
     DeviceFilter *getDevicesNearby() const { return m_devices_nearby_filter; }
@@ -381,6 +404,15 @@ public:
 
     void invalidate();
     void invalidateFilter();
+
+    QString getFilterText() const { return m_filterText; }
+    void setFilterText(const QString &text);
+    QString getFilterLocation() const { return m_filterLocation; }
+    bool isFilterNoLocation() const { return m_filterNoLocation; }
+    Q_INVOKABLE void setFilterLocation(const QString &location, bool noLocationOnly);
+    Q_INVOKABLE void resetFilters();
+    bool isFilterActive() const;
+    QStringList getLocationNames() const { return m_locationNames; }
 
     // Device data export
     Q_INVOKABLE bool exportDataSave();

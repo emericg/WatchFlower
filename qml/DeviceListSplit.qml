@@ -43,9 +43,7 @@ Item {
         selectionList = []
         selectionCount = 0
 
-        for (var i = 0; i < DeviceManager.deviceCount; i++) {
-            DeviceManager.getDeviceByProxyIndex(i, 0).selected = false
-        }
+        DeviceManager.clearDeviceSelection()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -116,9 +114,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: DeviceManager.devicePlantCount
+                visible: plantRepeater.count
 
-                text: qsTr("Plant sensor(s)", "", DeviceManager.devicePlantCount)
+                text: qsTr("Plant sensor(s)", "", plantRepeater.count)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -126,8 +124,10 @@ Item {
                 id: devicesPlantView
                 anchors.left: parent.left
                 anchors.right: parent.right
+                visible: plantRepeater.count
 
                 Repeater {
+                    id: plantRepeater
                     model: DeviceManager.devicesPlantList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
@@ -142,9 +142,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: DeviceManager.deviceThermoCount
+                visible: thermoRepeater.count
 
-                text: qsTr("Thermometer(s)", "", DeviceManager.deviceThermoCount)
+                text: qsTr("Thermometer(s)", "", thermoRepeater.count)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -152,8 +152,10 @@ Item {
                 id: devicesThermoView
                 anchors.left: parent.left
                 anchors.right: parent.right
+                visible: thermoRepeater.count
 
                 Repeater {
+                    id: thermoRepeater
                     model: DeviceManager.devicesThermoList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
@@ -168,9 +170,9 @@ Item {
             ListTitle {
                 anchors.leftMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
                 anchors.rightMargin: devicesView.listWidget ? -devicesView.halfmargin : devicesView.halfmargin
-                visible: DeviceManager.deviceEnvCount
+                visible: envRepeater.count
 
-                text: qsTr("Environmental sensor(s)", "", DeviceManager.deviceEnvCount)
+                text: qsTr("Environmental sensor(s)", "", envRepeater.count)
                 textSize: Theme.fontSizeContentVeryBig
             }
 
@@ -178,8 +180,10 @@ Item {
                 id: devicesEnvView
                 anchors.left: parent.left
                 anchors.right: parent.right
+                visible: envRepeater.count
 
                 Repeater {
+                    id: envRepeater
                     model: DeviceManager.devicesEnvList
                     delegate: DeviceWidget {
                         width: devicesView.cellWidth
@@ -187,6 +191,23 @@ Item {
                         listMode: devicesView.listWidget
                     }
                 }
+            }
+
+            ////////
+
+            Text {
+                width: devicesView.width
+                visible: (plantRepeater.count + thermoRepeater.count + envRepeater.count === 0 &&
+                          DeviceManager.filterActive)
+
+                topPadding: Theme.componentMargin
+                bottomPadding: Theme.componentMargin
+                text: screenDeviceList.noMatchText
+                textFormat: Text.PlainText
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeContent
+                color: Theme.colorSubText
             }
 
             ////////
