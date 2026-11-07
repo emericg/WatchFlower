@@ -26,13 +26,14 @@
 #include <QtQml/qqmlregistration.h>
 
 #include <QObject>
+#include <QWindow>
+
+class QJSEngine;
+class QQmlEngine;
 
 class QMenu;
 class QAction;
-class QJSEngine;
-class QQmlEngine;
 class QQuickWindow;
-
 
 /* ************************************************************************** */
 
@@ -47,46 +48,85 @@ class MenubarManager: public QObject
 
     QQuickWindow *m_saved_view = nullptr;
 
+    QAction *m_actionAbout = nullptr;
+    QAction *m_actionSettings = nullptr;
+
+    QMenu *m_menuFile = nullptr;
+    QAction *m_actionExport = nullptr;
+
+    QMenu *m_menuView = nullptr;
+    QAction *m_actionViewSensors = nullptr;
+    QAction *m_actionViewPlantBrowser = nullptr;
+    QAction *m_actionViewDeviceBrowser = nullptr;
+
+    int m_currentView = -1; //!< UI screen currently shown, for the View menu checkmark
+
     QMenu *m_menuSensors = nullptr;
-    QAction *m_actionSensorList = nullptr;
-    QAction *m_actionSensorScan = nullptr;
     QAction *m_actionSensorRefresh = nullptr;
+    QAction *m_actionSensorScan = nullptr;
+
+    QMenu *m_menuWindow = nullptr;
+    QAction *m_actionMinimize = nullptr;
+    QAction *m_actionMaximize = nullptr;
+    QAction *m_actionFullScreen = nullptr;
+    QAction *m_actionClose = nullptr;
+
+    QWindow::Visibility m_previousVisibility = QWindow::Windowed; //!< state to restore when leaving full screen
 
     QMenu *m_menuHelp = nullptr;
-    QAction *m_actionAbout = nullptr;
-    QAction *m_actionPreferences = nullptr;
+    QAction *m_actionTutorial = nullptr;
     QAction *m_actionWebsite = nullptr;
     QAction *m_actionIssueTracker = nullptr;
     QAction *m_actionReleaseNotes = nullptr;
-    QAction *m_actionTutorial = nullptr;
 
-    static MenubarManager *instance;
+    void showWindow();
 
-    MenubarManager();
+    // Singleton
+    explicit MenubarManager(QObject *parent = nullptr);
     ~MenubarManager();
 
 signals:
-    void sensorsClicked();
     void settingsClicked();
     void aboutClicked();
     void tutorialClicked();
+    void exportClicked();
+    void viewClicked(int screen);
 
 public:
     static MenubarManager *getInstance();
     static MenubarManager *create(QQmlEngine *, QJSEngine *);
 
+    /*!
+     * \brief Create the macOS menu bar.
+     * \param view: the application main window, target of the Window menu actions.
+     */
     void setupMenubar(QQuickWindow *view);
 
+    /*!
+     * \brief Set the screen currently shown, to update the View menu checkmark.
+     * \param screen: screen index, as emitted by viewClicked(), or -1 for none.
+     */
+    Q_INVOKABLE void setCurrentView(int screen);
+
 private slots:
-    void sensorList();
-    void sensorScan();
-    void sensorRefresh();
-    void settings();
+    void updateViewActions();
+    void updateWindowActions();
     void about();
+    void settings();
+    void fileExport();
+
+    void sensorRefresh();
+    void sensorScan();
+
+    void windowMinimize();
+    void windowMaximize();
+    void windowFullScreen();
+    void windowClose();
+
+    void tutorial();
     void website();
     void issuetracker();
     void releasenotes();
-    void tutorial();
 };
 
 /* ************************************************************************** */

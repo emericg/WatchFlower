@@ -166,10 +166,19 @@ ApplicationWindow {
 
     Connections {
         target: MenubarManager
-        function onSensorsClicked() { screenDeviceList.loadScreen() }
         function onSettingsClicked() { screenSettings.loadScreen() }
         function onAboutClicked() { screenAbout.loadScreen() }
         function onTutorialClicked() { screenTutorial.loadScreenFrom(appContent.state) }
+        function onExportClicked() {
+            if (DeviceManager.hasDevices && DeviceManager.exportDataSave()) {
+                UtilsApp.openWith(DeviceManager.exportDataFolder())
+            }
+        }
+        function onViewClicked(screen) {
+            if (screen === 0) screenDeviceList.loadScreen()
+            else if (screen === 1 && appContent.state !== "PlantBrowser") screenPlantBrowser.loadScreenFrom(appContent.state)
+            else if (screen === 2) screenDeviceBrowser.loadScreen()
+        }
     }
 
     Connections {
@@ -404,6 +413,13 @@ ApplicationWindow {
         onStateChanged: {
             screenDeviceList.exitSelectionMode()
             appHeader.setActiveMenu()
+
+            // Reflect the active screen as a checkmark in the macOS View menu
+            if (state === "DeviceList" || state === "DevicePlantSensor" ||
+                state === "DeviceThermometer" || state === "DeviceEnvironmental") MenubarManager.setCurrentView(0)
+            else if (state === "PlantBrowser") MenubarManager.setCurrentView(1)
+            else if (state === "DeviceBrowser") MenubarManager.setCurrentView(2)
+            else MenubarManager.setCurrentView(-1)
 
             if (state === "ScreenTutorial") return
             if (previousStates[previousStates.length-1] !== state) previousStates.push(state)

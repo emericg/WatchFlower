@@ -449,7 +449,7 @@ void Device::actionShutdown()
 
 void Device::actionStarted(int action)
 {
-    qDebug() << "Device::actionStarted()" << getAddress() << getName() << "> action:" << action;
+    //qDebug() << "Device::actionStarted()" << getAddress() << getName() << "> action:" << action;
 
     if (m_ble_action != action)
     {
@@ -472,7 +472,7 @@ void Device::actionStarted(int action)
 
 void Device::actionFinished(int action)
 {
-    qDebug() << "Device::actionFinished()" << getAddress() << getName() << "> action:" << m_ble_action;
+    //qDebug() << "Device::actionFinished()" << getAddress() << getName() << "> action:" << m_ble_action;
 
     if (m_ble_action != DeviceUtils::ACTION_IDLE)
     {

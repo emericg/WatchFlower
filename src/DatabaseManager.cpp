@@ -221,7 +221,7 @@ bool DatabaseManager::openDatabase_mysql()
 {
     if (!QSqlDatabase::isDriverAvailable("QMYSQL"))
     {
-        qWarning() << "> MySQL is NOT available";
+        qDebug() << "> MySQL is NOT available";
         return false;
     }
 
