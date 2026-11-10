@@ -242,7 +242,7 @@ void DeviceEssGeneric::serviceDetailsDiscovered_ess(QLowEnergyService::ServiceSt
             m_humidity = chum.value().toInt() / 100.0;
             Q_EMIT dataUpdated();
 
-            m_deviceSensors += DeviceUtils::SENSOR_TEMPERATURE;
+            m_deviceSensors += DeviceUtils::SENSOR_HUMIDITY;
             Q_EMIT sensorsUpdated();
         }
 

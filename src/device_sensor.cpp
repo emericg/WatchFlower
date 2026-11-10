@@ -547,14 +547,14 @@ bool DeviceSensor::getSqlPlantData(int minutes)
 
     while (cachedData.next())
     {
-        m_soilMoisture = cachedData.value(1).toInt();
-        m_soilConductivity = cachedData.value(2).toInt();
-        m_soilTemperature = cachedData.value(3).toFloat();
-        m_soilPH = cachedData.value(4).toFloat();
-        m_temperature = cachedData.value(5).toFloat();
-        m_humidity = cachedData.value(6).toFloat();
-        m_luminosityLux = cachedData.value(7).toInt();
-        m_watertank_level = cachedData.value(8).toFloat();
+        m_soilMoisture = DeviceUtils::sqlInt(cachedData.value(1));
+        m_soilConductivity = DeviceUtils::sqlInt(cachedData.value(2));
+        m_soilTemperature = DeviceUtils::sqlFloat(cachedData.value(3));
+        m_soilPH = DeviceUtils::sqlFloat(cachedData.value(4));
+        m_temperature = DeviceUtils::sqlFloat(cachedData.value(5));
+        m_humidity = DeviceUtils::sqlFloat(cachedData.value(6));
+        m_luminosityLux = DeviceUtils::sqlInt(cachedData.value(7));
+        m_watertank_level = DeviceUtils::sqlFloat(cachedData.value(8));
 
         QString datetime = cachedData.value(0).toString();
         m_lastUpdateDatabase = m_lastUpdate = QDateTime::fromString(datetime, "yyyy-MM-dd hh:mm:ss");

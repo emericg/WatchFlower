@@ -129,6 +129,16 @@ QString DeviceManager::exportDataFolder()
 
 /* ************************************************************************** */
 
+/*!
+ * \brief Check if a value read from the database is an actual measurement.
+ * \param v: the value, as returned by QSqlQuery::value().
+ * \return false if the column is NULL, or holds the -99 "no data" marker.
+ */
+static bool isExportable(const QVariant &v)
+{
+    return !v.isNull() && v.toFloat() > -99.f;
+}
+
 bool DeviceManager::exportData(const QString &exportFilePath)
 {
     bool status = false;
@@ -152,10 +162,17 @@ bool DeviceManager::exportData(const QString &exportFilePath)
         status = true;
         QTextStream eout(&efile);
 
-        QString legend = "Timestamp (YYYY-MM-DD hh:mm:ss), Soil moisture (%), Soil conductivity (μs/cm), Temperature (";
-        legend += (isCelcius ? "℃" : "℉");
-        legend += "), Humidity (%RH), Luminosity (lux)";
+        QString legend = "Timestamp (YYYY-MM-DD hh:mm:ss), Soil moisture (%), Soil conductivity (μs/cm), ";
+        const QString tempUnit = isCelcius ? "℃" : "℉";
+        legend += "Soil temperature (" + tempUnit + "), ";
+        legend += "Temperature (" + tempUnit + "), ";
+        legend += "Humidity (%RH), Luminosity (lux)";
         eout << legend << Qt::endl;
+
+        auto formatTemp = [isCelcius](const QVariant &v) {
+            if (isCelcius) return QString::number(v.toReal(), 'f', 1);
+            return QString::number(v.toReal() * 1.8 + 32.0, 'f', 1);
+        };
 
         for (auto d: std::as_const(m_devices_model->m_devices))
         {
@@ -177,20 +194,22 @@ bool DeviceManager::exportData(const QString &exportFilePath)
                     {
                         eout << data.value(0).toString() << ",";
 
-                        if (dd->hasSoilMoistureSensor()) eout << data.value(1).toString();
+                        if (dd->hasSoilMoistureSensor() && isExportable(data.value(1))) eout << data.value(1).toString();
                         eout << ",";
 
-                        if (dd->hasSoilConductivitySensor()) eout << data.value(2).toString();
+                        if (dd->hasSoilConductivitySensor() && isExportable(data.value(2))) eout << data.value(2).toString();
                         eout << ",";
 
-                        if (isCelcius) eout << QString::number(data.value(4).toReal(), 'f', 1);
-                        else eout << QString::number(data.value(4).toReal()* 1.8 + 32.0, 'f', 1);
+                        if (dd->hasSoilTemperatureSensor() && isExportable(data.value(3))) eout << formatTemp(data.value(3));
                         eout << ",";
 
-                        if (dd->hasHumiditySensor()) eout << data.value(5).toString();
+                        if (dd->hasTemperatureSensor() && isExportable(data.value(4))) eout << formatTemp(data.value(4));
                         eout << ",";
 
-                        if (dd->hasLuminositySensor()) eout << data.value(6).toString();
+                        if (dd->hasHumiditySensor() && isExportable(data.value(5))) eout << data.value(5).toString();
+                        eout << ",";
+
+                        if (dd->hasLuminositySensor() && isExportable(data.value(6))) eout << data.value(6).toString();
                         eout << ",";
 
                         eout << Qt::endl;

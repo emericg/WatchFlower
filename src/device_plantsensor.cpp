@@ -554,21 +554,21 @@ void DevicePlantSensor::getChartData_plantAIO(const int maxDays, QDateTimeAxis *
             qint64 timecode = date.toMSecsSinceEpoch();
 
             // data
-            hygro->append(timecode, graphData.value(1).toReal());
-            condu->append(timecode, graphData.value(2).toReal());
-            temp->append(timecode, graphData.value(3).toReal());
-            if (hasLuminositySensor()) lumi->append(timecode, graphData.value(4).toReal());
+            if (!graphData.value(1).isNull()) hygro->append(timecode, graphData.value(1).toReal());
+            if (!graphData.value(2).isNull()) condu->append(timecode, graphData.value(2).toReal());
+            if (!graphData.value(3).isNull()) temp->append(timecode, graphData.value(3).toReal());
+            if (!graphData.value(4).isNull() && hasLuminositySensor()) lumi->append(timecode, graphData.value(4).toReal());
 
             // min/max
-            if (graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
-            if (graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
-            if (graphData.value(3).toFloat() < m_tempMin) { m_tempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
-            if (graphData.value(4).toInt() < m_luxMin) { m_luxMin = graphData.value(4).toInt(); minmaxChanged = true; }
+            if (!graphData.value(1).isNull() && graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (!graphData.value(2).isNull() && graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (!graphData.value(3).isNull() && graphData.value(3).toFloat() < m_tempMin) { m_tempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
+            if (!graphData.value(4).isNull() && graphData.value(4).toInt() < m_luxMin) { m_luxMin = graphData.value(4).toInt(); minmaxChanged = true; }
 
-            if (graphData.value(1).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
-            if (graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
-            if (graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
-            if (graphData.value(4).toInt() > m_luxMax) { m_luxMax = graphData.value(4).toInt(); minmaxChanged = true; }
+            if (!graphData.value(1).isNull() && graphData.value(1).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (!graphData.value(2).isNull() && graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (!graphData.value(3).isNull() && graphData.value(3).toFloat() > m_tempMax) { m_tempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
+            if (!graphData.value(4).isNull() && graphData.value(4).toInt() > m_luxMax) { m_luxMax = graphData.value(4).toInt(); minmaxChanged = true; }
         }
 
         if (minmaxChanged) { Q_EMIT minmaxUpdated(); }
@@ -676,9 +676,9 @@ void DevicePlantSensor::updateChartData_history_today()
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
-                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
-                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                           DeviceUtils::sqlFloat(graphData.value(1)), DeviceUtils::sqlFloat(graphData.value(2)), DeviceUtils::sqlFloat(graphData.value(3)),
+                                                           DeviceUtils::sqlFloat(graphData.value(4)), DeviceUtils::sqlFloat(graphData.value(5)), DeviceUtils::sqlFloat(graphData.value(6)),
+                                                           DeviceUtils::sqlFloat(graphData.value(7)), DeviceUtils::sqlFloat(graphData.value(8)),
                                                            this);
                 m_chartData_history_day.push_front(d);
                 previousdata = d;
@@ -783,9 +783,9 @@ void DevicePlantSensor::updateChartData_history_thisweek()
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
-                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
-                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                           DeviceUtils::sqlFloat(graphData.value(1)), DeviceUtils::sqlFloat(graphData.value(2)), DeviceUtils::sqlFloat(graphData.value(3)),
+                                                           DeviceUtils::sqlFloat(graphData.value(4)), DeviceUtils::sqlFloat(graphData.value(5)), DeviceUtils::sqlFloat(graphData.value(6)),
+                                                           DeviceUtils::sqlFloat(graphData.value(7)), DeviceUtils::sqlFloat(graphData.value(8)),
                                                            this);
                 m_chartData_history_week.push_front(d);
                 previousdata = d;
@@ -881,25 +881,25 @@ void DevicePlantSensor::updateChartData_history_thismonth(const int maxDays)
                 }
 
                 // min/max
-                if (graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
-                if (graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
-                if (graphData.value(3).toFloat() < m_soilTempMin) { m_soilTempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
-                if (graphData.value(4).toFloat() < m_tempMin) { m_tempMin = graphData.value(4).toFloat(); minmaxChanged = true; }
-                if (graphData.value(5).toInt() < m_humiMin) { m_humiMin = graphData.value(5).toInt(); minmaxChanged = true; }
-                if (graphData.value(6).toInt() < m_luxMin) { m_luxMin = graphData.value(6).toInt(); minmaxChanged = true; }
+                if (!graphData.value(1).isNull() && graphData.value(1).toInt() < m_soilMoistureMin) { m_soilMoistureMin = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (!graphData.value(2).isNull() && graphData.value(2).toInt() < m_soilConduMin) { m_soilConduMin = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (!graphData.value(3).isNull() && graphData.value(3).toFloat() < m_soilTempMin) { m_soilTempMin = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(4).isNull() && graphData.value(4).toFloat() < m_tempMin) { m_tempMin = graphData.value(4).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(5).isNull() && graphData.value(5).toInt() < m_humiMin) { m_humiMin = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (!graphData.value(6).isNull() && graphData.value(6).toInt() < m_luxMin) { m_luxMin = graphData.value(6).toInt(); minmaxChanged = true; }
 
-                if (graphData.value(1).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
-                if (graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
-                if (graphData.value(3).toFloat() > m_soilTempMax) { m_soilTempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
-                if (graphData.value(4).toFloat() > m_tempMax) { m_tempMax = graphData.value(4).toFloat(); minmaxChanged = true; }
-                if (graphData.value(5).toInt() > m_humiMax) { m_humiMax = graphData.value(5).toInt(); minmaxChanged = true; }
-                if (graphData.value(6).toInt() > m_luxMax) { m_luxMax = graphData.value(6).toInt(); minmaxChanged = true; }
+                if (!graphData.value(1).isNull() && graphData.value(1).toInt() > m_soilMoistureMax) { m_soilMoistureMax = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (!graphData.value(2).isNull() && graphData.value(2).toInt() > m_soilConduMax) { m_soilConduMax = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (!graphData.value(3).isNull() && graphData.value(3).toFloat() > m_soilTempMax) { m_soilTempMax = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(4).isNull() && graphData.value(4).toFloat() > m_tempMax) { m_tempMax = graphData.value(4).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(5).isNull() && graphData.value(5).toInt() > m_humiMax) { m_humiMax = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (!graphData.value(6).isNull() && graphData.value(6).toInt() > m_luxMax) { m_luxMax = graphData.value(6).toInt(); minmaxChanged = true; }
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
-                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
-                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                           DeviceUtils::sqlFloat(graphData.value(1)), DeviceUtils::sqlFloat(graphData.value(2)), DeviceUtils::sqlFloat(graphData.value(3)),
+                                                           DeviceUtils::sqlFloat(graphData.value(4)), DeviceUtils::sqlFloat(graphData.value(5)), DeviceUtils::sqlFloat(graphData.value(6)),
+                                                           DeviceUtils::sqlFloat(graphData.value(7)), DeviceUtils::sqlFloat(graphData.value(8)),
                                                            this);
                 m_chartData_history_month.push_front(d);
                 previousdata = d;
@@ -1026,9 +1026,9 @@ void DevicePlantSensor::updateChartData_history_day(const QDateTime &d)
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
-                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
-                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                           DeviceUtils::sqlFloat(graphData.value(1)), DeviceUtils::sqlFloat(graphData.value(2)), DeviceUtils::sqlFloat(graphData.value(3)),
+                                                           DeviceUtils::sqlFloat(graphData.value(4)), DeviceUtils::sqlFloat(graphData.value(5)), DeviceUtils::sqlFloat(graphData.value(6)),
+                                                           DeviceUtils::sqlFloat(graphData.value(7)), DeviceUtils::sqlFloat(graphData.value(8)),
                                                            this);
                 m_chartData_history_day.push_front(d);
                 previousdata = d;
@@ -1124,25 +1124,25 @@ void DevicePlantSensor::updateChartData_history_week(const QDateTime &f, const Q
             }
 
             // min/max
-            if (graphData.value(1).toInt() < m_soilMoistureMin_history) { m_soilMoistureMin_history = graphData.value(1).toInt(); minmaxChanged = true; }
-            if (graphData.value(2).toInt() < m_soilConduMin_history) { m_soilConduMin_history = graphData.value(2).toInt(); minmaxChanged = true; }
-            if (graphData.value(3).toFloat() < m_soilTempMin_history) { m_soilTempMin_history = graphData.value(3).toFloat(); minmaxChanged = true; }
-            if (graphData.value(4).toFloat() < m_tempMin_history) { m_tempMin_history = graphData.value(4).toFloat(); minmaxChanged = true; }
-            if (graphData.value(5).toInt() < m_humiMin_history) { m_humiMin_history = graphData.value(5).toInt(); minmaxChanged = true; }
-            if (graphData.value(6).toInt() < m_luxMin_history) { m_luxMin_history = graphData.value(6).toInt(); minmaxChanged = true; }
+            if (!graphData.value(1).isNull() && graphData.value(1).toInt() < m_soilMoistureMin_history) { m_soilMoistureMin_history = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (!graphData.value(2).isNull() && graphData.value(2).toInt() < m_soilConduMin_history) { m_soilConduMin_history = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (!graphData.value(3).isNull() && graphData.value(3).toFloat() < m_soilTempMin_history) { m_soilTempMin_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+            if (!graphData.value(4).isNull() && graphData.value(4).toFloat() < m_tempMin_history) { m_tempMin_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+            if (!graphData.value(5).isNull() && graphData.value(5).toInt() < m_humiMin_history) { m_humiMin_history = graphData.value(5).toInt(); minmaxChanged = true; }
+            if (!graphData.value(6).isNull() && graphData.value(6).toInt() < m_luxMin_history) { m_luxMin_history = graphData.value(6).toInt(); minmaxChanged = true; }
 
-            if (graphData.value(1).toInt() > m_soilMoistureMax_history) { m_soilMoistureMax_history = graphData.value(1).toInt(); minmaxChanged = true; }
-            if (graphData.value(2).toInt() > m_soilConduMax_history) { m_soilConduMax_history = graphData.value(2).toInt(); minmaxChanged = true; }
-            if (graphData.value(3).toFloat() > m_soilTempMax_history) { m_soilTempMax_history = graphData.value(3).toFloat(); minmaxChanged = true; }
-            if (graphData.value(4).toFloat() > m_tempMax_history) { m_tempMax_history = graphData.value(4).toFloat(); minmaxChanged = true; }
-            if (graphData.value(5).toInt() > m_humiMax_history) { m_humiMax_history = graphData.value(5).toInt(); minmaxChanged = true; }
-            if (graphData.value(6).toInt() > m_luxMax_history) { m_luxMax_history = graphData.value(6).toInt(); minmaxChanged = true; }
+            if (!graphData.value(1).isNull() && graphData.value(1).toInt() > m_soilMoistureMax_history) { m_soilMoistureMax_history = graphData.value(1).toInt(); minmaxChanged = true; }
+            if (!graphData.value(2).isNull() && graphData.value(2).toInt() > m_soilConduMax_history) { m_soilConduMax_history = graphData.value(2).toInt(); minmaxChanged = true; }
+            if (!graphData.value(3).isNull() && graphData.value(3).toFloat() > m_soilTempMax_history) { m_soilTempMax_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+            if (!graphData.value(4).isNull() && graphData.value(4).toFloat() > m_tempMax_history) { m_tempMax_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+            if (!graphData.value(5).isNull() && graphData.value(5).toInt() > m_humiMax_history) { m_humiMax_history = graphData.value(5).toInt(); minmaxChanged = true; }
+            if (!graphData.value(6).isNull() && graphData.value(6).toInt() > m_luxMax_history) { m_luxMax_history = graphData.value(6).toInt(); minmaxChanged = true; }
 
             // data
             ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                       graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
-                                                       graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
-                                                       graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                       DeviceUtils::sqlFloat(graphData.value(1)), DeviceUtils::sqlFloat(graphData.value(2)), DeviceUtils::sqlFloat(graphData.value(3)),
+                                                       DeviceUtils::sqlFloat(graphData.value(4)), DeviceUtils::sqlFloat(graphData.value(5)), DeviceUtils::sqlFloat(graphData.value(6)),
+                                                       DeviceUtils::sqlFloat(graphData.value(7)), DeviceUtils::sqlFloat(graphData.value(8)),
                                                        this);
             m_chartData_history_week.push_front(d);
             previousdata = d;
@@ -1243,25 +1243,25 @@ void DevicePlantSensor::updateChartData_history_month(const QDateTime &f, const 
                 }
 
                 // min/max
-                if (graphData.value(1).toInt() < m_soilMoistureMin_history) { m_soilMoistureMin_history = graphData.value(1).toInt(); minmaxChanged = true; }
-                if (graphData.value(2).toInt() < m_soilConduMin_history) { m_soilConduMin_history = graphData.value(2).toInt(); minmaxChanged = true; }
-                if (graphData.value(3).toFloat() < m_soilTempMin_history) { m_soilTempMin_history = graphData.value(3).toFloat(); minmaxChanged = true; }
-                if (graphData.value(4).toFloat() < m_tempMin_history) { m_tempMin_history = graphData.value(4).toFloat(); minmaxChanged = true; }
-                if (graphData.value(5).toInt() < m_humiMin_history) { m_humiMin_history = graphData.value(5).toInt(); minmaxChanged = true; }
-                if (graphData.value(6).toInt() < m_luxMin_history) { m_luxMin_history = graphData.value(6).toInt(); minmaxChanged = true; }
+                if (!graphData.value(1).isNull() && graphData.value(1).toInt() < m_soilMoistureMin_history) { m_soilMoistureMin_history = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (!graphData.value(2).isNull() && graphData.value(2).toInt() < m_soilConduMin_history) { m_soilConduMin_history = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (!graphData.value(3).isNull() && graphData.value(3).toFloat() < m_soilTempMin_history) { m_soilTempMin_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(4).isNull() && graphData.value(4).toFloat() < m_tempMin_history) { m_tempMin_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(5).isNull() && graphData.value(5).toInt() < m_humiMin_history) { m_humiMin_history = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (!graphData.value(6).isNull() && graphData.value(6).toInt() < m_luxMin_history) { m_luxMin_history = graphData.value(6).toInt(); minmaxChanged = true; }
 
-                if (graphData.value(1).toInt() > m_soilMoistureMax_history) { m_soilMoistureMax_history = graphData.value(1).toInt(); minmaxChanged = true; }
-                if (graphData.value(2).toInt() > m_soilConduMax_history) { m_soilConduMax_history = graphData.value(2).toInt(); minmaxChanged = true; }
-                if (graphData.value(3).toFloat() > m_soilTempMax_history) { m_soilTempMax_history = graphData.value(3).toFloat(); minmaxChanged = true; }
-                if (graphData.value(4).toFloat() > m_tempMax_history) { m_tempMax_history = graphData.value(4).toFloat(); minmaxChanged = true; }
-                if (graphData.value(5).toInt() > m_humiMax_history) { m_humiMax_history = graphData.value(5).toInt(); minmaxChanged = true; }
-                if (graphData.value(6).toInt() > m_luxMax_history) { m_luxMax_history = graphData.value(6).toInt(); minmaxChanged = true; }
+                if (!graphData.value(1).isNull() && graphData.value(1).toInt() > m_soilMoistureMax_history) { m_soilMoistureMax_history = graphData.value(1).toInt(); minmaxChanged = true; }
+                if (!graphData.value(2).isNull() && graphData.value(2).toInt() > m_soilConduMax_history) { m_soilConduMax_history = graphData.value(2).toInt(); minmaxChanged = true; }
+                if (!graphData.value(3).isNull() && graphData.value(3).toFloat() > m_soilTempMax_history) { m_soilTempMax_history = graphData.value(3).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(4).isNull() && graphData.value(4).toFloat() > m_tempMax_history) { m_tempMax_history = graphData.value(4).toFloat(); minmaxChanged = true; }
+                if (!graphData.value(5).isNull() && graphData.value(5).toInt() > m_humiMax_history) { m_humiMax_history = graphData.value(5).toInt(); minmaxChanged = true; }
+                if (!graphData.value(6).isNull() && graphData.value(6).toInt() > m_luxMax_history) { m_luxMax_history = graphData.value(6).toInt(); minmaxChanged = true; }
 
                 // data
                 ChartDataHistory *d = new ChartDataHistory(graphData.value(0).toDateTime(),
-                                                           graphData.value(1).toFloat(), graphData.value(2).toFloat(), graphData.value(3).toFloat(),
-                                                           graphData.value(4).toFloat(), graphData.value(5).toFloat(), graphData.value(6).toFloat(),
-                                                           graphData.value(7).toFloat(), graphData.value(8).toFloat(),
+                                                           DeviceUtils::sqlFloat(graphData.value(1)), DeviceUtils::sqlFloat(graphData.value(2)), DeviceUtils::sqlFloat(graphData.value(3)),
+                                                           DeviceUtils::sqlFloat(graphData.value(4)), DeviceUtils::sqlFloat(graphData.value(5)), DeviceUtils::sqlFloat(graphData.value(6)),
+                                                           DeviceUtils::sqlFloat(graphData.value(7)), DeviceUtils::sqlFloat(graphData.value(8)),
                                                            this);
                 m_chartData_history_month.push_front(d);
                 previousdata = d;

@@ -27,6 +27,7 @@
 #include <QString>
 #include <QByteArray>
 #include <QDateTime>
+#include <QVariant>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
 
@@ -104,6 +105,29 @@ public:
         uint32_t v = 0;
         for (int i = size - 1; i >= 0; i--) v = (v << 8) | data[pos + i];
         return v;
+    }
+
+    /*!
+     * \brief Convert a value read from the database, mapping SQL NULL to the -99 "no data" marker.
+     * \param v: the value, as returned by QSqlQuery::value().
+     * \return the value as a float, or -99 if the column was NULL.
+     *
+     * Some records (like a history synced from a device without all of its sensors)
+     * leave columns unset, which toFloat() would otherwise silently turn into 0.
+     */
+    static float sqlFloat(const QVariant &v)
+    {
+        return v.isNull() ? -99.f : v.toFloat();
+    }
+
+    /*!
+     * \brief Convert a value read from the database, mapping SQL NULL to the -99 "no data" marker.
+     * \param v: the value, as returned by QSqlQuery::value().
+     * \return the value as an int, or -99 if the column was NULL.
+     */
+    static int sqlInt(const QVariant &v)
+    {
+        return v.isNull() ? -99 : v.toInt();
     }
 
     enum BluetoothMode {
