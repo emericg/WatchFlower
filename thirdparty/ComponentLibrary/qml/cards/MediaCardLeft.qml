@@ -5,6 +5,8 @@ import ComponentLibrary
 MediaCardBackground {
     id: control
 
+    actionButton: actionRow.primaryButton
+
     implicitWidth: 500
     implicitHeight: 190
 
@@ -134,6 +136,7 @@ MediaCardBackground {
     }
 
     CardActionRow { // pinned to the bottom of the body area
+        id: actionRow
         anchors.left: (control.actionAlignment === Qt.AlignRight) ? undefined : parent.left
         anchors.leftMargin: control.mediaWidth + Theme.componentMarginL
         anchors.right: (control.actionAlignment === Qt.AlignRight) ? parent.right : undefined

@@ -37,11 +37,6 @@ T.ItemDelegate {
 
     background: Rectangle {
         color: control.highlighted ? Theme.colorForeground : Theme.colorBackground
-
-        RippleThemed {
-            anchors.fill: parent
-            anchor: control
-        }
     }
 
     ////////////////

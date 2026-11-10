@@ -219,7 +219,7 @@ list(APPEND MODULE_QML_FILES
     qml/utils/CsdMac.qml
     qml/utils/CsdWindows.qml
     qml/utils/CsdLinux.qml
-    qml/utils/FpsMonitor.qml
+    qml/utils/FpsCounter.qml
     qml/utils/MovablePoint.qml
     qml/utils/SwipeArea.qml
     qml/utils/WindowGeometrySaver.qml

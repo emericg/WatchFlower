@@ -5,6 +5,8 @@ import ComponentLibrary
 MediaCardBackground {
     id: control
 
+    actionButton: actionRow.primaryButton
+
     implicitWidth: 380
     implicitHeight: bodyColumn.implicitHeight + Theme.componentMarginL + actionRow.implicitHeight + control.mediaHeight
 
