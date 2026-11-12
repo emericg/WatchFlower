@@ -95,6 +95,11 @@ ApplicationWindow {
                 selectedDevice.actionWatering()
             }
         }
+        function onDeviceWateringSettingsButtonClicked() {
+            if (selectedDevice) {
+                popupParrotWatering.open()
+            }
+        }
         function onDeviceCalibrateButtonClicked() {
             if (selectedDevice) {
                 popupCalibration.open()
@@ -224,12 +229,12 @@ ApplicationWindow {
         if (visibility === Window.AutomaticVisibility ||
             visibility === Window.Minimized || visibility === Window.Maximized ||
             visibility === Window.Windowed || visibility === Window.FullScreen) {
-             if (SettingsManager.systray && Qt.platform.os === "osx") {
-                 utilsDock.toggleDockIconVisibility(true)
-             }
+            if (SettingsManager.systray && Qt.platform.os === "osx") {
+                utilsDock.toggleDockIconVisibility(true)
+            }
          }
 
-         if (visibility === Window.Hidden) {
+        if (visibility === Window.Hidden) {
             DeviceManager.disconnectDevices()
         }
     }
@@ -339,6 +344,10 @@ ApplicationWindow {
     }
     PopupDeleteData {
         id: popupDeleteData
+    }
+    PopupParrotWatering {
+        id: popupParrotWatering
+        device: selectedDevice
     }
 
     DesktopHeader {

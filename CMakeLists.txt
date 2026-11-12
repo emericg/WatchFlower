@@ -191,6 +191,7 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/popups/PopupCalibration.qml
         qml/popups/PopupDeleteData.qml
         qml/popups/PopupDeleteDevice.qml
+        qml/popups/PopupParrotWatering.qml
         qml/charts/ChartHistory.qml
         qml/charts/ChartPlantDataAio_qtgraphs.qml
         qml/charts/ChartThermometerMinMax.qml
@@ -223,6 +224,7 @@ qt_add_qml_module(${PROJECT_NAME}
         qml/components/PlantHardinessWidget.qml
         qml/components/PlantSizeWidget.qml
         qml/components/SpinBoxHistory.qml
+        qml/components/WateringChart.qml
 
         qml/components_js/UtilsDeviceSensors.js
         qml/components_js/UtilsPlantDatabase.js

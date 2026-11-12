@@ -1593,7 +1593,8 @@ void Device::deviceConnected()
     }
     else if (m_ble_action == DeviceUtils::ACTION_LED_BLINK ||
              m_ble_action == DeviceUtils::ACTION_CLEAR_HISTORY||
-             m_ble_action == DeviceUtils::ACTION_WATERING)
+             m_ble_action == DeviceUtils::ACTION_WATERING ||
+             m_ble_action == DeviceUtils::ACTION_WATERING_SETTINGS)
     {
         m_ble_status = DeviceUtils::DEVICE_WORKING;
     }

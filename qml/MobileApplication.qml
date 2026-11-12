@@ -88,6 +88,11 @@ Window {
                 appWindow.selectedDevice.actionWatering()
             }
         }
+        function onDeviceWateringSettingsButtonClicked() {
+            if (appWindow.selectedDevice) {
+                popupParrotWatering.open()
+            }
+        }
         function onDeviceCalibrateButtonClicked() {
             if (appWindow.selectedDevice) {
                 popupCalibration.open()
@@ -192,6 +197,10 @@ Window {
     }
     PopupDeleteData {
         id: popupDeleteData
+    }
+    PopupParrotWatering {
+        id: popupParrotWatering
+        device: appWindow.selectedDevice
     }
 
     FocusScope {

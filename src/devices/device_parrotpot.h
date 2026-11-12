@@ -50,10 +50,44 @@ class DeviceParrotPot: public DevicePlantSensor
 {
     Q_OBJECT
 
+    Q_PROPERTY(bool hasWateringSettings READ hasWateringSettings NOTIFY wateringSettingsUpdated)
+    Q_PROPERTY(bool wateringAuto READ getWateringAuto NOTIFY wateringSettingsUpdated)
+    Q_PROPERTY(float wateringThreshold READ getWateringThreshold NOTIFY wateringSettingsUpdated)
+    Q_PROPERTY(float wateringTarget READ getWateringTarget NOTIFY wateringSettingsUpdated)
+    Q_PROPERTY(int wateringDelay READ getWateringDelay NOTIFY wateringSettingsUpdated)
+
+Q_SIGNALS:
+    void wateringSettingsUpdated();
+    void wateringSettingsSaved(bool success);
+
 public:
     DeviceParrotPot(const QString &deviceAddr, const QString &deviceName, QObject *parent = nullptr);
     DeviceParrotPot(const QBluetoothDeviceInfo &d, QObject *parent = nullptr);
     ~DeviceParrotPot();
+
+    /*!
+     * \brief Whether the automatic watering settings have been read from the device at least once.
+     */
+    bool hasWateringSettings() const;
+    bool getWateringAuto() const { return (m_watering_enabled > 0); }
+    float getWateringThreshold() const { return m_watering_threshold / 10.f; } //!< in % VWC
+    float getWateringTarget() const { return m_watering_target / 10.f; } //!< in % VWC
+    int getWateringDelay() const { return (m_watering_delay > 0) ? (m_watering_delay / 4) : 0; } //!< in hours
+
+    /*!
+     * \brief Write new automatic watering settings to the device.
+     * \param enabled: automatic watering on or off. When off, only the enable flag is written,
+     *                 the device keeps its previous bounds and delay.
+     * \param threshold: water when the soil moisture drops below this, in %.
+     * \param target: stop watering once the soil moisture reaches this, in %.
+     * \param delay: wait once the threshold is reached, before watering, in hours, 0: disabled.
+     * \return false if the device is busy (connecting, connected or disconnecting) and the write could not start.
+     *
+     * The outcome is reported with wateringSettingsSaved().
+     * A value that only differs from the device one by its rounding is not rewritten,
+     * so a 40.5 % set by another application stays 40.5 %.
+     */
+    Q_INVOKABLE bool actionWateringSettings(bool enabled, int threshold, int target, int delay);
 
 private:
     // Services
@@ -76,6 +110,10 @@ private:
     static inline const QBluetoothUuid uuid_clock_time{QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b")};
     static inline const QBluetoothUuid uuid_watering_trigger{QStringLiteral("39e1f906-84a8-11e2-afba-0002a5d5c51b")};
     static inline const QBluetoothUuid uuid_watering_tank_level{QStringLiteral("39e1f907-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_watering_threshold{QStringLiteral("39e1f903-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_watering_target{QStringLiteral("39e1f904-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_watering_delay{QStringLiteral("39e1f905-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_watering_enable{QStringLiteral("39e1f90d-84a8-11e2-afba-0002a5d5c51b")};
 
     // QLowEnergyController related
     void serviceScanDone();
@@ -102,6 +140,50 @@ private:
     void bleReadErrored(QLowEnergyService::ServiceError error);
     void bleWorkFinished();
     void parseLiveValues();
+
+    // Automatic watering settings, in device units, -1 if unknown
+    int m_watering_enabled = -1;        //!< f90d, 0 or 1
+    int m_watering_threshold = -1;      //!< f903, 0.1 % VWC
+    int m_watering_target = -1;         //!< f904, 0.1 % VWC
+    int m_watering_delay = -1;          //!< f905, quarter hours
+
+    // Automatic watering settings being written, in device units
+    bool m_watering_write_ongoing = false;
+    int m_watering_writes_pending = 0;
+    int m_watering_write_enabled = 0;
+    int m_watering_write_threshold = 0;
+    int m_watering_write_target = 0;
+    int m_watering_write_delay = 0;
+
+    /*!
+     * \brief Load the watering settings cached in the device settings by the last read or write.
+     */
+    void loadWateringSettings();
+
+    /*!
+     * \brief Update the watering settings, and cache them in the device settings.
+     */
+    void setWateringSettings(int enabled, int threshold, int target, int delay);
+
+    /*!
+     * \brief Queue the watering settings writes, once the watering service is discovered.
+     */
+    void writeWateringSettings();
+
+    /*!
+     * \brief Handle a failed characteristic write, while writing the watering settings.
+     */
+    void bleWriteErrored(QLowEnergyService::ServiceError error);
+
+    /*!
+     * \brief End the watering settings write, and report its outcome.
+     * \param success: every write has been acknowledged by the device.
+     */
+    void wateringSettingsWriteFinished(bool success);
+
+    void deviceDisconnected();
+    void deviceErrored(QLowEnergyController::Error error);
+    void actionTimedOut();
 
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);

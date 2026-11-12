@@ -246,7 +246,25 @@ Rectangle {
             textColor: Theme.colorHeaderContent
             backgroundColor: Theme.colorHeaderHighlight
 
-            onClicked: deviceWateringButtonClicked()
+            onClicked: appHeader.deviceWateringButtonClicked()
+        }
+        ButtonCompactable {
+            id: buttonWateringSettings
+            height: compact ? 36 : 34
+            anchors.verticalCenter: parent.verticalCenter
+
+            compact: appHeader.headerCompact
+            visible: (DeviceManager.bluetooth &&
+                      (selectedDevice && selectedDevice.hasWaterTank) &&
+                      (appContent.state === "DevicePlantSensor"))
+
+            source: "qrc:/assets/gfx/icons/water_settings.svg"
+            tooltipText: qsTr("Watering settings")
+            iconColor: Theme.colorHeaderContent
+            textColor: Theme.colorHeaderContent
+            backgroundColor: Theme.colorHeaderHighlight
+
+            onClicked: appHeader.deviceWateringSettingsButtonClicked()
         }
         ButtonCompactable {
             id: buttonCalibrate

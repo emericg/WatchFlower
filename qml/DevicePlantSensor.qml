@@ -309,6 +309,25 @@ Loader {
 
         ////////
 
+        ButtonFabExtended { // Parrot Pot only
+            id: wateringButton
+            anchors.right: parent.right
+            anchors.rightMargin: Theme.componentMarginXL
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.componentMarginXL
+
+            visible: (DeviceManager.bluetooth &&
+                      currentDevice && currentDevice.hasWaterTank &&
+                      plantSensorPages.currentIndex === 0)
+
+            text: qsTr("Water now")
+            source: "qrc:/IconLibrary/material-icons/duotone/local_drink.svg"
+
+            onClicked: currentDevice.actionWatering()
+        }
+
+        ////////
+
         ActionbarSync {
             id: syncBanner
         }

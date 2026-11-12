@@ -247,8 +247,26 @@ T.Popup {
             }
 
             ActionMenuItem_button {
-                id: actionCalibrate
+                id: actionWateringSettings
                 index: 10
+
+                height: Theme.componentHeightL
+                layoutDirection: actionMenu.layoutDirection
+                visible: (DeviceManager.bluetooth && (selectedDevice && selectedDevice.hasWaterTank))
+
+                text: qsTr("Watering settings")
+                source: "qrc:/assets/gfx/icons/water_settings.svg"
+
+                onClicked: {
+                    deviceWateringSettingsButtonClicked()
+                    menuSelected(index)
+                    close()
+                }
+            }
+
+            ActionMenuItem_button {
+                id: actionCalibrate
+                index: 11
 
                 height: Theme.componentHeightL
                 layoutDirection: actionMenu.layoutDirection

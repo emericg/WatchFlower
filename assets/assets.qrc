@@ -37,5 +37,6 @@
         <file>gfx/icons/sunlight_borders.svg</file>
         <file>gfx/icons/thermometer-24px.svg</file>
         <file>gfx/icons/thermometer_big-24px.svg</file>
+        <file>gfx/icons/water_settings.svg</file>
     </qresource>
 </RCC>

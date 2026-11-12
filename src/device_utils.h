@@ -275,9 +275,10 @@ public:
         // App specific actions
 
         ACTION_LED_BLINK,
+        ACTION_CALIBRATE,
         ACTION_CLEAR_HISTORY,
         ACTION_WATERING,
-        ACTION_CALIBRATE,
+        ACTION_WATERING_SETTINGS,
     };
     Q_ENUM(DeviceActions)
 };

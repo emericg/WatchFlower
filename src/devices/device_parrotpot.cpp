@@ -23,6 +23,7 @@
 #include "device_firmwares.h"
 #include "utils_maths.h"
 
+#include <algorithm>
 #include <cstdint>
 #include <cmath>
 
@@ -72,6 +73,8 @@ DeviceParrotPot::DeviceParrotPot(const QString &deviceAddr, const QString &devic
     m_deviceSensors += DeviceUtils::SENSOR_WATER_LEVEL;
 
     m_watertank_capacity = 2.2;
+
+    loadWateringSettings();
 }
 
 DeviceParrotPot::DeviceParrotPot(const QBluetoothDeviceInfo &d, QObject *parent):
@@ -92,6 +95,8 @@ DeviceParrotPot::DeviceParrotPot(const QBluetoothDeviceInfo &d, QObject *parent)
     m_deviceSensors += DeviceUtils::SENSOR_WATER_LEVEL;
 
     m_watertank_capacity = 2.2;
+
+    loadWateringSettings();
 }
 
 DeviceParrotPot::~DeviceParrotPot()
@@ -188,6 +193,8 @@ void DeviceParrotPot::serviceScanDone()
             connect(serviceWatering, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_watering);
             connect(serviceWatering, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
             connect(serviceWatering, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleReadErrored);
+            connect(serviceWatering, &QLowEnergyService::characteristicWritten, this, &DeviceParrotPot::bleWriteDone);
+            connect(serviceWatering, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleWriteErrored);
 
             m_services_pending++;
 
@@ -287,6 +294,26 @@ void DeviceParrotPot::bleWorkFinished()
 {
     if (m_services_pending > 0 || m_reads_pending > 0) return;
 
+    if (m_ble_action == DeviceUtils::ACTION_UPDATE && serviceWatering)
+    {
+        const QByteArray v_en = serviceWatering->characteristic(uuid_watering_enable).value();
+        const QByteArray v_th = serviceWatering->characteristic(uuid_watering_threshold).value();
+        const QByteArray v_ta = serviceWatering->characteristic(uuid_watering_target).value();
+        const QByteArray v_de = serviceWatering->characteristic(uuid_watering_delay).value();
+
+        if (v_en.size() >= 1 && v_th.size() >= 2 && v_ta.size() >= 2 && v_de.size() >= 2)
+        {
+            setWateringSettings(static_cast<uint8_t>(v_en.at(0)) ? 1 : 0,
+                                static_cast<uint16_t>(DeviceUtils::readLE(v_th, 0, 2)),
+                                static_cast<uint16_t>(DeviceUtils::readLE(v_ta, 0, 2)),
+                                static_cast<uint16_t>(DeviceUtils::readLE(v_de, 0, 2)));
+        }
+        else
+        {
+            qWarning() << "DeviceParrotPot::bleWorkFinished(" << m_deviceAddress << ") incomplete watering settings";
+        }
+    }
+
     if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
         m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
     {
@@ -359,7 +386,8 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         serviceWatering = nullptr;
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
-            m_ble_action == DeviceUtils::ACTION_WATERING)
+            m_ble_action == DeviceUtils::ACTION_WATERING ||
+            m_ble_action == DeviceUtils::ACTION_WATERING_SETTINGS)
         {
             serviceWatering = m_bleController->createServiceObject(uuid);
             if (!serviceWatering)
@@ -602,6 +630,17 @@ void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::Servi
         {
             // Characteristic "water tank level", parsed in bleReadDone()
             bleReadPending(serviceWatering, uuid_watering_tank_level);
+
+            // Automatic watering settings, parsed together in bleWorkFinished()
+            bleReadPending(serviceWatering, uuid_watering_enable);
+            bleReadPending(serviceWatering, uuid_watering_threshold);
+            bleReadPending(serviceWatering, uuid_watering_target);
+            bleReadPending(serviceWatering, uuid_watering_delay);
+        }
+
+        if (m_ble_action == DeviceUtils::ACTION_WATERING_SETTINGS)
+        {
+            writeWateringSettings();
         }
 
         if (m_ble_action == DeviceUtils::ACTION_WATERING)
@@ -656,8 +695,30 @@ void DeviceParrotPot::bleWriteDone(const QLowEnergyCharacteristic &c, const QByt
     //qDebug() << "DeviceParrotPot::bleWriteDone(" << m_deviceAddress << ") on" << c.name() << " / uuid" << c.uuid() << value.size();
     //qDebug() << "DATA: 0x" << value.toHex();
 
-    Q_UNUSED(c)
     Q_UNUSED(value)
+
+    if (m_watering_write_ongoing &&
+        (c.uuid() == uuid_watering_enable || c.uuid() == uuid_watering_threshold ||
+         c.uuid() == uuid_watering_target || c.uuid() == uuid_watering_delay))
+    {
+        if (m_watering_writes_pending > 0) m_watering_writes_pending--;
+
+        if (m_watering_writes_pending == 0)
+        {
+            if (m_watering_write_enabled)
+            {
+                setWateringSettings(m_watering_write_enabled, m_watering_write_threshold,
+                                    m_watering_write_target, m_watering_write_delay);
+            }
+            else
+            {
+                setWateringSettings(0, m_watering_threshold, m_watering_target, m_watering_delay);
+            }
+
+            wateringSettingsWriteFinished(true);
+            deviceDisconnect();
+        }
+    }
 }
 
 void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value)
@@ -730,6 +791,173 @@ void DeviceParrotPot::bleReadNotify(const QLowEnergyCharacteristic &c, const QBy
 
     Q_UNUSED(c)
     Q_UNUSED(value)
+}
+
+/* ************************************************************************** */
+
+bool DeviceParrotPot::hasWateringSettings() const
+{
+    return (m_watering_enabled >= 0 && m_watering_threshold >= 0 &&
+            m_watering_target >= 0 && m_watering_delay >= 0);
+}
+
+void DeviceParrotPot::loadWateringSettings()
+{
+    const auto readCached = [this](const QString &key) {
+        bool ok = false;
+        const int v = m_additionalSettings.value(key).toString().toInt(&ok);
+        return ok ? v : -1;
+    };
+
+    m_watering_enabled = readCached(QStringLiteral("watering_enable"));
+    m_watering_threshold = readCached(QStringLiteral("watering_threshold"));
+    m_watering_target = readCached(QStringLiteral("watering_target"));
+    m_watering_delay = readCached(QStringLiteral("watering_delay"));
+}
+
+void DeviceParrotPot::setWateringSettings(int enabled, int threshold, int target, int delay)
+{
+    //qDebug() << "DeviceParrotPot::setWateringSettings(" << m_deviceAddress << ")" << enabled << threshold << target << delay;
+
+    if (enabled == m_watering_enabled && threshold == m_watering_threshold &&
+        target == m_watering_target && delay == m_watering_delay) return;
+
+    m_watering_enabled = enabled;
+    m_watering_threshold = threshold;
+    m_watering_target = target;
+    m_watering_delay = delay;
+
+    setSetting(QStringLiteral("watering_enable"), m_watering_enabled);
+    setSetting(QStringLiteral("watering_threshold"), m_watering_threshold);
+    setSetting(QStringLiteral("watering_target"), m_watering_target);
+    setSetting(QStringLiteral("watering_delay"), m_watering_delay);
+
+    Q_EMIT wateringSettingsUpdated();
+}
+
+/* ************************************************************************** */
+
+bool DeviceParrotPot::actionWateringSettings(bool enabled, int threshold, int target, int delay)
+{
+    //qDebug() << "DeviceParrotPot::actionWateringSettings()" << getAddress() << getName() << enabled << threshold << target << delay;
+
+    if (m_ble_status > DeviceUtils::DEVICE_AVAILABLE || m_watering_write_ongoing) return false;
+
+    threshold = std::clamp(threshold, 5, 99);
+    target = std::clamp(target, threshold + 1, 100);
+    delay = std::clamp(delay, 0, 168);
+
+    // Keep the device values when they round to the requested ones
+    m_watering_write_enabled = enabled ? 1 : 0;
+    m_watering_write_threshold = (std::lround(getWateringThreshold()) == threshold && m_watering_threshold >= 0) ?
+                                     m_watering_threshold : threshold * 10;
+    m_watering_write_target = (std::lround(getWateringTarget()) == target && m_watering_target >= 0) ?
+                                  m_watering_target : target * 10;
+    m_watering_write_delay = (getWateringDelay() == delay && m_watering_delay >= 0) ?
+                                 m_watering_delay : delay * 4;
+
+    m_watering_write_ongoing = true;
+    m_watering_writes_pending = 0;
+
+    actionStarted(DeviceUtils::ACTION_WATERING_SETTINGS);
+    deviceConnect();
+
+    if (m_ble_status != DeviceUtils::DEVICE_CONNECTING)
+    {
+        qWarning() << "DeviceParrotPot::actionWateringSettings(" << m_deviceAddress << ") unable to connect";
+
+        m_watering_write_ongoing = false;
+        actionFinished();
+        return false;
+    }
+
+    return true;
+}
+
+void DeviceParrotPot::writeWateringSettings()
+{
+    if (!serviceWatering) return;
+
+    const QLowEnergyCharacteristic cen = serviceWatering->characteristic(uuid_watering_enable);
+    const QLowEnergyCharacteristic cth = serviceWatering->characteristic(uuid_watering_threshold);
+    const QLowEnergyCharacteristic cta = serviceWatering->characteristic(uuid_watering_target);
+    const QLowEnergyCharacteristic cde = serviceWatering->characteristic(uuid_watering_delay);
+
+    if (!cen.isValid() || !cth.isValid() || !cta.isValid() || !cde.isValid())
+    {
+        qWarning() << "DeviceParrotPot::writeWateringSettings(" << m_deviceAddress << ") no watering settings characteristics";
+        wateringSettingsWriteFinished(false);
+        deviceDisconnect();
+        return;
+    }
+
+    const auto u16 = [](int v) {
+        QByteArray ba(2, 0);
+        ba[0] = static_cast<char>(v & 0xFF);
+        ba[1] = static_cast<char>((v >> 8) & 0xFF);
+        return ba;
+    };
+
+    // Writes are queued in order: the bounds and delay go first, and automatic watering
+    // is only enabled once they are in place, so the pump never runs on half written settings
+    if (m_watering_write_enabled)
+    {
+        m_watering_writes_pending = 4;
+        serviceWatering->writeCharacteristic(cth, u16(m_watering_write_threshold), QLowEnergyService::WriteWithResponse);
+        serviceWatering->writeCharacteristic(cta, u16(m_watering_write_target), QLowEnergyService::WriteWithResponse);
+        serviceWatering->writeCharacteristic(cde, u16(m_watering_write_delay), QLowEnergyService::WriteWithResponse);
+        serviceWatering->writeCharacteristic(cen, QByteArray(1, 1), QLowEnergyService::WriteWithResponse);
+    }
+    else
+    {
+        m_watering_writes_pending = 1;
+        serviceWatering->writeCharacteristic(cen, QByteArray(1, 0), QLowEnergyService::WriteWithResponse);
+    }
+}
+
+void DeviceParrotPot::bleWriteErrored(QLowEnergyService::ServiceError error)
+{
+    if (error != QLowEnergyService::CharacteristicWriteError) return;
+    if (!m_watering_write_ongoing) return;
+
+    qWarning() << "DeviceParrotPot::bleWriteErrored(" << m_deviceAddress << ") error:" << error;
+
+    wateringSettingsWriteFinished(false);
+    deviceDisconnect();
+}
+
+void DeviceParrotPot::wateringSettingsWriteFinished(bool success)
+{
+    if (!m_watering_write_ongoing) return;
+
+    m_watering_write_ongoing = false;
+    m_watering_writes_pending = 0;
+
+    Q_EMIT wateringSettingsSaved(success);
+}
+
+/* ************************************************************************** */
+
+void DeviceParrotPot::deviceDisconnected()
+{
+    // Disconnected before every write has been acknowledged
+    wateringSettingsWriteFinished(false);
+
+    DevicePlantSensor::deviceDisconnected();
+}
+
+void DeviceParrotPot::deviceErrored(QLowEnergyController::Error error)
+{
+    if (error > QLowEnergyController::NoError) wateringSettingsWriteFinished(false);
+
+    DevicePlantSensor::deviceErrored(error);
+}
+
+void DeviceParrotPot::actionTimedOut()
+{
+    wateringSettingsWriteFinished(false);
+
+    DevicePlantSensor::actionTimedOut();
 }
 
 /* ************************************************************************** */
