@@ -28,6 +28,7 @@
 #include <QObject>
 #include <QList>
 
+#include <QBluetoothUuid>
 #include <QBluetoothDeviceInfo>
 #include <QLowEnergyController>
 
@@ -35,6 +36,10 @@
 
 /*!
  * Parrot "Flower Power" devices
+ *
+ * Parrot devices have MANY services and characteristics, so we use SkipValueDiscovery
+ * to speed up connections, and we read the few characteristics values we actually need
+ * explicitely, instead of everything being fetched by the discovery.
  *
  * Protocol infos:
  * - WatchFlower/docs/flowerpower-ble-api.md
@@ -50,6 +55,25 @@ public:
     ~DeviceFlowerPower();
 
 private:
+    // Services
+    static constexpr QBluetoothUuid uuid_service_infos{QBluetoothUuid::ServiceClassUuid::DeviceInformation};
+    static constexpr QBluetoothUuid uuid_service_battery{QBluetoothUuid::ServiceClassUuid::BatteryService};
+    static inline const QBluetoothUuid uuid_service_live{QStringLiteral("39e1fa00-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_service_history{QStringLiteral("39e1fc00-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_service_clock{QStringLiteral("39e1fd00-84a8-11e2-afba-0002a5d5c51b")};
+
+    // Characteristics
+    static constexpr QBluetoothUuid uuid_firmware{QBluetoothUuid::CharacteristicType::FirmwareRevisionString};
+    static constexpr QBluetoothUuid uuid_battery_level{QBluetoothUuid::CharacteristicType::BatteryLevel};
+    static inline const QBluetoothUuid uuid_live_sunlight{QStringLiteral("39e1fa01-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_live_soil_ec{QStringLiteral("39e1fa02-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_live_soil_temp{QStringLiteral("39e1fa03-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_live_air_temp{QStringLiteral("39e1fa04-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_live_soil_moisture{QStringLiteral("39e1fa05-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_live_led{QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_live_last_move{QStringLiteral("39e1fa08-84a8-11e2-afba-0002a5d5c51b")};
+    static inline const QBluetoothUuid uuid_clock_time{QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b")};
+
     // QLowEnergyController related
     void serviceScanDone();
     void addLowEnergyService(const QBluetoothUuid &uuid);
@@ -58,12 +82,21 @@ private:
     void serviceDetailsDiscovered_clock(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState);
     void serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState);
+    void serviceDiscoveryFinished();
 
     QLowEnergyService *serviceInfos = nullptr;
     QLowEnergyService *serviceBattery = nullptr;
     QLowEnergyService *serviceClock = nullptr;
     QLowEnergyService *serviceHistory = nullptr;
     QLowEnergyService *serviceLive = nullptr;
+
+    int m_services_pending = 0;
+    int m_reads_pending = 0;
+
+    void bleReadPending(QLowEnergyService *service, const QBluetoothUuid &uuid);
+    void bleReadErrored(QLowEnergyService::ServiceError error);
+    void bleWorkFinished();
+    void parseLiveValues();
 
     void bleWriteDone(const QLowEnergyCharacteristic &c, const QByteArray &value);
     void bleReadDone(const QLowEnergyCharacteristic &c, const QByteArray &value);

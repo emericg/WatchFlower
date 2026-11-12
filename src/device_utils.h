@@ -23,6 +23,8 @@
 #define DEVICE_UTILS_H
 /* ************************************************************************** */
 
+#include <cstring>
+
 #include <QObject>
 #include <QString>
 #include <QByteArray>
@@ -50,6 +52,8 @@ public:
 
         qmlRegisterType<DeviceUtils>("DeviceUtils", 1, 0, "DeviceUtils");
     }
+
+    // BLE helpers /////////////////////////////////////////////////////////////
 
     /*!
      * \brief Read a big endian unsigned integer from a byte array.
@@ -80,6 +84,20 @@ public:
     }
 
     /*!
+     * \brief Read a little endian IEEE 754 float32 from a byte array.
+     * \param ba: the byte array to read from, with at least 4 bytes available from pos.
+     * \param pos: the position of the first (least significant) byte.
+     * \return the decoded value, which can be NaN or infinite if the device sends garbage.
+     */
+    static float readFloatLE(const QByteArray &ba, int pos)
+    {
+        const uint32_t raw = readLE(ba, pos, 4);
+        float f = 0.f;
+        std::memcpy(&f, &raw, sizeof(f));
+        return f;
+    }
+
+    /*!
      * \brief Read a big endian unsigned integer from a raw buffer.
      * \param data: the buffer to read from, not bounds checked.
      * \param pos: the position of the first (most significant) byte.
@@ -107,6 +125,8 @@ public:
         return v;
     }
 
+    // Sql helpers /////////////////////////////////////////////////////////////
+
     /*!
      * \brief Convert a value read from the database, mapping SQL NULL to the -99 "no data" marker.
      * \param v: the value, as returned by QSqlQuery::value().
@@ -129,6 +149,8 @@ public:
     {
         return v.isNull() ? -99 : v.toInt();
     }
+
+    // Enums ///////////////////////////////////////////////////////////////////
 
     enum BluetoothMode {
         DEVICE_BLE_UNKNOWN          = 0,

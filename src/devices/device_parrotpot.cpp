@@ -111,12 +111,24 @@ void DeviceParrotPot::serviceScanDone()
 {
     //qDebug() << "DeviceParrotPot::serviceScanDone(" << m_deviceAddress << ")";
 
+    m_services_pending = 0;
+    m_reads_pending = 0;
+
+    // Every service is discovered with SkipValueDiscovery: a Parrot Pot exposes
+    // dozens of characteristics we never look at, and a full discovery reads all
+    // of their values *and* descriptors before we get a chance to do anything.
+    // The handful of values we need are read explicitly instead, from the
+    // serviceDetailsDiscovered_*() handlers.
+
     if (serviceInfos)
     {
         if (serviceInfos->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceInfos, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_infos);
             connect(serviceInfos, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceInfos, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleReadErrored);
+
+            m_services_pending++;
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
             QTimer::singleShot(0, this, [=] () { serviceInfos->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
@@ -128,10 +140,13 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceBattery->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceBattery, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_battery);
-            //connect(serviceBattery, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceBattery, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceBattery, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleReadErrored);
+
+            m_services_pending++;
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceBattery->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
         }
     }
 
@@ -140,10 +155,13 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceClock->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceClock, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_clock);
-            //connect(serviceClock, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceClock, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceClock, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleReadErrored);
+
+            m_services_pending++;
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceClock->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceClock->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
         }
     }
 
@@ -152,11 +170,14 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceHistory->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceHistory, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_history);
-            //connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceHistory, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceHistory, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleReadErrored);
             //connect(serviceHistory, &QLowEnergyService::characteristicWritten, this, &DeviceParrotPot::bleWriteDone);
 
+            m_services_pending++;
+
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceHistory->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceHistory->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
         }
     }
 
@@ -165,10 +186,13 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceWatering->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceWatering, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_watering);
-            //connect(serviceWatering, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceWatering, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceWatering, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleReadErrored);
+
+            m_services_pending++;
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceWatering->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceWatering->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
         }
     }
 
@@ -177,11 +201,96 @@ void DeviceParrotPot::serviceScanDone()
         if (serviceLive->state() == QLowEnergyService::RemoteService)
         {
             connect(serviceLive, &QLowEnergyService::stateChanged, this, &DeviceParrotPot::serviceDetailsDiscovered_live);
-            //connect(serviceLive, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceLive, &QLowEnergyService::characteristicRead, this, &DeviceParrotPot::bleReadDone);
+            connect(serviceLive, &QLowEnergyService::errorOccurred, this, &DeviceParrotPot::bleReadErrored);
+
+            m_services_pending++;
 
             // Windows hack, see: QTBUG-80770 and QTBUG-78488
-            QTimer::singleShot(0, this, [=] () { serviceLive->discoverDetails(); });
+            QTimer::singleShot(0, this, [=] () { serviceLive->discoverDetails(QLowEnergyService::SkipValueDiscovery); });
         }
+    }
+}
+
+/* ************************************************************************** */
+
+/*!
+ * \brief Request a characteristic value, and keep track of the pending read.
+ * \param service: the service holding the characteristic.
+ * \param uuid: the characteristic to read.
+ *
+ * Services are discovered with SkipValueDiscovery, so a characteristic value is
+ * only available once it has been explicitly read. The value ends up in the
+ * service's own cache, so it can be picked up with characteristic().value()
+ * once bleWorkFinished() reports every read as done.
+ */
+void DeviceParrotPot::bleReadPending(QLowEnergyService *service, const QBluetoothUuid &uuid)
+{
+    if (!service) return;
+
+    const QLowEnergyCharacteristic c = service->characteristic(uuid);
+    if (!c.isValid())
+    {
+        qWarning() << "DeviceParrotPot::bleReadPending(" << m_deviceAddress << ") unknown characteristic:" << uuid.toString();
+        return;
+    }
+
+    m_reads_pending++;
+    service->readCharacteristic(c);
+}
+
+/*!
+ * \brief Account for a service whose details have been discovered.
+ *
+ * Requests towards a given peripheral are serialised, and the services are
+ * discovered in the order they are listed in serviceScanDone(). The reads
+ * issued by the earlier services are therefore always queued behind the detail
+ * discovery of the last one, meaning no read can complete before every service
+ * has had the chance to queue its own.
+ *
+ * A service that never reaches RemoteServiceDiscovered is deliberately left
+ * accounted for: the action then ends on its timeout, like it did when the
+ * values were fetched by the discovery itself.
+ */
+void DeviceParrotPot::serviceDiscoveryFinished()
+{
+    if (m_services_pending > 0) m_services_pending--;
+
+    bleWorkFinished();
+}
+
+/*!
+ * \brief Handle a failed characteristic read.
+ *
+ * A read that errors out never emits characteristicRead(), so its slot in the
+ * pending count has to be reclaimed here, or the action would hang until it
+ * times out.
+ */
+void DeviceParrotPot::bleReadErrored(QLowEnergyService::ServiceError error)
+{
+    if (error != QLowEnergyService::CharacteristicReadError) return;
+
+    qWarning() << "DeviceParrotPot::bleReadErrored(" << m_deviceAddress << ") error:" << error;
+
+    if (m_reads_pending > 0) m_reads_pending--;
+
+    bleWorkFinished();
+}
+
+/*!
+ * \brief Called whenever a service discovery or a characteristic read settles.
+ *
+ * Once nothing is in flight anymore, every value we asked for is sitting in its
+ * service cache and the live values can be turned into a sensor reading.
+ */
+void DeviceParrotPot::bleWorkFinished()
+{
+    if (m_services_pending > 0 || m_reads_pending > 0) return;
+
+    if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
+        m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+    {
+        parseLiveValues();
     }
 }
 
@@ -191,7 +300,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
 {
     //qDebug() << "DeviceParrotPot::addLowEnergyService(" << uuid.toString() << ")";
 
-    if (uuid.toString() == "{0000180a-0000-1000-8000-00805f9b34fb}") // Device Information service
+    if (uuid == uuid_service_infos)
     {
         delete serviceInfos;
         serviceInfos = nullptr;
@@ -205,7 +314,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{0000180f-0000-1000-8000-00805f9b34fb}") // Battery service
+    if (uuid == uuid_service_battery)
     {
         delete serviceBattery;
         serviceBattery = nullptr;
@@ -218,7 +327,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fc00-84a8-11e2-afba-0002a5d5c51b}") // (custom) History service
+    if (uuid == uuid_service_history)
     {
         delete serviceHistory;
         serviceHistory = nullptr;
@@ -231,7 +340,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fd00-84a8-11e2-afba-0002a5d5c51b}") // (custom) Clock service
+    if (uuid == uuid_service_clock)
     {
         delete serviceClock;
         serviceClock = nullptr;
@@ -244,7 +353,7 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1f900-84a8-11e2-afba-0002a5d5c51b}") // (custom) Watering service
+    if (uuid == uuid_service_watering)
     {
         delete serviceWatering;
         serviceWatering = nullptr;
@@ -258,12 +367,14 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
         }
     }
 
-    if (uuid.toString() == "{39e1fa00-84a8-11e2-afba-0002a5d5c51b}") // (custom) Live service
+    if (uuid == uuid_service_live)
     {
         delete serviceLive;
         serviceLive = nullptr;
 
-        if (m_ble_action != DeviceUtils::ACTION_UPDATE_HISTORY)
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
+            m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME ||
+            m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             serviceLive = m_bleController->createServiceObject(uuid);
             if (!serviceLive)
@@ -276,256 +387,266 @@ void DeviceParrotPot::addLowEnergyService(const QBluetoothUuid &uuid)
 
 void DeviceParrotPot::serviceDetailsDiscovered_infos(QLowEnergyService::ServiceState newState)
 {
-    if (serviceInfos && newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (newState != QLowEnergyService::RemoteServiceDiscovered) return;
+
+    if (serviceInfos)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_infos(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        QBluetoothUuid uuid_fw(QStringLiteral("00002a26-0000-1000-8000-00805f9b34fb"));
-        QLowEnergyCharacteristic cfw = serviceInfos->characteristic(uuid_fw);
-        if (cfw.value().size() > 0)
-        {
-            QString fw = parseFirmwareRevision(cfw.value());
-            if (!fw.isEmpty())
-            {
-                setFirmware(fw);
-
-                QVersionNumber fw_version = QVersionNumber::fromString(m_deviceFirmware);
-                if (!fw_version.isNull() &&
-                    fw_version >= QVersionNumber::fromString(LATEST_KNOWN_FIRMWARE_PARROTPOT))
-                {
-                    m_firmware_uptodate = true;
-                    Q_EMIT firmwareUpdated();
-                }
-            }
-        }
-        else
-        {
-            serviceInfos->readCharacteristic(cfw);
-        }
+        // Characteristic "Firmware Revision String", parsed in bleReadDone()
+        bleReadPending(serviceInfos, uuid_firmware);
     }
+
+    serviceDiscoveryFinished();
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_battery(QLowEnergyService::ServiceState newState)
 {
-    if (serviceBattery && newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (newState != QLowEnergyService::RemoteServiceDiscovered) return;
+
+    if (serviceBattery)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_battery(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        // Characteristic "Battery Level"
-        QBluetoothUuid uuid_batterylevel(QStringLiteral("00002a19-0000-1000-8000-00805f9b34fb"));
-        QLowEnergyCharacteristic cbat = serviceBattery->characteristic(uuid_batterylevel);
-
-        if (cbat.value().size() == 1)
-        {
-            int lvl = static_cast<uint8_t>(cbat.value().constData()[0]);
-            setBattery(lvl);
-        }
-        else
-        {
-            serviceBattery->readCharacteristic(cbat);
-        }
+        // Characteristic "Battery Level", parsed in bleReadDone()
+        bleReadPending(serviceBattery, uuid_battery_level);
     }
+
+    serviceDiscoveryFinished();
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_live(QLowEnergyService::ServiceState newState)
 {
-    if (serviceLive && newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (newState != QLowEnergyService::RemoteServiceDiscovered) return;
+
+    if (serviceLive)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_live(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (m_ble_action == DeviceUtils::ACTION_LED_BLINK)
         {
             // Make LED blink
-            QBluetoothUuid led(QStringLiteral("39e1fa07-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic cled = serviceLive->characteristic(led);
-            serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
+            const QLowEnergyCharacteristic cled = serviceLive->characteristic(uuid_live_led);
+            if (cled.isValid())
+            {
+                serviceLive->writeCharacteristic(cled, QByteArray::fromHex("01"), QLowEnergyService::WriteWithResponse);
+            }
+            else
+            {
+                qWarning() << "DeviceParrotPot::serviceDetailsDiscovered_live(" << m_deviceAddress << ") no LED characteristic";
+                deviceDisconnect();
+            }
         }
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE ||
             m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
         {
-            const quint8 *rawData = nullptr;
-            uint32_t rawValue = 0;
-            uint32_t rawValueCal;
-
-            /////////
-
-            QBluetoothUuid lx(QStringLiteral("39e1fa01-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic chlx = serviceLive->characteristic(lx);
-
-            rawData = reinterpret_cast<const quint8 *>(chlx.value().constData());
-            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            // sensor output is linear in illuminance, and reads ~3 with the sensor obstructed
-            m_luminosityLux = static_cast<int>(std::lround(22.06 * rawValue - 73.5));
-            if (m_luminosityLux < 0) m_luminosityLux = 0;
-
-            /////////
-
-            QBluetoothUuid sf(QStringLiteral("39e1fa02-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic chsf = serviceLive->characteristic(sf);
-
-            rawData = reinterpret_cast<const quint8 *>(chsf.value().constData());
-            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            // sensor output (no soil: 2036) - (max observed: 1747) wich maps to 0 - 10 (mS/cm)
-            if (rawValue < 1500) rawValue = 1500;
-            if (rawValue > 2036) rawValue = 2036;
-            m_soilConductivity = mapNumber(rawValue, 2036, 1500, 0, 1000, false);
-
-            /////////
-
-            QBluetoothUuid st(QStringLiteral("39e1fa03-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic chst = serviceLive->characteristic(st);
-
-            rawData = reinterpret_cast<const quint8 *>(chst.value().constData());
-            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_soilTemperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
-
-            /////////
-
-            QBluetoothUuid t(QStringLiteral("39e1fa04-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic cht = serviceLive->characteristic(t);
-
-            rawData = reinterpret_cast<const quint8 *>(cht.value().constData());
-            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            m_temperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
-            if (m_temperature < -10.f) m_temperature = -10.f;
-            if (m_temperature > 55.f) m_temperature = 55.f;
-
-            /////////
-/*
-            QBluetoothUuid sm(QStringLiteral("39e1fa05-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic chsm = serviceLive->characteristic(sm);
-
-            rawData = reinterpret_cast<const quint8 *>(chsm.value().constData());
-            rawValue = static_cast<uint16_t>(rawData[0] + (rawData[1] << 8));
-            double hygro1 = 11.4293 + (0.0000000010698 * std::pow(rawValue, 4.0) - 0.00000152538 * std::pow(rawValue, 3.0) + 0.000866976 * std::pow(rawValue, 2.0) - 0.169422 * rawValue);
-            double hygro2 = 100.0 * (0.0000045 * std::pow(hygro1, 3.0) - 0.00055 * std::pow(hygro1, 2.0) + 0.0292 * hygro1 - 0.053);
-            if (hygro2 < 0.0) hygro2 = 0.0;
-            if (hygro2 > 60.0) hygro2 = 60.0;
-            m_soilMoisture = std::round(hygro2);
-*/
-            /////////
-
-            QBluetoothUuid sm_calibrated(QStringLiteral("39e1fa09-84a8-11e2-afba-0002a5d5c51b")); // soil moisture
-            QLowEnergyCharacteristic chsmc = serviceLive->characteristic(sm_calibrated);
-
-            rawData = reinterpret_cast<const quint8 *>(chsmc.value().constData());
-            rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
-            m_soilMoisture = std::round(*((float*)&rawValueCal));
-/*
-            QBluetoothUuid at_calibrated(QStringLiteral("39e1fa0a-84a8-11e2-afba-0002a5d5c51b")); // air temp
-            QLowEnergyCharacteristic chatc = serviceLive->characteristic(at_calibrated);
-
-            rawData = reinterpret_cast<const quint8 *>(chatc.value().constData());
-            rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
-            m_temperature = std::round(*((float*)&rawValueCal));
-*/
-/*
-            QBluetoothUuid dli_calibrated(QStringLiteral("39e1fa0b-84a8-11e2-afba-0002a5d5c51b")); // sunlight? // unusable, give bad values
-            QLowEnergyCharacteristic chdlic = serviceLive->characteristic(dli_calibrated);
-
-            rawData = reinterpret_cast<const quint8 *>(chdlic.value().constData());
-            rawValueCal = static_cast<uint32_t>(rawData[0] + (rawData[1] << 8) + (rawData[2] << 16) + (rawData[3] << 24));
-            m_luminosityLux = std::round(*((float*)&rawValueCal)) * 11.574 * 53.93 * 10.0;
-*/
-            /////////
-
-            if (m_soilTemperature < -10.f || m_soilTemperature > 100.f ||
-                m_temperature < -10.f || m_temperature > 100.f ||
-                m_luminosityLux < 0 || m_luminosityLux > 200000)
-            {
-                // Sometimes, Parrot devices send obviously wrong data over BLE
-                // Maybe the sensor is warming up?
-                qWarning() << "Parrot sensor values error";
-            }
-            else
-            {
-                m_lastUpdate = QDateTime::currentDateTime();
-
-                if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
-                {
-                    refreshRealtime(); // TODO // ask for new values?
-                }
-                else
-                {
-                    bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
-                                                    m_soilMoisture, m_soilConductivity, m_soilTemperature, m_watertank_level,
-                                                    m_temperature, -99.f, m_luminosityLux);
-
-                    refreshDataFinished(status);
-
-                    deviceDisconnect();
-                }
-            }
-
-            /////////
-/*
-            qDebug() << "* DeviceParrotPot update:" << getAddress();
-            qDebug() << "- m_firmware:" << m_deviceFirmware;
-            qDebug() << "- m_battery:" << m_deviceBattery;
-            qDebug() << "- m_soilMoisture:" << m_soilMoisture;
-            qDebug() << "- m_soilConductivity:" << m_soilConductivity;
-            qDebug() << "- m_soilTemperature:" << m_soilTemperature;
-            qDebug() << "- m_temperature:" << m_temperature;
-            qDebug() << "- m_luminosityLux:" << m_luminosityLux;
-*/
+            // The values land in the service cache, and are parsed together by
+            // parseLiveValues() once every read has come back
+            bleReadPending(serviceLive, uuid_live_sunlight);
+            bleReadPending(serviceLive, uuid_live_soil_ec);
+            bleReadPending(serviceLive, uuid_live_soil_temp);
+            bleReadPending(serviceLive, uuid_live_air_temp);
+            bleReadPending(serviceLive, uuid_live_soil_moisture_cal);
         }
     }
+
+    serviceDiscoveryFinished();
+}
+
+/*!
+ * \brief Turn the live service values into a sensor reading.
+ *
+ * Only called once every pending read has come back, so the values are the ones
+ * we just read from the device, not leftovers from a previous connection.
+ */
+void DeviceParrotPot::parseLiveValues()
+{
+    if (!serviceLive) return;
+
+    const QByteArray v_lx = serviceLive->characteristic(uuid_live_sunlight).value();
+    const QByteArray v_sf = serviceLive->characteristic(uuid_live_soil_ec).value();
+    const QByteArray v_st = serviceLive->characteristic(uuid_live_soil_temp).value();
+    const QByteArray v_at = serviceLive->characteristic(uuid_live_air_temp).value();
+    const QByteArray v_smc = serviceLive->characteristic(uuid_live_soil_moisture_cal).value();
+
+    if (v_lx.size() < 2 || v_sf.size() < 2 || v_st.size() < 2 || v_at.size() < 2 || v_smc.size() < 4)
+    {
+        qWarning() << "DeviceParrotPot::parseLiveValues(" << m_deviceAddress << ") incomplete live values";
+
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+        {
+            refreshDataFinished(false);
+            deviceDisconnect();
+        }
+        return;
+    }
+
+    const quint8 *rawData = nullptr;
+    uint32_t rawValue = 0;
+
+    /////////
+
+    rawData = reinterpret_cast<const quint8 *>(v_lx.constData());
+    rawValue = static_cast<uint16_t>(DeviceUtils::readLE(rawData, 0, 2));
+    // sensor output is linear in illuminance, and reads ~3 with the sensor obstructed
+    m_luminosityLux = static_cast<int>(std::lround(22.06 * rawValue - 73.5));
+    if (m_luminosityLux < 0) m_luminosityLux = 0;
+
+    /////////
+
+    rawData = reinterpret_cast<const quint8 *>(v_sf.constData());
+    rawValue = static_cast<uint16_t>(DeviceUtils::readLE(rawData, 0, 2));
+    // sensor output (no soil: 2036) - (max observed: 1747) wich maps to 0 - 10 (mS/cm)
+    if (rawValue < 1500) rawValue = 1500;
+    if (rawValue > 2036) rawValue = 2036;
+    m_soilConductivity = mapNumber(rawValue, 2036, 1500, 0, 1000, false);
+
+    /////////
+
+    rawData = reinterpret_cast<const quint8 *>(v_st.constData());
+    rawValue = static_cast<uint16_t>(DeviceUtils::readLE(rawData, 0, 2));
+    m_soilTemperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+
+    /////////
+
+    rawData = reinterpret_cast<const quint8 *>(v_at.constData());
+    rawValue = static_cast<uint16_t>(DeviceUtils::readLE(rawData, 0, 2));
+    m_temperature = 0.00000003044 * std::pow(rawValue, 3.0) - 0.00008038 * std::pow(rawValue, 2.0) + rawValue * 0.1149 - 30.449999999999999;
+    if (m_temperature < -10.f) m_temperature = -10.f;
+    if (m_temperature > 55.f) m_temperature = 55.f;
+
+    /////////
+/*
+    // soil moisture (raw), 39e1fa05-84a8-11e2-afba-0002a5d5c51b
+    rawData = reinterpret_cast<const quint8 *>(v_sm.constData());
+    rawValue = static_cast<uint16_t>(DeviceUtils::readLE(rawData, 0, 2));
+    double hygro1 = 11.4293 + (0.0000000010698 * std::pow(rawValue, 4.0) - 0.00000152538 * std::pow(rawValue, 3.0) + 0.000866976 * std::pow(rawValue, 2.0) - 0.169422 * rawValue);
+    double hygro2 = 100.0 * (0.0000045 * std::pow(hygro1, 3.0) - 0.00055 * std::pow(hygro1, 2.0) + 0.0292 * hygro1 - 0.053);
+    if (hygro2 < 0.0) hygro2 = 0.0;
+    if (hygro2 > 60.0) hygro2 = 60.0;
+    m_soilMoisture = std::round(hygro2);
+*/
+    /////////
+
+    const float soilMoisture = DeviceUtils::readFloatLE(v_smc, 0);
+    const bool soilMoistureValid = (std::isfinite(soilMoisture) && soilMoisture >= 0.f && soilMoisture <= 100.f);
+    if (soilMoistureValid) m_soilMoisture = static_cast<int>(std::lround(soilMoisture));
+/*
+    // air temperature (calibrated), 39e1fa0a-84a8-11e2-afba-0002a5d5c51b
+    m_temperature = DeviceUtils::readFloatLE(v_atc, 0);
+*/
+/*
+    // sunlight / DLI (calibrated), 39e1fa0b-84a8-11e2-afba-0002a5d5c51b // unusable, give bad values
+    m_luminosityLux = std::round(DeviceUtils::readFloatLE(v_dlic, 0)) * 11.574 * 53.93 * 10.0;
+*/
+    /////////
+
+    if (!soilMoistureValid ||
+        m_soilTemperature < -10.f || m_soilTemperature > 100.f ||
+        m_temperature < -10.f || m_temperature > 100.f ||
+        m_luminosityLux < 0 || m_luminosityLux > 200000)
+    {
+        // Sometimes, Parrot devices send obviously wrong data over BLE
+        // Maybe the sensor is warming up?
+        qWarning() << "Parrot sensor values error";
+
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+        {
+            refreshDataFinished(false);
+            deviceDisconnect();
+        }
+    }
+    else
+    {
+        m_lastUpdate = QDateTime::currentDateTime();
+
+        if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+        {
+            refreshRealtime(); // TODO // ask for new values?
+        }
+        else
+        {
+            bool status = addDatabaseRecord(m_lastUpdate.toSecsSinceEpoch(),
+                                            m_soilMoisture, m_soilConductivity, m_soilTemperature, m_watertank_level,
+                                            m_temperature, -99.f, m_luminosityLux);
+
+            refreshDataFinished(status);
+
+            deviceDisconnect();
+        }
+    }
+
+    /////////
+/*
+    qDebug() << "* DeviceParrotPot update:" << getAddress();
+    qDebug() << "- m_firmware:" << m_deviceFirmware;
+    qDebug() << "- m_battery:" << m_deviceBattery;
+    qDebug() << "- m_soilMoisture:" << m_soilMoisture;
+    qDebug() << "- m_soilConductivity:" << m_soilConductivity;
+    qDebug() << "- m_soilTemperature:" << m_soilTemperature;
+    qDebug() << "- m_temperature:" << m_temperature;
+    qDebug() << "- m_luminosityLux:" << m_luminosityLux;
+*/
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_watering(QLowEnergyService::ServiceState newState)
 {
-    if (serviceWatering && newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (newState != QLowEnergyService::RemoteServiceDiscovered) return;
+
+    if (serviceWatering)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_watering(" << m_deviceAddress << ") > ServiceDiscovered";
 
         if (m_ble_action == DeviceUtils::ACTION_UPDATE)
         {
-            QBluetoothUuid uuid_wt_lvl(QStringLiteral("39e1f907-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_lvl);
-            if (cwt.value().size() > 0)
-            {
-                int water_percent = static_cast<uint8_t>(cwt.value().constData()[0]);
-                m_watertank_level = (water_percent * m_watertank_capacity) / 100.0;
-
-                //qDebug() << "* DeviceParrotPot water tank: " << m_watertank_level;
-            }
+            // Characteristic "water tank level", parsed in bleReadDone()
+            bleReadPending(serviceWatering, uuid_watering_tank_level);
         }
 
         if (m_ble_action == DeviceUtils::ACTION_WATERING)
         {
-            QBluetoothUuid uuid_wt_trigger(QStringLiteral("39e1f906-84a8-11e2-afba-0002a5d5c51b"));
-            QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_wt_trigger);
-            serviceWatering->writeCharacteristic(cwt, QByteArray::fromHex("0800"));
+            const QLowEnergyCharacteristic cwt = serviceWatering->characteristic(uuid_watering_trigger);
+            if (cwt.isValid())
+            {
+                serviceWatering->writeCharacteristic(cwt, QByteArray::fromHex("0800"));
+            }
+            else
+            {
+                qWarning() << "DeviceParrotPot::serviceDetailsDiscovered_watering(" << m_deviceAddress << ") no watering trigger characteristic";
+                deviceDisconnect();
+            }
         }
     }
+
+    serviceDiscoveryFinished();
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_clock(QLowEnergyService::ServiceState newState)
 {
-    if (serviceClock && newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (newState != QLowEnergyService::RemoteServiceDiscovered) return;
+
+    if (serviceClock)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_clock(" << m_deviceAddress << ") > ServiceDiscovered";
 
-        QBluetoothUuid uuid_clk(QStringLiteral("39e1fd01-84a8-11e2-afba-0002a5d5c51b"));
-        QLowEnergyCharacteristic cclk = serviceClock->characteristic(uuid_clk);
-        if (cclk.value().size() > 0)
-        {
-            const quint8 *data = reinterpret_cast<const quint8 *>(cclk.value().constData());
-            m_device_time = data[0] + (data[1] << 8) + (data[2] << 16) + (data[3] << 24);
-            m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
-
-            qDebug() << "* DeviceParrotPot clock: " << m_device_time;
-        }
+        // Characteristic "current time", parsed in bleReadDone()
+        bleReadPending(serviceClock, uuid_clock_time);
     }
+
+    serviceDiscoveryFinished();
 }
 
 void DeviceParrotPot::serviceDetailsDiscovered_history(QLowEnergyService::ServiceState newState)
 {
-    if (serviceHistory && newState == QLowEnergyService::RemoteServiceDiscovered)
+    if (newState != QLowEnergyService::RemoteServiceDiscovered) return;
+
+    if (serviceHistory)
     {
         //qDebug() << "DeviceParrotPot::serviceDetailsDiscovered_history(" << m_deviceAddress << ") > ServiceDiscovered";
     }
+
+    serviceDiscoveryFinished();
 }
 
 /* ************************************************************************** */
@@ -545,7 +666,7 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
     //qDebug() << "DATA: 0x" << value.toHex();
 
     // Read firmware version
-    if (c.uuid().toString() == "00002a26-0000-1000-8000-00805f9b34fb")
+    if (c.uuid() == uuid_firmware)
     {
         QString fw = parseFirmwareRevision(value);
         if (!fw.isEmpty())
@@ -563,7 +684,7 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
     }
 
     // Read battery level
-    if (c.uuid().toString() == "00002a19-0000-1000-8000-00805f9b34fb")
+    if (c.uuid() == uuid_battery_level)
     {
         if (value.size() == 1)
         {
@@ -571,6 +692,35 @@ void DeviceParrotPot::bleReadDone(const QLowEnergyCharacteristic &c, const QByte
             setBattery(lvl);
         }
     }
+
+    // Read water tank level
+    if (c.uuid() == uuid_watering_tank_level)
+    {
+        if (value.size() >= 1)
+        {
+            int water_percent = static_cast<uint8_t>(value.constData()[0]);
+            m_watertank_level = (water_percent * m_watertank_capacity) / 100.0;
+
+            //qDebug() << "* DeviceParrotPot water tank: " << m_watertank_level;
+        }
+    }
+
+    // Read device clock
+    if (c.uuid() == uuid_clock_time)
+    {
+        if (value.size() >= 4)
+        {
+            const quint8 *data = reinterpret_cast<const quint8 *>(value.constData());
+            m_device_time = DeviceUtils::readLE(data, 0, 4);
+            m_device_wall_time = QDateTime::currentSecsSinceEpoch() - m_device_time;
+
+            qDebug() << "* DeviceParrotPot clock: " << m_device_time;
+        }
+    }
+
+    if (m_reads_pending > 0) m_reads_pending--;
+
+    bleWorkFinished();
 }
 
 void DeviceParrotPot::bleReadNotify(const QLowEnergyCharacteristic &c, const QByteArray &value)
