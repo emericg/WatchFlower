@@ -10,7 +10,7 @@
   <description>
     <p>WatchFlower is a plant monitoring application that reads and plots data from compatible Bluetooth Low Energy sensors like Xiaomi "Flower Care" and "Ropot" or Parrot "Flower Power" and "Parrot Pot", as well as many thermometers and air quality sensors!</p>
     <p>It works with international and Chinese Xiaomi devices, doesn't require an account creation, your GPS location, nor any other personal data from you!</p>
-    <p>Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, German, Norwegian (Bokmål and Nynorsk), Russian and Spanish!</p>
+    <p>Available in Chinese (traditional and simplified), Danish, Dutch, English, French, Frisian, German, Norwegian (Bokmål and Nynorsk), Polish, Russian and Spanish!</p>
     <p>Features:</p>
     <ul>
       <li>Support many different plant sensors and thermometers</li>
@@ -23,12 +23,12 @@
       <li>Clickable two-week graphs</li>
       <li>Monthly/weekly/daily data histograms</li>
       <li>90 days CSV data export</li>
-      <li>Scalable UI: 4.6" to 34" screens, landscape or portrait</li>
+      <li>Scalable UI: 5.0" to 34" screens, landscape or portrait</li>
     </ul>
   </description>
 
   <releases>
-    <release version="6.0" date="2026-10-15"> <url type="details">https://github.com/emericg/WatchFlower/releases/tag/v6.0</url> </release>
+    <release version="6.0" date="2026-11-14"> <url type="details">https://github.com/emericg/WatchFlower/releases/tag/v6.0</url> </release>
     <release version="5.4" date="2024-01-17" />
     <release version="5.3" date="2023-10-03" />
     <release version="5.2" date="2023-08-01" />
@@ -59,41 +59,55 @@
   <url type="translate">https://github.com/emericg/WatchFlower/blob/master/i18n/README.md</url>
   <url type="donation">https://paypal.me/EmericGrange</url>
 
+  <branding>
+    <color type="primary" scheme_preference="light">#07bf97</color>
+    <color type="primary" scheme_preference="dark">#8e2de2</color>
+  </branding>
+
   <screenshots>
     <screenshot type="default">
-      <image>https://i.imgur.com/1F666UF.png</image>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/devicelist.png</image>
       <caption>Device list screen</caption>
     </screenshot>
     <screenshot>
-      <image>https://i.imgur.com/XBoM36H.png</image>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/plantdata1.png</image>
       <caption>Plant sensor recap</caption>
     </screenshot>
     <screenshot>
-      <image>https://i.imgur.com/vrA5YB3.png</image>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/plantdata2.png</image>
       <caption>Plant sensor history</caption>
     </screenshot>
     <screenshot>
-      <image>https://i.imgur.com/wGhtGXH.png</image>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/thermo1.png</image>
       <caption>Thermometer</caption>
     </screenshot>
     <screenshot>
-      <image>https://i.imgur.com/Zu45MtM.png</image>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/thermo2.png</image>
+      <caption>Dark mode</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/plants1.png</image>
+      <caption>Plant database</caption>
+    </screenshot>
+    <screenshot>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/airsensor1.png</image>
       <caption>Air Quality sensor</caption>
     </screenshot>
     <screenshot>
-      <image>https://i.imgur.com/nXotThA.png</image>
+      <image>https://raw.githubusercontent.com/emericg/screenshots_flathub/master/WatchFlower/mobile1.png</image>
       <caption>Mobile screens</caption>
     </screenshot>
   </screenshots>
 
   <requires>
-    <display_length>360</display_length>
+    <display_length compare="ge">360</display_length>
   </requires>
-  <supports>
+  
+  <recommends>
     <control>keyboard</control>
     <control>pointing</control>
     <control>touch</control>
-  </supports>
+  </recommends>
 
   <categories>
     <category>Utility</category>

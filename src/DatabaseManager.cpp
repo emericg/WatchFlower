@@ -190,7 +190,7 @@ bool DatabaseManager::openDatabase_sqlite()
             // Sanitize database ///////////////////////////////////////////////
 
             int maxDays = SettingsManager::getInstance()->getDataRetentionDays();
-            if (maxDays < 30) maxDays = 30;
+            if (maxDays < 90) maxDays = 90;
 
             // Delete everything xx days old
             QSqlQuery sanitizePastData1("DELETE FROM plantData WHERE timestamp < DATE('now', '-" + QString::number(maxDays) + " days')");

@@ -455,7 +455,8 @@ endif()
 
 # Output (build)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
+    #RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"   # write binary in the project's bin/ directory
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_INSTALL_BINDIR}"      # write binary in kit directory
 )
 
 # Output (install)
