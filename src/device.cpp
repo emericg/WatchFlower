@@ -535,6 +535,20 @@ void Device::actionTimedOut()
 {
     qWarning() << "Device::actionTimedOut()" << getAddress() << getName() << "> action:" << m_ble_action;
 
+    // Report the failure, so the device manager can move on to the next device
+    if (m_ble_action == DeviceUtils::ACTION_UPDATE)
+    {
+        refreshDataFinished(false);
+    }
+    else if (m_ble_action == DeviceUtils::ACTION_UPDATE_HISTORY)
+    {
+        refreshHistoryFinished(false);
+    }
+    else if (m_ble_action == DeviceUtils::ACTION_UPDATE_REALTIME)
+    {
+        refreshRealtimeFinished();
+    }
+
     if (m_ble_action != DeviceUtils::ACTION_IDLE)
     {
         m_ble_action = DeviceUtils::ACTION_IDLE;
@@ -1612,6 +1626,8 @@ void Device::deviceDisconnected()
     m_timeoutTimer.stop();
     m_keepaliveTimer.stop();
 
+    const int previousStatus = m_ble_status;
+
     m_ble_status = DeviceUtils::DEVICE_OFFLINE;
     Q_EMIT statusUpdated();
 
@@ -1627,17 +1643,17 @@ void Device::deviceDisconnected()
 #endif
     }
 
-    if (m_ble_status == DeviceUtils::DEVICE_UPDATING)
+    if (previousStatus == DeviceUtils::DEVICE_UPDATING)
     {
         // This means we got forcibly disconnected by the device before completing the update
         refreshDataFinished(false);
     }
-    else if (m_ble_status == DeviceUtils::DEVICE_UPDATING_HISTORY)
+    else if (previousStatus == DeviceUtils::DEVICE_UPDATING_HISTORY)
     {
         // This means we got forcibly disconnected by the device before completing the history sync
         refreshHistoryFinished(false);
     }
-    else if (m_ble_status == DeviceUtils::DEVICE_UPDATING_REALTIME)
+    else if (previousStatus == DeviceUtils::DEVICE_UPDATING_REALTIME)
     {
         refreshRealtimeFinished();
     }
