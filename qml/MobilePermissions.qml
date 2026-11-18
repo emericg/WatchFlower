@@ -1,7 +1,7 @@
 import QtQuick
-import QtQuick.Controls
 
 import ComponentLibrary
+import MobileUI
 import AppUtils
 
 Item {
@@ -10,12 +10,23 @@ Item {
 
     property string entryPoint: "ScreenAbout"
 
+    readonly property bool isIOS: (Qt.platform.os === "ios")
+    readonly property bool isAndroid: (Qt.platform.os === "android")
+
+    //! Android 10 and lower (SDK <= 29): VIBRATE
+    readonly property bool androidLegacyVibrate: (isAndroid && UtilsApp.getAndroidSdkVersion() <= 29)
+
+    //! Android 11 and lower (SDK <= 30): BLUETOOTH / BLUETOOTH_ADMIN + location based BLE scanning
+    readonly property bool androidLegacyBluetooth: (isAndroid && UtilsApp.getAndroidSdkVersion() <= 30)
+
+    //! Android 12 and higher (SDK >= 31): BLUETOOTH_SCAN / BLUETOOTH_CONNECT ("Nearby devices")
+    readonly property bool androidModernBluetooth: (isAndroid && UtilsApp.getAndroidSdkVersion() >= 31)
+
     ////////////////////////////////////////////////////////////////////////////
 
     function loadScreen() {
         // refresh permissions
-        DeviceManager.checkBluetoothPermissions()
-        notifButton.validperm = UtilsOS.checkMobileNotificationPermission()
+        refreshPermissions()
 
         // change screen
         appContent.state = "ScreenAboutPermissions"
@@ -30,14 +41,16 @@ Item {
         screenAbout.loadScreen()
     }
 
+    function refreshPermissions() {
+        DeviceManager.checkBluetoothPermissions()
+        element_notifications.status = UtilsOS.checkMobileNotificationPermission()
+    }
+
     Timer {
-        id: refreshPermissions
+        id: retryPermissions
         interval: 333
         repeat: false
-        onTriggered: {
-            DeviceManager.checkBluetoothPermissions()
-            notifButton.validperm = UtilsOS.checkMobileNotificationPermission()
-        }
+        onTriggered: screenAboutPermissions.refreshPermissions()
     }
 
     ////////////////////////////////////////////////////////////////////////////
@@ -50,548 +63,230 @@ Item {
 
         Column {
             id: contentColumn
+
             anchors.left: parent.left
             anchors.right: parent.right
 
-            topPadding: 20
-            bottomPadding: 20
-            spacing: 8
-
-            ////////
+            topPadding: Theme.componentMarginXXL
+            bottomPadding: Theme.componentMarginXXL
+            spacing: Theme.componentMarginL
 /*
-            Item { // Network access
+            ListSeparator { } //////////////////////////////////////////////////
+
+            ListItemPermission { // element_network
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 24
 
-                RoundButtonIcon {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
-                    z: 1
-
-                    property bool validperm: true
-
-                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
-                    backgroundVisible: true
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: 64
-                    anchors.right: parent.right
-                    anchors.rightMargin: 16
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 16
-
-                    text: qsTr("Network access")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: 18
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
+                text: qsTr("Network access")
+                legend: qsTr("Network state and Internet permissions are used to connect to SQL databases or MQTT brokers.")
+                status: true
             }
-            Text { // Network access legend
-                anchors.left: parent.left
-                anchors.leftMargin: 64
-                anchors.right: parent.right
-                anchors.rightMargin: 16
-
-                text: qsTr("Network state and Internet permissions are used to connect to MQTT brokers.")
-                textFormat: Text.PlainText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            ListSeparatorPadded { height: 16+1 }
 */
-            ////////
+            ListSeparator { } //////////////////////////////////////////////////
 
-            Item { // Bluetooth control
+            ListItemPermission {
+                id: element_bluetooth_control
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 24
 
-                visible: (Qt.platform.os === "android")
-
-                RoundButtonIcon {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
-
-                    property bool validperm: true
-
-                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
-                    backgroundVisible: true
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 16
-
-                    text: qsTr("Bluetooth control")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContentBig
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-            Text { // Bluetooth control legend
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
-
-                visible: (Qt.platform.os === "android")
-
-                text: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
-                textFormat: Text.PlainText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
+                text: qsTr("Bluetooth control")
+                legend: qsTr("WatchFlower can activate your device's Bluetooth in order to operate.")
+                status: true
             }
 
-            ////////
+            ListSeparator { visible: element_bluetooth_legacy.visible } ////////
 
-            ListSeparatorPadded { height: 16+1 }
-
-            ////////
-
-            Item { // Bluetooth
+            ListItemPermission {
+                id: element_bluetooth_legacy
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 24
 
-                RoundButtonIcon {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
+                visible: (screenAboutPermissions.androidLegacyBluetooth || screenAboutPermissions.isIOS)
 
-                    property bool validperm: DeviceManager.permissionBluetooth
+                text: qsTr("Bluetooth (legacy)")
+                legend: qsTr("The Android operating system requires permission to scan for nearby Bluetooth Low Energy sensors.")
+                status: DeviceManager.permissionBluetooth
 
-                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
-                    backgroundVisible: true
-
-                    onClicked: {
-                        UtilsOS.hapticFeedback()
-                        UtilsOS.getMobileBluetoothPermission()
-                        refreshPermissions.start()
-                    }
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 16
-
-                    text: qsTr("Bluetooth")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContentBig
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
+                onClicked: {
+                    MobileUI.hapticFeedback()
+                    DeviceManager.requestBluetoothPermission()
+                    retryPermissions.start()
                 }
             }
-            Text { // Bluetooth legend
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
 
-                text: qsTr("The Android operating system requires permission to scan for nearby Bluetooth Low Energy sensors.")
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
+            ListSeparator { visible: element_bluetooth_nearby.visible } ////////
 
-            ////////
-
-            ListSeparatorPadded { height: 16+1; visible: (Qt.platform.os === "android"); }
-
-            ////////
-
-            Item { // Location
+            ListItemPermission {
+                id: element_bluetooth_nearby
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 24
 
-                visible: (Qt.platform.os === "android")
+                visible: screenAboutPermissions.androidModernBluetooth
 
-                RoundButtonIcon {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
+                text: qsTr("Bluetooth (nearby devices)")
+                legend: qsTr("Since Android 12, the \"Nearby devices\" permission is required to scan for and connect to nearby Bluetooth Low Energy sensors.") + "\n" +
+                        qsTr("This permission is not used to derive your location.")
+                status: DeviceManager.permissionBluetooth
 
-                    property bool validperm: DeviceManager.permissionLocationForeground
-
-                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
-                    backgroundVisible: true
-
-                    onClicked: {
-                        UtilsOS.hapticFeedback()
-                        UtilsOS.getMobileBleLocationPermission()
-                        refreshPermissions.start()
-                    }
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 16
-
-                    text: qsTr("Location")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContentBig
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
+                onClicked: {
+                    MobileUI.hapticFeedback()
+                    DeviceManager.requestBluetoothPermission()
+                    retryPermissions.start()
                 }
             }
-            Text { // Location legend
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
 
-                text: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.") + "<br>" +
-                      qsTr("WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
             ButtonWireframe {
                 anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                height: 38
+                anchors.leftMargin: element_bluetooth_nearby.headerPosition
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.componentMarginL
 
+                visible: element_bluetooth_nearby.visible
+
+                layoutAlignment: Qt.AlignLeft
                 colorBackground: Theme.colorForeground
 
                 text: qsTr("Official information")
                 source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
-                sourceSize: 20
+                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android12-or-higher")
+            }
+
+            ListSeparator { visible: element_location.visible } ////////////////
+
+            ListItemPermission {
+                id: element_location
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                visible: screenAboutPermissions.androidLegacyBluetooth
+
+                text: qsTr("Location")
+                legend: qsTr("The Android operating system requires applications to ask for device location permission in order to scan for nearby Bluetooth Low Energy sensors.") + "\n" +
+                        qsTr("WatchFlower doesn't use, store nor communicate your location to anyone or anything.")
+                status: DeviceManager.permissionLocationForeground
 
                 onClicked: {
-                    if (UtilsApp.getAndroidSdkVersion() >= 12)
-                        Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android12-or-higher")
-                    else
-                        Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
+                    MobileUI.hapticFeedback()
+                    UtilsOS.getMobileBleLocationPermission()
+                    retryPermissions.start()
                 }
-            }
-
-            ////////
-
-            ListSeparatorPadded { height: 16+1; visible: (Qt.platform.os === "android"); }
-
-            ////////
-
-            Item { // Background location
-                height: 24
-                anchors.left: parent.left
-                anchors.right: parent.right
-
-                visible: (Qt.platform.os === "android")
-
-                RoundButtonIcon {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
-
-                    property bool validperm: DeviceManager.permissionLocationBackground
-
-                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
-                    backgroundVisible: true
-
-                    onClicked: {
-                        UtilsOS.vibrate(25)
-                        DeviceManager.requestLocationPermission_background()
-                        refreshPermissions.start()
-                    }
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 16
-
-                    text: qsTr("Background location")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContentBig
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-            Text { // Background location legend
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
-
-                visible: (Qt.platform.os === "android")
-
-                text: qsTr("Similarly, background location permission is needed if you want to automatically get data from the sensors, while the application is not explicitly opened.")
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            ListSeparatorPadded { height: 16+1; visible: (Qt.platform.os === "android"); }
-
-            ////////
-
-            Item { // GPS
-                anchors.left: parent.left
-                anchors.right: parent.right
-                height: 24
-
-                visible: (Qt.platform.os === "android")
-
-                RoundButtonIcon {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
-
-                    property bool validperm: DeviceManager.gpsEnabled
-
-                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorWarning
-                    backgroundVisible: true
-
-                    onClicked: {
-                        UtilsOS.vibrate(25)
-                        refreshPermissions.start()
-                    }
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    height: 16
-
-                    text: qsTr("GPS")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContentBig
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
-                }
-            }
-            Text { // GPS legend
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
-
-                visible: (Qt.platform.os === "android")
-
-                text: qsTr("Some Android devices also require the GPS to be turned on for Bluetooth operations.")
-                textFormat: Text.PlainText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
             }
 
             ButtonWireframe {
                 anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                height: 38
+                anchors.leftMargin: element_location.headerPosition
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.componentMarginL
 
-                visible: (Qt.platform.os === "android")
+                visible: element_location.visible
+
+                layoutAlignment: Qt.AlignLeft
+                colorBackground: Theme.colorForeground
+
+                text: qsTr("Official information")
+                source: "qrc:/IconLibrary/material-icons/duotone/launch.svg"
+                onClicked: Qt.openUrlExternally("https://developer.android.com/guide/topics/connectivity/bluetooth/permissions#declare-android11-or-lower")
+            }
+
+            ListSeparator { visible: element_location_background.visible } /////
+
+            ListItemPermission {
+                id: element_location_background
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                visible: (UtilsApp.getAndroidSdkVersion() >= 29 && UtilsApp.getAndroidSdkVersion() <= 30)
+
+                text: qsTr("Background location")
+                legend: qsTr("Similarly, background location permission is needed if you want to automatically get data from the sensors, while the application is not explicitly opened.")
+                status: DeviceManager.permissionLocationBackground
+
+                onClicked: {
+                    MobileUI.hapticFeedback()
+                    DeviceManager.requestLocationPermission_background()
+                    retryPermissions.start()
+                }
+            }
+
+            ListSeparator { visible: element_gps.visible } /////////////////////
+
+            ListItemPermission {
+                id: element_gps
+                anchors.left: parent.left
+                anchors.right: parent.right
+
+                visible: screenAboutPermissions.androidLegacyBluetooth
+
+                text: qsTr("GPS")
+                legend: qsTr("Some Android devices also require the GPS to be turned on for Bluetooth operations.")
+                status: DeviceManager.gpsEnabled
+
+                onClicked: {
+                    MobileUI.hapticFeedback()
+                    retryPermissions.start()
+                }
+            }
+
+            ButtonWireframe {
+                anchors.left: parent.left
+                anchors.leftMargin: element_gps.headerPosition
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.componentMarginL
+
+                visible: element_gps.visible
+
+                layoutAlignment: Qt.AlignLeft
                 colorBackground: Theme.colorForeground
 
                 text: qsTr("Location settings")
                 source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
-                sourceSize: 20
-
                 onClicked: UtilsApp.openAndroidLocationSettings()
             }
 
-            ////////
+            ListSeparator { visible: element_notifications.visible } ///////////
 
-            ListSeparatorPadded { height: 16+1 }
-
-            ////////
-
-            Item { // Notifications
-                height: 24
+            ListItemPermission {
+                id: element_notifications
                 anchors.left: parent.left
                 anchors.right: parent.right
 
-                visible: (Qt.platform.os === "ios" || UtilsApp.getAndroidSdkVersion() >= 13)
+                visible: UtilsApp.getAndroidSdkVersion() >= 33
 
-                RoundButtonIcon {
-                    id: notifButton
-                    width: 32
-                    height: 32
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
+                text: qsTr("Notifications")
+                legend: qsTr("The Android operating system requires permission to send notifications.")
+                status: false
 
-                    property bool validperm: false
-
-                    source: (validperm) ? "qrc:/IconLibrary/material-symbols/check.svg" : "qrc:/IconLibrary/material-symbols/close.svg"
-                    iconColor: (validperm) ? "white" : "white"
-                    backgroundColor: (validperm) ? Theme.colorSuccess : Theme.colorSubText
-                    backgroundVisible: true
-
-                    onClicked: {
-                        UtilsOS.hapticFeedback()
-                        validperm = UtilsOS.getMobileNotificationPermission()
-                        refreshPermissions.start()
-                    }
-                }
-
-                Text {
-                    height: 16
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Notifications")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: Theme.fontSizeContentBig
-                    color: Theme.colorText
-                    verticalAlignment: Text.AlignVCenter
+                onClicked: {
+                    MobileUI.hapticFeedback()
+                    status = UtilsOS.getMobileNotificationPermission()
+                    retryPermissions.start()
                 }
             }
-            Text { // Notifications legend
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
 
-                visible: (Qt.platform.os === "ios" || UtilsApp.getAndroidSdkVersion() >= 13)
+            ListSeparator { visible: element_vibrate.visible } /////////////////
 
-                text: qsTr("The Android operating system requires permission to send notifications.")
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
-            }
-
-            ////////
-
-            ListSeparatorPadded { height: 16+1 }
-
-            ////////
-
-            Item { // element_infos
+            ListItemPermission {
+                id: element_vibrate
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 32
 
-                IconSvg {
-                    anchors.left: parent.left
-                    anchors.leftMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 32
-                    height: 32
+                visible: androidLegacyVibrate
 
-                    opacity: 0.66
-                    color: Theme.colorSubText
-                    source: "qrc:/IconLibrary/material-icons/duotone/info.svg"
-                }
-
-                Text {
-                    anchors.left: parent.left
-                    anchors.leftMargin: appHeader.headerPosition
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.componentMargin
-                    anchors.verticalCenter: parent.verticalCenter
-
-                    text: qsTr("Click on the checkmarks to request missing permissions.")
-                    textFormat: Text.StyledText
-                    lineHeight : 0.8
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorText
-                    font.pixelSize: Theme.fontSizeContent
-                }
+                text: qsTr("Notifications")
+                legend: qsTr("The Android operating system requires permission to trigger vibrations.")
+                status: true
             }
 
-            Text {
+            ListSeparator { } //////////////////////////////////////////////////
+
+            ListItemPermissionInfo { // element_infos
                 anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
                 anchors.right: parent.right
-                anchors.rightMargin: Theme.componentMargin
 
-                visible: (Qt.platform.os === "android")
-
-                text: qsTr("If it has no effect, you may have previously refused a permission and clicked on \"don't ask again\".") + "<br>" +
-                      qsTr("You can go to the Android \"application info\" panel to change a permission manually.")
-                textFormat: Text.StyledText
-                wrapMode: Text.WordWrap
-                color: Theme.colorSubText
-                font.pixelSize: Theme.fontSizeContentSmall
+                applicationID: "com.emeric.watchflower"
             }
 
-            ButtonWireframe {
-                anchors.left: parent.left
-                anchors.leftMargin: appHeader.headerPosition
-                height: 38
-
-                visible: (Qt.platform.os === "android")
-                colorBackground: Theme.colorForeground
-
-                text: qsTr("Application info")
-                source: "qrc:/IconLibrary/material-icons/duotone/tune.svg"
-                sourceSize: 20
-
-                onClicked: UtilsApp.openAndroidAppInfo("com.emeric.watchflower")
-            }
-
-            ////////
+            ////////////////////////////////////////////////////////////////////
         }
     }
 

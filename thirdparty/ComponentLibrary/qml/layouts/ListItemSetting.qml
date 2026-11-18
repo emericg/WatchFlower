@@ -93,41 +93,41 @@ T.ItemDelegate {
             columnSpacing: control.spacing
             rowSpacing: 0
 
-            ColumnLayout {
+            Text {
+                id: titleText
+                Layout.row: 0
+                Layout.column: 0
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignTop
+                Layout.minimumHeight: Theme.componentHeightXL
 
-                spacing: 0
+                text: control.text
+                textFormat: Text.PlainText
+                color: control.textColor
+                wrapMode: Text.WordWrap
+                verticalAlignment: Text.AlignVCenter
+                font.pixelSize: control.textSize
+            }
 
-                Text {
-                    id: titleText
-                    Layout.fillWidth: true
-                    Layout.minimumHeight: Theme.componentHeightXL
+            Text {
+                Layout.row: 1
+                Layout.column: 0
+                Layout.columnSpan: control.wrapped ? 1 : 2
+                Layout.fillWidth: true
 
-                    text: control.text
-                    textFormat: Text.PlainText
-                    color: control.textColor
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: control.textSize
-                }
+                visible: (control.legend.length > 0)
+                bottomPadding: Theme.componentMarginXS
 
-                Text {
-                    Layout.fillWidth: true
-
-                    visible: (control.legend.length > 0)
-                    bottomPadding: Theme.componentMarginXS
-
-                    text: control.legend
-                    textFormat: Text.PlainText
-                    color: control.legendColor
-                    wrapMode: Text.WordWrap
-                    font.pixelSize: control.legendSize
-                }
+                text: control.legend
+                textFormat: Text.PlainText
+                color: control.legendColor
+                wrapMode: Text.WordWrap
+                font.pixelSize: control.legendSize
             }
 
             Item {
                 id: controlSlot
+                Layout.row: control.wrapped ? 2 : 0
+                Layout.column: control.wrapped ? 0 : 1
                 Layout.alignment: Qt.AlignTop | Qt.AlignLeft
                 Layout.topMargin: control.wrapped ? 0 : Math.max(0, (titleText.height - height) / 2)
                 Layout.bottomMargin: control.wrapped ? Theme.componentMargin : 0

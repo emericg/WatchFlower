@@ -103,45 +103,17 @@ Loader {
 
                 ////////////////
 
-                Item { // element_appTheme
+                ListItemSetting { // element_appTheme
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/style.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: appTheme_selector.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Theme")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                    }
+                    source: "qrc:/IconLibrary/material-icons/duotone/style.svg"
+                    text: qsTr("Theme")
 
                     Row {
                         id: appTheme_selector
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        z: 1
                         spacing: Theme.componentMargin / 2
 
                         Rectangle {
@@ -274,44 +246,22 @@ Loader {
 
                 ////////
 
-                Item { // element_appThemeAuto
+                ListItemSetting { // element_appThemeAuto
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
+                    text: qsTr("Automatic dark mode")
+                    legend: SettingsManager.appThemeAuto ?
+                                qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.") :
+                                qsTr("Dark mode schedule is disabled.")
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/brightness_4.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_appThemeAuto.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Automatic dark mode")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                    }
+                    onClicked: switch_appThemeAuto.click()
 
                     SwitchThemed {
                         id: switch_appThemeAuto
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.appThemeAuto
                         onClicked: {
@@ -320,101 +270,29 @@ Loader {
                         }
                     }
                 }
-                Text { // legend_appThemeAuto
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: Theme.isDesktop ? 6 : 6
-
-                    property bool osSupport: (Qt.platform.os !== "linux")
-                    property string osName: {
-                        if (Qt.platform.os === "android") return "Android"
-                        if (Qt.platform.os === "ios") return "iOS"
-                        if (Qt.platform.os === "osx") return "macOS"
-                        if (Qt.platform.os === "linux") return "Linux"
-                        if (Qt.platform.os === "windows") return "Windows"
-                        //: fallback string
-                        return qsTr("Operating System")
-                    }
-
-                    text: {
-                        if (SettingsManager.appThemeAuto) {
-                            if (osSupport) return qsTr("Dark mode will follow %1 settings.").arg(osName)
-                            return qsTr("Dark mode will switch on automatically between 9 PM and 9 AM.")
-                        }
-                        return qsTr("Dark mode schedule is disabled.")
-                    }
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                }
 
                 ////////
 
-                Item { // element_splitView
+                ListItemSetting { // element_splitView
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/IconLibrary/material-symbols/menu.svg"
+                    text: qsTr("Split sensor list in categories")
+                    legend: SettingsManager.splitView ?
+                                qsTr("Devices will be split into categories (plant sensors, thermometers, air quality monitors)") :
+                                qsTr("Devices will be shown together.")
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-symbols/menu.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_splitView.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Split sensor list in categories")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                        lineHeight: 0.8
-                    }
+                    onClicked: switch_splitView.click()
 
                     SwitchThemed {
                         id: switch_splitView
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.splitView
                         onClicked: SettingsManager.splitView = checked
                     }
-                }
-                Text { // legend_splitView
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: Theme.isDesktop ? 12 : 6
-
-                    text: SettingsManager.splitView ?
-                              qsTr("Devices will be split into categories (plant sensors, thermometers, air quality monitors)") :
-                              qsTr("Devices will be shown together.")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
                 }
 
                 ////////
@@ -423,47 +301,20 @@ Loader {
 
                 ////////
 
-                Item {
+                ListItemSetting {
                     id: element_language
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/translate.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: combobox_language.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Language")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                    }
+                    source: "qrc:/IconLibrary/material-icons/duotone/translate.svg"
+                    text: qsTr("Language")
 
                     ComboBoxThemed {
                         id: combobox_language
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
                         height: 36
 
-                        z: 1
                         wheelEnabled: false
 
                         model: ListModel {
@@ -506,47 +357,21 @@ Loader {
 
                 ////////
 
-                Item { // element_minimized
+                ListItemSetting { // element_minimized
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
                     visible: Theme.isDesktop
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/IconLibrary/material-icons/duotone/minimize.svg"
+                    text: qsTr("Start application minimized")
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/minimize.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_minimized.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Start application minimized")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                        lineHeight: 0.8
-                    }
+                    onClicked: switch_minimized.click()
 
                     SwitchThemed {
                         id: switch_minimized
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.startMinimized
                         onClicked: SettingsManager.startMinimized = checked
@@ -579,46 +404,29 @@ Loader {
 
                 ////////////////
 
-                Item {
+                ListItemSetting {
                     id: element_worker
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
+                    source: "qrc:/IconLibrary/material-symbols/autorenew.svg"
+                    text: qsTr("Enable background updates")
+                    legend: {
+                        if (Qt.platform.os === "android")
+                            return qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth is enabled.")
+                        if (Theme.isDesktop)
+                            return SettingsManager.systray ?
+                                       qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
+                                       qsTr("WatchFlower is only active while the window is open.")
+                        return ""
                     }
 
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_worker.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Enable background updates")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        lineHeight: 0.8
-                    }
+                    onClicked: switch_worker.click()
 
                     SwitchThemed {
                         id: switch_worker
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.systray
                         onClicked: {
@@ -635,88 +443,29 @@ Loader {
                         }
                     }
                 }
-                Text { // legend_worker_mobile
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: element_notifications.visible ? 0 : 12
-                    visible: (element_worker.visible && Qt.platform.os === "android")
-
-                    text: qsTr("Wake up at a predefined interval to refresh sensor data. Only if Bluetooth is enabled.")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                }
-                Text { // legend_worker_desktop
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: element_notifications.visible ? 0 : 12
-                    visible: (element_worker.visible && Theme.isDesktop)
-
-                    text: SettingsManager.systray ?
-                              qsTr("WatchFlower will remain active in the notification area after the window is closed, and will automatically refresh sensors data at regular interval.") :
-                              qsTr("WatchFlower is only active while the window is open.")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                }
 
                 ////////
 
-                Item {
+                ListItemSetting {
                     id: element_notifications
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
                     // every platforms except iOS // also, need the systray
                     visible: (Qt.platform.os !== "ios")
                     enabled: SettingsManager.systray
-                    opacity: SettingsManager.systray ? 1 : 0.4
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/IconLibrary/material-symbols/notifications.svg"
+                    text: qsTr("Enable notifications")
+                    legend: SettingsManager.notifications ?
+                                "" : qsTr("If a plant needs water, WatchFlower can bring it to your attention.")
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-symbols/notifications.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_notifications.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Enable notifications")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        lineHeight: 0.8
-                    }
+                    onClicked: switch_notifications.click()
 
                     SwitchThemed {
                         id: switch_notifications
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.notifications
                         onClicked: {
@@ -726,25 +475,6 @@ Loader {
                             }
                         }
                     }
-                }
-                Text { // legend_notifications
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: SettingsManager.notifications ? 0 : 12
-                    visible: (element_notifications.visible && !SettingsManager.notifications)
-                    opacity: SettingsManager.systray ? 1 : 0.4
-
-                    text: SettingsManager.notifications ?
-                              qsTr("If a plant needs water, WatchFlower will bring it to your attention!") :
-                              qsTr("If a plant needs water, WatchFlower can bring it to your attention.")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
                 }
 
                 ////////
@@ -888,132 +618,52 @@ Loader {
 
                 ////////
 
-                Item { // element_bluetoothControl
+                ListItemSetting { // element_bluetoothControl
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
                     visible: (Qt.platform.os === "android")
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
+                    text: qsTr("Bluetooth control")
+                    legend: SettingsManager.bluetoothControl ?
+                                qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
+                                qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.")
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/outlined/bluetooth_disabled.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_bluetoothControl.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Bluetooth control")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        lineHeight: 0.8
-                    }
+                    onClicked: switch_bluetoothControl.click()
 
                     SwitchThemed {
                         id: switch_bluetoothControl
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.bluetoothControl
                         onClicked: SettingsManager.bluetoothControl = checked
                     }
                 }
-                Text { // legend_bluetoothControl
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: 0
-                    visible: (Qt.platform.os === "android")
-
-                    text: SettingsManager.bluetoothControl ? qsTr("WatchFlower will enable your device's Bluetooth in order to operate.") :
-                                                             qsTr("WatchFlower will only operate if your device's Bluetooth is already enabled.")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                }
 
                 ////////
 
-                Item { // element_bluetoothRange
+                ListItemSetting { // element_bluetoothRange
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
+                    text: qsTr("Limit Bluetooth scanning range")
+                    legend: SettingsManager.bluetoothLimitScanningRange ?
+                                qsTr("Will only scan for sensors approximately 2 meters around you.") :
+                                qsTr("Sensor scanning range is not limited.")
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-symbols/sensors/radar.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_bluetoothRange.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Limit Bluetooth scanning range")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        lineHeight: 0.8
-                    }
+                    onClicked: switch_bluetoothRange.click()
 
                     SwitchThemed {
                         id: switch_bluetoothRange
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.bluetoothLimitScanningRange
                         onClicked: SettingsManager.bluetoothLimitScanningRange = checked
                     }
-                }
-                Text { // legend_bluetoothRange
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: 0
-
-                    text: SettingsManager.bluetoothLimitScanningRange ?
-                              qsTr("Will only scan for sensors approximately 2 meters around you.") :
-                              qsTr("Sensor scanning range is not limited.")
-                    textFormat: Text.PlainText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
                 }
 
                 ////////
@@ -1119,48 +769,19 @@ Loader {
 
                 ////////////////
 
-                Item { // element_plant_update
+                ListItemSetting { // element_plant_update
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/timer.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: spinBox_plant_update.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Update interval")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                        lineHeight: 0.8
-                    }
+                    source: "qrc:/IconLibrary/material-icons/duotone/timer.svg"
+                    text: qsTr("Update interval")
 
                     SpinBoxThemedMobile {
                         id: spinBox_plant_update
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
                         width: 128
                         height: 36
-                        z: 1
 
                         legend: " " + qsTr("h.", "short for hours")
                         from: 1
@@ -1315,47 +936,19 @@ Loader {
 
                 ////////////////
 
-                Item { // element_thermometer_update
+                ListItemSetting { // element_thermometer_update
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/timer.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: spinBox_thermometer_update.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Update interval")
-                        textFormat: Text.PlainText
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        wrapMode: Text.WordWrap
-                        lineHeight: 0.8
-                    }
+                    source: "qrc:/IconLibrary/material-icons/duotone/timer.svg"
+                    text: qsTr("Update interval")
 
                     SpinBoxThemedMobile {
                         id: spinBox_thermometer_update
                         width: 128
                         height: 36
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         legend: " " + qsTr("h.", "short for hours")
                         from: 1
@@ -1371,44 +964,18 @@ Loader {
 
                 ////////
 
-                Item { // element_thermometer_unit
+                ListItemSetting { // element_thermometer_unit
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: row_thermometer_unit.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Temperature unit")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                    }
+                    source: "qrc:/IconLibrary/material-symbols/sensors/airware.svg"
+                    text: qsTr("Temperature unit")
 
                     SelectorMenuColorful {
                         id: row_thermometer_unit
                         height: 32
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
 
                         model: ListModel {
                             ListElement { idx: 1; txt: qsTr("°C"); src: ""; sz: 16; }
@@ -1433,46 +1000,21 @@ Loader {
 
                 ////////////////
 
-                Item {
+                ListItemSetting {
                     id: element_sunandmoon
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:/IconLibrary/material-symbols/routine-fill.svg"
+                    text: qsTr("Enable Sun and Moon widget")
+                    legend: qsTr("Gives you sunset / sunrise time at your location.")
 
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-symbols/routine-fill.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: switch_sunandmoon.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("Enable Sun and Moon widget")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        lineHeight: 0.8
-                    }
+                    onClicked: switch_sunandmoon.click()
 
                     SwitchThemed {
                         id: switch_sunandmoon
-                        anchors.right: parent.right
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-                        z: 1
 
                         checked: SettingsManager.sunandmoon
                         onClicked: {
@@ -1487,65 +1029,23 @@ Loader {
                     }
                 }
 
-                Text { // legend_sunandmoon
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: 12
-
-                    text: qsTr("Gives you sunset / sunrise time at your location.")
-                    textFormat: Text.StyledText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
-                }
-
                 ////////
 
-                Item {
+                ListItemSetting {
                     id: element_location
                     anchors.left: parent.left
                     anchors.leftMargin: contentColumn.paddingLeft
                     anchors.right: parent.right
                     anchors.rightMargin: contentColumn.paddingRight
-                    height: Theme.componentHeightXL
 
                     visible: SettingsManager.sunandmoon
 
-                    IconSvg {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padIcon
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        width: 24
-                        height: 24
-                        color: Theme.colorIcon
-                        source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
-                    }
-
-                    Text {
-                        anchors.left: parent.left
-                        anchors.leftMargin: contentColumn.padText
-                        anchors.right: rowPosition.left
-                        anchors.rightMargin: Theme.componentMargin
-                        anchors.verticalCenter: parent.verticalCenter
-
-                        text: qsTr("GPS position")
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        font.pixelSize: Theme.fontSizeContent
-                        color: Theme.colorText
-                        lineHeight: 0.8
-                    }
+                    source: "qrc:/IconLibrary/material-icons/duotone/pin_drop.svg"
+                    text: qsTr("GPS position")
+                    legend: qsTr("Coarse location is required to give you sunset and sunrise times.")
 
                     Row {
                         id: rowPosition
-                        anchors.right: parent.right
-                        anchors.rightMargin: 8
-                        anchors.verticalCenter: parent.verticalCenter
                         spacing: 12
 
                         property bool manualEdit: false
@@ -1734,22 +1234,6 @@ Loader {
                     //    autoUpdate: false
                     //}
 */
-                }
-
-                Text { // legend_location
-                    anchors.left: parent.left
-                    anchors.leftMargin: contentColumn.paddingLeft + contentColumn.padText
-                    anchors.right: parent.right
-                    anchors.rightMargin: contentColumn.paddingRight + Theme.componentMargin
-
-                    topPadding: -12
-                    bottomPadding: 12
-
-                    text: qsTr("Coarse location is required to give you sunset and sunrise times.")
-                    textFormat: Text.StyledText
-                    wrapMode: Text.WordWrap
-                    color: Theme.colorSubText
-                    font.pixelSize: Theme.fontSizeContentSmall
                 }
 
                 ////////////////

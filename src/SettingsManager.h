@@ -51,7 +51,7 @@ class SettingsManager: public QObject
 
     Q_PROPERTY(QString appTheme READ getAppTheme WRITE setAppTheme NOTIFY appThemeChanged)
     Q_PROPERTY(bool appThemeAuto READ getAppThemeAuto WRITE setAppThemeAuto NOTIFY appThemeAutoChanged)
-    Q_PROPERTY(uint appThemeAutoMethod READ getAppThemeAutoMethod WRITE setAppThemeAutoMethod NOTIFY appThemeAutoChanged)
+    Q_PROPERTY(uint appThemeAutoMethod READ getAppThemeAutoMethod WRITE setAppThemeAutoMethod NOTIFY appThemeAutoMethodChanged)
     Q_PROPERTY(uint appUnitSystem READ getAppUnitSystem WRITE setAppUnitSystem NOTIFY appUnitSystemChanged)
     Q_PROPERTY(QString appLanguage READ getAppLanguage WRITE setAppLanguage NOTIFY appLanguageChanged)
 
