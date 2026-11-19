@@ -190,5 +190,5 @@ modules:
     buildsystem: cmake-ninja
     sources:
       - type: archive
-        url: https://github.com/emericg/WatchFlower/archive/refs/tags/v6.0.tar.gz
+        url: https://github.com/emericg/WatchFlower/archive/refs/tags/v6.1.tar.gz
         sha256: 

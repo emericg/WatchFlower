@@ -21,10 +21,10 @@
 	<string>com.emeric.watchflower.ios</string>
 
 	<key>CFBundleVersion</key>
-	<string>0600001</string>
+	<string>0601001</string>
 
 	<key>CFBundleShortVersionString</key>
-	<string>6.0</string>
+	<string>6.1</string>
 
 	<key>CFBundleIconFile</key>
 	<string>AppIcon</string>

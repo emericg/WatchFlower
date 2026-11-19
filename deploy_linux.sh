@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export APP_NAME="WatchFlower"
-export APP_VERSION=6.0
+export APP_VERSION=6.1
 export GIT_VERSION=$(git rev-parse --short HEAD)
 
 #export APP_NAME_LOWERCASE=${APP_NAME,,}  # lowercase

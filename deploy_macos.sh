@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export APP_NAME="WatchFlower"
-export APP_VERSION=6.0
+export APP_VERSION=6.1
 export GIT_VERSION=$(git rev-parse --short HEAD)
 
 echo "> $APP_NAME packager (macOS) [v$APP_VERSION]"
