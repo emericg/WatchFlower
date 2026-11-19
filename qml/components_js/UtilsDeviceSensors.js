@@ -334,7 +334,7 @@ function getDeviceSensorName(sensorId) {
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_TEMPERATURE) {
         name = qsTr("Temperature")
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_HUMIDITY) {
-        name = qsTr("Humididty")
+        name = qsTr("Humidity")
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_PRESSURE) {
         name = qsTr("Pressure")
     } else if (sensorId === DeviceUtils.DeviceUtils.SENSOR_LUMINOSITY) {

@@ -37,7 +37,7 @@ find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 qt_standard_project_setup(REQUIRES 6.8
                           I18N_SOURCE_LANGUAGE en
-                          I18N_TRANSLATED_LANGUAGES ca da de es fr fy hu nb nl nn pl pt ru zh_CN zh_TW)
+                          I18N_TRANSLATED_LANGUAGES ca da de es fr fy hu it nb nl nn pl pt ru zh_CN zh_TW)
 
 qt_policy(SET QTP0001 NEW)
 qt_policy(SET QTP0002 NEW)

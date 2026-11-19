@@ -109,7 +109,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                     else if (!m_locationName.isEmpty())
                         message = tr("You need to water the plant near '%1'").arg(m_locationName);
                     else
-                        message = tr("You need to water one of your plant!");
+                        message = tr("You need to water one of your plants!");
                 }
 
                 // 'sub zero' temperature notification
@@ -160,7 +160,7 @@ void DeviceSensor::refreshDataFinished(bool status, bool cached)
                 {
                     title = tr("Radiation warning");
                     if (m_rm > 1) message = tr("Radiation levels are high!");
-                    if (m_rm > 10) message = tr("Radiation levels are very high, please advise!");
+                    if (m_rm > 10) message = tr("Radiation levels are very high!");
                 }
             }
 

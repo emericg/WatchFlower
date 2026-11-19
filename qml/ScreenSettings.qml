@@ -322,6 +322,7 @@ Loader {
                             ListElement {
                                 text: qsTr("auto", "short for automatic");
                             }
+                            ListElement { text: "Català"; }
                             ListElement { text: "Chinese (traditional)"; }
                             ListElement { text: "Chinese (simplified)"; }
                             ListElement { text: "Dansk"; }
@@ -331,10 +332,12 @@ Loader {
                             ListElement { text: "Français"; }
                             ListElement { text: "Frysk"; }
                             ListElement { text: "Hungarian"; }
+                            ListElement { text: "Italiano"; }
                             ListElement { text: "Nederlands"; }
                             ListElement { text: "Norsk (Bokmål)"; }
                             ListElement { text: "Norsk (Nynorsk)"; }
                             ListElement { text: "Polski"; }
+                            ListElement { text: "Português"; }
                             ListElement { text: "Pусский"; }
                         }
 

@@ -54,7 +54,7 @@ function getJournalEntryName2(entryType) {
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_MOVE) {
         txt = qsTr("Moved")
     } else if (entryType === JournalUtils.JournalUtils.JOURNAL_REPOT) {
-        txt = qsTr("Repoted")
+        txt = qsTr("Repotted")
     }
 
     return txt

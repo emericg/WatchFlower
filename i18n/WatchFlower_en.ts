@@ -4,9 +4,9 @@
 <context>
     <name>ActionbarSelection</name>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/components/ActionbarSelection.qml" line="48"/>
+        <location filename="../qml/components/ActionbarSelection.qml" line="48"/>
         <source>%n device(s) selected</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%n device selected</numerusform>
             <numerusform>%n devices selected</numerusform>
         </translation>
@@ -15,7 +15,7 @@
 <context>
     <name>Device</name>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/src/device.cpp" line="807"/>
+        <location filename="../src/device.cpp" line="994"/>
         <source>%n minute(s)</source>
         <translation>
             <numerusform>%n min.</numerusform>
@@ -23,7 +23,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/src/device.cpp" line="809"/>
+        <location filename="../src/device.cpp" line="996"/>
         <source>%n hour(s)</source>
         <translation>
             <numerusform>%n h.</numerusform>
@@ -44,7 +44,7 @@
 <context>
     <name>DeviceListSplit</name>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/DeviceListSplit.qml" line="111"/>
+        <location filename="../qml/DeviceListSplit.qml" line="123"/>
         <source>Plant sensor(s)</source>
         <translation>
             <numerusform>Plant sensor</numerusform>
@@ -52,7 +52,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/DeviceListSplit.qml" line="137"/>
+        <location filename="../qml/DeviceListSplit.qml" line="151"/>
         <source>Thermometer(s)</source>
         <translation>
             <numerusform>Thermometer</numerusform>
@@ -60,7 +60,7 @@
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/DeviceListSplit.qml" line="163"/>
+        <location filename="../qml/DeviceListSplit.qml" line="179"/>
         <source>Environmental sensor(s)</source>
         <translation>
             <numerusform>Environmental sensor</numerusform>
@@ -71,19 +71,19 @@
 <context>
     <name>PopupDeleteDevice</name>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/popups/PopupDeleteDevice.qml" line="75"/>
+        <location filename="../qml/popups/PopupDeleteDevice.qml" line="75"/>
         <source>Are you sure you want to delete selected sensor(s)?</source>
         <translation>
-            <numerusform>Are you sure you want to delete selected sensor?</numerusform>
-            <numerusform>Are you sure you want to delete selected sensors?</numerusform>
+            <numerusform>Are you sure you want to delete the selected sensor?</numerusform>
+            <numerusform>Are you sure you want to delete the selected sensors?</numerusform>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../../perso/WatchFlower/qml/popups/PopupDeleteDevice.qml" line="88"/>
+        <location filename="../qml/popups/PopupDeleteDevice.qml" line="88"/>
         <source>Data from the sensor(s) are kept for an additional 90 days, in case you would like to re-add a sensor later.</source>
         <translation>
-            <numerusform>Data from the sensor are kept for an additional 90 days, in case you would like to re-add a sensor later.</numerusform>
-            <numerusform>Data from the sensors are kept for an additional 90 days, in case you would like to re-add a sensor later.</numerusform>
+            <numerusform>Data from the sensor is kept for an additional 90 days, in case you would like to re-add it later.</numerusform>
+            <numerusform>Data from the sensors is kept for an additional 90 days, in case you would like to re-add them later.</numerusform>
         </translation>
     </message>
 </context>

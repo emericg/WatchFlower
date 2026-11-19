@@ -106,8 +106,9 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     m_extraTranslators.clear();
 
     m_appLanguage = lng;
-    if (m_appLanguage == "Chinese (traditional)") m_locale_str_full = "zh_TW";
-    else if (m_appLanguage == "Chinese (simplified)") m_locale_str_full = "zh_CN";
+    if (m_appLanguage == "Chinese (traditional)" || m_appLanguage == "繁體中文") m_locale_str_full = "zh_TW";
+    else if (m_appLanguage == "Chinese (simplified)" || m_appLanguage == "简体中文") m_locale_str_full = "zh_CN";
+    else if (m_appLanguage == "Català") m_locale_str_full = "ca_ES"; // Catalan
     else if (m_appLanguage == "Dansk") m_locale_str_full = "da_DK"; // Danish
     else if (m_appLanguage == "Deutsch") m_locale_str_full = "de_DE";
     else if (m_appLanguage == "English") m_locale_str_full = "en_US";
@@ -122,7 +123,7 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     else if (m_appLanguage == "Polski") m_locale_str_full = "pl_PL"; // Polish
     else if (m_appLanguage == "Português") m_locale_str_full = "pt_PT"; // Portuguese
     else if (m_appLanguage == "Português brasileiro") m_locale_str_full = "pt_BR"; // Brazilian Portuguese
-    else if (m_appLanguage == "Pусский") m_locale_str_full = "ru_RU"; // Russian
+    else if (m_appLanguage == "Russian" || m_appLanguage == "Pусский") m_locale_str_full = "ru_RU";
     else
     {
         m_locale_str_full = QLocale::system().name();
@@ -130,7 +131,9 @@ void UtilsLanguage::loadLanguage(const QString &lng)
     }
 
     m_locale_str_short = m_locale_str_full;
-    m_locale_str_short.truncate(m_locale_str_full.lastIndexOf('_'));
+    if (m_locale_str_full == "zh_TW" || m_locale_str_full == "zh_CN") m_locale_str_short = m_locale_str_full;
+    else if (m_locale_str_full == "pt_PT" || m_locale_str_full == "pt_BR") m_locale_str_short = m_locale_str_full;
+    else m_locale_str_short.truncate(m_locale_str_full.lastIndexOf('_'));
 
     QLocale locale(m_locale_str_full);
     QLocale::setDefault(locale);

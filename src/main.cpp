@@ -164,12 +164,12 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
-    //UtilsLog::getInstance()->setEnabled(false);
-
     // App-side endpoint for the background service communication
     AndroidServiceLink *asc = AndroidServiceLink::getInstance();
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
+
+    //
 
 #else // !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
 
@@ -208,6 +208,7 @@ int main(int argc, char *argv[])
     PlantUtils::registerQML();
 
     // Translate the application
+    utilsLanguage->addTranslationCatalog("ComponentLibrary");
     utilsLanguage->loadLanguage(sm->getAppLanguage());
 
     // Force the QtQuick Controls style (the only one deployed on Android)

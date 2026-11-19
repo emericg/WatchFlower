@@ -492,7 +492,7 @@ Item {
             hhh: graphGrid.mode
             ddd: ChartHistory.Data.SoilConductivity
             color: Theme.colorRed
-            suffix: " " + "<br>" + qsTr("µs/cm")
+            suffix: " " + "<br>" + qsTr("µS/cm")
             floatprecision: 0
 
             valueMax: currentDevice.conduMax_history*1.2
