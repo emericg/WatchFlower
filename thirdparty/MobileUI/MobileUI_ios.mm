@@ -42,14 +42,6 @@
 
 /* ************************************************************************** */
 
-@interface QIOSViewController : UIViewController
-@property (nonatomic, assign) BOOL prefersStatusBarHidden;
-@property (nonatomic, assign) UIStatusBarAnimation preferredStatusBarUpdateAnimation;
-@property (nonatomic, assign) UIStatusBarStyle preferredStatusBarStyle;
-@end
-
-/* ************************************************************************** */
-
 // Returns the app's foreground-active window scene, or the first available one.
 static UIWindowScene *activeWindowScene()
 {
@@ -64,9 +56,23 @@ static UIWindowScene *activeWindowScene()
     return fallback;
 }
 
-// Returns the key window of the active scene.
-static UIWindow *activeKeyWindow()
+/*!
+ * \brief Returns the UIWindow hosting a Qt window.
+ * \param window: the Qt window (may be nullptr).
+ * \return the UIWindow of the Qt window, or the key window of the active scene as a fallback.
+ *
+ * The key window may not exist yet at startup (or may be another window), while the Qt window's own
+ * UIView is attached to its UIWindow as soon as it's shown.
+ */
+static UIWindow *nativeWindow(const QWindow *window)
 {
+    // Only use the native view if it already exists, winId() would create it otherwise
+    if (window && window->handle())
+    {
+        UIView *view = (__bridge UIView *)reinterpret_cast<void *>(window->winId());
+        if (view.window) return view.window;
+    }
+
     return activeWindowScene().keyWindow;
 }
 
@@ -84,23 +90,58 @@ static UIStatusBarStyle statusBarStyle(const MobileUI::Theme theme)
     return UIStatusBarStyleDarkContent;
 }
 
-static void setPreferredStatusBarStyle(UIWindow *window, UIStatusBarStyle style)
+//! Status bar style reported by the Qt view controllers, or -1 when MobileUI hasn't set one.
+static NSInteger s_statusBarStyle = -1;
+
+//! preferredStatusBarStyle implementation QIOSViewController had before our hook.
+static IMP s_originalPreferredStatusBarStyle = nullptr;
+
+/*!
+ * \brief Hook preferredStatusBarStyle on the Qt view controller class.
+ *
+ * QIOSViewController::updateProperties() sets its own preferredStatusBarStyle whenever the focus window
+ * changes (UIStatusBarStyleDefault for windows using the full screen geometry, which follows the
+ * device appearance, not the application theme). At startup this happens after MobileUI applied
+ * its style, and possibly before the UIWindow is key, leaving the wrong status bar content color
+ * until something re-applies it (theme change, app resume...).
+ * The hook reports the MobileUI style whenever one is set, so UIKit always reads it,
+ * whenever it queries it and whatever Qt stored. It is installed once, on the class only.
+ */
+static void installStatusBarStyleHook()
 {
-    UIViewController *rootVC = [window rootViewController];
-    if (![rootVC respondsToSelector:@selector(setPreferredStatusBarStyle:)]) return;
+    if (s_originalPreferredStatusBarStyle) return;
 
-    QIOSViewController *viewController = static_cast<QIOSViewController *>(rootVC);
-    if (viewController.preferredStatusBarStyle == style) return;
+    Class cls = objc_getClass("QIOSViewController");
+    if (!cls) return;
 
-    viewController.preferredStatusBarStyle = style;
-    [viewController setNeedsStatusBarAppearanceUpdate];
+    SEL sel = @selector(preferredStatusBarStyle);
+    Method method = class_getInstanceMethod(cls, sel);
+    if (!method) return;
+
+    s_originalPreferredStatusBarStyle = method_getImplementation(method);
+
+    IMP hook = imp_implementationWithBlock(^UIStatusBarStyle(UIViewController *self_) {
+        if (s_statusBarStyle >= 0) return static_cast<UIStatusBarStyle>(s_statusBarStyle);
+
+        using PreferredStatusBarStyleFn = UIStatusBarStyle (*)(id, SEL);
+        return reinterpret_cast<PreferredStatusBarStyleFn>(s_originalPreferredStatusBarStyle)(self_, sel);
+    });
+
+    class_replaceMethod(cls, sel, hook, method_getTypeEncoding(method));
 }
 
 static void updatePreferredStatusBarStyle(const MobileUI::Theme theme)
 {
-    UIStatusBarStyle style = statusBarStyle(theme);
-    UIWindow *keyWindow = activeKeyWindow();
-    if (keyWindow) setPreferredStatusBarStyle(keyWindow, style);
+    installStatusBarStyleHook();
+    s_statusBarStyle = statusBarStyle(theme);
+
+    // Ask every window of the scene (the key window may not exist yet at startup) to re-query the style.
+    // If none exists yet, UIKit will query the hooked getter when the window first appears.
+    UIWindowScene *windowScene = activeWindowScene();
+    for (UIWindow *window in windowScene.windows)
+    {
+        [window.rootViewController setNeedsStatusBarAppearanceUpdate];
+    }
 }
 
 /* ************************************************************************** */
@@ -151,22 +192,23 @@ void IosMobileUI::refreshSafeAreaMetrics()
         return;
     }
 
-    UIWindowScene *windowScene = activeWindowScene();
+    // Without a native window yet, keep the current metrics instead of reporting empty ones,
+    // the next refresh (focus/visibility change or retry timers) will pick them up.
+    UIWindow *window = nativeWindow(m_window);
+    if (!window) return;
+
+    UIWindowScene *windowScene = window.windowScene;
     if (windowScene)
     {
         CGSize statusBarSize = windowScene.statusBarManager.statusBarFrame.size;
         metrics.statusbarHeight = static_cast<int>(std::lround(MIN(statusBarSize.width, statusBarSize.height)));
     }
 
-    UIWindow *keyWindow = windowScene.keyWindow;
-    if (keyWindow)
-    {
-        UIEdgeInsets insets = keyWindow.safeAreaInsets;
-        metrics.top = static_cast<int>(std::lround(insets.top));
-        metrics.left = static_cast<int>(std::lround(insets.left));
-        metrics.right = static_cast<int>(std::lround(insets.right));
-        metrics.bottom = static_cast<int>(std::lround(insets.bottom));
-    }
+    UIEdgeInsets insets = window.safeAreaInsets;
+    metrics.top = static_cast<int>(std::lround(insets.top));
+    metrics.left = static_cast<int>(std::lround(insets.left));
+    metrics.right = static_cast<int>(std::lround(insets.right));
+    metrics.bottom = static_cast<int>(std::lround(insets.bottom));
 
     Q_EMIT safeAreaMetricsUpdated(metrics);
 }
@@ -279,8 +321,10 @@ static void installOrientationHook(UIViewController *viewController)
 
 void IosMobileUI::setScreenLockOrientation(const MobileUI::ScreenLockOrientation orientation)
 {
-    UIWindowScene *windowScene = activeWindowScene();
-    UIViewController *rootVC = windowScene.keyWindow.rootViewController;
+    // Without a native window yet, MobileUI re-applies the lock once the application window is known
+    UIWindow *window = nativeWindow(m_window);
+    UIWindowScene *windowScene = window.windowScene;
+    UIViewController *rootVC = window.rootViewController;
     if (!windowScene || !rootVC) return;
 
     // For reference, the values from iOS:
